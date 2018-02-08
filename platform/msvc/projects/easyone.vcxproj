@@ -1,0 +1,267 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>9.easyone</ProjectName>
+    <ProjectGuid>{76884A5E-E1EC-4FE2-9096-9503EB0A3B71}</ProjectGuid>
+    <RootNamespace>easyone</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>15.0.26730.12</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>..\easyone\x86\Debug\</OutDir>
+    <IntDir>..\easyone\x86\Debug\obj\</IntDir>
+    <LinkIncremental>true</LinkIncremental>
+    <TargetName>easyone</TargetName>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>..\easyone\x86\Release\</OutDir>
+    <IntDir>..\easyone\x86\Release\obj\</IntDir>
+    <LinkIncremental>false</LinkIncremental>
+    <TargetName>easyone</TargetName>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\..\..\src\easyone;..\..\..\ext\easyeditor0\include;..\..\..\ext\easyeditor2\include;..\..\..\ext\easyeditor3\include;..\..\..\ext\cu\src;..\..\..\ext\ds\src\ds;..\..\..\ext\sm\src\sm;..\..\..\ext\sprite2\include;..\..\..\ext\painting2\include;..\..\..\ext\painting3\include;..\..\..\ext\js\include;..\..\..\ext\guard\include;..\..\..\ext\node0\include;..\..\..\ext\node2\include;..\..\..\ext\node3\include;..\..\..\ext\memmgr\include;..\..\..\ext\external-editor\wx\include;..\..\..\ext\external\json\include;..\..\..\ext\external\rapidjson\include;..\..\..\ext\external\freetype\include;..\..\..\ext\external\c99;..\..\..\ext\external\lua\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <AssemblerListingLocation>..\easyone\x86\Debug</AssemblerListingLocation>
+      <ProgramDataBaseFileName>..\easyone\x86\Debug\easyone.pdb</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <AdditionalDependencies>wxmsw31ud_aui.lib;wxmsw31ud_gl.lib;wxmsw31ud_propgrid.lib;wxmsw31ud_adv.lib;wxmsw31ud_stc.lib;wxmsw31ud_core.lib;wxbase31ud_net.lib;wxbase31ud.lib;wxscintillad.lib;wxtiffd.lib;wxjpegd.lib;wxpngd.lib;wxzlibd.lib;comctl32.lib;rpcrt4.lib;glew32s.lib;jsond.lib;freetype281d.lib;lua.lib;assimp.lib;libpng16d.lib;cjsond.lib;lzmad.lib;pthreadVC2.lib;wsock32.lib;OpenAL32.lib;libmpg123d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>..\easyone\x86\Debug\easyone.exe</OutputFile>
+      <AdditionalLibraryDirectories>..\..\..\ext\external-editor\wx\lib;..\..\..\ext\external\gl\lib;..\..\..\ext\external\json\lib;..\..\..\ext\external\freetype\lib;..\..\..\ext\external\libpng\lib;..\..\..\ext\external\lua\lib;..\..\..\ext\external\assimp\lib;..\..\..\ext\external\intel;..\..\..\ext\external\cjson\lib;..\..\..\ext\external\pthread\lib;..\..\..\ext\external\lzma\lib;..\..\..\ext\external\assimp\lib;..\..\..\ext\external\boost\lib;..\..\..\ext\external\mpg123\lib;..\..\..\ext\external\openal32\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>LIBC.LIB;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>..\easyone\x86\Debug\easyone.pdb</ProgramDatabaseFile>
+      <SubSystem>Windows</SubSystem>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>..\..\..\src\easyone;..\..\..\ext\easyeditor0\include;..\..\..\ext\easyeditor2\include;..\..\..\ext\easyeditor3\include;..\..\..\ext\cu\src;..\..\..\ext\ds\src\ds;..\..\..\ext\sm\src\sm;..\..\..\ext\sprite2\include;..\..\..\ext\painting2\include;..\..\..\ext\painting3\include;..\..\..\ext\js\include;..\..\..\ext\guard\include;..\..\..\ext\node0\include;..\..\..\ext\node2\include;..\..\..\ext\node3\include;..\..\..\ext\memmgr\include;..\..\..\ext\external-editor\wx\include;..\..\..\ext\external\json\include;..\..\..\ext\external\rapidjson\include;..\..\..\ext\external\freetype\include;..\..\..\ext\external\c99;..\..\..\ext\external\lua\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader />
+      <AssemblerListingLocation>..\easyone\x86\Release</AssemblerListingLocation>
+      <ProgramDataBaseFileName>..\easyone\x86\Release\easyone.pdb</ProgramDataBaseFileName>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <ProjectReference>
+      <LinkLibraryDependencies>false</LinkLibraryDependencies>
+    </ProjectReference>
+    <Link>
+      <AdditionalDependencies>wxmsw31u_aui.lib;wxmsw31u_gl.lib;wxmsw31u_propgrid.lib;wxmsw31u_adv.lib;wxmsw31u_stc.lib;wxmsw31u_core.lib;wxbase31u_net.lib;wxbase31u.lib;wxscintilla.lib;wxtiff.lib;wxjpeg.lib;wxpng.lib;wxzlib.lib;comctl32.lib;rpcrt4.lib;glew32s.lib;json.lib;freetype281.lib;lua.lib;assimp.lib;libpng16.lib;cjson.lib;lzma.lib;pthreadVC2.lib;wsock32.lib;OpenAL32.lib;libmpg123.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <OutputFile>..\easyone\x86\Release\easyone.exe</OutputFile>
+      <AdditionalLibraryDirectories>..\..\..\ext\external-editor\wx\lib;..\..\..\ext\external\gl\lib;..\..\..\ext\external\json\lib;..\..\..\ext\external\freetype\lib;..\..\..\ext\external\libpng\lib;..\..\..\ext\external\lua\lib;..\..\..\ext\external\assimp\lib;..\..\..\ext\external\intel;..\..\..\ext\external\cjson\lib;..\..\..\ext\external\pthread\lib;..\..\..\ext\external\lzma\lib;..\..\..\ext\external\assimp\lib;..\..\..\ext\external\boost\lib;..\..\..\ext\external\mpg123\lib;..\..\..\ext\external\openal32\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <IgnoreSpecificDefaultLibraries>LIBC.LIB;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <ProgramDatabaseFile>..\easyone\x86\Release\easyone.pdb</ProgramDatabaseFile>
+      <StripPrivateSymbols />
+      <SubSystem>Windows</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\ext\bimp\platform\msvc\projects\bimp.vcxproj">
+      <Project>{f22a86e7-b73f-4f6a-9ea8-e4ae9cc9d885}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\bs\platform\msvc\projects\bs.vcxproj">
+      <Project>{f5e6ae49-23dc-421b-ad33-c422e8590520}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\camera25\platform\msvc\projects\camera25.vcxproj">
+      <Project>{510eaacb-b026-43f3-a68d-3ec421e46dd0}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\cooking\platform\msvc\projects\cooking.vcxproj">
+      <Project>{4eee80e8-662f-4ec2-a19b-68b1d7f8c46f}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\ds\platform\msvc\projects\ds.vcxproj">
+      <Project>{e6044d31-8304-4854-99ac-cbef18b9e7d3}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\dtex2\platform\msvc\projects\dtex2.vcxproj">
+      <Project>{a502c49c-7014-4d77-8bd9-b3f917ad34b0}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\easyeditor0\platform\msvc\projects\easyeditor0.vcxproj">
+      <Project>{9a81990c-3c18-4adf-a9eb-46990625c107}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\easyeditor2\platform\msvc\projects\easyeditor2.vcxproj">
+      <Project>{58699389-f675-489e-a912-c9110d8d6e3d}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\easyeditor3\platform\msvc\projects\easyeditor3.vcxproj">
+      <Project>{ceebd91e-9297-47ea-aded-68d791ba6fd4}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\flatten\platform\msvc\projects\flatten.vcxproj">
+      <Project>{26016761-3f64-45e4-aa37-ddd8714fb159}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\fs\platform\msvc\projects\fs.vcxproj">
+      <Project>{09c39b9e-27f5-4b39-9829-2815fd1c5469}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\gimg\platform\msvc\projects\gimg.vcxproj">
+      <Project>{d1acc0be-3a2b-450f-a708-f3e84df5e5ad}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\glp\platform\msvc\projects\glp.vcxproj">
+      <Project>{ca120fa2-89a7-4957-a4a5-4746972aa39f}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\gtxt\platform\msvc\projects\gtxt.vcxproj">
+      <Project>{eb4f1ee0-cb3b-4b2e-9655-a8e22f948575}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\guard\platform\msvc\projects\guard.vcxproj">
+      <Project>{cc45ae0e-8c51-4759-9614-8bc321c565a0}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\gum\platform\msvc\projects\gum.vcxproj">
+      <Project>{70c5478d-6d53-4f75-99d4-f06373175c83}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\js\platform\msvc\projects\js.vcxproj">
+      <Project>{68c18da9-79bb-43a5-9e0c-79740aea954b}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\logger\platform\msvc\projects\logger.vcxproj">
+      <Project>{4031b66e-39a3-401e-918a-e1424a4af944}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\memmgr\platform\msvc\projects\memmgr.vcxproj">
+      <Project>{5ffa0de4-1489-4267-8a79-52decc2d0351}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\mtrail\platform\msvc\projects\mtrail.vcxproj">
+      <Project>{a9854fd8-f2e4-4b5a-8c15-d3c661dd4def}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\multitask\platform\msvc\projects\multitask.vcxproj">
+      <Project>{6728bb94-9882-4804-87d3-ce9ceb62fdab}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\node0\platform\msvc\projects\node0.vcxproj">
+      <Project>{7f41d3ce-ef51-43b9-a6ac-8c3df4894430}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\node2\platform\msvc\projects\node2.vcxproj">
+      <Project>{88574804-351f-4308-bd45-e33f503fdd70}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\node3\platform\msvc\projects\node3.vcxproj">
+      <Project>{6030cf6b-1a8b-421b-92ce-4eb965751636}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\painting2\platform\msvc\projects\painting2.vcxproj">
+      <Project>{18829913-b301-424c-8cd8-d95773038029}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\painting3\platform\msvc\projects\painting3.vcxproj">
+      <Project>{0ba2f6ef-159c-4330-8a7b-74c931cff5f9}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\pimg\platform\msvc\projects\pimg.vcxproj">
+      <Project>{5ae91e72-1c23-4913-bea9-1fe795c570f5}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\playdb\platform\msvc\projects\playdb.vcxproj">
+      <Project>{e421cc5f-0909-4f8d-8e9a-bcb52e0e8350}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\polymesh\platform\msvc\projects\polymesh.vcxproj">
+      <Project>{748f2e41-4c8f-4c0f-a90a-26eca6741a34}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\ps\platform\msvc\projects\ps.vcxproj">
+      <Project>{ee2229a3-ad5f-46e7-afab-729f8aa18036}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\rapidvg\platform\msvc\projects\rapidvg.vcxproj">
+      <Project>{66207e9a-031c-402b-9e3e-fa5599a1c89b}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\rigging\platform\msvc\projects\rigging.vcxproj">
+      <Project>{dbe6d3f5-4e3d-4df8-b520-a27bce5a5d21}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\s2loader\platform\msvc\projects\s2loader.vcxproj">
+      <Project>{e5a136ee-7ee1-4682-a1b1-c942cb2110e7}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\s2serializer\platform\msvc\projects\s2serializer.vcxproj">
+      <Project>{b6939acb-3794-4b2a-95da-f99ecdf79d0f}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\s2storer\platform\msvc\projects\s2storer.vcxproj">
+      <Project>{6032ddf2-fe43-4d51-afaa-f6b6a6d855ad}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\shaderlab\platform\msvc\projects\shaderlab.vcxproj">
+      <Project>{5c357759-ca95-42e1-b907-dfb87a995f6c}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\simp\platform\msvc\projects\simp.vcxproj">
+      <Project>{d19b530f-a257-4465-a92c-381e91b47746}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\sm\platform\msvc\projects\sm.vcxproj">
+      <Project>{81630e0d-e1ef-4837-a0ee-30435ed4fe59}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\sprite2\platform\msvc\projects\sprite2.vcxproj">
+      <Project>{ccdd6dc3-9da2-4215-bac6-6031699fb7e4}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\texpack\platform\msvc\projects\texpack.vcxproj">
+      <Project>{a7737c76-5221-47a5-86b7-84bd56c47730}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\timp\platform\msvc\projects\timp.vcxproj">
+      <Project>{27824966-6c3c-4874-abff-499ddddb4d48}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\uniaudio\platform\msvc\projects\uniaudio.vcxproj">
+      <Project>{fdb8a0eb-d438-43b4-b65f-ff1b80a9d45b}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\unirender\platform\msvc\projects\unirender.vcxproj">
+      <Project>{637a0e9c-1867-459d-8611-65a064e3b2c2}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\src\DetailPanel.h" />
+    <ClInclude Include="..\..\..\src\main.h" />
+    <ClInclude Include="..\..\..\src\StagePanel.h" />
+    <ClInclude Include="..\..\..\src\Task.h" />
+    <ClInclude Include="..\..\..\src\LibraryPanel.h" />
+    <ClInclude Include="..\..\..\src\SceneTreeCtrl.h" />
+    <ClInclude Include="..\..\..\src\SceneTreeImpl.h" />
+    <ClInclude Include="..\..\..\src\SceneTreeItem.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\src\DetailPanel.cpp" />
+    <ClCompile Include="..\..\..\src\main.cpp" />
+    <ClCompile Include="..\..\..\src\StagePanel.cpp" />
+    <ClCompile Include="..\..\..\src\Task.cpp" />
+    <ClCompile Include="..\..\..\src\LibraryPanel.cpp" />
+    <ClCompile Include="..\..\..\src\SceneTreeCtrl.cpp" />
+    <ClCompile Include="..\..\..\src\SceneTreeImpl.cpp" />
+    <ClCompile Include="..\..\..\src\SceneTreeItem.cpp" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

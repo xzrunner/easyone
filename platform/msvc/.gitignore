@@ -1,0 +1,5 @@
+easyone/
+projects/*
+
+!projects/easyone.vcxproj
+!projects/easyone.vcxproj.filters

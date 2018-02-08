@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>0.sm</ProjectName>
+    <ProjectGuid>{81630E0D-E1EF-4837-A0EE-30435ED4FE59}</ProjectGuid>
+    <RootNamespace>sm</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+	<WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>    
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>15.0.26730.12</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>..\sm\x86\Debug\</OutDir>
+    <IntDir>..\sm\x86\Debug\obj\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>..\sm\x86\Release\</OutDir>
+    <IntDir>..\sm\x86\Release\obj\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\..\..\src;..\..\..\..\external\c99;..\..\..\..\memmgr\include;..\..\..\..\cu\src;..\..\..\..\guard\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>..\..\..\src;..\..\..\..\external\c99;..\..\..\..\memmgr\include;..\..\..\..\cu\src;..\..\..\..\guard\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\src\sm\SM_ConvexHull.cpp" />
+    <ClCompile Include="..\..\..\src\sm\SM_CosineSmooth.cpp" />
+    <ClCompile Include="..\..\..\src\sm\sm_c_calc.cpp" />
+    <ClCompile Include="..\..\..\src\sm\sm_c_matrix.cpp" />
+    <ClCompile Include="..\..\..\src\sm\sm_c_vector.cpp" />
+    <ClCompile Include="..\..\..\src\sm\SM_DouglasPeucker.cpp" />
+    <ClCompile Include="..\..\..\src\sm\SM_Matrix2D.cpp" />
+    <ClCompile Include="..\..\..\src\sm\SM_Test.cpp" />
+    <ClCompile Include="..\..\..\src\sm\SM_Triangulation.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\src\sm\external\sm_config.h" />
+    <ClInclude Include="..\..\..\src\sm\SM_Calc.h" />
+    <ClInclude Include="..\..\..\src\sm\sm_const.h" />
+    <ClInclude Include="..\..\..\src\sm\SM_ConvexHull.h" />
+    <ClInclude Include="..\..\..\src\sm\SM_CosineSmooth.h" />
+    <ClInclude Include="..\..\..\src\sm\sm_c_calc.h" />
+    <ClInclude Include="..\..\..\src\sm\sm_c_matrix.h" />
+    <ClInclude Include="..\..\..\src\sm\sm_c_vector.h" />
+    <ClInclude Include="..\..\..\src\sm\SM_DouglasPeucker.h" />
+    <ClInclude Include="..\..\..\src\sm\SM_Ease.h" />
+    <ClInclude Include="..\..\..\src\sm\SM_Math.h" />
+    <ClInclude Include="..\..\..\src\sm\SM_Matrix.h" />
+    <ClInclude Include="..\..\..\src\sm\SM_Matrix2D.h" />
+    <ClInclude Include="..\..\..\src\sm\SM_Plane.h" />
+    <ClInclude Include="..\..\..\src\sm\SM_Process.h" />
+    <ClInclude Include="..\..\..\src\sm\SM_Quaternion.h" />
+    <ClInclude Include="..\..\..\src\sm\SM_Rect.h" />
+    <ClInclude Include="..\..\..\src\sm\SM_Test.h" />
+    <ClInclude Include="..\..\..\src\sm\SM_Triangulation.h" />
+    <ClInclude Include="..\..\..\src\sm\SM_Vector.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\src\sm\SM_Calc.inl" />
+    <None Include="..\..\..\src\sm\SM_Math.inl" />
+    <None Include="..\..\..\src\sm\SM_Matrix.inl" />
+    <None Include="..\..\..\src\sm\SM_Matrix2D.inl" />
+    <None Include="..\..\..\src\sm\SM_Plane.inl" />
+    <None Include="..\..\..\src\sm\SM_Process.inl" />
+    <None Include="..\..\..\src\sm\SM_Quaternion.inl" />
+    <None Include="..\..\..\src\sm\SM_Rect.inl" />
+    <None Include="..\..\..\src\sm\SM_Test.inl" />
+    <None Include="..\..\..\src\sm\SM_Vector.inl" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

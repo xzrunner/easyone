@@ -1,0 +1,72 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="frame">
+      <UniqueIdentifier>{f2ac435f-2b29-4461-ba51-b7df3f28bf31}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="library">
+      <UniqueIdentifier>{d22de338-67a5-4535-9061-a35e56341ffd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="tree">
+      <UniqueIdentifier>{fabe2985-214e-40e8-a5a1-9e2f42db58b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="stage">
+      <UniqueIdentifier>{2b11e1a0-9b69-4748-ae7e-7337f2cf492a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="detail">
+      <UniqueIdentifier>{7653a908-a019-47e9-9c73-82f1621d2f93}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\src\main.h">
+      <Filter>frame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\LibraryPanel.h">
+      <Filter>library</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\SceneTreeCtrl.h">
+      <Filter>tree</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\Task.h">
+      <Filter>frame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\SceneTreeImpl.h">
+      <Filter>tree</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\SceneTreeItem.h">
+      <Filter>tree</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\StagePanel.h">
+      <Filter>stage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\DetailPanel.h">
+      <Filter>detail</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\src\main.cpp">
+      <Filter>frame</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\Task.cpp">
+      <Filter>frame</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\LibraryPanel.cpp">
+      <Filter>library</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\SceneTreeCtrl.cpp">
+      <Filter>tree</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\SceneTreeImpl.cpp">
+      <Filter>tree</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\SceneTreeItem.cpp">
+      <Filter>tree</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\StagePanel.cpp">
+      <Filter>stage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\DetailPanel.cpp">
+      <Filter>detail</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

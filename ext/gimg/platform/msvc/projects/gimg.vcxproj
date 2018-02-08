@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectName>1.gimg</ProjectName>
+    <ProjectGuid>{D1ACC0BE-3A2B-450F-A708-F3E84DF5E5AD}</ProjectGuid>
+    <RootNamespace>gimg</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.15063.0</WindowsTargetPlatformVersion>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <PlatformToolset>v141</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>15.0.26730.12</_ProjectFileVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <OutDir>..\gimg\x86\Debug\</OutDir>
+    <IntDir>..\gimg\x86\Debug\obj\</IntDir>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <OutDir>..\gimg\x86\Release\</OutDir>
+    <IntDir>..\gimg\x86\Release\obj\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\..\..\src;..\..\..\..\logger\src\logger;..\..\..\..\fs\src\fs;..\..\..\..\external\c99;..\..\..\..\external\libpng\include;..\..\..\..\external\libjpeg\include;..\..\..\..\external\etcpack;..\..\..\..\external\rg_etc1;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <AdditionalIncludeDirectories>..\..\..\src;..\..\..\..\logger\src\logger;..\..\..\..\fs\src\fs;..\..\..\..\external\c99;..\..\..\..\external\libpng\include;..\..\..\..\external\libjpeg\include;..\..\..\..\external\etcpack;..\..\..\..\external\rg_etc1;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader />
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\external\etcpack\c_wrap_etcpack.cpp" />
+    <ClCompile Include="..\..\..\..\external\etcpack\etcdecwrap.cpp" />
+    <ClCompile Include="..\..\..\..\external\etcpack\etcimagewrap.cpp" />
+    <ClCompile Include="..\..\..\..\external\etcpack\etcpackwrap.cpp" />
+    <ClCompile Include="..\..\..\..\external\etcpack\source\etcdec.cxx" />
+    <ClCompile Include="..\..\..\..\external\etcpack\source\etcimage.cxx" />
+    <ClCompile Include="..\..\..\..\external\etcpack\source\etcpack.cxx" />
+    <ClCompile Include="..\..\..\src\gimg\gimg_bmp.c" />
+    <ClCompile Include="..\..\..\src\gimg\gimg_etc1.c" />
+    <ClCompile Include="..\..\..\src\gimg\gimg_etc2.c" />
+    <ClCompile Include="..\..\..\src\gimg\gimg_export.c" />
+    <ClCompile Include="..\..\..\src\gimg\gimg_import.c" />
+    <ClCompile Include="..\..\..\src\gimg\gimg_jpg.c" />
+    <ClCompile Include="..\..\..\src\gimg\gimg_png.c" />
+    <ClCompile Include="..\..\..\src\gimg\gimg_ppm.c" />
+    <ClCompile Include="..\..\..\src\gimg\gimg_pvr.c" />
+    <ClCompile Include="..\..\..\src\gimg\gimg_utility.c" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\external\etcpack\c_wrap_etcpack.h" />
+    <ClInclude Include="..\..\..\..\external\etcpack\etcpack_lib.h" />
+    <ClInclude Include="..\..\..\..\external\etcpack\source\etcimage.h" />
+    <ClInclude Include="..\..\..\src\gimg\gimg_bmp.h" />
+    <ClInclude Include="..\..\..\src\gimg\gimg_etc1.h" />
+    <ClInclude Include="..\..\..\src\gimg\gimg_etc2.h" />
+    <ClInclude Include="..\..\..\src\gimg\gimg_export.h" />
+    <ClInclude Include="..\..\..\src\gimg\gimg_import.h" />
+    <ClInclude Include="..\..\..\src\gimg\gimg_jpg.h" />
+    <ClInclude Include="..\..\..\src\gimg\gimg_math.h" />
+    <ClInclude Include="..\..\..\src\gimg\gimg_png.h" />
+    <ClInclude Include="..\..\..\src\gimg\gimg_ppm.h" />
+    <ClInclude Include="..\..\..\src\gimg\gimg_pvr.h" />
+    <ClInclude Include="..\..\..\src\gimg\gimg_typedef.h" />
+    <ClInclude Include="..\..\..\src\gimg\gimg_utility.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
