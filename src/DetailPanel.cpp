@@ -4,6 +4,8 @@
 #include <ee0/VariantSet.h>
 #include <ee0/WxCompPanel.h>
 
+#include <ee2/WxCompTransformPanel.h>
+#include <ee2/WxCompColorCommonPanel.h>
 #include <ee3/WxCompTransformPanel.h>
 
 #include <guard/check.h>
@@ -71,7 +73,7 @@ void DetailPanel::RegisterMsg(ee0::SubjectMgr& sub_mgr)
 void DetailPanel::InitComponents(const ee0::VariantSet& variants)
 {
 	auto var = variants.GetVariant("node");
-	GD_ASSERT(var.m_type != ee0::VT_EMPTY, "no var in vars: node");
+	GD_ASSERT(var.m_type != ee0::VT_EMPTY, "no var in vars: node"); 
 	GD_ASSERT(var.m_val.pv, "err scene node");
 	m_node = *static_cast<n0::SceneNodePtr*>(var.m_val.pv);
 
@@ -79,6 +81,21 @@ void DetailPanel::InitComponents(const ee0::VariantSet& variants)
 	{
 		auto& comp = m_node->GetComponent<n3::CompTransform>();
 		auto panel = new ee3::WxCompTransformPanel(this, comp, *m_sub_mgr);
+		m_comp_sizer->Insert(m_components.size(), panel);
+		m_components.push_back(panel);
+	}
+
+	if (m_node->HasComponent<n2::CompTransform>())
+	{
+		auto& comp = m_node->GetComponent<n2::CompTransform>();
+		auto panel = new ee2::WxCompTransformPanel(this, comp, *m_sub_mgr);
+		m_comp_sizer->Insert(m_components.size(), panel);
+		m_components.push_back(panel);
+	}
+	if (m_node->HasComponent<n2::CompColorCommon>())
+	{
+		auto& comp = m_node->GetComponent<n2::CompColorCommon>();
+		auto panel = new ee2::WxCompColorCommonPanel(this, comp, *m_sub_mgr);
 		m_comp_sizer->Insert(m_components.size(), panel);
 		m_components.push_back(panel);
 	}
