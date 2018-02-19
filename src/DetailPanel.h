@@ -27,10 +27,14 @@ private:
 	void UpdateComponents();
 	void StagePageChanging(const ee0::VariantSet& variants);
 
+	void OnAddPress(wxCommandEvent& event);
+
 private:
 	ee0::SubjectMgr* m_sub_mgr;
 
 	wxSizer* m_comp_sizer;
+
+	wxButton* m_add_btn;
 
 	std::vector<ee0::WxCompPanel*> m_components;
 

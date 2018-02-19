@@ -5,7 +5,8 @@
 #include <ee0/WxCompPanel.h>
 
 #include <ee2/WxCompTransformPanel.h>
-#include <ee2/WxCompColorCommonPanel.h>
+#include <ee2/WxCompColComPanel.h>
+#include <ee2/WxCompColMapPanel.h>
 #include <ee3/WxCompTransformPanel.h>
 
 #include <guard/check.h>
@@ -13,6 +14,70 @@
 
 #include <wx/sizer.h>
 #include <wx/button.h>
+#include <wx/treectrl.h>
+#include <wx/dialog.h>
+
+namespace
+{
+
+static const std::string COMP_COLOR_COMMON_STR = "ColorCommon";
+static const std::string COMP_COLOR_MAP_STR    = "ColorMap";
+
+class AddDialog : public wxDialog
+{
+public:
+	AddDialog(wxWindow* parent, const wxPoint& pos)
+		: wxDialog(parent, wxID_ANY, "components", pos)
+	{
+		InitLayout();
+	}
+
+	std::string GetSelectedName() const
+	{
+		return m_tree->GetItemText(m_tree->GetSelection()).ToStdString();
+	}
+
+private:
+	void InitLayout()
+	{
+		wxSizer* sizer = new wxBoxSizer(wxVERTICAL);
+
+		m_tree = new wxTreeCtrl(this, wxID_ANY, wxDefaultPosition, wxSize(200, 400), 
+			wxTR_HIDE_ROOT | /*wxTR_NO_LINES | */wxTR_DEFAULT_STYLE);
+		Bind(wxEVT_TREE_SEL_CHANGED, &AddDialog::OnSelChanged, this, m_tree->GetId());
+
+		auto root = m_tree->AddRoot("ROOT");
+
+		m_tree->InsertItem(root, -1, COMP_COLOR_COMMON_STR);
+		m_tree->InsertItem(root, -1, COMP_COLOR_MAP_STR);
+
+		sizer->Add(m_tree);
+
+		wxBoxSizer* btn_sizer = new wxBoxSizer(wxHORIZONTAL);
+		btn_sizer->Add(new wxButton(this, wxID_OK), wxALL, 5);
+		btn_sizer->Add(new wxButton(this, wxID_CANCEL), wxALL, 5);
+		sizer->Add(btn_sizer, 0, wxALL, 5);
+
+		SetSizer(sizer);
+		sizer->Fit(this);
+	}
+
+	void OnSelChanged(wxTreeEvent& event)
+	{
+		auto id = event.GetItem();
+		if (!id.IsOk()) {
+			return;
+		}
+
+		auto text = m_tree->GetItemText(id);
+	}
+
+private:
+	wxTreeCtrl* m_tree;
+
+}; // AddDialog
+
+}
 
 namespace eone
 {
@@ -32,16 +97,19 @@ void DetailPanel::OnNotify(ee0::MessageID msg, const ee0::VariantSet& variants)
 	switch (msg)
 	{
 	case ee0::MSG_SELECTED_ONE_NODE:
+		m_add_btn->Show(true);
 		ClearComponents();
 		InitComponents(variants);
 		break;
 	case ee0::MSG_NODE_SELECTION_CLEAR:
+		m_add_btn->Show(false);
 		ClearComponents();
 		break;
 	case ee0::MSG_UPDATE_COMPONENTS:
 		UpdateComponents();
 		break;
 	case ee0::MSG_STAGE_PAGE_CHANGING:
+		m_add_btn->Show(false);
 		ClearComponents();
 		StagePageChanging(variants);
 		break;
@@ -57,7 +125,11 @@ void DetailPanel::InitLayout()
 
 	top_sizer->AddSpacer(100);
 
-	top_sizer->Add(new wxButton(this, wxID_ANY, "Add Component"), 0, wxALIGN_CENTER_HORIZONTAL);
+	m_add_btn = new wxButton(this, wxID_ANY, "Add Component");
+	Connect(m_add_btn->GetId(), wxEVT_COMMAND_BUTTON_CLICKED,
+		wxCommandEventHandler(DetailPanel::OnAddPress));
+	top_sizer->Add(m_add_btn, 0, wxALIGN_CENTER_HORIZONTAL);
+	m_add_btn->Show(false);
 
 	SetSizer(top_sizer);
 }
@@ -95,7 +167,14 @@ void DetailPanel::InitComponents(const ee0::VariantSet& variants)
 	if (m_node->HasComponent<n2::CompColorCommon>())
 	{
 		auto& comp = m_node->GetComponent<n2::CompColorCommon>();
-		auto panel = new ee2::WxCompColorCommonPanel(this, comp, *m_sub_mgr);
+		auto panel = new ee2::WxCompColComPanel(this, comp, *m_sub_mgr);
+		m_comp_sizer->Insert(m_components.size(), panel);
+		m_components.push_back(panel);
+	}
+	if (m_node->HasComponent<n2::CompColorMap>())
+	{
+		auto& comp = m_node->GetComponent<n2::CompColorMap>();
+		auto panel = new ee2::WxCompColMapPanel(this, comp, *m_sub_mgr);
 		m_comp_sizer->Insert(m_components.size(), panel);
 		m_components.push_back(panel);
 	}
@@ -136,6 +215,31 @@ void DetailPanel::StagePageChanging(const ee0::VariantSet& variants)
 	m_sub_mgr = static_cast<ee0::SubjectMgr*>(var.m_val.pv);
 
 	RegisterMsg(*m_sub_mgr);
+}
+
+void DetailPanel::OnAddPress(wxCommandEvent& event)
+{
+	AddDialog dlg(this, m_add_btn->GetScreenPosition());
+	if (dlg.ShowModal() == wxID_OK)
+	{
+		auto name = dlg.GetSelectedName();
+		if (name == COMP_COLOR_COMMON_STR)
+		{
+			auto& comp = m_node->AddComponent<n2::CompColorCommon>();
+			auto panel = new ee2::WxCompColComPanel(this, comp, *m_sub_mgr);
+			m_comp_sizer->Insert(m_components.size(), panel);
+			m_components.push_back(panel);
+		}
+		else if (name == COMP_COLOR_MAP_STR)
+		{
+			auto& comp = m_node->AddComponent<n2::CompColorMap>();
+			auto panel = new ee2::WxCompColMapPanel(this, comp, *m_sub_mgr);
+			m_comp_sizer->Insert(m_components.size(), panel);
+			m_components.push_back(panel);
+		}
+
+		Layout();
+	}
 }
 
 }
