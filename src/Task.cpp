@@ -1,7 +1,7 @@
 #include "Task.h"
 #include "LibraryPanel.h"
 #include "StagePanel.h"
-#include "SceneTreeCtrl.h"
+#include "SceneTreePanel.h"
 #include "DetailPanel.h"
 
 #include <ee0/CompNodeEditor.h>
@@ -15,6 +15,8 @@
 
 #include <node0/SceneNode.h>
 #include <node3/ComponentFactory.h>
+#include <gum/Facade.h>
+#include <gum/GTxt.h>
 
 namespace eone
 {
@@ -24,8 +26,19 @@ Task::Task(wxFrame* frame)
 {
 	m_mgr.SetManagedWindow(frame);
 
+	InitSubmodule();
 	InitLayout();
 	InitCallback();
+}
+
+void Task::InitSubmodule()
+{
+	CU_VEC<std::pair<CU_STR, CU_STR>> fonts;
+	CU_VEC<std::pair<CU_STR, CU_STR>> user_fonts;
+	fonts.push_back(std::make_pair("default", "FZCY_GBK.ttf"));
+	gum::GTxt::Instance()->Init(fonts, user_fonts);
+
+	gum::Facade::Initialize();
 }
 
 void Task::InitLayout()
@@ -99,7 +112,7 @@ wxWindow* Task::CreateStagePanel()
 wxWindow* Task::CreateTreePanel()
 {
 	auto& sub_mgr = m_stage->GetCurrentStagePage()->GetSubjectMgr();
-	m_tree = new SceneTreeCtrl(m_frame, sub_mgr);
+	m_tree = new SceneTreePanel(m_frame, sub_mgr);
 	return m_tree;
 }
 

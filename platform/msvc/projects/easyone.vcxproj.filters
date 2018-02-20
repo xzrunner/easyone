@@ -42,6 +42,9 @@
     <ClInclude Include="..\..\..\src\DetailPanel.h">
       <Filter>detail</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\SceneTreePanel.h">
+      <Filter>tree</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\main.cpp">
@@ -67,6 +70,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\DetailPanel.cpp">
       <Filter>detail</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\SceneTreePanel.cpp">
+      <Filter>tree</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

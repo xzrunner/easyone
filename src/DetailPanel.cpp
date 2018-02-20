@@ -7,6 +7,7 @@
 #include <ee2/WxCompTransformPanel.h>
 #include <ee2/WxCompColComPanel.h>
 #include <ee2/WxCompColMapPanel.h>
+#include <ee2/WxCompTextPanel.h>
 #include <ee3/WxCompTransformPanel.h>
 
 #include <guard/check.h>
@@ -27,7 +28,7 @@ class AddDialog : public wxDialog
 {
 public:
 	AddDialog(wxWindow* parent, const wxPoint& pos)
-		: wxDialog(parent, wxID_ANY, "components", pos)
+		: wxDialog(parent, wxID_ANY, "Add component", pos)
 	{
 		InitLayout();
 	}
@@ -119,18 +120,18 @@ void DetailPanel::OnNotify(ee0::MessageID msg, const ee0::VariantSet& variants)
 void DetailPanel::InitLayout()
 {
 	wxSizer* top_sizer = new wxBoxSizer(wxVERTICAL);
-
-	m_comp_sizer = new wxBoxSizer(wxVERTICAL);
-	top_sizer->Add(m_comp_sizer);
-
+	{
+		m_comp_sizer = new wxBoxSizer(wxVERTICAL);
+		top_sizer->Add(m_comp_sizer);
+	}
 	top_sizer->AddSpacer(100);
-
-	m_add_btn = new wxButton(this, wxID_ANY, "Add Component");
-	Connect(m_add_btn->GetId(), wxEVT_COMMAND_BUTTON_CLICKED,
-		wxCommandEventHandler(DetailPanel::OnAddPress));
-	top_sizer->Add(m_add_btn, 0, wxALIGN_CENTER_HORIZONTAL);
-	m_add_btn->Show(false);
-
+	{
+		m_add_btn = new wxButton(this, wxID_ANY, "Add Component");
+		Connect(m_add_btn->GetId(), wxEVT_COMMAND_BUTTON_CLICKED,
+			wxCommandEventHandler(DetailPanel::OnAddPress));
+		top_sizer->Add(m_add_btn, 0, wxALIGN_CENTER_HORIZONTAL);
+		m_add_btn->Show(false);
+	}
 	SetSizer(top_sizer);
 }
 
@@ -179,6 +180,14 @@ void DetailPanel::InitComponents(const ee0::VariantSet& variants)
 		m_components.push_back(panel);
 	}
 
+	if (m_node->HasComponent<n2::CompText>())
+	{
+		auto& comp = m_node->GetComponent<n2::CompText>();
+		auto panel = new ee2::WxCompTextPanel(this, comp, *m_sub_mgr);
+		m_comp_sizer->Insert(m_components.size(), panel);
+		m_components.push_back(panel);
+	}
+
 	Layout();
 }
 
@@ -220,26 +229,27 @@ void DetailPanel::StagePageChanging(const ee0::VariantSet& variants)
 void DetailPanel::OnAddPress(wxCommandEvent& event)
 {
 	AddDialog dlg(this, m_add_btn->GetScreenPosition());
-	if (dlg.ShowModal() == wxID_OK)
-	{
-		auto name = dlg.GetSelectedName();
-		if (name == COMP_COLOR_COMMON_STR)
-		{
-			auto& comp = m_node->AddComponent<n2::CompColorCommon>();
-			auto panel = new ee2::WxCompColComPanel(this, comp, *m_sub_mgr);
-			m_comp_sizer->Insert(m_components.size(), panel);
-			m_components.push_back(panel);
-		}
-		else if (name == COMP_COLOR_MAP_STR)
-		{
-			auto& comp = m_node->AddComponent<n2::CompColorMap>();
-			auto panel = new ee2::WxCompColMapPanel(this, comp, *m_sub_mgr);
-			m_comp_sizer->Insert(m_components.size(), panel);
-			m_components.push_back(panel);
-		}
-
-		Layout();
+	if (dlg.ShowModal() != wxID_OK) {
+		return;
 	}
+
+	auto name = dlg.GetSelectedName();
+	if (name == COMP_COLOR_COMMON_STR)
+	{
+		auto& comp = m_node->AddComponent<n2::CompColorCommon>();
+		auto panel = new ee2::WxCompColComPanel(this, comp, *m_sub_mgr);
+		m_comp_sizer->Insert(m_components.size(), panel);
+		m_components.push_back(panel);
+	}
+	else if (name == COMP_COLOR_MAP_STR)
+	{
+		auto& comp = m_node->AddComponent<n2::CompColorMap>();
+		auto panel = new ee2::WxCompColMapPanel(this, comp, *m_sub_mgr);
+		m_comp_sizer->Insert(m_components.size(), panel);
+		m_components.push_back(panel);
+	}
+
+	Layout();
 }
 
 }

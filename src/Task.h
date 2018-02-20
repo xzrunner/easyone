@@ -12,7 +12,7 @@ namespace eone
 
 class StagePanel;
 
-class SceneTreeCtrl;
+class SceneTreePanel;
 
 class Task
 {
@@ -20,6 +20,7 @@ public:
 	Task(wxFrame* frame);
 
 private:
+	void InitSubmodule();
 	void InitLayout();
 	void InitCallback();
 
@@ -37,7 +38,7 @@ private:
 
 	StagePanel* m_stage;
 
-	SceneTreeCtrl* m_tree;
+	SceneTreePanel* m_tree;
 
 }; // Task
 
