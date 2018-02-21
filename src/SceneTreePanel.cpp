@@ -7,15 +7,24 @@
 #include <ee2/NodeFactory.h>
 
 #include <guard/check.h>
+#include <node0/SceneNode.h>
+#include <node2/CompImage.h>
+#include <node2/CompTransform.h>
+#include <node2/CompBoundingBox.h>
+#include <gum/ResPool.h>
+#include <gum/Image.h>
+#include <gum/Texture.h>
 
 #include <wx/sizer.h>
 #include <wx/button.h>
 #include <wx/dialog.h>
+#include <wx/filedlg.h>
 
 namespace
 {
 
-static const std::string NODE_TEXT_STR = "Text";
+static const std::string NODE_IMAGE_STR = "Image";
+static const std::string NODE_TEXT_STR  = "Text";
 
 class CreateNodeDialog : public wxDialog
 {
@@ -36,12 +45,13 @@ private:
 	{
 		wxSizer* sizer = new wxBoxSizer(wxVERTICAL);
 
-		m_tree = new wxTreeCtrl(this, wxID_ANY, wxDefaultPosition, wxSize(200, 400), 
+		m_tree = new wxTreeCtrl(this, wxID_ANY, wxDefaultPosition, wxSize(200, 200), 
 			wxTR_HIDE_ROOT | /*wxTR_NO_LINES | */wxTR_DEFAULT_STYLE);
 		Bind(wxEVT_TREE_SEL_CHANGED, &CreateNodeDialog::OnSelChanged, this, m_tree->GetId());
 
 		auto root = m_tree->AddRoot("ROOT");
 
+		m_tree->InsertItem(root, -1, NODE_IMAGE_STR);
 		m_tree->InsertItem(root, -1, NODE_TEXT_STR);
 
 		sizer->Add(m_tree);
@@ -107,7 +117,28 @@ void SceneTreePanel::OnCreatePress(wxCommandEvent& event)
 	n0::SceneNodePtr node = nullptr;
 
 	auto name = dlg.GetSelectedName();
-	if (name == NODE_TEXT_STR) {
+	if (name == NODE_IMAGE_STR) 
+	{
+		std::string filter = "*.png;*.jpg;*.bmp;*.pvr;*.pkm";
+		wxFileDialog dlg(this, wxT("Choose image"), wxEmptyString, filter);
+		if (dlg.ShowModal() == wxID_OK)
+		{
+			auto& path = dlg.GetPath();
+			auto img = gum::ResPool::Instance().Fetch<gum::Image>(path.ToStdString());
+
+			node = ee2::NodeFactory::Instance()->Create(ee2::NODE_IMAGE);
+			auto& cimage = node->GetComponent<n2::CompImage>();
+			cimage.SetFilepath(path.ToStdString());
+			cimage.SetTexture(img->GetTexture());
+
+			auto& cbounding = node->GetComponent<n2::CompBoundingBox>();
+			cbounding.SetSize(sm::rect(img->GetWidth(), img->GetHeight()));
+			auto& ctrans = node->GetComponent<n2::CompTransform>();
+			cbounding.Build(ctrans.GetTrans().GetSRT());
+		}
+	} 
+	else if (name == NODE_TEXT_STR) 
+	{
 		node = ee2::NodeFactory::Instance()->Create(ee2::NODE_TEXT);
 	}
 	if (!node) {

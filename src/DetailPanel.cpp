@@ -7,6 +7,7 @@
 #include <ee2/WxCompTransformPanel.h>
 #include <ee2/WxCompColComPanel.h>
 #include <ee2/WxCompColMapPanel.h>
+#include <ee2/WxCompImagePanel.h>
 #include <ee2/WxCompTextPanel.h>
 #include <ee3/WxCompTransformPanel.h>
 
@@ -180,6 +181,13 @@ void DetailPanel::InitComponents(const ee0::VariantSet& variants)
 		m_components.push_back(panel);
 	}
 
+	if (m_node->HasComponent<n2::CompImage>())
+	{
+		auto& comp = m_node->GetComponent<n2::CompImage>();
+		auto panel = new ee2::WxCompImagePanel(this, comp, *m_sub_mgr);
+		m_comp_sizer->Insert(m_components.size(), panel);
+		m_components.push_back(panel);
+	}
 	if (m_node->HasComponent<n2::CompText>())
 	{
 		auto& comp = m_node->GetComponent<n2::CompText>();
