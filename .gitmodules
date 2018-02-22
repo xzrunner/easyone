@@ -136,3 +136,6 @@
 [submodule "ext/external-editor"]
 	path = ext/external-editor
 	url = git@github.com:xzrunner/external-editor.git
+[submodule "ext/stat"]
+	path = ext/stat
+	url = git@github.com:xzrunner/stat.git

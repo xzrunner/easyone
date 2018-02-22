@@ -3,12 +3,13 @@
 #include <ee0/SubjectMgr.h>
 #include <ee0/VariantSet.h>
 #include <ee0/WxCompPanel.h>
-
+#include <ee0/WxCompNodeEditorPanel.h>
 #include <ee2/WxCompTransformPanel.h>
 #include <ee2/WxCompColComPanel.h>
 #include <ee2/WxCompColMapPanel.h>
 #include <ee2/WxCompImagePanel.h>
 #include <ee2/WxCompTextPanel.h>
+#include <ee2/WxCompMaskPanel.h>
 #include <ee2/WxCompSprite2Panel.h>
 #include <ee3/WxCompTransformPanel.h>
 
@@ -152,6 +153,14 @@ void DetailPanel::InitComponents(const ee0::VariantSet& variants)
 	GD_ASSERT(var.m_val.pv, "err scene node");
 	m_node = *static_cast<n0::SceneNodePtr*>(var.m_val.pv);
 
+	if (m_node->HasComponent<ee0::CompNodeEditor>())
+	{
+		auto& comp = m_node->GetComponent<ee0::CompNodeEditor>();
+		auto panel = new ee0::WxCompNodeEditorPanel(this, comp, *m_sub_mgr);
+		m_comp_sizer->Insert(m_components.size(), panel);
+		m_components.push_back(panel);
+	}
+
 	if (m_node->HasComponent<n3::CompTransform>())
 	{
 		auto& comp = m_node->GetComponent<n3::CompTransform>();
@@ -196,6 +205,14 @@ void DetailPanel::InitComponents(const ee0::VariantSet& variants)
 		m_comp_sizer->Insert(m_components.size(), panel);
 		m_components.push_back(panel);
 	}
+	if (m_node->HasComponent<n2::CompMask>())
+	{
+		auto& comp = m_node->GetComponent<n2::CompMask>();
+		auto panel = new ee2::WxCompMaskPanel(this, comp, *m_sub_mgr);
+		m_comp_sizer->Insert(m_components.size(), panel);
+		m_components.push_back(panel);
+	}
+
 	if (m_node->HasComponent<n2::CompSprite2>())
 	{
 		auto& comp = m_node->GetComponent<n2::CompSprite2>();

@@ -27,6 +27,8 @@ namespace
 
 static const std::string NODE_IMAGE_STR   = "Image";
 static const std::string NODE_TEXT_STR    = "Text";
+static const std::string NODE_MASK_STR    = "Mask";
+
 static const std::string NODE_SPRITE2_STR = "Sprite2";
 
 class CreateNodeDialog : public wxDialog
@@ -51,11 +53,14 @@ private:
 		m_tree = new wxTreeCtrl(this, wxID_ANY, wxDefaultPosition, wxSize(200, 200), 
 			wxTR_HIDE_ROOT | /*wxTR_NO_LINES | */wxTR_DEFAULT_STYLE);
 		Bind(wxEVT_TREE_SEL_CHANGED, &CreateNodeDialog::OnSelChanged, this, m_tree->GetId());
+		Bind(wxEVT_TREE_ITEM_ACTIVATED, &CreateNodeDialog::OnDoubleClick, this, m_tree->GetId());
 
 		auto root = m_tree->AddRoot("ROOT");
 
 		m_tree->InsertItem(root, -1, NODE_IMAGE_STR);
 		m_tree->InsertItem(root, -1, NODE_TEXT_STR);
+		m_tree->InsertItem(root, -1, NODE_MASK_STR);
+
 		m_tree->InsertItem(root, -1, NODE_SPRITE2_STR);
 
 		sizer->Add(m_tree);
@@ -77,6 +82,12 @@ private:
 		}
 
 		auto text = m_tree->GetItemText(id);
+	}
+
+	void OnDoubleClick(wxTreeEvent& event)
+	{
+		assert(IsModal());
+		EndModal(wxID_OK);
 	}
 
 private:
@@ -144,6 +155,10 @@ void SceneTreePanel::OnCreatePress(wxCommandEvent& event)
 	else if (name == NODE_TEXT_STR) 
 	{
 		node = ee2::NodeFactory::Instance()->Create(ee2::NODE_TEXT);
+	}
+	else if (name == NODE_MASK_STR)
+	{
+		node = ee2::NodeFactory::Instance()->Create(ee2::NODE_MASK);
 	}
 	else if (name == NODE_SPRITE2_STR)
 	{

@@ -113,6 +113,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0.utilities", "0.utilities"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.preprocess", "4.preprocess", "{71D877EC-55A6-43CA-AD4F-47F0246AF149}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "1.stat", "..\..\ext\stat\platform\msvc\projects\stat.vcxproj", "{16868CDE-6DEF-4136-8CC8-75212F34462E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -300,6 +302,10 @@ Global
 		{27824966-6C3C-4874-ABFF-499DDDDB4D48}.Debug|Win32.Build.0 = Debug|Win32
 		{27824966-6C3C-4874-ABFF-499DDDDB4D48}.Release|Win32.ActiveCfg = Release|Win32
 		{27824966-6C3C-4874-ABFF-499DDDDB4D48}.Release|Win32.Build.0 = Release|Win32
+		{16868CDE-6DEF-4136-8CC8-75212F34462E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{16868CDE-6DEF-4136-8CC8-75212F34462E}.Debug|Win32.Build.0 = Debug|Win32
+		{16868CDE-6DEF-4136-8CC8-75212F34462E}.Release|Win32.ActiveCfg = Release|Win32
+		{16868CDE-6DEF-4136-8CC8-75212F34462E}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -350,6 +356,7 @@ Global
 		{A7737C76-5221-47A5-86B7-84BD56C47730} = {71D877EC-55A6-43CA-AD4F-47F0246AF149}
 		{510EAACB-B026-43F3-A68D-3EC421E46DD0} = {55D85D01-599C-4F78-A116-BDBAEAF0D939}
 		{27824966-6C3C-4874-ABFF-499DDDDB4D48} = {C39783B3-85DA-4D10-AFD0-16D546F5F3D7}
+		{16868CDE-6DEF-4136-8CC8-75212F34462E} = {3E445281-8F17-4763-9112-39A38C12FE16}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8D54C01A-3C82-4351-A325-2853C3E81322}
