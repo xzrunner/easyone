@@ -9,9 +9,11 @@
 #include <guard/check.h>
 #include <node0/SceneNode.h>
 #include <node2/CompImage.h>
+#include <node2/CompSprite2.h>
 #include <node2/CompTransform.h>
 #include <node2/CompBoundingBox.h>
 #include <gum/ResPool.h>
+#include <gum/SymbolPool.h>
 #include <gum/Image.h>
 #include <gum/Texture.h>
 
@@ -23,8 +25,9 @@
 namespace
 {
 
-static const std::string NODE_IMAGE_STR = "Image";
-static const std::string NODE_TEXT_STR  = "Text";
+static const std::string NODE_IMAGE_STR   = "Image";
+static const std::string NODE_TEXT_STR    = "Text";
+static const std::string NODE_SPRITE2_STR = "Sprite2";
 
 class CreateNodeDialog : public wxDialog
 {
@@ -53,6 +56,7 @@ private:
 
 		m_tree->InsertItem(root, -1, NODE_IMAGE_STR);
 		m_tree->InsertItem(root, -1, NODE_TEXT_STR);
+		m_tree->InsertItem(root, -1, NODE_SPRITE2_STR);
 
 		sizer->Add(m_tree);
 
@@ -140,6 +144,25 @@ void SceneTreePanel::OnCreatePress(wxCommandEvent& event)
 	else if (name == NODE_TEXT_STR) 
 	{
 		node = ee2::NodeFactory::Instance()->Create(ee2::NODE_TEXT);
+	}
+	else if (name == NODE_SPRITE2_STR)
+	{
+		wxFileDialog dlg(this, wxT("Choose sprite2"), wxEmptyString, "*.json");
+		if (dlg.ShowModal() == wxID_OK)
+		{
+			auto& path = dlg.GetPath();
+			auto sym = gum::SymbolPool::Instance()->Fetch(path.ToStdString().c_str());
+
+			node = ee2::NodeFactory::Instance()->Create(ee2::NODE_SPRITE2);
+			auto& csprite2 = node->GetComponent<n2::CompSprite2>();
+			csprite2.SetFilepath(path.ToStdString());
+			csprite2.SetSymbol(sym);
+
+			auto& cbounding = node->GetComponent<n2::CompBoundingBox>();
+			cbounding.SetSize(sym->GetBounding());
+			auto& ctrans = node->GetComponent<n2::CompTransform>();
+			cbounding.Build(ctrans.GetTrans().GetSRT());
+		}
 	}
 	if (!node) {
 		return;
