@@ -29,6 +29,7 @@ namespace
 static const std::string NODE_IMAGE_STR   = "Image";
 static const std::string NODE_TEXT_STR    = "Text";
 static const std::string NODE_MASK_STR    = "Mask";
+static const std::string NODE_MESH_STR    = "Mesh";
 
 static const std::string NODE_SPRITE2_STR = "Sprite2";
 
@@ -61,6 +62,7 @@ private:
 		m_tree->InsertItem(root, -1, NODE_IMAGE_STR);
 		m_tree->InsertItem(root, -1, NODE_TEXT_STR);
 		m_tree->InsertItem(root, -1, NODE_MASK_STR);
+		m_tree->InsertItem(root, -1, NODE_MESH_STR);
 
 		m_tree->InsertItem(root, -1, NODE_SPRITE2_STR);
 
@@ -157,6 +159,10 @@ void SceneTreePanel::OnCreatePress(wxCommandEvent& event)
 	else if (name == NODE_MASK_STR)
 	{
 		node = ee2::NodeFactory::Instance()->Create(ee2::NODE_MASK);
+	}
+	else if (name == NODE_MESH_STR)
+	{
+		node = ee2::NodeFactory::Instance()->Create(ee2::NODE_MESH);
 	}
 	else if (name == NODE_SPRITE2_STR)
 	{
