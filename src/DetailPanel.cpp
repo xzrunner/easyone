@@ -208,7 +208,7 @@ void DetailPanel::InitComponents(const ee0::VariantSet& variants)
 	if (m_node->HasComponent<n2::CompMask>())
 	{
 		auto& comp = m_node->GetComponent<n2::CompMask>();
-		auto panel = new ee2::WxCompMaskPanel(this, comp, *m_sub_mgr);
+		auto panel = new ee2::WxCompMaskPanel(this, comp, *m_sub_mgr, *m_node);
 		m_comp_sizer->Insert(m_components.size(), panel);
 		m_components.push_back(panel);
 	}
