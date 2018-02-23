@@ -12,6 +12,7 @@
 #include <node2/CompSprite2.h>
 #include <node2/CompTransform.h>
 #include <node2/CompBoundingBox.h>
+#include <node2/NodeHelper.h>
 #include <gum/ResPool.h>
 #include <gum/SymbolPool.h>
 #include <gum/Image.h>
@@ -146,10 +147,7 @@ void SceneTreePanel::OnCreatePress(wxCommandEvent& event)
 			cimage.SetFilepath(path.ToStdString());
 			cimage.SetTexture(img->GetTexture());
 
-			auto& cbounding = node->GetComponent<n2::CompBoundingBox>();
-			cbounding.SetSize(sm::rect(img->GetWidth(), img->GetHeight()));
-			auto& ctrans = node->GetComponent<n2::CompTransform>();
-			cbounding.Build(ctrans.GetTrans().GetSRT());
+			n2::NodeHelper::SetBoundingSize(*node, sm::rect(img->GetWidth(), img->GetHeight()));
 		}
 	} 
 	else if (name == NODE_TEXT_STR) 
@@ -173,26 +171,28 @@ void SceneTreePanel::OnCreatePress(wxCommandEvent& event)
 			csprite2.SetFilepath(path.ToStdString());
 			csprite2.SetSymbol(sym);
 
-			auto& cbounding = node->GetComponent<n2::CompBoundingBox>();
-			cbounding.SetSize(sym->GetBounding());
-			auto& ctrans = node->GetComponent<n2::CompTransform>();
-			cbounding.Build(ctrans.GetTrans().GetSRT());
+			n2::NodeHelper::SetBoundingSize(*node, sym->GetBounding());
 		}
 	}
 	if (!node) {
 		return;
 	}
 	
-	// insert node
-
 	ee0::VariantSet vars;
 	ee0::Variant var;
 	var.m_type = ee0::VT_PVOID;
 	var.m_val.pv = &std::const_pointer_cast<n0::SceneNode>(node);
 	vars.SetVariant("node", var);
-
-	bool succ = m_sub_mgr.NotifyObservers(ee0::MSG_INSERT_SCENE_NODE, vars);
-	GD_ASSERT(succ, "no MSG_INSERT_SCENE_NODE");
+	// insert node
+	{
+		bool succ = m_sub_mgr.NotifyObservers(ee0::MSG_INSERT_SCENE_NODE, vars);
+		GD_ASSERT(succ, "no MSG_INSERT_SCENE_NODE");
+	}
+	// select node
+	{
+		bool succ = m_sub_mgr.NotifyObservers(ee0::MSG_SELECTED_ONE_NODE, vars);
+		GD_ASSERT(succ, "no MSG_SELECTED_ONE_NODE");
+	}
 }
 
 }
