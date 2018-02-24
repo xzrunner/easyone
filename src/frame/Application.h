@@ -10,14 +10,15 @@ namespace ee0 { class WxLibraryPanel; }
 namespace eone
 {
 
-class StagePanel;
+class WxStagePanel;
 
-class SceneTreePanel;
+class WxSceneTreePanel;
 
-class Task
+class Application
 {
 public:
-	Task(wxFrame* frame);
+	Application(wxFrame* frame);
+	~Application();
 
 private:
 	void InitSubmodule();
@@ -36,10 +37,10 @@ private:
 
 	ee0::WxLibraryPanel* m_library;
 
-	StagePanel* m_stage;
+	WxStagePanel* m_stage;
 
-	SceneTreePanel* m_tree;
+	WxSceneTreePanel* m_tree;
 
-}; // Task
+}; // Application
 
 }

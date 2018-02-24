@@ -7,13 +7,13 @@
 namespace eone
 {
 
-class SceneTreeItem : public wxTreeItemData
+class WxSceneTreeItem : public wxTreeItemData
 {
 public:
-	SceneTreeItem();
-	SceneTreeItem(const n0::SceneNodePtr& node);
+	WxSceneTreeItem();
+	WxSceneTreeItem(const n0::SceneNodePtr& node);
 
-	void AddChild(SceneTreeItem* item);
+	void AddChild(WxSceneTreeItem* item);
 
 	size_t GetChildrenNum() const { return m_children.size(); }
 
@@ -22,8 +22,8 @@ public:
 private:
 	n0::SceneNodePtr m_node = nullptr;
 
-	std::vector<SceneTreeItem*> m_children;
+	std::vector<WxSceneTreeItem*> m_children;
 
-}; // SceneTreeItem
+}; // WxSceneTreeItem
 
 }

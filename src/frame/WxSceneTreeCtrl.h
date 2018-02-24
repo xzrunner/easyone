@@ -11,12 +11,12 @@ namespace ee0 { class SubjectMgr; }
 namespace eone
 {
 
-class SceneTreePanel;
+class WxSceneTreePanel;
 
-class SceneTreeCtrl : public wxTreeCtrl, public ee0::Observer
+class WxSceneTreeCtrl : public wxTreeCtrl, public ee0::Observer
 {
 public:
-	SceneTreeCtrl(wxWindow* parent, ee0::SubjectMgr& sub_mgr);
+	WxSceneTreeCtrl(wxWindow* parent, ee0::SubjectMgr& sub_mgr);
 
 	virtual void OnNotify(ee0::MessageID msg, const ee0::VariantSet& variants) override;
 
@@ -48,6 +48,6 @@ private:
 
 	DECLARE_EVENT_TABLE()
 
-}; // SceneTreeCtrl
+}; // WxSceneTreeCtrl
 
 }

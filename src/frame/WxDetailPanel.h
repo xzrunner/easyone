@@ -11,10 +11,10 @@ namespace ee0 { class SubjectMgr; class WxCompPanel; }
 namespace eone
 {
 
-class DetailPanel : public wxPanel, public ee0::Observer
+class WxDetailPanel : public wxPanel, public ee0::Observer
 {
 public:
-	DetailPanel(wxWindow* parent, ee0::SubjectMgr& sub_mgr);
+	WxDetailPanel(wxWindow* parent, ee0::SubjectMgr& sub_mgr);
 
 	virtual void OnNotify(ee0::MessageID msg, const ee0::VariantSet& variants) override;
 
@@ -40,6 +40,6 @@ private:
 
 	n0::SceneNodePtr m_node = nullptr;
 
-}; // DetailPanel
+}; // WxDetailPanel
 
 }

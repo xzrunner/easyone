@@ -1,13 +1,14 @@
-#include "Task.h"
-#include "LibraryPanel.h"
-#include "StagePanel.h"
-#include "SceneTreePanel.h"
-#include "DetailPanel.h"
+#include "Application.h"
+#include "frame/WxLibraryPanel.h"
+#include "frame/WxStagePanel.h"
+#include "frame/WxSceneTreePanel.h"
+#include "frame/WxDetailPanel.h"
+#include "frame/NodeSelectOP.h"
+#include "frame/Blackboard.h"
 
 #include <ee0/CompNodeEditor.h>
 #include <ee2/WxStagePage.h>
 #include <ee2/WxStageCanvas.h>
-#include <ee2/NodeSelectOP.h>
 #include <ee3/WxStagePage.h>
 #include <ee3/WxStageCanvas.h>
 #include <ee3/NodeArrangeOP.h>
@@ -21,17 +22,21 @@
 namespace eone
 {
 
-Task::Task(wxFrame* frame)
+Application::Application(wxFrame* frame)
 	: m_frame(frame)
+	, m_mgr(frame)
 {
-	m_mgr.SetManagedWindow(frame);
-
 	InitSubmodule();
 	InitLayout();
 	InitCallback();
 }
 
-void Task::InitSubmodule()
+Application::~Application()
+{
+	m_mgr.UnInit();
+}
+
+void Application::InitSubmodule()
 {
 	CU_VEC<std::pair<CU_STR, CU_STR>> fonts;
 	CU_VEC<std::pair<CU_STR, CU_STR>> user_fonts;
@@ -41,14 +46,12 @@ void Task::InitSubmodule()
 	gum::Facade::Initialize();
 }
 
-void Task::InitLayout()
+void Application::InitLayout()
 {
 	m_mgr.AddPane(CreateLibraryPanel(),
 		wxAuiPaneInfo().Name("Library").Caption("Library").
 		Left().MinSize(wxSize(100, 0)));
 	
-	m_mgr.GetPane("Stage");
-
 	m_mgr.AddPane(CreateStagePanel(),
 		wxAuiPaneInfo().Name("Stage").Caption("Stage").
 		CenterPane().PaneBorder(false));
@@ -64,7 +67,7 @@ void Task::InitLayout()
 	m_mgr.Update();
 }
 
-void Task::InitCallback()
+void Application::InitCallback()
 {
 	n3::ComponentFactory::Instance()->AddCreator(ee0::CompNodeEditor::TYPE_NAME,
 		[](n0::SceneNodePtr& node, const rapidjson::Value& val)
@@ -74,15 +77,16 @@ void Task::InitCallback()
 	});
 }
 
-wxWindow* Task::CreateLibraryPanel()
+wxWindow* Application::CreateLibraryPanel()
 {
-	m_library = new LibraryPanel(m_frame);
+	m_library = new WxLibraryPanel(m_frame);
 	return m_library;
 }
 
-wxWindow* Task::CreateStagePanel()
+wxWindow* Application::CreateStagePanel()
 {
-	m_stage = new StagePanel(m_frame);
+	m_stage = new WxStagePanel(m_frame);
+	Blackboard::Instance()->SetStage(m_stage);
 	m_stage->Freeze();
 
 	std::shared_ptr<wxGLContext> gl_ctx = nullptr;
@@ -91,7 +95,7 @@ wxWindow* Task::CreateStagePanel()
 		auto canvas = std::make_shared<ee2::WxStageCanvas>(page);
 		gl_ctx = canvas->GetGLContext();
 		page->GetImpl().SetCanvas(canvas);
-		page->GetImpl().SetEditOP(std::make_shared<ee2::NodeSelectOP>(*page));
+		page->GetImpl().SetEditOP(std::make_shared<NodeSelectOP>(*page));
 
 		m_stage->AddPage(page, ("New 2d"));
 	}
@@ -109,17 +113,17 @@ wxWindow* Task::CreateStagePanel()
 	return m_stage;
 }
 
-wxWindow* Task::CreateTreePanel()
+wxWindow* Application::CreateTreePanel()
 {
 	auto& sub_mgr = m_stage->GetCurrentStagePage()->GetSubjectMgr();
-	m_tree = new SceneTreePanel(m_frame, sub_mgr);
+	m_tree = new WxSceneTreePanel(m_frame, sub_mgr);
 	return m_tree;
 }
 
-wxWindow* Task::CreateDetailPanel()
+wxWindow* Application::CreateDetailPanel()
 {
 	auto& sub_mgr = m_stage->GetCurrentStagePage()->GetSubjectMgr();
-	return new DetailPanel(m_frame, sub_mgr);
+	return new WxDetailPanel(m_frame, sub_mgr);
 }
 
 }

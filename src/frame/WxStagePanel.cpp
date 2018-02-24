@@ -1,4 +1,4 @@
-#include "StagePanel.h"
+#include "frame/WxStagePanel.h"
 
 #include <ee0/WxStagePage.h>
 
@@ -7,23 +7,23 @@
 namespace eone
 {
 
-StagePanel::StagePanel(wxWindow* parent)
+WxStagePanel::WxStagePanel(wxWindow* parent)
 	: wxAuiNotebook(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, 
 		wxAUI_NB_DEFAULT_STYLE | wxAUI_NB_TAB_EXTERNAL_MOVE | wxNO_BORDER)
 	, m_last_page(nullptr)
 {
 	Connect(GetId(), wxEVT_AUINOTEBOOK_PAGE_CHANGING, 
-		wxAuiNotebookEventHandler(StagePanel::OnPageChanging));
+		wxAuiNotebookEventHandler(WxStagePanel::OnPageChanging));
 	Connect(GetId(), wxEVT_AUINOTEBOOK_PAGE_CHANGED,
-		wxAuiNotebookEventHandler(StagePanel::OnPageChanged));
+		wxAuiNotebookEventHandler(WxStagePanel::OnPageChanged));
 }
 
-ee0::WxStagePage* StagePanel::GetCurrentStagePage() const
+ee0::WxStagePage* WxStagePanel::GetCurrentStagePage() const
 {
 	return dynamic_cast<ee0::WxStagePage*>(GetCurrentPage());
 }
 
-void StagePanel::OnPageChanging(wxAuiNotebookEvent& event)
+void WxStagePanel::OnPageChanging(wxAuiNotebookEvent& event)
 {
 	auto page = GetCurrentStagePage();
 	if (page) {
@@ -31,7 +31,7 @@ void StagePanel::OnPageChanging(wxAuiNotebookEvent& event)
 	}
 }
 
-void StagePanel::OnPageChanged(wxAuiNotebookEvent& event)
+void WxStagePanel::OnPageChanged(wxAuiNotebookEvent& event)
 {
 	if (!m_last_page) {
 		return;

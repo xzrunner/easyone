@@ -1,4 +1,4 @@
-#include "LibraryPanel.h"
+#include "frame/WxLibraryPanel.h"
 
 #include <ee0/WxLibraryPage.h>
 #include <ee3/WxLibGeoPage.h>
@@ -7,7 +7,7 @@
 namespace eone
 {
 
-LibraryPanel::LibraryPanel(wxWindow* parent)
+WxLibraryPanel::WxLibraryPanel(wxWindow* parent)
 	: ee0::WxLibraryPanel(parent)
 {
 	wxWindow* nb = GetNotebook();

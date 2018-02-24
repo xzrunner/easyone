@@ -1,5 +1,5 @@
-#include "SceneTreeCtrl.h"
-#include "SceneTreeItem.h"
+#include "frame/WxSceneTreeCtrl.h"
+#include "frame/WxSceneTreeItem.h"
 
 #include <ee0/SubjectMgr.h>
 #include <ee0/CompNodeEditor.h>
@@ -13,12 +13,12 @@ namespace eone
 {
 
 
-BEGIN_EVENT_TABLE(SceneTreeCtrl, wxTreeCtrl)
-	EVT_TREE_SEL_CHANGED(ID_SCENE_TREE_CTRL, SceneTreeCtrl::OnSelChanged)
-	EVT_TREE_END_LABEL_EDIT(ID_SCENE_TREE_CTRL, SceneTreeCtrl::OnLabelEdited)
+BEGIN_EVENT_TABLE(WxSceneTreeCtrl, wxTreeCtrl)
+	EVT_TREE_SEL_CHANGED(ID_SCENE_TREE_CTRL, WxSceneTreeCtrl::OnSelChanged)
+	EVT_TREE_END_LABEL_EDIT(ID_SCENE_TREE_CTRL, WxSceneTreeCtrl::OnLabelEdited)
 END_EVENT_TABLE()
 
-SceneTreeCtrl::SceneTreeCtrl(wxWindow* parent, ee0::SubjectMgr& sub_mgr)
+WxSceneTreeCtrl::WxSceneTreeCtrl(wxWindow* parent, ee0::SubjectMgr& sub_mgr)
 	: wxTreeCtrl(parent, ID_SCENE_TREE_CTRL, wxDefaultPosition, wxDefaultSize,
 		wxTR_HIDE_ROOT | wxTR_EDIT_LABELS | wxTR_MULTIPLE | wxTR_NO_LINES | wxTR_DEFAULT_STYLE)
 	, m_sub_mgr(&sub_mgr)
@@ -29,7 +29,7 @@ SceneTreeCtrl::SceneTreeCtrl(wxWindow* parent, ee0::SubjectMgr& sub_mgr)
 	RegisterMsg(*m_sub_mgr);
 }
 
-void SceneTreeCtrl::OnNotify(ee0::MessageID msg, const ee0::VariantSet& variants)
+void WxSceneTreeCtrl::OnNotify(ee0::MessageID msg, const ee0::VariantSet& variants)
 {
 	switch (msg)
 	{
@@ -53,7 +53,7 @@ void SceneTreeCtrl::OnNotify(ee0::MessageID msg, const ee0::VariantSet& variants
 	}
 }
 
-void SceneTreeCtrl::Traverse(wxTreeItemId id, std::function<bool(wxTreeItemId)> func) const
+void WxSceneTreeCtrl::Traverse(wxTreeItemId id, std::function<bool(wxTreeItemId)> func) const
 {
 	std::queue<wxTreeItemId> buf;
 	buf.push(id);
@@ -90,13 +90,13 @@ void SceneTreeCtrl::Traverse(wxTreeItemId id, std::function<bool(wxTreeItemId)> 
 	}
 }
 
-void SceneTreeCtrl::InitRoot()
+void WxSceneTreeCtrl::InitRoot()
 {
 	m_root = AddRoot("ROOT");
-	SetItemData(m_root, new SceneTreeItem());
+	SetItemData(m_root, new WxSceneTreeItem());
 }
 
-void SceneTreeCtrl::RegisterMsg(ee0::SubjectMgr& sub_mgr)
+void WxSceneTreeCtrl::RegisterMsg(ee0::SubjectMgr& sub_mgr)
 {
 	sub_mgr.RegisterObserver(ee0::MSG_INSERT_SCENE_NODE, this);
 	sub_mgr.RegisterObserver(ee0::MSG_NODE_SELECTION_INSERT, this);
@@ -105,14 +105,14 @@ void SceneTreeCtrl::RegisterMsg(ee0::SubjectMgr& sub_mgr)
 	sub_mgr.RegisterObserver(ee0::MSG_STAGE_PAGE_CHANGING, this);
 }
 
-void SceneTreeCtrl::OnSelChanged(wxTreeEvent& event)
+void WxSceneTreeCtrl::OnSelChanged(wxTreeEvent& event)
 {
 	auto id = event.GetItem();
 	if (!id.IsOk()) {
 		return;
 	}
 
-	auto data = (SceneTreeItem*)GetItemData(id);
+	auto data = (WxSceneTreeItem*)GetItemData(id);
 	auto& node = data->GetNode();
 	GD_ASSERT(node, "err scene node.");
 
@@ -135,12 +135,12 @@ void SceneTreeCtrl::OnSelChanged(wxTreeEvent& event)
 	}
 }
 
-void SceneTreeCtrl::OnLabelEdited(wxTreeEvent& event)
+void WxSceneTreeCtrl::OnLabelEdited(wxTreeEvent& event)
 {
 
 }
 
-void SceneTreeCtrl::SelectSceneNode(const ee0::VariantSet& variants)
+void WxSceneTreeCtrl::SelectSceneNode(const ee0::VariantSet& variants)
 {
 	auto var = variants.GetVariant("node");
 	GD_ASSERT(var.m_type != ee0::VT_EMPTY, "no var in vars: node");
@@ -155,7 +155,7 @@ void SceneTreeCtrl::SelectSceneNode(const ee0::VariantSet& variants)
 
 	Traverse(m_root, [&](wxTreeItemId item)->bool
 		{
-			auto pdata = (SceneTreeItem*)GetItemData(item);
+			auto pdata = (WxSceneTreeItem*)GetItemData(item);
 			if (pdata->GetNode() == *node) {
 				SelectItem(item, !multiple);
 				return true;
@@ -166,7 +166,7 @@ void SceneTreeCtrl::SelectSceneNode(const ee0::VariantSet& variants)
 	);
 }
 
-void SceneTreeCtrl::UnselectSceneNode(const ee0::VariantSet& variants)
+void WxSceneTreeCtrl::UnselectSceneNode(const ee0::VariantSet& variants)
 {
 	auto var = variants.GetVariant("node");
 	GD_ASSERT(var.m_type != ee0::VT_EMPTY, "no var in vars: node");
@@ -175,7 +175,7 @@ void SceneTreeCtrl::UnselectSceneNode(const ee0::VariantSet& variants)
 
 	Traverse(m_root, [&](wxTreeItemId item)->bool
 		{
-			auto pdata = (SceneTreeItem*)GetItemData(item);
+			auto pdata = (WxSceneTreeItem*)GetItemData(item);
 			if (pdata->GetNode() == *node) {
 				UnselectItem(item);
 				return true;
@@ -186,7 +186,7 @@ void SceneTreeCtrl::UnselectSceneNode(const ee0::VariantSet& variants)
 	);
 }
 
-void SceneTreeCtrl::InsertSceneNode(const ee0::VariantSet& variants)
+void WxSceneTreeCtrl::InsertSceneNode(const ee0::VariantSet& variants)
 {
 	auto var = variants.GetVariant("node");
 	GD_ASSERT(var.m_type != ee0::VT_EMPTY, "no var in vars: node");
@@ -202,18 +202,18 @@ void SceneTreeCtrl::InsertSceneNode(const ee0::VariantSet& variants)
 
 	if (parent != m_root) 
 	{
-		auto pdata = (SceneTreeItem*)GetItemData(parent);
+		auto pdata = (WxSceneTreeItem*)GetItemData(parent);
 		pdata->GetNode()->AddChild(*node);
 		(*node)->SetParent(pdata->GetNode());
 		Expand(parent);
 	}
 }
 
-void SceneTreeCtrl::InsertSceneNode(wxTreeItemId parent, const n0::SceneNodePtr& node)
+void WxSceneTreeCtrl::InsertSceneNode(wxTreeItemId parent, const n0::SceneNodePtr& node)
 {
-	auto item = new SceneTreeItem(node);
+	auto item = new WxSceneTreeItem(node);
 
-	auto pdata = (SceneTreeItem*)GetItemData(parent);
+	auto pdata = (WxSceneTreeItem*)GetItemData(parent);
 	auto pos = pdata->GetChildrenNum();
 	pdata->AddChild(item);
 
@@ -226,7 +226,7 @@ void SceneTreeCtrl::InsertSceneNode(wxTreeItemId parent, const n0::SceneNodePtr&
 	}
 }
 
-void SceneTreeCtrl::StagePageChanging(const ee0::VariantSet& variants)
+void WxSceneTreeCtrl::StagePageChanging(const ee0::VariantSet& variants)
 {
 	auto var = variants.GetVariant("sub_mgr");
 	GD_ASSERT(var.m_type != ee0::VT_EMPTY, "no var in vars: sub_mgr");

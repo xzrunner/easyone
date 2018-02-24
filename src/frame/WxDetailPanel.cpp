@@ -1,4 +1,4 @@
-#include "DetailPanel.h"
+#include "WxDetailPanel.h"
 
 #include <ee0/SubjectMgr.h>
 #include <ee0/VariantSet.h>
@@ -87,7 +87,7 @@ private:
 namespace eone
 {
 
-DetailPanel::DetailPanel(wxWindow* parent, ee0::SubjectMgr& sub_mgr)
+WxDetailPanel::WxDetailPanel(wxWindow* parent, ee0::SubjectMgr& sub_mgr)
 	: wxPanel(parent, wxID_ANY)
 	, m_sub_mgr(&sub_mgr)
 {
@@ -97,11 +97,11 @@ DetailPanel::DetailPanel(wxWindow* parent, ee0::SubjectMgr& sub_mgr)
 	RegisterMsg(*m_sub_mgr);
 }
 
-void DetailPanel::OnNotify(ee0::MessageID msg, const ee0::VariantSet& variants)
+void WxDetailPanel::OnNotify(ee0::MessageID msg, const ee0::VariantSet& variants)
 {
 	switch (msg)
 	{
-	case ee0::MSG_SELECTED_ONE_NODE:
+	case ee0::MSG_NODE_SELECTION_INSERT:
 		m_add_btn->Show(true);
 		ClearComponents();
 		InitComponents(variants);
@@ -121,7 +121,7 @@ void DetailPanel::OnNotify(ee0::MessageID msg, const ee0::VariantSet& variants)
 	}
 }
 
-void DetailPanel::InitLayout()
+void WxDetailPanel::InitLayout()
 {
 	wxSizer* top_sizer = new wxBoxSizer(wxVERTICAL);
 	{
@@ -132,22 +132,22 @@ void DetailPanel::InitLayout()
 	{
 		m_add_btn = new wxButton(this, wxID_ANY, "Add Component");
 		Connect(m_add_btn->GetId(), wxEVT_COMMAND_BUTTON_CLICKED,
-			wxCommandEventHandler(DetailPanel::OnAddPress));
+			wxCommandEventHandler(WxDetailPanel::OnAddPress));
 		top_sizer->Add(m_add_btn, 0, wxALIGN_CENTER_HORIZONTAL);
 		m_add_btn->Show(false);
 	}
 	SetSizer(top_sizer);
 }
 
-void DetailPanel::RegisterMsg(ee0::SubjectMgr& sub_mgr)
+void WxDetailPanel::RegisterMsg(ee0::SubjectMgr& sub_mgr)
 {
-	sub_mgr.RegisterObserver(ee0::MSG_SELECTED_ONE_NODE, this);
+	sub_mgr.RegisterObserver(ee0::MSG_NODE_SELECTION_INSERT, this);
 	sub_mgr.RegisterObserver(ee0::MSG_NODE_SELECTION_CLEAR, this);
 	sub_mgr.RegisterObserver(ee0::MSG_UPDATE_COMPONENTS, this);
 	sub_mgr.RegisterObserver(ee0::MSG_STAGE_PAGE_CHANGING, this);
 }
 
-void DetailPanel::InitComponents(const ee0::VariantSet& variants)
+void WxDetailPanel::InitComponents(const ee0::VariantSet& variants)
 {
 	auto var = variants.GetVariant("node");
 	GD_ASSERT(var.m_type != ee0::VT_EMPTY, "no var in vars: node"); 
@@ -232,7 +232,7 @@ void DetailPanel::InitComponents(const ee0::VariantSet& variants)
 	Layout();
 }
 
-void DetailPanel::ClearComponents()
+void WxDetailPanel::ClearComponents()
 {
 	m_node.reset();
 	if (m_children.empty()) {
@@ -247,7 +247,7 @@ void DetailPanel::ClearComponents()
 	Layout();
 }
 
-void DetailPanel::UpdateComponents()
+void WxDetailPanel::UpdateComponents()
 {
 	if (!m_node) {
 		return;
@@ -257,7 +257,7 @@ void DetailPanel::UpdateComponents()
 	}
 }
 
-void DetailPanel::StagePageChanging(const ee0::VariantSet& variants)
+void WxDetailPanel::StagePageChanging(const ee0::VariantSet& variants)
 {
 	auto var = variants.GetVariant("sub_mgr");
 	GD_ASSERT(var.m_type != ee0::VT_EMPTY, "no var in vars: sub_mgr");
@@ -267,7 +267,7 @@ void DetailPanel::StagePageChanging(const ee0::VariantSet& variants)
 	RegisterMsg(*m_sub_mgr);
 }
 
-void DetailPanel::OnAddPress(wxCommandEvent& event)
+void WxDetailPanel::OnAddPress(wxCommandEvent& event)
 {
 	AddDialog dlg(this, m_add_btn->GetScreenPosition());
 	if (dlg.ShowModal() != wxID_OK) {

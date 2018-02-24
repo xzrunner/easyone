@@ -7,10 +7,10 @@ namespace ee0 { class WxStagePage; }
 namespace eone
 {
 
-class StagePanel : public wxAuiNotebook
+class WxStagePanel : public wxAuiNotebook
 {
 public:
-	StagePanel(wxWindow* parent);
+	WxStagePanel(wxWindow* parent);
 
 	ee0::WxStagePage* GetCurrentStagePage() const;
 
@@ -21,6 +21,6 @@ private:
 private:
 	ee0::WxStagePage* m_last_page;
 
-}; // StagePanel
+}; // WxStagePanel
 
 }

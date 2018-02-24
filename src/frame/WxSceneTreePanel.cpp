@@ -1,5 +1,5 @@
-#include "SceneTreePanel.h"
-#include "SceneTreeCtrl.h"
+#include "frame/WxSceneTreePanel.h"
+#include "frame/WxSceneTreeCtrl.h"
 
 #include <ee0/MessageID.h>
 #include <ee0/VariantSet.h>
@@ -103,29 +103,29 @@ private:
 namespace eone
 {
 
-SceneTreePanel::SceneTreePanel(wxWindow* parent, ee0::SubjectMgr& sub_mgr)
+WxSceneTreePanel::WxSceneTreePanel(wxWindow* parent, ee0::SubjectMgr& sub_mgr)
 	: wxPanel(parent, wxID_ANY)
 	, m_sub_mgr(sub_mgr)
 {
 	InitLayout();
 }
 
-void SceneTreePanel::InitLayout()
+void WxSceneTreePanel::InitLayout()
 {
 	wxSizer* top_sizer = new wxBoxSizer(wxVERTICAL);
 	{
 		m_create_btn = new wxButton(this, wxID_ANY, "Create Node");
 		Connect(m_create_btn->GetId(), wxEVT_COMMAND_BUTTON_CLICKED,
-			wxCommandEventHandler(SceneTreePanel::OnCreatePress));
+			wxCommandEventHandler(WxSceneTreePanel::OnCreatePress));
 		top_sizer->Add(m_create_btn, 0, wxALIGN_CENTER_HORIZONTAL);
 	}
 	{
-		top_sizer->Add(new SceneTreeCtrl(this, m_sub_mgr), 1, wxEXPAND);
+		top_sizer->Add(new WxSceneTreeCtrl(this, m_sub_mgr), 1, wxEXPAND);
 	}
 	SetSizer(top_sizer);
 }
 
-void SceneTreePanel::OnCreatePress(wxCommandEvent& event)
+void WxSceneTreePanel::OnCreatePress(wxCommandEvent& event)
 {
 	CreateNodeDialog dlg(this, m_create_btn->GetScreenPosition());
 	if (dlg.ShowModal() != wxID_OK) {
@@ -196,8 +196,8 @@ void SceneTreePanel::OnCreatePress(wxCommandEvent& event)
 	}
 	// select node
 	{
-		bool succ = m_sub_mgr.NotifyObservers(ee0::MSG_SELECTED_ONE_NODE, vars);
-		GD_ASSERT(succ, "no MSG_SELECTED_ONE_NODE");
+		bool succ = m_sub_mgr.NotifyObservers(ee0::MSG_NODE_SELECTION_INSERT, vars);
+		GD_ASSERT(succ, "no MSG_NODE_SELECTION_INSERT");
 	}
 }
 
