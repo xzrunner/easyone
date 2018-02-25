@@ -1,5 +1,7 @@
 #pragma once
 
+#include <ee0/Application.h>
+
 #include <wx/aui/framemanager.h>
 
 class wxFrame;
@@ -14,11 +16,14 @@ class WxStagePanel;
 
 class WxSceneTreePanel;
 
-class Application
+class Application : public ee0::Application
 {
 public:
 	Application(wxFrame* frame);
-	~Application();
+	virtual ~Application();
+
+	virtual void LoadFromFile(const std::string& filepath) override;
+	virtual void StoreToFile(const std::string& filepath) const override;
 
 private:
 	void InitSubmodule();

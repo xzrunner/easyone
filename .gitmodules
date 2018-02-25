@@ -139,3 +139,6 @@
 [submodule "ext/stat"]
 	path = ext/stat
 	url = git@github.com:xzrunner/stat.git
+[submodule "ext/nserializer"]
+	path = ext/nserializer
+	url = git@github.com:xzrunner/nserializer.git

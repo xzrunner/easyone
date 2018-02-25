@@ -10,9 +10,8 @@ bool MyApp::OnInit()
 {
 	auto frame = new ee0::WxFrame("EasyOne", true);
 	eone::Blackboard::Instance()->SetFrame(frame);
-	auto app = new eone::Application(frame);
-	// todo zz
-//	frame->SetTask(task);
+	auto app = std::make_shared<eone::Application>(frame);
+	frame->SetApp(app);
 	frame->Show(true);
 
 	return true;

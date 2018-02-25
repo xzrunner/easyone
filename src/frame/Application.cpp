@@ -5,6 +5,7 @@
 #include "frame/WxDetailPanel.h"
 #include "frame/NodeSelectOP.h"
 #include "frame/Blackboard.h"
+#include "frame/Serializer.h"
 
 #include <ee0/CompNodeEditor.h>
 #include <ee2/WxStagePage.h>
@@ -15,7 +16,7 @@
 #include <ee3/Serializer.h>
 
 #include <node0/SceneNode.h>
-#include <node3/ComponentFactory.h>
+#include <ns/RegistCallback.h>
 #include <gum/Facade.h>
 #include <gum/GTxt.h>
 
@@ -34,6 +35,39 @@ Application::Application(wxFrame* frame)
 Application::~Application()
 {
 	m_mgr.UnInit();
+}
+
+void Application::LoadFromFile(const std::string& filepath)
+{
+	auto page = m_stage->GetCurrentStagePage();
+	if (!page) {
+		return;
+	}
+
+	Serializer::LoadFromFile(*page, filepath);
+}
+
+void Application::StoreToFile(const std::string& filepath) const
+{
+	auto page = m_stage->GetCurrentStagePage();
+	if (!page) {
+		return;
+	}
+	
+	std::string _filepath = filepath;
+	if (_filepath.empty()) {
+		_filepath = page->GetFilepath();
+	}
+	if (_filepath.empty())
+	{
+		wxFileDialog dlg(Blackboard::Instance()->GetFrame(), wxT("Save"), 
+			wxEmptyString, wxEmptyString, "*.json", wxFD_SAVE);
+		if (dlg.ShowModal() == wxID_OK) {
+			_filepath = dlg.GetPath().ToStdString();		
+		}
+	}
+
+	Serializer::StoreToFile(*page, _filepath);
 }
 
 void Application::InitSubmodule()
@@ -69,12 +103,7 @@ void Application::InitLayout()
 
 void Application::InitCallback()
 {
-	n3::ComponentFactory::Instance()->AddCreator(ee0::CompNodeEditor::TYPE_NAME,
-		[](n0::SceneNodePtr& node, const rapidjson::Value& val)
-	{
-		auto& comp = node->AddComponent<ee0::CompNodeEditor>();
-		comp.LoadFromJson(val);
-	});
+	ns::RegistCallback::Init();
 }
 
 wxWindow* Application::CreateLibraryPanel()

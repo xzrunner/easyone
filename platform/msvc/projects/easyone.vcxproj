@@ -57,7 +57,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\..\src;..\..\..\ext\easyeditor0\include;..\..\..\ext\easyeditor2\include;..\..\..\ext\easyeditor3\include;..\..\..\ext\cu\src;..\..\..\ext\ds\src\ds;..\..\..\ext\sm\src\sm;..\..\..\ext\rigging\src\rigging;..\..\..\ext\sprite2\include;..\..\..\ext\painting2\include;..\..\..\ext\painting3\include;..\..\..\ext\js\include;..\..\..\ext\bimp\include;..\..\..\ext\guard\include;..\..\..\ext\polymesh\include;..\..\..\ext\gum\include;..\..\..\ext\node0\include;..\..\..\ext\node2\include;..\..\..\ext\node3\include;..\..\..\ext\memmgr\include;..\..\..\ext\external-editor\wx\include;..\..\..\ext\external\json\include;..\..\..\ext\external\rapidjson\include;..\..\..\ext\external\freetype\include;..\..\..\ext\external\c99;..\..\..\ext\external\lua\include;..\..\..\ext\external\boost\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\src;..\..\..\ext\easyeditor0\include;..\..\..\ext\easyeditor2\include;..\..\..\ext\easyeditor3\include;..\..\..\ext\cu\src;..\..\..\ext\ds\src\ds;..\..\..\ext\sm\src\sm;..\..\..\ext\rigging\src\rigging;..\..\..\ext\sprite2\include;..\..\..\ext\painting2\include;..\..\..\ext\painting3\include;..\..\..\ext\js\include;..\..\..\ext\bimp\include;..\..\..\ext\guard\include;..\..\..\ext\polymesh\include;..\..\..\ext\gum\include;..\..\..\ext\node0\include;..\..\..\ext\node2\include;..\..\..\ext\node3\include;..\..\..\ext\memmgr\include;..\..\..\ext\nserializer\include;..\..\..\ext\external-editor\wx\include;..\..\..\ext\external\json\include;..\..\..\ext\external\rapidjson\include;..\..\..\ext\external\freetype\include;..\..\..\ext\external\c99;..\..\..\ext\external\lua\include;..\..\..\ext\external\boost\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -83,7 +83,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>..\..\..\src;..\..\..\ext\easyeditor0\include;..\..\..\ext\easyeditor2\include;..\..\..\ext\easyeditor3\include;..\..\..\ext\cu\src;..\..\..\ext\ds\src\ds;..\..\..\ext\sm\src\sm;..\..\..\ext\rigging\src\rigging;..\..\..\ext\sprite2\include;..\..\..\ext\painting2\include;..\..\..\ext\painting3\include;..\..\..\ext\js\include;..\..\..\ext\bimp\include;..\..\..\ext\guard\include;..\..\..\ext\polymesh\include;..\..\..\ext\gum\include;..\..\..\ext\node0\include;..\..\..\ext\node2\include;..\..\..\ext\node3\include;..\..\..\ext\memmgr\include;..\..\..\ext\external-editor\wx\include;..\..\..\ext\external\json\include;..\..\..\ext\external\rapidjson\include;..\..\..\ext\external\freetype\include;..\..\..\ext\external\c99;..\..\..\ext\external\lua\include;..\..\..\ext\external\boost\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\src;..\..\..\ext\easyeditor0\include;..\..\..\ext\easyeditor2\include;..\..\..\ext\easyeditor3\include;..\..\..\ext\cu\src;..\..\..\ext\ds\src\ds;..\..\..\ext\sm\src\sm;..\..\..\ext\rigging\src\rigging;..\..\..\ext\sprite2\include;..\..\..\ext\painting2\include;..\..\..\ext\painting3\include;..\..\..\ext\js\include;..\..\..\ext\bimp\include;..\..\..\ext\guard\include;..\..\..\ext\polymesh\include;..\..\..\ext\gum\include;..\..\..\ext\node0\include;..\..\..\ext\node2\include;..\..\..\ext\node3\include;..\..\..\ext\memmgr\include;..\..\..\ext\nserializer\include;..\..\..\ext\external-editor\wx\include;..\..\..\ext\external\json\include;..\..\..\ext\external\rapidjson\include;..\..\..\ext\external\freetype\include;..\..\..\ext\external\c99;..\..\..\ext\external\lua\include;..\..\..\ext\external\boost\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -183,6 +183,9 @@
     <ProjectReference Include="..\..\..\ext\node3\platform\msvc\projects\node3.vcxproj">
       <Project>{6030cf6b-1a8b-421b-92ce-4eb965751636}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\nserializer\platform\msvc\projects\nserializer.vcxproj">
+      <Project>{8b91994c-018b-4664-b615-a1eac669ca5c}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\ext\painting2\platform\msvc\projects\painting2.vcxproj">
       <Project>{18829913-b301-424c-8cd8-d95773038029}</Project>
     </ProjectReference>
@@ -247,6 +250,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\..\src\frame\Blackboard.h" />
     <ClInclude Include="..\..\..\src\frame\NodeSelectOP.h" />
+    <ClInclude Include="..\..\..\src\frame\Serializer.h" />
     <ClInclude Include="..\..\..\src\frame\WxDetailPanel.h" />
     <ClInclude Include="..\..\..\src\frame\main.h" />
     <ClInclude Include="..\..\..\src\frame\WxSceneTreePanel.h" />
@@ -260,6 +264,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\src\frame\Blackboard.cpp" />
     <ClCompile Include="..\..\..\src\frame\NodeSelectOP.cpp" />
+    <ClCompile Include="..\..\..\src\frame\Serializer.cpp" />
     <ClCompile Include="..\..\..\src\frame\WxDetailPanel.cpp" />
     <ClCompile Include="..\..\..\src\frame\main.cpp" />
     <ClCompile Include="..\..\..\src\frame\WxSceneTreePanel.cpp" />
