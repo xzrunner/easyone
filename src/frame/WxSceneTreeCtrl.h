@@ -31,8 +31,13 @@ private:
 
 	void SelectSceneNode(const ee0::VariantSet& variants);
 	void UnselectSceneNode(const ee0::VariantSet& variants);
+
 	void InsertSceneNode(const ee0::VariantSet& variants);
 	void InsertSceneNode(wxTreeItemId parent, const n0::SceneNodePtr& child);
+	void DeleteSceneNode(const ee0::VariantSet& variants);
+	void DeleteSceneNode(const n0::SceneNodePtr& node);
+	void ClearSceneNode();
+
 	void StagePageChanging(const ee0::VariantSet& variants);
 
 private:

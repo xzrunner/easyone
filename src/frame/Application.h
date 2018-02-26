@@ -24,6 +24,7 @@ public:
 
 	virtual void LoadFromFile(const std::string& filepath) override;
 	virtual void StoreToFile(const std::string& filepath) const override;
+	virtual void Clear() override;
 
 private:
 	void InitSubmodule();

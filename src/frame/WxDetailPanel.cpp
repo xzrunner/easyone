@@ -106,6 +106,8 @@ void WxDetailPanel::OnNotify(ee0::MessageID msg, const ee0::VariantSet& variants
 		ClearComponents();
 		InitComponents(variants);
 		break;
+	case ee0::MSG_DELETE_SCENE_NODE:
+	case ee0::MSG_CLEAR_SCENE_NODE:
 	case ee0::MSG_NODE_SELECTION_CLEAR:
 		m_add_btn->Show(false);
 		ClearComponents();
@@ -141,8 +143,12 @@ void WxDetailPanel::InitLayout()
 
 void WxDetailPanel::RegisterMsg(ee0::SubjectMgr& sub_mgr)
 {
+	sub_mgr.RegisterObserver(ee0::MSG_DELETE_SCENE_NODE, this);
+	sub_mgr.RegisterObserver(ee0::MSG_CLEAR_SCENE_NODE, this);
+
 	sub_mgr.RegisterObserver(ee0::MSG_NODE_SELECTION_INSERT, this);
 	sub_mgr.RegisterObserver(ee0::MSG_NODE_SELECTION_CLEAR, this);
+
 	sub_mgr.RegisterObserver(ee0::MSG_UPDATE_COMPONENTS, this);
 	sub_mgr.RegisterObserver(ee0::MSG_STAGE_PAGE_CHANGING, this);
 }
@@ -150,7 +156,7 @@ void WxDetailPanel::RegisterMsg(ee0::SubjectMgr& sub_mgr)
 void WxDetailPanel::InitComponents(const ee0::VariantSet& variants)
 {
 	auto var = variants.GetVariant("node");
-	GD_ASSERT(var.m_type != ee0::VT_EMPTY, "no var in vars: node"); 
+	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: node");
 	GD_ASSERT(var.m_val.pv, "err scene node");
 	m_node = *static_cast<n0::SceneNodePtr*>(var.m_val.pv);
 
@@ -173,7 +179,7 @@ void WxDetailPanel::InitComponents(const ee0::VariantSet& variants)
 	if (m_node->HasComponent<n2::CompTransform>())
 	{
 		auto& comp = m_node->GetComponent<n2::CompTransform>();
-		auto panel = new ee2::WxCompTransformPanel(this, comp, *m_sub_mgr);
+		auto panel = new ee2::WxCompTransformPanel(this, comp, *m_sub_mgr, *m_node);
 		m_comp_sizer->Insert(m_components.size(), panel);
 		m_components.push_back(panel);
 	}
@@ -260,7 +266,7 @@ void WxDetailPanel::UpdateComponents()
 void WxDetailPanel::StagePageChanging(const ee0::VariantSet& variants)
 {
 	auto var = variants.GetVariant("sub_mgr");
-	GD_ASSERT(var.m_type != ee0::VT_EMPTY, "no var in vars: sub_mgr");
+	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: sub_mgr");
 	GD_ASSERT(var.m_val.pv, "err scene node");
 	m_sub_mgr = static_cast<ee0::SubjectMgr*>(var.m_val.pv);
 

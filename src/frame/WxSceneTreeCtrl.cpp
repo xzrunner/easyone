@@ -3,6 +3,7 @@
 
 #include <ee0/SubjectMgr.h>
 #include <ee0/CompNodeEditor.h>
+#include <ee0/SelectionSet.h>
 
 #include <guard/check.h>
 #include <node0/SceneNode.h>
@@ -36,6 +37,13 @@ void WxSceneTreeCtrl::OnNotify(ee0::MessageID msg, const ee0::VariantSet& varian
 	case ee0::MSG_INSERT_SCENE_NODE:
 		InsertSceneNode(variants);
 		break;
+	case ee0::MSG_DELETE_SCENE_NODE:
+		DeleteSceneNode(variants);
+		break;
+	case ee0::MSG_CLEAR_SCENE_NODE:
+		ClearSceneNode();
+		break;
+
 	case ee0::MSG_NODE_SELECTION_INSERT:
 		SelectSceneNode(variants);
 		break;
@@ -99,6 +107,9 @@ void WxSceneTreeCtrl::InitRoot()
 void WxSceneTreeCtrl::RegisterMsg(ee0::SubjectMgr& sub_mgr)
 {
 	sub_mgr.RegisterObserver(ee0::MSG_INSERT_SCENE_NODE, this);
+	sub_mgr.RegisterObserver(ee0::MSG_DELETE_SCENE_NODE, this);
+	sub_mgr.RegisterObserver(ee0::MSG_CLEAR_SCENE_NODE, this);
+
 	sub_mgr.RegisterObserver(ee0::MSG_NODE_SELECTION_INSERT, this);
 	sub_mgr.RegisterObserver(ee0::MSG_NODE_SELECTION_DELETE, this);
 	sub_mgr.RegisterObserver(ee0::MSG_NODE_SELECTION_CLEAR, this);
@@ -108,7 +119,7 @@ void WxSceneTreeCtrl::RegisterMsg(ee0::SubjectMgr& sub_mgr)
 void WxSceneTreeCtrl::OnSelChanged(wxTreeEvent& event)
 {
 	auto id = event.GetItem();
-	if (!id.IsOk()) {
+	if (!id.IsOk() || id == m_root) {
 		return;
 	}
 
@@ -143,7 +154,7 @@ void WxSceneTreeCtrl::OnLabelEdited(wxTreeEvent& event)
 void WxSceneTreeCtrl::SelectSceneNode(const ee0::VariantSet& variants)
 {
 	auto var = variants.GetVariant("node");
-	GD_ASSERT(var.m_type != ee0::VT_EMPTY, "no var in vars: node");
+	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: node");
 	n0::SceneNodePtr* node = static_cast<n0::SceneNodePtr*>(var.m_val.pv);
 	GD_ASSERT(node, "err scene node");
 
@@ -169,7 +180,7 @@ void WxSceneTreeCtrl::SelectSceneNode(const ee0::VariantSet& variants)
 void WxSceneTreeCtrl::UnselectSceneNode(const ee0::VariantSet& variants)
 {
 	auto var = variants.GetVariant("node");
-	GD_ASSERT(var.m_type != ee0::VT_EMPTY, "no var in vars: node");
+	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: node");
 	n0::SceneNodePtr* node = static_cast<n0::SceneNodePtr*>(var.m_val.pv);
 	GD_ASSERT(node, "err scene node");
 
@@ -189,7 +200,7 @@ void WxSceneTreeCtrl::UnselectSceneNode(const ee0::VariantSet& variants)
 void WxSceneTreeCtrl::InsertSceneNode(const ee0::VariantSet& variants)
 {
 	auto var = variants.GetVariant("node");
-	GD_ASSERT(var.m_type != ee0::VT_EMPTY, "no var in vars: node");
+	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: node");
 	n0::SceneNodePtr* node = static_cast<n0::SceneNodePtr*>(var.m_val.pv);
 	GD_ASSERT(node, "err scene node");
 
@@ -226,10 +237,42 @@ void WxSceneTreeCtrl::InsertSceneNode(wxTreeItemId parent, const n0::SceneNodePt
 	}
 }
 
+void WxSceneTreeCtrl::DeleteSceneNode(const ee0::VariantSet& variants)
+{
+	UnselectAll();
+
+	auto var = variants.GetVariant("node");
+	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: node");
+	n0::SceneNodePtr* node = static_cast<n0::SceneNodePtr*>(var.m_val.pv);
+	GD_ASSERT(node, "err scene node");
+	DeleteSceneNode(*node);
+}
+
+void WxSceneTreeCtrl::DeleteSceneNode(const n0::SceneNodePtr& node)
+{
+	Traverse(m_root, [&](wxTreeItemId item)->bool
+	{
+		auto pdata = (WxSceneTreeItem*)GetItemData(item);
+		if (pdata->GetNode() == node) {
+			Delete(item);
+		}
+		return false;
+	});
+}
+
+void WxSceneTreeCtrl::ClearSceneNode()
+{
+	//ClearFocusedItem();
+	//DeleteChildren(m_root);
+
+	DeleteAllItems();
+	InitRoot();
+}
+
 void WxSceneTreeCtrl::StagePageChanging(const ee0::VariantSet& variants)
 {
 	auto var = variants.GetVariant("sub_mgr");
-	GD_ASSERT(var.m_type != ee0::VT_EMPTY, "no var in vars: sub_mgr");
+	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: sub_mgr");
 	GD_ASSERT(var.m_val.pv, "err scene node");
 	m_sub_mgr = static_cast<ee0::SubjectMgr*>(var.m_val.pv);
 
