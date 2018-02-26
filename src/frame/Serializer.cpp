@@ -6,7 +6,7 @@
 #include <node0/SerializeSystem.h>
 #include <js/RapidJsonHelper.h>
 #include <guard/check.h>
-#include <ns/Tools.h>
+#include <ns/NodeFactory.h>
 
 #include <boost/filesystem.hpp>
 
@@ -46,7 +46,7 @@ void Serializer::LoadFromFile(ee0::WxStagePage& page, const std::string& filepat
 	auto& nodes_val = doc["nodes"];
 	for (auto& node_val : nodes_val.GetArray())
 	{
-		auto node = ns::Tools::CreateNode(dir, node_val);
+		auto node = ns::NodeFactory::CreateNode(dir, node_val);
 		bool succ = ee0::MsgHelper::InsertNode(page.GetSubjectMgr(), node);
 		GD_ASSERT(succ, "no MSG_INSERT_SCENE_NODE");
 	}
