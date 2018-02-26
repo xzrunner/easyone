@@ -1,4 +1,5 @@
 #include "frame/main.h"
+#include "frame/WxFrame.h"
 #include "frame/Application.h"
 #include "frame/Blackboard.h"
 
@@ -8,7 +9,7 @@ IMPLEMENT_APP(MyApp)
 
 bool MyApp::OnInit()
 {
-	auto frame = new ee0::WxFrame("EasyOne", true);
+	auto frame = new eone::WxFrame();
 	eone::Blackboard::Instance()->SetFrame(frame);
 	auto app = std::make_shared<eone::Application>(frame);
 	frame->SetApp(app);

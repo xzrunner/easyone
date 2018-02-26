@@ -124,26 +124,15 @@ wxWindow* Application::CreateStagePanel()
 	m_stage = new WxStagePanel(m_frame);
 	Blackboard::Instance()->SetStage(m_stage);
 	m_stage->Freeze();
-
-	std::shared_ptr<wxGLContext> gl_ctx = nullptr;
 	{
 		auto page = new ee2::WxStagePage(m_frame, m_library);
 		auto canvas = std::make_shared<ee2::WxStageCanvas>(page);
-		gl_ctx = canvas->GetGLContext();
+		m_gl_ctx = canvas->GetGLContext();
 		page->GetImpl().SetCanvas(canvas);
 		page->GetImpl().SetEditOP(std::make_shared<NodeSelectOP>(*page));
 
-		m_stage->AddPage(page, ("New 2d"));
+		m_stage->AddPage(page, ("Scene2D"));
 	}
-	{
-		auto page = new ee3::WxStagePage(m_frame, m_library);
-		auto canvas = std::make_shared<ee3::WxStageCanvas>(page, gl_ctx);
-		page->GetImpl().SetCanvas(canvas);
-		page->GetImpl().SetEditOP(std::make_shared<ee3::NodeArrangeOP>(*page));
-
-		m_stage->AddPage(page, ("New 3d"));
-	}
-
 	m_stage->Thaw();
 
 	return m_stage;

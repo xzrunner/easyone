@@ -60,6 +60,9 @@
     <ClInclude Include="..\..\..\src\frame\Serializer.h">
       <Filter>frame\frame</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\frame\WxFrame.h">
+      <Filter>frame\frame</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\frame\main.cpp">
@@ -96,6 +99,9 @@
       <Filter>frame\frame</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\frame\Serializer.cpp">
+      <Filter>frame\frame</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\frame\WxFrame.cpp">
       <Filter>frame\frame</Filter>
     </ClCompile>
   </ItemGroup>

@@ -4,6 +4,7 @@
 #include <ee0/MessageID.h>
 #include <ee0/VariantSet.h>
 #include <ee0/SubjectMgr.h>
+#include <ee0/WxListSelectDlg.h>
 #include <ee2/NodeFactory.h>
 
 #include <guard/check.h>
@@ -26,77 +27,25 @@
 namespace
 {
 
-static const std::string NODE_IMAGE_STR   = "Image";
-static const std::string NODE_TEXT_STR    = "Text";
-static const std::string NODE_MASK_STR    = "Mask";
-static const std::string NODE_MESH_STR    = "Mesh";
-
-static const std::string NODE_SPRITE2_STR = "Sprite2";
-
-class CreateNodeDialog : public wxDialog
+enum NodeType
 {
-public:
-	CreateNodeDialog(wxWindow* parent, const wxPoint& pos)
-		: wxDialog(parent, wxID_ANY, "Create node", pos)
-	{
-		InitLayout();
-	}
+	NODE_IMAGE = 0,
+	NODE_TEXT,
+	NODE_MASK,
+	NODE_MESH,
 
-	std::string GetSelectedName() const
-	{
-		return m_tree->GetItemText(m_tree->GetSelection()).ToStdString();
-	}
+	NODE_SPRITE2,
+};
 
-private:
-	void InitLayout()
-	{
-		wxSizer* sizer = new wxBoxSizer(wxVERTICAL);
+static const std::vector<std::pair<uint32_t, std::string>> NODE_LIST =
+{
+	std::make_pair(NODE_IMAGE,   "Image"),
+	std::make_pair(NODE_TEXT,    "Text"),
+	std::make_pair(NODE_MASK,    "Mask"),
+	std::make_pair(NODE_MESH,    "Mesh"),
 
-		m_tree = new wxTreeCtrl(this, wxID_ANY, wxDefaultPosition, wxSize(200, 200), 
-			wxTR_HIDE_ROOT | /*wxTR_NO_LINES | */wxTR_DEFAULT_STYLE);
-		Bind(wxEVT_TREE_SEL_CHANGED, &CreateNodeDialog::OnSelChanged, this, m_tree->GetId());
-		Bind(wxEVT_TREE_ITEM_ACTIVATED, &CreateNodeDialog::OnDoubleClick, this, m_tree->GetId());
-
-		auto root = m_tree->AddRoot("ROOT");
-
-		m_tree->InsertItem(root, -1, NODE_IMAGE_STR);
-		m_tree->InsertItem(root, -1, NODE_TEXT_STR);
-		m_tree->InsertItem(root, -1, NODE_MASK_STR);
-		m_tree->InsertItem(root, -1, NODE_MESH_STR);
-
-		m_tree->InsertItem(root, -1, NODE_SPRITE2_STR);
-
-		sizer->Add(m_tree);
-
-		wxBoxSizer* btn_sizer = new wxBoxSizer(wxHORIZONTAL);
-		btn_sizer->Add(new wxButton(this, wxID_OK), wxALL, 5);
-		btn_sizer->Add(new wxButton(this, wxID_CANCEL), wxALL, 5);
-		sizer->Add(btn_sizer, 0, wxALL, 5);
-
-		SetSizer(sizer);
-		sizer->Fit(this);		
-	}
-
-	void OnSelChanged(wxTreeEvent& event)
-	{
-		auto id = event.GetItem();
-		if (!id.IsOk()) {
-			return;
-		}
-
-		auto text = m_tree->GetItemText(id);
-	}
-
-	void OnDoubleClick(wxTreeEvent& event)
-	{
-		assert(IsModal());
-		EndModal(wxID_OK);
-	}
-
-private:
-	wxTreeCtrl* m_tree;
-
-}; // CreateNodeDialog
+	std::make_pair(NODE_SPRITE2, "Sprite2"),
+};
 
 }
 
@@ -127,60 +76,63 @@ void WxSceneTreePanel::InitLayout()
 
 void WxSceneTreePanel::OnCreatePress(wxCommandEvent& event)
 {
-	CreateNodeDialog dlg(this, m_create_btn->GetScreenPosition());
+	ee0::WxListSelectDlg dlg(this, "Create node", 
+		NODE_LIST, m_create_btn->GetScreenPosition());
 	if (dlg.ShowModal() != wxID_OK) {
 		return;
 	}
 
 	n0::SceneNodePtr node = nullptr;
 
-	auto name = dlg.GetSelectedName();
-	if (name == NODE_IMAGE_STR) 
+	auto id = dlg.GetSelectedID();
+	switch (id)
 	{
-		std::string filter = "*.png;*.jpg;*.bmp;*.pvr;*.pkm";
-		wxFileDialog dlg(this, wxT("Choose image"), wxEmptyString, filter);
-		if (dlg.ShowModal() == wxID_OK)
+	case NodeType::NODE_IMAGE:
 		{
-			auto& path = dlg.GetPath();
-			auto img = gum::ResPool::Instance().Fetch<gum::Image>(path.ToStdString());
+			std::string filter = "*.png;*.jpg;*.bmp;*.pvr;*.pkm";
+			wxFileDialog dlg(this, wxT("Choose image"), wxEmptyString, filter);
+			if (dlg.ShowModal() == wxID_OK)
+			{
+				auto& path = dlg.GetPath();
+				auto img = gum::ResPool::Instance().Fetch<gum::Image>(path.ToStdString());
 
-			node = ee2::NodeFactory::Instance()->Create(ee2::NODE_IMAGE);
-			auto& cimage = node->GetComponent<n2::CompImage>();
-			cimage.SetFilepath(path.ToStdString());
-			cimage.SetTexture(img->GetTexture());
+				node = ee2::NodeFactory::Instance()->Create(ee2::NODE_IMAGE);
+				auto& cimage = node->GetComponent<n2::CompImage>();
+				cimage.SetFilepath(path.ToStdString());
+				cimage.SetTexture(img->GetTexture());
 
-			n2::NodeHelper::SetBoundingSize(*node, sm::rect(img->GetWidth(), img->GetHeight()));
+				n2::NodeHelper::SetBoundingSize(*node, sm::rect(img->GetWidth(), img->GetHeight()));
+			}
 		}
-	} 
-	else if (name == NODE_TEXT_STR) 
-	{
+		break;
+	case NodeType::NODE_TEXT:
 		node = ee2::NodeFactory::Instance()->Create(ee2::NODE_TEXT);
-	}
-	else if (name == NODE_MASK_STR)
-	{
+		break;
+	case NodeType::NODE_MASK:
 		node = ee2::NodeFactory::Instance()->Create(ee2::NODE_MASK);
-	}
-	else if (name == NODE_MESH_STR)
-	{
+		break;
+	case NodeType::NODE_MESH:
 		node = ee2::NodeFactory::Instance()->Create(ee2::NODE_MESH);
-	}
-	else if (name == NODE_SPRITE2_STR)
-	{
-		wxFileDialog dlg(this, wxT("Choose sprite2"), wxEmptyString, "*.json");
-		if (dlg.ShowModal() == wxID_OK)
+		break;
+
+	case NodeType::NODE_SPRITE2:
 		{
-			auto& path = dlg.GetPath();
-			auto sym = gum::SymbolPool::Instance()->Fetch(path.ToStdString().c_str());
+			wxFileDialog dlg(this, wxT("Choose sprite2"), wxEmptyString, "*.json");
+			if (dlg.ShowModal() == wxID_OK)
+			{
+				auto& path = dlg.GetPath();
+				auto sym = gum::SymbolPool::Instance()->Fetch(path.ToStdString().c_str());
 
-			node = ee2::NodeFactory::Instance()->Create(ee2::NODE_SPRITE2);
-			auto& csprite2 = node->GetComponent<n2::CompSprite2>();
-			csprite2.SetFilepath(path.ToStdString());
-			csprite2.SetSymbol(sym);
+				node = ee2::NodeFactory::Instance()->Create(ee2::NODE_SPRITE2);
+				auto& csprite2 = node->GetComponent<n2::CompSprite2>();
+				csprite2.SetFilepath(path.ToStdString());
+				csprite2.SetSymbol(sym);
 
-			n2::NodeHelper::SetBoundingSize(*node, sym->GetBounding());
+				n2::NodeHelper::SetBoundingSize(*node, sym->GetBounding());
+			}
 		}
-	}
-	if (!node) {
+		break;
+	default:
 		return;
 	}
 	

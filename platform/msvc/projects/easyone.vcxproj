@@ -253,6 +253,7 @@
     <ClInclude Include="..\..\..\src\frame\Serializer.h" />
     <ClInclude Include="..\..\..\src\frame\WxDetailPanel.h" />
     <ClInclude Include="..\..\..\src\frame\main.h" />
+    <ClInclude Include="..\..\..\src\frame\WxFrame.h" />
     <ClInclude Include="..\..\..\src\frame\WxSceneTreePanel.h" />
     <ClInclude Include="..\..\..\src\frame\WxStagePanel.h" />
     <ClInclude Include="..\..\..\src\frame\Application.h" />
@@ -267,6 +268,7 @@
     <ClCompile Include="..\..\..\src\frame\Serializer.cpp" />
     <ClCompile Include="..\..\..\src\frame\WxDetailPanel.cpp" />
     <ClCompile Include="..\..\..\src\frame\main.cpp" />
+    <ClCompile Include="..\..\..\src\frame\WxFrame.cpp" />
     <ClCompile Include="..\..\..\src\frame\WxSceneTreePanel.cpp" />
     <ClCompile Include="..\..\..\src\frame\WxStagePanel.cpp" />
     <ClCompile Include="..\..\..\src\frame\Application.cpp" />

@@ -4,8 +4,11 @@
 
 #include <wx/aui/framemanager.h>
 
+#include <memory>
+
 class wxFrame;
 class wxWindow;
+class wxGLContext;
 
 namespace ee0 { class WxLibraryPanel; }
 
@@ -43,9 +46,12 @@ private:
 
 	ee0::WxLibraryPanel* m_library;
 
+	std::shared_ptr<wxGLContext> m_gl_ctx = nullptr;
 	WxStagePanel* m_stage;
 
 	WxSceneTreePanel* m_tree;
+
+	friend class WxFrame;
 
 }; // Application
 
