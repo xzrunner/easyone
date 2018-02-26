@@ -4,11 +4,9 @@
 #include <ee0/MsgHelper.h>
 
 #include <node0/SerializeSystem.h>
-#include <node0/SceneNode.h>
-#include <node2/CompBoundingBox.h>
-#include <node2/CompTransform.h>
 #include <js/RapidJsonHelper.h>
 #include <guard/check.h>
+#include <ns/Tools.h>
 
 #include <boost/filesystem.hpp>
 
@@ -48,17 +46,7 @@ void Serializer::LoadFromFile(ee0::WxStagePage& page, const std::string& filepat
 	auto& nodes_val = doc["nodes"];
 	for (auto& node_val : nodes_val.GetArray())
 	{
-		auto node = std::make_shared<n0::SceneNode>();
-		n0::SerializeSystem::LoadNodeFromJson(node, dir, node_val);
-
-		if (node->HasComponent<n2::CompBoundingBox>() && 
-			node->HasComponent<n2::CompTransform>()) 
-		{
-			auto& cbb = node->GetComponent<n2::CompBoundingBox>();
-			auto& ctrans = node->GetComponent<n2::CompTransform>();
-			cbb.Build(ctrans.GetTrans().GetSRT());
-		}
-
+		auto node = ns::Tools::CreateNode(dir, node_val);
 		bool succ = ee0::MsgHelper::InsertNode(page.GetSubjectMgr(), node);
 		GD_ASSERT(succ, "no MSG_INSERT_SCENE_NODE");
 	}
