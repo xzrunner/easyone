@@ -22,6 +22,9 @@
     <Filter Include="mask">
       <UniqueIdentifier>{a0814d30-c873-4c45-817c-38f4d2014634}</UniqueIdentifier>
     </Filter>
+    <Filter Include="scale9">
+      <UniqueIdentifier>{039df47e-8cdb-4f9d-8ded-c5d49d95425a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\frame\main.h">
@@ -63,6 +66,21 @@
     <ClInclude Include="..\..\..\src\frame\WxFrame.h">
       <Filter>frame\frame</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\mask\WxStagePage.h">
+      <Filter>mask</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\scale9\WxStagePage.h">
+      <Filter>scale9</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\scale9\WxStageCanvas.h">
+      <Filter>scale9</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\scale9\ComposeGrids.h">
+      <Filter>scale9</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\scale9\WxEditDialog.h">
+      <Filter>scale9</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\frame\main.cpp">
@@ -103,6 +121,21 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\frame\WxFrame.cpp">
       <Filter>frame\frame</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mask\WxStagePage.cpp">
+      <Filter>mask</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\scale9\WxStagePage.cpp">
+      <Filter>scale9</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\scale9\WxStageCanvas.cpp">
+      <Filter>scale9</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\scale9\ComposeGrids.cpp">
+      <Filter>scale9</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\scale9\WxEditDialog.cpp">
+      <Filter>scale9</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

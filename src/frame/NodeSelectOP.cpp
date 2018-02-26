@@ -2,6 +2,7 @@
 #include "frame/Blackboard.h"
 
 #include "mask/WxEditDialog.h"
+#include "scale9/WxEditDialog.h"
 
 #include <ee0/WxStagePage.h>
 #include <ee0/WxStageCanvas.h>
@@ -9,6 +10,7 @@
 
 #include <node0/SceneNode.h>
 #include <node2/CompMask.h>
+#include <node2/CompScale9.h>
 
 namespace
 {
@@ -22,6 +24,13 @@ void OpenEditDialog(ee0::WxStagePage& stage, const n0::SceneNodePtr& node)
 			std::const_pointer_cast<n0::SceneNode>(node), node->GetComponent<n2::CompMask>());
 		dlg.ShowModal();
 	}
+	else if (node->HasComponent<n2::CompScale9>())
+	{
+		auto& canvas = stage.GetImpl().GetCanvas();
+		eone::scale9::WxEditDialog dlg(eone::Blackboard::Instance()->GetStage(), canvas->GetGLContext(),
+			std::const_pointer_cast<n0::SceneNode>(node), node->GetComponent<n2::CompScale9>());
+		dlg.ShowModal();
+	}
 }
 
 }
@@ -29,7 +38,7 @@ void OpenEditDialog(ee0::WxStagePage& stage, const n0::SceneNodePtr& node)
 namespace eone
 {
 
-NodeSelectOP::NodeSelectOP(ee2::WxStagePage& stage)
+NodeSelectOP::NodeSelectOP(ee0::WxStagePage& stage)
 	: ee2::NodeSelectOP(stage)
 {
 }

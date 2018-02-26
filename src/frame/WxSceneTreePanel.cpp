@@ -33,6 +33,7 @@ enum NodeType
 	NODE_TEXT,
 	NODE_MASK,
 	NODE_MESH,
+	NODE_SCALE9,
 
 	NODE_SPRITE2,
 };
@@ -43,6 +44,7 @@ static const std::vector<std::pair<uint32_t, std::string>> NODE_LIST =
 	std::make_pair(NODE_TEXT,    "Text"),
 	std::make_pair(NODE_MASK,    "Mask"),
 	std::make_pair(NODE_MESH,    "Mesh"),
+	std::make_pair(NODE_SCALE9,  "Scale9"),
 
 	std::make_pair(NODE_SPRITE2, "Sprite2"),
 };
@@ -113,6 +115,9 @@ void WxSceneTreePanel::OnCreatePress(wxCommandEvent& event)
 		break;
 	case NodeType::NODE_MESH:
 		node = ee2::NodeFactory::Instance()->Create(ee2::NODE_MESH);
+		break;
+	case NodeType::NODE_SCALE9:
+		node = ee2::NodeFactory::Instance()->Create(ee2::NODE_SCALE9);
 		break;
 
 	case NodeType::NODE_SPRITE2:

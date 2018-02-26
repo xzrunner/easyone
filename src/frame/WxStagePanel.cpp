@@ -23,6 +23,12 @@ ee0::WxStagePage* WxStagePanel::GetCurrentStagePage() const
 	return dynamic_cast<ee0::WxStagePage*>(GetCurrentPage());
 }
 
+void WxStagePanel::AddNewPage(ee0::WxStagePage* page, const std::string& title)
+{
+	AddPage(page, title);
+	SetSelection(GetPageCount() - 1);
+}
+
 void WxStagePanel::OnPageChanging(wxAuiNotebookEvent& event)
 {
 	auto page = GetCurrentStagePage();

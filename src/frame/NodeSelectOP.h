@@ -8,7 +8,7 @@ namespace eone
 class NodeSelectOP : public ee2::NodeSelectOP
 {
 public:
-	NodeSelectOP(ee2::WxStagePage& stage);
+	NodeSelectOP(ee0::WxStagePage& stage);
 	
 	virtual bool OnMouseLeftDClick(int x, int y);
 

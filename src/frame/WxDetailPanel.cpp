@@ -11,8 +11,11 @@
 #include <ee2/WxCompTextPanel.h>
 #include <ee2/WxCompMaskPanel.h>
 #include <ee2/WxCompMeshPanel.h>
+#include <ee2/WxCompScale9Panel.h>
 #include <ee2/WxCompSprite2Panel.h>
 #include <ee3/WxCompTransformPanel.h>
+
+#include <node2/CompScale9.h>
 
 #include <guard/check.h>
 #include <node0/SceneNode.h>
@@ -223,6 +226,13 @@ void WxDetailPanel::InitComponents(const ee0::VariantSet& variants)
 	{
 		auto& comp = m_node->GetComponent<n2::CompMesh>();
 		auto panel = new ee2::WxCompMeshPanel(this, comp, *m_sub_mgr, *m_node);
+		m_comp_sizer->Insert(m_components.size(), panel);
+		m_components.push_back(panel);
+	}
+	if (m_node->HasComponent<n2::CompScale9>())
+	{
+		auto& comp = m_node->GetComponent<n2::CompScale9>();
+		auto panel = new ee2::WxCompScale9Panel(this, comp, *m_sub_mgr);
 		m_comp_sizer->Insert(m_components.size(), panel);
 		m_components.push_back(panel);
 	}

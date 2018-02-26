@@ -14,6 +14,8 @@ public:
 
 	ee0::WxStagePage* GetCurrentStagePage() const;
 
+	void AddNewPage(ee0::WxStagePage* page, const std::string& title);
+	
 private:
 	void OnPageChanging(wxAuiNotebookEvent& event);
 	void OnPageChanged(wxAuiNotebookEvent& event);

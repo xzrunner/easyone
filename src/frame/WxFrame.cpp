@@ -3,6 +3,9 @@
 #include "frame/WxStagePanel.h"
 #include "frame/NodeSelectOP.h"
 
+#include "scale9/WxStagePage.h"
+#include "scale9/WxStageCanvas.h"
+
 #include <ee0/WxListSelectDlg.h>
 #include <ee2/WxStagePage.h>
 #include <ee2/WxStageCanvas.h>
@@ -61,7 +64,7 @@ void WxFrame::OnNew(wxCommandEvent& event)
 			page->GetImpl().SetCanvas(canvas);
 			page->GetImpl().SetEditOP(std::make_shared<NodeSelectOP>(*page));
 
-			app->m_stage->AddPage(page, ("Scene2D"));
+			app->m_stage->AddNewPage(page, "Scene2D");
 		}
 		break;
 	case NEW_SCENE3D:
@@ -71,7 +74,17 @@ void WxFrame::OnNew(wxCommandEvent& event)
 			page->GetImpl().SetCanvas(canvas);
 			page->GetImpl().SetEditOP(std::make_shared<ee3::NodeArrangeOP>(*page));
 
-			app->m_stage->AddPage(page, ("Scene3d"));
+			app->m_stage->AddNewPage(page, "Scene3d");
+		}
+		break;
+	case NEW_SCALE9:
+		{
+			//auto page = new scale9::WxStagePage(app->m_frame, app->m_library);
+			//auto canvas = std::make_shared<scale9::WxStageCanvas>(page, app->m_gl_ctx);
+			//page->GetImpl().SetCanvas(canvas);
+			//page->GetImpl().SetEditOP(std::make_shared<NodeSelectOP>(*page));
+
+			//app->m_stage->AddNewPage(page, "Scale9");
 		}
 		break;
 	}
