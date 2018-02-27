@@ -40,6 +40,8 @@ private:
 
 	void StagePageChanging(const ee0::VariantSet& variants);
 
+	void ClearALLSelected();
+
 private:
 	enum
 	{

@@ -51,7 +51,7 @@ void WxSceneTreeCtrl::OnNotify(ee0::MessageID msg, const ee0::VariantSet& varian
 		UnselectSceneNode(variants);
 		break;
 	case ee0::MSG_NODE_SELECTION_CLEAR:
-		UnselectAll();
+		ClearALLSelected();
 		break;
 	case ee0::MSG_STAGE_PAGE_CHANGING:
 		DeleteAllItems();
@@ -239,7 +239,7 @@ void WxSceneTreeCtrl::InsertSceneNode(wxTreeItemId parent, const n0::SceneNodePt
 
 void WxSceneTreeCtrl::DeleteSceneNode(const ee0::VariantSet& variants)
 {
-	UnselectAll();
+	ClearALLSelected();
 
 	auto var = variants.GetVariant("node");
 	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: node");
@@ -277,6 +277,12 @@ void WxSceneTreeCtrl::StagePageChanging(const ee0::VariantSet& variants)
 	m_sub_mgr = static_cast<ee0::SubjectMgr*>(var.m_val.pv);
 
 	RegisterMsg(*m_sub_mgr);
+}
+
+void WxSceneTreeCtrl::ClearALLSelected()
+{
+	UnselectAll();
+	ClearFocusedItem();
 }
 
 }
