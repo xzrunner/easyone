@@ -25,6 +25,9 @@
     <Filter Include="scale9">
       <UniqueIdentifier>{039df47e-8cdb-4f9d-8ded-c5d49d95425a}</UniqueIdentifier>
     </Filter>
+    <Filter Include="frame\preview">
+      <UniqueIdentifier>{b87ee58f-e935-4243-8fc0-5e091731df77}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\frame\main.h">
@@ -81,6 +84,12 @@
     <ClInclude Include="..\..\..\src\scale9\WxEditDialog.h">
       <Filter>scale9</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\frame\WxPreviewPanel.h">
+      <Filter>frame\preview</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\frame\WxPreviewCanvas.h">
+      <Filter>frame\preview</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\frame\main.cpp">
@@ -136,6 +145,12 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\scale9\WxEditDialog.cpp">
       <Filter>scale9</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\frame\WxPreviewPanel.cpp">
+      <Filter>frame\preview</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\frame\WxPreviewCanvas.cpp">
+      <Filter>frame\preview</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

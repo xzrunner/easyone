@@ -1,6 +1,8 @@
 #include "Application.h"
 #include "frame/WxLibraryPanel.h"
 #include "frame/WxStagePanel.h"
+#include "frame/WxPreviewPanel.h"
+#include "frame/WxPreviewCanvas.h"
 #include "frame/WxSceneTreePanel.h"
 #include "frame/WxDetailPanel.h"
 #include "frame/NodeSelectOP.h"
@@ -97,6 +99,10 @@ void Application::InitLayout()
 		wxAuiPaneInfo().Name("Stage").Caption("Stage").
 		CenterPane().PaneBorder(false));
 
+	m_mgr.AddPane(CreatePreviewPanel(),
+		wxAuiPaneInfo().Name("Preview").Caption("Preview").
+		CenterPane().PaneBorder(false));
+
 	m_mgr.AddPane(CreateTreePanel(),
 		wxAuiPaneInfo().Name("Tree").Caption("Tree").
 		Right().Row(1).MinSize(200, 0).PaneBorder(false));
@@ -128,6 +134,7 @@ wxWindow* Application::CreateStagePanel()
 		auto page = new ee2::WxStagePage(m_frame, m_library);
 		auto canvas = std::make_shared<ee2::WxStageCanvas>(page);
 		m_gl_ctx = canvas->GetGLContext();
+		m_gum_rc = canvas->GetGumRC();
 		page->GetImpl().SetCanvas(canvas);
 		page->GetImpl().SetEditOP(std::make_shared<NodeSelectOP>(*page));
 
@@ -136,6 +143,16 @@ wxWindow* Application::CreateStagePanel()
 	m_stage->Thaw();
 
 	return m_stage;
+}
+
+wxWindow* Application::CreatePreviewPanel()
+{
+	m_preview = new WxPreviewPanel(m_frame);
+
+	auto canvas = std::make_shared<WxPreviewCanvas>(m_preview);
+	m_preview->GetImpl().SetCanvas(canvas);
+
+	return m_preview;
 }
 
 wxWindow* Application::CreateTreePanel()
