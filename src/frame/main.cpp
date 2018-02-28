@@ -5,7 +5,11 @@
 
 #include <ee0/WxFrame.h>
 
-IMPLEMENT_APP(MyApp)
+#ifdef _DEBUG
+IMPLEMENT_APP_CONSOLE(MyApp);
+#else
+IMPLEMENT_APP(MyApp);
+#endif
 
 bool MyApp::OnInit()
 {
