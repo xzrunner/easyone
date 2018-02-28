@@ -6,8 +6,9 @@ namespace eone
 namespace scale9
 {
 
-WxStageCanvas::WxStageCanvas(ee0::WxStagePage* stage, std::shared_ptr<wxGLContext> glctx)
-	: ee2::WxStageCanvas(stage, glctx)
+WxStageCanvas::WxStageCanvas(ee0::WxStagePage* stage, 
+	                         const std::shared_ptr<ee0::RenderContext>& rc)
+	: ee2::WxStageCanvas(stage, rc)
 {
 }
 

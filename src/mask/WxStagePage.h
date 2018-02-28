@@ -3,16 +3,19 @@
 #include <ee0/WxStagePage.h>
 
 namespace ee0 { class WxLibraryPanel; }
+namespace n2 { class CompMask; }
 
 namespace eone
 {
 namespace mask
 {
 
-class WxStagePage : ee0::WxStagePage
+class WxStagePage : public ee0::WxStagePage
 {
 public:
-	WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library);
+	WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library,
+		n2::CompMask* cmask = nullptr);
+	virtual ~WxStagePage();
 
 	virtual void OnNotify(ee0::MessageID msg, const ee0::VariantSet& variants) override;
 
@@ -23,7 +26,8 @@ private:
 	void ClearSceneNode();
 
 private:
-	n0::SceneNodePtr m_base, m_mask;
+	n2::CompMask* m_cmask = nullptr;
+	bool m_comp_new;
 
 }; // WxStagePage
 

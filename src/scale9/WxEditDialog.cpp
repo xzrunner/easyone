@@ -18,13 +18,13 @@ namespace eone
 namespace scale9
 {
 
-WxEditDialog::WxEditDialog(wxWindow* parent, const std::shared_ptr<wxGLContext>& glctx,
-	                       n0::SceneNodePtr& node, n2::CompScale9& cscale9)
+WxEditDialog::WxEditDialog(wxWindow* parent, const std::shared_ptr<ee0::RenderContext>& rc,
+	                       n0::SceneNodePtr& node, n2::CompScale9* cscale9)
 	: wxDialog(parent, wxID_ANY, "Edit Scale9", wxDefaultPosition, 
 		wxSize(800, 600), wxCLOSE_BOX | wxCAPTION | wxMAXIMIZE_BOX)
 	, m_mgr(this)
 {
-	InitLayout(glctx, cscale9);
+	InitLayout(rc, cscale9);
 }
 
 WxEditDialog::~WxEditDialog()
@@ -32,13 +32,14 @@ WxEditDialog::~WxEditDialog()
 	m_mgr.UnInit();
 }
 
-void WxEditDialog::InitLayout(const std::shared_ptr<wxGLContext>& glctx, n2::CompScale9& cscale9)
+void WxEditDialog::InitLayout(const std::shared_ptr<ee0::RenderContext>& rc,
+	                          n2::CompScale9* cscale9)
 {
-	m_mgr.AddPane(CreateStagePanel(glctx, cscale9),
+	m_mgr.AddPane(CreateStagePanel(rc, cscale9),
 		wxAuiPaneInfo().Name("Stage").Caption("Stage").
 		Center().PaneBorder(false));
 
-	m_mgr.AddPane(CreatePreviewPanel(glctx),
+	m_mgr.AddPane(CreatePreviewPanel(rc),
 		wxAuiPaneInfo().Name("Preview").Caption("Preview").
 		Center().PaneBorder(false));
 
@@ -53,19 +54,20 @@ void WxEditDialog::InitLayout(const std::shared_ptr<wxGLContext>& glctx, n2::Com
 	m_mgr.Update();
 }
 
-wxWindow* WxEditDialog::CreateStagePanel(const std::shared_ptr<wxGLContext>& glctx, n2::CompScale9& cscale9)
+wxWindow* WxEditDialog::CreateStagePanel(const std::shared_ptr<ee0::RenderContext>& rc,
+	                                     n2::CompScale9* cscale9)
 {
 	m_stage = new scale9::WxStagePage(this, nullptr, cscale9);
-	auto canvas = std::make_shared<ee2::WxStageCanvas>(m_stage, glctx);
+	auto canvas = std::make_shared<ee2::WxStageCanvas>(m_stage, rc);
 	m_stage->GetImpl().SetCanvas(canvas);
 	m_stage->GetImpl().SetEditOP(std::make_shared<NodeSelectOP>(*m_stage));
 	return m_stage;
 }
 
-wxWindow* WxEditDialog::CreatePreviewPanel(const std::shared_ptr<wxGLContext>& glctx)
+wxWindow* WxEditDialog::CreatePreviewPanel(const std::shared_ptr<ee0::RenderContext>& rc)
 {
 	m_preview = new ee2::WxStagePage(this, nullptr);
-	auto canvas = std::make_shared<WxStageCanvas>(m_preview, glctx);
+	auto canvas = std::make_shared<WxStageCanvas>(m_preview, rc);
 	m_preview->GetImpl().SetCanvas(canvas);
 	auto op = std::make_shared<ee2::CamControlOP>(*canvas->GetCamera(), m_preview->GetSubjectMgr());
 	m_preview->GetImpl().SetEditOP(op);

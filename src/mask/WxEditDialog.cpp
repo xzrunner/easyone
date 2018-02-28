@@ -15,13 +15,13 @@ namespace eone
 namespace mask
 {
 
-WxEditDialog::WxEditDialog(wxWindow* parent, const std::shared_ptr<wxGLContext>& glctx,
+WxEditDialog::WxEditDialog(wxWindow* parent, const std::shared_ptr<ee0::RenderContext>& rc,
 	                       n0::SceneNodePtr& node, n2::CompMask& cmask)
 	: wxDialog(parent, wxID_ANY, "Edit Mask", wxDefaultPosition, 
 		wxSize(800, 600), wxCLOSE_BOX | wxCAPTION | wxMAXIMIZE_BOX)
 	, m_mgr(this)
 {
-	InitLayout(glctx);
+	InitLayout(rc);
 	InitNodes(node, cmask);
 }
 
@@ -30,13 +30,13 @@ WxEditDialog::~WxEditDialog()
 	m_mgr.UnInit();
 }
 
-void WxEditDialog::InitLayout(const std::shared_ptr<wxGLContext>& glctx)
+void WxEditDialog::InitLayout(const std::shared_ptr<ee0::RenderContext>& rc)
 {
-	m_mgr.AddPane(CreateStagePanel(glctx),
+	m_mgr.AddPane(CreateStagePanel(rc),
 		wxAuiPaneInfo().Name("Stage").Caption("Stage").
 		Center().PaneBorder(false));
 
-	m_mgr.AddPane(CreatePreviewPanel(glctx),
+	m_mgr.AddPane(CreatePreviewPanel(rc),
 		wxAuiPaneInfo().Name("Preview").Caption("Preview").
 		Center().PaneBorder(false));
 
@@ -69,19 +69,19 @@ void WxEditDialog::InitNodes(n0::SceneNodePtr& node, n2::CompMask& cmask)
 	}
 }
 
-wxWindow* WxEditDialog::CreateStagePanel(const std::shared_ptr<wxGLContext>& glctx)
+wxWindow* WxEditDialog::CreateStagePanel(const std::shared_ptr<ee0::RenderContext>& rc)
 {
 	m_stage = new ee2::WxStagePage(this, nullptr);
-	auto canvas = std::make_shared<ee2::WxStageCanvas>(m_stage, glctx);
+	auto canvas = std::make_shared<ee2::WxStageCanvas>(m_stage, rc);
 	m_stage->GetImpl().SetCanvas(canvas);
 	m_stage->GetImpl().SetEditOP(std::make_shared<NodeSelectOP>(*m_stage));
 	return m_stage;
 }
 
-wxWindow* WxEditDialog::CreatePreviewPanel(const std::shared_ptr<wxGLContext>& glctx)
+wxWindow* WxEditDialog::CreatePreviewPanel(const std::shared_ptr<ee0::RenderContext>& rc)
 {
 	m_preview = new ee2::WxStagePage(this, nullptr);
-	auto canvas = std::make_shared<ee2::WxStageCanvas>(m_preview, glctx);
+	auto canvas = std::make_shared<ee2::WxStageCanvas>(m_preview, rc);
 	m_preview->GetImpl().SetCanvas(canvas);
 	auto op = std::make_shared<ee2::CamControlOP>(*canvas->GetCamera(), m_preview->GetSubjectMgr());
 	m_preview->GetImpl().SetEditOP(op);

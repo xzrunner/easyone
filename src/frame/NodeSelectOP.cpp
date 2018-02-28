@@ -20,15 +20,15 @@ void OpenEditDialog(ee0::WxStagePage& stage, const n0::SceneNodePtr& node)
 	if (node->HasComponent<n2::CompMask>())
 	{
 		auto& canvas = stage.GetImpl().GetCanvas();
-		eone::mask::WxEditDialog dlg(eone::Blackboard::Instance()->GetStage(), canvas->GetGLContext(), 
+		eone::mask::WxEditDialog dlg(eone::Blackboard::Instance()->GetStage(), canvas->GetContext(), 
 			std::const_pointer_cast<n0::SceneNode>(node), node->GetComponent<n2::CompMask>());
 		dlg.ShowModal();
 	}
 	else if (node->HasComponent<n2::CompScale9>())
 	{
 		auto& canvas = stage.GetImpl().GetCanvas();
-		eone::scale9::WxEditDialog dlg(eone::Blackboard::Instance()->GetStage(), canvas->GetGLContext(),
-			std::const_pointer_cast<n0::SceneNode>(node), node->GetComponent<n2::CompScale9>());
+		eone::scale9::WxEditDialog dlg(eone::Blackboard::Instance()->GetStage(), canvas->GetContext(),
+			std::const_pointer_cast<n0::SceneNode>(node), &node->GetComponent<n2::CompScale9>());
 		dlg.ShowModal();
 	}
 }

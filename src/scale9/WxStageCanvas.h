@@ -10,7 +10,7 @@ namespace scale9
 class WxStageCanvas : public ee2::WxStageCanvas
 {
 public:
-	WxStageCanvas(ee0::WxStagePage* stage, std::shared_ptr<wxGLContext> glctx);
+	WxStageCanvas(ee0::WxStagePage* stage, const std::shared_ptr<ee0::RenderContext>& rc);
 
 protected:
 	virtual void DrawBackground() const;

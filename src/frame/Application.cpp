@@ -133,8 +133,7 @@ wxWindow* Application::CreateStagePanel()
 	{
 		auto page = new ee2::WxStagePage(m_frame, m_library);
 		auto canvas = std::make_shared<ee2::WxStageCanvas>(page);
-		m_gl_ctx = canvas->GetGLContext();
-		m_gum_rc = canvas->GetGumRC();
+		m_rc = canvas->GetContext();
 		page->GetImpl().SetCanvas(canvas);
 		page->GetImpl().SetEditOP(std::make_shared<NodeSelectOP>(*page));
 

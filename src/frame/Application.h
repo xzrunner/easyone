@@ -8,9 +8,8 @@
 
 class wxFrame;
 class wxWindow;
-class wxGLContext;
 
-namespace ee0 { class WxLibraryPanel; }
+namespace ee0 { class WxLibraryPanel; class RenderContext; }
 namespace gum { class RenderContext; }
 
 namespace eone
@@ -49,8 +48,7 @@ private:
 
 	ee0::WxLibraryPanel* m_library;
 
-	std::shared_ptr<wxGLContext> m_gl_ctx = nullptr;
-	std::shared_ptr<gum::RenderContext> m_gum_rc = nullptr;
+	std::shared_ptr<ee0::RenderContext> m_rc = nullptr;
 
 	WxStagePanel* m_stage;
 	WxPreviewPanel* m_preview;
