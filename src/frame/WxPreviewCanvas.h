@@ -1,16 +1,16 @@
 #pragma once
 
-#include <ee0/WxStageCanvas.h>
+#include <ee2/WxStageCanvas.h>
 
-namespace ee0 { class WxEditPanel; }
+namespace ee2 { class WxStagePage; }
 
 namespace eone
 {
 
-class WxPreviewCanvas : public ee0::WxStageCanvas
+class WxPreviewCanvas : public ee2::WxStageCanvas
 {
 public:
-	WxPreviewCanvas(ee0::WxEditPanel* stage);
+	WxPreviewCanvas(ee0::WxStagePage* stage);
 
 protected:
 	virtual void OnSize(int w, int h) override;

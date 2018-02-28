@@ -7,8 +7,8 @@
 namespace eone
 {
 
-WxPreviewCanvas::WxPreviewCanvas(ee0::WxEditPanel* stage)
-	: ee0::WxStageCanvas(stage, stage->GetImpl())
+WxPreviewCanvas::WxPreviewCanvas(ee0::WxStagePage* stage)
+	: ee2::WxStageCanvas(stage)
 {
 }
 

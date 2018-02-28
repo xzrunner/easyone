@@ -151,6 +151,8 @@ wxWindow* Application::CreatePreviewPanel()
 
 	auto canvas = std::make_shared<WxPreviewCanvas>(m_preview);
 	m_preview->GetImpl().SetCanvas(canvas);
+	auto op = std::make_shared<ee2::CamControlOP>(*canvas->GetCamera(), m_preview->GetSubjectMgr());
+	m_preview->GetImpl().SetEditOP(op);
 
 	return m_preview;
 }
