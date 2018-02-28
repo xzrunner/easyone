@@ -95,12 +95,12 @@ void Application::InitLayout()
 		wxAuiPaneInfo().Name("Library").Caption("Library").
 		Left().MinSize(wxSize(100, 0)));
 	
-	m_mgr.AddPane(CreateStagePanel(),
-		wxAuiPaneInfo().Name("Stage").Caption("Stage").
-		CenterPane().PaneBorder(false));
-
 	m_mgr.AddPane(CreatePreviewPanel(),
 		wxAuiPaneInfo().Name("Preview").Caption("Preview").
+		CenterPane().PaneBorder(false));
+
+	m_mgr.AddPane(CreateStagePanel(),
+		wxAuiPaneInfo().Name("Stage").Caption("Stage").
 		CenterPane().PaneBorder(false));
 
 	m_mgr.AddPane(CreateTreePanel(),
@@ -133,9 +133,9 @@ wxWindow* Application::CreateStagePanel()
 	{
 		auto page = new ee2::WxStagePage(m_frame, m_library);
 		auto canvas = std::make_shared<ee2::WxStageCanvas>(page);
-		m_rc = canvas->GetContext();
+		m_edit_rc = canvas->GetContext();
 		page->GetImpl().SetCanvas(canvas);
-		page->GetImpl().SetEditOP(std::make_shared<NodeSelectOP>(*page));
+		page->GetImpl().SetEditOP(std::make_shared<NodeSelectOP>(*page, m_preview_rc));
 
 		m_stage->AddPage(page, ("Scene2D"));
 	}
@@ -149,6 +149,7 @@ wxWindow* Application::CreatePreviewPanel()
 	m_preview = new WxPreviewPanel(m_frame);
 
 	auto canvas = std::make_shared<WxPreviewCanvas>(m_preview);
+	m_preview_rc = canvas->GetContext();
 	m_preview->GetImpl().SetCanvas(canvas);
 	auto op = std::make_shared<ee2::CamControlOP>(*canvas->GetCamera(), m_preview->GetSubjectMgr());
 	m_preview->GetImpl().SetEditOP(op);

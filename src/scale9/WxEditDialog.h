@@ -16,19 +16,23 @@ namespace scale9
 class WxEditDialog : public wxDialog
 {
 public:
-	WxEditDialog(wxWindow* parent, const std::shared_ptr<ee0::RenderContext>& rc,
+	WxEditDialog(wxWindow* parent, const std::shared_ptr<ee0::RenderContext>& edit_rc,
+		const std::shared_ptr<ee0::RenderContext>& preview_rc,
 		n0::SceneNodePtr& node, n2::CompScale9* cscale9 = nullptr);
 	virtual ~WxEditDialog();
 
 private:
-	void InitLayout(const std::shared_ptr<ee0::RenderContext>& rc, n2::CompScale9* cscale9);
+	void InitLayout(n2::CompScale9* cscale9);
 
-	wxWindow* CreateStagePanel(const std::shared_ptr<ee0::RenderContext>& rc, n2::CompScale9* cscale9);
-	wxWindow* CreatePreviewPanel(const std::shared_ptr<ee0::RenderContext>& rc);
+	wxWindow* CreateStagePanel(n2::CompScale9* cscale9);
+	wxWindow* CreatePreviewPanel();
 	wxWindow* CreateTreePanel();
 	wxWindow* CreateDetailPanel();
 
 private:
+	std::shared_ptr<ee0::RenderContext> m_edit_rc = nullptr;
+	std::shared_ptr<ee0::RenderContext> m_preview_rc = nullptr;
+
 	wxAuiManager m_mgr;
 
 	ee0::WxStagePage* m_preview;

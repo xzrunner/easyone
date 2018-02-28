@@ -61,9 +61,9 @@ void WxFrame::OnNew(wxCommandEvent& event)
 	case NEW_SCENE2D:
 		{
 			auto page = new ee2::WxStagePage(app->m_frame, app->m_library);
-			auto canvas = std::make_shared<ee2::WxStageCanvas>(page, app->m_rc);
+			auto canvas = std::make_shared<ee2::WxStageCanvas>(page, app->m_edit_rc);
 			page->GetImpl().SetCanvas(canvas);
-			page->GetImpl().SetEditOP(std::make_shared<NodeSelectOP>(*page));
+			page->GetImpl().SetEditOP(std::make_shared<NodeSelectOP>(*page, app->m_preview_rc));
 
 			app->m_stage->AddNewPage(page, "Scene2D");
 		}
@@ -71,7 +71,7 @@ void WxFrame::OnNew(wxCommandEvent& event)
 	case NEW_SCENE3D:
 		{
 			auto page = new ee3::WxStagePage(app->m_frame, app->m_library);
-			auto canvas = std::make_shared<ee3::WxStageCanvas>(page, app->m_rc);
+			auto canvas = std::make_shared<ee3::WxStageCanvas>(page, app->m_edit_rc);
 			page->GetImpl().SetCanvas(canvas);
 			page->GetImpl().SetEditOP(std::make_shared<ee3::NodeArrangeOP>(*page));
 
@@ -81,9 +81,9 @@ void WxFrame::OnNew(wxCommandEvent& event)
 	case NEW_SCALE9:
 		{
 			auto page = new scale9::WxStagePage(app->m_frame, app->m_library);
-			auto canvas = std::make_shared<scale9::WxStageCanvas>(page, app->m_rc);
+			auto canvas = std::make_shared<scale9::WxStageCanvas>(page, app->m_edit_rc);
 			page->GetImpl().SetCanvas(canvas);
-			page->GetImpl().SetEditOP(std::make_shared<NodeSelectOP>(*page));
+			page->GetImpl().SetEditOP(std::make_shared<NodeSelectOP>(*page, app->m_preview_rc));
 
 			app->m_stage->AddNewPage(page, "Scale9");
 		}
@@ -91,9 +91,9 @@ void WxFrame::OnNew(wxCommandEvent& event)
 	case NEW_MASK:
 		{
 			auto page = new mask::WxStagePage(app->m_frame, app->m_library);
-			auto canvas = std::make_shared<ee2::WxStageCanvas>(page, app->m_rc);
+			auto canvas = std::make_shared<ee2::WxStageCanvas>(page, app->m_edit_rc);
 			page->GetImpl().SetCanvas(canvas);
-			page->GetImpl().SetEditOP(std::make_shared<NodeSelectOP>(*page));
+			page->GetImpl().SetEditOP(std::make_shared<NodeSelectOP>(*page, app->m_preview_rc));
 
 			app->m_stage->AddNewPage(page, "Mask");
 		}

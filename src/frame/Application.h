@@ -48,7 +48,8 @@ private:
 
 	ee0::WxLibraryPanel* m_library;
 
-	std::shared_ptr<ee0::RenderContext> m_rc = nullptr;
+	std::shared_ptr<ee0::RenderContext> m_edit_rc = nullptr;
+	std::shared_ptr<ee0::RenderContext> m_preview_rc = nullptr;
 
 	WxStagePanel* m_stage;
 	WxPreviewPanel* m_preview;
