@@ -12,12 +12,7 @@ WxPreviewCanvas::WxPreviewCanvas(ee0::WxStagePage* stage)
 {
 }
 
-void WxPreviewCanvas::OnSize(int w, int h)
-{
-	// 
-}
-
-void WxPreviewCanvas::OnDrawSprites() const
+void WxPreviewCanvas::DrawBackground() const
 {
 	pt2::PrimitiveDraw::Rect(nullptr, sm::vec2(0, 0), 200, 200, false);
 }

@@ -13,8 +13,7 @@ public:
 	WxPreviewCanvas(ee0::WxStagePage* stage);
 
 protected:
-	virtual void OnSize(int w, int h) override;
-	virtual void OnDrawSprites() const override;
+	virtual void DrawBackground() const;
 
 }; // WxPreviewCanvas
 
