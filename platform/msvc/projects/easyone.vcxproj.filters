@@ -90,6 +90,9 @@
     <ClInclude Include="..\..\..\src\frame\WxPreviewCanvas.h">
       <Filter>frame\preview</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\frame\WxStagePage.h">
+      <Filter>frame\stage</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\frame\main.cpp">
@@ -151,6 +154,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\frame\WxPreviewCanvas.cpp">
       <Filter>frame\preview</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\frame\WxStagePage.cpp">
+      <Filter>frame\stage</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

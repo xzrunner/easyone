@@ -91,24 +91,25 @@ void Application::InitSubmodule()
 
 void Application::InitLayout()
 {
-	m_mgr.AddPane(CreateLibraryPanel(),
-		wxAuiPaneInfo().Name("Library").Caption("Library").
+	auto library = CreateLibraryPanel();
+	auto stage = CreateStagePanel();
+	auto preview = CreatePreviewPanel();
+	auto tree = CreateTreePanel();
+	auto detail = CreateDetailPanel();
+
+	m_mgr.AddPane(library, wxAuiPaneInfo().Name("Library").Caption("Library").
 		Left().MinSize(wxSize(100, 0)));
 	
-	m_mgr.AddPane(CreatePreviewPanel(),
-		wxAuiPaneInfo().Name("Preview").Caption("Preview").
+	m_mgr.AddPane(stage, wxAuiPaneInfo().Name("Stage").Caption("Stage").
 		CenterPane().PaneBorder(false));
 
-	m_mgr.AddPane(CreateStagePanel(),
-		wxAuiPaneInfo().Name("Stage").Caption("Stage").
+	m_mgr.AddPane(preview, wxAuiPaneInfo().Name("Preview").Caption("Preview").
 		CenterPane().PaneBorder(false));
 
-	m_mgr.AddPane(CreateTreePanel(),
-		wxAuiPaneInfo().Name("Tree").Caption("Tree").
+	m_mgr.AddPane(tree, wxAuiPaneInfo().Name("Tree").Caption("Tree").
 		Right().Row(1).MinSize(200, 0).PaneBorder(false));
 
-	m_mgr.AddPane(CreateDetailPanel(),
-		wxAuiPaneInfo().Name("Detail").Caption("Detail").
+	m_mgr.AddPane(detail, wxAuiPaneInfo().Name("Detail").Caption("Detail").
 		Right().MinSize(300, 0).PaneBorder(false));
 
 	m_mgr.Update();
@@ -135,7 +136,7 @@ wxWindow* Application::CreateStagePanel()
 		auto canvas = std::make_shared<ee2::WxStageCanvas>(page);
 		m_edit_rc = canvas->GetContext();
 		page->GetImpl().SetCanvas(canvas);
-		page->GetImpl().SetEditOP(std::make_shared<NodeSelectOP>(*page, m_preview_rc));
+		page->GetImpl().SetEditOP(std::make_shared<NodeSelectOP>(*page, m_edit_rc));
 
 		m_stage->AddPage(page, ("Scene2D"));
 	}
@@ -148,7 +149,7 @@ wxWindow* Application::CreatePreviewPanel()
 {
 	m_preview = new WxPreviewPanel(m_frame);
 
-	auto canvas = std::make_shared<WxPreviewCanvas>(m_preview);
+	auto canvas = std::make_shared<WxPreviewCanvas>(m_preview, m_edit_rc);
 	m_preview_rc = canvas->GetContext();
 	m_preview->GetImpl().SetCanvas(canvas);
 	auto op = std::make_shared<ee2::CamControlOP>(*canvas->GetCamera(), m_preview->GetSubjectMgr());

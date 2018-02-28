@@ -68,7 +68,7 @@ wxWindow* WxEditDialog::CreateStagePanel(n2::CompScale9* cscale9)
 wxWindow* WxEditDialog::CreatePreviewPanel()
 {
 	m_preview = new ee2::WxStagePage(this, nullptr);
-	auto canvas = std::make_shared<WxStageCanvas>(m_preview, m_preview_rc);
+	auto canvas = std::make_shared<ee2::WxStageCanvas>(m_preview, m_preview_rc);
 	m_preview->GetImpl().SetCanvas(canvas);
 	auto op = std::make_shared<ee2::CamControlOP>(*canvas->GetCamera(), m_preview->GetSubjectMgr());
 	m_preview->GetImpl().SetEditOP(op);

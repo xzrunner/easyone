@@ -10,7 +10,8 @@ namespace eone
 class WxPreviewCanvas : public ee2::WxStageCanvas
 {
 public:
-	WxPreviewCanvas(ee0::WxStagePage* stage);
+	WxPreviewCanvas(ee0::WxStagePage* stage, 
+		const std::shared_ptr<ee0::RenderContext>& rc);
 
 protected:
 	virtual void DrawBackground() const;

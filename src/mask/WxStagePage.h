@@ -14,8 +14,7 @@ class WxStagePage : public ee0::WxStagePage
 {
 public:
 	WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library,
-		n2::CompMask* cmask = nullptr);
-	virtual ~WxStagePage();
+		n2::CompMask& cmask);
 
 	virtual void OnNotify(ee0::MessageID msg, const ee0::VariantSet& variants) override;
 
@@ -23,11 +22,11 @@ public:
 
 private:
 	void InsertSceneNode(const ee0::VariantSet& variants);
+	void DeleteSceneNode(const ee0::VariantSet& variants);
 	void ClearSceneNode();
 
 private:
-	n2::CompMask* m_cmask = nullptr;
-	bool m_comp_new;
+	n2::CompMask& m_cmask;
 
 }; // WxStagePage
 
