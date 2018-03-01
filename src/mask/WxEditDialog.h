@@ -5,7 +5,7 @@
 #include <wx/dialog.h>
 #include <wx/aui/framemanager.h>
 
-namespace ee0 { class RenderContext; }
+namespace ee0 { class RenderContext; class WindowContext; }
 namespace ee2 { class WxStagePage; }
 namespace n2 { class CompMask; }
 
@@ -17,9 +17,8 @@ namespace mask
 class WxEditDialog : public wxDialog
 {
 public:
-	WxEditDialog(wxWindow* parent, const std::shared_ptr<ee0::RenderContext>& edit_rc,
-		const std::shared_ptr<ee0::RenderContext>& preview_rc,
-		n0::SceneNodePtr& node, n2::CompMask& cmask);
+	WxEditDialog(wxWindow* parent, const ee0::RenderContext& rc, 
+		const ee0::WindowContext& wc, n0::SceneNodePtr& node, n2::CompMask& cmask);
 	virtual ~WxEditDialog();
 
 private:
@@ -32,8 +31,8 @@ private:
 	wxWindow* CreateDetailPanel();
 
 private:
-	std::shared_ptr<ee0::RenderContext> m_edit_rc = nullptr;
-	std::shared_ptr<ee0::RenderContext> m_preview_rc = nullptr;
+	const ee0::RenderContext& m_rc;
+	const ee0::WindowContext& m_wc;
 
 	wxAuiManager m_mgr;
 

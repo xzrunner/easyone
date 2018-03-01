@@ -2,7 +2,7 @@
 
 #include <ee2/NodeSelectOP.h>
 
-namespace ee0 { class RenderContext; }
+namespace ee0 { class RenderContext; class WindowContext; }
 
 namespace eone
 {
@@ -10,13 +10,14 @@ namespace eone
 class NodeSelectOP : public ee2::NodeSelectOP
 {
 public:
-	NodeSelectOP(ee0::WxStagePage& stage, 
-		const std::shared_ptr<ee0::RenderContext>& preview_rc);
+	NodeSelectOP(ee0::WxStagePage& stage, const ee0::RenderContext& rc,
+		const ee0::WindowContext& wc);
 	
 	virtual bool OnMouseLeftDClick(int x, int y);
 
 private:
-	std::shared_ptr<ee0::RenderContext> m_preview_rc;
+	const ee0::RenderContext& m_rc;
+	const ee0::WindowContext& m_wc;
 
 }; // NodeSelectOP
 

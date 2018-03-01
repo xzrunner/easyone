@@ -7,8 +7,9 @@ namespace scale9
 {
 
 WxStageCanvas::WxStageCanvas(ee0::WxStagePage* stage, 
-	                         const std::shared_ptr<ee0::RenderContext>& rc)
-	: ee2::WxStageCanvas(stage, rc)
+	                         const ee0::RenderContext& rc, 
+	                         const ee0::WindowContext& wc)
+	: ee2::WxStageCanvas(stage, &rc, &wc)
 {
 }
 

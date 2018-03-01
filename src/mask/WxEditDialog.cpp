@@ -15,14 +15,12 @@ namespace eone
 namespace mask
 {
 
-WxEditDialog::WxEditDialog(wxWindow* parent, const std::shared_ptr<ee0::RenderContext>& edit_rc,
-		                   const std::shared_ptr<ee0::RenderContext>& preview_rc,
-	                       n0::SceneNodePtr& node, n2::CompMask& cmask)
-	: wxDialog(parent, wxID_ANY, "Edit Mask", wxDefaultPosition, 
-		wxSize(800, 600), wxCLOSE_BOX | wxCAPTION | wxMAXIMIZE_BOX)
+WxEditDialog::WxEditDialog(wxWindow* parent, const ee0::RenderContext& rc,
+	                       const ee0::WindowContext& wc, n0::SceneNodePtr& node, n2::CompMask& cmask)
+	: wxDialog(parent, wxID_ANY, "Edit Mask", wxDefaultPosition, wxSize(800, 600), wxCLOSE_BOX | wxCAPTION | wxMAXIMIZE_BOX)
+	, m_rc(rc)
+	, m_wc(wc)
 	, m_mgr(this)
-	, m_edit_rc(edit_rc)
-	, m_preview_rc(preview_rc)
 {
 	InitLayout();
 	InitNodes(node, cmask);
@@ -75,16 +73,16 @@ void WxEditDialog::InitNodes(n0::SceneNodePtr& node, n2::CompMask& cmask)
 wxWindow* WxEditDialog::CreateStagePanel()
 {
 	m_stage = new ee2::WxStagePage(this, nullptr);
-	auto canvas = std::make_shared<ee2::WxStageCanvas>(m_stage, m_edit_rc);
+	auto canvas = std::make_shared<ee2::WxStageCanvas>(m_stage, &m_rc, &m_wc);
 	m_stage->GetImpl().SetCanvas(canvas);
-	m_stage->GetImpl().SetEditOP(std::make_shared<NodeSelectOP>(*m_stage, m_preview_rc));
+	m_stage->GetImpl().SetEditOP(std::make_shared<NodeSelectOP>(*m_stage, m_rc, m_wc));
 	return m_stage;
 }
 
 wxWindow* WxEditDialog::CreatePreviewPanel()
 {
 	m_preview = new ee2::WxStagePage(this, nullptr);
-	auto canvas = std::make_shared<ee2::WxStageCanvas>(m_preview, m_preview_rc);
+	auto canvas = std::make_shared<ee2::WxStageCanvas>(m_preview, &m_rc, &m_wc);
 	m_preview->GetImpl().SetCanvas(canvas);
 	auto op = std::make_shared<ee2::CamControlOP>(*canvas->GetCamera(), m_preview->GetSubjectMgr());
 	m_preview->GetImpl().SetEditOP(op);

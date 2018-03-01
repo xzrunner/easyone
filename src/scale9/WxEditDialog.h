@@ -5,7 +5,7 @@
 #include <wx/dialog.h>
 #include <wx/aui/framemanager.h>
 
-namespace ee0 { class WxStagePage; class RenderContext;  }
+namespace ee0 { class WxStagePage; class RenderContext; class WindowContext; }
 namespace n2 { class CompScale9; }
 
 namespace eone
@@ -16,22 +16,21 @@ namespace scale9
 class WxEditDialog : public wxDialog
 {
 public:
-	WxEditDialog(wxWindow* parent, const std::shared_ptr<ee0::RenderContext>& edit_rc,
-		const std::shared_ptr<ee0::RenderContext>& preview_rc,
-		n0::SceneNodePtr& node, n2::CompScale9* cscale9 = nullptr);
+	WxEditDialog(wxWindow* parent, const ee0::RenderContext& rc,
+		const ee0::WindowContext& wc, n0::SceneNodePtr& node, n2::CompScale9& cscale9);
 	virtual ~WxEditDialog();
 
 private:
-	void InitLayout(n2::CompScale9* cscale9);
+	void InitLayout(n2::CompScale9& cscale9);
 
-	wxWindow* CreateStagePanel(n2::CompScale9* cscale9);
+	wxWindow* CreateStagePanel(n2::CompScale9& cscale9);
 	wxWindow* CreatePreviewPanel();
 	wxWindow* CreateTreePanel();
 	wxWindow* CreateDetailPanel();
 
 private:
-	std::shared_ptr<ee0::RenderContext> m_edit_rc = nullptr;
-	std::shared_ptr<ee0::RenderContext> m_preview_rc = nullptr;
+	const ee0::RenderContext& m_rc;
+	const ee0::WindowContext& m_wc;
 
 	wxAuiManager m_mgr;
 

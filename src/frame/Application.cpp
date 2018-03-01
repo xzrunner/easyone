@@ -134,9 +134,10 @@ wxWindow* Application::CreateStagePanel()
 	{
 		auto page = new ee2::WxStagePage(m_frame, m_library);
 		auto canvas = std::make_shared<ee2::WxStageCanvas>(page);
-		m_edit_rc = canvas->GetContext();
+		m_rc = canvas->GetRenderContext();
+		m_wc = canvas->GetWidnowContext();
 		page->GetImpl().SetCanvas(canvas);
-		page->GetImpl().SetEditOP(std::make_shared<NodeSelectOP>(*page, m_edit_rc));
+		page->GetImpl().SetEditOP(std::make_shared<NodeSelectOP>(*page, m_rc, m_wc));
 
 		m_stage->AddPage(page, ("Scene2D"));
 	}
@@ -149,8 +150,7 @@ wxWindow* Application::CreatePreviewPanel()
 {
 	m_preview = new WxPreviewPanel(m_frame);
 
-	auto canvas = std::make_shared<WxPreviewCanvas>(m_preview, m_edit_rc);
-	m_preview_rc = canvas->GetContext();
+	auto canvas = std::make_shared<WxPreviewCanvas>(m_preview, m_rc, m_wc);
 	m_preview->GetImpl().SetCanvas(canvas);
 	auto op = std::make_shared<ee2::CamControlOP>(*canvas->GetCamera(), m_preview->GetSubjectMgr());
 	m_preview->GetImpl().SetEditOP(op);

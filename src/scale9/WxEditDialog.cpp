@@ -18,14 +18,13 @@ namespace eone
 namespace scale9
 {
 
-WxEditDialog::WxEditDialog(wxWindow* parent, const std::shared_ptr<ee0::RenderContext>& edit_rc,
-		                   const std::shared_ptr<ee0::RenderContext>& preview_rc,
-	                       n0::SceneNodePtr& node, n2::CompScale9* cscale9)
-	: wxDialog(parent, wxID_ANY, "Edit Scale9", wxDefaultPosition, 
-		wxSize(800, 600), wxCLOSE_BOX | wxCAPTION | wxMAXIMIZE_BOX)
+WxEditDialog::WxEditDialog(wxWindow* parent, const ee0::RenderContext& rc,
+	                       const ee0::WindowContext& wc, n0::SceneNodePtr& node, 
+                           n2::CompScale9& cscale9)
+	: wxDialog(parent, wxID_ANY, "Edit Scale9", wxDefaultPosition, wxSize(800, 600), wxCLOSE_BOX | wxCAPTION | wxMAXIMIZE_BOX)
+	, m_rc(rc)
+	, m_wc(wc)
 	, m_mgr(this)
-	, m_edit_rc(edit_rc)
-	, m_preview_rc(preview_rc)
 {
 	InitLayout(cscale9);
 }
@@ -35,7 +34,7 @@ WxEditDialog::~WxEditDialog()
 	m_mgr.UnInit();
 }
 
-void WxEditDialog::InitLayout(n2::CompScale9* cscale9)
+void WxEditDialog::InitLayout(n2::CompScale9& cscale9)
 {
 	m_mgr.AddPane(CreateStagePanel(cscale9),
 		wxAuiPaneInfo().Name("Stage").Caption("Stage").
@@ -56,19 +55,19 @@ void WxEditDialog::InitLayout(n2::CompScale9* cscale9)
 	m_mgr.Update();
 }
 
-wxWindow* WxEditDialog::CreateStagePanel(n2::CompScale9* cscale9)
+wxWindow* WxEditDialog::CreateStagePanel(n2::CompScale9& cscale9)
 {
 	m_stage = new scale9::WxStagePage(this, nullptr, cscale9);
-	auto canvas = std::make_shared<ee2::WxStageCanvas>(m_stage, m_edit_rc);
+	auto canvas = std::make_shared<ee2::WxStageCanvas>(m_stage, &m_rc, &m_wc);
 	m_stage->GetImpl().SetCanvas(canvas);
-	m_stage->GetImpl().SetEditOP(std::make_shared<NodeSelectOP>(*m_stage, m_preview_rc));
+	m_stage->GetImpl().SetEditOP(std::make_shared<NodeSelectOP>(*m_stage, m_rc, m_wc));
 	return m_stage;
 }
 
 wxWindow* WxEditDialog::CreatePreviewPanel()
 {
 	m_preview = new ee2::WxStagePage(this, nullptr);
-	auto canvas = std::make_shared<ee2::WxStageCanvas>(m_preview, m_preview_rc);
+	auto canvas = std::make_shared<ee2::WxStageCanvas>(m_preview, &m_rc, &m_wc);
 	m_preview->GetImpl().SetCanvas(canvas);
 	auto op = std::make_shared<ee2::CamControlOP>(*canvas->GetCamera(), m_preview->GetSubjectMgr());
 	m_preview->GetImpl().SetEditOP(op);

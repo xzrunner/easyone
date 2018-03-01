@@ -14,8 +14,7 @@ class WxStagePage : public ee0::WxStagePage
 {
 public:
 	WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library,
-		n2::CompScale9* cscale9 = nullptr);
-	virtual ~WxStagePage();
+		n2::CompScale9& cscale9);
 
 	virtual void OnNotify(ee0::MessageID msg, const ee0::VariantSet& variants) override;
 
@@ -29,8 +28,7 @@ private:
 	bool DeleteSceneNode(const n0::SceneNodePtr& node);
 
 private:
-	n2::CompScale9* m_cscale9 = nullptr;
-	bool m_comp_new;
+	n2::CompScale9& m_cscale9;
 	
 }; // WxStagePage
 

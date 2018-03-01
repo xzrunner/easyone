@@ -16,20 +16,20 @@ namespace
 {
 
 void OpenEditDialog(ee0::WxStagePage& stage, const n0::SceneNodePtr& node,
-	                const std::shared_ptr<ee0::RenderContext>& preview_rc)
+	                const ee0::RenderContext& rc, const ee0::WindowContext& wc)
 {
 	if (node->HasComponent<n2::CompMask>())
 	{
 		auto& canvas = stage.GetImpl().GetCanvas();
-		eone::mask::WxEditDialog dlg(eone::Blackboard::Instance()->GetStage(), canvas->GetContext(), 
-			preview_rc, std::const_pointer_cast<n0::SceneNode>(node), node->GetComponent<n2::CompMask>());
+		eone::mask::WxEditDialog dlg(eone::Blackboard::Instance()->GetStage(), rc, wc, 
+			std::const_pointer_cast<n0::SceneNode>(node), node->GetComponent<n2::CompMask>());
 		dlg.ShowModal();
 	}
 	else if (node->HasComponent<n2::CompScale9>())
 	{
 		auto& canvas = stage.GetImpl().GetCanvas();
-		eone::scale9::WxEditDialog dlg(eone::Blackboard::Instance()->GetStage(), canvas->GetContext(),
-			preview_rc, std::const_pointer_cast<n0::SceneNode>(node), &node->GetComponent<n2::CompScale9>());
+		eone::scale9::WxEditDialog dlg(eone::Blackboard::Instance()->GetStage(), rc, wc, 
+			std::const_pointer_cast<n0::SceneNode>(node), node->GetComponent<n2::CompScale9>());
 		dlg.ShowModal();
 	}
 }
@@ -40,9 +40,11 @@ namespace eone
 {
 
 NodeSelectOP::NodeSelectOP(ee0::WxStagePage& stage,
-	                       const std::shared_ptr<ee0::RenderContext>& preview_rc)
+	                       const ee0::RenderContext& rc,
+	                       const ee0::WindowContext& wc)
 	: ee2::NodeSelectOP(stage)
-	, m_preview_rc(preview_rc)
+	, m_rc(rc)
+	, m_wc(wc)
 {
 }
 
@@ -60,7 +62,7 @@ bool NodeSelectOP::OnMouseLeftDClick(int x, int y)
 	selection.Traverse(
 		[&](const n0::SceneNodePtr& node)->bool
 		{
-			OpenEditDialog(m_stage, node, m_preview_rc);
+			OpenEditDialog(m_stage, node, m_rc, m_wc);
 			return false;
 		}
 	);

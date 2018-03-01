@@ -7,15 +7,14 @@
 namespace eone
 {
 
-WxPreviewCanvas::WxPreviewCanvas(ee0::WxStagePage* stage,
-	                             const std::shared_ptr<ee0::RenderContext>& rc)
-	: ee2::WxStageCanvas(stage, rc)
+WxPreviewCanvas::WxPreviewCanvas(ee0::WxStagePage* stage, const ee0::RenderContext& rc)
+	: ee2::WxStageCanvas(stage, &rc)
 {
 }
 
 void WxPreviewCanvas::DrawBackground() const
 {
-//	pt2::PrimitiveDraw::Rect(nullptr, sm::vec2(0, 0), 200, 200, false);
+	pt2::PrimitiveDraw::Rect(nullptr, sm::vec2(0, 0), 200, 200, false);
 }
 
 }
