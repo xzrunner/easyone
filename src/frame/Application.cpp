@@ -148,11 +148,12 @@ wxWindow* Application::CreateStagePanel()
 
 wxWindow* Application::CreatePreviewPanel()
 {
-	m_preview = new WxPreviewPanel(m_frame);
+	auto& sub_mgr = m_stage->GetCurrentStagePage()->GetSubjectMgr();
+	m_preview = new WxPreviewPanel(m_frame, sub_mgr, m_stage->GetCurrentStagePage());
 
-	auto canvas = std::make_shared<WxPreviewCanvas>(m_preview, m_rc, m_wc);
+	auto canvas = std::make_shared<WxPreviewCanvas>(m_preview, m_rc);
 	m_preview->GetImpl().SetCanvas(canvas);
-	auto op = std::make_shared<ee2::CamControlOP>(*canvas->GetCamera(), m_preview->GetSubjectMgr());
+	auto op = std::make_shared<ee2::CamControlOP>(*canvas->GetCamera(), sub_mgr);
 	m_preview->GetImpl().SetEditOP(op);
 
 	return m_preview;

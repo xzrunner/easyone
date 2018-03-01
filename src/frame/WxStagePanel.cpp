@@ -10,7 +10,7 @@ namespace eone
 WxStagePanel::WxStagePanel(wxWindow* parent)
 	: wxAuiNotebook(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, 
 		wxAUI_NB_DEFAULT_STYLE | wxAUI_NB_TAB_EXTERNAL_MOVE | wxNO_BORDER)
-	, m_last_page(nullptr)
+	, m_old_page(nullptr)
 {
 	Connect(GetId(), wxEVT_AUINOTEBOOK_PAGE_CHANGING, 
 		wxAuiNotebookEventHandler(WxStagePanel::OnPageChanging));
@@ -33,29 +33,29 @@ void WxStagePanel::OnPageChanging(wxAuiNotebookEvent& event)
 {
 	auto page = GetCurrentStagePage();
 	if (page) {
-		m_last_page = page;
+		m_old_page = page;
 	}
 }
 
 void WxStagePanel::OnPageChanged(wxAuiNotebookEvent& event)
 {
-	if (!m_last_page) {
+	if (!m_old_page) {
 		return;
 	}
 
-	auto page = GetCurrentStagePage();
-	GD_ASSERT(page, "null page");
+	auto new_page = GetCurrentStagePage();
+	GD_ASSERT(new_page, "null new_page");
 
 	ee0::VariantSet vars;
 
 	ee0::Variant var;
 	var.m_type = ee0::VT_PVOID;
-	var.m_val.pv = &page->GetSubjectMgr();
-	vars.SetVariant("sub_mgr", var);
+	var.m_val.pv = new_page;
+	vars.SetVariant("new_page", var);
 
-	m_last_page->GetSubjectMgr().NotifyObservers(ee0::MSG_STAGE_PAGE_CHANGING, vars);
+	m_old_page->GetSubjectMgr().NotifyObservers(ee0::MSG_STAGE_PAGE_CHANGING, vars);
 
-	m_last_page = nullptr;
+	m_old_page = nullptr;
 }
 
 }

@@ -7,6 +7,8 @@ namespace ee0 { class WxStagePage; }
 namespace eone
 {
 
+class WxStagePage;
+
 class WxStagePanel : public wxAuiNotebook
 {
 public:
@@ -21,7 +23,7 @@ private:
 	void OnPageChanged(wxAuiNotebookEvent& event);
 
 private:
-	ee0::WxStagePage* m_last_page;
+	ee0::WxStagePage* m_old_page;
 
 }; // WxStagePanel
 
