@@ -5,6 +5,8 @@
 #include "frame/WxSceneTreePanel.h"
 #include "frame/WxDetailPanel.h"
 #include "frame/NodeSelectOP.h"
+#include "frame/WxPreviewPanel.h"
+#include "frame/WxPreviewCanvas.h"
 
 #include <ee0/MsgHelper.h>
 #include <ee2/WxStagePage.h>
@@ -65,11 +67,14 @@ wxWindow* WxEditDialog::CreateStagePanel(const n0::SceneNodePtr& node)
 
 wxWindow* WxEditDialog::CreatePreviewPanel()
 {
-	m_preview = new ee2::WxStagePage(this, nullptr);
-	auto canvas = std::make_shared<ee2::WxStageCanvas>(m_preview, &m_rc, &m_wc);
+	auto& sub_mgr = m_stage->GetSubjectMgr();
+	m_preview = new WxPreviewPanel(this, sub_mgr, m_stage);
+
+	auto canvas = std::make_shared<WxPreviewCanvas>(m_preview, m_rc);
 	m_preview->GetImpl().SetCanvas(canvas);
-	auto op = std::make_shared<ee2::CamControlOP>(*canvas->GetCamera(), m_preview->GetSubjectMgr());
+	auto op = std::make_shared<ee2::CamControlOP>(*canvas->GetCamera(), sub_mgr);
 	m_preview->GetImpl().SetEditOP(op);
+
 	return m_preview;
 }
 
