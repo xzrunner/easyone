@@ -1,13 +1,45 @@
 #include "scene2d/WxStagePage.h"
 
+#include <ee2/WxStageDropTarget.h>
+
+#include <guard/check.h>
+#include <node0/SceneNode.h>
+#include <node0/CompComplex.h>
+
 namespace eone
 {
 namespace scene2d
 {
 
-WxStagePage::WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library)
-	: ee2::WxStagePage(parent, library)
+WxStagePage::WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, const n0::SceneNodePtr& node)
+	: ee0::WxStagePage(parent)
+	, m_node(node)
 {
+	m_sub_mgr.RegisterObserver(ee0::MSG_INSERT_SCENE_NODE, this);
+	m_sub_mgr.RegisterObserver(ee0::MSG_DELETE_SCENE_NODE, this);
+	m_sub_mgr.RegisterObserver(ee0::MSG_CLEAR_SCENE_NODE, this);
+
+	if (library) {
+		SetDropTarget(new ee2::WxStageDropTarget(library, this));
+	}
+}
+
+void WxStagePage::OnNotify(ee0::MessageID msg, const ee0::VariantSet& variants)
+{
+	ee0::WxStagePage::OnNotify(msg, variants);
+
+	switch (msg)
+	{
+	case ee0::MSG_INSERT_SCENE_NODE:
+		InsertSceneNode(variants);
+		break;
+	case ee0::MSG_DELETE_SCENE_NODE:
+		DeleteSceneNode(variants);
+		break;
+	case ee0::MSG_CLEAR_SCENE_NODE:
+		ClearSceneNode();
+		break;
+	}
 }
 
 void WxStagePage::Traverse(std::function<bool(const n0::SceneNodePtr&)> func,
@@ -15,10 +47,46 @@ void WxStagePage::Traverse(std::function<bool(const n0::SceneNodePtr&)> func,
 {
 	auto var = variants.GetVariant("preview");
 	if (var.m_type == ee0::VT_EMPTY) {
-		ee2::WxStagePage::Traverse(func);
+		auto& ccomplex = m_node->GetComponent<n0::CompComplex>();
+		ccomplex.Traverse(func);
 	} else {
-		ee2::WxStagePage::Traverse(func);
+		func(m_node);
 	}
+}
+
+void WxStagePage::InsertSceneNode(const ee0::VariantSet& variants)
+{
+	auto var = variants.GetVariant("node");
+	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: node");
+	n0::SceneNodePtr* node = static_cast<n0::SceneNodePtr*>(var.m_val.pv);
+	GD_ASSERT(node, "err scene node");
+
+	auto& ccomplex = m_node->GetComponent<n0::CompComplex>();
+	if (m_node_selection.IsEmpty()) {
+		ccomplex.AddChild(*node);
+	}
+
+	m_sub_mgr.NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
+}
+
+void WxStagePage::DeleteSceneNode(const ee0::VariantSet& variants)
+{
+	auto var = variants.GetVariant("node");
+	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: node");
+	n0::SceneNodePtr* node = static_cast<n0::SceneNodePtr*>(var.m_val.pv);
+	GD_ASSERT(node, "err scene node");
+
+	auto& ccomplex = m_node->GetComponent<n0::CompComplex>();
+	if (ccomplex.RemoveChild(*node)) {
+		m_sub_mgr.NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
+	}
+}
+
+void WxStagePage::ClearSceneNode()
+{
+	auto& ccomplex = m_node->GetComponent<n0::CompComplex>();
+	ccomplex.RemoveAllChildren();
+	m_sub_mgr.NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
 }
 
 }

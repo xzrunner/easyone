@@ -1,4 +1,4 @@
-#include "Application.h"
+#include "frame/Application.h"
 #include "frame/WxLibraryPanel.h"
 #include "frame/WxStagePanel.h"
 #include "frame/WxPreviewPanel.h"
@@ -8,9 +8,11 @@
 #include "frame/NodeSelectOP.h"
 #include "frame/Blackboard.h"
 #include "frame/Serializer.h"
+#include "frame/NodeFactory.h"
+
+#include "scene2d/WxStagePage.h"
 
 #include <ee0/CompNodeEditor.h>
-#include <ee2/WxStagePage.h>
 #include <ee2/WxStageCanvas.h>
 #include <ee3/WxStagePage.h>
 #include <ee3/WxStageCanvas.h>
@@ -132,7 +134,8 @@ wxWindow* Application::CreateStagePanel()
 	Blackboard::Instance()->SetStage(m_stage);
 	m_stage->Freeze();
 	{
-		auto page = new ee2::WxStagePage(m_frame, m_library);
+		auto node = NodeFactory::Create(NODE_SCENE2D);
+		auto page = new scene2d::WxStagePage(m_frame, m_library, node);
 		auto canvas = std::make_shared<ee2::WxStageCanvas>(page);
 		m_rc = canvas->GetRenderContext();
 		m_wc = canvas->GetWidnowContext();

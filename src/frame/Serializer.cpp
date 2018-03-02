@@ -21,13 +21,20 @@ void Serializer::StoreToFile(const ee0::WxStagePage& page, const std::string& fi
 	auto dir = boost::filesystem::path(filepath).parent_path().string();
 
 	auto& alloc = doc.GetAllocator();
+
+	ee0::VariantSet vars;
+	ee0::Variant var;
+	var.m_type = ee0::VT_BOOL;
+	var.m_val.bl = true;
+	vars.SetVariant("preview", var);
+
 	page.Traverse([&](const n0::SceneNodePtr& node)->bool 
 	{
 		rapidjson::Value val_node;
 		ns::NodeSerializer::StoreNodeToJson(node, dir, val_node, alloc);
 		doc.PushBack(val_node, alloc);
 		return true;
-	});
+	}, vars);
 
 	js::RapidJsonHelper::WriteToFile(filepath.c_str(), doc);
 }
@@ -40,7 +47,7 @@ void Serializer::LoadFromFile(ee0::WxStagePage& page, const std::string& filepat
 	auto dir = boost::filesystem::path(filepath).parent_path().string();
 	for (auto& node_val : doc.GetArray())
 	{
-		auto node = ns::NodeFactory::CreateNode(dir, node_val);
+		auto node = ns::NodeFactory::Create(dir, node_val);
 		bool succ = ee0::MsgHelper::InsertNode(page.GetSubjectMgr(), node);
 		GD_ASSERT(succ, "no MSG_INSERT_SCENE_NODE");
 	}

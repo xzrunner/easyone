@@ -249,7 +249,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\frame\Blackboard.h" />
+    <ClInclude Include="..\..\..\src\frame\NodeFactory.h" />
     <ClInclude Include="..\..\..\src\frame\NodeSelectOP.h" />
+    <ClInclude Include="..\..\..\src\frame\NodeType.h" />
     <ClInclude Include="..\..\..\src\frame\Serializer.h" />
     <ClInclude Include="..\..\..\src\frame\WxDetailPanel.h" />
     <ClInclude Include="..\..\..\src\frame\main.h" />
@@ -272,6 +274,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\frame\Blackboard.cpp" />
+    <ClCompile Include="..\..\..\src\frame\NodeFactory.cpp" />
     <ClCompile Include="..\..\..\src\frame\NodeSelectOP.cpp" />
     <ClCompile Include="..\..\..\src\frame\Serializer.cpp" />
     <ClCompile Include="..\..\..\src\frame\WxDetailPanel.cpp" />

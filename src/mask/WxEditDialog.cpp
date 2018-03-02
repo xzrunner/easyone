@@ -9,7 +9,6 @@
 #include "mask/WxStagePage.h"
 
 #include <ee0/MsgHelper.h>
-#include <ee2/WxStagePage.h>
 #include <ee2/WxStageCanvas.h>
 #include <ee2/CamControlOP.h>
 

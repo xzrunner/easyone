@@ -1,11 +1,11 @@
 #include "frame/WxSceneTreePanel.h"
 #include "frame/WxSceneTreeCtrl.h"
+#include "frame/NodeFactory.h"
 
 #include <ee0/MessageID.h>
 #include <ee0/VariantSet.h>
 #include <ee0/SubjectMgr.h>
 #include <ee0/WxListSelectDlg.h>
-#include <ee2/NodeFactory.h>
 
 #include <guard/check.h>
 #include <node0/SceneNode.h>
@@ -98,7 +98,7 @@ void WxSceneTreePanel::OnCreatePress(wxCommandEvent& event)
 				auto& path = dlg.GetPath();
 				auto img = gum::ResPool::Instance().Fetch<gum::Image>(path.ToStdString());
 
-				node = ee2::NodeFactory::Instance()->Create(ee2::NODE_IMAGE);
+				node = NodeFactory::Create(NODE_IMAGE);
 				auto& cimage = node->GetComponent<n2::CompImage>();
 				cimage.SetFilepath(path.ToStdString());
 				cimage.SetTexture(img->GetTexture());
@@ -108,16 +108,16 @@ void WxSceneTreePanel::OnCreatePress(wxCommandEvent& event)
 		}
 		break;
 	case NodeType::NODE_TEXT:
-		node = ee2::NodeFactory::Instance()->Create(ee2::NODE_TEXT);
+		node = NodeFactory::Create(NODE_TEXT);
 		break;
 	case NodeType::NODE_MASK:
-		node = ee2::NodeFactory::Instance()->Create(ee2::NODE_MASK);
+		node = NodeFactory::Create(NODE_MASK);
 		break;
 	case NodeType::NODE_MESH:
-		node = ee2::NodeFactory::Instance()->Create(ee2::NODE_MESH);
+		node = NodeFactory::Create(NODE_MESH);
 		break;
 	case NodeType::NODE_SCALE9:
-		node = ee2::NodeFactory::Instance()->Create(ee2::NODE_SCALE9);
+		node = NodeFactory::Create(NODE_SCALE9);
 		break;
 
 	case NodeType::NODE_SPRITE2:
@@ -128,7 +128,7 @@ void WxSceneTreePanel::OnCreatePress(wxCommandEvent& event)
 				auto& path = dlg.GetPath();
 				auto sym = gum::SymbolPool::Instance()->Fetch(path.ToStdString().c_str());
 
-				node = ee2::NodeFactory::Instance()->Create(ee2::NODE_SPRITE2);
+				node = NodeFactory::Create(NODE_SPRITE2);
 				auto& csprite2 = node->GetComponent<n2::CompSprite2>();
 				csprite2.SetFilepath(path.ToStdString());
 				csprite2.SetSymbol(sym);

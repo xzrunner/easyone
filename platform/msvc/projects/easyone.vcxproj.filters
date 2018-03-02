@@ -31,6 +31,9 @@
     <Filter Include="03.mask">
       <UniqueIdentifier>{a0814d30-c873-4c45-817c-38f4d2014634}</UniqueIdentifier>
     </Filter>
+    <Filter Include="00.frame\tools">
+      <UniqueIdentifier>{19f5effd-40ff-45bc-8e06-2d19aacba034}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\frame\main.h">
@@ -96,6 +99,12 @@
     <ClInclude Include="..\..\..\src\scene2d\WxStagePage.h">
       <Filter>01.scene2d</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\frame\NodeFactory.h">
+      <Filter>00.frame\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\frame\NodeType.h">
+      <Filter>00.frame\tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\frame\main.cpp">
@@ -160,6 +169,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\scene2d\WxStagePage.cpp">
       <Filter>01.scene2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\frame\NodeFactory.cpp">
+      <Filter>00.frame\tools</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
