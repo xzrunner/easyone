@@ -3,6 +3,7 @@
 #include <ee2/WxStageDropTarget.h>
 
 #include <guard/check.h>
+#include <node0/SceneNode.h>
 #include <node2/CompMask.h>
 
 namespace eone
@@ -10,10 +11,9 @@ namespace eone
 namespace mask
 {
 
-WxStagePage::WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library,
-	                     n2::CompMask& cmask)
+WxStagePage::WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, const n0::SceneNodePtr& node)
 	: ee0::WxStagePage(parent)
-	, m_cmask(cmask)
+	, m_node(node)
 {
 	m_sub_mgr.RegisterObserver(ee0::MSG_INSERT_SCENE_NODE, this);
 	m_sub_mgr.RegisterObserver(ee0::MSG_DELETE_SCENE_NODE, this);
@@ -40,14 +40,22 @@ void WxStagePage::OnNotify(ee0::MessageID msg, const ee0::VariantSet& variants)
 	}
 }
 
-void WxStagePage::Traverse(std::function<bool(const n0::SceneNodePtr&)> func) const
+void WxStagePage::Traverse(std::function<bool(const n0::SceneNodePtr&)> func,
+	                       const ee0::VariantSet& variants) const
 {
-	m_cmask.Traverse(func);
+	auto var = variants.GetVariant("preview");
+	if (var.m_type == ee0::VT_EMPTY) {
+		auto& cmask = m_node->GetComponent<n2::CompMask>();
+		cmask.Traverse(func);
+	} else {
+		func(m_node);
+	}
 }
 
 void WxStagePage::InsertSceneNode(const ee0::VariantSet& variants)
 {
-	if (m_cmask.GetBaseNode() && m_cmask.GetMaskNode()) {
+	auto& cmask = m_node->GetComponent<n2::CompMask>();
+	if (cmask.GetBaseNode() && cmask.GetMaskNode()) {
 		return;
 	}
 
@@ -56,11 +64,11 @@ void WxStagePage::InsertSceneNode(const ee0::VariantSet& variants)
 	n0::SceneNodePtr* node = static_cast<n0::SceneNodePtr*>(var.m_val.pv);
 	GD_ASSERT(node, "err scene node");
 
-	if (!m_cmask.GetBaseNode()) {
-		m_cmask.SetBaseNode(*node);
+	if (!cmask.GetBaseNode()) {
+		cmask.SetBaseNode(*node);
 	} else {
-		GD_ASSERT(!m_cmask.GetMaskNode(), "mask not null");
-		m_cmask.SetMaskNode(*node);
+		GD_ASSERT(!cmask.GetMaskNode(), "mask not null");
+		cmask.SetMaskNode(*node);
 	}
 		
 	m_sub_mgr.NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
@@ -73,11 +81,12 @@ void WxStagePage::DeleteSceneNode(const ee0::VariantSet& variants)
 	n0::SceneNodePtr* node = static_cast<n0::SceneNodePtr*>(var.m_val.pv);
 	GD_ASSERT(node, "err scene node");
 
-	if (m_cmask.GetBaseNode() == *node) {
-		m_cmask.SetBaseNode(nullptr);
+	auto& cmask = m_node->GetComponent<n2::CompMask>();
+	if (cmask.GetBaseNode() == *node) {
+		cmask.SetBaseNode(nullptr);
 	} else {
-		GD_ASSERT(m_cmask.GetMaskNode() == *node, "err mask");
-		m_cmask.SetMaskNode(nullptr);
+		GD_ASSERT(cmask.GetMaskNode() == *node, "err mask");
+		cmask.SetMaskNode(nullptr);
 	}
 
 	m_sub_mgr.NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
@@ -85,8 +94,9 @@ void WxStagePage::DeleteSceneNode(const ee0::VariantSet& variants)
 
 void WxStagePage::ClearSceneNode()
 {
-	m_cmask.SetBaseNode(nullptr);
-	m_cmask.SetMaskNode(nullptr);
+	auto& cmask = m_node->GetComponent<n2::CompMask>();
+	cmask.SetBaseNode(nullptr);
+	cmask.SetMaskNode(nullptr);
 
 	m_sub_mgr.NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
 }

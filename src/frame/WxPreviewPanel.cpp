@@ -28,11 +28,6 @@ void WxPreviewPanel::OnNotify(ee0::MessageID msg, const ee0::VariantSet& variant
 	}
 }
 
-void WxPreviewPanel::Traverse(std::function<bool(const n0::SceneNodePtr&)> func) const
-{
-	m_stage->Traverse(func);
-}
-
 void WxPreviewPanel::RegisterMsg(ee0::SubjectMgr& sub_mgr)
 {
 	sub_mgr.RegisterObserver(ee0::MSG_STAGE_PAGE_CHANGING, this);
@@ -52,6 +47,7 @@ void WxPreviewPanel::StagePageChanging(const ee0::VariantSet& variants)
 	auto canvas = std::dynamic_pointer_cast<WxPreviewCanvas>(
 		GetImpl().GetCanvas());
 	canvas->RegisterMsg(*m_sub_mgr);
+	canvas->SetDirty();
 }
 
 }

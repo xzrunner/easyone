@@ -45,9 +45,6 @@
     <ClInclude Include="..\..\..\src\frame\WxLibraryPanel.h">
       <Filter>00.frame\library</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\frame\WxStagePanel.h">
-      <Filter>00.frame\stage</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\frame\WxSceneTreeCtrl.h">
       <Filter>00.frame\tree</Filter>
     </ClInclude>
@@ -93,6 +90,12 @@
     <ClInclude Include="..\..\..\src\frame\WxPreviewCanvas.h">
       <Filter>00.frame\preview</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\frame\WxStagePanel.h">
+      <Filter>00.frame\stage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\scene2d\WxStagePage.h">
+      <Filter>01.scene2d</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\frame\main.cpp">
@@ -106,9 +109,6 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\frame\WxLibraryPanel.cpp">
       <Filter>00.frame\library</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\frame\WxStagePanel.cpp">
-      <Filter>00.frame\stage</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\frame\WxSceneTreeCtrl.cpp">
       <Filter>00.frame\tree</Filter>
@@ -154,6 +154,12 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\frame\WxPreviewCanvas.cpp">
       <Filter>00.frame\preview</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\frame\WxStagePanel.cpp">
+      <Filter>00.frame\stage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\scene2d\WxStagePage.cpp">
+      <Filter>01.scene2d</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -13,13 +13,14 @@ namespace eone
 class WxPreviewPanel : public ee0::WxEditPanel, public ee0::Observer
 {
 public:
-	WxPreviewPanel(wxWindow* parent, ee0::SubjectMgr& sub_mgr, ee0::WxStagePage* stage);
+	WxPreviewPanel(wxWindow* parent, ee0::SubjectMgr& sub_mgr, 
+		ee0::WxStagePage* stage);
 
 	virtual void OnNotify(ee0::MessageID msg, const ee0::VariantSet& variants) override;
 
-	virtual void Traverse(std::function<bool(const n0::SceneNodePtr&)> func) const;
-
 	ee0::SubjectMgr& GetSubjectMgr() { return *m_sub_mgr; }
+
+	ee0::WxStagePage& GetStagePage() { return *m_stage; }
 
 private:
 	void RegisterMsg(ee0::SubjectMgr& sub_mgr);

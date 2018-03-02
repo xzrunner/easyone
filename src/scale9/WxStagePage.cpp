@@ -14,10 +14,9 @@ namespace eone
 namespace scale9
 {
 
-WxStagePage::WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library,
-	                     n2::CompScale9& cscale9)
+WxStagePage::WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, const n0::SceneNodePtr& node)
 	: ee0::WxStagePage(parent)
-	, m_cscale9(cscale9)
+	, m_node(node)
 {
 	m_sub_mgr.RegisterObserver(ee0::MSG_INSERT_SCENE_NODE, this);
 	m_sub_mgr.RegisterObserver(ee0::MSG_DELETE_SCENE_NODE, this);
@@ -44,9 +43,16 @@ void WxStagePage::OnNotify(ee0::MessageID msg, const ee0::VariantSet& variants)
 	}
 }
 
-void WxStagePage::Traverse(std::function<bool(const n0::SceneNodePtr&)> func) const
+void WxStagePage::Traverse(std::function<bool(const n0::SceneNodePtr&)> func,
+	                       const ee0::VariantSet& variants) const
 {
-	m_cscale9.Traverse(func);
+	auto var = variants.GetVariant("preview");
+	if (var.m_type == ee0::VT_EMPTY) {
+		auto& cscale9 = m_node->GetComponent<n2::CompScale9>();
+		cscale9.Traverse(func);
+	} else {
+		func(m_node);
+	}
 }
 
 void WxStagePage::InsertSceneNode(const ee0::VariantSet& variants)
@@ -66,7 +72,8 @@ void WxStagePage::InsertSceneNode(const ee0::VariantSet& variants)
 	ctrans.GetTrans().SetPosition(ComposeGrids::GetGridCenter(col, row));
 	(*node)->GetComponent<n2::CompBoundingBox>().Build(ctrans.GetTrans().GetSRT());
 
-	m_cscale9.SetNode(row * 3 + col, *node);
+	auto& cscale9 = m_node->GetComponent<n2::CompScale9>();
+	cscale9.SetNode(row * 3 + col, *node);
 	
 	m_sub_mgr.NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
 }

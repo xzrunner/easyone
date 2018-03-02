@@ -5,9 +5,7 @@
 #include <wx/dialog.h>
 #include <wx/aui/framemanager.h>
 
-namespace ee0 { class RenderContext; class WindowContext; }
-namespace ee2 { class WxStagePage; }
-namespace n2 { class CompMask; }
+namespace ee0 { class RenderContext; class WindowContext; class WxStagePage; }
 
 namespace eone
 {
@@ -18,14 +16,13 @@ class WxEditDialog : public wxDialog
 {
 public:
 	WxEditDialog(wxWindow* parent, const ee0::RenderContext& rc, 
-		const ee0::WindowContext& wc, n0::SceneNodePtr& node, n2::CompMask& cmask);
+		const ee0::WindowContext& wc, const n0::SceneNodePtr& node);
 	virtual ~WxEditDialog();
 
 private:
-	void InitLayout();
-	void InitNodes(n0::SceneNodePtr& node, n2::CompMask& cmask);
+	void InitLayout(const n0::SceneNodePtr& node);
 
-	wxWindow* CreateStagePanel();
+	wxWindow* CreateStagePanel(const n0::SceneNodePtr& node);
 	wxWindow* CreatePreviewPanel();
 	wxWindow* CreateTreePanel();
 	wxWindow* CreateDetailPanel();
@@ -36,8 +33,8 @@ private:
 
 	wxAuiManager m_mgr;
 
-	ee2::WxStagePage* m_preview;
-	ee2::WxStagePage* m_stage;
+	ee0::WxStagePage* m_preview;
+	ee0::WxStagePage* m_stage;
 
 }; // WxEditDialog
 

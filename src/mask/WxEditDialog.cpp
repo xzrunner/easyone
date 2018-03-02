@@ -3,6 +3,8 @@
 #include "frame/WxDetailPanel.h"
 #include "frame/NodeSelectOP.h"
 
+#include "mask/WxStagePage.h"
+
 #include <ee0/MsgHelper.h>
 #include <ee2/WxStagePage.h>
 #include <ee2/WxStageCanvas.h>
@@ -16,14 +18,13 @@ namespace mask
 {
 
 WxEditDialog::WxEditDialog(wxWindow* parent, const ee0::RenderContext& rc,
-	                       const ee0::WindowContext& wc, n0::SceneNodePtr& node, n2::CompMask& cmask)
+	                       const ee0::WindowContext& wc, const n0::SceneNodePtr& node)
 	: wxDialog(parent, wxID_ANY, "Edit Mask", wxDefaultPosition, wxSize(800, 600), wxCLOSE_BOX | wxCAPTION | wxMAXIMIZE_BOX)
 	, m_rc(rc)
 	, m_wc(wc)
 	, m_mgr(this)
 {
-	InitLayout();
-	InitNodes(node, cmask);
+	InitLayout(node);
 }
 
 WxEditDialog::~WxEditDialog()
@@ -31,9 +32,9 @@ WxEditDialog::~WxEditDialog()
 	m_mgr.UnInit();
 }
 
-void WxEditDialog::InitLayout()
+void WxEditDialog::InitLayout(const n0::SceneNodePtr& node)
 {
-	m_mgr.AddPane(CreateStagePanel(),
+	m_mgr.AddPane(CreateStagePanel(node),
 		wxAuiPaneInfo().Name("Stage").Caption("Stage").
 		Center().PaneBorder(false));
 
@@ -52,27 +53,9 @@ void WxEditDialog::InitLayout()
 	m_mgr.Update();
 }
 
-void WxEditDialog::InitNodes(n0::SceneNodePtr& node, n2::CompMask& cmask)
+wxWindow* WxEditDialog::CreateStagePanel(const n0::SceneNodePtr& node)
 {
-	// preview
-	if (node) {
-		ee0::MsgHelper::InsertNode(m_preview->GetSubjectMgr(), node);
-	}
-
-	// stage
-	if (auto& node = cmask.GetBaseNode()) {
-		ee0::MsgHelper::InsertNode(m_stage->GetSubjectMgr(), 
-			std::const_pointer_cast<n0::SceneNode>(node));
-	}
-	if (auto& node = cmask.GetMaskNode()) {
-		ee0::MsgHelper::InsertNode(m_stage->GetSubjectMgr(),
-			std::const_pointer_cast<n0::SceneNode>(node));
-	}
-}
-
-wxWindow* WxEditDialog::CreateStagePanel()
-{
-	m_stage = new ee2::WxStagePage(this, nullptr);
+	m_stage = new mask::WxStagePage(this, nullptr, node);
 	auto canvas = std::make_shared<ee2::WxStageCanvas>(m_stage, &m_rc, &m_wc);
 	m_stage->GetImpl().SetCanvas(canvas);
 	m_stage->GetImpl().SetEditOP(std::make_shared<NodeSelectOP>(*m_stage, m_rc, m_wc));

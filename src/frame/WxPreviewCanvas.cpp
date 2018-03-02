@@ -4,6 +4,7 @@
 #include <ee0/SubjectMgr.h>
 #include <ee0/EditOP.h>
 #include <ee0/color_config.h>
+#include <ee0/WxStagePage.h>
 
 #include <painting2/OrthoCamera.h>
 #include <painting2/PrimitiveDraw.h>
@@ -56,10 +57,16 @@ void WxPreviewCanvas::OnDrawSprites() const
 	pt2::PrimitiveDraw::SetColor(ee0::WHITE);
 	pt2::PrimitiveDraw::Rect(nullptr, sm::vec2(0, 0), 1024, 768, false);
 
-	m_stage->Traverse([&](const n0::SceneNodePtr& node)->bool {
+	ee0::VariantSet vars;
+	ee0::Variant var;
+	var.m_type = ee0::VT_BOOL;
+	var.m_val.bl = true;
+	vars.SetVariant("preview", var);
+
+	m_stage->GetStagePage().Traverse([&](const n0::SceneNodePtr& node)->bool {
 		n2::RenderSystem::Draw(node, sm::Matrix2D());
 		return true;
-	});
+	}, vars);
 
 	auto& op = m_stage->GetImpl().GetEditOP();
 	if (op) {

@@ -19,14 +19,13 @@ namespace scale9
 {
 
 WxEditDialog::WxEditDialog(wxWindow* parent, const ee0::RenderContext& rc,
-	                       const ee0::WindowContext& wc, n0::SceneNodePtr& node, 
-                           n2::CompScale9& cscale9)
+	                       const ee0::WindowContext& wc, const n0::SceneNodePtr& node)
 	: wxDialog(parent, wxID_ANY, "Edit Scale9", wxDefaultPosition, wxSize(800, 600), wxCLOSE_BOX | wxCAPTION | wxMAXIMIZE_BOX)
 	, m_rc(rc)
 	, m_wc(wc)
 	, m_mgr(this)
 {
-	InitLayout(cscale9);
+	InitLayout(node);
 }
 
 WxEditDialog::~WxEditDialog()
@@ -34,9 +33,9 @@ WxEditDialog::~WxEditDialog()
 	m_mgr.UnInit();
 }
 
-void WxEditDialog::InitLayout(n2::CompScale9& cscale9)
+void WxEditDialog::InitLayout(const n0::SceneNodePtr& node)
 {
-	m_mgr.AddPane(CreateStagePanel(cscale9),
+	m_mgr.AddPane(CreateStagePanel(node),
 		wxAuiPaneInfo().Name("Stage").Caption("Stage").
 		Center().PaneBorder(false));
 
@@ -55,9 +54,9 @@ void WxEditDialog::InitLayout(n2::CompScale9& cscale9)
 	m_mgr.Update();
 }
 
-wxWindow* WxEditDialog::CreateStagePanel(n2::CompScale9& cscale9)
+wxWindow* WxEditDialog::CreateStagePanel(const n0::SceneNodePtr& node)
 {
-	m_stage = new scale9::WxStagePage(this, nullptr, cscale9);
+	m_stage = new scale9::WxStagePage(this, nullptr, node);
 	auto canvas = std::make_shared<ee2::WxStageCanvas>(m_stage, &m_rc, &m_wc);
 	m_stage->GetImpl().SetCanvas(canvas);
 	m_stage->GetImpl().SetEditOP(std::make_shared<NodeSelectOP>(*m_stage, m_rc, m_wc));

@@ -4,6 +4,7 @@
 #include "frame/NodeSelectOP.h"
 #include "frame/WxPreviewPanel.h"
 
+#include "scene2d/WxStagePage.h"
 #include "scale9/WxStagePage.h"
 #include "scale9/WxStageCanvas.h"
 #include "mask/WxStagePage.h"
@@ -67,7 +68,7 @@ void WxFrame::OnNew(wxCommandEvent& event)
 	{
 	case NEW_SCENE2D:
 		{
-			auto page = new ee2::WxStagePage(app->m_frame, app->m_library);
+			auto page = new scene2d::WxStagePage(app->m_frame, app->m_library);
 			auto canvas = std::make_shared<ee2::WxStageCanvas>(page, &app->m_rc, nullptr);
 			page->GetImpl().SetCanvas(canvas);
 			page->GetImpl().SetEditOP(std::make_shared<NodeSelectOP>(*page, app->m_rc, app->m_wc));
@@ -87,15 +88,8 @@ void WxFrame::OnNew(wxCommandEvent& event)
 		break;
 	case NEW_SCALE9:
 		{
-			//auto& preview_sub_mgr = app->m_preview->GetSubjectMgr();
-			//preview_sub_mgr.NotifyObservers(ee0::MSG_CLEAR_SCENE_NODE);
-			//auto node = ee2::NodeFactory::Instance()->Create(ee2::NODE_SCALE9);
-			//ee0::MsgHelper::InsertNode(preview_sub_mgr, node);
-
-			// todo
 			auto node = ee2::NodeFactory::Instance()->Create(ee2::NODE_SCALE9);
-
-			auto page = new scale9::WxStagePage(app->m_frame, app->m_library, node->GetComponent<n2::CompScale9>());
+			auto page = new scale9::WxStagePage(app->m_frame, app->m_library, node);
 			auto canvas = std::make_shared<scale9::WxStageCanvas>(page, app->m_rc);
 			page->GetImpl().SetCanvas(canvas);
 			page->GetImpl().SetEditOP(std::make_shared<NodeSelectOP>(*page, app->m_rc, app->m_wc));
@@ -105,15 +99,8 @@ void WxFrame::OnNew(wxCommandEvent& event)
 		break;
 	case NEW_MASK:
 		{
-			//auto& preview_sub_mgr = app->m_preview->GetSubjectMgr();
-			//preview_sub_mgr.NotifyObservers(ee0::MSG_CLEAR_SCENE_NODE);
-			//auto node = ee2::NodeFactory::Instance()->Create(ee2::NODE_MASK);
-			//ee0::MsgHelper::InsertNode(preview_sub_mgr, node);
-
-			// todo
 			auto node = ee2::NodeFactory::Instance()->Create(ee2::NODE_MASK);
-
-			auto page = new mask::WxStagePage(app->m_frame, app->m_library, node->GetComponent<n2::CompMask>());
+			auto page = new mask::WxStagePage(app->m_frame, app->m_library, node);
 			auto canvas = std::make_shared<ee2::WxStageCanvas>(page, &app->m_rc, nullptr);
 			page->GetImpl().SetCanvas(canvas);
 			page->GetImpl().SetEditOP(std::make_shared<NodeSelectOP>(*page, app->m_rc, app->m_wc));
