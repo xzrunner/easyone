@@ -30,7 +30,7 @@ WxFrame::WxFrame()
 
 void WxFrame::OnNew(wxCommandEvent& event)
 {
-	ee0::WxListSelectDlg dlg(this, "New page", PAGE_LIST);
+	ee0::WxListSelectDlg dlg(this, "New page", PAGE_LIST, wxGetMousePosition());
 	if (dlg.ShowModal() != wxID_OK) {
 		return;
 	}
