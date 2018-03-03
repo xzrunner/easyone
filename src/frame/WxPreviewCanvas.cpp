@@ -1,10 +1,10 @@
 #include "frame/WxPreviewCanvas.h"
 #include "frame/WxPreviewPanel.h"
+#include "frame/WxStagePage.h"
 
 #include <ee0/SubjectMgr.h>
 #include <ee0/EditOP.h>
 #include <ee0/color_config.h>
-#include <ee0/WxStagePage.h>
 
 #include <painting2/OrthoCamera.h>
 #include <painting2/PrimitiveDraw.h>

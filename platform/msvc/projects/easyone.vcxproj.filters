@@ -25,14 +25,17 @@
     <Filter Include="01.scene2d">
       <UniqueIdentifier>{be2243b9-cf01-4f82-9fbf-4525dffd5f07}</UniqueIdentifier>
     </Filter>
-    <Filter Include="02.scale9">
-      <UniqueIdentifier>{039df47e-8cdb-4f9d-8ded-c5d49d95425a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="03.mask">
-      <UniqueIdentifier>{a0814d30-c873-4c45-817c-38f4d2014634}</UniqueIdentifier>
-    </Filter>
     <Filter Include="00.frame\tools">
       <UniqueIdentifier>{19f5effd-40ff-45bc-8e06-2d19aacba034}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="02.scene3d">
+      <UniqueIdentifier>{86c6ff20-69a9-41f3-a503-7cad3ff0cedd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="10.scale9">
+      <UniqueIdentifier>{039df47e-8cdb-4f9d-8ded-c5d49d95425a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="11.mask">
+      <UniqueIdentifier>{a0814d30-c873-4c45-817c-38f4d2014634}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -40,7 +43,7 @@
       <Filter>00.frame\frame</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\mask\WxEditDialog.h">
-      <Filter>03.mask</Filter>
+      <Filter>11.mask</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\frame\Application.h">
       <Filter>00.frame\frame</Filter>
@@ -73,19 +76,19 @@
       <Filter>00.frame\frame</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\mask\WxStagePage.h">
-      <Filter>03.mask</Filter>
+      <Filter>11.mask</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\scale9\WxStagePage.h">
-      <Filter>02.scale9</Filter>
+      <Filter>10.scale9</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\scale9\WxStageCanvas.h">
-      <Filter>02.scale9</Filter>
+      <Filter>10.scale9</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\scale9\ComposeGrids.h">
-      <Filter>02.scale9</Filter>
+      <Filter>10.scale9</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\scale9\WxEditDialog.h">
-      <Filter>02.scale9</Filter>
+      <Filter>10.scale9</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\frame\WxPreviewPanel.h">
       <Filter>00.frame\preview</Filter>
@@ -105,13 +108,19 @@
     <ClInclude Include="..\..\..\src\frame\NodeType.h">
       <Filter>00.frame\tools</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\frame\WxStagePage.h">
+      <Filter>00.frame\stage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\scene3d\WxStagePage.h">
+      <Filter>02.scene3d</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\frame\main.cpp">
       <Filter>00.frame\frame</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\mask\WxEditDialog.cpp">
-      <Filter>03.mask</Filter>
+      <Filter>11.mask</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\frame\Application.cpp">
       <Filter>00.frame\frame</Filter>
@@ -144,19 +153,19 @@
       <Filter>00.frame\frame</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\mask\WxStagePage.cpp">
-      <Filter>03.mask</Filter>
+      <Filter>11.mask</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\scale9\WxStagePage.cpp">
-      <Filter>02.scale9</Filter>
+      <Filter>10.scale9</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\scale9\WxStageCanvas.cpp">
-      <Filter>02.scale9</Filter>
+      <Filter>10.scale9</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\scale9\ComposeGrids.cpp">
-      <Filter>02.scale9</Filter>
+      <Filter>10.scale9</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\scale9\WxEditDialog.cpp">
-      <Filter>02.scale9</Filter>
+      <Filter>10.scale9</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\frame\WxPreviewPanel.cpp">
       <Filter>00.frame\preview</Filter>
@@ -172,6 +181,12 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\frame\NodeFactory.cpp">
       <Filter>00.frame\tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\frame\WxStagePage.cpp">
+      <Filter>00.frame\stage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\scene3d\WxStagePage.cpp">
+      <Filter>02.scene3d</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -1,6 +1,6 @@
-#include "WxDetailPanel.h"
+#include "frame/WxDetailPanel.h"
+#include "frame/WxStagePage.h"
 
-#include <ee0/WxStagePage.h>
 #include <ee0/SubjectMgr.h>
 #include <ee0/VariantSet.h>
 #include <ee0/WxCompPanel.h>
@@ -279,7 +279,7 @@ void WxDetailPanel::StagePageChanging(const ee0::VariantSet& variants)
 	auto var = variants.GetVariant("new_page");
 	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: new_page");
 	GD_ASSERT(var.m_val.pv, "err new_page");
-	auto new_page = static_cast<ee0::WxStagePage*>(var.m_val.pv);
+	auto new_page = static_cast<WxStagePage*>(var.m_val.pv);
 	m_sub_mgr = &new_page->GetSubjectMgr();
 
 	RegisterMsg(*m_sub_mgr);

@@ -263,6 +263,7 @@
     <ClInclude Include="..\..\..\src\frame\WxLibraryPanel.h" />
     <ClInclude Include="..\..\..\src\frame\WxSceneTreeCtrl.h" />
     <ClInclude Include="..\..\..\src\frame\WxSceneTreeItem.h" />
+    <ClInclude Include="..\..\..\src\frame\WxStagePage.h" />
     <ClInclude Include="..\..\..\src\frame\WxStagePanel.h" />
     <ClInclude Include="..\..\..\src\mask\WxEditDialog.h" />
     <ClInclude Include="..\..\..\src\mask\WxStagePage.h" />
@@ -271,6 +272,7 @@
     <ClInclude Include="..\..\..\src\scale9\WxStageCanvas.h" />
     <ClInclude Include="..\..\..\src\scale9\WxStagePage.h" />
     <ClInclude Include="..\..\..\src\scene2d\WxStagePage.h" />
+    <ClInclude Include="..\..\..\src\scene3d\WxStagePage.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\frame\Blackboard.cpp" />
@@ -280,13 +282,26 @@
     <ClCompile Include="..\..\..\src\frame\WxDetailPanel.cpp" />
     <ClCompile Include="..\..\..\src\frame\main.cpp" />
     <ClCompile Include="..\..\..\src\frame\WxFrame.cpp" />
-    <ClCompile Include="..\..\..\src\frame\WxPreviewCanvas.cpp" />
-    <ClCompile Include="..\..\..\src\frame\WxPreviewPanel.cpp" />
+    <ClCompile Include="..\..\..\src\frame\WxPreviewCanvas.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/%(RelativeDir)/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/%(RelativeDir)/</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\frame\WxPreviewPanel.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/%(RelativeDir)/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/%(RelativeDir)/</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="..\..\..\src\frame\WxSceneTreePanel.cpp" />
     <ClCompile Include="..\..\..\src\frame\Application.cpp" />
-    <ClCompile Include="..\..\..\src\frame\WxLibraryPanel.cpp" />
+    <ClCompile Include="..\..\..\src\frame\WxLibraryPanel.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/%(RelativeDir)/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/%(RelativeDir)/</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="..\..\..\src\frame\WxSceneTreeCtrl.cpp" />
     <ClCompile Include="..\..\..\src\frame\WxSceneTreeItem.cpp" />
+    <ClCompile Include="..\..\..\src\frame\WxStagePage.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/%(RelativeDir)/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/%(RelativeDir)/</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="..\..\..\src\frame\WxStagePanel.cpp" />
     <ClCompile Include="..\..\..\src\mask\WxEditDialog.cpp">
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/%(RelativeDir)/</ObjectFileName>
@@ -309,7 +324,14 @@
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/%(RelativeDir)/</ObjectFileName>
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/%(RelativeDir)/</ObjectFileName>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\scene2d\WxStagePage.cpp" />
+    <ClCompile Include="..\..\..\src\scene2d\WxStagePage.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/%(RelativeDir)/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/%(RelativeDir)/</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\scene3d\WxStagePage.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/%(RelativeDir)/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/%(RelativeDir)/</ObjectFileName>
+    </ClCompile>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

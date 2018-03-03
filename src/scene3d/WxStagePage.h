@@ -2,11 +2,16 @@
 
 #include "frame/WxStagePage.h"
 
+#include <node0/typedef.h>
+
 namespace ee0 { class WxLibraryPanel; }
 
 namespace eone
 {
-namespace scale9
+
+class WxStagePage;
+
+namespace scene3d
 {
 
 class WxStagePage : public eone::WxStagePage
@@ -27,8 +32,6 @@ private:
 	void DeleteSceneNode(const ee0::VariantSet& variants);
 	void ClearSceneNode();
 
-	bool DeleteSceneNode(const n0::SceneNodePtr& node);
-	
 }; // WxStagePage
 
 }

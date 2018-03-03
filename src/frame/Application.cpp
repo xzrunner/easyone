@@ -14,7 +14,6 @@
 
 #include <ee0/CompNodeEditor.h>
 #include <ee2/WxStageCanvas.h>
-#include <ee3/WxStagePage.h>
 #include <ee3/WxStageCanvas.h>
 #include <ee3/NodeArrangeOP.h>
 #include <ee3/Serializer.h>

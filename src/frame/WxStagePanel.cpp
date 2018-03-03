@@ -1,6 +1,5 @@
 #include "frame/WxStagePanel.h"
-
-#include <ee0/WxStagePage.h>
+#include "frame/WxStagePage.h"
 
 #include <guard/check.h>
 
@@ -18,12 +17,12 @@ WxStagePanel::WxStagePanel(wxWindow* parent)
 		wxAuiNotebookEventHandler(WxStagePanel::OnPageChanged));
 }
 
-ee0::WxStagePage* WxStagePanel::GetCurrentStagePage() const
+WxStagePage* WxStagePanel::GetCurrentStagePage() const
 {
-	return dynamic_cast<ee0::WxStagePage*>(GetCurrentPage());
+	return dynamic_cast<WxStagePage*>(GetCurrentPage());
 }
 
-void WxStagePanel::AddNewPage(ee0::WxStagePage* page, const std::string& title)
+void WxStagePanel::AddNewPage(WxStagePage* page, const std::string& title)
 {
 	AddPage(page, title);
 	SetSelection(GetPageCount() - 1);

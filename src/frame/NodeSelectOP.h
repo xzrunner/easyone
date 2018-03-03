@@ -7,10 +7,12 @@ namespace ee0 { class RenderContext; class WindowContext; }
 namespace eone
 {
 
+class WxStagePage;
+
 class NodeSelectOP : public ee2::NodeSelectOP
 {
 public:
-	NodeSelectOP(ee0::WxStagePage& stage, const ee0::RenderContext& rc,
+	NodeSelectOP(WxStagePage& stage, const ee0::RenderContext& rc,
 		const ee0::WindowContext& wc);
 	
 	virtual bool OnMouseLeftDClick(int x, int y);

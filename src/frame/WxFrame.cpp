@@ -6,6 +6,7 @@
 #include "frame/NodeFactory.h"
 
 #include "scene2d/WxStagePage.h"
+#include "scene3d/WxStagePage.h"
 #include "scale9/WxStagePage.h"
 #include "scale9/WxStageCanvas.h"
 #include "mask/WxStagePage.h"
@@ -13,7 +14,6 @@
 #include <ee0/WxListSelectDlg.h>
 #include <ee0/MsgHelper.h>
 #include <ee2/WxStageCanvas.h>
-#include <ee3/WxStagePage.h>
 #include <ee3/WxStageCanvas.h>
 #include <ee3/NodeArrangeOP.h>
 
@@ -78,7 +78,8 @@ void WxFrame::OnNew(wxCommandEvent& event)
 		break;
 	case NEW_SCENE3D:
 		{
-			auto page = new ee3::WxStagePage(app->m_frame, app->m_library);
+			auto node = NodeFactory::Create(NODE_SCENE3D);
+			auto page = new scene3d::WxStagePage(app->m_frame, app->m_library, node);
 			auto canvas = std::make_shared<ee3::WxStageCanvas>(page, &app->m_rc, nullptr);
 			page->GetImpl().SetCanvas(canvas);
 			page->GetImpl().SetEditOP(std::make_shared<ee3::NodeArrangeOP>(*page));

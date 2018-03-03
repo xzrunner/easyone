@@ -11,6 +11,7 @@ namespace eone
 {
 
 class WxPreviewPanel;
+class WxStagePage;
 
 namespace scale9
 {
@@ -36,8 +37,8 @@ private:
 
 	wxAuiManager m_mgr;
 
-	WxPreviewPanel* m_preview;
-	ee0::WxStagePage* m_stage;
+	WxPreviewPanel*    m_preview;
+	eone::WxStagePage* m_stage;
 
 }; // WxEditDialog
 

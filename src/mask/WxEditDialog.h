@@ -5,12 +5,13 @@
 #include <wx/dialog.h>
 #include <wx/aui/framemanager.h>
 
-namespace ee0 { class RenderContext; class WindowContext; class WxStagePage; }
+namespace ee0 { class RenderContext; class WindowContext; }
 
 namespace eone
 {
 
 class WxPreviewPanel;
+class WxStagePage;
 
 namespace mask
 {
@@ -37,7 +38,7 @@ private:
 	wxAuiManager m_mgr;
 
 	WxPreviewPanel* m_preview;
-	ee0::WxStagePage* m_stage;
+	eone::WxStagePage* m_stage;
 
 }; // WxEditDialog
 

@@ -1,10 +1,10 @@
 #include "frame/NodeSelectOP.h"
 #include "frame/Blackboard.h"
+#include "frame/WxStagePage.h"
 
 #include "mask/WxEditDialog.h"
 #include "scale9/WxEditDialog.h"
 
-#include <ee0/WxStagePage.h>
 #include <ee0/WxStageCanvas.h>
 #include <ee0/EditOpState.h>
 
@@ -37,7 +37,7 @@ void OpenEditDialog(ee0::WxStagePage& stage, const n0::SceneNodePtr& node,
 namespace eone
 {
 
-NodeSelectOP::NodeSelectOP(ee0::WxStagePage& stage,
+NodeSelectOP::NodeSelectOP(WxStagePage& stage,
 	                       const ee0::RenderContext& rc,
 	                       const ee0::WindowContext& wc)
 	: ee2::NodeSelectOP(stage)

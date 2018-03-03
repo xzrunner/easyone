@@ -1,5 +1,7 @@
 #include "scene2d/WxStagePage.h"
 
+#include "frame/WxStagePage.h"
+
 #include <ee2/WxStageDropTarget.h>
 
 #include <guard/check.h>
@@ -12,8 +14,7 @@ namespace scene2d
 {
 
 WxStagePage::WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, const n0::SceneNodePtr& node)
-	: ee0::WxStagePage(parent)
-	, m_node(node)
+	: eone::WxStagePage(parent, node)
 {
 	m_sub_mgr.RegisterObserver(ee0::MSG_INSERT_SCENE_NODE, this);
 	m_sub_mgr.RegisterObserver(ee0::MSG_DELETE_SCENE_NODE, this);
@@ -26,7 +27,7 @@ WxStagePage::WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, const n
 
 void WxStagePage::OnNotify(ee0::MessageID msg, const ee0::VariantSet& variants)
 {
-	ee0::WxStagePage::OnNotify(msg, variants);
+	eone::WxStagePage::OnNotify(msg, variants);
 
 	switch (msg)
 	{
@@ -52,6 +53,11 @@ void WxStagePage::Traverse(std::function<bool(const n0::SceneNodePtr&)> func,
 	} else {
 		func(m_node);
 	}
+}
+
+const n0::NodeComponent& WxStagePage::GetEditedNodeComp() const 
+{
+	return m_node->GetComponent<n0::CompComplex>();
 }
 
 void WxStagePage::InsertSceneNode(const ee0::VariantSet& variants)
