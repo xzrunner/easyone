@@ -15,6 +15,8 @@ public:
 	WxStagePage* GetCurrentStagePage() const;
 
 	void AddNewPage(WxStagePage* page, const std::string& title);
+
+	bool SwitchToPage(const std::string& filepath);
 	
 private:
 	void OnPageChanging(wxAuiNotebookEvent& event);

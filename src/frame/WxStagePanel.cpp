@@ -1,5 +1,6 @@
 #include "frame/WxStagePanel.h"
 #include "frame/WxStagePage.h"
+#include "frame/Blackboard.h"
 
 #include <guard/check.h>
 
@@ -19,13 +20,26 @@ WxStagePanel::WxStagePanel(wxWindow* parent)
 
 WxStagePage* WxStagePanel::GetCurrentStagePage() const
 {
-	return dynamic_cast<WxStagePage*>(GetCurrentPage());
+	return static_cast<WxStagePage*>(GetCurrentPage());
 }
 
 void WxStagePanel::AddNewPage(WxStagePage* page, const std::string& title)
 {
 	AddPage(page, title);
 	SetSelection(GetPageCount() - 1);
+}
+
+bool WxStagePanel::SwitchToPage(const std::string& filepath)
+{
+	for (int i = 0; i < GetPageCount(); ++i)
+	{
+		auto page = static_cast<WxStagePage*>(GetPage(i));
+		if (page->GetFilepath() == filepath) {
+			SetSelection(i);
+			return true;
+		}
+	}
+	return false;
 }
 
 void WxStagePanel::OnPageChanging(wxAuiNotebookEvent& event)
@@ -44,6 +58,7 @@ void WxStagePanel::OnPageChanged(wxAuiNotebookEvent& event)
 
 	auto new_page = GetCurrentStagePage();
 	GD_ASSERT(new_page, "null new_page");
+	Blackboard::Instance()->GetFrame()->SetTitle(new_page->GetFilepath());
 
 	ee0::VariantSet vars;
 

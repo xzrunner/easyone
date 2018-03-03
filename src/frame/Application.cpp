@@ -7,8 +7,9 @@
 #include "frame/WxDetailPanel.h"
 #include "frame/NodeSelectOP.h"
 #include "frame/Blackboard.h"
-#include "frame/Serializer.h"
 #include "frame/NodeFactory.h"
+#include "frame/StagePageType.h"
+#include "frame/StagePageFactory.h"
 
 #include "scene2d/WxStagePage.h"
 
@@ -18,10 +19,13 @@
 #include <ee3/NodeArrangeOP.h>
 #include <ee3/Serializer.h>
 
+#include <js/RapidJsonHelper.h>
 #include <node0/SceneNode.h>
 #include <ns/RegistCallback.h>
 #include <gum/Facade.h>
 #include <gum/GTxt.h>
+
+#include <boost/filesystem.hpp>
 
 namespace eone
 {
@@ -42,12 +46,42 @@ Application::~Application()
 
 void Application::LoadFromFile(const std::string& filepath)
 {
-	auto page = m_stage->GetCurrentStagePage();
-	if (!page) {
+	if (m_stage->SwitchToPage(filepath)) {
 		return;
 	}
 
-	Serializer::LoadFromFile(*page, filepath);
+	auto page = m_stage->GetCurrentStagePage();
+	int old_type = page->GetPageType();
+
+	rapidjson::Document doc;
+	js::RapidJsonHelper::ReadFromFile(filepath.c_str(), doc);
+	
+	int new_type = PAGE_INVALID;
+	std::string new_type_str = doc["type"].GetString();
+	if (new_type_str == "n0_complex") {
+		std::string camera = doc["camera"].GetString();
+		if (camera == "2d") {
+			new_type = PAGE_SCENE2D;
+		} else if (camera == "3d") {
+			new_type = PAGE_SCENE3D;
+		}
+	} else if (new_type_str == "n2_scale9") {
+		new_type = PAGE_SCALE9;
+	} else if (new_type_str == "n2_mask") {
+		new_type = PAGE_MASK;
+	} else if (new_type_str == "n2_mesh") {
+		new_type = PAGE_MESH;
+	}
+
+	if (old_type != new_type || !page->GetFilepath().empty()) {
+		page = StagePageFactory::Create(new_type, m_stage);
+	}
+
+	auto dir = boost::filesystem::path(filepath).parent_path().string();
+	page->LoadFromJson(dir, doc);
+
+	page->SetFilepath(filepath);
+	m_frame->SetTitle(filepath);
 }
 
 void Application::StoreToFile(const std::string& filepath) const
@@ -70,7 +104,19 @@ void Application::StoreToFile(const std::string& filepath) const
 		}
 	}
 
-	Serializer::StoreToFile(*page, _filepath);
+	page->SetFilepath(_filepath);
+	m_frame->SetTitle(_filepath);
+
+	rapidjson::Document doc;
+	doc.SetArray();
+
+	auto dir = boost::filesystem::path(_filepath).parent_path().string();
+
+	auto& alloc = doc.GetAllocator();
+
+	page->StoreToJson(dir, doc, alloc);
+
+	js::RapidJsonHelper::WriteToFile(_filepath.c_str(), doc);
 }
 
 void Application::Clear()
@@ -130,7 +176,6 @@ wxWindow* Application::CreateLibraryPanel()
 wxWindow* Application::CreateStagePanel()
 {
 	m_stage = new WxStagePanel(m_frame);
-	Blackboard::Instance()->SetStage(m_stage);
 	m_stage->Freeze();
 	{
 		auto node = NodeFactory::Create(NODE_SCENE2D);

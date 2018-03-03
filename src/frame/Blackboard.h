@@ -2,11 +2,14 @@
 
 #include <cu/cu_macro.h>
 
+#include <memory>
+
 class wxFrame;
-class wxWindow;
 
 namespace eone
 {
+
+class Application;
 
 class Blackboard
 {
@@ -14,13 +17,13 @@ public:
 	void SetFrame(wxFrame* frame) { m_frame = frame; }
 	wxFrame* GetFrame() { return m_frame; }
 
-	void SetStage(wxWindow* stage) { m_stage = stage; }
-	wxWindow* GetStage() { return m_stage; }
+	void SetApp(const std::shared_ptr<Application>& app) { m_app = app; }
+	const std::shared_ptr<Application>& GetApp() const { return m_app; }
 
 private:
 	wxFrame* m_frame;
 
-	wxWindow* m_stage;
+	std::shared_ptr<Application> m_app = nullptr;
 
 	CU_SINGLETON_DECLARATION(Blackboard);
 

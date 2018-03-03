@@ -1,6 +1,7 @@
 #pragma once
 
 #include "frame/WxStagePage.h"
+#include "frame/StagePageType.h"
 
 namespace ee0 { class WxLibraryPanel; }
 
@@ -18,6 +19,8 @@ public:
 
 	virtual void Traverse(std::function<bool(const n0::SceneNodePtr&)> func,
 		const ee0::VariantSet& variants = ee0::VariantSet()) const override;
+
+	virtual int GetPageType() const override { return PAGE_SCALE9; }
 
 protected:
 	virtual const n0::NodeComponent& GetEditedNodeComp() const override;

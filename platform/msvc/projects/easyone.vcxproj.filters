@@ -69,9 +69,6 @@
     <ClInclude Include="..\..\..\src\frame\Blackboard.h">
       <Filter>00.frame\frame</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\frame\Serializer.h">
-      <Filter>00.frame\frame</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\frame\WxFrame.h">
       <Filter>00.frame\frame</Filter>
     </ClInclude>
@@ -114,6 +111,12 @@
     <ClInclude Include="..\..\..\src\scene3d\WxStagePage.h">
       <Filter>02.scene3d</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\frame\StagePageFactory.h">
+      <Filter>00.frame\stage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\frame\StagePageType.h">
+      <Filter>00.frame\stage</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\frame\main.cpp">
@@ -144,9 +147,6 @@
       <Filter>00.frame\stage</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\frame\Blackboard.cpp">
-      <Filter>00.frame\frame</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\frame\Serializer.cpp">
       <Filter>00.frame\frame</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\frame\WxFrame.cpp">
@@ -187,6 +187,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\scene3d\WxStagePage.cpp">
       <Filter>02.scene3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\frame\StagePageFactory.cpp">
+      <Filter>00.frame\stage</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

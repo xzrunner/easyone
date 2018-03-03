@@ -60,6 +60,12 @@ const n0::NodeComponent& WxStagePage::GetEditedNodeComp() const
 	return m_node->GetComponent<n0::CompComplex>();
 }
 
+void WxStagePage::StoreToJsonExt(const std::string& dir, rapidjson::Value& val, 
+	                             rapidjson::MemoryPoolAllocator<>& alloc) const
+{
+	val.AddMember("camera", "3d", alloc);
+}
+
 void WxStagePage::InsertSceneNode(const ee0::VariantSet& variants)
 {
 	auto var = variants.GetVariant("node");

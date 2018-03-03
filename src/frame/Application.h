@@ -32,6 +32,12 @@ public:
 	virtual void StoreToFile(const std::string& filepath) const override;
 	virtual void Clear() override;
 
+	ee0::WxLibraryPanel* GetLiraryPanel() { return m_library; }
+	WxStagePanel* GetStagePanel() { return m_stage; }
+
+	const ee0::RenderContext& GetRenderContext() const { return m_rc; }
+	const ee0::WindowContext& GetWindowContext() const { return m_wc; }
+
 private:
 	void InitSubmodule();
 	void InitLayout();
@@ -57,8 +63,6 @@ private:
 	WxPreviewPanel* m_preview;
 
 	WxSceneTreePanel* m_tree;
-
-	friend class WxFrame;
 
 }; // Application
 

@@ -13,9 +13,11 @@ IMPLEMENT_APP(MyApp);
 
 bool MyApp::OnInit()
 {
+	auto bb = eone::Blackboard::Instance();
 	auto frame = new eone::WxFrame();
-	eone::Blackboard::Instance()->SetFrame(frame);
+	bb->SetFrame(frame);
 	auto app = std::make_shared<eone::Application>(frame);
+	bb->SetApp(app);
 	frame->SetApp(app);
 	frame->Show(true);
 
