@@ -10,6 +10,7 @@
 #include "frame/NodeFactory.h"
 #include "frame/StagePageType.h"
 #include "frame/StagePageFactory.h"
+#include "frame/Blackboard.h"
 
 #include "scene2d/WxStagePage.h"
 
@@ -35,6 +36,7 @@ Application::Application(wxFrame* frame)
 	, m_mgr(frame)
 {
 	InitSubmodule();
+	Blackboard::Instance()->InitRenderContext();
 	InitLayout();
 	InitCallback();
 }
@@ -169,25 +171,19 @@ void Application::InitCallback()
 
 wxWindow* Application::CreateLibraryPanel()
 {
-	m_library = new WxLibraryPanel(m_frame);
-	return m_library;
+	auto library = new WxLibraryPanel(m_frame);
+	Blackboard::Instance()->SetLiraryPanel(library);
+	return library;
 }
 
 wxWindow* Application::CreateStagePanel()
 {
 	m_stage = new WxStagePanel(m_frame);
 	m_stage->Freeze();
-	{
-		auto node = NodeFactory::Create(NODE_SCENE2D);
-		auto page = new scene2d::WxStagePage(m_frame, m_library, node);
-		auto canvas = std::make_shared<ee2::WxStageCanvas>(page);
-		m_rc = canvas->GetRenderContext();
-		m_wc = canvas->GetWidnowContext();
-		page->GetImpl().SetCanvas(canvas);
-		page->GetImpl().SetEditOP(std::make_shared<NodeSelectOP>(*page, m_rc, m_wc));
 
-		m_stage->AddPage(page, ("Scene2D"));
-	}
+	//StagePageFactory::Create(PAGE_SCENE2D, m_stage);
+	StagePageFactory::Create(PAGE_SCALE9, m_stage);
+
 	m_stage->Thaw();
 
 	return m_stage;
@@ -198,7 +194,8 @@ wxWindow* Application::CreatePreviewPanel()
 	auto& sub_mgr = m_stage->GetCurrentStagePage()->GetSubjectMgr();
 	m_preview = new WxPreviewPanel(m_frame, sub_mgr, m_stage->GetCurrentStagePage());
 
-	auto canvas = std::make_shared<WxPreviewCanvas>(m_preview, m_rc);
+	auto canvas = std::make_shared<WxPreviewCanvas>(m_preview, 
+		Blackboard::Instance()->GetRenderContext());
 	m_preview->GetImpl().SetCanvas(canvas);
 	auto op = std::make_shared<ee2::CamControlOP>(*canvas->GetCamera(), sub_mgr);
 	m_preview->GetImpl().SetEditOP(op);

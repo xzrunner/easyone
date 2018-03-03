@@ -31,10 +31,9 @@ WxStagePage* StagePageFactory::Create(int page_type, WxStagePanel* stage_panel)
 
 	auto bb = Blackboard::Instance();
 	auto frame = bb->GetFrame();
-	auto app = bb->GetApp();
-	auto library = app->GetLiraryPanel();
-	auto& rc = app->GetRenderContext();
-	auto& wc = app->GetWindowContext();
+	auto library = bb->GetLiraryPanel();
+	auto& rc = bb->GetRenderContext();
+	auto& wc = bb->GetWindowContext();
 
 	switch (page_type)
 	{
