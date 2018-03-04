@@ -16,7 +16,8 @@ public:
 	WxStageCanvas(eone::WxStagePage* stage, const ee0::RenderContext& rc);
 
 protected:
-	virtual void DrawBackground() const;
+	virtual void DrawBackground() const override;
+	virtual void DrawNodes() const override;
 
 }; // WxStageCanvas
 

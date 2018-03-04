@@ -48,10 +48,16 @@ void WxStagePage::Traverse(std::function<bool(const n0::SceneNodePtr&)> func,
 	                       const ee0::VariantSet& variants) const
 {
 	auto var = variants.GetVariant("preview");
-	if (var.m_type == ee0::VT_EMPTY) {
-		auto& cscale9 = m_node->GetComponent<n2::CompScale9>();
-		cscale9.Traverse(func);
-	} else {
+	if (var.m_type == ee0::VT_EMPTY) 
+	{
+		for (int i = 0; i < 9; ++i) {
+			if (m_grids[i]) {
+				func(m_grids[i]);
+			}
+		}
+	} 
+	else 
+	{
 		func(m_node);
 	}
 }
@@ -78,8 +84,13 @@ void WxStagePage::InsertSceneNode(const ee0::VariantSet& variants)
 	ctrans.GetTrans().SetPosition(ComposeGrids::GetGridCenter(col, row));
 	(*node)->GetComponent<n2::CompBoundingBox>().Build(ctrans.GetTrans().GetSRT());
 
+	m_grids[row * 3 + col] = *node;
+
 	auto& cscale9 = m_node->GetComponent<n2::CompScale9>();
-	cscale9.SetNode(row * 3 + col, *node);
+	auto type = n2::CompScale9::CheckType(m_grids);
+	if (type != n2::CompScale9::S9_NULL) {
+		cscale9.Build(type, cscale9.GetWidth(), cscale9.GetHeight(), m_grids, 0, 0, 0, 0);
+	}
 	
 	m_sub_mgr.NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
 }

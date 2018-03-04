@@ -3,6 +3,11 @@
 
 #include "frame/WxStagePage.h"
 
+#include <SM_Matrix2D.h>
+#include <node0/SceneNode.h>
+#include <node2/RenderSystem.h>
+#include <node2/CompTransform.h>
+
 namespace eone
 {
 namespace scale9
@@ -17,6 +22,20 @@ WxStageCanvas::WxStageCanvas(eone::WxStagePage* stage,
 void WxStageCanvas::DrawBackground() const
 {
 	ComposeGrids::Draw();
+}
+
+void WxStageCanvas::DrawNodes() const
+{
+	m_stage->Traverse([&](const n0::SceneNodePtr& node)->bool 
+	{
+		auto& ctrans = node->GetComponent<n2::CompTransform>();
+		auto& trans = ctrans.GetTrans();
+		auto old_scale = trans.GetScale();
+		trans.SetScale(sm::vec2(1, 1));
+		n2::RenderSystem::Draw(node, sm::Matrix2D());
+		trans.SetScale(old_scale);
+		return true;
+	});
 }
 
 }

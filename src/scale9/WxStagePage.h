@@ -32,6 +32,12 @@ private:
 
 	bool DeleteSceneNode(const n0::SceneNodePtr& node);
 	
+private:
+	// 6 7 8
+	// 3 4 5
+	// 0 1 2
+	n0::SceneNodePtr m_grids[9];
+
 }; // WxStagePage
 
 }
