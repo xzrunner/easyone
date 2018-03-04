@@ -11,6 +11,10 @@ CU_SINGLETON_DEFINITION(Blackboard);
 
 Blackboard::Blackboard()
 	: m_frame(nullptr)
+	, m_library(nullptr)
+	, m_stage(nullptr)
+	, m_preview(nullptr)
+	, m_dummy_canvas(nullptr)
 {
 }
 

@@ -269,6 +269,7 @@
     <ClInclude Include="..\..\..\src\mask\WxEditDialog.h" />
     <ClInclude Include="..\..\..\src\mask\WxStagePage.h" />
     <ClInclude Include="..\..\..\src\scale9\ComposeGrids.h" />
+    <ClInclude Include="..\..\..\src\scale9\ResizeScale9OP.h" />
     <ClInclude Include="..\..\..\src\scale9\WxEditDialog.h" />
     <ClInclude Include="..\..\..\src\scale9\WxStageCanvas.h" />
     <ClInclude Include="..\..\..\src\scale9\WxStagePage.h" />
@@ -313,6 +314,7 @@
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/%(RelativeDir)/</ObjectFileName>
     </ClCompile>
     <ClCompile Include="..\..\..\src\scale9\ComposeGrids.cpp" />
+    <ClCompile Include="..\..\..\src\scale9\ResizeScale9OP.cpp" />
     <ClCompile Include="..\..\..\src\scale9\WxEditDialog.cpp">
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/%(RelativeDir)/</ObjectFileName>
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/%(RelativeDir)/</ObjectFileName>

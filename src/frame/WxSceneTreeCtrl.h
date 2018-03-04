@@ -38,7 +38,7 @@ private:
 	void DeleteSceneNode(const n0::SceneNodePtr& node);
 	void ClearSceneNode();
 
-	void StagePageChanging(const ee0::VariantSet& variants);
+	void StagePageChanged(const ee0::VariantSet& variants);
 
 	void ClearALLSelected();
 

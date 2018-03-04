@@ -16,6 +16,8 @@ namespace eone
 {
 
 class Application;
+class WxStagePanel;
+class WxPreviewPanel;
 
 class Blackboard
 {
@@ -29,6 +31,12 @@ public:
 	void SetLiraryPanel(ee0::WxLibraryPanel* library) { m_library = library; }
 	ee0::WxLibraryPanel* GetLiraryPanel() { return m_library; }
 
+	void SetStagePanel(WxStagePanel* stage) { m_stage = stage; }
+	WxStagePanel* GetStagePanel() { return m_stage; }
+
+	void SetPreviewPanel(WxPreviewPanel* preview) { m_preview = preview; }
+	WxPreviewPanel* GetPreviewPanel() { return m_preview; }
+
 	void InitRenderContext();
 	const ee0::RenderContext& GetRenderContext() const { return m_rc; }
 	const ee0::WindowContext& GetWindowContext() const { return m_wc; }
@@ -37,6 +45,8 @@ private:
 	wxFrame* m_frame;
 
 	ee0::WxLibraryPanel* m_library;
+	WxStagePanel*        m_stage;
+	WxPreviewPanel*      m_preview;
 
 	wxGLCanvas* m_dummy_canvas;
 	ee0::RenderContext m_rc;

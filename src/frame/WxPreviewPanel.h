@@ -27,7 +27,7 @@ public:
 private:
 	void RegisterMsg(ee0::SubjectMgr& sub_mgr);
 
-	void StagePageChanging(const ee0::VariantSet& variants);
+	void StagePageChanged(const ee0::VariantSet& variants);
 
 private:
 	ee0::SubjectMgr* m_sub_mgr;

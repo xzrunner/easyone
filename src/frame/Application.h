@@ -16,9 +16,6 @@ namespace eone
 {
 
 class WxStagePanel;
-class WxPreviewPanel;
-
-class WxSceneTreePanel;
 
 class Application : public ee0::Application
 {
@@ -49,9 +46,6 @@ private:
 	wxAuiManager m_mgr;
 
 	WxStagePanel* m_stage;
-	WxPreviewPanel* m_preview;
-
-	WxSceneTreePanel* m_tree;
 
 }; // Application
 

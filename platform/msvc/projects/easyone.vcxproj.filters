@@ -117,6 +117,9 @@
     <ClInclude Include="..\..\..\src\frame\StagePageType.h">
       <Filter>00.frame\stage</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\scale9\ResizeScale9OP.h">
+      <Filter>10.scale9</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\frame\main.cpp">
@@ -190,6 +193,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\frame\StagePageFactory.cpp">
       <Filter>00.frame\stage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\scale9\ResizeScale9OP.cpp">
+      <Filter>10.scale9</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

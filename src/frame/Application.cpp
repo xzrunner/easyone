@@ -34,6 +34,7 @@ namespace eone
 Application::Application(wxFrame* frame)
 	: m_frame(frame)
 	, m_mgr(frame)
+	, m_stage(nullptr)
 {
 	InitSubmodule();
 	Blackboard::Instance()->InitRenderContext();
@@ -180,6 +181,7 @@ wxWindow* Application::CreateStagePanel()
 {
 	m_stage = new WxStagePanel(m_frame);
 	m_stage->Freeze();
+	Blackboard::Instance()->SetStagePanel(m_stage);
 
 	//StagePageFactory::Create(PAGE_SCENE2D, m_stage);
 	StagePageFactory::Create(PAGE_SCALE9, m_stage);
@@ -192,22 +194,22 @@ wxWindow* Application::CreateStagePanel()
 wxWindow* Application::CreatePreviewPanel()
 {
 	auto& sub_mgr = m_stage->GetCurrentStagePage()->GetSubjectMgr();
-	m_preview = new WxPreviewPanel(m_frame, sub_mgr, m_stage->GetCurrentStagePage());
+	auto preview = new WxPreviewPanel(m_frame, sub_mgr, m_stage->GetCurrentStagePage());
+	Blackboard::Instance()->SetPreviewPanel(preview);
 
-	auto canvas = std::make_shared<WxPreviewCanvas>(m_preview, 
+	auto canvas = std::make_shared<WxPreviewCanvas>(preview,
 		Blackboard::Instance()->GetRenderContext());
-	m_preview->GetImpl().SetCanvas(canvas);
-	auto op = std::make_shared<ee2::CamControlOP>(*canvas->GetCamera(), sub_mgr);
-	m_preview->GetImpl().SetEditOP(op);
+	preview->GetImpl().SetCanvas(canvas);
+	StagePageFactory::CreatePreviewOP();
 
-	return m_preview;
+	return preview;
 }
 
 wxWindow* Application::CreateTreePanel()
 {
 	auto& sub_mgr = m_stage->GetCurrentStagePage()->GetSubjectMgr();
-	m_tree = new WxSceneTreePanel(m_frame, sub_mgr);
-	return m_tree;
+	auto tree = new WxSceneTreePanel(m_frame, sub_mgr);
+	return tree;
 }
 
 wxWindow* Application::CreateDetailPanel()

@@ -25,12 +25,14 @@ public:
 protected:
 	virtual const n0::NodeComponent& GetEditedNodeComp() const override;
 
+	virtual void LoadFromJsonExt(const std::string& dir, const rapidjson::Value& val);
+
 private:
 	void InsertSceneNode(const ee0::VariantSet& variants);
 	void DeleteSceneNode(const ee0::VariantSet& variants);
 	void ClearSceneNode();
 
-	bool DeleteSceneNode(const n0::SceneNodePtr& node);
+	void StagePageOnShow();
 	
 private:
 	// 6 7 8

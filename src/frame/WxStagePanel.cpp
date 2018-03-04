@@ -45,8 +45,10 @@ bool WxStagePanel::SwitchToPage(const std::string& filepath)
 void WxStagePanel::OnPageChanging(wxAuiNotebookEvent& event)
 {
 	auto page = GetCurrentStagePage();
-	if (page) {
+	if (page) 
+	{
 		m_old_page = page;
+		page->GetSubjectMgr().NotifyObservers(ee0::MSG_STAGE_PAGE_CHANGING);
 	}
 }
 
@@ -67,7 +69,9 @@ void WxStagePanel::OnPageChanged(wxAuiNotebookEvent& event)
 	var.m_val.pv = new_page;
 	vars.SetVariant("new_page", var);
 
-	m_old_page->GetSubjectMgr().NotifyObservers(ee0::MSG_STAGE_PAGE_CHANGING, vars);
+	m_old_page->GetSubjectMgr().NotifyObservers(ee0::MSG_STAGE_PAGE_CHANGED, vars);
+
+	new_page->GetSubjectMgr().NotifyObservers(ee0::MSG_STAGE_PAGE_ON_SHOW);
 
 	m_old_page = nullptr;
 }

@@ -22,6 +22,8 @@ public:
 		rapidjson::MemoryPoolAllocator<>& alloc) const;
 	void LoadFromJson(const std::string& dir, const rapidjson::Value& val);
 
+	const n0::SceneNodePtr& GetEditedNode() const { return m_node; }
+
 	void SetFilepath(const std::string& filepath) { m_filepath = filepath; }
 	const std::string& GetFilepath() const { return m_filepath; }
 

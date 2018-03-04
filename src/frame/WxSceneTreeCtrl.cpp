@@ -55,10 +55,10 @@ void WxSceneTreeCtrl::OnNotify(ee0::MessageID msg, const ee0::VariantSet& varian
 	case ee0::MSG_NODE_SELECTION_CLEAR:
 		ClearALLSelected();
 		break;
-	case ee0::MSG_STAGE_PAGE_CHANGING:
+	case ee0::MSG_STAGE_PAGE_CHANGED:
 		DeleteAllItems();
 		InitRoot();
-		StagePageChanging(variants);
+		StagePageChanged(variants);
 		break;
 	}
 }
@@ -115,7 +115,7 @@ void WxSceneTreeCtrl::RegisterMsg(ee0::SubjectMgr& sub_mgr)
 	sub_mgr.RegisterObserver(ee0::MSG_NODE_SELECTION_INSERT, this);
 	sub_mgr.RegisterObserver(ee0::MSG_NODE_SELECTION_DELETE, this);
 	sub_mgr.RegisterObserver(ee0::MSG_NODE_SELECTION_CLEAR, this);
-	sub_mgr.RegisterObserver(ee0::MSG_STAGE_PAGE_CHANGING, this);
+	sub_mgr.RegisterObserver(ee0::MSG_STAGE_PAGE_CHANGED, this);
 }
 
 void WxSceneTreeCtrl::OnSelChanged(wxTreeEvent& event)
@@ -277,7 +277,7 @@ void WxSceneTreeCtrl::ClearSceneNode()
 	InitRoot();
 }
 
-void WxSceneTreeCtrl::StagePageChanging(const ee0::VariantSet& variants)
+void WxSceneTreeCtrl::StagePageChanged(const ee0::VariantSet& variants)
 {
 	auto var = variants.GetVariant("new_page");
 	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: new_page");

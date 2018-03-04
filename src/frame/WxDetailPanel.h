@@ -25,7 +25,7 @@ private:
 	void InitComponents(const ee0::VariantSet& variants);
 	void ClearComponents();
 	void UpdateComponents();
-	void StagePageChanging(const ee0::VariantSet& variants);
+	void StagePageChanged(const ee0::VariantSet& variants);
 
 	void OnAddPress(wxCommandEvent& event);
 

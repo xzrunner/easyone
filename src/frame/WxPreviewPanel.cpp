@@ -22,18 +22,18 @@ void WxPreviewPanel::OnNotify(ee0::MessageID msg, const ee0::VariantSet& variant
 {
 	switch (msg)
 	{
-	case ee0::MSG_STAGE_PAGE_CHANGING:
-		StagePageChanging(variants);
+	case ee0::MSG_STAGE_PAGE_CHANGED:
+		StagePageChanged(variants);
 		break;
 	}
 }
 
 void WxPreviewPanel::RegisterMsg(ee0::SubjectMgr& sub_mgr)
 {
-	sub_mgr.RegisterObserver(ee0::MSG_STAGE_PAGE_CHANGING, this);
+	sub_mgr.RegisterObserver(ee0::MSG_STAGE_PAGE_CHANGED, this);
 }
 
-void WxPreviewPanel::StagePageChanging(const ee0::VariantSet& variants)
+void WxPreviewPanel::StagePageChanged(const ee0::VariantSet& variants)
 {
 	auto var = variants.GetVariant("new_page");
 	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: new_page");
