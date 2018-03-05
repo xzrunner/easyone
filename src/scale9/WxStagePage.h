@@ -23,7 +23,7 @@ public:
 	virtual int GetPageType() const override { return PAGE_SCALE9; }
 
 protected:
-	virtual const n0::NodeComponent& GetEditedNodeComp() const override;
+	virtual const n0::NodeSharedComp& GetEditedNodeComp() const override;
 
 	virtual void LoadFromJsonExt(const std::string& dir, const rapidjson::Value& val);
 

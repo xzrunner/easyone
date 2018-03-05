@@ -28,7 +28,7 @@ void WxStageCanvas::DrawNodes() const
 {
 	m_stage->Traverse([&](const n0::SceneNodePtr& node)->bool 
 	{
-		auto& ctrans = node->GetComponent<n2::CompTransform>();
+		auto& ctrans = node->GetUniqueComp<n2::CompTransform>();
 		auto& trans = ctrans.GetTrans();
 		auto old_scale = trans.GetScale();
 		trans.SetScale(sm::vec2(1, 1));

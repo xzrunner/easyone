@@ -29,59 +29,59 @@ n0::SceneNodePtr NodeFactory::Create(NodeType type)
 	{
 	case NODE_IMAGE:
 		{
-			auto& cimage = node->AddComponent<n2::CompImage>();
+			auto& cimage = node->AddSharedComp<n2::CompImage>();
 			sz.Build(100, 100);
 		}
 		break;
 	case NODE_TEXT:
 		{
-			auto& ctext = node->AddComponent<n2::CompText>();
+			auto& ctext = node->AddSharedComp<n2::CompText>();
 			auto& tb = ctext.GetText().tb;
 			sz.Build(static_cast<float>(tb.width), static_cast<float>(tb.height));
 		}
 		break;
 	case NODE_MASK:
 		{
-			node->AddComponent<n2::CompMask>();
+			node->AddSharedComp<n2::CompMask>();
 			sz.Build(100, 100);
 		}
 		break;
 	case NODE_MESH:
 		{
-			node->AddComponent<n2::CompMesh>();
+			node->AddSharedComp<n2::CompMesh>();
 			sz.Build(100, 100);
 		}
 		break;
 	case NODE_SCALE9:
 		{
-			node->AddComponent<n2::CompScale9>();
+			node->AddSharedComp<n2::CompScale9>();
 			sz.Build(100, 100);
 		}
 		break;
 
 	case NODE_SPRITE2:
 		{
-			node->AddComponent<n2::CompSprite2>();
+			node->AddSharedComp<n2::CompSprite2>();
 			sz.Build(100, 100);
 		}
 		break;
 	case NODE_SCENE2D:
 		{
-			node->AddComponent<n0::CompComplex>();
+			node->AddSharedComp<n0::CompComplex>();
 			sz.Build(100, 100);
 		}
 		break;
 	}
 
 	// transform
-	auto& ctrans = node->AddComponent<n2::CompTransform>();
+	auto& ctrans = node->AddUniqueComp<n2::CompTransform>();
 
 	// aabb
-	auto& cbounding = node->AddComponent<n2::CompBoundingBox>(sz);
+	auto& cbounding = node->AddUniqueComp<n2::CompBoundingBox>(sz);
 	cbounding.Build(ctrans.GetTrans().GetSRT());
 
 	// editor
-	node->AddComponent<ee0::CompNodeEditor>();
+	node->AddUniqueComp<ee0::CompNodeEditor>();
 
 	return node;
 }

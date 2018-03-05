@@ -99,7 +99,7 @@ void WxSceneTreePanel::OnCreatePress(wxCommandEvent& event)
 				auto img = gum::ResPool::Instance().Fetch<gum::Image>(path.ToStdString());
 
 				node = NodeFactory::Create(NODE_IMAGE);
-				auto& cimage = node->GetComponent<n2::CompImage>();
+				auto& cimage = node->GetSharedComp<n2::CompImage>();
 				cimage.SetFilepath(path.ToStdString());
 				cimage.SetTexture(img->GetTexture());
 
@@ -129,7 +129,7 @@ void WxSceneTreePanel::OnCreatePress(wxCommandEvent& event)
 				auto sym = gum::SymbolPool::Instance()->Fetch(path.ToStdString().c_str());
 
 				node = NodeFactory::Create(NODE_SPRITE2);
-				auto& csprite2 = node->GetComponent<n2::CompSprite2>();
+				auto& csprite2 = node->GetSharedComp<n2::CompSprite2>();
 				csprite2.SetFilepath(path.ToStdString());
 				csprite2.SetSymbol(sym);
 

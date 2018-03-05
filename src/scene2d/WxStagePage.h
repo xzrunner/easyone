@@ -6,6 +6,7 @@
 #include <node0/typedef.h>
 
 namespace ee0 { class WxLibraryPanel; }
+namespace n0 { class NodeSharedComp; }
 
 namespace eone
 {
@@ -28,7 +29,7 @@ public:
 	virtual int GetPageType() const override { return PAGE_SCENE2D; }
 
 protected:
-	virtual const n0::NodeComponent& GetEditedNodeComp() const override;
+	virtual const n0::NodeSharedComp& GetEditedNodeComp() const override;
 
 	virtual void StoreToJsonExt(const std::string& dir, rapidjson::Value& val,
 		rapidjson::MemoryPoolAllocator<>& alloc) const;

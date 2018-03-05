@@ -73,9 +73,9 @@ void WxStagePage::Traverse(std::function<bool(const n0::SceneNodePtr&)> func,
 	}
 }
 
-const n0::NodeComponent& WxStagePage::GetEditedNodeComp() const
+const n0::NodeSharedComp& WxStagePage::GetEditedNodeComp() const
 {
-	return m_node->GetComponent<n2::CompScale9>();
+	return m_node->GetSharedComp<n2::CompScale9>();
 }
 
 void WxStagePage::LoadFromJsonExt(const std::string& dir, const rapidjson::Value& val)
@@ -86,7 +86,7 @@ void WxStagePage::LoadFromJsonExt(const std::string& dir, const rapidjson::Value
 		auto node = std::make_shared<n0::SceneNode>();
 		ns::NodeSerializer::LoadNodeFromJson(node, dir, *itr);
 
-		auto& ctrans = node->GetComponent<n2::CompTransform>();
+		auto& ctrans = node->GetUniqueComp<n2::CompTransform>();
 		int col, row;
 		ComposeGrids::Query(ctrans.GetTrans().GetPosition(), &col, &row);
 		if (col == -1 || row == -1) {
@@ -94,7 +94,7 @@ void WxStagePage::LoadFromJsonExt(const std::string& dir, const rapidjson::Value
 		}
 
 		ctrans.GetTrans().SetPosition(ComposeGrids::GetGridCenter(col, row));
-		node->GetComponent<n2::CompBoundingBox>().Build(ctrans.GetTrans().GetSRT());
+		node->GetUniqueComp<n2::CompBoundingBox>().Build(ctrans.GetTrans().GetSRT());
 
 		const int idx = row * 3 + col;
 		if (m_grids[idx]) {
@@ -113,7 +113,7 @@ void WxStagePage::InsertSceneNode(const ee0::VariantSet& variants)
 	n0::SceneNodePtr* node = static_cast<n0::SceneNodePtr*>(var.m_val.pv);
 	GD_ASSERT(node, "err scene node");
 
-	auto& ctrans = (*node)->GetComponent<n2::CompTransform>();
+	auto& ctrans = (*node)->GetUniqueComp<n2::CompTransform>();
 	int col, row;
 	ComposeGrids::Query(ctrans.GetTrans().GetPosition(), &col, &row);
 	if (col == -1 || row == -1) {
@@ -121,7 +121,7 @@ void WxStagePage::InsertSceneNode(const ee0::VariantSet& variants)
 	}
 	
 	ctrans.GetTrans().SetPosition(ComposeGrids::GetGridCenter(col, row));
-	(*node)->GetComponent<n2::CompBoundingBox>().Build(ctrans.GetTrans().GetSRT());
+	(*node)->GetUniqueComp<n2::CompBoundingBox>().Build(ctrans.GetTrans().GetSRT());
 
 	const int idx = row * 3 + col;
 	if (m_grids[idx]) {
@@ -129,16 +129,16 @@ void WxStagePage::InsertSceneNode(const ee0::VariantSet& variants)
 	}
 	m_grids[idx] = *node;
 
-	auto& cscale9 = m_node->GetComponent<n2::CompScale9>();
+	auto& cscale9 = m_node->GetSharedComp<n2::CompScale9>();
 	auto type = n2::CompScale9::CheckType(m_grids);
 	cscale9.Build(type, cscale9.GetWidth(), cscale9.GetHeight(), m_grids, 0, 0, 0, 0);
 
 	// update bounding
 	if (type != n2::CompScale9::S9_NULL) 
 	{
-		auto& cbb = m_node->GetComponent<n2::CompBoundingBox>();
+		auto& cbb = m_node->GetUniqueComp<n2::CompBoundingBox>();
 		cbb.SetSize(sm::rect(cscale9.GetWidth(), cscale9.GetHeight()));
-		cbb.Build(m_node->GetComponent<n2::CompTransform>().GetTrans().GetSRT());
+		cbb.Build(m_node->GetUniqueComp<n2::CompTransform>().GetTrans().GetSRT());
 	}
 	
 	m_sub_mgr.NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
@@ -157,7 +157,7 @@ void WxStagePage::DeleteSceneNode(const ee0::VariantSet& variants)
 		}
 	}
 
-	auto& cscale9 = m_node->GetComponent<n2::CompScale9>();
+	auto& cscale9 = m_node->GetSharedComp<n2::CompScale9>();
 	auto type = n2::CompScale9::CheckType(m_grids);
 	cscale9.Build(type, cscale9.GetWidth(), cscale9.GetHeight(), m_grids, 0, 0, 0, 0);
 
@@ -170,7 +170,7 @@ void WxStagePage::ClearSceneNode()
 		m_grids[i].reset();
 	}
 
-	auto& cscale9 = m_node->GetComponent<n2::CompScale9>();
+	auto& cscale9 = m_node->GetSharedComp<n2::CompScale9>();
 	cscale9.Build(n2::CompScale9::S9_NULL, cscale9.GetWidth(), cscale9.GetHeight(), m_grids, 0, 0, 0, 0);
 
 	m_sub_mgr.NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);

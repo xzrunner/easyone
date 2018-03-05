@@ -46,21 +46,21 @@ void WxStagePage::Traverse(std::function<bool(const n0::SceneNodePtr&)> func,
 {
 	auto var = variants.GetVariant("preview");
 	if (var.m_type == ee0::VT_EMPTY) {
-		auto& cmask = m_node->GetComponent<n2::CompMask>();
+		auto& cmask = m_node->GetSharedComp<n2::CompMask>();
 		cmask.Traverse(func);
 	} else {
 		func(m_node);
 	}
 }
 
-const n0::NodeComponent& WxStagePage::GetEditedNodeComp() const
+const n0::NodeSharedComp& WxStagePage::GetEditedNodeComp() const
 {
-	return m_node->GetComponent<n2::CompMask>();
+	return m_node->GetSharedComp<n2::CompMask>();
 }
 
 void WxStagePage::InsertSceneNode(const ee0::VariantSet& variants)
 {
-	auto& cmask = m_node->GetComponent<n2::CompMask>();
+	auto& cmask = m_node->GetSharedComp<n2::CompMask>();
 	if (cmask.GetBaseNode() && cmask.GetMaskNode()) {
 		return;
 	}
@@ -87,7 +87,7 @@ void WxStagePage::DeleteSceneNode(const ee0::VariantSet& variants)
 	n0::SceneNodePtr* node = static_cast<n0::SceneNodePtr*>(var.m_val.pv);
 	GD_ASSERT(node, "err scene node");
 
-	auto& cmask = m_node->GetComponent<n2::CompMask>();
+	auto& cmask = m_node->GetSharedComp<n2::CompMask>();
 	if (cmask.GetBaseNode() == *node) {
 		cmask.SetBaseNode(nullptr);
 	} else {
@@ -100,7 +100,7 @@ void WxStagePage::DeleteSceneNode(const ee0::VariantSet& variants)
 
 void WxStagePage::ClearSceneNode()
 {
-	auto& cmask = m_node->GetComponent<n2::CompMask>();
+	auto& cmask = m_node->GetSharedComp<n2::CompMask>();
 	cmask.SetBaseNode(nullptr);
 	cmask.SetMaskNode(nullptr);
 

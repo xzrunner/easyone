@@ -6,7 +6,7 @@
 
 #include <rapidjson/document.h>
 
-namespace n0 { class NodeComponent; }
+namespace n0 { class NodeSharedComp; }
 
 namespace eone
 {
@@ -28,7 +28,7 @@ public:
 	const std::string& GetFilepath() const { return m_filepath; }
 
 protected:
-	virtual const n0::NodeComponent& GetEditedNodeComp() const = 0;
+	virtual const n0::NodeSharedComp& GetEditedNodeComp() const = 0;
 
 	virtual void StoreToJsonExt(const std::string& dir, rapidjson::Value& val,
 		rapidjson::MemoryPoolAllocator<>& alloc) const {}

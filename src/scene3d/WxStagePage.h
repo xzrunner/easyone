@@ -28,7 +28,7 @@ public:
 	virtual int GetPageType() const override { return PAGE_SCENE3D; }
 
 protected:
-	virtual const n0::NodeComponent& GetEditedNodeComp() const override;
+	virtual const n0::NodeSharedComp& GetEditedNodeComp() const override;
 
 	virtual void StoreToJsonExt(const std::string& dir, rapidjson::Value& val,
 		rapidjson::MemoryPoolAllocator<>& alloc) const;

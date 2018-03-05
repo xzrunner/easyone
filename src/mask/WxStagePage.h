@@ -23,7 +23,7 @@ public:
 	virtual int GetPageType() const override { return PAGE_MASK; }
 
 protected:
-	virtual const n0::NodeComponent& GetEditedNodeComp() const override;
+	virtual const n0::NodeSharedComp& GetEditedNodeComp() const override;
 
 private:
 	void InsertSceneNode(const ee0::VariantSet& variants);
