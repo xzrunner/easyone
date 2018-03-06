@@ -6,7 +6,7 @@
 
 #include <guard/check.h>
 #include <node0/SceneNode.h>
-#include <node0/CompComplex.h>
+#include <node2/CompComplex.h>
 
 namespace eone
 {
@@ -48,7 +48,7 @@ void WxStagePage::Traverse(std::function<bool(const n0::SceneNodePtr&)> func,
 {
 	auto var = variants.GetVariant("preview");
 	if (var.m_type == ee0::VT_EMPTY) {
-		auto& ccomplex = m_node->GetSharedComp<n0::CompComplex>();
+		auto& ccomplex = m_node->GetSharedComp<n2::CompComplex>();
 		ccomplex.Traverse(func);
 	} else {
 		func(m_node);
@@ -57,13 +57,13 @@ void WxStagePage::Traverse(std::function<bool(const n0::SceneNodePtr&)> func,
 
 const n0::NodeSharedComp& WxStagePage::GetEditedNodeComp() const
 {
-	return m_node->GetSharedComp<n0::CompComplex>();
+	return m_node->GetSharedComp<n2::CompComplex>();
 }
 
 void WxStagePage::StoreToJsonExt(const std::string& dir, rapidjson::Value& val, 
 	                             rapidjson::MemoryPoolAllocator<>& alloc) const
 {
-	val.AddMember("camera", "3d", alloc);
+//	val.AddMember("camera", "3d", alloc);
 }
 
 void WxStagePage::InsertSceneNode(const ee0::VariantSet& variants)
@@ -73,7 +73,7 @@ void WxStagePage::InsertSceneNode(const ee0::VariantSet& variants)
 	n0::SceneNodePtr* node = static_cast<n0::SceneNodePtr*>(var.m_val.pv);
 	GD_ASSERT(node, "err scene node");
 
-	auto& ccomplex = m_node->GetSharedComp<n0::CompComplex>();
+	auto& ccomplex = m_node->GetSharedComp<n2::CompComplex>();
 	if (m_node_selection.IsEmpty()) {
 		ccomplex.AddChild(*node);
 	}
@@ -88,7 +88,7 @@ void WxStagePage::DeleteSceneNode(const ee0::VariantSet& variants)
 	n0::SceneNodePtr* node = static_cast<n0::SceneNodePtr*>(var.m_val.pv);
 	GD_ASSERT(node, "err scene node");
 
-	auto& ccomplex = m_node->GetSharedComp<n0::CompComplex>();
+	auto& ccomplex = m_node->GetSharedComp<n2::CompComplex>();
 	if (ccomplex.RemoveChild(*node)) {
 		m_sub_mgr.NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
 	}
@@ -96,7 +96,7 @@ void WxStagePage::DeleteSceneNode(const ee0::VariantSet& variants)
 
 void WxStagePage::ClearSceneNode()
 {
-	auto& ccomplex = m_node->GetSharedComp<n0::CompComplex>();
+	auto& ccomplex = m_node->GetSharedComp<n2::CompComplex>();
 	ccomplex.RemoveAllChildren();
 	m_sub_mgr.NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
 }

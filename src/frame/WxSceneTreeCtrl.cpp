@@ -8,7 +8,7 @@
 
 #include <guard/check.h>
 #include <node0/SceneNode.h>
-#include <node0/CompComplex.h>
+#include <node2/CompComplex.h>
 
 #include <queue>
 
@@ -217,7 +217,7 @@ void WxSceneTreeCtrl::InsertSceneNode(const ee0::VariantSet& variants)
 	{
 		auto pdata = (WxSceneTreeItem*)GetItemData(parent);
 		auto& pnode = pdata->GetNode();
-		auto& ccomplex = pnode->GetSharedComp<n0::CompComplex>();
+		auto& ccomplex = pnode->GetSharedComp<n2::CompComplex>();
 		ccomplex.AddChild(*node);
 		Expand(parent);
 	}
@@ -235,9 +235,9 @@ void WxSceneTreeCtrl::InsertSceneNode(wxTreeItemId parent, const n0::SceneNodePt
 	wxTreeItemId id = InsertItem(parent, pos, ceditor.GetName());
 	SetItemData(id, item);
 
-	if (node->HasSharedComp<n0::CompComplex>())
+	if (node->HasSharedComp<n2::CompComplex>())
 	{
-		auto& ccomplex = node->GetSharedComp<n0::CompComplex>();
+		auto& ccomplex = node->GetSharedComp<n2::CompComplex>();
 		auto& children = ccomplex.GetAllChildren();
 		for (auto& child : children) {
 			InsertSceneNode(id, child);

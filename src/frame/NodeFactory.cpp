@@ -3,7 +3,7 @@
 #include <ee0/CompNodeEditor.h>
 
 #include <node0/SceneNode.h>
-#include <node0/CompComplex.h>
+#include <node2/CompComplex.h>
 #include <node2/CompImage.h>
 #include <node2/CompText.h>
 #include <node2/CompMask.h>
@@ -67,7 +67,7 @@ n0::SceneNodePtr NodeFactory::Create(NodeType type)
 		break;
 	case NODE_SCENE2D:
 		{
-			node->AddSharedComp<n0::CompComplex>();
+			node->AddSharedComp<n2::CompComplex>();
 			sz.Build(100, 100);
 		}
 		break;
