@@ -60,14 +60,14 @@ void Application::LoadFromFile(const std::string& filepath)
 	js::RapidJsonHelper::ReadFromFile(filepath.c_str(), doc);
 	
 	int new_type = PAGE_INVALID;
-	std::string new_type_str = doc["type"].GetString();
-	if (new_type_str == "n0_complex") {
-		std::string camera = doc["camera"].GetString();
-		if (camera == "2d") {
+	std::string new_type_str = doc["comp_type"].GetString();
+	if (new_type_str == "n2_complex") {
+		//std::string camera = doc["camera"].GetString();
+		//if (camera == "2d") {
 			new_type = PAGE_SCENE2D;
-		} else if (camera == "3d") {
-			new_type = PAGE_SCENE3D;
-		}
+		//} else if (camera == "3d") {
+		//	new_type = PAGE_SCENE3D;
+		//}
 	} else if (new_type_str == "n2_scale9") {
 		new_type = PAGE_SCALE9;
 	} else if (new_type_str == "n2_mask") {
