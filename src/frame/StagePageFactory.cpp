@@ -18,6 +18,7 @@
 #include <ee0/WxListSelectDlg.h>
 #include <ee0/MsgHelper.h>
 #include <ee2/WxStageCanvas.h>
+#include <ee2/ArrangeNodeOP.h>
 #include <ee3/WxStageCanvas.h>
 #include <ee3/NodeArrangeOP.h>
 #include <ee3/CamControlOP.h>
@@ -47,7 +48,12 @@ WxStagePage* StagePageFactory::Create(int page_type, WxStagePanel* stage_panel)
 			page = new scene2d::WxStagePage(frame, library, node);
 			auto canvas = std::make_shared<ee2::WxStageCanvas>(page, &rc, nullptr);
 			page->GetImpl().SetCanvas(canvas);
-			page->GetImpl().SetEditOP(std::make_shared<NodeSelectOP>(*page, rc, wc));
+
+			//auto op = std::make_shared<NodeSelectOP>(*page, rc, wc);
+
+			auto cam = canvas->GetCamera();
+			GD_ASSERT(cam, "null cam");
+			auto op = std::make_shared<ee2::ArrangeNodeOP>(*page, *cam);
 
 			stage_panel->AddNewPage(page, "Scene2D");
 		}
