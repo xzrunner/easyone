@@ -93,8 +93,7 @@ void WxStagePage::LoadFromJsonExt(const std::string& dir, const rapidjson::Value
 			continue;
 		}
 
-		ctrans.GetTrans().SetPosition(ComposeGrids::GetGridCenter(col, row));
-		node->GetUniqueComp<n2::CompBoundingBox>().Build(ctrans.GetTrans().GetSRT());
+		ctrans.SetPosition(*node, ComposeGrids::GetGridCenter(col, row));
 
 		const int idx = row * 3 + col;
 		if (m_grids[idx]) {
@@ -120,8 +119,7 @@ void WxStagePage::InsertSceneNode(const ee0::VariantSet& variants)
 		return;
 	}
 	
-	ctrans.GetTrans().SetPosition(ComposeGrids::GetGridCenter(col, row));
-	(*node)->GetUniqueComp<n2::CompBoundingBox>().Build(ctrans.GetTrans().GetSRT());
+	ctrans.SetPosition(**node, ComposeGrids::GetGridCenter(col, row));
 
 	const int idx = row * 3 + col;
 	if (m_grids[idx]) {
@@ -137,8 +135,7 @@ void WxStagePage::InsertSceneNode(const ee0::VariantSet& variants)
 	if (type != n2::CompScale9::S9_NULL) 
 	{
 		auto& cbb = m_node->GetUniqueComp<n2::CompBoundingBox>();
-		cbb.SetSize(sm::rect(cscale9.GetWidth(), cscale9.GetHeight()));
-		cbb.Build(m_node->GetUniqueComp<n2::CompTransform>().GetTrans().GetSRT());
+		cbb.SetSize(*m_node, sm::rect(cscale9.GetWidth(), cscale9.GetHeight()));
 	}
 	
 	m_sub_mgr.NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);

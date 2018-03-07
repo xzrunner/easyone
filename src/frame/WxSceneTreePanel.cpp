@@ -13,7 +13,6 @@
 #include <node2/CompSprite2.h>
 #include <node2/CompTransform.h>
 #include <node2/CompBoundingBox.h>
-#include <node2/NodeHelper.h>
 #include <gum/ResPool.h>
 #include <gum/SymbolPool.h>
 #include <gum/Image.h>
@@ -103,7 +102,8 @@ void WxSceneTreePanel::OnCreatePress(wxCommandEvent& event)
 				cimage.SetFilepath(path.ToStdString());
 				cimage.SetTexture(img->GetTexture());
 
-				n2::NodeHelper::SetBoundingSize(*node, sm::rect(img->GetWidth(), img->GetHeight()));
+				auto& cbb = node->GetUniqueComp<n2::CompBoundingBox>();
+				cbb.SetSize(*node, sm::rect(img->GetWidth(), img->GetHeight()));
 			}
 		}
 		break;
@@ -133,7 +133,8 @@ void WxSceneTreePanel::OnCreatePress(wxCommandEvent& event)
 				csprite2.SetFilepath(path.ToStdString());
 				csprite2.SetSymbol(sym);
 
-				n2::NodeHelper::SetBoundingSize(*node, sym->GetBounding());
+				auto& cbb = node->GetUniqueComp<n2::CompBoundingBox>();
+				cbb.SetSize(*node, sym->GetBounding());
 			}
 		}
 		break;

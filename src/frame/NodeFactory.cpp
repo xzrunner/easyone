@@ -77,8 +77,7 @@ n0::SceneNodePtr NodeFactory::Create(NodeType type)
 	auto& ctrans = node->AddUniqueComp<n2::CompTransform>();
 
 	// aabb
-	auto& cbounding = node->AddUniqueComp<n2::CompBoundingBox>(sz);
-	cbounding.Build(ctrans.GetTrans().GetSRT());
+	node->AddUniqueComp<n2::CompBoundingBox>(sz);
 
 	// editor
 	node->AddUniqueComp<ee0::CompNodeEditor>();
