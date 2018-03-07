@@ -49,11 +49,13 @@ WxStagePage* StagePageFactory::Create(int page_type, WxStagePanel* stage_panel)
 			auto canvas = std::make_shared<ee2::WxStageCanvas>(page, &rc, nullptr);
 			page->GetImpl().SetCanvas(canvas);
 
-			//auto op = std::make_shared<NodeSelectOP>(*page, rc, wc);
+			auto prev_op = std::make_shared<NodeSelectOP>(*page, rc, wc);
 
 			auto cam = canvas->GetCamera();
 			GD_ASSERT(cam, "null cam");
-			auto op = std::make_shared<ee2::ArrangeNodeOP>(*page, *cam);
+			auto op = std::make_shared<ee2::ArrangeNodeOP>(*page, *cam, ee2::ArrangeNodeCfg(), prev_op);
+
+			page->GetImpl().SetEditOP(op);
 
 			stage_panel->AddNewPage(page, "Scene2D");
 		}
@@ -75,6 +77,7 @@ WxStagePage* StagePageFactory::Create(int page_type, WxStagePanel* stage_panel)
 			page = new scale9::WxStagePage(frame, library, node);
 			auto canvas = std::make_shared<scale9::WxStageCanvas>(page, rc);
 			page->GetImpl().SetCanvas(canvas);
+
 			page->GetImpl().SetEditOP(std::make_shared<NodeSelectOP>(*page, rc, wc));
 
 			stage_panel->AddNewPage(page, "Scale9");
@@ -86,7 +89,14 @@ WxStagePage* StagePageFactory::Create(int page_type, WxStagePanel* stage_panel)
 			page = new mask::WxStagePage(frame, library, node);
 			auto canvas = std::make_shared<ee2::WxStageCanvas>(page, &rc, nullptr);
 			page->GetImpl().SetCanvas(canvas);
-			page->GetImpl().SetEditOP(std::make_shared<NodeSelectOP>(*page, rc, wc));
+
+			auto prev_op = std::make_shared<NodeSelectOP>(*page, rc, wc);
+
+			auto cam = canvas->GetCamera();
+			GD_ASSERT(cam, "null cam");
+			auto op = std::make_shared<ee2::ArrangeNodeOP>(*page, *cam, ee2::ArrangeNodeCfg(), prev_op);
+
+			page->GetImpl().SetEditOP(op);
 
 			stage_panel->AddNewPage(page, "Mask");
 		}
