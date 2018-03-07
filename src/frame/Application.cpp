@@ -183,8 +183,8 @@ wxWindow* Application::CreateStagePanel()
 	m_stage->Freeze();
 	Blackboard::Instance()->SetStagePanel(m_stage);
 
-	//StagePageFactory::Create(PAGE_SCENE2D, m_stage);
-	StagePageFactory::Create(PAGE_SCALE9, m_stage);
+	StagePageFactory::Create(PAGE_SCENE2D, m_stage);
+	//StagePageFactory::Create(PAGE_SCALE9, m_stage);
 
 	m_stage->Thaw();
 
