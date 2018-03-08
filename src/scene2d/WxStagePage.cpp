@@ -74,9 +74,7 @@ void WxStagePage::InsertSceneNode(const ee0::VariantSet& variants)
 	GD_ASSERT(node, "err scene node");
 
 	auto& ccomplex = m_node->GetSharedComp<n2::CompComplex>();
-	if (m_node_selection.IsEmpty()) {
-		ccomplex.AddChild(*node);
-	}
+	ccomplex.AddChild(*node);
 
 	m_sub_mgr.NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
 }
