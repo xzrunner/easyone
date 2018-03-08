@@ -131,6 +131,10 @@ void WxSceneTreePanel::OnCreatePress(wxCommandEvent& event)
 	default:
 		return;
 	}
+
+	if (!node) {
+		return;
+	}
 	
 	ee0::VariantSet vars;
 	ee0::Variant var;
