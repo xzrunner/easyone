@@ -11,7 +11,7 @@ namespace eone
 {
 
 WxPreviewPanel::WxPreviewPanel(wxWindow* parent, ee0::SubjectMgr& sub_mgr, WxStagePage* stage)
-	: ee0::WxEditPanel(parent)
+	: ee0::WxEditPanel(parent, sub_mgr)
 	, m_sub_mgr(&sub_mgr)
 	, m_stage(stage)
 {

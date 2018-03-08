@@ -57,7 +57,7 @@ WxStagePage* StagePageFactory::Create(int page_type, WxStagePanel* stage_panel)
 
 			page->GetImpl().SetEditOP(op);
 
-			stage_panel->AddNewPage(page, "Scene2D");
+			stage_panel->AddNewPage(page, GetPageName(page->GetPageType()));
 		}
 		break;
 	case PAGE_SCENE3D:
@@ -68,7 +68,7 @@ WxStagePage* StagePageFactory::Create(int page_type, WxStagePanel* stage_panel)
 			page->GetImpl().SetCanvas(canvas);
 			page->GetImpl().SetEditOP(std::make_shared<ee3::NodeArrangeOP>(*page));
 
-			stage_panel->AddNewPage(page, "Scene3d");
+			stage_panel->AddNewPage(page, GetPageName(page->GetPageType()));
 		}
 		break;
 	case PAGE_SCALE9:
@@ -80,7 +80,7 @@ WxStagePage* StagePageFactory::Create(int page_type, WxStagePanel* stage_panel)
 
 			page->GetImpl().SetEditOP(std::make_shared<NodeSelectOP>(*page, rc, wc));
 
-			stage_panel->AddNewPage(page, "Scale9");
+			stage_panel->AddNewPage(page, GetPageName(page->GetPageType()));
 		}
 		break;
 	case PAGE_MASK:
@@ -98,7 +98,7 @@ WxStagePage* StagePageFactory::Create(int page_type, WxStagePanel* stage_panel)
 
 			page->GetImpl().SetEditOP(op);
 
-			stage_panel->AddNewPage(page, "Mask");
+			stage_panel->AddNewPage(page, GetPageName(page->GetPageType()));
 		}
 		break;
 	}

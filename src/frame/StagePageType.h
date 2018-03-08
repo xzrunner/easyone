@@ -15,4 +15,25 @@ enum StagePageType
 	PAGE_MESH,
 };
 
+inline 
+std::string GetPageName(int type)
+{
+	switch (type)
+	{
+	case PAGE_SCENE2D:
+		return "Scene2D";
+	case PAGE_SCENE3D:
+		return "Scene3D";
+
+	case PAGE_SCALE9:
+		return "Scale9";
+	case PAGE_MASK:
+		return "Mask";
+	case PAGE_MESH:
+		return "Mesh";
+	default:
+		return "";
+	}
+}
+
 }

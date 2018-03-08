@@ -7,6 +7,7 @@
 #include <rapidjson/document.h>
 
 namespace n0 { class NodeSharedComp; }
+namespace ee0 { class VariantSet; }
 
 namespace eone
 {
@@ -15,6 +16,8 @@ class WxStagePage : public ee0::WxStagePage
 {
 public:
 	WxStagePage(wxWindow* parent, const n0::SceneNodePtr& node);
+
+	virtual void OnNotify(ee0::MessageID msg, const ee0::VariantSet& variants) override;
 
 	virtual int GetPageType() const = 0;
 
@@ -33,6 +36,9 @@ protected:
 	virtual void StoreToJsonExt(const std::string& dir, rapidjson::Value& val,
 		rapidjson::MemoryPoolAllocator<>& alloc) const {}
 	virtual void LoadFromJsonExt(const std::string& dir, const rapidjson::Value& val) {}
+
+private:
+	void SetEditorDirty(const ee0::VariantSet& variants);
 
 protected:
 	n0::SceneNodePtr m_node;
