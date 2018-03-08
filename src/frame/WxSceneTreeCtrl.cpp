@@ -103,7 +103,7 @@ void WxSceneTreeCtrl::Traverse(wxTreeItemId id, std::function<bool(wxTreeItemId)
 void WxSceneTreeCtrl::InitRoot()
 {
 	m_root = AddRoot("ROOT");
-	SetItemData(m_root, new WxSceneTreeItem());
+	SetItemData(m_root, new WxSceneTreeItem(nullptr));
 }
 
 void WxSceneTreeCtrl::RegisterMsg(ee0::SubjectMgr& sub_mgr)
@@ -210,15 +210,20 @@ void WxSceneTreeCtrl::InsertSceneNode(const ee0::VariantSet& variants)
 	if (!parent.IsOk()) {
 		parent = m_root;
 	}
-
-	InsertSceneNode(parent, *node);
-
-	if (parent != m_root) 
+	while (parent != m_root)
 	{
 		auto pdata = (WxSceneTreeItem*)GetItemData(parent);
 		auto& pnode = pdata->GetNode();
-		auto& ccomplex = pnode->GetSharedComp<n2::CompComplex>();
-		ccomplex.AddChild(*node);
+		if (pdata->GetNode()->HasSharedComp<n2::CompComplex>()) {
+			break;
+		} else {
+			parent = GetItemParent(parent);
+		}
+	}
+
+	InsertSceneNode(parent, *node);
+
+	if (parent != m_root) {
 		Expand(parent);
 	}
 }
@@ -226,13 +231,8 @@ void WxSceneTreeCtrl::InsertSceneNode(const ee0::VariantSet& variants)
 void WxSceneTreeCtrl::InsertSceneNode(wxTreeItemId parent, const n0::SceneNodePtr& node)
 {
 	auto item = new WxSceneTreeItem(node);
-
-	auto pdata = (WxSceneTreeItem*)GetItemData(parent);
-	auto pos = pdata->GetChildrenNum();
-	pdata->AddChild(item);
-
 	auto& ceditor = node->GetUniqueComp<ee0::CompNodeEditor>();
-	wxTreeItemId id = InsertItem(parent, pos, ceditor.GetName());
+	wxTreeItemId id = InsertItem(parent, 0, ceditor.GetName());
 	SetItemData(id, item);
 
 	if (node->HasSharedComp<n2::CompComplex>())
