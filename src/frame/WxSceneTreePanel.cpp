@@ -7,6 +7,7 @@
 #include <ee0/VariantSet.h>
 #include <ee0/SubjectMgr.h>
 #include <ee0/WxListSelectDlg.h>
+#include <ee0/MsgHelper.h>
 
 #include <guard/check.h>
 #include <node0/SceneNode.h>
@@ -135,22 +136,8 @@ void WxSceneTreePanel::OnCreatePress(wxCommandEvent& event)
 	if (!node) {
 		return;
 	}
-	
-	ee0::VariantSet vars;
-	ee0::Variant var;
-	var.m_type = ee0::VT_PVOID;
-	var.m_val.pv = &std::const_pointer_cast<n0::SceneNode>(node);
-	vars.SetVariant("node", var);
-	// insert node
-	{
-		bool succ = m_sub_mgr.NotifyObservers(ee0::MSG_INSERT_SCENE_NODE, vars);
-		GD_ASSERT(succ, "no MSG_INSERT_SCENE_NODE");
-	}
-	// select node
-	{
-		bool succ = m_sub_mgr.NotifyObservers(ee0::MSG_NODE_SELECTION_INSERT, vars);
-		GD_ASSERT(succ, "no MSG_NODE_SELECTION_INSERT");
-	}
+
+	ee0::MsgHelper::InsertNode(m_sub_mgr, node, true);
 }
 
 }
