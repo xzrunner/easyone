@@ -1,6 +1,7 @@
 #include "frame/WxSceneTreePanel.h"
 #include "frame/WxSceneTreeCtrl.h"
 #include "frame/NodeFactory.h"
+#include "frame/NodeType.h"
 
 #include <ee0/MessageID.h>
 #include <ee0/VariantSet.h>
@@ -26,26 +27,15 @@
 namespace
 {
 
-enum NodeType
-{
-	NODE_IMAGE = 0,
-	NODE_TEXT,
-	NODE_MASK,
-	NODE_MESH,
-	NODE_SCALE9,
-
-	NODE_SPRITE2,
-};
-
 static const std::vector<std::pair<uint32_t, std::string>> NODE_LIST =
 {
-	std::make_pair(NODE_IMAGE,   "Image"),
-	std::make_pair(NODE_TEXT,    "Text"),
-	std::make_pair(NODE_MASK,    "Mask"),
-	std::make_pair(NODE_MESH,    "Mesh"),
-	std::make_pair(NODE_SCALE9,  "Scale9"),
+	std::make_pair(eone::NODE_IMAGE,   "Image"),
+	std::make_pair(eone::NODE_TEXT,    "Text"),
+	std::make_pair(eone::NODE_MASK,    "Mask"),
+	std::make_pair(eone::NODE_MESH,    "Mesh"),
+	std::make_pair(eone::NODE_SCALE9,  "Scale9"),
 
-	std::make_pair(NODE_SPRITE2, "Sprite2"),
+	std::make_pair(eone::NODE_SPRITE2, "Sprite2"),
 };
 
 }
