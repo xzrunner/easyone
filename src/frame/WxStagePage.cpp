@@ -3,6 +3,9 @@
 #include "frame/WxStagePanel.h"
 #include "frame/StagePageType.h"
 
+#include <node0/CompAsset.h>
+#include <node0/SceneNode.h>
+#include <node2/CompBoundingBox.h>
 #include <ns/CompSerializer.h>
 
 #include <guard/check.h>
@@ -40,6 +43,10 @@ void WxStagePage::LoadFromJson(const std::string& dir, const rapidjson::Value& v
 {
 	ns::CompSerializer::Instance()->FromJson(m_node, dir, val);
 	LoadFromJsonExt(dir, val);
+
+	auto& casset = m_node->GetSharedComp<n0::CompAsset>();
+	auto& cbb = m_node->GetUniqueComp<n2::CompBoundingBox>();
+	cbb.SetSize(*m_node, casset.GetBounding());
 }
 
 void WxStagePage::SetEditorDirty(const ee0::VariantSet& variants)
