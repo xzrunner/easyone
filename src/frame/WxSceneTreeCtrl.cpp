@@ -4,10 +4,10 @@
 
 #include <ee0/SubjectMgr.h>
 #include <ee0/CompNodeEditor.h>
-#include <ee0/SelectionSet.h>
 
 #include <guard/check.h>
 #include <node0/SceneNode.h>
+#include <node0/CompAsset.h>
 #include <node2/CompComplex.h>
 
 #include <queue>
@@ -103,7 +103,7 @@ void WxSceneTreeCtrl::Traverse(wxTreeItemId id, std::function<bool(wxTreeItemId)
 void WxSceneTreeCtrl::InitRoot()
 {
 	m_root = AddRoot("ROOT");
-	SetItemData(m_root, new WxSceneTreeItem(nullptr));
+	SetItemData(m_root, new WxSceneTreeItem(nullptr, nullptr, -1));
 }
 
 void WxSceneTreeCtrl::RegisterMsg(ee0::SubjectMgr& sub_mgr)
@@ -131,10 +131,20 @@ void WxSceneTreeCtrl::OnSelChanged(wxTreeEvent& event)
 
 	ee0::VariantSet vars;
 
-	ee0::Variant var;
-	var.m_type = ee0::VT_PVOID;
-	var.m_val.pv = &std::const_pointer_cast<n0::SceneNode>(node);
-	vars.SetVariant("node", var);
+	ee0::Variant var_node;
+	var_node.m_type = ee0::VT_PVOID;
+	var_node.m_val.pv = &std::const_pointer_cast<n0::SceneNode>(node);
+	vars.SetVariant("node", var_node);
+
+	ee0::Variant var_root;
+	var_root.m_type = ee0::VT_PVOID;
+	var_root.m_val.pv = &std::const_pointer_cast<n0::SceneNode>(data->GetRoot());
+	vars.SetVariant("root", var_root);
+
+	ee0::Variant var_id;
+	var_id.m_type = ee0::VT_ULONG;
+	var_id.m_val.ul = data->GetNodeID();
+	vars.SetVariant("id", var_id);
 
 	ee0::Variant var_skip;
 	var_skip.m_type = ee0::VT_PVOID;
@@ -221,26 +231,44 @@ void WxSceneTreeCtrl::InsertSceneNode(const ee0::VariantSet& variants)
 		}
 	}
 
-	InsertSceneNode(parent, *node);
+	n0::SceneNodePtr root;
+	size_t node_id;
+	if (parent == m_root) 
+	{
+		root = *node;
+		node_id = 0;
+	}
+	else
+	{
+		auto pdata = (WxSceneTreeItem*)GetItemData(parent);
+		root = pdata->GetRoot();
+		// todo
+		node_id = 0;
+	}
+	InsertSceneNode(parent, *node, root, node_id);
 
 	if (parent != m_root) {
 		Expand(parent);
 	}
 }
 
-void WxSceneTreeCtrl::InsertSceneNode(wxTreeItemId parent, const n0::SceneNodePtr& node)
+void WxSceneTreeCtrl::InsertSceneNode(wxTreeItemId parent, const n0::SceneNodePtr& node,
+	                                  const n0::SceneNodePtr& root, size_t node_id)
 {
-	auto item = new WxSceneTreeItem(node);
+	auto item = new WxSceneTreeItem(node, root, node_id);
 	auto& ceditor = node->GetUniqueComp<ee0::CompNodeEditor>();
 	wxTreeItemId id = InsertItem(parent, 0, ceditor.GetName());
 	SetItemData(id, item);
-
 	if (node->HasSharedComp<n2::CompComplex>())
 	{
 		auto& ccomplex = node->GetSharedComp<n2::CompComplex>();
 		auto& children = ccomplex.GetAllChildren();
-		for (auto& child : children) {
-			InsertSceneNode(id, child);
+		node_id = node_id + 1;
+		for (auto& child : children) 
+		{
+			InsertSceneNode(id, child, root, node_id);
+			auto& casset = child->GetSharedComp<n0::CompAsset>();
+			node_id += casset.GetNodeCount();
 		}
 	}
 }

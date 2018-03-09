@@ -33,7 +33,8 @@ private:
 	void UnselectSceneNode(const ee0::VariantSet& variants);
 
 	void InsertSceneNode(const ee0::VariantSet& variants);
-	void InsertSceneNode(wxTreeItemId parent, const n0::SceneNodePtr& child);
+	void InsertSceneNode(wxTreeItemId parent, const n0::SceneNodePtr& child,
+		const n0::SceneNodePtr& root, size_t node_id);
 	void DeleteSceneNode(const ee0::VariantSet& variants);
 	void DeleteSceneNode(const n0::SceneNodePtr& node);
 	void ClearSceneNode();

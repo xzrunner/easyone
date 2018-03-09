@@ -60,13 +60,10 @@ bool NodeSelectOP::OnMouseLeftDClick(int x, int y)
 		return false;
 	}
 
-	selection.Traverse(
-		[&](const n0::SceneNodePtr& node)->bool
-		{
-			OpenEditDialog(m_stage, node, m_rc, m_wc);
-			return false;
-		}
-	);
+	selection.Traverse([&](const n0::NodeWithPos& nwp)->bool {
+		OpenEditDialog(m_stage, nwp.node, m_rc, m_wc);
+		return false;
+	});
 
 	return false;
 }

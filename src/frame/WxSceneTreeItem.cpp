@@ -3,12 +3,12 @@
 namespace eone
 {
 
-//WxSceneTreeItem::WxSceneTreeItem()
-//{
-//}
-
-WxSceneTreeItem::WxSceneTreeItem(const n0::SceneNodePtr& node)
+WxSceneTreeItem::WxSceneTreeItem(const n0::SceneNodePtr& node, 
+	                             const n0::SceneNodePtr& root, 
+	                             int node_id)
 	: m_node(node)
+	, m_root(root)
+	, m_node_id(node_id)
 {
 }
 
