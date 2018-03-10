@@ -2,7 +2,7 @@
 
 #include <ee0/Observer.h>
 
-#include <node0/typedef.h>
+#include <node0/NodeWithPos.h>
 
 #include <wx/panel.h>
 
@@ -38,7 +38,7 @@ private:
 
 	std::vector<ee0::WxCompPanel*> m_components;
 
-	n0::SceneNodePtr m_node = nullptr;
+	n0::NodeWithPos m_nwp;
 
 }; // WxDetailPanel
 
