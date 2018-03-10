@@ -64,7 +64,7 @@ void WxPreviewCanvas::OnDrawSprites() const
 	vars.SetVariant("preview", var);
 
 	m_stage->GetStagePage().Traverse([&](const n0::SceneNodePtr& node)->bool {
-		n2::RenderSystem::Draw(node, sm::Matrix2D());
+		n2::RenderSystem::Draw(node, sm::Matrix2D(), nullptr, 0);
 		return true;
 	}, vars);
 

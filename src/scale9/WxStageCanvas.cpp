@@ -31,7 +31,7 @@ void WxStageCanvas::DrawNodes() const
 		auto& ctrans = node->GetUniqueComp<n2::CompTransform>();
 		auto old_scale = ctrans.GetTrans().GetScale();
 		ctrans.SetScale(*node, sm::vec2(1, 1));
-		n2::RenderSystem::Draw(node, sm::Matrix2D());
+		n2::RenderSystem::Draw(node, sm::Matrix2D(), nullptr, 0);
 		ctrans.SetScale(*node, old_scale);
 		return true;
 	});
