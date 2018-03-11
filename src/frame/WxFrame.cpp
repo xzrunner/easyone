@@ -2,6 +2,7 @@
 #include "frame/Application.h"
 #include "frame/StagePageType.h"
 #include "frame/StagePageFactory.h"
+#include "frame/WxSettingsDialog.h"
 
 #include <ee0/WxListSelectDlg.h>
 
@@ -38,6 +39,12 @@ void WxFrame::OnNew(wxCommandEvent& event)
 	auto app = std::static_pointer_cast<Application>(m_app);
 	auto type = dlg.GetSelectedID();
 	StagePageFactory::Create(type, app->GetStagePanel());
+}
+
+void WxFrame::OnSettings(wxCommandEvent& event)
+{
+	WxSettingsDialog dlg(this);
+	dlg.ShowModal();
 }
 
 }
