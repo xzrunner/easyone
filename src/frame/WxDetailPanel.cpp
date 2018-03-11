@@ -165,13 +165,13 @@ void WxDetailPanel::InitComponents(const ee0::VariantSet& variants)
 	GD_ASSERT(m_nwp.node, "err scene node");
 
 	auto var_root = variants.GetVariant("root");
-	if (var_root.m_type != VT_EMPTY) {
+	if (var_root.m_type != ee0::VT_EMPTY) {
 		GD_ASSERT(var_root.m_type == ee0::VT_PVOID, "no var in vars: node");
 		m_nwp.root = *static_cast<n0::SceneNodePtr*>(var_root.m_val.pv);
 	}
 
 	auto var_id = variants.GetVariant("id");
-	if (var_id.m_type != VT_EMPTY) {
+	if (var_id.m_type != ee0::VT_EMPTY) {
 		GD_ASSERT(var_id.m_type == ee0::VT_ULONG, "no var in vars: node");
 		m_nwp.node_id = var_id.m_val.ul;
 	}
