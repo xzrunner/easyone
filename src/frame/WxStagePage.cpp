@@ -66,6 +66,8 @@ void WxStagePage::LoadFromJson(const std::string& dir, const rapidjson::Value& v
 
 		return true;
 	});
+
+	m_sub_mgr.NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
 }
 
 void WxStagePage::SetEditorDirty(const ee0::VariantSet& variants)
