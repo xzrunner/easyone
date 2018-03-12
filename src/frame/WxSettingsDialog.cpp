@@ -22,10 +22,23 @@ void WxSettingsDialog::InitLayout()
 
 	wxArrayString choices;
 	choices.Add("shared");
+	choices.Add("shared_patch");
 	choices.Add("unique");
 	auto radio = new wxRadioBox(this, wxID_ANY, "edit_type", wxDefaultPosition, wxDefaultSize, choices, 1, wxRA_SPECIFY_COLS);
 	Connect(radio->GetId(), wxEVT_COMMAND_RADIOBOX_SELECTED, 
 		wxCommandEventHandler(WxSettingsDialog::OnChangeEditType));
+	switch (ee0::SettingCfg::Instance()->GetEditOpType())
+	{
+	case ee0::EditOpType::EDIT_SHARED:
+		radio->SetSelection(0);
+		break;
+	case ee0::EditOpType::EDIT_SHARED_PATCH:
+		radio->SetSelection(1);
+		break;
+	case ee0::EditOpType::EDIT_UNIQUE:
+		radio->SetSelection(2);
+		break;
+	}
 	sizer->Add(radio);
 
 	SetSizer(sizer);
@@ -41,6 +54,9 @@ void WxSettingsDialog::OnChangeEditType(wxCommandEvent& event)
 		ee0::SettingCfg::Instance()->SetEditOpType(ee0::EditOpType::EDIT_SHARED);
 		break;
 	case 1:
+		ee0::SettingCfg::Instance()->SetEditOpType(ee0::EditOpType::EDIT_SHARED_PATCH);
+		break;
+	case 2:
 		ee0::SettingCfg::Instance()->SetEditOpType(ee0::EditOpType::EDIT_UNIQUE);
 		break;
 	default:
