@@ -10,6 +10,7 @@ namespace eone
 class WxSceneTreeItem : public wxTreeItemData
 {
 public:
+	WxSceneTreeItem(const WxSceneTreeItem& item);
 	WxSceneTreeItem(const n0::SceneNodePtr& node, 
 		const n0::SceneNodePtr& root, int node_id);
 

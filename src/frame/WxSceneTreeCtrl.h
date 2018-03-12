@@ -38,6 +38,8 @@ private:
 	void DeleteSceneNode(const ee0::VariantSet& variants);
 	void DeleteSceneNode(const n0::SceneNodePtr& node);
 	void ClearSceneNode();
+	void ReorderSceneNode(const ee0::VariantSet& variants);
+	bool ReorderItem(wxTreeItemId item, bool up);
 
 	void StagePageChanged(const ee0::VariantSet& variants);
 
