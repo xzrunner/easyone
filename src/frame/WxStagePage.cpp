@@ -47,6 +47,25 @@ void WxStagePage::LoadFromJson(const std::string& dir, const rapidjson::Value& v
 	auto& casset = m_node->GetSharedComp<n0::CompAsset>();
 	auto& cbb = m_node->GetUniqueComp<n2::CompBoundingBox>();
 	cbb.SetSize(*m_node, casset.GetBounding());
+
+	casset.Traverse([&](const n0::SceneNodePtr& node)->bool
+	{
+		ee0::VariantSet vars;
+
+		ee0::Variant var_skip;
+		var_skip.m_type = ee0::VT_PVOID;
+		var_skip.m_val.pv = static_cast<Observer*>(this);
+		vars.SetVariant("skip_observer", var_skip);
+
+		ee0::Variant var_node;
+		var_node.m_type = ee0::VT_PVOID;
+		var_node.m_val.pv = &std::const_pointer_cast<n0::SceneNode>(node);
+		vars.SetVariant("node", var_node);
+
+		m_sub_mgr.NotifyObservers(ee0::MSG_INSERT_SCENE_NODE, vars);
+
+		return true;
+	});
 }
 
 void WxStagePage::SetEditorDirty(const ee0::VariantSet& variants)
