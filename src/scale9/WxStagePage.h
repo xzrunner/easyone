@@ -18,7 +18,7 @@ public:
 	virtual void OnNotify(ee0::MessageID msg, const ee0::VariantSet& variants) override;
 
 	virtual void Traverse(std::function<bool(const n0::SceneNodePtr&)> func,
-		const ee0::VariantSet& variants = ee0::VariantSet()) const override;
+		const ee0::VariantSet& variants = ee0::VariantSet(), bool inverse = false) const override;
 
 	virtual int GetPageType() const override { return PAGE_SCALE9; }
 

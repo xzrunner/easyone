@@ -56,7 +56,8 @@ void WxStagePage::OnNotify(ee0::MessageID msg, const ee0::VariantSet& variants)
 }
 
 void WxStagePage::Traverse(std::function<bool(const n0::SceneNodePtr&)> func,
-	                       const ee0::VariantSet& variants) const
+	                       const ee0::VariantSet& variants,
+	                       bool inverse) const
 {
 	auto var = variants.GetVariant("preview");
 	if (var.m_type == ee0::VT_EMPTY) 

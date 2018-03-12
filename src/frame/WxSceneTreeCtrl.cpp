@@ -177,16 +177,15 @@ void WxSceneTreeCtrl::SelectSceneNode(const ee0::VariantSet& variants)
 	}
 
 	Traverse(m_root, [&](wxTreeItemId item)->bool
-		{
-			auto pdata = (WxSceneTreeItem*)GetItemData(item);
-			if (pdata->GetNode() == *node) {
-				SelectItem(item, !multiple);
-				return true;
-			} else {
-				return false;
-			}
+	{
+		auto pdata = (WxSceneTreeItem*)GetItemData(item);
+		if (pdata->GetNode() == *node) {
+			SelectItem(item, !multiple);
+			return true;
+		} else {
+			return false;
 		}
-	);
+	});
 }
 
 void WxSceneTreeCtrl::UnselectSceneNode(const ee0::VariantSet& variants)
