@@ -6,7 +6,6 @@
 #include <node0/CompAsset.h>
 #include <node0/SceneNode.h>
 #include <node2/CompBoundingBox.h>
-#include <node2/CompSharedPatch.h>
 #include <ns/CompSerializer.h>
 
 #include <guard/check.h>
@@ -48,12 +47,6 @@ void WxStagePage::LoadFromJson(const std::string& dir, const rapidjson::Value& v
 	auto& casset = m_node->GetSharedComp<n0::CompAsset>();
 	auto& cbb = m_node->GetUniqueComp<n2::CompBoundingBox>();
 	cbb.SetSize(*m_node, casset.GetBounding());
-
-	if (m_node->HasUniqueComp<n2::CompSharedPatch>())
-	{
-		auto& cpatch = m_node->GetUniqueComp<n2::CompSharedPatch>();
-		
-	}
 }
 
 void WxStagePage::SetEditorDirty(const ee0::VariantSet& variants)
