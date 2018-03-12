@@ -111,7 +111,7 @@ bool WxStagePage::ReorderSceneNode(const ee0::VariantSet& variants)
 	GD_ASSERT(node, "err scene node");
 
 	auto up_var = variants.GetVariant("up");
-	GD_ASSERT(node_var.m_type == ee0::VT_BOOL, "no var in vars: up");
+	GD_ASSERT(up_var.m_type == ee0::VT_BOOL, "no var in vars: up");
 	bool up = up_var.m_val.bl;
 
 	auto& ccomplex = m_node->GetSharedComp<n2::CompComplex>();
