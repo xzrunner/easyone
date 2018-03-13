@@ -17,7 +17,9 @@ public:
 	const n0::SceneNodePtr& GetNode() const { return m_node; }
 
 	const n0::SceneNodePtr& GetRoot() const { return m_root; }
+
 	int GetNodeID() const { return m_node_id; }
+	void SetNodeID(int id) { m_node_id = id; }
 
 private:
 	n0::SceneNodePtr m_node = nullptr;

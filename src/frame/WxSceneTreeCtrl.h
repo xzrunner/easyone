@@ -12,6 +12,7 @@ namespace eone
 {
 
 class WxSceneTreePanel;
+class WxSceneTreeItem;
 
 class WxSceneTreeCtrl : public wxTreeCtrl, public ee0::Observer
 {
@@ -28,6 +29,8 @@ private:
 
 	void OnSelChanged(wxTreeEvent& event);
 	void OnLabelEdited(wxTreeEvent& event);
+	void OnBeginDrag(wxTreeEvent& event);
+	void OnEndDrag(wxTreeEvent& event);
 
 	void SelectSceneNode(const ee0::VariantSet& variants);
 	void UnselectSceneNode(const ee0::VariantSet& variants);
@@ -45,8 +48,13 @@ private:
 
 	void ClearALLSelected();
 
-	void CopyChildren(wxTreeItemId from, wxTreeItemId to);
+	void CopyChildrenTree(wxTreeItemId from, wxTreeItemId to);
+	void MoveSceneNode(WxSceneTreeItem* src, const n0::SceneNodePtr& dst_parent);
+	void UpdateTreeNodeID(wxTreeItemId src, wxTreeItemId dst);
+	void UpdateTreeNodeID(wxTreeItemId root);
 
+	void GetTreePath(wxTreeItemId start, wxTreeItemId end, std::vector<wxTreeItemId>& path);
+	
 private:
 	enum
 	{
@@ -57,6 +65,8 @@ private:
 	ee0::SubjectMgr* m_sub_mgr;
 
 	wxTreeItemId m_root;
+
+	wxTreeItemId m_dragged_item;
 
 	DECLARE_EVENT_TABLE()
 
