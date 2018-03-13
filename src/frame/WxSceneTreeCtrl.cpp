@@ -178,7 +178,14 @@ void WxSceneTreeCtrl::OnSelChanged(wxTreeEvent& event)
 
 void WxSceneTreeCtrl::OnLabelEdited(wxTreeEvent& event)
 {
+	wxTreeItemId edited_item = event.GetItem();
+	auto data_dst = (WxSceneTreeItem*)GetItemData(edited_item);
+	if (!data_dst) {
+		return;
+	}
 
+	auto& ceditor = data_dst->GetNode()->GetUniqueComp<ee0::CompNodeEditor>();
+	ceditor.SetName(event.GetLabel().ToStdString());
 }
 
 void WxSceneTreeCtrl::OnBeginDrag(wxTreeEvent& event)
