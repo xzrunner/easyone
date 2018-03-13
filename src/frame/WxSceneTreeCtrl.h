@@ -12,7 +12,6 @@ namespace eone
 {
 
 class WxSceneTreePanel;
-class WxSceneTreeItem;
 
 class WxSceneTreeCtrl : public wxTreeCtrl, public ee0::Observer
 {
@@ -31,6 +30,7 @@ private:
 	void OnLabelEdited(wxTreeEvent& event);
 	void OnBeginDrag(wxTreeEvent& event);
 	void OnEndDrag(wxTreeEvent& event);
+	void OnKeyDown(wxKeyEvent& event);
 
 	void SelectSceneNode(const ee0::VariantSet& variants);
 	void UnselectSceneNode(const ee0::VariantSet& variants);
@@ -49,14 +49,24 @@ private:
 	void ClearALLSelected();
 
 	void CopyChildrenTree(wxTreeItemId from, wxTreeItemId to);
-	void MoveSceneNode(WxSceneTreeItem* src, const n0::SceneNodePtr& dst_parent);
-	void UpdateTreeNodeID(wxTreeItemId src, wxTreeItemId dst);
+	void MoveSceneNode(wxTreeItemId src, const n0::SceneNodePtr& dst_parent);
 	void UpdateTreeNodeID(wxTreeItemId root);
+	void UpdateTreeNodeIDToRoot(wxTreeItemId item);
+	void DeleteEmptyNodeToRoot(wxTreeItemId item);
 
-	bool GetTreePath(wxTreeItemId start, wxTreeItemId end, std::vector<wxTreeItemId>& path);
+	void RebuildAllTree();
+	void RebuildTree(wxTreeItemId item);
 
 	void ChangeName(const ee0::VariantSet& variants);
 	
+	void SelectUp();
+	void SelectDown();
+	void SelectLeft();
+	void SelectRight();
+
+	void DeleteSelectedNode();
+	void DeleteNodeOutside(wxTreeItemId item);
+
 private:
 	enum
 	{
