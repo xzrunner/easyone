@@ -373,7 +373,7 @@ bool WxSceneTreeCtrl::ReorderItem(wxTreeItemId item, bool up)
 		SetItemBold(new_item, true);
 	}
 	// copy older's children
-//	Traverse(item, GroupTreeImpl::CopyPasteVisitor(this, item, new_item));
+	CopyChildren(item, new_item);
 	// remove
 	Delete(item);
 	// sort
@@ -399,6 +399,43 @@ void WxSceneTreeCtrl::ClearALLSelected()
 {
 	UnselectAll();
 	ClearFocusedItem();
+}
+
+void WxSceneTreeCtrl::CopyChildren(wxTreeItemId from, wxTreeItemId to)
+{
+	std::map<wxTreeItemId, wxTreeItemId> old2new;
+	old2new.insert(std::make_pair(GetItemParent(from), GetItemParent(to)));
+	old2new.insert(std::make_pair(from, to));
+
+	Traverse(from, [&](wxTreeItemId id)->bool
+	{
+		if (old2new.find(id) != old2new.end()) {
+			return true;
+		}
+
+		std::string str = GetItemText(id);
+
+		wxTreeItemId old_parent = GetItemParent(id);
+		std::string str_p = GetItemText(old_parent);
+
+		std::map<wxTreeItemId, wxTreeItemId>::iterator itr
+			= old2new.find(old_parent);
+		GD_ASSERT(itr != old2new.end(), "err id");
+		wxTreeItemId new_parent = itr->second;
+
+		std::string str_p_n;
+		if (new_parent != m_root) {
+			str_p_n = GetItemText(new_parent);
+		}
+
+		auto data = (WxSceneTreeItem*)GetItemData(id);
+		std::string name = GetItemText(id);
+		wxTreeItemId new_item = AppendItem(new_parent, name.c_str(), -1, -1, new WxSceneTreeItem(*data));
+		ExpandAll();
+		old2new.insert(std::make_pair(id, new_item));
+
+		return true;
+	});
 }
 
 }

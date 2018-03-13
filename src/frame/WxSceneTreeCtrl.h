@@ -45,6 +45,8 @@ private:
 
 	void ClearALLSelected();
 
+	void CopyChildren(wxTreeItemId from, wxTreeItemId to);
+
 private:
 	enum
 	{
