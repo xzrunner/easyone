@@ -651,38 +651,27 @@ void WxSceneTreeCtrl::UpdateTreeNodeID(wxTreeItemId root)
 	});
 }
 
-void WxSceneTreeCtrl::GetTreePath(wxTreeItemId start, wxTreeItemId end, std::vector<wxTreeItemId>& path)
+bool WxSceneTreeCtrl::GetTreePath(wxTreeItemId start, wxTreeItemId end, std::vector<wxTreeItemId>& path)
 {
-	std::queue<wxTreeItemId> buf;
-	buf.push(start);
-	while (!buf.empty())
+	path.push_back(start);
+	if (start == end) {
+		return true;
+	}
+	
+	wxTreeItemIdValue cookie;
+	wxTreeItemId id = GetFirstChild(start, cookie);
+	if (id.IsOk()) 
 	{
-		wxTreeItemId item = buf.front(); buf.pop();
-
-		wxTreeItemIdValue cookie;
-		wxTreeItemId id = GetFirstChild(item, cookie);
-		if (id.IsOk())
+		while (id.IsOk()) 
 		{
-			path.push_back(item);
-			if (id == end) {
-				path.push_back(id);
-				break;
+			if (GetTreePath(id, end, path)) {
+				return true;
 			}
-
-			while (id.IsOk()) {
-				buf.push(id);
-				id = GetNextSibling(id);
-			}
-			path.pop_back();
-		}
-		else
-		{
-			if (item == end) {
-				path.push_back(item);
-				break;
-			}
+			id = GetNextSibling(id);
 		}
 	}
+	path.pop_back();
+	return false;
 }
 
 }

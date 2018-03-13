@@ -53,7 +53,7 @@ private:
 	void UpdateTreeNodeID(wxTreeItemId src, wxTreeItemId dst);
 	void UpdateTreeNodeID(wxTreeItemId root);
 
-	void GetTreePath(wxTreeItemId start, wxTreeItemId end, std::vector<wxTreeItemId>& path);
+	bool GetTreePath(wxTreeItemId start, wxTreeItemId end, std::vector<wxTreeItemId>& path);
 	
 private:
 	enum
