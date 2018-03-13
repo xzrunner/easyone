@@ -54,6 +54,8 @@ private:
 	void UpdateTreeNodeID(wxTreeItemId root);
 
 	bool GetTreePath(wxTreeItemId start, wxTreeItemId end, std::vector<wxTreeItemId>& path);
+
+	void ChangeName(const ee0::VariantSet& variants);
 	
 private:
 	enum
@@ -67,6 +69,7 @@ private:
 	wxTreeItemId m_root;
 
 	wxTreeItemId m_dragged_item;
+	wxTreeItemId m_selected_item;
 
 	DECLARE_EVENT_TABLE()
 

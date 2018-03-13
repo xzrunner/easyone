@@ -179,7 +179,7 @@ void WxDetailPanel::InitComponents(const ee0::VariantSet& variants)
 	if (m_nwp.node->HasUniqueComp<ee0::CompNodeEditor>())
 	{
 		auto& comp = m_nwp.node->GetUniqueComp<ee0::CompNodeEditor>();
-		auto panel = new ee0::WxCompNodeEditorPanel(this, comp, *m_sub_mgr);
+		auto panel = new ee0::WxCompNodeEditorPanel(this, comp, *m_sub_mgr, m_nwp.node);
 		m_comp_sizer->Insert(m_components.size(), panel);
 		m_components.push_back(panel);
 	}

@@ -67,6 +67,10 @@ void WxSceneTreeCtrl::OnNotify(ee0::MessageID msg, const ee0::VariantSet& varian
 		InitRoot();
 		StagePageChanged(variants);
 		break;
+
+	case ee0::MSG_UPDATE_NODE_NAME:
+		ChangeName(variants);
+		break;
 	}
 }
 
@@ -109,6 +113,7 @@ void WxSceneTreeCtrl::InitRoot()
 {
 	m_root = AddRoot("ROOT");
 	SetItemData(m_root, new WxSceneTreeItem(nullptr, nullptr, -1));
+	SetItemBold(m_root, true);
 }
 
 void WxSceneTreeCtrl::RegisterMsg(ee0::SubjectMgr& sub_mgr)
@@ -122,6 +127,8 @@ void WxSceneTreeCtrl::RegisterMsg(ee0::SubjectMgr& sub_mgr)
 	sub_mgr.RegisterObserver(ee0::MSG_NODE_SELECTION_DELETE, this);
 	sub_mgr.RegisterObserver(ee0::MSG_NODE_SELECTION_CLEAR, this);
 	sub_mgr.RegisterObserver(ee0::MSG_STAGE_PAGE_CHANGED, this);
+
+	sub_mgr.RegisterObserver(ee0::MSG_UPDATE_NODE_NAME, this);
 }
 
 void WxSceneTreeCtrl::OnSelChanged(wxTreeEvent& event)
@@ -130,6 +137,8 @@ void WxSceneTreeCtrl::OnSelChanged(wxTreeEvent& event)
 	if (!id.IsOk() || id == m_root) {
 		return;
 	}
+
+	m_selected_item = id;
 
 	auto data = (WxSceneTreeItem*)GetItemData(id);
 	auto& node = data->GetNode();
@@ -532,26 +541,29 @@ void WxSceneTreeCtrl::MoveSceneNode(WxSceneTreeItem* src, const n0::SceneNodePtr
 	pt2::SRT src_world_srt;
 	if (src->GetRoot() && src->GetNodeID() != 0)
 	{
+		GD_ASSERT(src->GetNodeID() > 0, "err id");
+		size_t src_id = src->GetNodeID();
+
 		size_t curr_id = 0;
 		auto curr_node = src->GetRoot();
 		auto& ctrans = curr_node->GetUniqueComp<n2::CompTransform>();
 		src_world_srt = ctrans.GetTrans().GetSRT();
-		while (curr_id != src->GetNodeID())
+		while (curr_id != src_id)
 		{
 			auto& casset = curr_node->GetSharedComp<n0::CompAsset>();
-			GD_ASSERT(src->GetNodeID() > curr_id && src->GetNodeID() < curr_id + casset.GetNodeCount(), "err id");
+			GD_ASSERT(src_id > curr_id && src_id < curr_id + casset.GetNodeCount(), "err id");
 			curr_id += 1;
 			casset.Traverse([&](const n0::SceneNodePtr& node)->bool
 			{
 				auto& casset = node->GetSharedComp<n0::CompAsset>();
-				if (src->GetNodeID() == curr_id)
+				if (src_id == curr_id)
 				{
 					curr_node = node;
 					auto& ctrans = curr_node->GetUniqueComp<n2::CompTransform>();
 					src_world_srt = src_world_srt * ctrans.GetTrans().GetSRT();
 					return false;
 				}
-				else if (src->GetNodeID() < curr_id + casset.GetNodeCount()) 
+				else if (src_id < curr_id + casset.GetNodeCount()) 
 				{
 					curr_node = node;
 					auto& ctrans = curr_node->GetUniqueComp<n2::CompTransform>();
@@ -691,6 +703,24 @@ bool WxSceneTreeCtrl::GetTreePath(wxTreeItemId start, wxTreeItemId end, std::vec
 	}
 	path.pop_back();
 	return false;
+}
+
+void WxSceneTreeCtrl::ChangeName(const ee0::VariantSet& variants)
+{
+	GD_ASSERT(m_selected_item.IsOk(), "err item");
+
+	auto data = (WxSceneTreeItem*)GetItemData(m_selected_item);
+	GD_ASSERT(data, "err data");
+	
+	auto var = variants.GetVariant("node");
+	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: node");
+	n0::SceneNodePtr* node = static_cast<n0::SceneNodePtr*>(var.m_val.pv);
+	GD_ASSERT(node, "err scene node");
+
+	GD_ASSERT(data->GetNode() == *node, "err node");
+
+	auto& ceditor = data->GetNode()->GetUniqueComp<ee0::CompNodeEditor>();
+	SetItemText(m_selected_item, ceditor.GetName());
 }
 
 }
