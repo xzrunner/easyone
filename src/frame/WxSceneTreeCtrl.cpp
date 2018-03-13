@@ -157,9 +157,21 @@ void WxSceneTreeCtrl::OnSelChanged(wxTreeEvent& event)
 	var_skip.m_val.pv = static_cast<Observer*>(this);
 	vars.SetVariant("skip_observer", var_skip);
 
-	if (IsSelected(id)) {
+	if (IsSelected(id)) 
+	{
+		bool add = wxGetKeyState(WXK_CONTROL);
+		if (!add) 
+		{
+			ee0::Variant var_clear;
+			var_clear.m_type = ee0::VT_BOOL;
+			var_clear.m_val.bl = true;
+			vars.SetVariant("clear", var_clear);
+		}
+
 		m_sub_mgr->NotifyObservers(ee0::MSG_NODE_SELECTION_INSERT, vars);
-	} else {
+	} 
+	else 
+	{
 		m_sub_mgr->NotifyObservers(ee0::MSG_NODE_SELECTION_DELETE, vars);
 	}
 }
