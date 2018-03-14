@@ -404,6 +404,8 @@ void WxSceneTreeCtrl::InsertSceneNode(wxTreeItemId parent, const n0::SceneNodePt
 			auto& casset = child->GetSharedComp<n0::CompAsset>();
 			node_id += casset.GetNodeCount();
 		}
+
+		Expand(id);
 	}
 }
 
