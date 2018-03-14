@@ -248,16 +248,14 @@ void WxSceneTreeCtrl::OnEndDrag(wxTreeEvent& event)
 	ExpandAll();
 	// move scene tree
 	MoveSceneNode(old_item, data_dst->GetNode());
+	// rm if 1st level, rebuild based on 1st level
+	if (GetItemParent(old_item) == m_root) {
+		Delete(old_item);
+	}
 	// update node id
-	UpdateTreeNodeID(new_item);
-	UpdateTreeNodeIDToRoot(old_item);
-	// copy older's children
-	CopyChildrenTree(old_item, new_item);
-	// remove
-	DeleteEmptyNodeToRoot(old_item);
-	// set selection
 	m_sub_mgr->NotifyObservers(ee0::MSG_NODE_SELECTION_CLEAR);
-	SelectItem(new_item);
+	RebuildAllTree();
+	// todo: select new_item
 }
 
 void WxSceneTreeCtrl::OnKeyDown(wxKeyEvent& event)
