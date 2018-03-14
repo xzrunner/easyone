@@ -37,7 +37,7 @@ void WxStagePanel::AddNewPage(WxStagePage* page, const std::string& title)
 
 bool WxStagePanel::SwitchToPage(const std::string& filepath)
 {
-	for (int i = 0; i < GetPageCount(); ++i)
+	for (size_t i = 0; i < GetPageCount(); ++i)
 	{
 		auto page = static_cast<WxStagePage*>(GetPage(i));
 		if (page->GetFilepath() == filepath) {
