@@ -230,7 +230,7 @@ void WxSceneTreeCtrl::OnEndDrag(wxTreeEvent& event)
 	if (data_dst->GetNode() == nullptr)
 	{
 		new_item = InsertItem(new_item_parent, 0, name.c_str(), -1, -1,
-			new WxSceneTreeItem(data_src->GetNode(), data_dst->GetRoot(), 0));
+			new WxSceneTreeItem(data_src->GetNode(), data_src->GetNode(), 0));
 	}
 	else
 	{
