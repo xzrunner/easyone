@@ -3,6 +3,10 @@
 #include "frame/Blackboard.h"
 
 #include <guard/check.h>
+#include <ee0/MsgHelper.h>
+#include <js/RapidJsonHelper.h>
+
+#include <boost/filesystem.hpp>
 
 namespace eone
 {
@@ -12,6 +16,8 @@ WxStagePanel::WxStagePanel(wxWindow* parent)
 		wxAUI_NB_DEFAULT_STYLE | wxAUI_NB_TAB_EXTERNAL_MOVE | wxNO_BORDER)
 	, m_old_page(nullptr)
 {
+	Connect(GetId(), wxEVT_AUINOTEBOOK_PAGE_CLOSE,
+		wxAuiNotebookEventHandler(WxStagePanel::OnPageClose));
 	Connect(GetId(), wxEVT_AUINOTEBOOK_PAGE_CHANGING, 
 		wxAuiNotebookEventHandler(WxStagePanel::OnPageChanging));
 	Connect(GetId(), wxEVT_AUINOTEBOOK_PAGE_CHANGED,
@@ -40,6 +46,75 @@ bool WxStagePanel::SwitchToPage(const std::string& filepath)
 		}
 	}
 	return false;
+}
+
+std::string WxStagePanel::StoreCurrPage(const std::string& filepath)
+{
+	auto page = GetCurrentStagePage();
+	if (!page) {
+		return "";
+	}
+
+	std::string _filepath = filepath;
+	if (_filepath.empty()) {
+		_filepath = page->GetFilepath();
+	}
+	if (_filepath.empty())
+	{
+		wxFileDialog dlg(Blackboard::Instance()->GetFrame(), wxT("Save"),
+			wxEmptyString, wxEmptyString, "*.json", wxFD_SAVE);
+		if (dlg.ShowModal() == wxID_OK) {
+			_filepath = dlg.GetPath().ToStdString();
+		} else {
+			return "";
+		}
+	}
+	if (_filepath.empty()) {
+		return "";
+	}
+
+	page->SetFilepath(_filepath);
+
+	rapidjson::Document doc;
+	doc.SetArray();
+
+	auto dir = boost::filesystem::path(_filepath).parent_path().string();
+
+	auto& alloc = doc.GetAllocator();
+
+	page->StoreToJson(dir, doc, alloc);
+
+	js::RapidJsonHelper::WriteToFile(_filepath.c_str(), doc);
+
+	page->GetImpl().GetEditRecord().OnSave();
+	ee0::MsgHelper::SetEditorDirty(page->GetSubjectMgr(), false);
+
+	return _filepath;
+}
+
+void WxStagePanel::OnPageClose(wxAuiNotebookEvent& event)
+{
+	auto page = GetCurrentStagePage();
+	if (!page->IsEditDirty()) {
+		return;
+	}
+
+	int answer = wxMessageBox("Save the file?", "Close", wxYES_NO | wxCANCEL, this);
+	if (answer == wxYES)
+	{
+		auto path = StoreCurrPage("");
+		if (path.empty()) {
+			event.Veto();
+		}
+	}
+	else if (answer == wxNO)
+	{
+		;
+	}
+	else
+	{
+		event.Veto();
+	}
 }
 
 void WxStagePanel::OnPageChanging(wxAuiNotebookEvent& event)

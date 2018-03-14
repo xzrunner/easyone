@@ -90,40 +90,9 @@ void Application::LoadFromFile(const std::string& filepath)
 
 void Application::StoreToFile(const std::string& filepath) const
 {
-	auto page = m_stage->GetCurrentStagePage();
-	if (!page) {
-		return;
-	}
-	
-	std::string _filepath = filepath;
-	if (_filepath.empty()) {
-		_filepath = page->GetFilepath();
-	}
-	if (_filepath.empty())
-	{
-		wxFileDialog dlg(Blackboard::Instance()->GetFrame(), wxT("Save"), 
-			wxEmptyString, wxEmptyString, "*.json", wxFD_SAVE);
-		if (dlg.ShowModal() == wxID_OK) {
-			_filepath = dlg.GetPath().ToStdString();		
-		}
-	}
-
-	page->SetFilepath(_filepath);
-	m_frame->SetTitle(_filepath);
-
-	rapidjson::Document doc;
-	doc.SetArray();
-
-	auto dir = boost::filesystem::path(_filepath).parent_path().string();
-
-	auto& alloc = doc.GetAllocator();
-
-	page->StoreToJson(dir, doc, alloc);
-
-	js::RapidJsonHelper::WriteToFile(_filepath.c_str(), doc);
-
-	page->GetImpl().GetEditRecord().OnSave();
-	ee0::MsgHelper::SetEditorDirty(page->GetSubjectMgr(), false);
+	auto path = m_stage->StoreCurrPage(filepath);
+	GD_ASSERT(!path.empty(), "err path");
+	m_frame->SetTitle(path);
 }
 
 void Application::Clear()
