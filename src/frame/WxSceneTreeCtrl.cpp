@@ -659,15 +659,6 @@ void WxSceneTreeCtrl::UpdateTreeNodeID(wxTreeItemId root)
 	});
 }
 
-void WxSceneTreeCtrl::UpdateTreeNodeIDToRoot(wxTreeItemId item)
-{
-	wxTreeItemId curr = item;
-	while (curr.IsOk()) {
-		UpdateTreeNodeID(curr);
-		curr = GetItemParent(curr);
-	}
-}
-
 void WxSceneTreeCtrl::DeleteEmptyNodeToRoot(wxTreeItemId item)
 {
 	wxTreeItemId curr = item;

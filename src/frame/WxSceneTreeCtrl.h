@@ -51,7 +51,6 @@ private:
 	void CopyChildrenTree(wxTreeItemId from, wxTreeItemId to);
 	void MoveSceneNode(wxTreeItemId src, const n0::SceneNodePtr& dst_parent);
 	void UpdateTreeNodeID(wxTreeItemId root);
-	void UpdateTreeNodeIDToRoot(wxTreeItemId item);
 	void DeleteEmptyNodeToRoot(wxTreeItemId item);
 
 	void RebuildAllTree();
