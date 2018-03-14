@@ -30,6 +30,7 @@ WxSceneTreeCtrl::WxSceneTreeCtrl(wxWindow* parent, ee0::SubjectMgr& sub_mgr)
 	: wxTreeCtrl(parent, ID_SCENE_TREE_CTRL, wxDefaultPosition, wxDefaultSize,
 		/*wxTR_HIDE_ROOT | */wxTR_EDIT_LABELS | wxTR_MULTIPLE | wxTR_NO_LINES | wxTR_DEFAULT_STYLE)
 	, m_sub_mgr(&sub_mgr)
+	, m_disable_select(false)
 {
 	SetBackgroundColour(wxColour(229, 229, 229));
 
@@ -55,7 +56,9 @@ void WxSceneTreeCtrl::OnNotify(ee0::MessageID msg, const ee0::VariantSet& varian
 		break;
 
 	case ee0::MSG_NODE_SELECTION_INSERT:
-		SelectSceneNode(variants);
+		if (!m_disable_select) {
+			SelectSceneNode(variants);
+		}
 		break;
 	case ee0::MSG_NODE_SELECTION_DELETE:
 		UnselectSceneNode(variants);
@@ -300,10 +303,15 @@ void WxSceneTreeCtrl::SelectSceneNode(const ee0::VariantSet& variants)
 	Traverse(m_root, [&](wxTreeItemId item)->bool
 	{
 		auto pdata = (WxSceneTreeItem*)GetItemData(item);
-		if (pdata->GetNode() == *node) {
+		if (pdata->GetNode() == *node) 
+		{
+			m_disable_select = true;
 			SelectItem(item, !multiple);
+			m_disable_select = false;
 			return false;
-		} else {
+		} 
+		else 
+		{
 			return true;
 		}
 	});

@@ -81,6 +81,8 @@ private:
 	wxTreeItemId m_dragged_item;
 	wxTreeItemId m_selected_item;
 
+	bool m_disable_select;
+	
 	DECLARE_EVENT_TABLE()
 
 }; // WxSceneTreeCtrl
