@@ -61,7 +61,7 @@ bool NodeSelectOP::OnMouseLeftDClick(int x, int y)
 	}
 
 	selection.Traverse([&](const n0::NodeWithPos& nwp)->bool {
-		OpenEditDialog(m_stage, nwp.node, m_rc, m_wc);
+		OpenEditDialog(m_stage, nwp.GetNode(), m_rc, m_wc);
 		return false;
 	});
 
