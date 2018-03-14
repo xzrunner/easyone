@@ -1,5 +1,7 @@
 #include "frame/WxSceneTreeItem.h"
 
+#include <guard/check.h>
+
 namespace eone
 {
 
@@ -17,6 +19,7 @@ WxSceneTreeItem::WxSceneTreeItem(const n0::SceneNodePtr& node,
 	, m_root(root)
 	, m_node_id(node_id)
 {
+	GD_ASSERT((node && root) || (!node && !root), "err");
 }
 
 }
