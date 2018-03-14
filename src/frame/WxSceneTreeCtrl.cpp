@@ -9,9 +9,10 @@
 #include <guard/check.h>
 #include <node0/SceneNode.h>
 #include <node0/CompAsset.h>
-#include <node0/SceneTree.h>
+#include <node0/SceneTreeHelper.h>
 #include <node2/CompComplex.h>
 #include <node2/CompTransform.h>
+#include <node2/SceneTreeHelper.h>
 
 #include <queue>
 
@@ -247,7 +248,7 @@ void WxSceneTreeCtrl::OnEndDrag(wxTreeEvent& event)
 	SetItemBold(new_item, data_src->GetNode()->HasSharedComp<n2::CompComplex>());
 	ExpandAll();
 	// move scene tree
-	MoveSceneNode(old_item, data_dst->GetNode());
+	MoveSceneNode(old_item, new_item_parent);
 	// rm if 1st level, rebuild based on 1st level
 	if (GetItemParent(old_item) == m_root) {
 		Delete(old_item);
@@ -579,17 +580,18 @@ void WxSceneTreeCtrl::CopyChildrenTree(wxTreeItemId from, wxTreeItemId to)
 	});
 }
 
-void WxSceneTreeCtrl::MoveSceneNode(wxTreeItemId src, const n0::SceneNodePtr& dst_parent)
+void WxSceneTreeCtrl::MoveSceneNode(wxTreeItemId src, wxTreeItemId dst_parent)
 {
 	auto src_data = (WxSceneTreeItem*)GetItemData(src);
 	auto src_node = src_data->GetNode();
-	auto src_root = src_data->GetRoot();
-	auto src_node_id = src_data->GetNodeID();
+
+	auto dst_parent_data = (WxSceneTreeItem*)GetItemData(dst_parent);
+	auto dst_parent_node = dst_parent_data->GetNode();
 
 	// calc world srt transform
 	pt2::SRT src_world_srt;
 	std::vector<n0::SceneNodePtr> path;
-	n0::SceneTree::GetPathToRoot(src_root, src_node_id, path);
+	n0::SceneTreeHelper::GetPathToRoot(src_data->GetRoot(), src_data->GetNodeID(), path);
 	for (auto& node : path) {
 		auto& ctrans = node->GetUniqueComp<n2::CompTransform>();
 		src_world_srt = src_world_srt * ctrans.GetTrans().GetSRT();
@@ -597,9 +599,9 @@ void WxSceneTreeCtrl::MoveSceneNode(wxTreeItemId src, const n0::SceneNodePtr& ds
 
 	// set local srt transform
 	auto& src_ctrans = src_node->GetUniqueComp<n2::CompTransform>();
-	if (dst_parent)
+	if (dst_parent_node)
 	{
-		auto& dst_ctrans = dst_parent->GetUniqueComp<n2::CompTransform>();
+		auto& dst_ctrans = dst_parent_node->GetUniqueComp<n2::CompTransform>();
 		src_ctrans.SetAngle(*src_node, src_world_srt.angle - dst_ctrans.GetTrans().GetAngle());
 		src_ctrans.SetScale(*src_node, src_world_srt.scale / dst_ctrans.GetTrans().GetScale());
 		src_ctrans.SetPosition(*src_node, src_world_srt.position - dst_ctrans.GetTrans().GetPosition());
@@ -614,10 +616,13 @@ void WxSceneTreeCtrl::MoveSceneNode(wxTreeItemId src, const n0::SceneNodePtr& ds
 	CleanRootEmptyChild();
 
 	// insert to new place
-	if (dst_parent)
+	if (dst_parent_node)
 	{
-		auto& ccomplex = dst_parent->GetSharedComp<n2::CompComplex>();
+		auto& ccomplex = dst_parent_node->GetSharedComp<n2::CompComplex>();
 		ccomplex.AddChild(src_node);
+
+		n2::SceneTreeHelper::UpdateAABB(dst_parent_node, 
+			dst_parent_data->GetRoot(), dst_parent_data->GetNodeID());
 	}
 	else
 	{

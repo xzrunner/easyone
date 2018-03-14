@@ -49,7 +49,7 @@ private:
 	void ClearALLSelected();
 
 	void CopyChildrenTree(wxTreeItemId from, wxTreeItemId to);
-	void MoveSceneNode(wxTreeItemId src, const n0::SceneNodePtr& dst_parent);
+	void MoveSceneNode(wxTreeItemId src, wxTreeItemId dst_parent);
 	void UpdateTreeNodeID(wxTreeItemId root);
 	void DeleteEmptyNodeToRoot(wxTreeItemId item);
 
