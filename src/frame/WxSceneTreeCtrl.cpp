@@ -649,6 +649,7 @@ void WxSceneTreeCtrl::MoveSceneNode(wxTreeItemId src, const n0::SceneNodePtr& ds
 
 	// remote from old place
 	DeleteNodeOutside(src);
+	CleanRootEmptyChild();
 
 	// insert to new place
 	if (dst_parent)
@@ -739,25 +740,44 @@ void WxSceneTreeCtrl::RebuildAllTree()
 	}
 
 	wxTreeItemIdValue cookie;
-	wxTreeItemId child = GetFirstChild(m_selected_item, cookie);
+	wxTreeItemId child = GetFirstChild(m_root, cookie);
 	while (child.IsOk()) 
 	{
+		auto data = (WxSceneTreeItem*)GetItemData(child);
+		if (data->GetNode()->HasSharedComp<n2::CompComplex>())
+		{
+			auto& ccomplex = data->GetNode()->GetSharedComp<n2::CompComplex>();
+			if (ccomplex.GetAllChildren().empty()) 
+			{
+				auto next = GetNextSibling(child);
+				Delete(child);
+				child = next;
+				continue;
+			}
+		}
+		
+		DeleteChildren(child);
 		RebuildTree(child);
+
 		child = GetNextSibling(child);
 	}
 }
 
-// todo
 void WxSceneTreeCtrl::RebuildTree(wxTreeItemId item)
 {
 	auto data = (WxSceneTreeItem*)GetItemData(item);
-	if (data->GetNode()->HasSharedComp<n2::CompComplex>())
-	{
-//		auto& ccomplex = data->GetNode()
+	if (!data->GetNode()->HasSharedComp<n2::CompComplex>()) {
+		return;
 	}
-	else
+
+	auto& ccomplex = data->GetNode()->GetSharedComp<n2::CompComplex>();
+	auto& children = ccomplex.GetAllChildren();
+	size_t node_id = data->GetNodeID() + 1;
+	for (auto& child : children) 
 	{
-		
+		InsertSceneNode(item, child, data->GetRoot(), node_id);
+		auto& casset = child->GetSharedComp<n0::CompAsset>();
+		node_id += casset.GetNodeCount();
 	}
 }
 
@@ -847,14 +867,18 @@ void WxSceneTreeCtrl::DeleteSelectedNode()
 	}
 
 	DeleteNodeOutside(m_selected_item);
-
+	CleanRootEmptyChild();
+	
 	// 1. update path to root (other path might need update)
 	//UpdateTreeNodeIDToRoot(m_selected_item);
 	//DeleteEmptyNodeToRoot(m_selected_item);
 	//m_sub_mgr->NotifyObservers(ee0::MSG_NODE_SELECTION_CLEAR);
 
 	// 2. update all
+	m_sub_mgr->NotifyObservers(ee0::MSG_NODE_SELECTION_CLEAR);
 	RebuildAllTree();
+
+	m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
 }
 
 void WxSceneTreeCtrl::DeleteNodeOutside(wxTreeItemId item)
@@ -889,6 +913,32 @@ void WxSceneTreeCtrl::DeleteNodeOutside(wxTreeItemId item)
 		vars.SetVariant("node", var_node);
 
 		m_sub_mgr->NotifyObservers(ee0::MSG_DELETE_SCENE_NODE, vars);
+	}
+}
+
+void WxSceneTreeCtrl::CleanRootEmptyChild()
+{
+	if (!ItemHasChildren(m_root)) {
+		return;
+	}
+
+	wxTreeItemIdValue cookie;
+	wxTreeItemId child = GetFirstChild(m_root, cookie);
+	while (child.IsOk()) 
+	{
+		auto data = (WxSceneTreeItem*)GetItemData(child);
+		if (data->GetNode()->HasSharedComp<n2::CompComplex>())
+		{
+			auto& ccomplex = data->GetNode()->GetSharedComp<n2::CompComplex>();
+			if (ccomplex.GetAllChildren().empty()) 
+			{
+				ee0::MsgHelper::DeleteNode(*m_sub_mgr, data->GetNode());
+				child = GetNextSibling(child);
+				continue;
+			}
+		}
+		
+		child = GetNextSibling(child);
 	}
 }
 

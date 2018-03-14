@@ -66,7 +66,8 @@ private:
 
 	void DeleteSelectedNode();
 	void DeleteNodeOutside(wxTreeItemId item);
-
+	void CleanRootEmptyChild();
+	
 private:
 	enum
 	{
