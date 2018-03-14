@@ -337,6 +337,8 @@ void WxSceneTreeCtrl::InsertSceneNode(const ee0::VariantSet& variants)
 	GD_ASSERT(node, "err scene node");
 
 	InsertSceneNode(m_root, *node, *node, 0);
+
+	Expand(m_root);
 }
 
 //// insert to selected complex
