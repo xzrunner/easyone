@@ -9,6 +9,7 @@
 #include <guard/check.h>
 #include <node0/SceneNode.h>
 #include <node0/CompAsset.h>
+#include <node0/SceneTree.h>
 #include <node2/CompComplex.h>
 #include <node2/CompTransform.h>
 
@@ -589,48 +590,11 @@ void WxSceneTreeCtrl::MoveSceneNode(wxTreeItemId src, const n0::SceneNodePtr& ds
 
 	// calc world srt transform
 	pt2::SRT src_world_srt;
-	if (src_root && src_node_id != 0)
-	{
-		GD_ASSERT(src_node_id > 0, "err id");
-		size_t src_id = src_node_id;
-
-		size_t curr_id = 0;
-		auto curr_node = src_root;
-		auto& ctrans = curr_node->GetUniqueComp<n2::CompTransform>();
-		src_world_srt = ctrans.GetTrans().GetSRT();
-		while (curr_id != src_id)
-		{
-			auto& casset = curr_node->GetSharedComp<n0::CompAsset>();
-			GD_ASSERT(src_id > curr_id && src_id < curr_id + casset.GetNodeCount(), "err id");
-			curr_id += 1;
-			casset.Traverse([&](const n0::SceneNodePtr& node)->bool
-			{
-				auto& casset = node->GetSharedComp<n0::CompAsset>();
-				if (src_id == curr_id)
-				{
-					curr_node = node;
-					auto& ctrans = curr_node->GetUniqueComp<n2::CompTransform>();
-					src_world_srt = src_world_srt * ctrans.GetTrans().GetSRT();
-					return false;
-				}
-				else if (src_id < curr_id + casset.GetNodeCount()) 
-				{
-					curr_node = node;
-					auto& ctrans = curr_node->GetUniqueComp<n2::CompTransform>();
-					src_world_srt = src_world_srt * ctrans.GetTrans().GetSRT();
-					return false;
-				} 
-				else 
-				{
-					curr_id += casset.GetNodeCount();
-					return true;
-				}
-			});
-		}
-	}
-	else
-	{
-		src_world_srt = src_node->GetUniqueComp<n2::CompTransform>().GetTrans().GetSRT();
+	std::vector<n0::SceneNodePtr> path;
+	n0::SceneTree::GetPathToRoot(src_root, src_node_id, path);
+	for (auto& node : path) {
+		auto& ctrans = node->GetUniqueComp<n2::CompTransform>();
+		src_world_srt = src_world_srt * ctrans.GetTrans().GetSRT();
 	}
 
 	// set local srt transform
