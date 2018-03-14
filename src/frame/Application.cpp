@@ -15,6 +15,7 @@
 #include "scene2d/WxStagePage.h"
 
 #include <ee0/CompNodeEditor.h>
+#include <ee0/MsgHelper.h>
 #include <ee2/WxStageCanvas.h>
 #include <ee3/WxStageCanvas.h>
 #include <ee3/NodeArrangeOP.h>
@@ -120,6 +121,9 @@ void Application::StoreToFile(const std::string& filepath) const
 	page->StoreToJson(dir, doc, alloc);
 
 	js::RapidJsonHelper::WriteToFile(_filepath.c_str(), doc);
+
+	page->GetImpl().GetEditRecord().OnSave();
+	ee0::MsgHelper::SetEditorDirty(page->GetSubjectMgr(), false);
 }
 
 void Application::Clear()
