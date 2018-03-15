@@ -265,6 +265,7 @@
     <ClInclude Include="..\..\..\src\frame\WxSceneTreeCtrl.h" />
     <ClInclude Include="..\..\..\src\frame\WxSceneTreeItem.h" />
     <ClInclude Include="..\..\..\src\frame\WxSettingsDialog.h" />
+    <ClInclude Include="..\..\..\src\frame\WxStageCanvas.h" />
     <ClInclude Include="..\..\..\src\frame\WxStagePage.h" />
     <ClInclude Include="..\..\..\src\frame\WxStagePanel.h" />
     <ClInclude Include="..\..\..\src\mask\WxEditDialog.h" />
@@ -280,7 +281,10 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\src\frame\Blackboard.cpp" />
     <ClCompile Include="..\..\..\src\frame\NodeFactory.cpp" />
-    <ClCompile Include="..\..\..\src\frame\NodeSelectOP.cpp" />
+    <ClCompile Include="..\..\..\src\frame\NodeSelectOP.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/%(RelativeDir)/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/%(RelativeDir)/</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="..\..\..\src\frame\StagePageFactory.cpp" />
     <ClCompile Include="..\..\..\src\frame\WxDetailPanel.cpp" />
     <ClCompile Include="..\..\..\src\frame\main.cpp" />
@@ -302,6 +306,10 @@
     <ClCompile Include="..\..\..\src\frame\WxSceneTreeCtrl.cpp" />
     <ClCompile Include="..\..\..\src\frame\WxSceneTreeItem.cpp" />
     <ClCompile Include="..\..\..\src\frame\WxSettingsDialog.cpp" />
+    <ClCompile Include="..\..\..\src\frame\WxStageCanvas.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/%(RelativeDir)/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/%(RelativeDir)/</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="..\..\..\src\frame\WxStagePage.cpp">
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/%(RelativeDir)/</ObjectFileName>
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/%(RelativeDir)/</ObjectFileName>

@@ -85,8 +85,8 @@ wxWindow* WxEditDialog::CreateTreePanel()
 
 wxWindow* WxEditDialog::CreateDetailPanel()
 {
-	auto& sub_mgr = m_stage->GetSubjectMgr();
-	return new WxDetailPanel(this, sub_mgr);
+	return new WxDetailPanel(
+		this, m_stage->GetSubjectMgr(), m_stage->GetEditedNode());
 }
 
 }

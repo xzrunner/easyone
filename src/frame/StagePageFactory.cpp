@@ -2,6 +2,7 @@
 #include "frame/NodeFactory.h"
 #include "frame/StagePageType.h"
 #include "frame/WxStagePanel.h"
+#include "frame/WxStageCanvas.h"
 #include "frame/NodeSelectOP.h"
 #include "frame/Blackboard.h"
 #include "frame/Application.h"
@@ -46,7 +47,7 @@ WxStagePage* StagePageFactory::Create(int page_type, WxStagePanel* stage_panel)
 		{
 			auto node = NodeFactory::Create(NODE_SCENE2D);
 			page = new scene2d::WxStagePage(frame, library, node);
-			auto canvas = std::make_shared<ee2::WxStageCanvas>(page, &rc, nullptr);
+			auto canvas = std::make_shared<WxStageCanvas>(page, rc);
 			page->GetImpl().SetCanvas(canvas);
 
 			auto prev_op = std::make_shared<NodeSelectOP>(*page, rc, wc);
@@ -87,7 +88,7 @@ WxStagePage* StagePageFactory::Create(int page_type, WxStagePanel* stage_panel)
 		{
 			auto node = NodeFactory::Create(NODE_MASK);
 			page = new mask::WxStagePage(frame, library, node);
-			auto canvas = std::make_shared<ee2::WxStageCanvas>(page, &rc, nullptr);
+			auto canvas = std::make_shared<WxStageCanvas>(page, rc);
 			page->GetImpl().SetCanvas(canvas);
 
 			auto prev_op = std::make_shared<NodeSelectOP>(*page, rc, wc);

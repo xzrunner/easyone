@@ -53,14 +53,17 @@ static const std::vector<std::pair<uint32_t, std::string>> COMP_LIST =
 namespace eone
 {
 
-WxDetailPanel::WxDetailPanel(wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr)
+WxDetailPanel::WxDetailPanel(wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr,
+	                         const n0::SceneNodePtr& root_node)
 	: wxPanel(parent, wxID_ANY)
 	, m_sub_mgr(sub_mgr)
+	, m_root_node(root_node)
 {
 	SetBackgroundColour(wxColour(229, 229, 229));
 
 	InitLayout();
 	RegisterMsg(*m_sub_mgr);
+	InitComponents();
 }
 
 void WxDetailPanel::OnNotify(ee0::MessageID msg, const ee0::VariantSet& variants)
@@ -68,23 +71,22 @@ void WxDetailPanel::OnNotify(ee0::MessageID msg, const ee0::VariantSet& variants
 	switch (msg)
 	{
 	case ee0::MSG_NODE_SELECTION_INSERT:
-		m_add_btn->Show(true);
 		ClearComponents();
 		InitComponents(variants);
 		break;
 	case ee0::MSG_DELETE_SCENE_NODE:
 	case ee0::MSG_CLEAR_SCENE_NODE:
 	case ee0::MSG_NODE_SELECTION_CLEAR:
-		m_add_btn->Show(false);
 		ClearComponents();
+		InitComponents();
 		break;
 	case ee0::MSG_UPDATE_COMPONENTS:
 		UpdateComponents();
 		break;
 	case ee0::MSG_STAGE_PAGE_CHANGED:
-		m_add_btn->Show(false);
 		ClearComponents();
 		StagePageChanged(variants);
+		InitComponents();
 		break;
 	}
 }
@@ -102,7 +104,6 @@ void WxDetailPanel::InitLayout()
 		Connect(m_add_btn->GetId(), wxEVT_COMMAND_BUTTON_CLICKED,
 			wxCommandEventHandler(WxDetailPanel::OnAddPress));
 		top_sizer->Add(m_add_btn, 0, wxALIGN_CENTER_HORIZONTAL);
-		m_add_btn->Show(false);
 	}
 	SetSizer(top_sizer);
 }
@@ -143,6 +144,11 @@ void WxDetailPanel::InitComponents(const ee0::VariantSet& variants)
 
 	m_nwp.Init(node, root, node_id);
 
+	InitComponents(node);
+}
+
+void WxDetailPanel::InitComponents(const n0::SceneNodePtr& node)
+{
 	if (m_nwp.GetNode()->HasUniqueComp<ee0::CompNodeEditor>())
 	{
 		auto& comp = m_nwp.GetNode()->GetUniqueComp<ee0::CompNodeEditor>();
@@ -236,6 +242,12 @@ void WxDetailPanel::InitComponents(const ee0::VariantSet& variants)
 	Layout();
 }
 
+void WxDetailPanel::InitComponents()
+{
+	m_nwp.Init(m_root_node, m_root_node, 0);
+	InitComponents(m_root_node);
+}
+
 void WxDetailPanel::ClearComponents()
 {
 	m_nwp.Reset();
@@ -266,10 +278,13 @@ void WxDetailPanel::StagePageChanged(const ee0::VariantSet& variants)
 	auto var = variants.GetVariant("new_page");
 	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: new_page");
 	GD_ASSERT(var.m_val.pv, "err new_page");
-	auto new_page = static_cast<WxStagePage*>(var.m_val.pv);
-	m_sub_mgr = new_page->GetSubjectMgr();
 
+	auto new_page = static_cast<WxStagePage*>(var.m_val.pv);
+
+	m_sub_mgr = new_page->GetSubjectMgr();
 	RegisterMsg(*m_sub_mgr);
+
+	m_root_node = new_page->GetEditedNode();
 }
 
 void WxDetailPanel::OnAddPress(wxCommandEvent& event)

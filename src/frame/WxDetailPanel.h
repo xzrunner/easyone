@@ -15,7 +15,8 @@ namespace eone
 class WxDetailPanel : public wxPanel, public ee0::Observer
 {
 public:
-	WxDetailPanel(wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr);
+	WxDetailPanel(wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr,
+		const n0::SceneNodePtr& root_node);
 
 	virtual void OnNotify(ee0::MessageID msg, const ee0::VariantSet& variants) override;
 
@@ -24,6 +25,8 @@ private:
 	void RegisterMsg(ee0::SubjectMgr& sub_mgr);
 
 	void InitComponents(const ee0::VariantSet& variants);
+	void InitComponents(const n0::SceneNodePtr& node);
+	void InitComponents();
 	void ClearComponents();
 	void UpdateComponents();
 	void StagePageChanged(const ee0::VariantSet& variants);
@@ -32,6 +35,7 @@ private:
 
 private:
 	ee0::SubjectMgrPtr m_sub_mgr;
+	n0::SceneNodePtr   m_root_node;
 
 	wxSizer* m_comp_sizer;
 
