@@ -852,6 +852,8 @@ void WxSceneTreeCtrl::DeleteNodeOutside(wxTreeItemId item)
 
 		if (ccomplex.GetAllChildren().empty()) {
 			DeleteNodeOutside(parent);
+		} else {
+			n2::SceneTreeHelper::UpdateAABB(pdata->GetNode(), pdata->GetRoot(), pdata->GetNodeID());
 		}
 	}
 	else
