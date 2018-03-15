@@ -10,7 +10,9 @@
 #include <painting2/PrimitiveDraw.h>
 #include <painting2/Blackboard.h>
 #include <painting2/WindowContext.h>
+#include <node0/SceneNode.h>
 #include <node2/RenderSystem.h>
+#include <node2/CompUniquePatch.h>
 
 namespace eone
 {
@@ -63,8 +65,19 @@ void WxPreviewCanvas::OnDrawSprites() const
 	var.m_val.bl = true;
 	vars.SetVariant("preview", var);
 
-	m_stage->GetStagePage().Traverse([&](const n0::SceneNodePtr& node)->bool {
-		n2::RenderSystem::Draw(node, sm::Matrix2D(), nullptr, 0);
+	n2::RenderParams rp;
+	rp.SetEditMode(false);
+	m_stage->GetStagePage().Traverse([&](const n0::SceneNodePtr& node)->bool 
+	{
+		if (node->HasUniqueComp<n2::CompUniquePatch>())
+		{
+			auto patch = &node->GetUniqueComp<n2::CompUniquePatch>();
+			patch->Rewind();
+			rp.SetPatch(patch);
+		}
+
+		n2::RenderSystem::Draw(node, rp);
+
 		return true;
 	}, vars);
 
