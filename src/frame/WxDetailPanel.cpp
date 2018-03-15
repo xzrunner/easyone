@@ -1,6 +1,7 @@
 #include "frame/WxDetailPanel.h"
 #include "frame/WxStagePage.h"
 
+#include <ee0/WxListSelectDlg.h>
 #include <ee0/SubjectMgr.h>
 #include <ee0/VariantSet.h>
 #include <ee0/WxCompPanel.h>
@@ -14,9 +15,11 @@
 #include <ee2/WxCompMeshPanel.h>
 #include <ee2/WxCompScale9Panel.h>
 #include <ee2/WxCompSprite2Panel.h>
+#include <ee2/WxCompScissorPanel.h>
 #include <ee3/WxCompTransformPanel.h>
 
 #include <node2/CompScale9.h>
+#include <node2/CompScissor.h>
 
 #include <guard/check.h>
 #include <node0/SceneNode.h>
@@ -29,62 +32,21 @@
 namespace
 {
 
-static const std::string COMP_COLOR_COMMON_STR = "ColorCommon";
-static const std::string COMP_COLOR_MAP_STR    = "ColorMap";
-
-class AddDialog : public wxDialog
+enum CompType
 {
-public:
-	AddDialog(wxWindow* parent, const wxPoint& pos)
-		: wxDialog(parent, wxID_ANY, "Add component", pos)
-	{
-		InitLayout();
-	}
+	COMP_UNKNOWN = 0,
 
-	std::string GetSelectedName() const
-	{
-		return m_tree->GetItemText(m_tree->GetSelection()).ToStdString();
-	}
+	COMP_COLOR_COMMON = 1,
+	COMP_COLOR_MAP,
+	COMP_SCISSOR,
+};
 
-private:
-	void InitLayout()
-	{
-		wxSizer* sizer = new wxBoxSizer(wxVERTICAL);
-
-		m_tree = new wxTreeCtrl(this, wxID_ANY, wxDefaultPosition, wxSize(200, 400), 
-			wxTR_HIDE_ROOT | /*wxTR_NO_LINES | */wxTR_DEFAULT_STYLE);
-		Bind(wxEVT_TREE_SEL_CHANGED, &AddDialog::OnSelChanged, this, m_tree->GetId());
-
-		auto root = m_tree->AddRoot("ROOT");
-
-		m_tree->InsertItem(root, -1, COMP_COLOR_COMMON_STR);
-		m_tree->InsertItem(root, -1, COMP_COLOR_MAP_STR);
-
-		sizer->Add(m_tree);
-
-		wxBoxSizer* btn_sizer = new wxBoxSizer(wxHORIZONTAL);
-		btn_sizer->Add(new wxButton(this, wxID_OK), wxALL, 5);
-		btn_sizer->Add(new wxButton(this, wxID_CANCEL), wxALL, 5);
-		sizer->Add(btn_sizer, 0, wxALL, 5);
-
-		SetSizer(sizer);
-		sizer->Fit(this);
-	}
-
-	void OnSelChanged(wxTreeEvent& event)
-	{
-		auto id = event.GetItem();
-		if (!id.IsOk()) {
-			return;
-		}
-
-		auto text = m_tree->GetItemText(id);
-	}
-
-private:
-	wxTreeCtrl* m_tree;
-
-}; // AddDialog
+static const std::vector<std::pair<uint32_t, std::string>> COMP_LIST =
+{
+	std::make_pair(COMP_COLOR_COMMON, "ColorCommon"),
+	std::make_pair(COMP_COLOR_MAP,    "ColorMap"),
+	std::make_pair(COMP_SCISSOR,      "Scissor"),
+};
 
 }
 
@@ -263,6 +225,14 @@ void WxDetailPanel::InitComponents(const ee0::VariantSet& variants)
 		m_components.push_back(panel);
 	}
 
+	if (m_nwp.GetNode()->HasUniqueComp<n2::CompScissor>())
+	{
+		auto& comp = m_nwp.GetNode()->GetUniqueComp<n2::CompScissor>();
+		auto panel = new ee2::WxCompScissorPanel(this, comp, m_sub_mgr);
+		m_comp_sizer->Insert(m_components.size(), panel);
+		m_components.push_back(panel);
+	}
+
 	Layout();
 }
 
@@ -304,25 +274,42 @@ void WxDetailPanel::StagePageChanged(const ee0::VariantSet& variants)
 
 void WxDetailPanel::OnAddPress(wxCommandEvent& event)
 {
-	AddDialog dlg(this, m_add_btn->GetScreenPosition());
+	ee0::WxListSelectDlg dlg(this, "Create component",
+		COMP_LIST, m_add_btn->GetScreenPosition());
 	if (dlg.ShowModal() != wxID_OK) {
 		return;
 	}
 
-	auto name = dlg.GetSelectedName();
-	if (name == COMP_COLOR_COMMON_STR)
+	auto id = dlg.GetSelectedID();
+	switch (id)
 	{
-		auto& comp = m_nwp.GetNode()->AddUniqueComp<n2::CompColorCommon>();
-		auto panel = new ee2::WxCompColComPanel(this, comp, m_sub_mgr);
-		m_comp_sizer->Insert(m_components.size(), panel);
-		m_components.push_back(panel);
-	}
-	else if (name == COMP_COLOR_MAP_STR)
-	{
-		auto& comp = m_nwp.GetNode()->AddUniqueComp<n2::CompColorMap>();
-		auto panel = new ee2::WxCompColMapPanel(this, comp, m_sub_mgr);
-		m_comp_sizer->Insert(m_components.size(), panel);
-		m_components.push_back(panel);
+	case CompType::COMP_COLOR_COMMON:
+		{
+			auto& comp = m_nwp.GetNode()->AddUniqueComp<n2::CompColorCommon>();
+			auto panel = new ee2::WxCompColComPanel(this, comp, m_sub_mgr);
+			m_comp_sizer->Insert(m_components.size(), panel);
+			m_components.push_back(panel);
+		}
+		break;
+	case CompType::COMP_COLOR_MAP:
+		{
+			auto& comp = m_nwp.GetNode()->AddUniqueComp<n2::CompColorMap>();
+			auto panel = new ee2::WxCompColMapPanel(this, comp, m_sub_mgr);
+			m_comp_sizer->Insert(m_components.size(), panel);
+			m_components.push_back(panel);
+		}
+		break;
+	case CompType::COMP_SCISSOR:
+		{
+			auto& comp = m_nwp.GetNode()->AddUniqueComp<n2::CompScissor>();
+			comp.SetRect(sm::rect(100, 100));
+			auto panel = new ee2::WxCompScissorPanel(this, comp, m_sub_mgr);
+			m_comp_sizer->Insert(m_components.size(), panel);
+			m_components.push_back(panel);
+
+			m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
+		}
+		break;
 	}
 
 	Layout();
