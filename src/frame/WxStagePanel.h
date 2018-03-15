@@ -1,5 +1,7 @@
 #pragma once
 
+#include <ee0/typedef.h>
+
 #include <wx/aui/auibook.h>
 
 namespace eone
@@ -26,7 +28,7 @@ private:
 	void OnPageChanged(wxAuiNotebookEvent& event);
 
 private:
-	WxStagePage* m_old_page;
+	ee0::SubjectMgrPtr m_old_sub_mgr = nullptr;
 
 }; // WxStagePanel
 

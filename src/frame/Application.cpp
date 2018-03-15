@@ -16,6 +16,7 @@
 
 #include <ee0/CompNodeEditor.h>
 #include <ee0/MsgHelper.h>
+#include <ee0/SubjectMgr.h>
 #include <ee2/WxStageCanvas.h>
 #include <ee3/WxStageCanvas.h>
 #include <ee3/NodeArrangeOP.h>
@@ -98,8 +99,8 @@ void Application::StoreToFile(const std::string& filepath) const
 void Application::Clear()
 {
 	auto& sub_mgr = m_stage->GetCurrentStagePage()->GetSubjectMgr();
-	sub_mgr.NotifyObservers(ee0::MSG_NODE_SELECTION_CLEAR);
-	sub_mgr.NotifyObservers(ee0::MSG_CLEAR_SCENE_NODE);
+	sub_mgr->NotifyObservers(ee0::MSG_NODE_SELECTION_CLEAR);
+	sub_mgr->NotifyObservers(ee0::MSG_CLEAR_SCENE_NODE);
 }
 
 void Application::InitSubmodule()

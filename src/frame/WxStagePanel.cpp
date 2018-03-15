@@ -4,6 +4,7 @@
 
 #include <guard/check.h>
 #include <ee0/MsgHelper.h>
+#include <ee0/SubjectMgr.h>
 #include <js/RapidJsonHelper.h>
 
 #include <boost/filesystem.hpp>
@@ -14,7 +15,6 @@ namespace eone
 WxStagePanel::WxStagePanel(wxWindow* parent)
 	: wxAuiNotebook(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, 
 		wxAUI_NB_DEFAULT_STYLE | wxAUI_NB_TAB_EXTERNAL_MOVE | wxNO_BORDER)
-	, m_old_page(nullptr)
 {
 	Connect(GetId(), wxEVT_AUINOTEBOOK_PAGE_CLOSE,
 		wxAuiNotebookEventHandler(WxStagePanel::OnPageClose));
@@ -87,7 +87,7 @@ std::string WxStagePanel::StoreCurrPage(const std::string& filepath)
 	js::RapidJsonHelper::WriteToFile(_filepath.c_str(), doc);
 
 	page->GetImpl().GetEditRecord().OnSave();
-	ee0::MsgHelper::SetEditorDirty(page->GetSubjectMgr(), false);
+	ee0::MsgHelper::SetEditorDirty(*page->GetSubjectMgr(), false);
 
 	return _filepath;
 }
@@ -95,6 +95,7 @@ std::string WxStagePanel::StoreCurrPage(const std::string& filepath)
 void WxStagePanel::OnPageClose(wxAuiNotebookEvent& event)
 {
 	auto page = GetCurrentStagePage();
+	m_old_sub_mgr = page->GetSubjectMgr();
 	if (!page->IsEditDirty()) {
 		return;
 	}
@@ -122,14 +123,14 @@ void WxStagePanel::OnPageChanging(wxAuiNotebookEvent& event)
 	auto page = GetCurrentStagePage();
 	if (page) 
 	{
-		m_old_page = page;
-		page->GetSubjectMgr().NotifyObservers(ee0::MSG_STAGE_PAGE_CHANGING);
+		m_old_sub_mgr = page->GetSubjectMgr();
+		m_old_sub_mgr->NotifyObservers(ee0::MSG_STAGE_PAGE_CHANGING);
 	}
 }
 
 void WxStagePanel::OnPageChanged(wxAuiNotebookEvent& event)
 {
-	if (!m_old_page) {
+	if (!m_old_sub_mgr) {
 		return;
 	}
 
@@ -144,11 +145,11 @@ void WxStagePanel::OnPageChanged(wxAuiNotebookEvent& event)
 	var.m_val.pv = new_page;
 	vars.SetVariant("new_page", var);
 
-	m_old_page->GetSubjectMgr().NotifyObservers(ee0::MSG_STAGE_PAGE_CHANGED, vars);
+	m_old_sub_mgr->NotifyObservers(ee0::MSG_STAGE_PAGE_CHANGED, vars);
 
-	new_page->GetSubjectMgr().NotifyObservers(ee0::MSG_STAGE_PAGE_ON_SHOW);
+	new_page->GetSubjectMgr()->NotifyObservers(ee0::MSG_STAGE_PAGE_ON_SHOW);
 
-	m_old_page = nullptr;
+	m_old_sub_mgr.reset();
 }
 
 }

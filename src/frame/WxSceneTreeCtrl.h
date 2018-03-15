@@ -1,12 +1,11 @@
 #pragma once
 
 #include <ee0/Observer.h>
+#include <ee0/typedef.h>
 
 #include <node0/typedef.h>
 
 #include <wx/treectrl.h>
-
-namespace ee0 { class SubjectMgr; }
 
 namespace eone
 {
@@ -16,7 +15,7 @@ class WxSceneTreePanel;
 class WxSceneTreeCtrl : public wxTreeCtrl, public ee0::Observer
 {
 public:
-	WxSceneTreeCtrl(wxWindow* parent, ee0::SubjectMgr& sub_mgr);
+	WxSceneTreeCtrl(wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr);
 
 	virtual void OnNotify(ee0::MessageID msg, const ee0::VariantSet& variants) override;
 
@@ -74,7 +73,7 @@ private:
 	};
 
 private:
-	ee0::SubjectMgr* m_sub_mgr;
+	ee0::SubjectMgrPtr m_sub_mgr;
 
 	wxTreeItemId m_root;
 

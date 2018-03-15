@@ -10,9 +10,11 @@
 namespace eone
 {
 
-WxPreviewPanel::WxPreviewPanel(wxWindow* parent, ee0::SubjectMgr& sub_mgr, WxStagePage* stage)
+WxPreviewPanel::WxPreviewPanel(wxWindow* parent, 
+	                           const ee0::SubjectMgrPtr& sub_mgr, 
+	                           WxStagePage* stage)
 	: ee0::WxEditPanel(parent, sub_mgr)
-	, m_sub_mgr(&sub_mgr)
+	, m_sub_mgr(sub_mgr)
 	, m_stage(stage)
 {
 	RegisterMsg(*m_sub_mgr);
@@ -39,7 +41,7 @@ void WxPreviewPanel::StagePageChanged(const ee0::VariantSet& variants)
 	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: new_page");
 	GD_ASSERT(var.m_val.pv, "err new_page");
 	auto new_page = static_cast<WxStagePage*>(var.m_val.pv);
-	m_sub_mgr = &new_page->GetSubjectMgr();
+	m_sub_mgr = new_page->GetSubjectMgr();
 	m_stage = new_page;
 
 	RegisterMsg(*m_sub_mgr);

@@ -2,6 +2,7 @@
 
 #include "frame/WxStagePage.h"
 
+#include <ee0/SubjectMgr.h>
 #include <ee3/WxStageDropTarget.h>
 
 #include <guard/check.h>
@@ -16,9 +17,9 @@ namespace scene3d
 WxStagePage::WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, const n0::SceneNodePtr& node)
 	: eone::WxStagePage(parent, node)
 {
-	m_sub_mgr.RegisterObserver(ee0::MSG_INSERT_SCENE_NODE, this);
-	m_sub_mgr.RegisterObserver(ee0::MSG_DELETE_SCENE_NODE, this);
-	m_sub_mgr.RegisterObserver(ee0::MSG_CLEAR_SCENE_NODE, this);
+	m_sub_mgr->RegisterObserver(ee0::MSG_INSERT_SCENE_NODE, this);
+	m_sub_mgr->RegisterObserver(ee0::MSG_DELETE_SCENE_NODE, this);
+	m_sub_mgr->RegisterObserver(ee0::MSG_CLEAR_SCENE_NODE, this);
 
 	if (library) {
 		SetDropTarget(new ee3::WxStageDropTarget(library, this));
@@ -79,7 +80,7 @@ void WxStagePage::InsertSceneNode(const ee0::VariantSet& variants)
 		ccomplex.AddChild(*node);
 	}
 
-	m_sub_mgr.NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
+	m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
 }
 
 void WxStagePage::DeleteSceneNode(const ee0::VariantSet& variants)
@@ -91,7 +92,7 @@ void WxStagePage::DeleteSceneNode(const ee0::VariantSet& variants)
 
 	auto& ccomplex = m_node->GetSharedComp<n2::CompComplex>();
 	if (ccomplex.RemoveChild(*node)) {
-		m_sub_mgr.NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
+		m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
 	}
 }
 
@@ -99,7 +100,7 @@ void WxStagePage::ClearSceneNode()
 {
 	auto& ccomplex = m_node->GetSharedComp<n2::CompComplex>();
 	ccomplex.RemoveAllChildren();
-	m_sub_mgr.NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
+	m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
 }
 
 }

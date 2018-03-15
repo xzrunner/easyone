@@ -108,7 +108,7 @@ bool ResizeScale9OP::OnMouseDrag(int x, int y)
 	auto& cbb = m_node->GetUniqueComp<n2::CompBoundingBox>();
 	cbb.SetSize(*m_node, sm::rect(w, h));
 
-	m_stage->GetSubjectMgr().NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
+	m_stage->GetSubjectMgr()->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
 
 	return false;
 }

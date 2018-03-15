@@ -1,12 +1,13 @@
 #pragma once
 
 #include <ee0/Observer.h>
+#include <ee0/typedef.h>
 
 #include <node0/NodeWithPos.h>
 
 #include <wx/panel.h>
 
-namespace ee0 { class SubjectMgr; class WxCompPanel; }
+namespace ee0 { class WxCompPanel; }
 
 namespace eone
 {
@@ -14,7 +15,7 @@ namespace eone
 class WxDetailPanel : public wxPanel, public ee0::Observer
 {
 public:
-	WxDetailPanel(wxWindow* parent, ee0::SubjectMgr& sub_mgr);
+	WxDetailPanel(wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr);
 
 	virtual void OnNotify(ee0::MessageID msg, const ee0::VariantSet& variants) override;
 
@@ -30,7 +31,7 @@ private:
 	void OnAddPress(wxCommandEvent& event);
 
 private:
-	ee0::SubjectMgr* m_sub_mgr;
+	ee0::SubjectMgrPtr m_sub_mgr;
 
 	wxSizer* m_comp_sizer;
 

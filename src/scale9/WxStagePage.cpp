@@ -6,6 +6,7 @@
 #include "frame/WxPreviewPanel.h"
 
 #include <ee0/MsgHelper.h>
+#include <ee0/SubjectMgr.h>
 #include <ee2/WxStageDropTarget.h>
 
 #include <guard/check.h>
@@ -23,10 +24,10 @@ namespace scale9
 WxStagePage::WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, const n0::SceneNodePtr& node)
 	: eone::WxStagePage(parent, node)
 {
-	m_sub_mgr.RegisterObserver(ee0::MSG_INSERT_SCENE_NODE, this);
-	m_sub_mgr.RegisterObserver(ee0::MSG_DELETE_SCENE_NODE, this);
-	m_sub_mgr.RegisterObserver(ee0::MSG_CLEAR_SCENE_NODE, this);
-	m_sub_mgr.RegisterObserver(ee0::MSG_STAGE_PAGE_ON_SHOW, this);
+	m_sub_mgr->RegisterObserver(ee0::MSG_INSERT_SCENE_NODE, this);
+	m_sub_mgr->RegisterObserver(ee0::MSG_DELETE_SCENE_NODE, this);
+	m_sub_mgr->RegisterObserver(ee0::MSG_CLEAR_SCENE_NODE, this);
+	m_sub_mgr->RegisterObserver(ee0::MSG_STAGE_PAGE_ON_SHOW, this);
 
 	if (library) {
 		SetDropTarget(new ee2::WxStageDropTarget(library, this));
@@ -98,12 +99,12 @@ void WxStagePage::LoadFromJsonExt(const std::string& dir, const rapidjson::Value
 
 		const int idx = row * 3 + col;
 		if (m_grids[idx]) {
-			ee0::MsgHelper::DeleteNode(m_sub_mgr, m_grids[idx]);
+			ee0::MsgHelper::DeleteNode(*m_sub_mgr, m_grids[idx]);
 		}
 		m_grids[idx] = node;
 	}
 
-	m_sub_mgr.NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
+	m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
 }
 
 void WxStagePage::InsertSceneNode(const ee0::VariantSet& variants)
@@ -124,7 +125,7 @@ void WxStagePage::InsertSceneNode(const ee0::VariantSet& variants)
 
 	const int idx = row * 3 + col;
 	if (m_grids[idx]) {
-		ee0::MsgHelper::DeleteNode(m_sub_mgr, m_grids[idx]);
+		ee0::MsgHelper::DeleteNode(*m_sub_mgr, m_grids[idx]);
 	}
 	m_grids[idx] = *node;
 
@@ -139,7 +140,7 @@ void WxStagePage::InsertSceneNode(const ee0::VariantSet& variants)
 		cbb.SetSize(*m_node, sm::rect(cscale9.GetWidth(), cscale9.GetHeight()));
 	}
 	
-	m_sub_mgr.NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
+	m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
 }
 
 void WxStagePage::DeleteSceneNode(const ee0::VariantSet& variants)
@@ -159,7 +160,7 @@ void WxStagePage::DeleteSceneNode(const ee0::VariantSet& variants)
 	auto type = n2::CompScale9::CheckType(m_grids);
 	cscale9.Build(type, cscale9.GetWidth(), cscale9.GetHeight(), m_grids, 0, 0, 0, 0);
 
-	m_sub_mgr.NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
+	m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
 }
 
 void WxStagePage::ClearSceneNode()
@@ -171,7 +172,7 @@ void WxStagePage::ClearSceneNode()
 	auto& cscale9 = m_node->GetSharedComp<n2::CompScale9>();
 	cscale9.Build(n2::CompScale9::S9_NULL, cscale9.GetWidth(), cscale9.GetHeight(), m_grids, 0, 0, 0, 0);
 
-	m_sub_mgr.NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
+	m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
 }
 
 void WxStagePage::StagePageOnShow()

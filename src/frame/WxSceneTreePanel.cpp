@@ -44,7 +44,7 @@ static const std::vector<std::pair<uint32_t, std::string>> NODE_LIST =
 namespace eone
 {
 
-WxSceneTreePanel::WxSceneTreePanel(wxWindow* parent, ee0::SubjectMgr& sub_mgr)
+WxSceneTreePanel::WxSceneTreePanel(wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr)
 	: wxPanel(parent, wxID_ANY)
 	, m_sub_mgr(sub_mgr)
 {
@@ -137,7 +137,7 @@ void WxSceneTreePanel::OnCreatePress(wxCommandEvent& event)
 		return;
 	}
 
-	ee0::MsgHelper::InsertNode(m_sub_mgr, node, true);
+	ee0::MsgHelper::InsertNode(*m_sub_mgr, node, true);
 }
 
 }

@@ -28,10 +28,10 @@ BEGIN_EVENT_TABLE(WxSceneTreeCtrl, wxTreeCtrl)
 	EVT_KEY_DOWN(WxSceneTreeCtrl::OnKeyDown)
 END_EVENT_TABLE()
 
-WxSceneTreeCtrl::WxSceneTreeCtrl(wxWindow* parent, ee0::SubjectMgr& sub_mgr)
+WxSceneTreeCtrl::WxSceneTreeCtrl(wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr)
 	: wxTreeCtrl(parent, ID_SCENE_TREE_CTRL, wxDefaultPosition, wxDefaultSize,
 		/*wxTR_HIDE_ROOT | */wxTR_EDIT_LABELS | wxTR_MULTIPLE | wxTR_NO_LINES | wxTR_DEFAULT_STYLE)
-	, m_sub_mgr(&sub_mgr)
+	, m_sub_mgr(sub_mgr)
 	, m_disable_select(false)
 {
 	SetBackgroundColour(wxColour(229, 229, 229));
@@ -530,7 +530,7 @@ void WxSceneTreeCtrl::StagePageChanged(const ee0::VariantSet& variants)
 	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: new_page");
 	GD_ASSERT(var.m_val.pv, "err new_page");
 	auto new_page = static_cast<WxStagePage*>(var.m_val.pv);
-	m_sub_mgr = &new_page->GetSubjectMgr();
+	m_sub_mgr = new_page->GetSubjectMgr();
 
 	RegisterMsg(*m_sub_mgr);
 }

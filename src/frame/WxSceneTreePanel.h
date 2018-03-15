@@ -1,8 +1,8 @@
 #pragma once
 
-#include <wx/panel.h>
+#include <ee0/typedef.h>
 
-namespace ee0 { class SubjectMgr; }
+#include <wx/panel.h>
 
 namespace eone
 {
@@ -10,7 +10,7 @@ namespace eone
 class WxSceneTreePanel : public wxPanel
 {
 public:
-	WxSceneTreePanel(wxWindow* parent, ee0::SubjectMgr& sub_mgr);
+	WxSceneTreePanel(wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr);
 
 private:
 	void InitLayout();
@@ -18,7 +18,7 @@ private:
 	void OnCreatePress(wxCommandEvent& event);
 
 private:
-	ee0::SubjectMgr& m_sub_mgr;
+	ee0::SubjectMgrPtr m_sub_mgr;
 
 	wxButton* m_create_btn;
 

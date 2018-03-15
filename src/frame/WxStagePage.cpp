@@ -3,12 +3,13 @@
 #include "frame/WxStagePanel.h"
 #include "frame/StagePageType.h"
 
+#include <ee0/SubjectMgr.h>
+
+#include <guard/check.h>
 #include <node0/CompAsset.h>
 #include <node0/SceneNode.h>
 #include <node2/CompBoundingBox.h>
 #include <ns/CompSerializer.h>
-
-#include <guard/check.h>
 
 namespace eone
 {
@@ -17,7 +18,7 @@ WxStagePage::WxStagePage(wxWindow* parent, const n0::SceneNodePtr& node)
 	: ee0::WxStagePage(parent)
 	, m_node(node)
 {
-	m_sub_mgr.RegisterObserver(ee0::MSG_SET_EDITOR_DIRTY, this);
+	m_sub_mgr->RegisterObserver(ee0::MSG_SET_EDITOR_DIRTY, this);
 }
 
 void WxStagePage::OnNotify(ee0::MessageID msg, const ee0::VariantSet& variants)
@@ -62,12 +63,12 @@ void WxStagePage::LoadFromJson(const std::string& dir, const rapidjson::Value& v
 		var_node.m_val.pv = &std::const_pointer_cast<n0::SceneNode>(node);
 		vars.SetVariant("node", var_node);
 
-		m_sub_mgr.NotifyObservers(ee0::MSG_INSERT_SCENE_NODE, vars);
+		m_sub_mgr->NotifyObservers(ee0::MSG_INSERT_SCENE_NODE, vars);
 
 		return true;
 	});
 
-	m_sub_mgr.NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
+	m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
 }
 
 void WxStagePage::SetEditorDirty(const ee0::VariantSet& variants)

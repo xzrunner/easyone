@@ -1,5 +1,6 @@
 #include "mask/WxStagePage.h"
 
+#include <ee0/SubjectMgr.h>
 #include <ee2/WxStageDropTarget.h>
 
 #include <guard/check.h>
@@ -14,9 +15,9 @@ namespace mask
 WxStagePage::WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, const n0::SceneNodePtr& node)
 	: eone::WxStagePage(parent, node)
 {
-	m_sub_mgr.RegisterObserver(ee0::MSG_INSERT_SCENE_NODE, this);
-	m_sub_mgr.RegisterObserver(ee0::MSG_DELETE_SCENE_NODE, this);
-	m_sub_mgr.RegisterObserver(ee0::MSG_CLEAR_SCENE_NODE, this);
+	m_sub_mgr->RegisterObserver(ee0::MSG_INSERT_SCENE_NODE, this);
+	m_sub_mgr->RegisterObserver(ee0::MSG_DELETE_SCENE_NODE, this);
+	m_sub_mgr->RegisterObserver(ee0::MSG_CLEAR_SCENE_NODE, this);
 
 	if (library) {
 		SetDropTarget(new ee2::WxStageDropTarget(library, this));
@@ -78,7 +79,7 @@ void WxStagePage::InsertSceneNode(const ee0::VariantSet& variants)
 		cmask.SetMaskNode(*node);
 	}
 		
-	m_sub_mgr.NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
+	m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
 }
 
 void WxStagePage::DeleteSceneNode(const ee0::VariantSet& variants)
@@ -96,7 +97,7 @@ void WxStagePage::DeleteSceneNode(const ee0::VariantSet& variants)
 		cmask.SetMaskNode(nullptr);
 	}
 
-	m_sub_mgr.NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
+	m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
 }
 
 void WxStagePage::ClearSceneNode()
@@ -105,7 +106,7 @@ void WxStagePage::ClearSceneNode()
 	cmask.SetBaseNode(nullptr);
 	cmask.SetMaskNode(nullptr);
 
-	m_sub_mgr.NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
+	m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
 }
 
 }

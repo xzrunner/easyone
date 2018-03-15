@@ -91,9 +91,9 @@ private:
 namespace eone
 {
 
-WxDetailPanel::WxDetailPanel(wxWindow* parent, ee0::SubjectMgr& sub_mgr)
+WxDetailPanel::WxDetailPanel(wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr)
 	: wxPanel(parent, wxID_ANY)
-	, m_sub_mgr(&sub_mgr)
+	, m_sub_mgr(sub_mgr)
 {
 	SetBackgroundColour(wxColour(229, 229, 229));
 
@@ -184,7 +184,7 @@ void WxDetailPanel::InitComponents(const ee0::VariantSet& variants)
 	if (m_nwp.GetNode()->HasUniqueComp<ee0::CompNodeEditor>())
 	{
 		auto& comp = m_nwp.GetNode()->GetUniqueComp<ee0::CompNodeEditor>();
-		auto panel = new ee0::WxCompNodeEditorPanel(this, comp, *m_sub_mgr, m_nwp.GetNode());
+		auto panel = new ee0::WxCompNodeEditorPanel(this, comp, m_sub_mgr, m_nwp.GetNode());
 		m_comp_sizer->Insert(m_components.size(), panel);
 		m_components.push_back(panel);
 	}
@@ -192,7 +192,7 @@ void WxDetailPanel::InitComponents(const ee0::VariantSet& variants)
 	if (m_nwp.GetNode()->HasUniqueComp<n3::CompTransform>())
 	{
 		auto& comp = m_nwp.GetNode()->GetUniqueComp<n3::CompTransform>();
-		auto panel = new ee3::WxCompTransformPanel(this, comp, *m_sub_mgr);
+		auto panel = new ee3::WxCompTransformPanel(this, comp, m_sub_mgr);
 		m_comp_sizer->Insert(m_components.size(), panel);
 		m_components.push_back(panel);
 	}
@@ -200,21 +200,21 @@ void WxDetailPanel::InitComponents(const ee0::VariantSet& variants)
 	if (m_nwp.GetNode()->HasUniqueComp<n2::CompTransform>())
 	{
 		auto& comp = m_nwp.GetNode()->GetUniqueComp<n2::CompTransform>();
-		auto panel = new ee2::WxCompTransformPanel(this, comp, *m_sub_mgr, m_nwp);
+		auto panel = new ee2::WxCompTransformPanel(this, comp, m_sub_mgr, m_nwp);
 		m_comp_sizer->Insert(m_components.size(), panel);
 		m_components.push_back(panel);
 	}
 	if (m_nwp.GetNode()->HasUniqueComp<n2::CompColorCommon>())
 	{
 		auto& comp = m_nwp.GetNode()->GetUniqueComp<n2::CompColorCommon>();
-		auto panel = new ee2::WxCompColComPanel(this, comp, *m_sub_mgr);
+		auto panel = new ee2::WxCompColComPanel(this, comp, m_sub_mgr);
 		m_comp_sizer->Insert(m_components.size(), panel);
 		m_components.push_back(panel);
 	}
 	if (m_nwp.GetNode()->HasUniqueComp<n2::CompColorMap>())
 	{
 		auto& comp = m_nwp.GetNode()->GetUniqueComp<n2::CompColorMap>();
-		auto panel = new ee2::WxCompColMapPanel(this, comp, *m_sub_mgr);
+		auto panel = new ee2::WxCompColMapPanel(this, comp, m_sub_mgr);
 		m_comp_sizer->Insert(m_components.size(), panel);
 		m_components.push_back(panel);
 	}
@@ -222,35 +222,35 @@ void WxDetailPanel::InitComponents(const ee0::VariantSet& variants)
 	if (m_nwp.GetNode()->HasSharedComp<n2::CompImage>())
 	{
 		auto& comp = m_nwp.GetNode()->GetSharedComp<n2::CompImage>();
-		auto panel = new ee2::WxCompImagePanel(this, comp, *m_sub_mgr);
+		auto panel = new ee2::WxCompImagePanel(this, comp);
 		m_comp_sizer->Insert(m_components.size(), panel);
 		m_components.push_back(panel);
 	}
 	if (m_nwp.GetNode()->HasSharedComp<n2::CompText>())
 	{
 		auto& comp = m_nwp.GetNode()->GetSharedComp<n2::CompText>();
-		auto panel = new ee2::WxCompTextPanel(this, comp, *m_sub_mgr);
+		auto panel = new ee2::WxCompTextPanel(this, comp, m_sub_mgr);
 		m_comp_sizer->Insert(m_components.size(), panel);
 		m_components.push_back(panel);
 	}
 	if (m_nwp.GetNode()->HasSharedComp<n2::CompMask>())
 	{
 		auto& comp = m_nwp.GetNode()->GetSharedComp<n2::CompMask>();
-		auto panel = new ee2::WxCompMaskPanel(this, comp, *m_sub_mgr, *m_nwp.GetNode());
+		auto panel = new ee2::WxCompMaskPanel(this, comp, *m_nwp.GetNode());
 		m_comp_sizer->Insert(m_components.size(), panel);
 		m_components.push_back(panel);
 	}
 	if (m_nwp.GetNode()->HasSharedComp<n2::CompMesh>())
 	{
 		auto& comp = m_nwp.GetNode()->GetSharedComp<n2::CompMesh>();
-		auto panel = new ee2::WxCompMeshPanel(this, comp, *m_sub_mgr, *m_nwp.GetNode());
+		auto panel = new ee2::WxCompMeshPanel(this, comp, *m_nwp.GetNode());
 		m_comp_sizer->Insert(m_components.size(), panel);
 		m_components.push_back(panel);
 	}
 	if (m_nwp.GetNode()->HasSharedComp<n2::CompScale9>())
 	{
 		auto& comp = m_nwp.GetNode()->GetSharedComp<n2::CompScale9>();
-		auto panel = new ee2::WxCompScale9Panel(this, comp, *m_sub_mgr);
+		auto panel = new ee2::WxCompScale9Panel(this, comp);
 		m_comp_sizer->Insert(m_components.size(), panel);
 		m_components.push_back(panel);
 	}
@@ -258,7 +258,7 @@ void WxDetailPanel::InitComponents(const ee0::VariantSet& variants)
 	if (m_nwp.GetNode()->HasSharedComp<n2::CompSprite2>())
 	{
 		auto& comp = m_nwp.GetNode()->GetSharedComp<n2::CompSprite2>();
-		auto panel = new ee2::WxCompSprite2Panel(this, comp, *m_sub_mgr);
+		auto panel = new ee2::WxCompSprite2Panel(this, comp);
 		m_comp_sizer->Insert(m_components.size(), panel);
 		m_components.push_back(panel);
 	}
@@ -297,7 +297,7 @@ void WxDetailPanel::StagePageChanged(const ee0::VariantSet& variants)
 	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: new_page");
 	GD_ASSERT(var.m_val.pv, "err new_page");
 	auto new_page = static_cast<WxStagePage*>(var.m_val.pv);
-	m_sub_mgr = &new_page->GetSubjectMgr();
+	m_sub_mgr = new_page->GetSubjectMgr();
 
 	RegisterMsg(*m_sub_mgr);
 }
@@ -313,14 +313,14 @@ void WxDetailPanel::OnAddPress(wxCommandEvent& event)
 	if (name == COMP_COLOR_COMMON_STR)
 	{
 		auto& comp = m_nwp.GetNode()->AddUniqueComp<n2::CompColorCommon>();
-		auto panel = new ee2::WxCompColComPanel(this, comp, *m_sub_mgr);
+		auto panel = new ee2::WxCompColComPanel(this, comp, m_sub_mgr);
 		m_comp_sizer->Insert(m_components.size(), panel);
 		m_components.push_back(panel);
 	}
 	else if (name == COMP_COLOR_MAP_STR)
 	{
 		auto& comp = m_nwp.GetNode()->AddUniqueComp<n2::CompColorMap>();
-		auto panel = new ee2::WxCompColMapPanel(this, comp, *m_sub_mgr);
+		auto panel = new ee2::WxCompColMapPanel(this, comp, m_sub_mgr);
 		m_comp_sizer->Insert(m_components.size(), panel);
 		m_components.push_back(panel);
 	}

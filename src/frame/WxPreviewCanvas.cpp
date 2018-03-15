@@ -23,7 +23,7 @@ WxPreviewCanvas::WxPreviewCanvas(WxPreviewPanel* stage, const ee0::RenderContext
 	cam->Set(sm::vec2(0, 0), 2);
 	m_cam = cam;
 
-	RegisterMsg(stage->GetSubjectMgr());
+	RegisterMsg(*stage->GetSubjectMgr());
 }
 
 void WxPreviewCanvas::OnNotify(ee0::MessageID msg, const ee0::VariantSet& variants)
