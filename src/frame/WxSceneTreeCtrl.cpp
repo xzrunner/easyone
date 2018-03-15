@@ -5,6 +5,7 @@
 #include <ee0/SubjectMgr.h>
 #include <ee0/CompNodeEditor.h>
 #include <ee0/MsgHelper.h>
+#include <ee2/NodeReorderHelper.h>
 
 #include <guard/check.h>
 #include <node0/SceneNode.h>
@@ -28,10 +29,12 @@ BEGIN_EVENT_TABLE(WxSceneTreeCtrl, wxTreeCtrl)
 	EVT_KEY_DOWN(WxSceneTreeCtrl::OnKeyDown)
 END_EVENT_TABLE()
 
-WxSceneTreeCtrl::WxSceneTreeCtrl(wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr)
+WxSceneTreeCtrl::WxSceneTreeCtrl(wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr,
+	                             const n0::SceneNodePtr& root_node)
 	: wxTreeCtrl(parent, ID_SCENE_TREE_CTRL, wxDefaultPosition, wxDefaultSize,
 		/*wxTR_HIDE_ROOT | */wxTR_EDIT_LABELS | wxTR_MULTIPLE | wxTR_NO_LINES | wxTR_DEFAULT_STYLE)
 	, m_sub_mgr(sub_mgr)
+	, m_root_node(root_node)
 	, m_disable_select(false)
 {
 	SetBackgroundColour(wxColour(229, 229, 229));
@@ -69,8 +72,6 @@ void WxSceneTreeCtrl::OnNotify(ee0::MessageID msg, const ee0::VariantSet& varian
 		ClearALLSelected();
 		break;
 	case ee0::MSG_STAGE_PAGE_CHANGED:
-		DeleteAllItems();
-		InitRoot();
 		StagePageChanged(variants);
 		break;
 
@@ -143,8 +144,6 @@ void WxSceneTreeCtrl::OnSelChanged(wxTreeEvent& event)
 	if (!id.IsOk() || id == m_root) {
 		return;
 	}
-
-	m_selected_item = id;
 
 	auto data = (WxSceneTreeItem*)GetItemData(id);
 	auto& node = data->GetNode();
@@ -226,6 +225,7 @@ void WxSceneTreeCtrl::OnEndDrag(wxTreeEvent& event)
 	// old info
 	auto data_src = (WxSceneTreeItem*)GetItemData(old_item);
 	std::string name = GetItemText(old_item);
+	auto old_node = data_src->GetNode();
 
 	// move to root
 	if (data_dst->GetNode() == nullptr)
@@ -246,17 +246,12 @@ void WxSceneTreeCtrl::OnEndDrag(wxTreeEvent& event)
 	}
 
 	SetItemBold(new_item, data_src->GetNode()->HasSharedComp<n2::CompComplex>());
-	ExpandAll();
 	// move scene tree
 	MoveSceneNode(old_item, new_item_parent);
-	// rm if 1st level, rebuild based on 1st level
-	if (GetItemParent(old_item) == m_root) {
-		Delete(old_item);
-	}
-	// update node id
-	m_sub_mgr->NotifyObservers(ee0::MSG_NODE_SELECTION_CLEAR);
-	RebuildAllTree();
-	// todo: select new_item
+	// rebuild tree
+	RebuildTree(m_root_node);
+	// select
+	SelectSceneNode(old_node, false);
 }
 
 void WxSceneTreeCtrl::OnKeyDown(wxKeyEvent& event)
@@ -276,10 +271,10 @@ void WxSceneTreeCtrl::OnKeyDown(wxKeyEvent& event)
 		SelectRight();
 		break;
 	case WXK_PAGEUP:
-		ReorderItem(m_selected_item, true);
+		ReorderSelectionToMsg(true);
 		break;
 	case WXK_PAGEDOWN:
-		ReorderItem(m_selected_item, false);
+		ReorderSelectionToMsg(false);
 		break;
 	case WXK_DELETE:
 		DeleteSelectedNode();
@@ -300,21 +295,7 @@ void WxSceneTreeCtrl::SelectSceneNode(const ee0::VariantSet& variants)
 		multiple = true;
 	}
 
-	Traverse(m_root, [&](wxTreeItemId item)->bool
-	{
-		auto pdata = (WxSceneTreeItem*)GetItemData(item);
-		if (pdata->GetNode() == *node) 
-		{
-			m_disable_select = true;
-			SelectItem(item, !multiple);
-			m_disable_select = false;
-			return false;
-		} 
-		else 
-		{
-			return true;
-		}
-	});
+	SelectSceneNode(*node, multiple);
 }
 
 void WxSceneTreeCtrl::UnselectSceneNode(const ee0::VariantSet& variants)
@@ -324,13 +305,42 @@ void WxSceneTreeCtrl::UnselectSceneNode(const ee0::VariantSet& variants)
 	n0::SceneNodePtr* node = static_cast<n0::SceneNodePtr*>(var.m_val.pv);
 	GD_ASSERT(node, "err scene node");
 
+	UnselectSceneNode(*node);
+}
+
+void WxSceneTreeCtrl::SelectSceneNode(const n0::SceneNodePtr& node, bool multiple)
+{
 	Traverse(m_root, [&](wxTreeItemId item)->bool
 	{
 		auto pdata = (WxSceneTreeItem*)GetItemData(item);
-		if (pdata->GetNode() == *node) {
-			UnselectItem(item);
+		if (pdata->GetNode() == node)
+		{
+			m_disable_select = true;
+			SelectItem(item, !multiple);
+			m_disable_select = false;
 			return false;
-		} else {
+		}
+		else
+		{
+			return true;
+		}
+	});
+}
+
+void WxSceneTreeCtrl::UnselectSceneNode(const n0::SceneNodePtr& node)
+{
+	Traverse(m_root, [&](wxTreeItemId item)->bool
+	{
+		auto pdata = (WxSceneTreeItem*)GetItemData(item);
+		if (pdata->GetNode() == node) 
+		{
+			m_disable_select = true;
+			UnselectItem(item);
+			m_disable_select = false;
+			return false;
+		} 
+		else 
+		{
 			return true;
 		}
 	});
@@ -348,50 +358,6 @@ void WxSceneTreeCtrl::InsertSceneNode(const ee0::VariantSet& variants)
 
 	Expand(m_root);
 }
-
-//// insert to selected complex
-//void WxSceneTreeCtrl::InsertSceneNode(const ee0::VariantSet& variants)
-//{
-//	auto var = variants.GetVariant("node");
-//	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: node");
-//	n0::SceneNodePtr* node = static_cast<n0::SceneNodePtr*>(var.m_val.pv);
-//	GD_ASSERT(node, "err scene node");
-//
-//	wxTreeItemId parent = GetFocusedItem();
-//	if (!parent.IsOk()) {
-//		parent = m_root;
-//	}
-//	while (parent != m_root)
-//	{
-//		auto pdata = (WxSceneTreeItem*)GetItemData(parent);
-//		auto& pnode = pdata->GetNode();
-//		if (pdata->GetNode()->HasSharedComp<n2::CompComplex>()) {
-//			break;
-//		} else {
-//			parent = GetItemParent(parent);
-//		}
-//	}
-//
-//	n0::SceneNodePtr root;
-//	size_t node_id;
-//	if (parent == m_root) 
-//	{
-//		root = *node;
-//		node_id = 0;
-//	}
-//	else
-//	{
-//		auto pdata = (WxSceneTreeItem*)GetItemData(parent);
-//		root = pdata->GetRoot();
-//		// todo
-//		node_id = 0;
-//	}
-//	InsertSceneNode(parent, *node, root, node_id);
-//
-//	if (parent != m_root) {
-//		Expand(parent);
-//	}
-//}
 
 void WxSceneTreeCtrl::InsertSceneNode(wxTreeItemId parent, const n0::SceneNodePtr& node,
 	                                  const n0::SceneNodePtr& root, size_t node_id)
@@ -503,6 +469,7 @@ bool WxSceneTreeCtrl::ReorderItem(wxTreeItemId item, bool up)
 
 	// old info
 	auto pdata = (WxSceneTreeItem*)GetItemData(item);
+	auto old_node = pdata->GetNode();
 	std::string name = GetItemText(item);
 	// insert
 	wxTreeItemId parent = GetItemParent(item);
@@ -518,10 +485,29 @@ bool WxSceneTreeCtrl::ReorderItem(wxTreeItemId item, bool up)
 	CopyChildrenTree(item, new_item);
 	// remove
 	DeleteEmptyNodeToRoot(item);
-	// set selection
-	SelectItem(new_item);
+	// select
+	SelectSceneNode(old_node, false);
 
 	return true;
+}
+
+void WxSceneTreeCtrl::ReorderSelectionToMsg(bool up)
+{
+	ee0::SelectionSet<n0::NodeWithPos> selection;
+	wxArrayTreeItemIds items;
+	int count = GetSelections(items);
+	for (int i = 0; i < count; ++i) 
+	{
+		auto data = (WxSceneTreeItem*)GetItemData(items[i]);
+		selection.Add(n0::NodeWithPos(
+			data->GetNode(), data->GetRoot(), data->GetNodeID()));
+	}
+
+	if (up) {
+		ee2::NodeReorderHelper::UpOneLayer(*m_sub_mgr, selection);
+	} else {
+		ee2::NodeReorderHelper::DownOneLayer(*m_sub_mgr, selection);
+	}
 }
 
 void WxSceneTreeCtrl::StagePageChanged(const ee0::VariantSet& variants)
@@ -529,10 +515,14 @@ void WxSceneTreeCtrl::StagePageChanged(const ee0::VariantSet& variants)
 	auto var = variants.GetVariant("new_page");
 	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: new_page");
 	GD_ASSERT(var.m_val.pv, "err new_page");
-	auto new_page = static_cast<WxStagePage*>(var.m_val.pv);
-	m_sub_mgr = new_page->GetSubjectMgr();
 
+	auto new_page = static_cast<WxStagePage*>(var.m_val.pv);
+
+	m_sub_mgr = new_page->GetSubjectMgr();
 	RegisterMsg(*m_sub_mgr);
+
+	m_root_node = new_page->GetEditedNode();
+	RebuildTree(m_root_node);
 }
 
 void WxSceneTreeCtrl::ClearALLSelected()
@@ -541,7 +531,6 @@ void WxSceneTreeCtrl::ClearALLSelected()
 	ClearFocusedItem();
 
 	m_dragged_item.Unset();
-	m_selected_item.Unset();
 }
 
 void WxSceneTreeCtrl::CopyChildrenTree(wxTreeItemId from, wxTreeItemId to)
@@ -642,26 +631,6 @@ void WxSceneTreeCtrl::MoveSceneNode(wxTreeItemId src, wxTreeItemId dst_parent)
 	}
 }
 
-void WxSceneTreeCtrl::UpdateTreeNodeID(wxTreeItemId root)
-{
-	auto data = (WxSceneTreeItem*)GetItemData(root);
-	if (!data->GetRoot()) {
-		return;
-	}
-
-	int curr_id = -1;
-	Traverse(root, [&](wxTreeItemId id)->bool
-	{
-		auto data = (WxSceneTreeItem*)GetItemData(id);
-		if (id == root) {
-			curr_id = data->GetNodeID() + 1;
-		} else {
-			data->SetNodeID(curr_id++);
-		}
-		return true;
-	});
-}
-
 void WxSceneTreeCtrl::DeleteEmptyNodeToRoot(wxTreeItemId item)
 {
 	wxTreeItemId curr = item;
@@ -689,61 +658,27 @@ void WxSceneTreeCtrl::DeleteEmptyNodeToRoot(wxTreeItemId item)
 	}
 }
 
-void WxSceneTreeCtrl::RebuildAllTree()
+void WxSceneTreeCtrl::RebuildTree(const n0::SceneNodePtr& node)
 {
-	ClearALLSelected();
+	DeleteAllItems();
+	InitRoot();
 
-	if (!ItemHasChildren(m_root)) {
-		return;
-	}
-
-	wxTreeItemIdValue cookie;
-	wxTreeItemId child = GetFirstChild(m_root, cookie);
-	while (child.IsOk()) 
-	{
-		auto data = (WxSceneTreeItem*)GetItemData(child);
-		if (data->GetNode()->HasSharedComp<n2::CompComplex>())
-		{
-			auto& ccomplex = data->GetNode()->GetSharedComp<n2::CompComplex>();
-			if (ccomplex.GetAllChildren().empty()) 
-			{
-				auto next = GetNextSibling(child);
-				Delete(child);
-				child = next;
-				continue;
-			}
-		}
-		
-		DeleteChildren(child);
-		RebuildTree(child);
-
-		child = GetNextSibling(child);
-	}
-}
-
-void WxSceneTreeCtrl::RebuildTree(wxTreeItemId item)
-{
-	auto data = (WxSceneTreeItem*)GetItemData(item);
-	if (!data->GetNode()->HasSharedComp<n2::CompComplex>()) {
-		return;
-	}
-
-	auto& ccomplex = data->GetNode()->GetSharedComp<n2::CompComplex>();
-	auto& children = ccomplex.GetAllChildren();
-	size_t node_id = data->GetNodeID() + 1;
-	for (auto& child : children) 
-	{
-		InsertSceneNode(item, child, data->GetRoot(), node_id);
-		auto& casset = child->GetSharedComp<n0::CompAsset>();
-		node_id += casset.GetNodeCount();
-	}
+	auto& casset = node->GetSharedComp<n0::CompAsset>();
+	casset.Traverse([&](const n0::SceneNodePtr& node)->bool {
+		InsertSceneNode(m_root, node, node, 0);
+		return true;
+	});
+	Expand(m_root);
 }
 
 void WxSceneTreeCtrl::ChangeName(const ee0::VariantSet& variants)
 {
-	GD_ASSERT(m_selected_item.IsOk(), "err item");
+	auto selected = GetSingleSelected();
+	if (!selected.IsOk()) {
+		return;
+	}
 
-	auto data = (WxSceneTreeItem*)GetItemData(m_selected_item);
+	auto data = (WxSceneTreeItem*)GetItemData(selected);
 	GD_ASSERT(data, "err data");
 	
 	auto var = variants.GetVariant("node");
@@ -754,16 +689,17 @@ void WxSceneTreeCtrl::ChangeName(const ee0::VariantSet& variants)
 	GD_ASSERT(data->GetNode() == *node, "err node");
 
 	auto& ceditor = data->GetNode()->GetUniqueComp<ee0::CompNodeEditor>();
-	SetItemText(m_selected_item, ceditor.GetName());
+	SetItemText(selected, ceditor.GetName());
 }
 
 void WxSceneTreeCtrl::SelectUp()
 {
-	if (!m_selected_item.IsOk()) {
+	auto selected = GetSingleSelected();
+	if (!selected.IsOk()) {
 		return;
 	}
 
-	wxTreeItemId prev = GetPrevSibling(m_selected_item);
+	wxTreeItemId prev = GetPrevSibling(selected);
 	if (prev.IsOk()) {
 		SelectItem(prev);
 	}
@@ -771,11 +707,12 @@ void WxSceneTreeCtrl::SelectUp()
 
 void WxSceneTreeCtrl::SelectDown()
 {
-	if (!m_selected_item.IsOk()) {
+	auto selected = GetSingleSelected();
+	if (!selected.IsOk()) {
 		return;
 	}
 
-	wxTreeItemId next = GetNextSibling(m_selected_item);
+	wxTreeItemId next = GetNextSibling(selected);
 	if (next.IsOk()) {
 		SelectItem(next);
 	}
@@ -783,15 +720,16 @@ void WxSceneTreeCtrl::SelectDown()
 
 void WxSceneTreeCtrl::SelectLeft()
 {
-	if (!m_selected_item.IsOk()) {
+	auto selected = GetSingleSelected();
+	if (!selected.IsOk()) {
 		return;
 	}
 
-	if (ItemHasChildren(m_selected_item) && IsExpanded(m_selected_item)) {
-		Collapse(m_selected_item);
+	if (ItemHasChildren(selected) && IsExpanded(selected)) {
+		Collapse(selected);
 	}
 	else {
-		wxTreeItemId parent = GetItemParent(m_selected_item);
+		wxTreeItemId parent = GetItemParent(selected);
 		if (parent.IsOk() && parent != m_root) {
 			SelectItem(parent);
 		}
@@ -800,41 +738,38 @@ void WxSceneTreeCtrl::SelectLeft()
 
 void WxSceneTreeCtrl::SelectRight()
 {
-	if (!m_selected_item.IsOk()) {
+	auto selected = GetSingleSelected();
+	if (!selected.IsOk()) {
 		return;
 	}
 
-	if (ItemHasChildren(m_selected_item)) {
-		if (IsExpanded(m_selected_item)) {
+	if (ItemHasChildren(selected)) {
+		if (IsExpanded(selected)) {
 			wxTreeItemIdValue cookie;
-			wxTreeItemId next = GetFirstChild(m_selected_item, cookie);
+			wxTreeItemId next = GetFirstChild(selected, cookie);
 			if (next.IsOk()) {
 				SelectItem(next);
 			}
 		}
 		else {
-			Expand(m_selected_item);
+			Expand(selected);
 		}
 	}
 }
 
 void WxSceneTreeCtrl::DeleteSelectedNode()
 {
-	if (!m_selected_item.IsOk()) {
+	auto selected = GetSingleSelected();
+	if (!selected.IsOk()) {
 		return;
 	}
 
-	DeleteNodeOutside(m_selected_item);
+	DeleteNodeOutside(selected);
 	CleanRootEmptyChild();
 	
-	// 1. update path to root (other path might need update)
-	//UpdateTreeNodeIDToRoot(m_selected_item);
-	//DeleteEmptyNodeToRoot(m_selected_item);
-	//m_sub_mgr->NotifyObservers(ee0::MSG_NODE_SELECTION_CLEAR);
-
-	// 2. update all
 	m_sub_mgr->NotifyObservers(ee0::MSG_NODE_SELECTION_CLEAR);
-	RebuildAllTree();
+
+	RebuildTree(m_root_node);
 
 	m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
 }
@@ -899,6 +834,17 @@ void WxSceneTreeCtrl::CleanRootEmptyChild()
 		}
 		
 		child = GetNextSibling(child);
+	}
+}
+
+wxTreeItemId WxSceneTreeCtrl::GetSingleSelected() const
+{
+	wxArrayTreeItemIds selection;
+	int count = GetSelections(selection);
+	if (count == 1) {
+		return selection[0];
+	} else {
+		return wxTreeItemId();
 	}
 }
 

@@ -79,8 +79,8 @@ wxWindow* WxEditDialog::CreatePreviewPanel()
 
 wxWindow* WxEditDialog::CreateTreePanel()
 {
-	auto& sub_mgr = m_stage->GetSubjectMgr();
-	return new WxSceneTreePanel(this, sub_mgr);
+	return new WxSceneTreePanel(
+		this, m_stage->GetSubjectMgr(), m_stage->GetEditedNode());
 }
 
 wxWindow* WxEditDialog::CreateDetailPanel()

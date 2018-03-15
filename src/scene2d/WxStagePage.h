@@ -35,9 +35,9 @@ protected:
 		rapidjson::MemoryPoolAllocator<>& alloc) const;
 
 private:
-	void InsertSceneNode(const ee0::VariantSet& variants);
-	void DeleteSceneNode(const ee0::VariantSet& variants);
-	void ClearSceneNode();
+	bool InsertSceneNode(const ee0::VariantSet& variants);
+	bool DeleteSceneNode(const ee0::VariantSet& variants);
+	bool ClearSceneNode();
 	bool ReorderSceneNode(const ee0::VariantSet& variants);
 
 }; // WxStagePage

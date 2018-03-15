@@ -31,20 +31,25 @@ void WxStagePage::OnNotify(ee0::MessageID msg, const ee0::VariantSet& variants)
 {
 	eone::WxStagePage::OnNotify(msg, variants);
 
+	bool dirty = false;
 	switch (msg)
 	{
 	case ee0::MSG_INSERT_SCENE_NODE:
-		InsertSceneNode(variants);
+		dirty = InsertSceneNode(variants);
 		break;
 	case ee0::MSG_DELETE_SCENE_NODE:
-		DeleteSceneNode(variants);
+		dirty = DeleteSceneNode(variants);
 		break;
 	case ee0::MSG_CLEAR_SCENE_NODE:
-		ClearSceneNode();
+		dirty = ClearSceneNode();
 		break;
 	case ee0::MSG_REORDER_SCENE_NODE:
-		ReorderSceneNode(variants);
+		dirty = ReorderSceneNode(variants);
 		break;
+	}
+
+	if (dirty) {
+		m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
 	}
 }
 
@@ -71,7 +76,7 @@ void WxStagePage::StoreToJsonExt(const std::string& dir, rapidjson::Value& val,
 //	val.AddMember("camera", "2d", alloc);
 }
 
-void WxStagePage::InsertSceneNode(const ee0::VariantSet& variants)
+bool WxStagePage::InsertSceneNode(const ee0::VariantSet& variants)
 {
 	auto var = variants.GetVariant("node");
 	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: node");
@@ -81,10 +86,10 @@ void WxStagePage::InsertSceneNode(const ee0::VariantSet& variants)
 	auto& ccomplex = m_node->GetSharedComp<n2::CompComplex>();
 	ccomplex.AddChild(*node);
 
-	m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
+	return true;
 }
 
-void WxStagePage::DeleteSceneNode(const ee0::VariantSet& variants)
+bool WxStagePage::DeleteSceneNode(const ee0::VariantSet& variants)
 {
 	auto var = variants.GetVariant("node");
 	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: node");
@@ -92,16 +97,15 @@ void WxStagePage::DeleteSceneNode(const ee0::VariantSet& variants)
 	GD_ASSERT(node, "err scene node");
 
 	auto& ccomplex = m_node->GetSharedComp<n2::CompComplex>();
-	if (ccomplex.RemoveChild(*node)) {
-		m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
-	}
+	return ccomplex.RemoveChild(*node);
 }
 
-void WxStagePage::ClearSceneNode()
+bool WxStagePage::ClearSceneNode()
 {
 	auto& ccomplex = m_node->GetSharedComp<n2::CompComplex>();
+	bool dirty = !ccomplex.GetAllChildren().empty();
 	ccomplex.RemoveAllChildren();
-	m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
+	return dirty;
 }
 
 bool WxStagePage::ReorderSceneNode(const ee0::VariantSet& variants)

@@ -181,8 +181,9 @@ wxWindow* Application::CreatePreviewPanel()
 
 wxWindow* Application::CreateTreePanel()
 {
-	auto& sub_mgr = m_stage->GetCurrentStagePage()->GetSubjectMgr();
-	auto tree = new WxSceneTreePanel(m_frame, sub_mgr);
+	auto curr_page = m_stage->GetCurrentStagePage();
+	auto tree = new WxSceneTreePanel(m_frame, 
+		curr_page->GetSubjectMgr(), curr_page->GetEditedNode());
 	return tree;
 }
 

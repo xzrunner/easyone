@@ -44,14 +44,15 @@ static const std::vector<std::pair<uint32_t, std::string>> NODE_LIST =
 namespace eone
 {
 
-WxSceneTreePanel::WxSceneTreePanel(wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr)
+WxSceneTreePanel::WxSceneTreePanel(wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr,
+	                               const n0::SceneNodePtr& root_node)
 	: wxPanel(parent, wxID_ANY)
 	, m_sub_mgr(sub_mgr)
 {
-	InitLayout();
+	InitLayout(root_node);
 }
 
-void WxSceneTreePanel::InitLayout()
+void WxSceneTreePanel::InitLayout(const n0::SceneNodePtr& root_node)
 {
 	wxSizer* top_sizer = new wxBoxSizer(wxVERTICAL);
 	{
@@ -61,7 +62,7 @@ void WxSceneTreePanel::InitLayout()
 		top_sizer->Add(m_create_btn, 0, wxALIGN_CENTER_HORIZONTAL);
 	}
 	{
-		top_sizer->Add(new WxSceneTreeCtrl(this, m_sub_mgr), 1, wxEXPAND);
+		top_sizer->Add(new WxSceneTreeCtrl(this, m_sub_mgr, root_node), 1, wxEXPAND);
 	}
 	SetSizer(top_sizer);
 }
