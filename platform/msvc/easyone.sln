@@ -125,6 +125,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.node", "3.node", "{B7C128
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "1.nserializer", "..\..\ext\nserializer\platform\msvc\projects\nserializer.vcxproj", "{8B91994C-018B-4664-B615-A1EAC669CA5C}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "4.dust", "..\..\ext\dust\platform\msvc\projects\dust.vcxproj", "{9FB05942-DCAE-4A6F-8F99-86E20DE9DFCC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -322,6 +324,10 @@ Global
 		{8B91994C-018B-4664-B615-A1EAC669CA5C}.Debug|Win32.Build.0 = Debug|Win32
 		{8B91994C-018B-4664-B615-A1EAC669CA5C}.Release|Win32.ActiveCfg = Release|Win32
 		{8B91994C-018B-4664-B615-A1EAC669CA5C}.Release|Win32.Build.0 = Release|Win32
+		{9FB05942-DCAE-4A6F-8F99-86E20DE9DFCC}.Debug|Win32.ActiveCfg = Debug|Win32
+		{9FB05942-DCAE-4A6F-8F99-86E20DE9DFCC}.Debug|Win32.Build.0 = Debug|Win32
+		{9FB05942-DCAE-4A6F-8F99-86E20DE9DFCC}.Release|Win32.ActiveCfg = Release|Win32
+		{9FB05942-DCAE-4A6F-8F99-86E20DE9DFCC}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -378,6 +384,7 @@ Global
 		{7D33E5EB-2A99-4AFF-A317-AFFD8F6C6CC6} = {C39783B3-85DA-4D10-AFD0-16D546F5F3D7}
 		{B7C12803-3075-4188-84D5-5DB12B60691B} = {C39783B3-85DA-4D10-AFD0-16D546F5F3D7}
 		{8B91994C-018B-4664-B615-A1EAC669CA5C} = {B7C12803-3075-4188-84D5-5DB12B60691B}
+		{9FB05942-DCAE-4A6F-8F99-86E20DE9DFCC} = {ABB353A2-7879-4D9F-AF21-31A83E1B9D14}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8D54C01A-3C82-4351-A325-2853C3E81322}

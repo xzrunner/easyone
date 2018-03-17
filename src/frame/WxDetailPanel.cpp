@@ -16,10 +16,12 @@
 #include <ee2/WxCompScale9Panel.h>
 #include <ee2/WxCompSprite2Panel.h>
 #include <ee2/WxCompScissorPanel.h>
+#include <ee2/WxCompScriptPanel.h>
 #include <ee3/WxCompTransformPanel.h>
 
 #include <node2/CompScale9.h>
 #include <node2/CompScissor.h>
+#include <node2/CompScript.h>
 
 #include <guard/check.h>
 #include <node0/SceneNode.h>
@@ -39,6 +41,7 @@ enum CompType
 	COMP_COLOR_COMMON = 1,
 	COMP_COLOR_MAP,
 	COMP_SCISSOR,
+	COMP_SCRIPT,
 };
 
 static const std::vector<std::pair<uint32_t, std::string>> COMP_LIST =
@@ -46,6 +49,7 @@ static const std::vector<std::pair<uint32_t, std::string>> COMP_LIST =
 	std::make_pair(COMP_COLOR_COMMON, "ColorCommon"),
 	std::make_pair(COMP_COLOR_MAP,    "ColorMap"),
 	std::make_pair(COMP_SCISSOR,      "Scissor"),
+	std::make_pair(COMP_SCRIPT,       "Script"),
 };
 
 }
@@ -239,6 +243,14 @@ void WxDetailPanel::InitComponents(const n0::SceneNodePtr& node)
 		m_components.push_back(panel);
 	}
 
+	if (m_nwp.GetNode()->HasUniqueComp<n2::CompScript>())
+	{
+		auto& comp = m_nwp.GetNode()->GetUniqueComp<n2::CompScript>();
+		auto panel = new ee2::WxCompScriptPanel(this, comp);
+		m_comp_sizer->Insert(m_components.size(), panel);
+		m_components.push_back(panel);
+	}
+
 	Layout();
 }
 
@@ -323,6 +335,14 @@ void WxDetailPanel::OnAddPress(wxCommandEvent& event)
 			m_components.push_back(panel);
 
 			m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
+		}
+		break;
+	case CompType::COMP_SCRIPT:
+		{
+			auto& comp = m_nwp.GetNode()->AddUniqueComp<n2::CompScript>();
+			auto panel = new ee2::WxCompScriptPanel(this, comp);
+			m_comp_sizer->Insert(m_components.size(), panel);
+			m_components.push_back(panel);
 		}
 		break;
 	}

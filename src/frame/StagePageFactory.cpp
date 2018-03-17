@@ -15,6 +15,8 @@
 #include "scale9/WxStageCanvas.h"
 #include "scale9/ResizeScale9OP.h"
 #include "mask/WxStagePage.h"
+#include "script/WxStagePage.h"
+#include "script/WxStageCanvas.h"
 
 #include <ee0/WxListSelectDlg.h>
 #include <ee0/MsgHelper.h>
@@ -89,6 +91,31 @@ WxStagePage* StagePageFactory::Create(int page_type, WxStagePanel* stage_panel)
 			auto node = NodeFactory::Create(NODE_MASK);
 			page = new mask::WxStagePage(frame, library, node);
 			auto canvas = std::make_shared<WxStageCanvas>(page, rc);
+			page->GetImpl().SetCanvas(canvas);
+
+			auto prev_op = std::make_shared<NodeSelectOP>(*page, rc, wc);
+
+			auto cam = canvas->GetCamera();
+			GD_ASSERT(cam, "null cam");
+			auto op = std::make_shared<ee2::ArrangeNodeOP>(*page, *cam, ee2::ArrangeNodeCfg(), prev_op);
+
+			page->GetImpl().SetEditOP(op);
+
+			stage_panel->AddNewPage(page, GetPageName(page->GetPageType()));
+		}
+		break;
+
+	case PAGE_SCRIPT:
+		{
+			std::string filter = "*.lua";
+			wxFileDialog dlg(stage_panel, wxT("Choose script"), wxEmptyString, filter);
+			if (dlg.ShowModal() != wxID_OK) {
+				break;
+			}
+			
+			auto node = NodeFactory::Create(NODE_SCENE2D);
+			page = new script::WxStagePage(frame, library, node);
+			auto canvas = std::make_shared<script::WxStageCanvas>(page, rc, dlg.GetPath().ToStdString());
 			page->GetImpl().SetCanvas(canvas);
 
 			auto prev_op = std::make_shared<NodeSelectOP>(*page, rc, wc);

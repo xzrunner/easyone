@@ -33,6 +33,10 @@ void WxStagePanel::AddNewPage(WxStagePage* page, const std::string& title)
 {
 	AddPage(page, title);
 	SetSelection(GetPageCount() - 1);
+
+	if (GetPageCount() == 1) {
+		page->GetSubjectMgr()->NotifyObservers(ee0::MSG_STAGE_PAGE_ON_SHOW);
+	}
 }
 
 bool WxStagePanel::SwitchToPage(const std::string& filepath)
