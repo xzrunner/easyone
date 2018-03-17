@@ -142,3 +142,6 @@
 [submodule "ext/nserializer"]
 	path = ext/nserializer
 	url = git@github.com:xzrunner/nserializer.git
+[submodule "ext/dust"]
+	path = ext/dust
+	url = git@github.com:xzrunner/dust.git
