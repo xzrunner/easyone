@@ -29,6 +29,10 @@
 #include <node0/SceneNode.h>
 #include <node2/CompMask.h>
 #include <node2/CompScale9.h>
+#include <dust/Blackboard.h>
+#include <dust/Context.h>
+
+#include <boost/filesystem.hpp>
 
 namespace eone
 {
@@ -117,6 +121,10 @@ WxStagePage* StagePageFactory::Create(int page_type, WxStagePanel* stage_panel)
 			page = new script::WxStagePage(frame, library, node);
 			auto canvas = std::make_shared<script::WxStageCanvas>(page, rc, dlg.GetPath().ToStdString());
 			page->GetImpl().SetCanvas(canvas);
+
+			auto dir = boost::filesystem::path(dlg.GetPath().ToStdString()).parent_path();
+			dust::Blackboard::Instance()->GetContext()->SetWorkDir(dir.string());
+
 			canvas->ScriptLoad();
 
 			auto prev_op = std::make_shared<NodeSelectOP>(*page, rc, wc);
