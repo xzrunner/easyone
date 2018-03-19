@@ -19,12 +19,12 @@
 #include <ee2/WxCompScriptPanel.h>
 #include <ee3/WxCompTransformPanel.h>
 
+#include <guard/check.h>
+#include <node0/SceneNode.h>
+#include <dust/LuaVM.h>
 #include <node2/CompScale9.h>
 #include <node2/CompScissor.h>
 #include <node2/CompScript.h>
-
-#include <guard/check.h>
-#include <node0/SceneNode.h>
 
 #include <wx/sizer.h>
 #include <wx/button.h>
@@ -58,10 +58,11 @@ namespace eone
 {
 
 WxDetailPanel::WxDetailPanel(wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr,
-	                         const n0::SceneNodePtr& root_node)
+	                         const n0::SceneNodePtr& root_node, const dust::LuaVMPtr& lua)
 	: wxPanel(parent, wxID_ANY)
 	, m_sub_mgr(sub_mgr)
 	, m_root_node(root_node)
+	, m_lua_vm(lua)
 {
 	SetBackgroundColour(wxColour(229, 229, 229));
 
@@ -246,7 +247,7 @@ void WxDetailPanel::InitComponents(const n0::SceneNodePtr& node)
 	if (m_nwp.GetNode()->HasUniqueComp<n2::CompScript>())
 	{
 		auto& comp = m_nwp.GetNode()->GetUniqueComp<n2::CompScript>();
-		auto panel = new ee2::WxCompScriptPanel(this, comp);
+		auto panel = new ee2::WxCompScriptPanel(this, comp, m_sub_mgr, m_nwp.GetNode());
 		m_comp_sizer->Insert(m_components.size(), panel);
 		m_components.push_back(panel);
 	}
@@ -297,6 +298,8 @@ void WxDetailPanel::StagePageChanged(const ee0::VariantSet& variants)
 	RegisterMsg(*m_sub_mgr);
 
 	m_root_node = new_page->GetEditedNode();
+
+	m_lua_vm = new_page->GetLuaVM();
 }
 
 void WxDetailPanel::OnAddPress(wxCommandEvent& event)
@@ -340,7 +343,7 @@ void WxDetailPanel::OnAddPress(wxCommandEvent& event)
 	case CompType::COMP_SCRIPT:
 		{
 			auto& comp = m_nwp.GetNode()->AddUniqueComp<n2::CompScript>();
-			auto panel = new ee2::WxCompScriptPanel(this, comp);
+			auto panel = new ee2::WxCompScriptPanel(this, comp, m_sub_mgr, m_nwp.GetNode());
 			m_comp_sizer->Insert(m_components.size(), panel);
 			m_components.push_back(panel);
 		}

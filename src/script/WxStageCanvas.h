@@ -2,7 +2,7 @@
 
 #include <ee2/WxStageCanvas.h>
 
-#include <dust/StageCanvas.h>
+#include <dust/StageCanvasScript.h>
 
 namespace eone
 {
@@ -28,7 +28,7 @@ private:
 	void LoadScript(const std::string& filepath);
 
 private:
-	dust::StageCanvas m_script;
+	dust::StageCanvasScript m_script;
 
 }; // WxStageCanvas
 
