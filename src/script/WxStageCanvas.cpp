@@ -4,6 +4,7 @@
 
 #include <painting2/PrimitiveDraw.h>
 #include <dust/Context.h>
+#include <dust/Blackboard.h>
 #include <ee0/SubjectMgr.h>
 
 namespace eone
@@ -23,11 +24,15 @@ WxStageCanvas::WxStageCanvas(eone::WxStagePage* stage,
 void WxStageCanvas::ScriptLoad()
 {
 	SetCurrentCanvas();
+	BindDustCtx();
+
 	m_script.OnLoad();
 }
 
 void WxStageCanvas::OnNotify(ee0::MessageID msg, const ee0::VariantSet& variants)
 {
+	BindDustCtx();
+
 	ee2::WxStageCanvas::OnNotify(msg, variants);
 
 	switch (msg)
@@ -42,12 +47,19 @@ void WxStageCanvas::OnNotify(ee0::MessageID msg, const ee0::VariantSet& variants
 
 void WxStageCanvas::DrawBackground() const
 {
+	BindDustCtx();
 	m_script.OnDraw();
 }
 
 void WxStageCanvas::OnTimer()
 {
+	BindDustCtx();
 	m_script.OnUpdate();
+}
+
+void WxStageCanvas::BindDustCtx() const
+{
+	dust::Blackboard::Instance()->SetContext(m_stage->GetDustCtx());
 }
 
 }

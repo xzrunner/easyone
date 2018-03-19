@@ -27,7 +27,7 @@ protected:
 	virtual void OnTimer() override;
 
 private:
-	void LoadScript(const std::string& filepath);
+	void BindDustCtx() const;
 
 private:
 	dust::StagePageScript m_script;
