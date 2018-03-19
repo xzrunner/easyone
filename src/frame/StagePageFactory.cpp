@@ -117,6 +117,7 @@ WxStagePage* StagePageFactory::Create(int page_type, WxStagePanel* stage_panel)
 			page = new script::WxStagePage(frame, library, node);
 			auto canvas = std::make_shared<script::WxStageCanvas>(page, rc, dlg.GetPath().ToStdString());
 			page->GetImpl().SetCanvas(canvas);
+			canvas->ScriptLoad();
 
 			auto prev_op = std::make_shared<NodeSelectOP>(*page, rc, wc);
 

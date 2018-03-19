@@ -18,7 +18,11 @@ WxStageCanvas::WxStageCanvas(eone::WxStagePage* stage,
 	, m_script(stage->GetDustCtx()->GetState(), filepath.c_str())
 {
 	stage->GetSubjectMgr()->RegisterObserver(ee0::MSG_EDITOR_RELOAD, this);
+}
 
+void WxStageCanvas::ScriptLoad()
+{
+	SetCurrentCanvas();
 	m_script.OnLoad();
 }
 
@@ -30,6 +34,8 @@ void WxStageCanvas::OnNotify(ee0::MessageID msg, const ee0::VariantSet& variants
 	{
 	case ee0::MSG_EDITOR_RELOAD:
 		m_script.LoadScript();
+		m_script.OnLoad();
+		SetDirty();
 		break;
 	}
 }

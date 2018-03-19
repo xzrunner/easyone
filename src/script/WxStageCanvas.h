@@ -2,7 +2,7 @@
 
 #include <ee2/WxStageCanvas.h>
 
-#include <dust/StageCanvasScript.h>
+#include <dust/StagePageScript.h>
 
 namespace eone
 {
@@ -20,6 +20,8 @@ public:
 
 	virtual void OnNotify(ee0::MessageID msg, const ee0::VariantSet& variants) override;
 
+	void ScriptLoad();
+
 protected:
 	virtual void DrawBackground() const override;
 	virtual void OnTimer() override;
@@ -28,7 +30,7 @@ private:
 	void LoadScript(const std::string& filepath);
 
 private:
-	dust::StageCanvasScript m_script;
+	dust::StagePageScript m_script;
 
 }; // WxStageCanvas
 
