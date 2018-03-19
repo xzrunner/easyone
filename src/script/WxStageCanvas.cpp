@@ -3,7 +3,7 @@
 #include "frame/WxStagePage.h"
 
 #include <painting2/PrimitiveDraw.h>
-#include <dust/LuaVM.h>
+#include <dust/Context.h>
 #include <ee0/SubjectMgr.h>
 
 namespace eone
@@ -15,7 +15,7 @@ WxStageCanvas::WxStageCanvas(eone::WxStagePage* stage,
 	                         const ee0::RenderContext& rc,
 	                         const std::string& filepath)
 	: ee2::WxStageCanvas(stage, &rc)
-	, m_script(stage->GetLuaVM()->GetState(), filepath.c_str())
+	, m_script(stage->GetDustCtx()->GetState(), filepath.c_str())
 {
 	stage->GetSubjectMgr()->RegisterObserver(ee0::MSG_EDITOR_RELOAD, this);
 

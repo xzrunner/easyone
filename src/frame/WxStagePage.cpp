@@ -34,7 +34,7 @@ void WxStagePage::OnNotify(ee0::MessageID msg, const ee0::VariantSet& variants)
 		break;
 
 	case ee0::MSG_STAGE_PAGE_ON_SHOW:
-		dust::Blackboard::Instance()->vm = GetLuaVM();
+		dust::Blackboard::Instance()->ctx = GetDustCtx();
 		break;
 	}
 }

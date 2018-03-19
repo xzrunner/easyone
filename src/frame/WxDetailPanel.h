@@ -17,7 +17,7 @@ class WxDetailPanel : public wxPanel, public ee0::Observer
 {
 public:
 	WxDetailPanel(wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr,
-		const n0::SceneNodePtr& root_node, const dust::LuaVMPtr& lua);
+		const n0::SceneNodePtr& root_node, const dust::ContextPtr& dust_ctx);
 
 	virtual void OnNotify(ee0::MessageID msg, const ee0::VariantSet& variants) override;
 
@@ -37,7 +37,7 @@ private:
 private:
 	ee0::SubjectMgrPtr m_sub_mgr;
 	n0::SceneNodePtr   m_root_node;
-	dust::LuaVMPtr     m_lua_vm;
+	dust::ContextPtr   m_dust_ctx;
 
 	wxSizer* m_comp_sizer;
 

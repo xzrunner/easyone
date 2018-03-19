@@ -86,7 +86,7 @@ wxWindow* WxEditDialog::CreateTreePanel()
 wxWindow* WxEditDialog::CreateDetailPanel()
 {
 	return new WxDetailPanel(
-		this, m_stage->GetSubjectMgr(), m_stage->GetEditedNode(), m_stage->GetLuaVM());
+		this, m_stage->GetSubjectMgr(), m_stage->GetEditedNode(), m_stage->GetDustCtx());
 }
 
 }

@@ -190,7 +190,7 @@ wxWindow* Application::CreateDetailPanel()
 {
 	auto curr_page = m_stage->GetCurrentStagePage();
 	return new WxDetailPanel(m_frame, 
-		curr_page->GetSubjectMgr(), curr_page->GetEditedNode(), curr_page->GetLuaVM());
+		curr_page->GetSubjectMgr(), curr_page->GetEditedNode(), curr_page->GetDustCtx());
 }
 
 }
