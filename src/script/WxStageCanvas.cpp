@@ -55,6 +55,7 @@ void WxStageCanvas::OnTimer()
 {
 	BindDustCtx();
 	m_script.OnUpdate();
+	SetDirty();
 }
 
 void WxStageCanvas::BindDustCtx() const
