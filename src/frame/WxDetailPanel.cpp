@@ -21,7 +21,7 @@
 
 #include <guard/check.h>
 #include <node0/SceneNode.h>
-#include <dust/Context.h>
+#include <moon/Context.h>
 #include <node2/CompScale9.h>
 #include <node2/CompScissor.h>
 #include <node2/CompScript.h>
@@ -58,11 +58,11 @@ namespace eone
 {
 
 WxDetailPanel::WxDetailPanel(wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr,
-	                         const n0::SceneNodePtr& root_node, const dust::ContextPtr& dust_ctx)
+	                         const n0::SceneNodePtr& root_node, const moon::ContextPtr& moon_ctx)
 	: wxPanel(parent, wxID_ANY)
 	, m_sub_mgr(sub_mgr)
 	, m_root_node(root_node)
-	, m_dust_ctx(dust_ctx)
+	, m_moon_ctx(moon_ctx)
 {
 	SetBackgroundColour(wxColour(229, 229, 229));
 
@@ -299,7 +299,7 @@ void WxDetailPanel::StagePageChanged(const ee0::VariantSet& variants)
 
 	m_root_node = new_page->GetEditedNode();
 
-	m_dust_ctx = new_page->GetDustCtx();
+	m_moon_ctx = new_page->GetMoonCtx();
 }
 
 void WxDetailPanel::OnAddPress(wxCommandEvent& event)

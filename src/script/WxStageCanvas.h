@@ -2,7 +2,7 @@
 
 #include <ee2/WxStageCanvas.h>
 
-#include <dust/StagePageScript.h>
+#include <moon/StagePageScript.h>
 
 namespace eone
 {
@@ -27,10 +27,10 @@ protected:
 	virtual void OnTimer() override;
 
 private:
-	void BindDustCtx() const;
+	void BindMoonCtx() const;
 
 private:
-	dust::StagePageScript m_script;
+	moon::StagePageScript m_script;
 
 }; // WxStageCanvas
 

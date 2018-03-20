@@ -3,8 +3,8 @@
 #include "frame/WxStagePage.h"
 
 #include <painting2/PrimitiveDraw.h>
-#include <dust/Context.h>
-#include <dust/Blackboard.h>
+#include <moon/Context.h>
+#include <moon/Blackboard.h>
 #include <ee0/SubjectMgr.h>
 
 namespace eone
@@ -16,7 +16,7 @@ WxStageCanvas::WxStageCanvas(eone::WxStagePage* stage,
 	                         const ee0::RenderContext& rc,
 	                         const std::string& filepath)
 	: ee2::WxStageCanvas(stage, &rc)
-	, m_script(stage->GetDustCtx()->GetState(), filepath.c_str())
+	, m_script(stage->GetMoonCtx()->GetState(), filepath.c_str())
 {
 	stage->GetSubjectMgr()->RegisterObserver(ee0::MSG_EDITOR_RELOAD, this);
 }
@@ -24,14 +24,14 @@ WxStageCanvas::WxStageCanvas(eone::WxStagePage* stage,
 void WxStageCanvas::ScriptLoad()
 {
 	SetCurrentCanvas();
-	BindDustCtx();
+	BindMoonCtx();
 
 	m_script.OnLoad();
 }
 
 void WxStageCanvas::OnNotify(ee0::MessageID msg, const ee0::VariantSet& variants)
 {
-	BindDustCtx();
+	BindMoonCtx();
 
 	ee2::WxStageCanvas::OnNotify(msg, variants);
 
@@ -47,20 +47,20 @@ void WxStageCanvas::OnNotify(ee0::MessageID msg, const ee0::VariantSet& variants
 
 void WxStageCanvas::DrawBackground() const
 {
-	BindDustCtx();
+	BindMoonCtx();
 	m_script.OnDraw();
 }
 
 void WxStageCanvas::OnTimer()
 {
-	BindDustCtx();
+	BindMoonCtx();
 	m_script.OnUpdate();
 	SetDirty();
 }
 
-void WxStageCanvas::BindDustCtx() const
+void WxStageCanvas::BindMoonCtx() const
 {
-	dust::Blackboard::Instance()->SetContext(m_stage->GetDustCtx());
+	moon::Blackboard::Instance()->SetContext(m_stage->GetMoonCtx());
 }
 
 }

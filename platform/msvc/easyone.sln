@@ -125,7 +125,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.node", "3.node", "{B7C128
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "1.nserializer", "..\..\ext\nserializer\platform\msvc\projects\nserializer.vcxproj", "{8B91994C-018B-4664-B615-A1EAC669CA5C}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "4.dust", "..\..\ext\dust\platform\msvc\projects\dust.vcxproj", "{9FB05942-DCAE-4A6F-8F99-86E20DE9DFCC}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "4.moon", "..\..\ext\moon\platform\msvc\projects\moon.vcxproj", "{9FB05942-DCAE-4A6F-8F99-86E20DE9DFCC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

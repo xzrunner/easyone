@@ -4,7 +4,7 @@
 #include <ee0/typedef.h>
 
 #include <node0/NodeWithPos.h>
-#include <dust/typedef.h>
+#include <moon/typedef.h>
 
 #include <wx/panel.h>
 
@@ -17,7 +17,7 @@ class WxDetailPanel : public wxPanel, public ee0::Observer
 {
 public:
 	WxDetailPanel(wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr,
-		const n0::SceneNodePtr& root_node, const dust::ContextPtr& dust_ctx);
+		const n0::SceneNodePtr& root_node, const moon::ContextPtr& moon_ctx);
 
 	virtual void OnNotify(ee0::MessageID msg, const ee0::VariantSet& variants) override;
 
@@ -37,7 +37,7 @@ private:
 private:
 	ee0::SubjectMgrPtr m_sub_mgr;
 	n0::SceneNodePtr   m_root_node;
-	dust::ContextPtr   m_dust_ctx;
+	moon::ContextPtr   m_moon_ctx;
 
 	wxSizer* m_comp_sizer;
 

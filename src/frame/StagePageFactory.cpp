@@ -29,8 +29,8 @@
 #include <node0/SceneNode.h>
 #include <node2/CompMask.h>
 #include <node2/CompScale9.h>
-#include <dust/Blackboard.h>
-#include <dust/Context.h>
+#include <moon/Blackboard.h>
+#include <moon/Context.h>
 
 #include <boost/filesystem.hpp>
 
@@ -123,7 +123,7 @@ WxStagePage* StagePageFactory::Create(int page_type, WxStagePanel* stage_panel)
 			page->GetImpl().SetCanvas(canvas);
 
 			auto dir = boost::filesystem::path(dlg.GetPath().ToStdString()).parent_path();
-			dust::Blackboard::Instance()->GetContext()->SetWorkDir(dir.string());
+			moon::Blackboard::Instance()->GetContext()->SetWorkDir(dir.string());
 
 			canvas->ScriptLoad();
 

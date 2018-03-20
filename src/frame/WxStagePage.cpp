@@ -10,7 +10,7 @@
 #include <node0/SceneNode.h>
 #include <node2/CompBoundingBox.h>
 #include <ns/CompSerializer.h>
-#include <dust/Blackboard.h>
+#include <moon/Blackboard.h>
 
 namespace eone
 {
@@ -34,7 +34,7 @@ void WxStagePage::OnNotify(ee0::MessageID msg, const ee0::VariantSet& variants)
 		break;
 
 	case ee0::MSG_STAGE_PAGE_ON_SHOW:
-		dust::Blackboard::Instance()->SetContext(GetDustCtx());
+		moon::Blackboard::Instance()->SetContext(GetMoonCtx());
 		break;
 	}
 }
