@@ -1,11 +1,14 @@
 #include "script/WxStageCanvas.h"
 
 #include "frame/WxStagePage.h"
+#include "frame/Blackboard.h"
+
+#include <ee0/SubjectMgr.h>
+#include <ee0/CameraHelper.h>
 
 #include <painting2/PrimitiveDraw.h>
 #include <moon/Context.h>
 #include <moon/Blackboard.h>
-#include <ee0/SubjectMgr.h>
 
 namespace eone
 {
@@ -56,6 +59,16 @@ void WxStageCanvas::OnTimer()
 	BindMoonCtx();
 	m_script.OnUpdate();
 	SetDirty();
+}
+
+void WxStageCanvas::OnMouse(int x, int y)
+{
+	ee2::WxStageCanvas::OnMouse(x, y);
+
+	sm::vec2 pos = ee0::CameraHelper::TransPosScreenToProject(*GetCamera(), x, y);
+	wxString msg;
+	msg.Printf("Mouse: %.1f, %.1f", pos.x, pos.y);
+	Blackboard::Instance()->GetFrame()->SetStatusText(msg);
 }
 
 void WxStageCanvas::BindMoonCtx() const

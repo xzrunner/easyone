@@ -25,6 +25,7 @@ public:
 protected:
 	virtual void DrawBackground() const override;
 	virtual void OnTimer() override;
+	virtual void OnMouse(int x, int y) override;
 
 private:
 	void BindMoonCtx() const;
