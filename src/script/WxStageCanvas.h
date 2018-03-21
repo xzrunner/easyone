@@ -25,7 +25,8 @@ public:
 protected:
 	virtual void DrawBackground() const override;
 	virtual void OnTimer() override;
-	virtual void OnMouse(int x, int y) override;
+	virtual void OnMouseImpl(wxMouseEvent& event) override;
+	virtual void OnKeyDownImpl(wxKeyEvent& event) override;
 
 private:
 	void BindMoonCtx() const;

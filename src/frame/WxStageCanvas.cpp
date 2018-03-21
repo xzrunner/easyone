@@ -31,9 +31,10 @@ void WxStageCanvas::DrawNodes() const
 	}
 }
 
-void WxStageCanvas::OnMouse(int x, int y)
+void WxStageCanvas::OnMouseImpl(wxMouseEvent& event)
 {
-	sm::vec2 pos = ee0::CameraHelper::TransPosScreenToProject(*GetCamera(), x, y);
+	sm::vec2 pos = ee0::CameraHelper::TransPosScreenToProject(
+		*GetCamera(), event.GetX(), event.GetY());
 	wxString msg;
 	msg.Printf("Mouse: %.1f, %.1f", pos.x, pos.y);
 	Blackboard::Instance()->GetFrame()->SetStatusText(msg);

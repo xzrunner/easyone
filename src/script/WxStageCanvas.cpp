@@ -61,14 +61,66 @@ void WxStageCanvas::OnTimer()
 	SetDirty();
 }
 
-void WxStageCanvas::OnMouse(int x, int y)
+void WxStageCanvas::OnMouseImpl(wxMouseEvent& event)
 {
-	ee2::WxStageCanvas::OnMouse(x, y);
+	ee2::WxStageCanvas::OnMouseImpl(event);
 
+	int x = event.GetX();
+	int y = event.GetY();
 	sm::vec2 pos = ee0::CameraHelper::TransPosScreenToProject(*GetCamera(), x, y);
+	moon::Blackboard::Instance()->SetMousePos(pos);
+
 	wxString msg;
 	msg.Printf("Mouse: %.1f, %.1f", pos.x, pos.y);
 	Blackboard::Instance()->GetFrame()->SetStatusText(msg);
+
+	BindMoonCtx();
+	if (event.LeftDown()) {
+		m_script.OnMousePressed(x, y, 1);
+	} else if (event.LeftUp()) {
+		m_script.OnMouseReleased(x, y, 1);
+	} else if (event.RightDown()) {
+		m_script.OnMousePressed(x, y, 2);
+	} else if (event.RightUp()) {
+		m_script.OnMouseReleased(x, y, 2);
+	}
+}
+
+void WxStageCanvas::OnKeyDownImpl(wxKeyEvent& event)
+{
+	ee2::WxStageCanvas::OnKeyDownImpl(event);
+
+	int key_code = event.GetKeyCode();
+	if (key_code >= 'A' && key_code <= 'Z') 
+	{
+		std::string str;
+		str.push_back(static_cast<char>('a' + key_code - 'A'));
+		m_script.OnKeyPressed(str.c_str());
+		return;
+	}
+	else if (key_code >= '0' && key_code <= '9')
+	{
+		std::string str;
+		str.push_back(static_cast<char>('0' + key_code - '0'));
+		m_script.OnKeyPressed(str.c_str());
+		return;
+	}
+
+	switch (key_code)
+	{
+	case WXK_LEFT:
+		m_script.OnKeyPressed("left");
+		break;
+	case WXK_UP:
+		m_script.OnKeyPressed("up");
+		break;
+	case WXK_RIGHT:
+		m_script.OnKeyPressed("right");
+		break;
+	case WXK_DOWN:
+		m_script.OnKeyPressed("down");
+		break;
+	}
 }
 
 void WxStageCanvas::BindMoonCtx() const
