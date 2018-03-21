@@ -123,7 +123,7 @@ WxStagePage* StagePageFactory::Create(int page_type, WxStagePanel* stage_panel)
 			page->GetImpl().SetCanvas(canvas);
 
 			auto dir = boost::filesystem::path(dlg.GetPath().ToStdString()).parent_path();
-			moon::Blackboard::Instance()->GetContext()->SetWorkDir(dir.string());
+			moon::Blackboard::Instance()->SetWorkDir(dir.string());
 
 			canvas->ScriptLoad();
 
