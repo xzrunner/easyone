@@ -70,10 +70,6 @@ n0::SceneNodePtr NodeFactory::Create(NodeType type)
 			frame->index = 0;
 			layer->frames.push_back(std::move(frame));
 
-			frame = std::make_unique<n2::CompAnim::Frame>();
-			frame->index = 10;
-			layer->frames.push_back(std::move(frame));
-
 			auto& canim = node->AddSharedComp<n2::CompAnim>();
 			canim.AddLayer(layer);
 		}

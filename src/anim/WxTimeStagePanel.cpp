@@ -8,9 +8,9 @@
 #include <ee0/SubjectMgr.h>
 
 #include <guard/check.h>
-#include <node2/CompAnim.h>
 
 #include <wx/dcbuffer.h>
+#include <wx/menu.h>
 
 namespace
 {
@@ -34,11 +34,35 @@ BEGIN_EVENT_TABLE(WxTimeStagePanel, wxPanel)
 	EVT_MOUSE_EVENTS(WxTimeStagePanel::OnMouse)
 	EVT_KEY_DOWN(WxTimeStagePanel::OnKeyDown)
 	EVT_KEY_UP(WxTimeStagePanel::OnKeyUp)
+
+	EVT_MENU(Menu_CreateClassicTween, WxTimeStagePanel::OnCreateClassicTween)
+	EVT_MENU(Menu_DeleteClassicTween, WxTimeStagePanel::OnDeleteClassicTween)
+	EVT_MENU(Menu_InsertFrame, WxTimeStagePanel::OnInsertFrame)
+	EVT_MENU(Menu_DeleteFrame, WxTimeStagePanel::OnDeleteFrame)
+	EVT_MENU(Menu_InsertKeyFrame, WxTimeStagePanel::OnInsertKeyFrame)
+	EVT_MENU(Menu_DeleteKeyFrame, WxTimeStagePanel::OnDeleteKeyFrame)
+
+	EVT_UPDATE_UI(Menu_CreateClassicTween, WxTimeStagePanel::OnUpdateCreateClassicTween)
+	EVT_UPDATE_UI(Menu_DeleteClassicTween, WxTimeStagePanel::OnUpdateDeleteClassicTween)
+	EVT_UPDATE_UI(Menu_InsertFrame, WxTimeStagePanel::OnUpdateInsertFrame)
+	EVT_UPDATE_UI(Menu_DeleteFrame, WxTimeStagePanel::OnUpdateDeleteFrame)
+	EVT_UPDATE_UI(Menu_InsertKeyFrame, WxTimeStagePanel::OnUpdateInsertKeyFrame)
+	EVT_UPDATE_UI(Menu_DeleteKeyFrame, WxTimeStagePanel::OnUpdateDeleteKeyFrame)
 END_EVENT_TABLE()
+
+LanguageEntry WxTimeStagePanel::entries[] =
+{
+	{ "创建传统补间", "Create Classic Tween" },
+	{ "删除传统补间", "Delete Classic Tween" },
+	{ "插入帧", "Insert Frame" },
+	{ "删除帧", "Delete Frame" },
+	{ "插入关键帧", "Insert Key Frame" },
+	{ "删除关键帧", "Delete Key Frame" }
+};
 
 WxTimeStagePanel::WxTimeStagePanel(wxWindow* parent, const n2::CompAnim& canim,
 	                               const ee0::SubjectMgrPtr& sub_mgr)
-	: wxPanel(parent, wxID_ANY, wxDefaultPosition, wxSize(2000, 999))
+	: wxPanel(parent, wxID_ANY, wxDefaultPosition, wxSize(5000, 999))
 	, m_canim(canim)
 	, m_sub_mgr(sub_mgr)
 	, m_editop(canim, sub_mgr)
@@ -86,7 +110,7 @@ void WxTimeStagePanel::OnMouse(wxMouseEvent& event)
 
 	if (event.RightDown()) {
 		m_editop.OnMouseLeftDown(row, col);
-//		MousePopupMenu(event.GetX(), event.GetY());
+		MousePopupMenu(event.GetX(), event.GetY());
 	} else if (event.LeftDown()) {
 		m_editop.OnMouseLeftDown(row, col);
 	} else if (event.Dragging()) {
@@ -351,6 +375,164 @@ void WxTimeStagePanel::OnSetSelectedRegion(const ee0::VariantSet& variants)
 			}
 			Refresh(false);
 		}
+	}
+}
+
+void WxTimeStagePanel::MousePopupMenu(int x, int y)
+{
+	wxMenu menu;
+
+	menu.Append(Menu_CreateClassicTween, entries[Menu_CreateClassicTween].text[currLanguage]);
+	menu.Append(Menu_DeleteClassicTween, entries[Menu_DeleteClassicTween].text[currLanguage]);
+	menu.AppendSeparator();
+	menu.Append(Menu_InsertFrame, entries[Menu_InsertFrame].text[currLanguage]);
+	menu.Append(Menu_DeleteFrame, entries[Menu_DeleteFrame].text[currLanguage]);
+	menu.AppendSeparator();
+	menu.Append(Menu_InsertKeyFrame, entries[Menu_InsertKeyFrame].text[currLanguage]);
+	menu.Append(Menu_DeleteKeyFrame, entries[Menu_DeleteKeyFrame].text[currLanguage]);
+
+	PopupMenu(&menu, x, y);	
+}
+
+void WxTimeStagePanel::OnCreateClassicTween(wxCommandEvent& event)
+{
+	if (auto frame = GetCurrFrame()) {
+		frame->tween = true;
+		Refresh(false);
+	}
+}
+
+void WxTimeStagePanel::OnDeleteClassicTween(wxCommandEvent& event)
+{
+	if (auto frame = GetCurrFrame()) {
+		frame->tween = false;
+		Refresh(false);
+	}
+}
+
+void WxTimeStagePanel::OnInsertFrame(wxCommandEvent& event)
+{
+	OnInsertFrame();
+}
+
+void WxTimeStagePanel::OnDeleteFrame(wxCommandEvent& event)
+{
+	OnDeleteFrame();
+}
+
+void WxTimeStagePanel::OnInsertKeyFrame(wxCommandEvent& event)
+{
+	if (auto layer = GetCurrLayer()) {
+		LayerHelper::InsertKeyFrame(*layer, m_frame_idx);
+		Refresh(false);
+	}
+}
+
+void WxTimeStagePanel::OnDeleteKeyFrame(wxCommandEvent& event)
+{
+	if (auto layer = GetCurrLayer()) {
+		LayerHelper::RemoveKeyFrame(*layer, m_frame_idx);
+		Refresh(false);
+	}
+}
+
+void WxTimeStagePanel::OnUpdateCreateClassicTween(wxUpdateUIEvent& event)
+{
+	if (auto frame = GetCurrFrame()) {
+		event.Enable(!frame->tween);
+	} else {
+		event.Enable(false);
+	}
+}
+
+void WxTimeStagePanel::OnUpdateDeleteClassicTween(wxUpdateUIEvent& event)
+{
+	if (auto frame = GetCurrFrame()) {
+		event.Enable(frame->tween);
+	} else {
+		event.Enable(false);
+	}
+}
+
+void WxTimeStagePanel::OnUpdateInsertFrame(wxUpdateUIEvent& event)
+{
+	if (auto frame = GetCurrFrame()) {
+		event.Enable(frame->index != m_frame_idx);
+	} else {
+		event.Enable(false);
+	}
+}
+
+void WxTimeStagePanel::OnUpdateDeleteFrame(wxUpdateUIEvent& event)
+{
+	if (auto frame = GetCurrFrame()) {
+		event.Enable(frame->index != m_frame_idx);
+	} else {
+		event.Enable(false);
+	}
+}
+
+void WxTimeStagePanel::OnUpdateInsertKeyFrame(wxUpdateUIEvent& event)
+{
+	if (auto layer = GetCurrLayer()) {
+		event.Enable(!LayerHelper::IsKeyFrame(*layer, m_frame_idx));
+	} else {
+		event.Enable(false);
+	}
+}
+
+void WxTimeStagePanel::OnUpdateDeleteKeyFrame(wxUpdateUIEvent& event)
+{
+	if (auto layer = GetCurrLayer()) {
+		event.Enable(LayerHelper::IsKeyFrame(*layer, m_frame_idx));
+	} else {
+		event.Enable(false);
+	}
+}
+
+void WxTimeStagePanel::OnInsertFrame(wxKeyEvent& event)
+{
+	OnInsertFrame();
+}
+
+void WxTimeStagePanel::OnDeleteFrame(wxKeyEvent& event)
+{
+	OnDeleteFrame();
+}
+
+void WxTimeStagePanel::OnInsertFrame()
+{
+	if (auto layer = GetCurrLayer()) {
+		LayerHelper::InsertNullFrame(*layer, m_frame_idx);
+		Refresh(false);
+	}
+}
+
+void WxTimeStagePanel::OnDeleteFrame()
+{
+	if (auto layer = GetCurrLayer()) {
+		LayerHelper::RemoveNullFrame(*layer, m_frame_idx);
+		Refresh(false);
+	}
+}
+
+n2::CompAnim::Layer* WxTimeStagePanel::GetCurrLayer() const
+{
+	auto& layers = m_canim.GetAllLayers();
+	if (m_layer_idx >= 0 && static_cast<size_t>(m_layer_idx) < layers.size()) {
+		return layers[m_layer_idx].get();
+	} else {
+		return nullptr;
+	}	
+}
+
+n2::CompAnim::Frame* WxTimeStagePanel::GetCurrFrame() const
+{
+	auto layer = GetCurrLayer();
+	if (!layer) {
+		return nullptr;
+	} else {
+		return LayerHelper::GetCurrFrame(*layer, m_frame_idx);
 	}
 }
 

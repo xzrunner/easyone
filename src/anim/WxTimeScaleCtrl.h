@@ -26,12 +26,15 @@ private:
 	void OnMouse(wxMouseEvent& event);
 
 	void OnSetCurrFrame(const ee0::VariantSet& variants);
+	void OnWndScroll(const ee0::VariantSet& variants);
 
 private:
 	const n2::CompAnim& m_canim;
 	ee0::SubjectMgrPtr  m_sub_mgr;
 
 	int m_frame_idx;
+
+	int m_start_x;
 
 	DECLARE_EVENT_TABLE()
 

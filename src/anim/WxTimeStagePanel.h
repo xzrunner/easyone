@@ -1,12 +1,14 @@
 #pragma once
 
 #include "anim/TimeStageEdit.h"
+#include "anim/config.h"
 
 #include <ee0/Observer.h>
 
+#include <node2/CompAnim.h>
+
 #include <wx/panel.h>
 
-namespace n2 { class CompAnim; }
 namespace ee0 { class VariantSet; }
 
 class wxBufferedPaintDC;
@@ -39,6 +41,48 @@ private:
 
 	void OnSetCurrFrame(const ee0::VariantSet& variants);
 	void OnSetSelectedRegion(const ee0::VariantSet& variants);
+
+	void MousePopupMenu(int x, int y);
+
+	void OnCreateClassicTween(wxCommandEvent& event);
+	void OnDeleteClassicTween(wxCommandEvent& event);
+	void OnInsertFrame(wxCommandEvent& event);
+	void OnDeleteFrame(wxCommandEvent& event);
+	void OnInsertKeyFrame(wxCommandEvent& event);
+	void OnDeleteKeyFrame(wxCommandEvent& event);
+
+	void OnUpdateCreateClassicTween(wxUpdateUIEvent& event);
+	void OnUpdateDeleteClassicTween(wxUpdateUIEvent& event);
+	void OnUpdateInsertFrame(wxUpdateUIEvent& event);
+	void OnUpdateDeleteFrame(wxUpdateUIEvent& event);
+	void OnUpdateInsertKeyFrame(wxUpdateUIEvent& event);
+	void OnUpdateDeleteKeyFrame(wxUpdateUIEvent& event);
+
+	void OnInsertFrame(wxKeyEvent& event);
+	void OnDeleteFrame(wxKeyEvent& event);
+
+private:
+	void OnInsertFrame();
+	void OnDeleteFrame();
+
+	n2::CompAnim::Layer* GetCurrLayer() const;
+	n2::CompAnim::Frame* GetCurrFrame() const;
+
+private:
+	enum
+	{
+		Menu_CreateClassicTween,
+		Menu_DeleteClassicTween,
+		Menu_InsertFrame,
+		Menu_DeleteFrame,
+		Menu_InsertKeyFrame,
+		Menu_DeleteKeyFrame,
+
+		Hot_InsertFrame,
+		Hot_DeleteFrame
+	};
+
+	static LanguageEntry entries[];
 
 private:
 	const n2::CompAnim& m_canim;

@@ -1,9 +1,31 @@
 #pragma once
 
+#include <wx/colour.h>
+
 namespace eone
 {
 namespace anim
 {
+
+enum LanguageType
+{
+	Chinese,
+	English
+};
+
+struct LanguageEntry
+{
+	union {
+		const char* text[2];
+
+		struct {
+			const char* cn;
+			const char* en;
+		};
+	};
+};
+
+static const LanguageType currLanguage = Chinese;
 
 static const int FRAME_GRID_WIDTH = 12;
 static const int FRAME_GRID_HEIGHT = FRAME_GRID_WIDTH * 2;

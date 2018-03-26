@@ -189,6 +189,12 @@
     <ClInclude Include="..\..\..\src\anim\LayerHelper.h">
       <Filter>12.anim\timeline</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\anim\WxLayersScrolled.h">
+      <Filter>12.anim\timeline\left</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\anim\WxTimeStageScrolled.h">
+      <Filter>12.anim\timeline\right</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\frame\main.cpp">
@@ -307,6 +313,12 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\anim\LayerHelper.cpp">
       <Filter>12.anim\timeline</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\anim\WxLayersScrolled.cpp">
+      <Filter>12.anim\timeline\left</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\anim\WxTimeStageScrolled.cpp">
+      <Filter>12.anim\timeline\right</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

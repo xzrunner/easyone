@@ -36,8 +36,10 @@ WxTimeScaleCtrl::WxTimeScaleCtrl(wxWindow* parent, const n2::CompAnim& canim,
 	, m_canim(canim)
 	, m_sub_mgr(sub_mgr)
 	, m_frame_idx(0)
+	, m_start_x(0)
 {
 	sub_mgr->RegisterObserver(MSG_SET_CURR_FRAME, this);
+	sub_mgr->RegisterObserver(MSG_WND_SCROLL, this);
 }
 
 void WxTimeScaleCtrl::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
@@ -46,6 +48,9 @@ void WxTimeScaleCtrl::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
 	{
 	case MSG_SET_CURR_FRAME:
 		OnSetCurrFrame(variants);
+		break;
+	case MSG_WND_SCROLL:
+		OnWndScroll(variants);
 		break;
 	}
 }
@@ -70,13 +75,13 @@ void WxTimeScaleCtrl::OnPaint(wxPaintEvent& event)
 		int curr_pos = m_frame_idx;
 		dc.SetPen(wxPen(DARK_RED));
 		dc.SetBrush(wxBrush(MEDIUM_RED));
-		dc.DrawRectangle(FRAME_GRID_WIDTH * curr_pos, 2, FRAME_GRID_WIDTH + 1, FRAME_GRID_HEIGHT - 2);
-		dc.DrawLine(FRAME_GRID_WIDTH * (curr_pos + 0.5f), FRAME_GRID_HEIGHT, FRAME_GRID_WIDTH * (curr_pos + 0.5f), 100);
+		dc.DrawRectangle(FRAME_GRID_WIDTH * curr_pos - m_start_x, 2, FRAME_GRID_WIDTH + 1, FRAME_GRID_HEIGHT - 2);
+		dc.DrawLine(FRAME_GRID_WIDTH * (curr_pos + 0.5f) - m_start_x, FRAME_GRID_HEIGHT, FRAME_GRID_WIDTH * (curr_pos + 0.5f) - m_start_x, 100);
 		if (curr_pos % 5 != 0)
 		{
 			wxSize size = dc.GetTextExtent(wxString::Format(wxT("%d"), curr_pos));
-			dc.DrawText(wxString::Format(wxT("%d"), curr_pos),
-				FRAME_GRID_WIDTH * (curr_pos + 0.5f) - size.GetWidth() / 2, TEXT_Y);
+			float x = FRAME_GRID_WIDTH * (curr_pos + 0.5f) - size.GetWidth() / 2;
+			dc.DrawText(wxString::Format(wxT("%d"), curr_pos), x - m_start_x, TEXT_Y);
 		}
 	}
 
@@ -84,12 +89,12 @@ void WxTimeScaleCtrl::OnPaint(wxPaintEvent& event)
 	dc.SetPen(wxPen(TEXT_COLOR));
 	for (int i = 0; i <= MAX_FRAME_COUNT; ++i)
 	{
-		dc.DrawLine(FRAME_GRID_WIDTH * i, FRAME_GRID_HEIGHT, FRAME_GRID_WIDTH * i, FRAME_GRID_HEIGHT - DIVISION_HEIGHT);
+		dc.DrawLine(FRAME_GRID_WIDTH * i - m_start_x, FRAME_GRID_HEIGHT, FRAME_GRID_WIDTH * i - m_start_x, FRAME_GRID_HEIGHT - DIVISION_HEIGHT);
 		if (i % 5 == 0)
 		{
 			wxSize size = dc.GetTextExtent(wxString::Format(wxT("%d"), i));
-			dc.DrawText(wxString::Format(wxT("%d"), i),
-				FRAME_GRID_WIDTH * (i + 0.5f) - size.GetWidth() / 2, TEXT_Y);
+			float x = FRAME_GRID_WIDTH * (i + 0.5f) - size.GetWidth() / 2;
+			dc.DrawText(wxString::Format(wxT("%d"), i), x - m_start_x, TEXT_Y);
 		}
 	}
 }
@@ -98,7 +103,8 @@ void WxTimeScaleCtrl::OnMouse(wxMouseEvent& event)
 {
 	if (event.LeftDown() || event.Dragging())
 	{
-		int frame = (int)(event.GetX() / FRAME_GRID_WIDTH);
+		int x = event.GetX() + m_start_x;
+		int frame = (int)(x / FRAME_GRID_WIDTH);
 		frame = std::min(LayerHelper::GetMaxFrame(m_canim), frame);
 		if (m_frame_idx != frame) 
 		{
@@ -133,6 +139,14 @@ void WxTimeScaleCtrl::OnSetCurrFrame(const ee0::VariantSet& variants)
 			m_frame_idx = std::min(max_frame, frame);
 		}
 	}
+	Refresh(false);
+}
+
+void WxTimeScaleCtrl::OnWndScroll(const ee0::VariantSet& variants)
+{
+	auto var = variants.GetVariant("x");
+	GD_ASSERT(var.m_type == ee0::VT_LONG, "err val");
+	m_start_x = var.m_val.l;
 	Refresh(false);
 }
 

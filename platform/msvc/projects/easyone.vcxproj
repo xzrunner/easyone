@@ -257,11 +257,13 @@
     <ClInclude Include="..\..\..\src\anim\config.h" />
     <ClInclude Include="..\..\..\src\anim\TimeStageEdit.h" />
     <ClInclude Include="..\..\..\src\anim\WxLayersPanel.h" />
+    <ClInclude Include="..\..\..\src\anim\WxLayersScrolled.h" />
     <ClInclude Include="..\..\..\src\anim\WxLayersToolbar.h" />
     <ClInclude Include="..\..\..\src\anim\WxStagePage.h" />
     <ClInclude Include="..\..\..\src\anim\WxTimelinePanel.h" />
     <ClInclude Include="..\..\..\src\anim\WxTimeScaleCtrl.h" />
     <ClInclude Include="..\..\..\src\anim\WxTimeStagePanel.h" />
+    <ClInclude Include="..\..\..\src\anim\WxTimeStageScrolled.h" />
     <ClInclude Include="..\..\..\src\frame\Blackboard.h" />
     <ClInclude Include="..\..\..\src\frame\NodeFactory.h" />
     <ClInclude Include="..\..\..\src\frame\NodeSelectOP.h" />
@@ -301,6 +303,7 @@
     <ClCompile Include="..\..\..\src\anim\MessageHelper.cpp" />
     <ClCompile Include="..\..\..\src\anim\TimeStageEdit.cpp" />
     <ClCompile Include="..\..\..\src\anim\WxLayersPanel.cpp" />
+    <ClCompile Include="..\..\..\src\anim\WxLayersScrolled.cpp" />
     <ClCompile Include="..\..\..\src\anim\WxLayersToolbar.cpp" />
     <ClCompile Include="..\..\..\src\anim\WxStagePage.cpp">
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/anim/</ObjectFileName>
@@ -309,6 +312,7 @@
     <ClCompile Include="..\..\..\src\anim\WxTimelinePanel.cpp" />
     <ClCompile Include="..\..\..\src\anim\WxTimeScaleCtrl.cpp" />
     <ClCompile Include="..\..\..\src\anim\WxTimeStagePanel.cpp" />
+    <ClCompile Include="..\..\..\src\anim\WxTimeStageScrolled.cpp" />
     <ClCompile Include="..\..\..\src\frame\Blackboard.cpp" />
     <ClCompile Include="..\..\..\src\frame\NodeFactory.cpp" />
     <ClCompile Include="..\..\..\src\frame\NodeSelectOP.cpp" />
