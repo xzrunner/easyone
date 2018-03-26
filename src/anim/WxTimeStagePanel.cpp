@@ -28,7 +28,7 @@ namespace eone
 namespace anim
 {
 
-BEGIN_EVENT_TABLE(WxTimeStagePanel, wxScrolledWindow)
+BEGIN_EVENT_TABLE(WxTimeStagePanel, wxPanel)
 	EVT_PAINT(WxTimeStagePanel::OnPaint)
 	EVT_SIZE(WxTimeStagePanel::OnSize)
 	EVT_MOUSE_EVENTS(WxTimeStagePanel::OnMouse)
@@ -38,15 +38,13 @@ END_EVENT_TABLE()
 
 WxTimeStagePanel::WxTimeStagePanel(wxWindow* parent, const n2::CompAnim& canim,
 	                               const ee0::SubjectMgrPtr& sub_mgr)
-	: wxScrolledWindow(parent/*, wxID_ANY, wxDefaultPosition, wxSize(100, 500)*/)
+	: wxPanel(parent, wxID_ANY, wxDefaultPosition, wxSize(2000, 999))
 	, m_canim(canim)
 	, m_sub_mgr(sub_mgr)
 	, m_editop(canim, sub_mgr)
 {
 	m_layer_idx = m_frame_idx = m_valid_frame_idx = -1;
 	m_col_min = m_col_max = -1;
-
-	SetScrollbars(1, 1, 20, 10, 0, 0);
 
 	m_sub_mgr->RegisterObserver(MSG_SET_CURR_FRAME, this);
 	m_sub_mgr->RegisterObserver(MSG_SET_SELECTED_REGION, this);

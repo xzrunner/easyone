@@ -14,10 +14,10 @@ namespace anim
 class WxTimelinePanel : public wxPanel
 {
 public:
-	WxTimelinePanel(wxWindow* parent, const n2::CompAnim& canim);
+	WxTimelinePanel(wxWindow* parent, n2::CompAnim& canim);
 
 private:
-	void InitLayout(const n2::CompAnim& canim);
+	void InitLayout(n2::CompAnim& canim);
 
 private:
 	ee0::SubjectMgrPtr m_tl_sub_mgr = nullptr;

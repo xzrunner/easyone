@@ -64,6 +64,7 @@ n0::SceneNodePtr NodeFactory::Create(NodeType type)
 			sz.Build(100, 100);
 
 			auto layer = std::make_unique<n2::CompAnim::Layer>();
+			layer->name = "Layer0";
 
 			auto frame = std::make_unique<n2::CompAnim::Frame>();
 			frame->index = 0;

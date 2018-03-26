@@ -26,7 +26,7 @@ public:
 	virtual void Traverse(std::function<bool(const n0::SceneNodePtr&)> func,
 		const ee0::VariantSet& variants = ee0::VariantSet(), bool inverse = false) const override;
 
-	virtual int GetPageType() const override { return PAGE_SCENE2D; }
+	virtual int GetPageType() const override { return PAGE_ANIM; }
 
 protected:
 	virtual const n0::NodeSharedComp& GetEditedNodeComp() const override;

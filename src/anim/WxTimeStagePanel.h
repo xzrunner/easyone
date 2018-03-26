@@ -4,7 +4,7 @@
 
 #include <ee0/Observer.h>
 
-#include <wx/scrolwin.h>
+#include <wx/panel.h>
 
 namespace n2 { class CompAnim; }
 namespace ee0 { class VariantSet; }
@@ -16,7 +16,7 @@ namespace eone
 namespace anim
 {
 
-class WxTimeStagePanel : public wxScrolledWindow, public ee0::Observer
+class WxTimeStagePanel : public wxPanel, public ee0::Observer
 {
 public:
 	WxTimeStagePanel(wxWindow* parent, const n2::CompAnim& canim,
