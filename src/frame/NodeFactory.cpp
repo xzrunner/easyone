@@ -9,6 +9,7 @@
 #include <node2/CompMask.h>
 #include <node2/CompMesh.h>
 #include <node2/CompScale9.h>
+#include <node2/CompAnim.h>
 #include <node2/CompSprite2.h>
 #include <node2/CompBoundingBox.h>
 #include <node2/CompTransform.h>
@@ -56,6 +57,24 @@ n0::SceneNodePtr NodeFactory::Create(NodeType type)
 		{
 			node->AddSharedComp<n2::CompScale9>();
 			sz.Build(100, 100);
+		}
+		break;
+	case NODE_ANIM:
+		{
+			sz.Build(100, 100);
+
+			auto layer = std::make_unique<n2::CompAnim::Layer>();
+
+			auto frame = std::make_unique<n2::CompAnim::Frame>();
+			frame->index = 0;
+			layer->frames.push_back(std::move(frame));
+
+			frame = std::make_unique<n2::CompAnim::Frame>();
+			frame->index = 10;
+			layer->frames.push_back(std::move(frame));
+
+			auto& canim = node->AddSharedComp<n2::CompAnim>();
+			canim.AddLayer(layer);
 		}
 		break;
 

@@ -18,7 +18,7 @@ public:
 	WxSceneTreeCtrl(wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr,
 		const n0::SceneNodePtr& root_node);
 
-	virtual void OnNotify(ee0::MessageID msg, const ee0::VariantSet& variants) override;
+	virtual void OnNotify(uint32_t msg, const ee0::VariantSet& variants) override;
 
 	void Traverse(wxTreeItemId id, std::function<bool(wxTreeItemId)> func) const;
 

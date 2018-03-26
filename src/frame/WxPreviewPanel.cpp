@@ -20,7 +20,7 @@ WxPreviewPanel::WxPreviewPanel(wxWindow* parent,
 	RegisterMsg(*m_sub_mgr);
 }
 
-void WxPreviewPanel::OnNotify(ee0::MessageID msg, const ee0::VariantSet& variants)
+void WxPreviewPanel::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
 {
 	switch (msg)
 	{

@@ -1,6 +1,8 @@
 #include "frame/Application.h"
 #include "frame/WxLibraryPanel.h"
 #include "frame/WxStagePanel.h"
+#include "frame/WxStagePage.h"
+#include "frame/WxStageExtPanel.h"
 #include "frame/WxPreviewPanel.h"
 #include "frame/WxPreviewCanvas.h"
 #include "frame/WxSceneTreePanel.h"
@@ -11,8 +13,7 @@
 #include "frame/StagePageType.h"
 #include "frame/StagePageFactory.h"
 #include "frame/Blackboard.h"
-
-#include "scene2d/WxStagePage.h"
+#include "frame/typedef.h"
 
 #include <ee0/CompNodeEditor.h>
 #include <ee0/MsgHelper.h>
@@ -76,10 +77,13 @@ void Application::LoadFromFile(const std::string& filepath)
 		new_type = PAGE_MASK;
 	} else if (new_type_str == "n2_mesh") {
 		new_type = PAGE_MESH;
+	} else if (new_type_str == "n2_anim") {
+		new_type = PAGE_ANIM;
 	}
 
 	if (old_type != new_type || !page->GetFilepath().empty()) {
 		page = StagePageFactory::Create(new_type, m_stage);
+		page->GetSubjectMgr()->NotifyObservers(ee0::MSG_STAGE_PAGE_ON_SHOW);
 	}
 
 	auto dir = boost::filesystem::path(filepath).parent_path().string();
@@ -115,26 +119,30 @@ void Application::InitSubmodule()
 
 void Application::InitLayout()
 {
-	auto library = CreateLibraryPanel();
-	auto stage = CreateStagePanel();
-	auto preview = CreatePreviewPanel();
-	auto tree = CreateTreePanel();
-	auto detail = CreateDetailPanel();
+	auto library   = CreateLibraryPanel();
+	auto stage     = CreateStagePanel();
+	auto stage_ext = CreateStageExtPanel();
+	auto preview   = CreatePreviewPanel();
+	auto tree      = CreateTreePanel();
+	auto detail    = CreateDetailPanel();
 
-	m_mgr.AddPane(library, wxAuiPaneInfo().Name("Library").Caption("Library").
-		Left().MinSize(wxSize(100, 0)));
+	m_mgr.AddPane(library, wxAuiPaneInfo().Name(STR_LIBRARY_PANEL).
+		Caption(STR_LIBRARY_PANEL).Left().MinSize(100, 0));
 	
-	m_mgr.AddPane(stage, wxAuiPaneInfo().Name("Stage").Caption("Stage").
-		CenterPane().PaneBorder(false));
+	m_mgr.AddPane(stage, wxAuiPaneInfo().Name(STR_STAGE_PANEL).
+		Caption(STR_STAGE_PANEL).CenterPane().PaneBorder(false));
 
-	m_mgr.AddPane(preview, wxAuiPaneInfo().Name("Preview").Caption("Preview").
-		CenterPane().PaneBorder(false));
+	m_mgr.AddPane(stage_ext, wxAuiPaneInfo().Name(STR_STAGE_EXT_PANEL).
+		Caption(STR_STAGE_EXT_PANEL).CenterPane().PaneBorder(false));
 
-	m_mgr.AddPane(tree, wxAuiPaneInfo().Name("Tree").Caption("Tree").
-		Right().Row(1).MinSize(200, 0).PaneBorder(false));
+	m_mgr.AddPane(preview, wxAuiPaneInfo().Name(STR_PREVIEW_PANEL).
+		Caption(STR_PREVIEW_PANEL).CenterPane().PaneBorder(false));
 
-	m_mgr.AddPane(detail, wxAuiPaneInfo().Name("Detail").Caption("Detail").
-		Right().MinSize(300, 0).PaneBorder(false));
+	m_mgr.AddPane(tree, wxAuiPaneInfo().Name(STR_TREE_PANEL).
+		Caption(STR_TREE_PANEL).Right().Row(1).MinSize(200, 0).PaneBorder(false));
+
+	m_mgr.AddPane(detail, wxAuiPaneInfo().Name(STR_DETAIL_PANEL).
+		Caption(STR_DETAIL_PANEL).Right().Row(0).MinSize(300, 0).PaneBorder(false));
 
 	m_mgr.Update();
 }
@@ -159,11 +167,19 @@ wxWindow* Application::CreateStagePanel()
 
 	//StagePageFactory::Create(PAGE_SCENE2D, m_stage);
 	//StagePageFactory::Create(PAGE_SCALE9, m_stage);
-	StagePageFactory::Create(PAGE_SCRIPT, m_stage);
+	//StagePageFactory::Create(PAGE_SCRIPT, m_stage);
+	StagePageFactory::Create(PAGE_ANIM, m_stage);
 
 	m_stage->Thaw();
 
 	return m_stage;
+}
+
+wxWindow* Application::CreateStageExtPanel()
+{
+	auto stage_ext = new WxStageExtPanel(m_frame);
+	Blackboard::Instance()->SetStageExtPanel(stage_ext);
+	return stage_ext;
 }
 
 wxWindow* Application::CreatePreviewPanel()

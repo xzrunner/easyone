@@ -3,8 +3,11 @@
 #include "frame/StagePageType.h"
 #include "frame/StagePageFactory.h"
 #include "frame/WxSettingsDialog.h"
+#include "frame/WxStagePanel.h"
+#include "frame/WxStagePage.h"
 
 #include <ee0/WxListSelectDlg.h>
+#include <ee0/SubjectMgr.h>
 
 namespace
 {
@@ -17,6 +20,7 @@ static const std::vector<std::pair<uint32_t, std::string>> PAGE_LIST =
 	std::make_pair(eone::PAGE_SCALE9,  "Scale9"),
 	std::make_pair(eone::PAGE_MASK,    "Mask"),
 	std::make_pair(eone::PAGE_MESH,    "Mesh"),
+	std::make_pair(eone::PAGE_ANIM,    "Anim"),
 
 	std::make_pair(eone::PAGE_SCRIPT,  "Script..."),
 };
@@ -41,6 +45,9 @@ void WxFrame::OnNew(wxCommandEvent& event)
 	auto app = std::static_pointer_cast<Application>(m_app);
 	auto type = dlg.GetSelectedID();
 	StagePageFactory::Create(type, app->GetStagePanel());
+
+	WxStagePage* curr_page = static_cast<WxStagePage*>(app->GetStagePanel()->GetPage(app->GetStagePanel()->GetSelection()));
+	curr_page->GetSubjectMgr()->NotifyObservers(ee0::MSG_STAGE_PAGE_ON_SHOW);
 }
 
 void WxFrame::OnSettings(wxCommandEvent& event)

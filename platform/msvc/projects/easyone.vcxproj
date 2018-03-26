@@ -251,12 +251,24 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\src\anim\LayerHelper.h" />
+    <ClInclude Include="..\..\..\src\anim\MessageHelper.h" />
+    <ClInclude Include="..\..\..\src\anim\MessageID.h" />
+    <ClInclude Include="..\..\..\src\anim\config.h" />
+    <ClInclude Include="..\..\..\src\anim\TimeStageEdit.h" />
+    <ClInclude Include="..\..\..\src\anim\WxLayersPanel.h" />
+    <ClInclude Include="..\..\..\src\anim\WxLayersToolbar.h" />
+    <ClInclude Include="..\..\..\src\anim\WxStagePage.h" />
+    <ClInclude Include="..\..\..\src\anim\WxTimelinePanel.h" />
+    <ClInclude Include="..\..\..\src\anim\WxTimeScaleCtrl.h" />
+    <ClInclude Include="..\..\..\src\anim\WxTimeStagePanel.h" />
     <ClInclude Include="..\..\..\src\frame\Blackboard.h" />
     <ClInclude Include="..\..\..\src\frame\NodeFactory.h" />
     <ClInclude Include="..\..\..\src\frame\NodeSelectOP.h" />
     <ClInclude Include="..\..\..\src\frame\NodeType.h" />
     <ClInclude Include="..\..\..\src\frame\StagePageFactory.h" />
     <ClInclude Include="..\..\..\src\frame\StagePageType.h" />
+    <ClInclude Include="..\..\..\src\frame\typedef.h" />
     <ClInclude Include="..\..\..\src\frame\WxDetailPanel.h" />
     <ClInclude Include="..\..\..\src\frame\main.h" />
     <ClInclude Include="..\..\..\src\frame\WxFrame.h" />
@@ -269,6 +281,7 @@
     <ClInclude Include="..\..\..\src\frame\WxSceneTreeItem.h" />
     <ClInclude Include="..\..\..\src\frame\WxSettingsDialog.h" />
     <ClInclude Include="..\..\..\src\frame\WxStageCanvas.h" />
+    <ClInclude Include="..\..\..\src\frame\WxStageExtPanel.h" />
     <ClInclude Include="..\..\..\src\frame\WxStagePage.h" />
     <ClInclude Include="..\..\..\src\frame\WxStagePanel.h" />
     <ClInclude Include="..\..\..\src\mask\WxEditDialog.h" />
@@ -284,6 +297,18 @@
     <ClInclude Include="..\..\..\src\script\WxStagePage.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\src\anim\LayerHelper.cpp" />
+    <ClCompile Include="..\..\..\src\anim\MessageHelper.cpp" />
+    <ClCompile Include="..\..\..\src\anim\TimeStageEdit.cpp" />
+    <ClCompile Include="..\..\..\src\anim\WxLayersPanel.cpp" />
+    <ClCompile Include="..\..\..\src\anim\WxLayersToolbar.cpp" />
+    <ClCompile Include="..\..\..\src\anim\WxStagePage.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/anim/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/anim/</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\anim\WxTimelinePanel.cpp" />
+    <ClCompile Include="..\..\..\src\anim\WxTimeScaleCtrl.cpp" />
+    <ClCompile Include="..\..\..\src\anim\WxTimeStagePanel.cpp" />
     <ClCompile Include="..\..\..\src\frame\Blackboard.cpp" />
     <ClCompile Include="..\..\..\src\frame\NodeFactory.cpp" />
     <ClCompile Include="..\..\..\src\frame\NodeSelectOP.cpp" />
@@ -300,6 +325,7 @@
     <ClCompile Include="..\..\..\src\frame\WxSceneTreeItem.cpp" />
     <ClCompile Include="..\..\..\src\frame\WxSettingsDialog.cpp" />
     <ClCompile Include="..\..\..\src\frame\WxStageCanvas.cpp" />
+    <ClCompile Include="..\..\..\src\frame\WxStageExtPanel.cpp" />
     <ClCompile Include="..\..\..\src\frame\WxStagePage.cpp" />
     <ClCompile Include="..\..\..\src\frame\WxStagePanel.cpp" />
     <ClCompile Include="..\..\..\src\mask\WxEditDialog.cpp">

@@ -1,20 +1,24 @@
-#include "scene2d/WxStagePage.h"
+#include "anim/WxStagePage.h"
+#include "anim/WxTimelinePanel.h"
 
 #include "frame/WxStagePage.h"
 #include "frame/Blackboard.h"
 #include "frame/Application.h"
 #include "frame/typedef.h"
+#include "frame/WxStageExtPanel.h"
 
 #include <ee0/SubjectMgr.h>
 #include <ee2/WxStageDropTarget.h>
 
 #include <guard/check.h>
 #include <node0/SceneNode.h>
-#include <node2/CompComplex.h>
+#include <node2/CompAnim.h>
+
+#include <wx/aui/framemanager.h>
 
 namespace eone
 {
-namespace scene2d
+namespace anim
 {
 
 WxStagePage::WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, const n0::SceneNodePtr& node)
@@ -65,8 +69,8 @@ void WxStagePage::Traverse(std::function<bool(const n0::SceneNodePtr&)> func,
 {
 	auto var = variants.GetVariant("preview");
 	if (var.m_type == ee0::VT_EMPTY) {
-		auto& ccomplex = m_node->GetSharedComp<n2::CompComplex>();
-		ccomplex.Traverse(func, inverse);
+		auto& canim = m_node->GetSharedComp<n2::CompAnim>();
+		canim.Traverse(func, inverse);
 	} else {
 		func(m_node);
 	}
@@ -74,97 +78,52 @@ void WxStagePage::Traverse(std::function<bool(const n0::SceneNodePtr&)> func,
 
 const n0::NodeSharedComp& WxStagePage::GetEditedNodeComp() const 
 {
-	return m_node->GetSharedComp<n2::CompComplex>();
+	return m_node->GetSharedComp<n2::CompAnim>();
 }
 
 void WxStagePage::StoreToJsonExt(const std::string& dir, rapidjson::Value& val, 
 	                             rapidjson::MemoryPoolAllocator<>& alloc) const
 {
-//	val.AddMember("camera", "2d", alloc);
 }
 
 bool WxStagePage::InsertSceneNode(const ee0::VariantSet& variants)
 {
-	auto var = variants.GetVariant("node");
-	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: node");
-	n0::SceneNodePtr* node = static_cast<n0::SceneNodePtr*>(var.m_val.pv);
-	GD_ASSERT(node, "err scene node");
-
-	auto& ccomplex = m_node->GetSharedComp<n2::CompComplex>();
-	ccomplex.AddChild(*node);
-
-	return true;
+	return false;
 }
 
 bool WxStagePage::DeleteSceneNode(const ee0::VariantSet& variants)
 {
-	auto var = variants.GetVariant("node");
-	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: node");
-	n0::SceneNodePtr* node = static_cast<n0::SceneNodePtr*>(var.m_val.pv);
-	GD_ASSERT(node, "err scene node");
-
-	auto& ccomplex = m_node->GetSharedComp<n2::CompComplex>();
-	return ccomplex.RemoveChild(*node);
+	return false;
 }
 
 bool WxStagePage::ClearSceneNode()
 {
-	auto& ccomplex = m_node->GetSharedComp<n2::CompComplex>();
-	bool dirty = !ccomplex.GetAllChildren().empty();
-	ccomplex.RemoveAllChildren();
-	return dirty;
+	return false;
 }
 
 bool WxStagePage::ReorderSceneNode(const ee0::VariantSet& variants)
 {
-	auto node_var = variants.GetVariant("node");
-	GD_ASSERT(node_var.m_type == ee0::VT_PVOID, "no var in vars: node");
-	n0::SceneNodePtr* node = static_cast<n0::SceneNodePtr*>(node_var.m_val.pv);
-	GD_ASSERT(node, "err scene node");
-
-	auto up_var = variants.GetVariant("up");
-	GD_ASSERT(up_var.m_type == ee0::VT_BOOL, "no var in vars: up");
-	bool up = up_var.m_val.bl;
-
-	auto& ccomplex = m_node->GetSharedComp<n2::CompComplex>();
-	std::vector<n0::SceneNodePtr> all_nodes = ccomplex.GetAllChildren();
-	if (all_nodes.empty()) {
-		return false;
-	}
-
-	int idx = -1;
-	for (int i = 0, n = all_nodes.size(); i < n; ++i) 
-	{
-		if (all_nodes[i] == *node) {
-			idx = i;
-			break;
-		}
-	}
-
-	GD_ASSERT(idx >= 0, "not find");
-
-	if (up && idx != all_nodes.size() - 1)
-	{
-		std::swap(all_nodes[idx], all_nodes[idx + 1]);
-		ccomplex.SetChildren(all_nodes);
-		return true;
-	}
-	else if (!up && idx != 0)
-	{
-		std::swap(all_nodes[idx], all_nodes[idx - 1]);
-		ccomplex.SetChildren(all_nodes);
-		return true;
-	}
-
 	return false;
 }
 
 void WxStagePage::StagePageOnShow()
 {
-	auto& ui_mgr = Blackboard::Instance()->GetApp()->GetUIManager();
-	ui_mgr.GetPane(STR_PREVIEW_PANEL).Show();
-	ui_mgr.GetPane(STR_STAGE_EXT_PANEL).Hide();
+	auto bb = Blackboard::Instance();
+	auto& ui_mgr = bb->GetApp()->GetUIManager();
+	ui_mgr.GetPane(STR_PREVIEW_PANEL).Hide();
+	ui_mgr.GetPane(STR_STAGE_EXT_PANEL).Show();
 	ui_mgr.Update();
+
+	auto panel = bb->GetStageExtPanel();
+	auto sizer = panel->GetSizer();
+	if (sizer) {
+		sizer->Clear(true);
+	} else {
+		sizer = new wxBoxSizer(wxVERTICAL);
+	}
+	auto& canim = m_node->GetSharedComp<n2::CompAnim>();
+	sizer->Add(new WxTimelinePanel(panel, canim), 0, wxEXPAND);
+	panel->SetSizer(sizer);
 }
 
 }

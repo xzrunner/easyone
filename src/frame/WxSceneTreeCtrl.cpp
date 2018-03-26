@@ -43,7 +43,7 @@ WxSceneTreeCtrl::WxSceneTreeCtrl(wxWindow* parent, const ee0::SubjectMgrPtr& sub
 	RegisterMsg(*m_sub_mgr);
 }
 
-void WxSceneTreeCtrl::OnNotify(ee0::MessageID msg, const ee0::VariantSet& variants)
+void WxSceneTreeCtrl::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
 {
 	switch (msg)
 	{

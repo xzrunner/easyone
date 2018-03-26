@@ -3,11 +3,17 @@
 #include "frame/WxStagePage.h"
 #include "frame/StagePageType.h"
 
+#include <node0/typedef.h>
+
 namespace ee0 { class WxLibraryPanel; }
+namespace n0 { class NodeSharedComp; }
 
 namespace eone
 {
-namespace scale9
+
+class WxStagePage;
+
+namespace anim
 {
 
 class WxStagePage : public eone::WxStagePage
@@ -20,25 +26,21 @@ public:
 	virtual void Traverse(std::function<bool(const n0::SceneNodePtr&)> func,
 		const ee0::VariantSet& variants = ee0::VariantSet(), bool inverse = false) const override;
 
-	virtual int GetPageType() const override { return PAGE_SCALE9; }
+	virtual int GetPageType() const override { return PAGE_SCENE2D; }
 
 protected:
 	virtual const n0::NodeSharedComp& GetEditedNodeComp() const override;
 
-	virtual void LoadFromJsonExt(const std::string& dir, const rapidjson::Value& val);
+	virtual void StoreToJsonExt(const std::string& dir, rapidjson::Value& val,
+		rapidjson::MemoryPoolAllocator<>& alloc) const;
 
 private:
-	void InsertSceneNode(const ee0::VariantSet& variants);
-	void DeleteSceneNode(const ee0::VariantSet& variants);
-	void ClearSceneNode();
+	bool InsertSceneNode(const ee0::VariantSet& variants);
+	bool DeleteSceneNode(const ee0::VariantSet& variants);
+	bool ClearSceneNode();
+	bool ReorderSceneNode(const ee0::VariantSet& variants);
 
 	void StagePageOnShow();
-	
-private:
-	// 6 7 8
-	// 3 4 5
-	// 0 1 2
-	n0::SceneNodePtr m_grids[9];
 
 }; // WxStagePage
 

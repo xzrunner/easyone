@@ -1,5 +1,9 @@
 #include "mask/WxStagePage.h"
 
+#include "frame/Blackboard.h"
+#include "frame/Application.h"
+#include "frame/typedef.h"
+
 #include <ee0/SubjectMgr.h>
 #include <ee2/WxStageDropTarget.h>
 
@@ -24,7 +28,7 @@ WxStagePage::WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, const n
 	}
 }
 
-void WxStagePage::OnNotify(ee0::MessageID msg, const ee0::VariantSet& variants)
+void WxStagePage::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
 {
 	eone::WxStagePage::OnNotify(msg, variants);
 
@@ -38,6 +42,10 @@ void WxStagePage::OnNotify(ee0::MessageID msg, const ee0::VariantSet& variants)
 		break;
 	case ee0::MSG_CLEAR_SCENE_NODE:
 		ClearSceneNode();
+		break;
+
+	case ee0::MSG_STAGE_PAGE_ON_SHOW:
+		StagePageOnShow();
 		break;
 	}
 }
@@ -107,6 +115,14 @@ void WxStagePage::ClearSceneNode()
 	cmask.SetMaskNode(nullptr);
 
 	m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
+}
+
+void WxStagePage::StagePageOnShow()
+{
+	auto& ui_mgr = Blackboard::Instance()->GetApp()->GetUIManager();
+	ui_mgr.GetPane(STR_PREVIEW_PANEL).Show();
+	ui_mgr.GetPane(STR_STAGE_EXT_PANEL).Hide();
+	ui_mgr.Update();
 }
 
 }

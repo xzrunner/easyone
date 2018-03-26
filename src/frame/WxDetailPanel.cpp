@@ -71,7 +71,7 @@ WxDetailPanel::WxDetailPanel(wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr
 	InitComponents();
 }
 
-void WxDetailPanel::OnNotify(ee0::MessageID msg, const ee0::VariantSet& variants)
+void WxDetailPanel::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
 {
 	switch (msg)
 	{

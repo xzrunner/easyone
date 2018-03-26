@@ -28,7 +28,7 @@ WxPreviewCanvas::WxPreviewCanvas(WxPreviewPanel* stage, const ee0::RenderContext
 	RegisterMsg(*stage->GetSubjectMgr());
 }
 
-void WxPreviewCanvas::OnNotify(ee0::MessageID msg, const ee0::VariantSet& variants)
+void WxPreviewCanvas::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
 {
 	switch (msg)
 	{

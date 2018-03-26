@@ -40,6 +40,21 @@
     <Filter Include="20.script">
       <UniqueIdentifier>{e5403ed2-e587-4720-82ab-24d87ef5a467}</UniqueIdentifier>
     </Filter>
+    <Filter Include="00.frame\stage_ext">
+      <UniqueIdentifier>{150b3615-65f9-4f0e-91a4-3a5348147615}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="12.anim">
+      <UniqueIdentifier>{ef791827-85c5-499e-90fb-91382d36370b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="12.anim\timeline">
+      <UniqueIdentifier>{e0ff4de6-8556-4db8-8309-6693ff89ac62}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="12.anim\timeline\left">
+      <UniqueIdentifier>{b17d2df1-2cda-42c2-a69d-9dfb17da29b7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="12.anim\timeline\right">
+      <UniqueIdentifier>{cd790c51-5174-451e-bdad-be7e489e945f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\frame\main.h">
@@ -135,6 +150,45 @@
     <ClInclude Include="..\..\..\src\script\WxStageCanvas.h">
       <Filter>20.script</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\anim\WxStagePage.h">
+      <Filter>12.anim</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\anim\WxTimelinePanel.h">
+      <Filter>12.anim\timeline</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\anim\WxLayersToolbar.h">
+      <Filter>12.anim\timeline\left</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\anim\WxTimeScaleCtrl.h">
+      <Filter>12.anim\timeline\right</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\anim\WxTimeStagePanel.h">
+      <Filter>12.anim\timeline\right</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\anim\WxLayersPanel.h">
+      <Filter>12.anim\timeline\left</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\frame\WxStageExtPanel.h">
+      <Filter>00.frame\stage_ext</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\frame\typedef.h">
+      <Filter>00.frame\frame</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\anim\TimeStageEdit.h">
+      <Filter>12.anim\timeline\right</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\anim\MessageID.h">
+      <Filter>12.anim\timeline</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\anim\MessageHelper.h">
+      <Filter>12.anim\timeline</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\anim\config.h">
+      <Filter>12.anim\timeline</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\anim\LayerHelper.h">
+      <Filter>12.anim\timeline</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\frame\main.cpp">
@@ -223,6 +277,36 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\script\WxStageCanvas.cpp">
       <Filter>20.script</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\anim\WxStagePage.cpp">
+      <Filter>12.anim</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\anim\WxTimelinePanel.cpp">
+      <Filter>12.anim\timeline</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\anim\WxLayersToolbar.cpp">
+      <Filter>12.anim\timeline\left</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\anim\WxTimeScaleCtrl.cpp">
+      <Filter>12.anim\timeline\right</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\anim\WxTimeStagePanel.cpp">
+      <Filter>12.anim\timeline\right</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\anim\WxLayersPanel.cpp">
+      <Filter>12.anim\timeline\left</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\frame\WxStageExtPanel.cpp">
+      <Filter>00.frame\stage_ext</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\anim\TimeStageEdit.cpp">
+      <Filter>12.anim\timeline\right</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\anim\MessageHelper.cpp">
+      <Filter>12.anim\timeline</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\anim\LayerHelper.cpp">
+      <Filter>12.anim\timeline</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

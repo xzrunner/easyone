@@ -32,7 +32,7 @@ void WxStageCanvas::ScriptLoad()
 	m_script.OnLoad();
 }
 
-void WxStageCanvas::OnNotify(ee0::MessageID msg, const ee0::VariantSet& variants)
+void WxStageCanvas::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
 {
 	BindMoonCtx();
 

@@ -29,6 +29,8 @@ public:
 
 	WxStagePanel* GetStagePanel() { return m_stage; }
 
+	wxAuiManager& GetUIManager() { return m_mgr; }
+
 private:
 	void InitSubmodule();
 	void InitLayout();
@@ -36,6 +38,7 @@ private:
 
 	wxWindow* CreateLibraryPanel();
 	wxWindow* CreateStagePanel();
+	wxWindow* CreateStageExtPanel();
 	wxWindow* CreatePreviewPanel();
 	wxWindow* CreateTreePanel();
 	wxWindow* CreateDetailPanel();

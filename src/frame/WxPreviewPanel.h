@@ -16,7 +16,7 @@ public:
 	WxPreviewPanel(wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr, 
 		WxStagePage* stage);
 
-	virtual void OnNotify(ee0::MessageID msg, const ee0::VariantSet& variants) override;
+	virtual void OnNotify(uint32_t msg, const ee0::VariantSet& variants) override;
 
 	const ee0::SubjectMgrPtr& GetSubjectMgr() const { return m_sub_mgr; }
 

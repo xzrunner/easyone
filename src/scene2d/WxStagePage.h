@@ -21,7 +21,7 @@ class WxStagePage : public eone::WxStagePage
 public:
 	WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, const n0::SceneNodePtr& node);
 
-	virtual void OnNotify(ee0::MessageID msg, const ee0::VariantSet& variants) override;
+	virtual void OnNotify(uint32_t msg, const ee0::VariantSet& variants) override;
 
 	virtual void Traverse(std::function<bool(const n0::SceneNodePtr&)> func,
 		const ee0::VariantSet& variants = ee0::VariantSet(), bool inverse = false) const override;
@@ -39,6 +39,8 @@ private:
 	bool DeleteSceneNode(const ee0::VariantSet& variants);
 	bool ClearSceneNode();
 	bool ReorderSceneNode(const ee0::VariantSet& variants);
+
+	void StagePageOnShow();
 
 }; // WxStagePage
 

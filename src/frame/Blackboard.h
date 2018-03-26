@@ -17,6 +17,7 @@ namespace eone
 
 class Application;
 class WxStagePanel;
+class WxStageExtPanel;
 class WxPreviewPanel;
 
 class Blackboard
@@ -34,6 +35,9 @@ public:
 	void SetStagePanel(WxStagePanel* stage) { m_stage = stage; }
 	WxStagePanel* GetStagePanel() { return m_stage; }
 
+	void SetStageExtPanel(WxStageExtPanel* stage_ext) { m_stage_ext = stage_ext; }
+	WxStageExtPanel* GetStageExtPanel() { return m_stage_ext; }
+
 	void SetPreviewPanel(WxPreviewPanel* preview) { m_preview = preview; }
 	WxPreviewPanel* GetPreviewPanel() { return m_preview; }
 
@@ -46,6 +50,7 @@ private:
 
 	ee0::WxLibraryPanel* m_library;
 	WxStagePanel*        m_stage;
+	WxStageExtPanel*     m_stage_ext;
 	WxPreviewPanel*      m_preview;
 
 	wxGLCanvas* m_dummy_canvas;

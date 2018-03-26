@@ -18,7 +18,7 @@ public:
 	WxStageCanvas(eone::WxStagePage* stage,
 		const ee0::RenderContext& rc, const std::string& filepath);
 
-	virtual void OnNotify(ee0::MessageID msg, const ee0::VariantSet& variants) override;
+	virtual void OnNotify(uint32_t msg, const ee0::VariantSet& variants) override;
 
 	void ScriptLoad();
 

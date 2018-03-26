@@ -23,7 +23,7 @@ WxStagePage::WxStagePage(wxWindow* parent, const n0::SceneNodePtr& node)
 	m_sub_mgr->RegisterObserver(ee0::MSG_STAGE_PAGE_ON_SHOW, this);
 }
 
-void WxStagePage::OnNotify(ee0::MessageID msg, const ee0::VariantSet& variants)
+void WxStagePage::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
 {
 	ee0::WxStagePage::OnNotify(msg, variants);
 

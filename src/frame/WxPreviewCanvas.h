@@ -16,7 +16,7 @@ class WxPreviewCanvas : public ee0::WxStageCanvas, public ee0::Observer
 public:
 	WxPreviewCanvas(WxPreviewPanel* stage, const ee0::RenderContext& rc);
 
-	virtual void OnNotify(ee0::MessageID msg, const ee0::VariantSet& variants) override;
+	virtual void OnNotify(uint32_t msg, const ee0::VariantSet& variants) override;
 
 	void RegisterMsg(ee0::SubjectMgr& sub_mgr);
 
