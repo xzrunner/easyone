@@ -13,15 +13,15 @@ namespace anim
 {
 
 WxLayersScrolled::WxLayersScrolled(wxWindow* parent, const n2::CompAnim& canim,
-	                               const ee0::SubjectMgrPtr& sub_mgr)
+	                               const ee0::SubjectMgrPtr& tl_sub_mgr)
 	: wxScrolledWindow(parent)
 {
 	ShowScrollbars(wxSHOW_SB_NEVER, wxSHOW_SB_NEVER);
 
 	SetScrollbars(0, 1, 0, 10, 0, 0);
-	InitLayout(canim, sub_mgr);
+	InitLayout(canim, tl_sub_mgr);
 		
-	sub_mgr->RegisterObserver(MSG_WND_SCROLL, this);
+	tl_sub_mgr->RegisterObserver(MSG_WND_SCROLL, this);
 }
 
 void WxLayersScrolled::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
@@ -38,10 +38,10 @@ void WxLayersScrolled::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
 	}
 }
 
-void WxLayersScrolled::InitLayout(const n2::CompAnim& canim, const ee0::SubjectMgrPtr& sub_mgr)
+void WxLayersScrolled::InitLayout(const n2::CompAnim& canim, const ee0::SubjectMgrPtr& tl_sub_mgr)
 {
 	auto sizer = new wxBoxSizer(wxVERTICAL);
-	auto layers = new WxLayersPanel(this, canim, sub_mgr);
+	auto layers = new WxLayersPanel(this, canim, tl_sub_mgr);
 	sizer->Add(layers, 1, wxEXPAND);
 	SetSizer(sizer);
 }

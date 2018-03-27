@@ -1,13 +1,14 @@
 #include "anim/WxTimeScaleCtrl.h"
 #include "anim/config.h"
 #include "anim/MessageID.h"
-#include "anim/LayerHelper.h"
+#include "anim/AnimHelper.h"
 #include "anim/MessageHelper.h"
 
 #include <ee0/VariantSet.h>
 #include <ee0/SubjectMgr.h>
 
 #include <guard/check.h>
+#include <node2/CompAnim.h>
 
 #include <wx/dcbuffer.h>
 
@@ -31,15 +32,15 @@ BEGIN_EVENT_TABLE(WxTimeScaleCtrl, wxPanel)
 END_EVENT_TABLE()
 
 WxTimeScaleCtrl::WxTimeScaleCtrl(wxWindow* parent, const n2::CompAnim& canim,
-	                             const ee0::SubjectMgrPtr& sub_mgr)
+	                             const ee0::SubjectMgrPtr& tl_sub_mgr)
 	: wxPanel(parent, wxID_ANY, wxDefaultPosition, wxSize(1, FRAME_GRID_HEIGHT))
 	, m_canim(canim)
-	, m_sub_mgr(sub_mgr)
+	, m_tl_sub_mgr(tl_sub_mgr)
 	, m_frame_idx(0)
 	, m_start_x(0)
 {
-	sub_mgr->RegisterObserver(MSG_SET_CURR_FRAME, this);
-	sub_mgr->RegisterObserver(MSG_WND_SCROLL, this);
+	tl_sub_mgr->RegisterObserver(MSG_SET_CURR_FRAME, this);
+	tl_sub_mgr->RegisterObserver(MSG_WND_SCROLL, this);
 }
 
 void WxTimeScaleCtrl::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
@@ -105,13 +106,13 @@ void WxTimeScaleCtrl::OnMouse(wxMouseEvent& event)
 	{
 		int x = event.GetX() + m_start_x;
 		int frame = (int)(x / FRAME_GRID_WIDTH);
-		frame = std::min(LayerHelper::GetMaxFrame(m_canim), frame);
+		frame = std::min(AnimHelper::GetMaxFrame(m_canim), frame);
 		if (m_frame_idx != frame) 
 		{
 			m_frame_idx = frame;
 			Refresh(false);
 
-			MessageHelper::SetCurrFrame(*m_sub_mgr, -1, frame);
+			MessageHelper::SetCurrFrame(*m_tl_sub_mgr, -1, frame);
 		}
 	}
 }
@@ -134,12 +135,16 @@ void WxTimeScaleCtrl::OnSetCurrFrame(const ee0::VariantSet& variants)
 	}
 	else 
 	{
-		int max_frame = LayerHelper::GetMaxFrame(m_canim, layer);
+		int max_frame = AnimHelper::GetMaxFrame(m_canim, layer);
 		if (max_frame >= 0) {
 			m_frame_idx = std::min(max_frame, frame);
 		}
 	}
 	Refresh(false);
+
+	// update canim
+	// todo: should not be here
+	const_cast<n2::CompAnim&>(m_canim).SetCurrFrameIdx(m_frame_idx);
 }
 
 void WxTimeScaleCtrl::OnWndScroll(const ee0::VariantSet& variants)

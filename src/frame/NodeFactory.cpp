@@ -13,6 +13,8 @@
 #include <node2/CompSprite2.h>
 #include <node2/CompBoundingBox.h>
 #include <node2/CompTransform.h>
+#include <anim/KeyFrame.h>
+#include <anim/Layer.h>
 
 namespace eone
 {
@@ -63,12 +65,10 @@ n0::SceneNodePtr NodeFactory::Create(NodeType type)
 		{
 			sz.Build(100, 100);
 
-			auto layer = std::make_unique<n2::CompAnim::Layer>();
-			layer->name = "Layer0";
+			auto layer = std::make_unique<anim::Layer>();
+			layer->SetName("Layer0");
 
-			auto frame = std::make_unique<n2::CompAnim::Frame>();
-			frame->index = 0;
-			layer->frames.push_back(std::move(frame));
+			layer->AddKeyFrame(std::make_unique<anim::KeyFrame>(0));
 
 			auto& canim = node->AddSharedComp<n2::CompAnim>();
 			canim.AddLayer(layer);

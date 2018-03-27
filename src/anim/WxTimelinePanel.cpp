@@ -15,17 +15,19 @@ namespace eone
 namespace anim
 {
 
-WxTimelinePanel::WxTimelinePanel(wxWindow* parent, n2::CompAnim& canim)
+WxTimelinePanel::WxTimelinePanel(wxWindow* parent, n2::CompAnim& canim,
+	                             const ee0::SubjectMgrPtr& sub_mgr)
 	: wxPanel(parent)
 {
 	m_tl_sub_mgr = std::make_shared<ee0::SubjectMgr>();
 
-	InitLayout(canim);
+	InitLayout(canim, sub_mgr);
 
 	MessageHelper::SetCurrFrame(*m_tl_sub_mgr, 0, 0);
 }
 
-void WxTimelinePanel::InitLayout(n2::CompAnim& canim)
+void WxTimelinePanel::InitLayout(n2::CompAnim& canim,
+	                             const ee0::SubjectMgrPtr& sub_mgr)
 {
 	wxSplitterWindow* splitter = new wxSplitterWindow(this, wxID_ANY);
 
@@ -40,7 +42,7 @@ void WxTimelinePanel::InitLayout(n2::CompAnim& canim)
 	{
 		wxSizer* sizer = new wxBoxSizer(wxVERTICAL);
 		sizer->Add(new WxTimeScaleCtrl(right_panel, canim, m_tl_sub_mgr), 0, wxEXPAND);
-		sizer->Add(new WxTimeStageScrolled(right_panel, canim, m_tl_sub_mgr), 99, wxEXPAND);
+		sizer->Add(new WxTimeStageScrolled(right_panel, canim, sub_mgr, m_tl_sub_mgr), 99, wxEXPAND);
 		right_panel->SetSizer(sizer);
 	}
 	splitter->SetSashGravity(0.1f);

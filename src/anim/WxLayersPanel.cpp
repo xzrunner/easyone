@@ -8,6 +8,8 @@
 
 #include <guard/check.h>
 #include <node2/CompAnim.h>
+#include <anim/Layer.h>
+#include <anim/KeyFrame.h>
 
 #include <wx/dcclient.h>
 #include <wx/dialog.h>
@@ -78,17 +80,17 @@ BEGIN_EVENT_TABLE(WxLayersPanel, wxPanel)
 END_EVENT_TABLE()
 
 WxLayersPanel::WxLayersPanel(wxWindow* parent, const n2::CompAnim& canim,
-	                         const ee0::SubjectMgrPtr& sub_mgr)
+	                         const ee0::SubjectMgrPtr& tl_sub_mgr)
 	: wxPanel(parent, wxID_ANY, wxDefaultPosition, wxSize(1, 999))
 	, m_canim(canim)
-	, m_sub_mgr(sub_mgr)
+	, m_tl_sub_mgr(tl_sub_mgr)
 	, m_drag_flag_line(-1)
 	, m_curr_layer(-1)
 	, m_is_drag_open(false)
 	, m_xpress(0)
 	, m_ypress(0)
 {
-	m_sub_mgr->RegisterObserver(MSG_SET_CURR_FRAME, this);
+	m_tl_sub_mgr->RegisterObserver(MSG_SET_CURR_FRAME, this);
 }
 
 void WxLayersPanel::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
@@ -162,17 +164,17 @@ void WxLayersPanel::OnPaint(wxPaintEvent& event)
 	{
 		size_t idx = size - i - 1;
 		auto& layer = layers[idx];
-		dc.DrawText(layer->name, 5, FRAME_GRID_HEIGHT * i);
+		dc.DrawText(layer->GetName(), 5, FRAME_GRID_HEIGHT * i);
 
 		dc.SetPen(*wxBLACK_PEN);
-		if (layer->editable) {
+		if (layer->IsEditable()) {
 			dc.SetBrush(*wxBLACK_BRUSH);
 		} else {
 			dc.SetBrush(*wxWHITE_BRUSH);
 		}
 		dc.DrawRectangle(FLAG_EDITABLE_X, FRAME_GRID_HEIGHT * i + (FRAME_GRID_HEIGHT - FLAG_RADIUS*2) * 0.5, FLAG_RADIUS*2, FLAG_RADIUS*2);
 
-		if (layer->visible) {
+		if (layer->IsVisible()) {
 			dc.SetBrush(*wxBLACK_BRUSH);
 		} else {
 			dc.SetBrush(*wxWHITE_BRUSH);
@@ -199,7 +201,7 @@ void WxLayersPanel::OnMouse(wxMouseEvent& event)
 		int layer = size - screen_idx - 1;
 		if (layer >= 0) 
 		{
-			MessageHelper::SetCurrFrame(*m_sub_mgr, layer, -1);
+			MessageHelper::SetCurrFrame(*m_tl_sub_mgr, layer, -1);
 			if (screen_idx < size) {
 				m_is_drag_open = true;
 			}
@@ -211,18 +213,18 @@ void WxLayersPanel::OnMouse(wxMouseEvent& event)
 		{
 			unsigned int screen_idx = event.GetY() / FRAME_GRID_HEIGHT;
 			int layer_idx = size - screen_idx - 1;
-			if (layer_idx >= 0 && layer_idx < layers.size())
+			if (layer_idx >= 0 && static_cast<size_t>(layer_idx) < layers.size())
 			{
 				int x = event.GetX();
 				auto& layer = layers[layer_idx];
 				if (layer && x > FLAG_EDITABLE_X && x < FLAG_EDITABLE_X + FLAG_RADIUS * 2)
 				{
-					layer->editable = !layer->editable;
+					layer->SetEditable(!layer->IsEditable());
 					Refresh(true);
 				}
 				else if (layer && x > FLAG_VISIBLE_X - FLAG_RADIUS && x < FLAG_VISIBLE_X + FLAG_RADIUS)
 				{
-					layer->visible = !layer->visible;
+					layer->SetVisible(!layer->IsVisible());
 					Refresh(true);
 				}
 			}
@@ -239,7 +241,7 @@ void WxLayersPanel::OnMouse(wxMouseEvent& event)
 			{
 				if (to > from) --to;
 				const_cast<n2::CompAnim&>(m_canim).SwapLayers(from, to);
-				MessageHelper::SetCurrFrame(*m_sub_mgr, to, -1);
+				MessageHelper::SetCurrFrame(*m_tl_sub_mgr, to, -1);
 			}
 		}
 		m_drag_flag_line = -1;
@@ -251,7 +253,7 @@ void WxLayersPanel::OnMouse(wxMouseEvent& event)
 			int newDragLine = m_drag_flag_line;
 			int y = event.GetY();
 			if (y < 0) newDragLine = 0;
-			else if (y > FRAME_GRID_HEIGHT * size) newDragLine = size;
+			else if (static_cast<size_t>(y) > FRAME_GRID_HEIGHT * size) newDragLine = size;
 			else newDragLine = (float)y / FRAME_GRID_HEIGHT + 0.5f;
 			if (newDragLine != m_drag_flag_line) 
 			{
@@ -264,14 +266,14 @@ void WxLayersPanel::OnMouse(wxMouseEvent& event)
 	{
 		int screen_idx = event.GetY() / FRAME_GRID_HEIGHT;
 		int layer_idx = size - screen_idx - 1;
-		if (layer_idx < size)
+		if (static_cast<size_t>(layer_idx) < size)
 		{
 			auto& layer = layers[layer_idx];
 			wxPoint pos(GetScreenPosition() + wxPoint(event.GetX(), event.GetY()));
-			SetValueDialog dlg(this, "Set layer's name", layer->name, pos);
+			SetValueDialog dlg(this, "Set layer's name", layer->GetName(), pos);
 			if (dlg.ShowModal() == wxID_OK)
 			{
-				layer->name = dlg.GetText();
+				layer->SetName(dlg.GetText());
 				Refresh(true);
 			}
 		}

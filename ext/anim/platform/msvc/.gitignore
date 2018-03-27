@@ -1,0 +1,5 @@
+anim/
+projects/*
+
+!projects/anim.vcxproj
+!projects/anim.vcxproj.filters

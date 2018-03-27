@@ -5,8 +5,6 @@
 
 #include <ee0/Observer.h>
 
-#include <node2/CompAnim.h>
-
 #include <wx/panel.h>
 
 namespace ee0 { class VariantSet; }
@@ -22,7 +20,7 @@ class WxTimeStagePanel : public wxPanel, public ee0::Observer
 {
 public:
 	WxTimeStagePanel(wxWindow* parent, const n2::CompAnim& canim,
-		const ee0::SubjectMgrPtr& sub_mgr);
+		const ee0::SubjectMgrPtr& sub_mgr, const ee0::SubjectMgrPtr& tl_sub_mgr);
 
 	virtual void OnNotify(uint32_t msg, const ee0::VariantSet& variants) override;
 
@@ -38,6 +36,11 @@ private:
 	void DrawLayersDataFlag(wxBufferedPaintDC& dc);
 	void DrawCurrPosFlag(wxBufferedPaintDC& dc);
 	void DrawSelected(wxBufferedPaintDC& dc);
+
+	bool InsertSceneNode(const ee0::VariantSet& variants);
+	bool DeleteSceneNode(const ee0::VariantSet& variants);
+	bool ClearSceneNode();
+	bool ReorderSceneNode(const ee0::VariantSet& variants);
 
 	void OnSetCurrFrame(const ee0::VariantSet& variants);
 	void OnSetSelectedRegion(const ee0::VariantSet& variants);
@@ -65,9 +68,6 @@ private:
 	void OnInsertFrame();
 	void OnDeleteFrame();
 
-	n2::CompAnim::Layer* GetCurrLayer() const;
-	n2::CompAnim::Frame* GetCurrFrame() const;
-
 private:
 	enum
 	{
@@ -87,6 +87,7 @@ private:
 private:
 	const n2::CompAnim& m_canim;
 	ee0::SubjectMgrPtr  m_sub_mgr;
+	ee0::SubjectMgrPtr  m_tl_sub_mgr;
 
 	TimeStageEdit m_editop;
 

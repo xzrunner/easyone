@@ -3,6 +3,8 @@
 #include "anim/MessageHelper.h"
 
 #include <node2/CompAnim.h>
+#include <anim/KeyFrame.h>
+#include <anim/Layer.h>
 
 #include <wx/sizer.h>
 #include <wx/button.h>
@@ -13,10 +15,10 @@ namespace anim
 {
 
 WxLayersToolbar::WxLayersToolbar(wxWindow* parent, n2::CompAnim& canim,
-	                             const ee0::SubjectMgrPtr& sub_mgr)
+	                             const ee0::SubjectMgrPtr& tl_sub_mgr)
 	: wxPanel(parent)
 	, m_canim(canim)
-	, m_sub_mgr(sub_mgr)
+	, m_tl_sub_mgr(tl_sub_mgr)
 {
 	SetBackgroundColour(MEDIUM_GRAY);
 
@@ -44,16 +46,14 @@ void WxLayersToolbar::OnAddLayer(wxCommandEvent& event)
 {
 	int count = m_canim.GetAllLayers().size();
 
-	auto layer = std::make_unique<n2::CompAnim::Layer>();
-	layer->name = "Layer" + std::to_string(count);
+	auto layer = std::make_unique<::anim::Layer>();
+	layer->SetName("Layer" + std::to_string(count));
 
-	auto frame = std::make_unique<n2::CompAnim::Frame>();
-	frame->index = 0;
-	layer->frames.push_back(std::move(frame));
+	layer->AddKeyFrame(std::make_unique<::anim::KeyFrame>(0));
 
 	m_canim.AddLayer(layer);
 
-	MessageHelper::SetCurrFrame(*m_sub_mgr, count, 0);
+	MessageHelper::SetCurrFrame(*m_tl_sub_mgr, count, 0);
 }
 
 void WxLayersToolbar::OnDelLayer(wxCommandEvent& event)

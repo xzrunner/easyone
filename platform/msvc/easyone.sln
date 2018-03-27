@@ -127,6 +127,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "1.nserializer", "..\..\ext\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "4.moon", "..\..\ext\moon\platform\msvc\projects\moon.vcxproj", "{9FB05942-DCAE-4A6F-8F99-86E20DE9DFCC}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3.anim", "..\..\ext\anim\platform\msvc\projects\anim.vcxproj", "{8F1C8DB8-6B46-40C8-9ACF-E6AD237E47D4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -327,6 +329,10 @@ Global
 		{9FB05942-DCAE-4A6F-8F99-86E20DE9DFCC}.Debug|Win32.Build.0 = Debug|Win32
 		{9FB05942-DCAE-4A6F-8F99-86E20DE9DFCC}.Release|Win32.ActiveCfg = Release|Win32
 		{9FB05942-DCAE-4A6F-8F99-86E20DE9DFCC}.Release|Win32.Build.0 = Release|Win32
+		{8F1C8DB8-6B46-40C8-9ACF-E6AD237E47D4}.Debug|Win32.ActiveCfg = Debug|Win32
+		{8F1C8DB8-6B46-40C8-9ACF-E6AD237E47D4}.Debug|Win32.Build.0 = Debug|Win32
+		{8F1C8DB8-6B46-40C8-9ACF-E6AD237E47D4}.Release|Win32.ActiveCfg = Release|Win32
+		{8F1C8DB8-6B46-40C8-9ACF-E6AD237E47D4}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -384,6 +390,7 @@ Global
 		{B7C12803-3075-4188-84D5-5DB12B60691B} = {C39783B3-85DA-4D10-AFD0-16D546F5F3D7}
 		{8B91994C-018B-4664-B615-A1EAC669CA5C} = {B7C12803-3075-4188-84D5-5DB12B60691B}
 		{9FB05942-DCAE-4A6F-8F99-86E20DE9DFCC} = {ABB353A2-7879-4D9F-AF21-31A83E1B9D14}
+		{8F1C8DB8-6B46-40C8-9ACF-E6AD237E47D4} = {55D85D01-599C-4F78-A116-BDBAEAF0D939}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8D54C01A-3C82-4351-A325-2853C3E81322}

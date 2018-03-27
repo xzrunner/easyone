@@ -122,7 +122,7 @@ void WxStagePage::StagePageOnShow()
 		sizer = new wxBoxSizer(wxVERTICAL);
 	}
 	auto& canim = m_node->GetSharedComp<n2::CompAnim>();
-	sizer->Add(new WxTimelinePanel(panel, canim), 0, wxEXPAND);
+	sizer->Add(new WxTimelinePanel(panel, canim, m_sub_mgr), 0, wxEXPAND);
 	panel->SetSizer(sizer);
 }
 

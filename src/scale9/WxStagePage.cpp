@@ -30,7 +30,6 @@ WxStagePage::WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, const n
 	m_sub_mgr->RegisterObserver(ee0::MSG_INSERT_SCENE_NODE, this);
 	m_sub_mgr->RegisterObserver(ee0::MSG_DELETE_SCENE_NODE, this);
 	m_sub_mgr->RegisterObserver(ee0::MSG_CLEAR_SCENE_NODE, this);
-	m_sub_mgr->RegisterObserver(ee0::MSG_STAGE_PAGE_ON_SHOW, this);
 
 	if (library) {
 		SetDropTarget(new ee2::WxStageDropTarget(library, this));
