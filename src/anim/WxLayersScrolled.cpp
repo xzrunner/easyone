@@ -12,7 +12,7 @@ namespace
 
 const uint32_t MESSAGES[] =
 {
-	eone::anim::MSG_SET_CURR_FRAME,
+	eone::anim::MSG_WND_SCROLL,
 };
 
 }

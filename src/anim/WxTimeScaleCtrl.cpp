@@ -22,7 +22,7 @@ const uint32_t MESSAGES[] =
 {
 	ee0::MSG_UPDATE_NODES,
 	eone::anim::MSG_SET_CURR_FRAME,
-	eone::anim::MSG_SET_SELECTED_REGION,
+	eone::anim::MSG_WND_SCROLL,
 };
 
 }
