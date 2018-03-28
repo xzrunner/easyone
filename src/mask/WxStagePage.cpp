@@ -50,12 +50,20 @@ void WxStagePage::Traverse(std::function<bool(const n0::SceneNodePtr&)> func,
 	                       const ee0::VariantSet& variants,
 	                       bool inverse) const
 {
-	auto var = variants.GetVariant("preview");
+	auto var = variants.GetVariant("type");
 	if (var.m_type == ee0::VT_EMPTY) {
-		auto& cmask = m_node->GetSharedComp<n2::CompMask>();
-		cmask.Traverse(func);
-	} else {
+		m_node->GetSharedComp<n2::CompMask>().Traverse(func, inverse);
+		return;
+	}
+
+	GD_ASSERT(var.m_type == ee0::VT_LONG, "err type");
+	switch (var.m_val.l)
+	{
+	case TRAV_DRAW_PREVIEW:
 		func(m_node);
+		break;
+	default:
+		m_node->GetSharedComp<n2::CompMask>().Traverse(func, inverse);
 	}
 }
 

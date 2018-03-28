@@ -34,6 +34,8 @@ private:
 	void DeleteSceneNode(const ee0::VariantSet& variants);
 	void ClearSceneNode();
 	
+	void TraverseGrids(std::function<bool(const n0::SceneNodePtr&)> func) const;
+
 private:
 	// 6 7 8
 	// 3 4 5

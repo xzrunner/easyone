@@ -61,9 +61,9 @@ void WxPreviewCanvas::OnDrawSprites() const
 
 	ee0::VariantSet vars;
 	ee0::Variant var;
-	var.m_type = ee0::VT_BOOL;
-	var.m_val.bl = true;
-	vars.SetVariant("preview", var);
+	var.m_type = ee0::VT_LONG;
+	var.m_val.l = WxStagePage::TRAV_DRAW_PREVIEW;
+	vars.SetVariant("type", var);
 
 	n2::RenderParams rp;
 	rp.SetEditMode(false);

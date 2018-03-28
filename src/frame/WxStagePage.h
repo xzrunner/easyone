@@ -23,6 +23,12 @@ public:
 	};
 
 public:
+	enum TraverseType
+	{
+		TRAV_DRAW_PREVIEW = 1000,
+	};
+
+public:
 	WxStagePage(wxWindow* parent, const n0::SceneNodePtr& node, SubWndType sub_wnd_type);
 
 	virtual void OnNotify(uint32_t msg, const ee0::VariantSet& variants) override;

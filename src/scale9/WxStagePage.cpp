@@ -58,18 +58,20 @@ void WxStagePage::Traverse(std::function<bool(const n0::SceneNodePtr&)> func,
 	                       const ee0::VariantSet& variants,
 	                       bool inverse) const
 {
-	auto var = variants.GetVariant("preview");
-	if (var.m_type == ee0::VT_EMPTY) 
+	auto var = variants.GetVariant("type");
+	if (var.m_type == ee0::VT_EMPTY) {
+		TraverseGrids(func);
+		return;
+	}
+
+	GD_ASSERT(var.m_type == ee0::VT_LONG, "err type");
+	switch (var.m_val.l)
 	{
-		for (int i = 0; i < 9; ++i) {
-			if (m_grids[i]) {
-				func(m_grids[i]);
-			}
-		}
-	} 
-	else 
-	{
+	case TRAV_DRAW_PREVIEW:
 		func(m_node);
+		break;
+	default:
+		TraverseGrids(func);
 	}
 }
 
@@ -178,6 +180,15 @@ void WxStagePage::ClearSceneNode()
 	cscale9.Build(n2::CompScale9::S9_NULL, cscale9.GetWidth(), cscale9.GetHeight(), m_grids, 0, 0, 0, 0);
 
 	m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
+}
+
+void WxStagePage::TraverseGrids(std::function<bool(const n0::SceneNodePtr&)> func) const
+{
+	for (int i = 0; i < 9; ++i) {
+		if (m_grids[i]) {
+			func(m_grids[i]);
+		}
+	}
 }
 
 }
