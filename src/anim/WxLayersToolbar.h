@@ -15,7 +15,7 @@ class WxLayersToolbar : public wxPanel
 {
 public:
 	WxLayersToolbar(wxWindow* parent, n2::CompAnim& canim,
-		const ee0::SubjectMgrPtr& tl_sub_mgr);
+		const ee0::SubjectMgrPtr& sub_mgr);
 
 private:
 	void InitLayout();
@@ -25,7 +25,7 @@ private:
 
 private:
 	n2::CompAnim&      m_canim;
-	ee0::SubjectMgrPtr m_tl_sub_mgr;
+	ee0::SubjectMgrPtr m_sub_mgr;
 
 }; // WxLayersToolbar
 

@@ -17,10 +17,9 @@ BEGIN_EVENT_TABLE(WxTimeStageScrolled, wxScrolledWindow)
 END_EVENT_TABLE()
 
 WxTimeStageScrolled::WxTimeStageScrolled(wxWindow* parent, const n2::CompAnim& canim, 
-	                                     const ee0::SubjectMgrPtr& sub_mgr,
-	                                     const ee0::SubjectMgrPtr& tl_sub_mgr)
+	                                     const ee0::SubjectMgrPtr& sub_mgr)
 	: wxScrolledWindow(parent)
-	, m_tl_sub_mgr(tl_sub_mgr)
+	, m_sub_mgr(sub_mgr)
 {
 	SetScrollbars(1, 1, 20, 10, 0, 0);
 	InitLayout(canim, sub_mgr);
@@ -30,7 +29,7 @@ void WxTimeStageScrolled::InitLayout(const n2::CompAnim& canim,
 	                                 const ee0::SubjectMgrPtr& sub_mgr)
 {
 	auto sizer = new wxBoxSizer(wxVERTICAL);
-	auto layers = new WxTimeStagePanel(this, canim, sub_mgr, m_tl_sub_mgr);
+	auto layers = new WxTimeStagePanel(this, canim, sub_mgr);
 	sizer->Add(layers, 1, wxEXPAND);
 	SetSizer(sizer);
 }
@@ -51,7 +50,7 @@ void WxTimeStageScrolled::OnScroll(wxScrollWinEvent& event)
 	var_y.m_val.l = pos.y;
 	vars.SetVariant("y", var_y);
 
-	m_tl_sub_mgr->NotifyObservers(MSG_WND_SCROLL, vars);
+	m_sub_mgr->NotifyObservers(MSG_WND_SCROLL, vars);
 
 	event.Skip();
 }

@@ -1,5 +1,7 @@
 #include "anim/KeyFrame.h"
 
+#include <node0/SceneNode.h>
+
 namespace anim
 {
 
@@ -7,6 +9,16 @@ KeyFrame::KeyFrame(int frame_idx)
 	: m_frame_idx(frame_idx)
 	, m_tween(false)
 {
+}
+
+KeyFrame::KeyFrame(const KeyFrame& frame)
+	: m_frame_idx(frame.m_frame_idx)
+	, m_tween(frame.m_tween)
+{
+	m_nodes.reserve(frame.m_nodes.size());
+	for (auto& node : frame.m_nodes) {
+		m_nodes.push_back(node->Clone());
+	}
 }
 
 void KeyFrame::AddNode(const std::shared_ptr<n0::SceneNode>& node)

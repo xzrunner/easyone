@@ -23,6 +23,8 @@ public:
 	virtual int GetPageType() const override { return PAGE_SCALE9; }
 
 protected:
+	virtual void OnPageInit();
+
 	virtual const n0::NodeSharedComp& GetEditedNodeComp() const override;
 
 	virtual void LoadFromJsonExt(const std::string& dir, const rapidjson::Value& val);
@@ -31,8 +33,6 @@ private:
 	void InsertSceneNode(const ee0::VariantSet& variants);
 	void DeleteSceneNode(const ee0::VariantSet& variants);
 	void ClearSceneNode();
-
-	void StagePageOnShow();
 	
 private:
 	// 6 7 8

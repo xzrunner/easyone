@@ -24,6 +24,17 @@ const int KEY_FRAME_RECT_Y_OFFSET   = KEY_FRAME_CIRCLE_Y_OFFSET + 1;
 const int FRAME_END_RECT_WIDTH      = KEY_FRAME_CIRCLE_RADIUS * 2;
 const int FRAME_END_RECT_HEIGHT     = KEY_FRAME_CIRCLE_RADIUS * 3;
 
+const uint32_t MESSAGES[] = 
+{
+	ee0::MSG_INSERT_SCENE_NODE,
+	ee0::MSG_DELETE_SCENE_NODE,
+	ee0::MSG_CLEAR_SCENE_NODE,
+	ee0::MSG_REORDER_SCENE_NODE,
+
+	eone::anim::MSG_SET_CURR_FRAME,
+	eone::anim::MSG_SET_SELECTED_REGION,
+};
+
 }
 
 namespace eone
@@ -64,24 +75,25 @@ LanguageEntry WxTimeStagePanel::entries[] =
 };
 
 WxTimeStagePanel::WxTimeStagePanel(wxWindow* parent, const n2::CompAnim& canim,
-	                               const ee0::SubjectMgrPtr& sub_mgr,
-	                               const ee0::SubjectMgrPtr& tl_sub_mgr)
+	                               const ee0::SubjectMgrPtr& sub_mgr)
 	: wxPanel(parent, wxID_ANY, wxDefaultPosition, wxSize(5000, 999))
 	, m_canim(canim)
 	, m_sub_mgr(sub_mgr)
-	, m_tl_sub_mgr(tl_sub_mgr)
-	, m_editop(canim, tl_sub_mgr)
+	, m_editop(canim, sub_mgr)
 {
 	m_layer_idx = m_frame_idx = m_valid_frame_idx = -1;
 	m_col_min = m_col_max = -1;
 
-	m_sub_mgr->RegisterObserver(ee0::MSG_INSERT_SCENE_NODE, this);
-	m_sub_mgr->RegisterObserver(ee0::MSG_DELETE_SCENE_NODE, this);
-	m_sub_mgr->RegisterObserver(ee0::MSG_CLEAR_SCENE_NODE, this);
-	m_sub_mgr->RegisterObserver(ee0::MSG_REORDER_SCENE_NODE, this);
+	for (auto& msg : MESSAGES) {
+		m_sub_mgr->RegisterObserver(msg, this);
+	}
+}
 
-	m_tl_sub_mgr->RegisterObserver(MSG_SET_CURR_FRAME, this);
-	m_tl_sub_mgr->RegisterObserver(MSG_SET_SELECTED_REGION, this);
+WxTimeStagePanel::~WxTimeStagePanel()
+{
+	for (auto& msg : MESSAGES) {
+		m_sub_mgr->UnregisterObserver(msg, this);
+	}
 }
 
 void WxTimeStagePanel::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
@@ -490,7 +502,7 @@ void WxTimeStagePanel::OnSetSelectedRegion(const ee0::VariantSet& variants)
 			m_col_min = std::min(std::min(m_frame_idx, col), max_frame);
 			m_col_max = std::min(std::max(m_frame_idx, col), max_frame);
 			if (m_col_min == m_col_max) {
-				MessageHelper::SetCurrFrame(*m_tl_sub_mgr, -1, m_col_min);
+				MessageHelper::SetCurrFrame(*m_sub_mgr, -1, m_col_min);
 			}
 			Refresh(false);
 		}

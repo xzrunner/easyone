@@ -18,6 +18,12 @@ namespace
 static const int DIVISION_HEIGHT = 4;
 static const int TEXT_Y = 4;
 
+const uint32_t MESSAGES[] =
+{
+	eone::anim::MSG_SET_CURR_FRAME,
+	eone::anim::MSG_SET_SELECTED_REGION,
+};
+
 }
 
 namespace eone
@@ -32,15 +38,23 @@ BEGIN_EVENT_TABLE(WxTimeScaleCtrl, wxPanel)
 END_EVENT_TABLE()
 
 WxTimeScaleCtrl::WxTimeScaleCtrl(wxWindow* parent, const n2::CompAnim& canim,
-	                             const ee0::SubjectMgrPtr& tl_sub_mgr)
+	                             const ee0::SubjectMgrPtr& sub_mgr)
 	: wxPanel(parent, wxID_ANY, wxDefaultPosition, wxSize(1, FRAME_GRID_HEIGHT))
 	, m_canim(canim)
-	, m_tl_sub_mgr(tl_sub_mgr)
+	, m_sub_mgr(sub_mgr)
 	, m_frame_idx(0)
 	, m_start_x(0)
 {
-	tl_sub_mgr->RegisterObserver(MSG_SET_CURR_FRAME, this);
-	tl_sub_mgr->RegisterObserver(MSG_WND_SCROLL, this);
+	for (auto& msg : MESSAGES) {
+		m_sub_mgr->RegisterObserver(msg, this);
+	}
+}
+
+WxTimeScaleCtrl::~WxTimeScaleCtrl()
+{
+	for (auto& msg : MESSAGES) {
+		m_sub_mgr->UnregisterObserver(msg, this);
+	}
 }
 
 void WxTimeScaleCtrl::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
@@ -112,7 +126,7 @@ void WxTimeScaleCtrl::OnMouse(wxMouseEvent& event)
 			m_frame_idx = frame;
 			Refresh(false);
 
-			MessageHelper::SetCurrFrame(*m_tl_sub_mgr, -1, frame);
+			MessageHelper::SetCurrFrame(*m_sub_mgr, -1, frame);
 		}
 	}
 }

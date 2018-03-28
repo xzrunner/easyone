@@ -9,7 +9,7 @@ namespace eone
 namespace anim
 {
 
-void MessageHelper::SetSelectedRegion(ee0::SubjectMgr& tl_sub_mgr, int col)
+void MessageHelper::SetSelectedRegion(ee0::SubjectMgr& sub_mgr, int col)
 {
 	ee0::VariantSet vars;
 
@@ -18,10 +18,10 @@ void MessageHelper::SetSelectedRegion(ee0::SubjectMgr& tl_sub_mgr, int col)
 	var.m_val.l = col;
 	vars.SetVariant("col", var);
 
-	tl_sub_mgr.NotifyObservers(MSG_SET_SELECTED_REGION, vars);
+	sub_mgr.NotifyObservers(MSG_SET_SELECTED_REGION, vars);
 }
 
-void MessageHelper::SetCurrFrame(ee0::SubjectMgr& tl_sub_mgr,
+void MessageHelper::SetCurrFrame(ee0::SubjectMgr& sub_mgr,
 	                             int layer, int frame)
 {
 	ee0::VariantSet vars;
@@ -36,7 +36,7 @@ void MessageHelper::SetCurrFrame(ee0::SubjectMgr& tl_sub_mgr,
 	var_frame.m_val.l = frame;
 	vars.SetVariant("frame", var_frame);
 
-	tl_sub_mgr.NotifyObservers(MSG_SET_CURR_FRAME, vars);
+	sub_mgr.NotifyObservers(MSG_SET_CURR_FRAME, vars);
 }
 
 }

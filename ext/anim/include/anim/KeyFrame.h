@@ -11,6 +11,7 @@ class KeyFrame
 {
 public:
 	KeyFrame(int frame_idx);
+	KeyFrame(const KeyFrame& frame);
 
 	int  GetFrameIdx() const { return m_frame_idx; }
 	void SetFrameIdx(int frame_idx) { m_frame_idx = frame_idx; }

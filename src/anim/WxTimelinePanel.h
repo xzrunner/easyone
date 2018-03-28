@@ -21,9 +21,6 @@ private:
 	void InitLayout(n2::CompAnim& canim,
 		const ee0::SubjectMgrPtr& sub_mgr);
 
-private:
-	ee0::SubjectMgrPtr m_tl_sub_mgr = nullptr;
-
 }; // WxTimelinePanel
 
 }

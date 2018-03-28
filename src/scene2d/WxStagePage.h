@@ -40,8 +40,6 @@ private:
 	bool ClearSceneNode();
 	bool ReorderSceneNode(const ee0::VariantSet& variants);
 
-	void StagePageOnShow();
-
 }; // WxStagePage
 
 }

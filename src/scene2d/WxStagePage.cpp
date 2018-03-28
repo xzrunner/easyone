@@ -18,12 +18,12 @@ namespace scene2d
 {
 
 WxStagePage::WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, const n0::SceneNodePtr& node)
-	: eone::WxStagePage(parent, node)
+	: eone::WxStagePage(parent, node, SUB_WND_PREVIEW)
 {
-	m_sub_mgr->RegisterObserver(ee0::MSG_INSERT_SCENE_NODE, this);
-	m_sub_mgr->RegisterObserver(ee0::MSG_DELETE_SCENE_NODE, this);
-	m_sub_mgr->RegisterObserver(ee0::MSG_CLEAR_SCENE_NODE, this);
-	m_sub_mgr->RegisterObserver(ee0::MSG_REORDER_SCENE_NODE, this);
+	m_messages.push_back(ee0::MSG_INSERT_SCENE_NODE);
+	m_messages.push_back(ee0::MSG_DELETE_SCENE_NODE);
+	m_messages.push_back(ee0::MSG_CLEAR_SCENE_NODE);
+	m_messages.push_back(ee0::MSG_REORDER_SCENE_NODE);
 
 	if (library) {
 		SetDropTarget(new ee2::WxStageDropTarget(library, this));
@@ -48,10 +48,6 @@ void WxStagePage::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
 		break;
 	case ee0::MSG_REORDER_SCENE_NODE:
 		dirty = ReorderSceneNode(variants);
-		break;
-
-	case ee0::MSG_STAGE_PAGE_ON_SHOW:
-		StagePageOnShow();
 		break;
 	}
 
@@ -157,14 +153,6 @@ bool WxStagePage::ReorderSceneNode(const ee0::VariantSet& variants)
 	}
 
 	return false;
-}
-
-void WxStagePage::StagePageOnShow()
-{
-	auto& ui_mgr = Blackboard::Instance()->GetApp()->GetUIManager();
-	ui_mgr.GetPane(STR_PREVIEW_PANEL).Show();
-	ui_mgr.GetPane(STR_STAGE_EXT_PANEL).Hide();
-	ui_mgr.Update();
 }
 
 }

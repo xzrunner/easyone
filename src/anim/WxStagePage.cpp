@@ -1,5 +1,6 @@
 #include "anim/WxStagePage.h"
 #include "anim/WxTimelinePanel.h"
+#include "anim/MessageID.h"
 
 #include "frame/WxStagePage.h"
 #include "frame/Blackboard.h"
@@ -22,15 +23,15 @@ namespace anim
 {
 
 WxStagePage::WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, const n0::SceneNodePtr& node)
-	: eone::WxStagePage(parent, node)
+	: eone::WxStagePage(parent, node, SUB_WND_STAGE_EXT)
 {
-	m_sub_mgr->RegisterObserver(ee0::MSG_INSERT_SCENE_NODE, this);
-	m_sub_mgr->RegisterObserver(ee0::MSG_DELETE_SCENE_NODE, this);
-	m_sub_mgr->RegisterObserver(ee0::MSG_CLEAR_SCENE_NODE, this);
-	m_sub_mgr->RegisterObserver(ee0::MSG_REORDER_SCENE_NODE, this);
+	m_messages.push_back(ee0::MSG_INSERT_SCENE_NODE);
+	m_messages.push_back(ee0::MSG_DELETE_SCENE_NODE);
+	m_messages.push_back(ee0::MSG_CLEAR_SCENE_NODE);
+	m_messages.push_back(ee0::MSG_REORDER_SCENE_NODE);
+	m_messages.push_back(MSG_SET_CURR_FRAME);
 
-	if (library) {
-		SetDropTarget(new ee2::WxStageDropTarget(library, this));
+	if (library) {SetDropTarget(new ee2::WxStageDropTarget(library, this));
 	}
 }
 
@@ -53,9 +54,8 @@ void WxStagePage::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
 	case ee0::MSG_REORDER_SCENE_NODE:
 		dirty = ReorderSceneNode(variants);
 		break;
-
-	case ee0::MSG_STAGE_PAGE_ON_SHOW:
-		StagePageOnShow();
+	case MSG_SET_CURR_FRAME:
+		dirty = true;
 		break;
 	}
 
@@ -74,6 +74,20 @@ void WxStagePage::Traverse(std::function<bool(const n0::SceneNodePtr&)> func,
 	} else {
 		func(m_node);
 	}
+}
+
+void WxStagePage::OnPageInit()
+{
+	auto panel = Blackboard::Instance()->GetStageExtPanel();
+	auto sizer = panel->GetSizer();
+	if (sizer) {
+		sizer->Clear(true);
+	} else {
+		sizer = new wxBoxSizer(wxVERTICAL);
+	}
+	auto& canim = m_node->GetSharedComp<n2::CompAnim>();
+	sizer->Add(new WxTimelinePanel(panel, canim, m_sub_mgr), 0, wxEXPAND);
+	panel->SetSizer(sizer);
 }
 
 const n0::NodeSharedComp& WxStagePage::GetEditedNodeComp() const 
@@ -104,26 +118,6 @@ bool WxStagePage::ClearSceneNode()
 bool WxStagePage::ReorderSceneNode(const ee0::VariantSet& variants)
 {
 	return false;
-}
-
-void WxStagePage::StagePageOnShow()
-{
-	auto bb = Blackboard::Instance();
-	auto& ui_mgr = bb->GetApp()->GetUIManager();
-	ui_mgr.GetPane(STR_PREVIEW_PANEL).Hide();
-	ui_mgr.GetPane(STR_STAGE_EXT_PANEL).Show();
-	ui_mgr.Update();
-
-	auto panel = bb->GetStageExtPanel();
-	auto sizer = panel->GetSizer();
-	if (sizer) {
-		sizer->Clear(true);
-	} else {
-		sizer = new wxBoxSizer(wxVERTICAL);
-	}
-	auto& canim = m_node->GetSharedComp<n2::CompAnim>();
-	sizer->Add(new WxTimelinePanel(panel, canim, m_sub_mgr), 0, wxEXPAND);
-	panel->SetSizer(sizer);
 }
 
 }

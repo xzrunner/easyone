@@ -10,6 +10,16 @@
 #include <moon/Context.h>
 #include <moon/Blackboard.h>
 
+namespace
+{
+
+const uint32_t MESSAGES[] =
+{
+	ee0::MSG_EDITOR_RELOAD,
+};
+
+}
+
 namespace eone
 {
 namespace script
@@ -21,7 +31,16 @@ WxStageCanvas::WxStageCanvas(eone::WxStagePage* stage,
 	: ee2::WxStageCanvas(stage, &rc)
 	, m_script(stage->GetMoonCtx()->GetState(), filepath.c_str())
 {
-	stage->GetSubjectMgr()->RegisterObserver(ee0::MSG_EDITOR_RELOAD, this);
+	for (auto& msg : MESSAGES) {
+		stage->GetSubjectMgr()->RegisterObserver(msg, this);
+	}
+}
+
+WxStageCanvas::~WxStageCanvas()
+{
+	for (auto& msg : MESSAGES) {
+		m_stage->GetSubjectMgr()->UnregisterObserver(msg, this);
+	}
 }
 
 void WxStageCanvas::ScriptLoad()

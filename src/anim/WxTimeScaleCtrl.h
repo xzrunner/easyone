@@ -16,7 +16,8 @@ class WxTimeScaleCtrl : public wxPanel, public ee0::Observer
 {
 public:
 	WxTimeScaleCtrl(wxWindow* parent, const n2::CompAnim& canim,
-		const ee0::SubjectMgrPtr& tl_sub_mgr);
+		const ee0::SubjectMgrPtr& sub_mgr);
+	virtual ~WxTimeScaleCtrl();
 
 	virtual void OnNotify(uint32_t msg, const ee0::VariantSet& variants) override;
 
@@ -30,7 +31,7 @@ private:
 
 private:
 	const n2::CompAnim& m_canim;
-	ee0::SubjectMgrPtr  m_tl_sub_mgr;
+	ee0::SubjectMgrPtr  m_sub_mgr;
 
 	int m_frame_idx;
 

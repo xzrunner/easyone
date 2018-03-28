@@ -138,6 +138,8 @@ void WxStagePanel::OnPageChanged(wxAuiNotebookEvent& event)
 	GD_ASSERT(new_page, "null new_page");
 	Blackboard::Instance()->GetFrame()->SetTitle(new_page->GetFilepath());
 
+	m_old_sub_mgr->NotifyObservers(ee0::MSG_STAGE_PAGE_ON_HIDE);
+
 	ee0::VariantSet vars;
 
 	ee0::Variant var;

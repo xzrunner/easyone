@@ -18,20 +18,8 @@ namespace script
 {
 
 WxStagePage::WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, const n0::SceneNodePtr& node)
-	: eone::WxStagePage(parent, node)
+	: eone::WxStagePage(parent, node, SUB_WND_PREVIEW)
 {
-}
-
-void WxStagePage::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
-{
-	eone::WxStagePage::OnNotify(msg, variants);
-
-	switch (msg)
-	{
-	case ee0::MSG_STAGE_PAGE_ON_SHOW:
-		StagePageOnShow();
-		break;
-	}
 }
 
 void WxStagePage::Traverse(std::function<bool(const n0::SceneNodePtr&)> func,
@@ -55,14 +43,6 @@ void WxStagePage::StoreToJsonExt(const std::string& dir, rapidjson::Value& val,
 	                             rapidjson::MemoryPoolAllocator<>& alloc) const
 {
 //	val.AddMember("camera", "2d", alloc);
-}
-
-void WxStagePage::StagePageOnShow()
-{
-	auto& ui_mgr = Blackboard::Instance()->GetApp()->GetUIManager();
-	ui_mgr.GetPane(STR_PREVIEW_PANEL).Show();
-	ui_mgr.GetPane(STR_STAGE_EXT_PANEL).Hide();
-	ui_mgr.Update();
 }
 
 }

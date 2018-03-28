@@ -16,7 +16,7 @@ class WxTimeStageScrolled : public wxScrolledWindow
 {
 public:
 	WxTimeStageScrolled(wxWindow* parent, const n2::CompAnim& canim,
-		const ee0::SubjectMgrPtr& sub_mgr, const ee0::SubjectMgrPtr& tl_sub_mgr);
+		const ee0::SubjectMgrPtr& sub_mgr);
 
 private:
 	void InitLayout(const n2::CompAnim& canim, const ee0::SubjectMgrPtr& sub_mgr);
@@ -24,7 +24,7 @@ private:
 	void OnScroll(wxScrollWinEvent& event);
 
 private:
-	ee0::SubjectMgrPtr m_tl_sub_mgr;
+	ee0::SubjectMgrPtr m_sub_mgr;
 
 	DECLARE_EVENT_TABLE()
 

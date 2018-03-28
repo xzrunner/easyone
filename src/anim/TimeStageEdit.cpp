@@ -15,9 +15,9 @@ namespace anim
 {
 
 TimeStageEdit::TimeStageEdit(const n2::CompAnim& canim,
-	                         const ee0::SubjectMgrPtr& tl_sub_mgr)
+	                         const ee0::SubjectMgrPtr& sub_mgr)
 	: m_canim(canim)
-	, m_tl_sub_mgr(tl_sub_mgr)
+	, m_sub_mgr(sub_mgr)
 {
 	m_row = m_col = -1;
 	m_col_min = m_col_max = -1;
@@ -34,14 +34,14 @@ void TimeStageEdit::OnMouseLeftDown(int row, int col)
 	if (wxGetKeyState(WXK_SHIFT))
 	{
 		UpdateRegion(layer_idx, col);
-		MessageHelper::SetSelectedRegion(*m_tl_sub_mgr, m_col);
+		MessageHelper::SetSelectedRegion(*m_sub_mgr, m_col);
 	} 
 	else 
 	{
 		m_row = row;
 		m_col = col;
 		m_col_min = m_col_max = col;
-		MessageHelper::SetCurrFrame(*m_tl_sub_mgr, layer_idx, col);
+		MessageHelper::SetCurrFrame(*m_sub_mgr, layer_idx, col);
 	}
 }
 

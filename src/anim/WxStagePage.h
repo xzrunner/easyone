@@ -29,6 +29,8 @@ public:
 	virtual int GetPageType() const override { return PAGE_ANIM; }
 
 protected:
+	virtual void OnPageInit();
+
 	virtual const n0::NodeSharedComp& GetEditedNodeComp() const override;
 
 	virtual void StoreToJsonExt(const std::string& dir, rapidjson::Value& val,
@@ -39,8 +41,6 @@ private:
 	bool DeleteSceneNode(const ee0::VariantSet& variants);
 	bool ClearSceneNode();
 	bool ReorderSceneNode(const ee0::VariantSet& variants);
-
-	void StagePageOnShow();
 
 }; // WxStagePage
 

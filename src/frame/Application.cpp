@@ -71,6 +71,8 @@ void Application::LoadFromFile(const std::string& filepath)
 		//} else if (camera == "3d") {
 		//	new_type = PAGE_SCENE3D;
 		//}
+	} else if (new_type_str == "n2_anim") {
+		new_type = PAGE_ANIM;
 	} else if (new_type_str == "n2_scale9") {
 		new_type = PAGE_SCALE9;
 	} else if (new_type_str == "n2_mask") {

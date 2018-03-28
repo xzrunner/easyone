@@ -12,10 +12,18 @@ namespace ee0 { class VariantSet; }
 namespace eone
 {
 
+
 class WxStagePage : public ee0::WxStagePage
 {
 public:
-	WxStagePage(wxWindow* parent, const n0::SceneNodePtr& node);
+	enum SubWndType
+	{
+		SUB_WND_PREVIEW = 0,
+		SUB_WND_STAGE_EXT,
+	};
+
+public:
+	WxStagePage(wxWindow* parent, const n0::SceneNodePtr& node, SubWndType sub_wnd_type);
 
 	virtual void OnNotify(uint32_t msg, const ee0::VariantSet& variants) override;
 
@@ -31,6 +39,8 @@ public:
 	const std::string& GetFilepath() const { return m_filepath; }
 
 protected:
+	virtual void OnPageInit() {}
+
 	virtual const n0::NodeSharedComp& GetEditedNodeComp() const = 0;
 
 	virtual void StoreToJsonExt(const std::string& dir, rapidjson::Value& val,
@@ -40,10 +50,19 @@ protected:
 private:
 	void SetEditorDirty(const ee0::VariantSet& variants);
 
+	void RegisterAllMessages();
+	void UnregisterAllMessages();
+
+	void InitSubWindow();
+
 protected:
 	n0::SceneNodePtr m_node;
 
+	SubWndType m_sub_wnd_type;
+
 	std::string m_filepath;
+
+	std::vector<uint32_t> m_messages;
 
 }; // WxStagePage
 

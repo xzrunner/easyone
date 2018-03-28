@@ -27,6 +27,17 @@ struct FrameLessThan
 namespace anim
 {
 
+Layer::Layer(const Layer& layer)
+{
+	m_frames.reserve(layer.m_frames.size());
+	for (auto& frame : layer.m_frames) {
+		m_frames.push_back(std::make_unique<KeyFrame>(*frame));
+	}
+	if (layer.m_edit_info) {
+		m_edit_info = std::make_unique<EditInfo>(*layer.m_edit_info);
+	}
+}
+
 void Layer::AddKeyFrame(KeyFramePtr& frame)
 {
 	m_frames.push_back(std::move(frame));

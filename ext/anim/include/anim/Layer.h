@@ -11,6 +11,7 @@ class Layer
 {
 public:
 	Layer() {}
+	Layer(const Layer& layer);
 
 	void AddKeyFrame(KeyFramePtr& frame);
 

@@ -65,6 +65,11 @@ private:
 
 }; // SetValueDialog
 
+const uint32_t MESSAGES[] =
+{
+	eone::anim::MSG_SET_CURR_FRAME,
+};
+
 }
 
 namespace eone
@@ -80,17 +85,26 @@ BEGIN_EVENT_TABLE(WxLayersPanel, wxPanel)
 END_EVENT_TABLE()
 
 WxLayersPanel::WxLayersPanel(wxWindow* parent, const n2::CompAnim& canim,
-	                         const ee0::SubjectMgrPtr& tl_sub_mgr)
+	                         const ee0::SubjectMgrPtr& sub_mgr)
 	: wxPanel(parent, wxID_ANY, wxDefaultPosition, wxSize(1, 999))
 	, m_canim(canim)
-	, m_tl_sub_mgr(tl_sub_mgr)
+	, m_sub_mgr(sub_mgr)
 	, m_drag_flag_line(-1)
 	, m_curr_layer(-1)
 	, m_is_drag_open(false)
 	, m_xpress(0)
 	, m_ypress(0)
 {
-	m_tl_sub_mgr->RegisterObserver(MSG_SET_CURR_FRAME, this);
+	for (auto& msg : MESSAGES) {
+		m_sub_mgr->RegisterObserver(msg, this);
+	}
+}
+
+WxLayersPanel::~WxLayersPanel()
+{
+	for (auto& msg : MESSAGES) {
+		m_sub_mgr->UnregisterObserver(msg, this);
+	}
 }
 
 void WxLayersPanel::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
@@ -201,7 +215,7 @@ void WxLayersPanel::OnMouse(wxMouseEvent& event)
 		int layer = size - screen_idx - 1;
 		if (layer >= 0) 
 		{
-			MessageHelper::SetCurrFrame(*m_tl_sub_mgr, layer, -1);
+			MessageHelper::SetCurrFrame(*m_sub_mgr, layer, -1);
 			if (screen_idx < size) {
 				m_is_drag_open = true;
 			}
@@ -241,7 +255,7 @@ void WxLayersPanel::OnMouse(wxMouseEvent& event)
 			{
 				if (to > from) --to;
 				const_cast<n2::CompAnim&>(m_canim).SwapLayers(from, to);
-				MessageHelper::SetCurrFrame(*m_tl_sub_mgr, to, -1);
+				MessageHelper::SetCurrFrame(*m_sub_mgr, to, -1);
 			}
 		}
 		m_drag_flag_line = -1;

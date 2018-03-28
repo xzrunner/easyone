@@ -2,6 +2,9 @@
 #include "frame/Blackboard.h"
 #include "frame/WxStagePanel.h"
 #include "frame/StagePageType.h"
+#include "frame/Blackboard.h"
+#include "frame/Application.h"
+#include "frame/typedef.h"
 
 #include <ee0/SubjectMgr.h>
 
@@ -15,12 +18,16 @@
 namespace eone
 {
 
-WxStagePage::WxStagePage(wxWindow* parent, const n0::SceneNodePtr& node)
+WxStagePage::WxStagePage(wxWindow* parent, const n0::SceneNodePtr& node, SubWndType sub_wnd_type)
 	: ee0::WxStagePage(parent)
 	, m_node(node)
+	, m_sub_wnd_type(sub_wnd_type)
 {
-	m_sub_mgr->RegisterObserver(ee0::MSG_SET_EDITOR_DIRTY, this);
 	m_sub_mgr->RegisterObserver(ee0::MSG_STAGE_PAGE_ON_SHOW, this);
+
+	m_messages.push_back(ee0::MSG_SET_EDITOR_DIRTY);
+//	m_messages.push_back(ee0::MSG_STAGE_PAGE_ON_SHOW);
+	m_messages.push_back(ee0::MSG_STAGE_PAGE_ON_HIDE);
 }
 
 void WxStagePage::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
@@ -35,6 +42,12 @@ void WxStagePage::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
 
 	case ee0::MSG_STAGE_PAGE_ON_SHOW:
 		moon::Blackboard::Instance()->SetContext(GetMoonCtx());
+		RegisterAllMessages();
+		InitSubWindow();
+		OnPageInit();
+		break;
+	case ee0::MSG_STAGE_PAGE_ON_HIDE:
+		UnregisterAllMessages();
 		break;
 	}
 }
@@ -88,6 +101,37 @@ void WxStagePage::SetEditorDirty(const ee0::VariantSet& variants)
 		page_name += "*";
 	}
 	stage_panel->SetPageText(stage_panel->GetSelection(), page_name);
+}
+
+void WxStagePage::RegisterAllMessages()
+{
+	for (auto& msg : m_messages) {
+		m_sub_mgr->RegisterObserver(msg, this);
+	}
+}
+
+void WxStagePage::UnregisterAllMessages()
+{
+	for (auto& msg : m_messages) {
+		m_sub_mgr->UnregisterObserver(msg, this);
+	}
+}
+
+void WxStagePage::InitSubWindow()
+{
+	auto& ui_mgr = Blackboard::Instance()->GetApp()->GetUIManager();
+	switch (m_sub_wnd_type)
+	{
+	case SUB_WND_PREVIEW:
+		ui_mgr.GetPane(STR_PREVIEW_PANEL).Show();
+		ui_mgr.GetPane(STR_STAGE_EXT_PANEL).Hide();
+		break;
+	case SUB_WND_STAGE_EXT:
+		ui_mgr.GetPane(STR_PREVIEW_PANEL).Hide();
+		ui_mgr.GetPane(STR_STAGE_EXT_PANEL).Show();
+		break;
+	}
+	ui_mgr.Update();
 }
 
 }

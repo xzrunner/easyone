@@ -15,10 +15,10 @@ namespace anim
 {
 
 WxLayersToolbar::WxLayersToolbar(wxWindow* parent, n2::CompAnim& canim,
-	                             const ee0::SubjectMgrPtr& tl_sub_mgr)
+	                             const ee0::SubjectMgrPtr& sub_mgr)
 	: wxPanel(parent)
 	, m_canim(canim)
-	, m_tl_sub_mgr(tl_sub_mgr)
+	, m_sub_mgr(sub_mgr)
 {
 	SetBackgroundColour(MEDIUM_GRAY);
 
@@ -53,7 +53,7 @@ void WxLayersToolbar::OnAddLayer(wxCommandEvent& event)
 
 	m_canim.AddLayer(layer);
 
-	MessageHelper::SetCurrFrame(*m_tl_sub_mgr, count, 0);
+	MessageHelper::SetCurrFrame(*m_sub_mgr, count, 0);
 }
 
 void WxLayersToolbar::OnDelLayer(wxCommandEvent& event)

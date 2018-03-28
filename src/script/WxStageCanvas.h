@@ -17,6 +17,7 @@ class WxStageCanvas : public ee2::WxStageCanvas
 public:
 	WxStageCanvas(eone::WxStagePage* stage,
 		const ee0::RenderContext& rc, const std::string& filepath);
+	virtual ~WxStageCanvas();
 
 	virtual void OnNotify(uint32_t msg, const ee0::VariantSet& variants) override;
 
