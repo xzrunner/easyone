@@ -1,7 +1,11 @@
 #include "anim/PlayCtrl.h"
 #include "anim/GlobalClock.h"
 
+#include <cmath>
+
 #include <assert.h>
+
+#include <stdio.h>
 
 namespace anim
 {
@@ -24,10 +28,13 @@ void PlayCtrl::SetActive(bool active)
 
 	if (active) 
 	{
+		float cost = m_curr_time - m_start_time - m_stop_during;
 		if (m_stop_time > 0) {
 			m_stop_during += GlobalClock::Instance()->GetTime() - m_stop_time;
 			m_stop_time = 0;
 		}
+		m_curr_time = GlobalClock::Instance()->GetTime();
+		m_start_time = m_curr_time - m_stop_during - cost;
 	} 
 	else 
 	{
@@ -51,6 +58,11 @@ bool PlayCtrl::SetFrame(int frame, int fps)
 	m_stop_during = 0;
 
 	return true;
+}
+
+int PlayCtrl::GetFrame(int fps) const
+{
+	return std::lround((m_curr_time - m_start_time - m_stop_during) * fps);
 }
 
 bool PlayCtrl::Update()

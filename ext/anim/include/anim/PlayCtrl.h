@@ -12,11 +12,9 @@ public:
 	void SetActive(bool active);
 
 	bool SetFrame(int frame, int fps);
+	int  GetFrame(int fps) const;
 
 	bool Update();
-
-	float GetStartTime() const { return m_start_time; }
-	float GetCurrTime() const { return m_curr_time; }
 
 private:
 	int m_frame;
