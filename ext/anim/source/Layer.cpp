@@ -94,11 +94,13 @@ int Layer::GetMaxFrameIdx() const
 KeyFrame* Layer::GetCurrKeyFrame(int frame_idx) const
 {
 	auto itr = std::lower_bound(m_frames.begin(), m_frames.end(), frame_idx, FrameLessThan());
-	if (itr != m_frames.end()) {
-		return itr->get();
-	} else {
+	if (itr == m_frames.end()) {
 		return nullptr;
 	}
+	if ((*itr)->GetFrameIdx() > frame_idx && itr != m_frames.begin()) {
+		--itr;
+	}
+	return itr->get();
 }
 
 bool Layer::IsKeyFrame(int frame_idx) const

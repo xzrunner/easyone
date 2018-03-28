@@ -26,6 +26,7 @@ private:
 	void OnPaint(wxPaintEvent& event);
 	void OnMouse(wxMouseEvent& event);
 
+	void OnUpdateNode();
 	void OnSetCurrFrame(const ee0::VariantSet& variants);
 	void OnWndScroll(const ee0::VariantSet& variants);
 

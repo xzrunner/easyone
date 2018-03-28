@@ -11,20 +11,11 @@ public:
 	bool IsActive() const { return m_active; }
 	void SetActive(bool active);
 
-	int GetFrame() const { return m_frame; }
-	void SetFrame(int frame);
-	void SetFrame(int frame, int fps);
-
-	void SetTime(float time);
+	bool SetFrame(int frame, int fps);
 
 	bool Update();
 
-	void Clear();
-
-	void Reset();
-
 	float GetStartTime() const { return m_start_time; }
-	void  SetStartTime(float time) { m_start_time = time; }
 	float GetCurrTime() const { return m_curr_time; }
 
 private:

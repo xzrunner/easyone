@@ -15,6 +15,8 @@ public:
 protected:
 	virtual void DrawNodes() const override;
 
+	virtual bool OnUpdate() override;
+
 	virtual void OnMouseImpl(wxMouseEvent& event) override;
 
 }; // WxStageCanvas

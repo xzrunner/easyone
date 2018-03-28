@@ -377,12 +377,7 @@ bool WxTimeStagePanel::DeleteSceneNode(const ee0::VariantSet& variants)
 
 bool WxTimeStagePanel::ClearSceneNode()
 {
-	auto frame = AnimHelper::GetKeyFrame(m_canim, m_layer_idx, m_frame_idx);
-	if (!frame) {
-		return false;
-	}
-
-	return frame->RemoveAllNodes();
+	return const_cast<n2::CompAnim&>(m_canim).RemoveAllLayers();
 }
 
 bool WxTimeStagePanel::ReorderSceneNode(const ee0::VariantSet& variants)

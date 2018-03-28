@@ -20,6 +20,7 @@ static const int TEXT_Y = 4;
 
 const uint32_t MESSAGES[] =
 {
+	ee0::MSG_UPDATE_NODES,
 	eone::anim::MSG_SET_CURR_FRAME,
 	eone::anim::MSG_SET_SELECTED_REGION,
 };
@@ -61,6 +62,9 @@ void WxTimeScaleCtrl::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
 {
 	switch (msg)
 	{
+	case ee0::MSG_UPDATE_NODES:
+		OnUpdateNode();
+		break;
 	case MSG_SET_CURR_FRAME:
 		OnSetCurrFrame(variants);
 		break;
@@ -131,6 +135,25 @@ void WxTimeScaleCtrl::OnMouse(wxMouseEvent& event)
 	}
 }
 
+void WxTimeScaleCtrl::OnUpdateNode()
+{
+	auto& ctrl = m_canim.GetPlayCtrl();
+	// todo fps
+	static const int FPS = 30;
+	int frame_idx = static_cast<int>((ctrl.GetCurrTime() - ctrl.GetStartTime()) * FPS);
+	int max_frame = AnimHelper::GetMaxFrame(m_canim);
+	if (max_frame > 0) {
+		frame_idx = frame_idx % max_frame;
+	}
+
+	if (frame_idx == m_frame_idx) {
+		return;
+	}
+
+	m_frame_idx = frame_idx;
+	Refresh(false);
+}
+
 void WxTimeScaleCtrl::OnSetCurrFrame(const ee0::VariantSet& variants)
 {
 	int layer, frame;
@@ -155,10 +178,6 @@ void WxTimeScaleCtrl::OnSetCurrFrame(const ee0::VariantSet& variants)
 		}
 	}
 	Refresh(false);
-
-	// update canim
-	// todo: should not be here
-	const_cast<n2::CompAnim&>(m_canim).SetCurrFrameIdx(m_frame_idx);
 }
 
 void WxTimeScaleCtrl::OnWndScroll(const ee0::VariantSet& variants)

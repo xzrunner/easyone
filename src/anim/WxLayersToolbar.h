@@ -23,9 +23,13 @@ private:
 	void OnAddLayer(wxCommandEvent& event);
 	void OnDelLayer(wxCommandEvent& event);
 
+	void OnPressPlay(wxCommandEvent& event);
+
 private:
 	n2::CompAnim&      m_canim;
 	ee0::SubjectMgrPtr m_sub_mgr;
+
+	wxButton* m_btn_play;
 
 }; // WxLayersToolbar
 

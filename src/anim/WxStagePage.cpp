@@ -25,13 +25,13 @@ namespace anim
 WxStagePage::WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, const n0::SceneNodePtr& node)
 	: eone::WxStagePage(parent, node, SUB_WND_STAGE_EXT)
 {
-	m_messages.push_back(ee0::MSG_INSERT_SCENE_NODE);
-	m_messages.push_back(ee0::MSG_DELETE_SCENE_NODE);
-	m_messages.push_back(ee0::MSG_CLEAR_SCENE_NODE);
-	m_messages.push_back(ee0::MSG_REORDER_SCENE_NODE);
+	auto& canim = node->GetSharedComp<n2::CompAnim>();
+	canim.GetPlayCtrl().SetActive(false);
+
 	m_messages.push_back(MSG_SET_CURR_FRAME);
 
-	if (library) {SetDropTarget(new ee2::WxStageDropTarget(library, this));
+	if (library) {
+		SetDropTarget(new ee2::WxStageDropTarget(library, this));
 	}
 }
 
@@ -42,20 +42,8 @@ void WxStagePage::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
 	bool dirty = false;
 	switch (msg)
 	{
-	case ee0::MSG_INSERT_SCENE_NODE:
-		dirty = InsertSceneNode(variants);
-		break;
-	case ee0::MSG_DELETE_SCENE_NODE:
-		dirty = DeleteSceneNode(variants);
-		break;
-	case ee0::MSG_CLEAR_SCENE_NODE:
-		dirty = ClearSceneNode();
-		break;
-	case ee0::MSG_REORDER_SCENE_NODE:
-		dirty = ReorderSceneNode(variants);
-		break;
 	case MSG_SET_CURR_FRAME:
-		dirty = true;
+		dirty = OnSetCurrFrame(variants);
 		break;
 	}
 
@@ -100,24 +88,14 @@ void WxStagePage::StoreToJsonExt(const std::string& dir, rapidjson::Value& val,
 {
 }
 
-bool WxStagePage::InsertSceneNode(const ee0::VariantSet& variants)
+bool WxStagePage::OnSetCurrFrame(const ee0::VariantSet& variants)
 {
-	return false;
-}
+	auto var = variants.GetVariant("frame");
+	GD_ASSERT(var.m_type == ee0::VT_INT, "err frame");
+	int frame = var.m_val.l; 
 
-bool WxStagePage::DeleteSceneNode(const ee0::VariantSet& variants)
-{
-	return false;
-}
-
-bool WxStagePage::ClearSceneNode()
-{
-	return false;
-}
-
-bool WxStagePage::ReorderSceneNode(const ee0::VariantSet& variants)
-{
-	return false;
+	auto& canim = m_node->GetSharedComp<n2::CompAnim>();
+	return canim.GetPlayCtrl().SetFrame(frame, canim.GetFPS());
 }
 
 }

@@ -61,6 +61,9 @@ void WxStagePage::StoreToJson(const std::string& dir, rapidjson::Value& val,
 
 void WxStagePage::LoadFromJson(const std::string& dir, const rapidjson::Value& val)
 {
+	m_sub_mgr->NotifyObservers(ee0::MSG_NODE_SELECTION_CLEAR);
+	m_sub_mgr->NotifyObservers(ee0::MSG_CLEAR_SCENE_NODE);
+
 	ns::CompSerializer::Instance()->FromJson(m_node, dir, val);
 	LoadFromJsonExt(dir, val);
 

@@ -39,6 +39,13 @@ void WxLayersToolbar::InitLayout()
 		wxCommandEventHandler(WxLayersToolbar::OnDelLayer));
 	sizer->Add(btn_del, 0, wxLEFT | wxRIGHT, 5);
 
+	sizer->AddSpacer(20);
+
+	m_btn_play = new wxButton(this, wxID_ANY, ">", wxDefaultPosition, wxSize(25, 25));
+	Connect(m_btn_play->GetId(), wxEVT_COMMAND_BUTTON_CLICKED,
+		wxCommandEventHandler(WxLayersToolbar::OnPressPlay));
+	sizer->Add(m_btn_play, 0, wxLEFT | wxRIGHT, 5);
+
 	SetSizer(sizer);
 }
 
@@ -59,6 +66,13 @@ void WxLayersToolbar::OnAddLayer(wxCommandEvent& event)
 void WxLayersToolbar::OnDelLayer(wxCommandEvent& event)
 {
 
+}
+
+void WxLayersToolbar::OnPressPlay(wxCommandEvent& event)
+{
+	auto& ctrl = m_canim.GetPlayCtrl();
+	ctrl.SetActive(!ctrl.IsActive());
+	m_btn_play->SetLabelText(ctrl.IsActive() ? "||" : ">");
 }
 
 }
