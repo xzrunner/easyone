@@ -59,5 +59,15 @@ int AnimHelper::GetMaxFrame(const n2::CompAnim& canim, int layer_idx)
 	}
 }
 
+int AnimHelper::GetCurrFrame(const n2::CompAnim& canim)
+{
+	int frame_idx = canim.GetPlayCtrl().GetFrame(canim.GetFPS());
+	int max_frame = GetMaxFrame(canim);
+	if (max_frame > 0) {
+		frame_idx = frame_idx % (max_frame + 1);
+	}
+	return frame_idx;
+}
+
 }
 }

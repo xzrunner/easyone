@@ -69,6 +69,8 @@ private:
 	void OnInsertFrame();
 	void OnDeleteFrame();
 
+	void OnUpdateNode();
+
 private:
 	enum
 	{

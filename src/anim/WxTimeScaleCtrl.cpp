@@ -137,21 +137,12 @@ void WxTimeScaleCtrl::OnMouse(wxMouseEvent& event)
 
 void WxTimeScaleCtrl::OnUpdateNode()
 {
-	auto& ctrl = m_canim.GetPlayCtrl();
-	// todo fps
-	static const int FPS = 30;
-	int frame_idx = static_cast<int>((ctrl.GetCurrTime() - ctrl.GetStartTime()) * FPS);
-	int max_frame = AnimHelper::GetMaxFrame(m_canim);
-	if (max_frame > 0) {
-		frame_idx = frame_idx % max_frame;
+	int frame_idx = AnimHelper::GetCurrFrame(m_canim);
+	if (frame_idx != m_frame_idx) 
+	{
+		m_frame_idx = frame_idx;
+		Refresh(false);
 	}
-
-	if (frame_idx == m_frame_idx) {
-		return;
-	}
-
-	m_frame_idx = frame_idx;
-	Refresh(false);
 }
 
 void WxTimeScaleCtrl::OnSetCurrFrame(const ee0::VariantSet& variants)

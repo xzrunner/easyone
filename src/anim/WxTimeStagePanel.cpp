@@ -31,6 +31,8 @@ const uint32_t MESSAGES[] =
 	ee0::MSG_CLEAR_SCENE_NODE,
 	ee0::MSG_REORDER_SCENE_NODE,
 
+	ee0::MSG_UPDATE_NODES,
+
 	eone::anim::MSG_SET_CURR_FRAME,
 	eone::anim::MSG_SET_SELECTED_REGION,
 };
@@ -112,6 +114,10 @@ void WxTimeStagePanel::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
 		break;
 	case ee0::MSG_REORDER_SCENE_NODE:
 		dirty = ReorderSceneNode(variants);
+		break;
+
+	case ee0::MSG_UPDATE_NODES:
+		OnUpdateNode();
 		break;
 
 	case MSG_SET_CURR_FRAME:
@@ -638,6 +644,17 @@ void WxTimeStagePanel::OnDeleteFrame()
 {
 	if (auto layer = AnimHelper::GetLayer(m_canim, m_layer_idx)) {
 		layer->RemoveNullFrame(m_frame_idx);
+		Refresh(false);
+	}
+}
+
+void WxTimeStagePanel::OnUpdateNode()
+{
+	int frame_idx = AnimHelper::GetCurrFrame(m_canim);
+	if (frame_idx != m_frame_idx)
+	{
+		m_frame_idx = frame_idx;
+		m_valid_frame_idx = frame_idx;
 		Refresh(false);
 	}
 }
