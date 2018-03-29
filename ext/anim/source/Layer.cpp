@@ -38,6 +38,23 @@ Layer::Layer(const Layer& layer)
 	}
 }
 
+Layer& Layer::operator = (const Layer& layer)
+{
+	if (&layer == this) {
+		return *this;
+	}
+
+	m_frames.clear();
+	m_frames.reserve(layer.m_frames.size());
+	for (auto& frame : layer.m_frames) {
+		m_frames.push_back(std::make_unique<KeyFrame>(*frame));
+	}
+	if (layer.m_edit_info) {
+		m_edit_info = std::make_unique<EditInfo>(*layer.m_edit_info);
+	}
+	return *this;
+}
+
 void Layer::AddKeyFrame(KeyFramePtr& frame)
 {
 	m_frames.push_back(std::move(frame));

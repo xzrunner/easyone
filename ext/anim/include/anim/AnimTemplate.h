@@ -6,16 +6,26 @@
 #include <painting2/Color.h>
 #include <painting2/SRT.h>
 
+#include <boost/noncopyable.hpp>
+
 #include <vector>
 
 namespace anim
 {
 
-class Animation
+class AnimTemplate : boost::noncopyable
 {
 public:
-	Animation(const std::vector<LayerPtr>& layers,
-		int max_frame_idx);
+	AnimTemplate();
+
+	void Build(const std::vector<LayerPtr>& layers);
+
+	int GetMaxFrameIdx() const { return m_max_frame_idx; }
+	int GetMaxItemNum() const { return m_max_item_num; }
+
+	const std::vector<n0::SceneNodePtr>& GetAllSlots() const {
+		return m_slots;
+	}
 
 private:
 	void SetCountNum(const std::vector<LayerPtr>& layers);
@@ -70,6 +80,8 @@ private:
 	int m_max_frame_idx;
 	int m_max_item_num;
 
-}; // Animation
+	friend class AnimInstance;
+
+}; // AnimTemplate
 
 }

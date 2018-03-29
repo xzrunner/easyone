@@ -3,6 +3,7 @@
 #include <node2/CompAnim.h>
 #include <anim/Layer.h>
 #include <anim/KeyFrame.h>
+#include <anim/Utility.h>
 
 namespace eone
 {
@@ -31,16 +32,7 @@ namespace anim
 
 int AnimHelper::GetMaxFrame(const n2::CompAnim& canim)
 {
-	int max_frame = -1;
-	auto& layers = canim.GetAllLayers();
-	for (auto& layer : layers) 
-	{
-		auto& frames = layer->GetAllKeyFrames();
-		if (!frames.empty()) {
-			max_frame = std::max(max_frame, frames.back()->GetFrameIdx());
-		}
-	}
-	return max_frame;
+	return ::anim::Utility::GetMaxFrame(canim.GetAllLayers());
 }
 
 int AnimHelper::GetMaxFrame(const n2::CompAnim& canim, int layer_idx)

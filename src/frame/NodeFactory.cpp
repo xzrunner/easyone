@@ -10,6 +10,7 @@
 #include <node2/CompMesh.h>
 #include <node2/CompScale9.h>
 #include <node2/CompAnim.h>
+#include <node2/CompAnimInst.h>
 #include <node2/CompSprite2.h>
 #include <node2/CompBoundingBox.h>
 #include <node2/CompTransform.h>
@@ -72,6 +73,8 @@ n0::SceneNodePtr NodeFactory::Create(NodeType type)
 
 			auto& canim = node->AddSharedComp<n2::CompAnim>();
 			canim.AddLayer(layer);
+
+			node->AddUniqueComp<n2::CompAnimInst>(canim);
 		}
 		break;
 

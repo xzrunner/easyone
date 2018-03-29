@@ -12,6 +12,7 @@ class Layer
 public:
 	Layer() {}
 	Layer(const Layer& layer);
+	Layer& operator = (const Layer& layer);
 
 	void AddKeyFrame(KeyFramePtr& frame);
 

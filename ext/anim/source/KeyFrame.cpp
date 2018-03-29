@@ -21,6 +21,25 @@ KeyFrame::KeyFrame(const KeyFrame& frame)
 	}
 }
 
+KeyFrame& KeyFrame::operator = (const KeyFrame& frame)
+{
+	if (&frame == this) {
+		return *this;
+	}
+
+	m_frame_idx = frame.m_frame_idx;
+
+	m_nodes.clear();
+	m_nodes.reserve(frame.m_nodes.size());
+	for (auto& node : frame.m_nodes) {
+		m_nodes.push_back(node->Clone());
+	}
+
+	m_tween = frame.m_tween;
+
+	return *this;
+}
+
 void KeyFrame::AddNode(const std::shared_ptr<n0::SceneNode>& node)
 {
 	m_nodes.push_back(node);

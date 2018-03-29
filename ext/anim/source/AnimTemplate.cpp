@@ -1,17 +1,31 @@
-#include "anim/Animation.h"
+#include "anim/AnimTemplate.h"
 #include "anim/Layer.h"
 #include "anim/KeyFrame.h"
+#include "anim/Utility.h"
+
+// todo
+#include <ee0/CompNodeEditor.h>
 
 #include <guard/check.h>
 #include <node0/SceneNode.h>
+#include <node2/CompColorCommon.h>
+#include <node2/CompColorMap.h>
+#include <node2/CompTransform.h>
 
 namespace anim
 {
 
-Animation::Animation(const std::vector<LayerPtr>& layers, int max_frame_idx)
-	: m_max_frame_idx(0)
-	, m_max_item_num(max_frame_idx)
+AnimTemplate::AnimTemplate()
+	: m_max_item_num(0)
+	, m_max_frame_idx(0)
 {
+}
+
+void AnimTemplate::Build(const std::vector<LayerPtr>& layers)
+{
+	m_max_item_num = 0;
+	m_max_frame_idx = Utility::GetMaxFrame(layers);
+
 	SetCountNum(layers);
 	FillingLayers(layers);
 	ConnectItems(layers);
@@ -19,7 +33,7 @@ Animation::Animation(const std::vector<LayerPtr>& layers, int max_frame_idx)
 	CreateSprSlots(layers);
 }
 
-void Animation::SetCountNum(const std::vector<LayerPtr>& layers)
+void AnimTemplate::SetCountNum(const std::vector<LayerPtr>& layers)
 {
 	for (auto& layer : layers) 
 	{
@@ -35,7 +49,7 @@ void Animation::SetCountNum(const std::vector<LayerPtr>& layers)
 	}
 }
 
-void Animation::FillingLayers(const std::vector<LayerPtr>& layers)
+void AnimTemplate::FillingLayers(const std::vector<LayerPtr>& layers)
 {
 	m_layers.clear();
 	m_layers.resize(layers.size());
@@ -68,7 +82,7 @@ void Animation::FillingLayers(const std::vector<LayerPtr>& layers)
 	}
 }
 
-void Animation::ConnectItems(const std::vector<LayerPtr>& layers)
+void AnimTemplate::ConnectItems(const std::vector<LayerPtr>& layers)
 {
 	for (int ilayer = 0, nlayer = m_layers.size(); ilayer < nlayer; ++ilayer) 
 	{
@@ -86,11 +100,16 @@ void Animation::ConnectItems(const std::vector<LayerPtr>& layers)
 
 			Frame& curr = layer.frames[iframe];
 			Frame& next = layer.frames[iframe + 1];
-			for (int icurr = 0, ncurr = curr.items.size(); icurr < ncurr; ++icurr) {
-				for (int inext = 0, nnext = next.items.size(); inext < nnext; ++inext) {
-					auto& curr_spr = src_frames[iframe]->GetAllNodes[icurr];
-					auto& next_spr = src_frames[iframe+1]->GetAllNodes[inext];
-					if (curr_spr->GetName() == next_spr->GetName()) {
+			for (int icurr = 0, ncurr = curr.items.size(); icurr < ncurr; ++icurr) 
+			{
+				for (int inext = 0, nnext = next.items.size(); inext < nnext; ++inext) 
+				{
+					auto& curr_node = src_frames[iframe]->GetAllNodes()[icurr];
+					auto& next_node = src_frames[iframe+1]->GetAllNodes()[inext];
+					auto& curr_info = curr_node->GetUniqueComp<ee0::CompNodeEditor>();
+					auto& next_info = next_node->GetUniqueComp<ee0::CompNodeEditor>();
+					if (curr_info.GetName() == next_info.GetName())
+					{
 						curr.items[icurr].next = inext;
 						next.items[inext].prev = icurr;
 						break;
@@ -101,8 +120,9 @@ void Animation::ConnectItems(const std::vector<LayerPtr>& layers)
 	}
 }
 
-void Animation::LoadLerpData(const std::vector<LayerPtr>& layers)
+void AnimTemplate::LoadLerpData(const std::vector<LayerPtr>& layers)
 {
+	m_lerps.clear();
 	for (int ilayer = 0, nlayer = m_layers.size(); ilayer < nlayer; ++ilayer) 
 	{
 		auto& src_frames = layers[ilayer]->GetAllKeyFrames();
@@ -122,24 +142,26 @@ void Animation::LoadLerpData(const std::vector<LayerPtr>& layers)
 
 				Lerp dst;
 
-				auto& begin = src_frames[iframe]->GetAllNodes[iitem];
-				auto& end   = src_frames[iframe+1]->GetAllNodes[item.next];
+				auto& begin = src_frames[iframe]->GetAllNodes()[iitem];
+				auto& end   = src_frames[iframe+1]->GetAllNodes()[item.next];
+
+				auto& b_ctrans = begin->GetUniqueComp<n2::CompTransform>();
+				auto& e_ctrans = end->GetUniqueComp<n2::CompTransform>();
+				auto& b_srt = b_ctrans.GetTrans().GetSRT();
+				auto& e_srt = e_ctrans.GetTrans().GetSRT();
 				int dt = layer.frames[iframe + 1].frame_idx - layer.frames[iframe].frame_idx;
+				dst.srt = b_srt;
+				dst.dsrt = (e_srt - b_srt) / static_cast<float>(dt);
 
-				SprSRT bsrt, esrt;
-				begin->GetLocalSRT(bsrt);
-				end->GetLocalSRT(esrt);
-				dst.srt = bsrt;
-				for (int i = 0; i < SprSRT::SRT_MAX; ++i) {
-					dst.dsrt.srt[i] = (esrt.srt[i] - bsrt.srt[i]) / dt;
+				if (begin->HasUniqueComp<n2::CompColorCommon>())
+				{
+					auto& b_ccol = begin->GetUniqueComp<n2::CompColorCommon>();
+					auto& e_ccol = end->GetUniqueComp<n2::CompColorCommon>();
+					dst.col_mul = b_ccol.GetColor().mul;
+					dst.col_add = b_ccol.GetColor().add;
+					CalcDeltaColor(b_ccol.GetColor().mul, e_ccol.GetColor().mul, dt, dst.dcol_mul);
+					CalcDeltaColor(b_ccol.GetColor().add, e_ccol.GetColor().add, dt, dst.dcol_add);
 				}
-
-				const RenderColor& rcb = begin->GetColor();
-				const RenderColor& rce = end->GetColor();
-				dst.col_mul = rcb.GetMul();
-				dst.col_add = rcb.GetAdd();
-				CalcDeltaColor(rcb.GetMul(), rce.GetMul(), dt, dst.dcol_mul);
-				CalcDeltaColor(rcb.GetAdd(), rce.GetAdd(), dt, dst.dcol_add);
 
 				m_lerps.push_back(dst);
 				item.lerp = idx;
@@ -148,8 +170,9 @@ void Animation::LoadLerpData(const std::vector<LayerPtr>& layers)
 	}
 }
 
-void Animation::CreateSprSlots(const std::vector<LayerPtr>& layers)
+void AnimTemplate::CreateSprSlots(const std::vector<LayerPtr>& layers)
 {
+	m_slots.clear();
 	for (int ilayer = 0, nlayer = m_layers.size(); ilayer < nlayer; ++ilayer) 
 	{
 		auto& src_frames = layers[ilayer]->GetAllKeyFrames();
@@ -182,10 +205,10 @@ void Animation::CreateSprSlots(const std::vector<LayerPtr>& layers)
 }
 
 /************************************************************************/
-/* struct Animation::Item                                               */
+/* struct AnimTemplate::Item                                               */
 /************************************************************************/
 
-Animation::Item::Item()
+AnimTemplate::Item::Item()
 	: slot(-1)
 	, next(-1)
 	, prev(-1)
