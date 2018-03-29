@@ -77,9 +77,11 @@ LanguageEntry WxTimeStagePanel::entries[] =
 };
 
 WxTimeStagePanel::WxTimeStagePanel(wxWindow* parent, const n2::CompAnim& canim,
+	                               const n2::CompAnimInst& canim_inst,
 	                               const ee0::SubjectMgrPtr& sub_mgr)
 	: wxPanel(parent, wxID_ANY, wxDefaultPosition, wxSize(5000, 999))
 	, m_canim(canim)
+	, m_canim_inst(canim_inst)
 	, m_sub_mgr(sub_mgr)
 	, m_editop(canim, sub_mgr)
 {
@@ -362,6 +364,7 @@ bool WxTimeStagePanel::InsertSceneNode(const ee0::VariantSet& variants)
 	GD_ASSERT(node, "err scene node");
 
 	frame->AddNode(*node);
+	m_sub_mgr->NotifyObservers(MSG_REFRESH_COMP_INST);
 
 	return true;
 }
@@ -378,12 +381,16 @@ bool WxTimeStagePanel::DeleteSceneNode(const ee0::VariantSet& variants)
 	n0::SceneNodePtr* node = static_cast<n0::SceneNodePtr*>(var.m_val.pv);
 	GD_ASSERT(node, "err scene node");
 
-	return frame->RemoveNode(*node);
+	bool ret = frame->RemoveNode(*node);
+	m_sub_mgr->NotifyObservers(MSG_REFRESH_COMP_INST);
+	return ret;
 }
 
 bool WxTimeStagePanel::ClearSceneNode()
 {
-	return const_cast<n2::CompAnim&>(m_canim).RemoveAllLayers();
+	bool ret = const_cast<n2::CompAnim&>(m_canim).RemoveAllLayers();
+	m_sub_mgr->NotifyObservers(MSG_REFRESH_COMP_INST);
+	return ret;
 }
 
 bool WxTimeStagePanel::ReorderSceneNode(const ee0::VariantSet& variants)
@@ -418,20 +425,23 @@ bool WxTimeStagePanel::ReorderSceneNode(const ee0::VariantSet& variants)
 
 	GD_ASSERT(idx >= 0, "not find");
 
+	bool ret = false;
 	if (up && idx != all_nodes.size() - 1)
 	{
 		std::swap(all_nodes[idx], all_nodes[idx + 1]);
 		frame->SetNodes(all_nodes);
-		return true;
+		ret = true;
 	}
 	else if (!up && idx != 0)
 	{
 		std::swap(all_nodes[idx], all_nodes[idx - 1]);
 		frame->SetNodes(all_nodes);
-		return true;
+		ret = true;
 	}
-
-	return false;
+	if (ret) {
+		m_sub_mgr->NotifyObservers(MSG_REFRESH_COMP_INST);
+	}
+	return ret;
 }
 
 void WxTimeStagePanel::OnSetCurrFrame(const ee0::VariantSet& variants)
@@ -650,7 +660,7 @@ void WxTimeStagePanel::OnDeleteFrame()
 
 void WxTimeStagePanel::OnUpdateNode()
 {
-	int frame_idx = AnimHelper::GetCurrFrame(m_canim);
+	int frame_idx = AnimHelper::GetCurrFrame(m_canim, m_canim_inst);
 	if (frame_idx != m_frame_idx)
 	{
 		m_frame_idx = frame_idx;

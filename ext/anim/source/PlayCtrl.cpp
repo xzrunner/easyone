@@ -45,9 +45,7 @@ void PlayCtrl::SetActive(bool active)
 
 bool PlayCtrl::SetFrame(int frame, int fps)
 {
-	if (m_frame == frame) {
-		return false;
-	}
+	bool ret = m_frame != frame;
 
 	m_frame = frame;
 
@@ -57,15 +55,10 @@ bool PlayCtrl::SetFrame(int frame, int fps)
 	m_stop_time = -1;
 	m_stop_during = 0;
 
-	return true;
+	return ret;
 }
 
-int PlayCtrl::GetFrame(int fps) const
-{
-	return std::lround((m_curr_time - m_start_time - m_stop_during) * fps);
-}
-
-bool PlayCtrl::Update()
+bool PlayCtrl::Update(int fps)
 {
 	if (!m_active) {
 		return false;
@@ -74,10 +67,15 @@ bool PlayCtrl::Update()
 	float curr_time = GlobalClock::Instance()->GetTime();
 	if (curr_time == m_curr_time) {
 		return false;
-	} else {
-		m_curr_time = curr_time;
-		return true;
 	}
+
+	m_curr_time = curr_time;
+
+	int frame = std::lround((m_curr_time - m_start_time - m_stop_during) * fps);
+	bool ret = frame != m_frame;
+	m_frame = frame;
+
+	return ret;
 }
 
 }

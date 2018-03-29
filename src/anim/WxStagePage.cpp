@@ -13,7 +13,9 @@
 
 #include <guard/check.h>
 #include <node0/SceneNode.h>
+#include <node0/NodePool.h>
 #include <node2/CompAnim.h>
+#include <node2/CompAnimInst.h>
 
 #include <wx/aui/framemanager.h>
 
@@ -25,10 +27,11 @@ namespace anim
 WxStagePage::WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, const n0::SceneNodePtr& node)
 	: eone::WxStagePage(parent, node, SUB_WND_STAGE_EXT)
 {
-	auto& canim = node->GetSharedComp<n2::CompAnim>();
-	canim.GetPlayCtrl().SetActive(false);
+	auto& canim_inst = node->GetUniqueComp<n2::CompAnimInst>();
+	canim_inst.GetPlayCtrl().SetActive(false);
 
 	m_messages.push_back(MSG_SET_CURR_FRAME);
+	m_messages.push_back(MSG_REFRESH_COMP_INST);
 
 	if (library) {
 		SetDropTarget(new ee2::WxStageDropTarget(library, this));
@@ -44,6 +47,9 @@ void WxStagePage::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
 	{
 	case MSG_SET_CURR_FRAME:
 		dirty = OnSetCurrFrame(variants);
+		break;
+	case MSG_REFRESH_COMP_INST:
+		dirty = OnRefreshCompInst(variants);
 		break;
 	}
 
@@ -85,7 +91,8 @@ void WxStagePage::OnPageInit()
 		sizer = new wxBoxSizer(wxVERTICAL);
 	}
 	auto& canim = m_node->GetSharedComp<n2::CompAnim>();
-	sizer->Add(new WxTimelinePanel(panel, canim, m_sub_mgr), 0, wxEXPAND);
+	auto& canim_inst = m_node->GetUniqueComp<n2::CompAnimInst>();
+	sizer->Add(new WxTimelinePanel(panel, canim, canim_inst, m_sub_mgr), 0, wxEXPAND);
 	panel->SetSizer(sizer);
 }
 
@@ -94,9 +101,9 @@ const n0::NodeSharedComp& WxStagePage::GetEditedNodeComp() const
 	return m_node->GetSharedComp<n2::CompAnim>();
 }
 
-void WxStagePage::StoreToJsonExt(const std::string& dir, rapidjson::Value& val, 
-	                             rapidjson::MemoryPoolAllocator<>& alloc) const
+void WxStagePage::LoadFromJsonExt(const std::string& dir, const rapidjson::Value& val)
 {
+	m_sub_mgr->NotifyObservers(MSG_REFRESH_COMP_INST);
 }
 
 bool WxStagePage::OnSetCurrFrame(const ee0::VariantSet& variants)
@@ -105,8 +112,27 @@ bool WxStagePage::OnSetCurrFrame(const ee0::VariantSet& variants)
 	GD_ASSERT(var.m_type == ee0::VT_INT, "err frame");
 	int frame = var.m_val.l; 
 
-	auto& canim = m_node->GetSharedComp<n2::CompAnim>();
-	return canim.GetPlayCtrl().SetFrame(frame, canim.GetFPS());
+	auto& canim_inst = m_node->GetUniqueComp<n2::CompAnimInst>();
+	return canim_inst.SetFrame(frame);
+}
+
+bool WxStagePage::OnRefreshCompInst(const ee0::VariantSet& variants)
+{
+	auto& canim = m_node->GetSharedCompPtr<n2::CompAnim>();
+	auto array = n0::NodePool::Instance()->Query(canim);
+	if (!array) {
+		return false;
+	}
+
+	for (auto& weak : *array)
+	{
+		auto node = weak.lock();
+		if (node) {
+			auto& inst = node->GetUniqueComp<n2::CompAnimInst>();
+			inst.Refresh();
+		}
+	}
+	return true;
 }
 
 }

@@ -21,6 +21,15 @@ AnimTemplate::AnimTemplate()
 {
 }
 
+void AnimTemplate::Clear()
+{
+	m_layers.clear();
+	m_slots.clear();
+	m_lerps.clear();
+	m_max_frame_idx = 0;
+	m_max_item_num = 0;
+}
+
 void AnimTemplate::Build(const std::vector<LayerPtr>& layers)
 {
 	m_max_item_num = 0;
@@ -202,6 +211,14 @@ void AnimTemplate::CreateSprSlots(const std::vector<LayerPtr>& layers)
 			}
 		}
 	}
+}
+
+void AnimTemplate::CalcDeltaColor(const pt2::Color& begin, const pt2::Color& end, int time, float* ret)
+{
+	ret[0] = (end.r - begin.r) / (float)time;
+	ret[1] = (end.g - begin.g) / (float)time;
+	ret[2] = (end.b - begin.b) / (float)time;
+	ret[3] = (end.a - begin.a) / (float)time;
 }
 
 /************************************************************************/

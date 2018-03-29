@@ -12,9 +12,9 @@ public:
 	void SetActive(bool active);
 
 	bool SetFrame(int frame, int fps);
-	int  GetFrame(int fps) const;
+	int  GetFrame() const { return m_frame; }
 
-	bool Update();
+	bool Update(int fps);
 
 private:
 	int m_frame;

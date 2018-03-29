@@ -8,6 +8,7 @@
 #include <wx/panel.h>
 
 namespace ee0 { class VariantSet; }
+namespace n2 { class CompAnimInst; }
 
 class wxBufferedPaintDC;
 
@@ -20,7 +21,7 @@ class WxTimeStagePanel : public wxPanel, public ee0::Observer
 {
 public:
 	WxTimeStagePanel(wxWindow* parent, const n2::CompAnim& canim,
-		const ee0::SubjectMgrPtr& sub_mgr);
+		const n2::CompAnimInst& canim_inst, const ee0::SubjectMgrPtr& sub_mgr);
 	virtual ~WxTimeStagePanel();
 
 	virtual void OnNotify(uint32_t msg, const ee0::VariantSet& variants) override;
@@ -88,8 +89,9 @@ private:
 	static LanguageEntry entries[];
 
 private:
-	const n2::CompAnim& m_canim;
-	ee0::SubjectMgrPtr  m_sub_mgr;
+	const n2::CompAnim&     m_canim;
+	const n2::CompAnimInst& m_canim_inst;
+	ee0::SubjectMgrPtr      m_sub_mgr;
 
 	TimeStageEdit m_editop;
 

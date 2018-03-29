@@ -1,6 +1,7 @@
 #include "anim/AnimHelper.h"
 
 #include <node2/CompAnim.h>
+#include <node2/CompAnimInst.h>
 #include <anim/Layer.h>
 #include <anim/KeyFrame.h>
 #include <anim/Utility.h>
@@ -51,9 +52,10 @@ int AnimHelper::GetMaxFrame(const n2::CompAnim& canim, int layer_idx)
 	}
 }
 
-int AnimHelper::GetCurrFrame(const n2::CompAnim& canim)
+int AnimHelper::GetCurrFrame(const n2::CompAnim& canim, 
+	                         const n2::CompAnimInst& canim_inst)
 {
-	int frame_idx = canim.GetPlayCtrl().GetFrame(canim.GetFPS());
+	int frame_idx = canim_inst.GetPlayCtrl().GetFrame();
 	int max_frame = GetMaxFrame(canim);
 	if (max_frame > 0) {
 		frame_idx = frame_idx % (max_frame + 1);

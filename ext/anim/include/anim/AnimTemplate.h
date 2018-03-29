@@ -18,6 +18,8 @@ class AnimTemplate : boost::noncopyable
 public:
 	AnimTemplate();
 
+	void Clear();
+
 	void Build(const std::vector<LayerPtr>& layers);
 
 	int GetMaxFrameIdx() const { return m_max_frame_idx; }

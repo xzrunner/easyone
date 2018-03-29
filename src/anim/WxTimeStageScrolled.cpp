@@ -17,19 +17,21 @@ BEGIN_EVENT_TABLE(WxTimeStageScrolled, wxScrolledWindow)
 END_EVENT_TABLE()
 
 WxTimeStageScrolled::WxTimeStageScrolled(wxWindow* parent, const n2::CompAnim& canim, 
+	                                     const n2::CompAnimInst& canim_inst,
 	                                     const ee0::SubjectMgrPtr& sub_mgr)
 	: wxScrolledWindow(parent)
 	, m_sub_mgr(sub_mgr)
 {
 	SetScrollbars(1, 1, 20, 10, 0, 0);
-	InitLayout(canim, sub_mgr);
+	InitLayout(canim, canim_inst, sub_mgr);
 }
 
 void WxTimeStageScrolled::InitLayout(const n2::CompAnim& canim,
+	                                 const n2::CompAnimInst& canim_inst,
 	                                 const ee0::SubjectMgrPtr& sub_mgr)
 {
 	auto sizer = new wxBoxSizer(wxVERTICAL);
-	auto layers = new WxTimeStagePanel(this, canim, sub_mgr);
+	auto layers = new WxTimeStagePanel(this, canim, canim_inst, sub_mgr);
 	sizer->Add(layers, 1, wxEXPAND);
 	SetSizer(sizer);
 }

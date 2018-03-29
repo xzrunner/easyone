@@ -3,6 +3,7 @@
 #include <ee0/CompNodeEditor.h>
 
 #include <node0/SceneNode.h>
+#include <node0/NodePool.h>
 #include <node2/CompComplex.h>
 #include <node2/CompImage.h>
 #include <node2/CompText.h>
@@ -74,7 +75,7 @@ n0::SceneNodePtr NodeFactory::Create(NodeType type)
 			auto& canim = node->AddSharedComp<n2::CompAnim>();
 			canim.AddLayer(layer);
 
-			node->AddUniqueComp<n2::CompAnimInst>(canim);
+			node->AddUniqueComp<n2::CompAnimInst>(canim.GetAnimTemplate());
 		}
 		break;
 
@@ -100,6 +101,10 @@ n0::SceneNodePtr NodeFactory::Create(NodeType type)
 
 	// editor
 	node->AddUniqueComp<ee0::CompNodeEditor>();
+
+	// add to pool
+	auto& asset = node->GetSharedCompPtr<n0::CompAsset>();
+	n0::NodePool::Instance()->Add(asset, node);
 
 	return node;
 }

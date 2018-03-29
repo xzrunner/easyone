@@ -33,11 +33,11 @@ protected:
 
 	virtual const n0::NodeSharedComp& GetEditedNodeComp() const override;
 
-	virtual void StoreToJsonExt(const std::string& dir, rapidjson::Value& val,
-		rapidjson::MemoryPoolAllocator<>& alloc) const;
+	virtual void LoadFromJsonExt(const std::string& dir, const rapidjson::Value& val);
 
 private:
 	bool OnSetCurrFrame(const ee0::VariantSet& variants);
+	bool OnRefreshCompInst(const ee0::VariantSet& variants);
 
 }; // WxStagePage
 

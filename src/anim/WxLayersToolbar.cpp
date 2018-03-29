@@ -1,8 +1,12 @@
 #include "anim/WxLayersToolbar.h"
 #include "anim/config.h"
 #include "anim/MessageHelper.h"
+#include "anim/MessageID.h"
+
+#include <ee0/SubjectMgr.h>
 
 #include <node2/CompAnim.h>
+#include <node2/CompAnimInst.h>
 #include <anim/KeyFrame.h>
 #include <anim/Layer.h>
 
@@ -15,9 +19,11 @@ namespace anim
 {
 
 WxLayersToolbar::WxLayersToolbar(wxWindow* parent, n2::CompAnim& canim,
+	                             n2::CompAnimInst& canim_inst,
 	                             const ee0::SubjectMgrPtr& sub_mgr)
 	: wxPanel(parent)
 	, m_canim(canim)
+	, m_canim_inst(canim_inst)
 	, m_sub_mgr(sub_mgr)
 {
 	SetBackgroundColour(MEDIUM_GRAY);
@@ -59,6 +65,7 @@ void WxLayersToolbar::OnAddLayer(wxCommandEvent& event)
 	layer->AddKeyFrame(std::make_unique<::anim::KeyFrame>(0));
 
 	m_canim.AddLayer(layer);
+	m_sub_mgr->NotifyObservers(MSG_REFRESH_COMP_INST);
 
 	MessageHelper::SetCurrFrame(*m_sub_mgr, count, 0);
 }
@@ -70,7 +77,7 @@ void WxLayersToolbar::OnDelLayer(wxCommandEvent& event)
 
 void WxLayersToolbar::OnPressPlay(wxCommandEvent& event)
 {
-	auto& ctrl = m_canim.GetPlayCtrl();
+	auto& ctrl = m_canim_inst.GetPlayCtrl();
 	ctrl.SetActive(!ctrl.IsActive());
 	m_btn_play->SetLabelText(ctrl.IsActive() ? "||" : ">");
 }

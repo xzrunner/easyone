@@ -5,7 +5,7 @@
 
 #include <wx/scrolwin.h>
 
-namespace n2 { class CompAnim; }
+namespace n2 { class CompAnim; class CompAnimInst; }
 
 namespace eone
 {
@@ -16,10 +16,11 @@ class WxTimeStageScrolled : public wxScrolledWindow
 {
 public:
 	WxTimeStageScrolled(wxWindow* parent, const n2::CompAnim& canim,
-		const ee0::SubjectMgrPtr& sub_mgr);
+		const n2::CompAnimInst& canim_inst, const ee0::SubjectMgrPtr& sub_mgr);
 
 private:
-	void InitLayout(const n2::CompAnim& canim, const ee0::SubjectMgrPtr& sub_mgr);
+	void InitLayout(const n2::CompAnim& canim, const n2::CompAnimInst& canim_inst,
+		const ee0::SubjectMgrPtr& sub_mgr);
 
 	void OnScroll(wxScrollWinEvent& event);
 

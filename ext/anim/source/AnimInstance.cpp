@@ -12,19 +12,9 @@ namespace anim
 
 AnimInstance::AnimInstance(const std::shared_ptr<const AnimTemplate>& anim_temp)
 	: m_template(anim_temp)
+	, m_curr_num(0)
 {
-	ResetLayerCursor();
-
-	m_slots.reserve(m_template->m_slots.size());
-	for (auto& node : m_template->m_slots) {
-		m_slots.push_back(node->Clone());
-	}
-
-	m_curr.clear();
-	m_curr.resize(anim_temp->GetMaxItemNum());
-	m_curr_num = 0;
-
-	UpdateSlotsVisible();
+	Refresh();
 }
 
 AnimInstance::AnimInstance(const AnimInstance& inst)
@@ -70,13 +60,32 @@ AnimInstance& AnimInstance::operator = (const AnimInstance& inst)
 	return *this;
 }
 
+void AnimInstance::Refresh()
+{
+	ResetLayerCursor();
+
+	m_slots.reserve(m_template->m_slots.size());
+	for (auto& node : m_template->m_slots) {
+		m_slots.push_back(node->Clone());
+	}
+
+	m_curr.clear();
+	int max_num = m_template->GetMaxItemNum();
+	if (max_num != m_curr.size()) {
+		m_curr.resize(max_num);
+	}
+	m_curr_num = 0;
+
+	UpdateSlotsVisible();
+}
+
 bool AnimInstance::Update(bool loop, float interval, int fps)
 {
 	if (!m_ctrl.IsActive()) {
 		return UpdateChildren();
 	}
 
-	if (!m_ctrl.Update()) {
+	if (!m_ctrl.Update(fps)) {
 		return false;
 	}
 
@@ -84,7 +93,7 @@ bool AnimInstance::Update(bool loop, float interval, int fps)
 
 	// update curr frame
 	if (dirty) {
-		LoadCurrSprites(fps);
+		LoadCurrSprites();
 	}
 
 	if (UpdateChildren()) {
@@ -96,20 +105,20 @@ bool AnimInstance::Update(bool loop, float interval, int fps)
 
 bool AnimInstance::SetFrame(int frame_idx, int fps)
 {
-	if (frame_idx == m_ctrl.GetFrame(fps)) {
+	if (frame_idx == m_ctrl.GetFrame()) {
 		return false;
 	}
 
 	int frame_copy = frame_idx;
 	frame_idx = frame_idx % (m_template->GetMaxFrameIdx() + 1);
 
-	if (frame_idx < m_ctrl.GetFrame(fps)) {
+	if (frame_idx < m_ctrl.GetFrame()) {
 		ResetLayerCursor();
 	}
 
 	m_ctrl.SetFrame(frame_idx, fps);
 
-	LoadCurrSprites(fps);
+	LoadCurrSprites();
 
 	SetChildrenFrame(frame_copy, fps);
 
@@ -140,31 +149,34 @@ void AnimInstance::LoadSprLerpData(const n0::SceneNodePtr& node, const AnimTempl
 	auto& ctrans = node->GetUniqueComp<n2::CompTransform>();
 	ctrans.SetSRT(*node, srt);
 
-	pt2::Color mul(lerp.col_mul), add(lerp.col_add);
-	mul.r += static_cast<uint8_t>(lerp.dcol_mul[0] * time);
-	mul.g += static_cast<uint8_t>(lerp.dcol_mul[1] * time);
-	mul.b += static_cast<uint8_t>(lerp.dcol_mul[2] * time);
-	mul.a += static_cast<uint8_t>(lerp.dcol_mul[3] * time);
-	add.r += static_cast<uint8_t>(lerp.dcol_add[0] * time);
-	add.g += static_cast<uint8_t>(lerp.dcol_add[1] * time);
-	add.b += static_cast<uint8_t>(lerp.dcol_add[2] * time);
-	add.a += static_cast<uint8_t>(lerp.dcol_add[3] * time);
+	if (node->HasUniqueComp<n2::CompColorCommon>())
+	{
+		pt2::Color mul(lerp.col_mul), add(lerp.col_add);
+		mul.r += static_cast<uint8_t>(lerp.dcol_mul[0] * time);
+		mul.g += static_cast<uint8_t>(lerp.dcol_mul[1] * time);
+		mul.b += static_cast<uint8_t>(lerp.dcol_mul[2] * time);
+		mul.a += static_cast<uint8_t>(lerp.dcol_mul[3] * time);
+		add.r += static_cast<uint8_t>(lerp.dcol_add[0] * time);
+		add.g += static_cast<uint8_t>(lerp.dcol_add[1] * time);
+		add.b += static_cast<uint8_t>(lerp.dcol_add[2] * time);
+		add.a += static_cast<uint8_t>(lerp.dcol_add[3] * time);
 
-	auto& ccolor = node->GetUniqueComp<n2::CompColorCommon>();
-	ccolor.SetColor(pt2::RenderColorCommon(mul, add));
+		auto& ccolor = node->GetUniqueComp<n2::CompColorCommon>();
+		ccolor.SetColor(pt2::RenderColorCommon(mul, add));
+	}
 }
 
 bool AnimInstance::UpdateFrameCursor(bool loop, float interval, int fps, bool reset_cursor)
 {
 	bool update = false;
-	int curr_frame = m_ctrl.GetFrame(fps);
-	int max_frame = m_template->GetMaxItemNum();
+	int curr_frame = m_ctrl.GetFrame();
+	int max_frame = m_template->GetMaxFrameIdx();
 	int loop_max_frame = static_cast<int>(max_frame + interval * fps);
 	if (loop) 
 	{
 		if (curr_frame <= max_frame) 
 		{
-			;
+			update = true;
 		} 
 		else if (curr_frame > max_frame && curr_frame <= loop_max_frame) 
 		{
@@ -191,10 +203,10 @@ bool AnimInstance::UpdateFrameCursor(bool loop, float interval, int fps, bool re
 			curr_frame = max_frame;
 		}
 	}
-	if (curr_frame != m_ctrl.GetFrame(fps)) {
-		m_ctrl.SetFrame(curr_frame, fps);
-		update = true;
-	}
+	//if (curr_frame != m_ctrl.GetFrame()) {
+	//	m_ctrl.SetFrame(curr_frame, fps);
+	//	update = true;
+	//}
 	return update;
 }
 
@@ -207,17 +219,17 @@ void AnimInstance::ResetLayerCursor()
 	}
 }
 
-void AnimInstance::LoadCurrSprites(int fps)
+void AnimInstance::LoadCurrSprites()
 {
 	if (m_template->GetMaxItemNum() < 0) {
 		return;
 	}
 
-	UpdateCursor(fps);
-	LoadCurrSpritesImpl(fps);
+	UpdateCursor();
+	LoadCurrSpritesImpl();
 }
 
-void AnimInstance::UpdateCursor(int fps)
+void AnimInstance::UpdateCursor()
 {
 	if (m_layer_cursor.empty()) {
 		return;
@@ -225,7 +237,7 @@ void AnimInstance::UpdateCursor(int fps)
 
 	assert(m_layer_cursor.size() == m_layer_cursor_update.size());
 	
-	int frame = m_ctrl.GetFrame(fps);
+	int frame = m_ctrl.GetFrame();
 	int* layer_cursor_ptr = &m_layer_cursor[0];
 	int* layer_cursor_update_ptr = &m_layer_cursor_update[0];
 	const AnimTemplate::Layer* layer_ptr = &m_template->m_layers[0];
@@ -280,13 +292,13 @@ void AnimInstance::UpdateCursor(int fps)
 	}
 }
 
-void AnimInstance::LoadCurrSpritesImpl(int fps)
+void AnimInstance::LoadCurrSpritesImpl()
 {
 	if (m_layer_cursor.empty()) {
 		return;
 	}
 
-	int ctrl_frame = m_ctrl.GetFrame(fps);
+	int ctrl_frame = m_ctrl.GetFrame();
 
 	m_curr_num = 0;
 	int* layer_cursor_ptr = &m_layer_cursor[0];

@@ -255,6 +255,7 @@ void WxLayersPanel::OnMouse(wxMouseEvent& event)
 			{
 				if (to > from) --to;
 				const_cast<n2::CompAnim&>(m_canim).SwapLayers(from, to);
+				m_sub_mgr->NotifyObservers(MSG_REFRESH_COMP_INST);
 				MessageHelper::SetCurrFrame(*m_sub_mgr, to, -1);
 			}
 		}

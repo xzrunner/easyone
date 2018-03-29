@@ -1,7 +1,7 @@
 #pragma once
 
 namespace anim { class KeyFrame; class Layer; }
-namespace n2 { class CompAnim; }
+namespace n2 { class CompAnim; class CompAnimInst; }
 
 namespace eone
 {
@@ -17,7 +17,8 @@ public:
 	static int GetMaxFrame(const n2::CompAnim& canim);
 	static int GetMaxFrame(const n2::CompAnim& canim, int layer_idx);
 
-	static int GetCurrFrame(const n2::CompAnim& canim);
+	static int GetCurrFrame(const n2::CompAnim& canim, 
+		const n2::CompAnimInst& canim_inst);
 
 }; // AnimHelper
 

@@ -18,7 +18,8 @@ public:
 	AnimInstance(const std::shared_ptr<const AnimTemplate>& anim_temp);
 	AnimInstance(const AnimInstance& inst);
 	AnimInstance& operator = (const AnimInstance& inst);
-	~AnimInstance() = default;
+
+	void Refresh();
 	
 	bool Update(bool loop = true, float interval = 0, int fps = 30);
 	bool SetFrame(int frame_idx, int fps);
@@ -29,6 +30,9 @@ public:
 		return m_template;
 	}
 
+	PlayCtrl& GetPlayCtrl() { return m_ctrl; }
+	const PlayCtrl& GetPlayCtrl() const { return m_ctrl; }
+
 	static void LoadSprLerpData(const n0::SceneNodePtr& node, const AnimTemplate::Lerp& lerp, int time);
 
 private:
@@ -36,9 +40,9 @@ private:
 
 	void ResetLayerCursor();
 
-	void LoadCurrSprites(int fps);
-	void UpdateCursor(int fps);
-	void LoadCurrSpritesImpl(int fps);
+	void LoadCurrSprites();
+	void UpdateCursor();
+	void LoadCurrSpritesImpl();
 	bool UpdateChildren();
 
 	void SetChildrenFrame(int frame, int fps);

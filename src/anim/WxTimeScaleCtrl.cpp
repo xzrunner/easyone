@@ -39,9 +39,11 @@ BEGIN_EVENT_TABLE(WxTimeScaleCtrl, wxPanel)
 END_EVENT_TABLE()
 
 WxTimeScaleCtrl::WxTimeScaleCtrl(wxWindow* parent, const n2::CompAnim& canim,
+	                             const n2::CompAnimInst& canim_inst,
 	                             const ee0::SubjectMgrPtr& sub_mgr)
 	: wxPanel(parent, wxID_ANY, wxDefaultPosition, wxSize(1, FRAME_GRID_HEIGHT))
 	, m_canim(canim)
+	, m_canim_inst(canim_inst)
 	, m_sub_mgr(sub_mgr)
 	, m_frame_idx(0)
 	, m_start_x(0)
@@ -137,7 +139,7 @@ void WxTimeScaleCtrl::OnMouse(wxMouseEvent& event)
 
 void WxTimeScaleCtrl::OnUpdateNode()
 {
-	int frame_idx = AnimHelper::GetCurrFrame(m_canim);
+	int frame_idx = AnimHelper::GetCurrFrame(m_canim, m_canim_inst);
 	if (frame_idx != m_frame_idx) 
 	{
 		m_frame_idx = frame_idx;

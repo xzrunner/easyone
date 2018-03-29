@@ -16,15 +16,16 @@ namespace anim
 {
 
 WxTimelinePanel::WxTimelinePanel(wxWindow* parent, n2::CompAnim& canim,
+	                             n2::CompAnimInst& canim_inst,
 	                             const ee0::SubjectMgrPtr& sub_mgr)
 	: wxPanel(parent)
 {
-	InitLayout(canim, sub_mgr);
+	InitLayout(canim, canim_inst, sub_mgr);
 
 	MessageHelper::SetCurrFrame(*sub_mgr, 0, 0);
 }
 
-void WxTimelinePanel::InitLayout(n2::CompAnim& canim,
+void WxTimelinePanel::InitLayout(n2::CompAnim& canim, n2::CompAnimInst& canim_inst,
 	                             const ee0::SubjectMgrPtr& sub_mgr)
 {
 	wxSplitterWindow* splitter = new wxSplitterWindow(this, wxID_ANY);
@@ -33,14 +34,14 @@ void WxTimelinePanel::InitLayout(n2::CompAnim& canim,
 	wxWindow* right_panel = new wxPanel(splitter);
 	{
 		wxSizer* sizer = new wxBoxSizer(wxVERTICAL);
-		sizer->Add(new WxLayersToolbar(left_panel, canim, sub_mgr), 1, wxEXPAND);
+		sizer->Add(new WxLayersToolbar(left_panel, canim, canim_inst, sub_mgr), 1, wxEXPAND);
 		sizer->Add(new WxLayersScrolled(left_panel, canim, sub_mgr), 99, wxEXPAND);
 		left_panel->SetSizer(sizer);
 	}
 	{
 		wxSizer* sizer = new wxBoxSizer(wxVERTICAL);
-		sizer->Add(new WxTimeScaleCtrl(right_panel, canim, sub_mgr), 0, wxEXPAND);
-		sizer->Add(new WxTimeStageScrolled(right_panel, canim, sub_mgr), 99, wxEXPAND);
+		sizer->Add(new WxTimeScaleCtrl(right_panel, canim, canim_inst, sub_mgr), 0, wxEXPAND);
+		sizer->Add(new WxTimeStageScrolled(right_panel, canim, canim_inst, sub_mgr), 99, wxEXPAND);
 		right_panel->SetSizer(sizer);
 	}
 	splitter->SetSashGravity(0.1f);

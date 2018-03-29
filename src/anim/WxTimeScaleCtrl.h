@@ -5,7 +5,7 @@
 
 #include <wx/panel.h>
 
-namespace n2 { class CompAnim; }
+namespace n2 { class CompAnim; class CompAnimInst; }
 
 namespace eone
 {
@@ -16,7 +16,7 @@ class WxTimeScaleCtrl : public wxPanel, public ee0::Observer
 {
 public:
 	WxTimeScaleCtrl(wxWindow* parent, const n2::CompAnim& canim,
-		const ee0::SubjectMgrPtr& sub_mgr);
+		const n2::CompAnimInst& canim_inst, const ee0::SubjectMgrPtr& sub_mgr);
 	virtual ~WxTimeScaleCtrl();
 
 	virtual void OnNotify(uint32_t msg, const ee0::VariantSet& variants) override;
@@ -31,8 +31,9 @@ private:
 	void OnWndScroll(const ee0::VariantSet& variants);
 
 private:
-	const n2::CompAnim& m_canim;
-	ee0::SubjectMgrPtr  m_sub_mgr;
+	const n2::CompAnim&     m_canim;
+	const n2::CompAnimInst& m_canim_inst;
+	ee0::SubjectMgrPtr      m_sub_mgr;
 
 	int m_frame_idx;
 

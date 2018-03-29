@@ -4,7 +4,7 @@
 
 #include <wx/panel.h>
 
-namespace n2 { class CompAnim; }
+namespace n2 { class CompAnim; class CompAnimInst; }
 
 namespace eone
 {
@@ -15,10 +15,10 @@ class WxTimelinePanel : public wxPanel
 {
 public:
 	WxTimelinePanel(wxWindow* parent, n2::CompAnim& canim,
-		const ee0::SubjectMgrPtr& sub_mgr);
+		n2::CompAnimInst& canim_inst, const ee0::SubjectMgrPtr& sub_mgr);
 
 private:
-	void InitLayout(n2::CompAnim& canim,
+	void InitLayout(n2::CompAnim& canim, n2::CompAnimInst& canim_inst,
 		const ee0::SubjectMgrPtr& sub_mgr);
 
 }; // WxTimelinePanel
