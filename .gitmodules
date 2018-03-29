@@ -145,3 +145,6 @@
 [submodule "ext/moon"]
 	path = ext/moon
 	url = git@github.com:xzrunner/moon.git
+[submodule "ext/anim"]
+	path = ext/anim
+	url = git@github.com:xzrunner/anim.git
