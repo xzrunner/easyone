@@ -1,7 +1,14 @@
 #include "anim/AnimHelper.h"
 
+#include "frame/NodeFactory.h"
+#include "frame/MessageID.h"
+
+#include <ee0/SubjectMgr.h>
+
+#include <node0/SceneNode.h>
 #include <node2/CompAnim.h>
 #include <node2/CompAnimInst.h>
+#include <node2/CompComplex.h>
 #include <anim/Layer.h>
 #include <anim/KeyFrame.h>
 #include <anim/Utility.h>
@@ -61,6 +68,27 @@ int AnimHelper::GetCurrFrame(const n2::CompAnim& canim,
 		frame_idx = frame_idx % (max_frame + 1);
 	}
 	return frame_idx;
+}
+
+void AnimHelper::UpdateTreePanael(ee0::SubjectMgr& sub_mgr,
+	                              const n2::CompAnimInst& canim_inst)
+{
+	auto root = NodeFactory::Create(NODE_SCENE2D);
+	auto& ccomplex = root->GetSharedComp<n2::CompComplex>();
+	canim_inst.TraverseCurrNodes([&](const n0::SceneNodePtr& node)->bool
+	{
+		ccomplex.AddChild(node);
+		return true;
+	});
+
+	ee0::VariantSet vars;
+
+	ee0::Variant var;
+	var.m_type = ee0::VT_PVOID;
+	var.m_val.pv = &root;
+	vars.SetVariant("node", var);
+
+	sub_mgr.NotifyObservers(MSG_TREE_PANEL_REBUILD, vars);
 }
 
 }

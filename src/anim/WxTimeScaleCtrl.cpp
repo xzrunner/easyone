@@ -2,7 +2,7 @@
 #include "anim/config.h"
 #include "anim/MessageID.h"
 #include "anim/AnimHelper.h"
-#include "anim/MessageHelper.h"
+#include "anim/MsgHelper.h"
 
 #include <ee0/VariantSet.h>
 #include <ee0/SubjectMgr.h>
@@ -132,7 +132,7 @@ void WxTimeScaleCtrl::OnMouse(wxMouseEvent& event)
 			m_frame_idx = frame;
 			Refresh(false);
 
-			MessageHelper::SetCurrFrame(*m_sub_mgr, -1, frame);
+			MsgHelper::SetCurrFrame(*m_sub_mgr, -1, frame);
 		}
 	}
 }

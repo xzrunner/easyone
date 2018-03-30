@@ -1,6 +1,7 @@
 #include "frame/WxSceneTreeCtrl.h"
 #include "frame/WxSceneTreeItem.h"
 #include "frame/WxStagePage.h"
+#include "frame/MessageID.h"
 
 #include <ee0/SubjectMgr.h>
 #include <ee0/CompNodeEditor.h>
@@ -78,6 +79,10 @@ void WxSceneTreeCtrl::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
 	case ee0::MSG_UPDATE_NODE_NAME:
 		ChangeName(variants);
 		break;
+
+	case MSG_TREE_PANEL_REBUILD:
+		RebuildTree(variants);
+		break;
 	}
 }
 
@@ -136,6 +141,8 @@ void WxSceneTreeCtrl::RegisterMsg(ee0::SubjectMgr& sub_mgr)
 	sub_mgr.RegisterObserver(ee0::MSG_STAGE_PAGE_CHANGED, this);
 
 	sub_mgr.RegisterObserver(ee0::MSG_UPDATE_NODE_NAME, this);
+
+	sub_mgr.RegisterObserver(MSG_TREE_PANEL_REBUILD, this);
 }
 
 void WxSceneTreeCtrl::OnSelChanged(wxTreeEvent& event)
@@ -669,6 +676,16 @@ void WxSceneTreeCtrl::RebuildTree(const n0::SceneNodePtr& node)
 		return true;
 	});
 	Expand(m_root);
+}
+
+void WxSceneTreeCtrl::RebuildTree(const ee0::VariantSet& variants)
+{
+	auto var = variants.GetVariant("node");
+	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: node");
+	n0::SceneNodePtr* node = static_cast<n0::SceneNodePtr*>(var.m_val.pv);
+	GD_ASSERT(node, "err scene node");
+	m_root_node = *node;
+	RebuildTree(m_root_node);
 }
 
 void WxSceneTreeCtrl::ChangeName(const ee0::VariantSet& variants)

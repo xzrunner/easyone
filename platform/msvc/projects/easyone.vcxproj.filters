@@ -180,9 +180,6 @@
     <ClInclude Include="..\..\..\src\anim\MessageID.h">
       <Filter>12.anim\timeline</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\anim\MessageHelper.h">
-      <Filter>12.anim\timeline</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\anim\config.h">
       <Filter>12.anim\timeline</Filter>
     </ClInclude>
@@ -193,6 +190,12 @@
       <Filter>12.anim\timeline\right</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\anim\AnimHelper.h">
+      <Filter>12.anim\timeline</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\frame\MessageID.h">
+      <Filter>00.frame\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\anim\MsgHelper.h">
       <Filter>12.anim\timeline</Filter>
     </ClInclude>
   </ItemGroup>
@@ -308,9 +311,6 @@
     <ClCompile Include="..\..\..\src\anim\TimeStageEdit.cpp">
       <Filter>12.anim\timeline\right</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\anim\MessageHelper.cpp">
-      <Filter>12.anim\timeline</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\anim\WxLayersScrolled.cpp">
       <Filter>12.anim\timeline\left</Filter>
     </ClCompile>
@@ -318,6 +318,9 @@
       <Filter>12.anim\timeline\right</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\anim\AnimHelper.cpp">
+      <Filter>12.anim\timeline</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\anim\MsgHelper.cpp">
       <Filter>12.anim\timeline</Filter>
     </ClCompile>
   </ItemGroup>

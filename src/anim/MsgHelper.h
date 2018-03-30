@@ -7,13 +7,13 @@ namespace eone
 namespace anim
 {
 
-class MessageHelper
+class MsgHelper
 {
 public:
 	static void SetSelectedRegion(ee0::SubjectMgr& sub_mgr, int col);
 	static void SetCurrFrame(ee0::SubjectMgr& sub_mgr, int layer, int frame);
 
-}; // MessageHelper
+}; // MsgHelper
 
 }
 }

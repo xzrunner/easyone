@@ -57,6 +57,7 @@ private:
 	void DeleteEmptyNodeToRoot(wxTreeItemId item);
 
 	void RebuildTree(const n0::SceneNodePtr& node);
+	void RebuildTree(const ee0::VariantSet& variants);
 
 	void ChangeName(const ee0::VariantSet& variants);
 	

@@ -1,6 +1,6 @@
 #include "anim/TimeStageEdit.h"
 #include "anim/MessageID.h"
-#include "anim/MessageHelper.h"
+#include "anim/MsgHelper.h"
 #include "anim/AnimHelper.h"
 
 #include <ee0/SubjectMgr.h>
@@ -34,14 +34,14 @@ void TimeStageEdit::OnMouseLeftDown(int row, int col)
 	if (wxGetKeyState(WXK_SHIFT))
 	{
 		UpdateRegion(layer_idx, col);
-		MessageHelper::SetSelectedRegion(*m_sub_mgr, m_col);
+		MsgHelper::SetSelectedRegion(*m_sub_mgr, m_col);
 	} 
 	else 
 	{
 		m_row = row;
 		m_col = col;
 		m_col_min = m_col_max = col;
-		MessageHelper::SetCurrFrame(*m_sub_mgr, layer_idx, col);
+		MsgHelper::SetCurrFrame(*m_sub_mgr, layer_idx, col);
 	}
 }
 

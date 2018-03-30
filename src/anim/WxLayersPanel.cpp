@@ -1,7 +1,7 @@
 #include "anim/WxLayersPanel.h"
 #include "anim/config.h"
 #include "anim/MessageID.h"
-#include "anim/MessageHelper.h"
+#include "anim/MsgHelper.h"
 
 #include <ee0/VariantSet.h>
 #include <ee0/SubjectMgr.h>
@@ -215,7 +215,7 @@ void WxLayersPanel::OnMouse(wxMouseEvent& event)
 		int layer = size - screen_idx - 1;
 		if (layer >= 0) 
 		{
-			MessageHelper::SetCurrFrame(*m_sub_mgr, layer, -1);
+			MsgHelper::SetCurrFrame(*m_sub_mgr, layer, -1);
 			if (screen_idx < size) {
 				m_is_drag_open = true;
 			}
@@ -255,8 +255,8 @@ void WxLayersPanel::OnMouse(wxMouseEvent& event)
 			{
 				if (to > from) --to;
 				const_cast<n2::CompAnim&>(m_canim).SwapLayers(from, to);
-				m_sub_mgr->NotifyObservers(MSG_REFRESH_COMP_INST);
-				MessageHelper::SetCurrFrame(*m_sub_mgr, to, -1);
+				m_sub_mgr->NotifyObservers(MSG_REFRESH_ANIM_COMP);
+				MsgHelper::SetCurrFrame(*m_sub_mgr, to, -1);
 			}
 		}
 		m_drag_flag_line = -1;

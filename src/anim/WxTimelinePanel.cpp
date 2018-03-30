@@ -3,7 +3,7 @@
 #include "anim/WxLayersScrolled.h"
 #include "anim/WxTimeScaleCtrl.h"
 #include "anim/WxTimeStageScrolled.h"
-#include "anim/MessageHelper.h"
+#include "anim/MsgHelper.h"
 
 #include <ee0/SubjectMgr.h>
 
@@ -22,7 +22,7 @@ WxTimelinePanel::WxTimelinePanel(wxWindow* parent, n2::CompAnim& canim,
 {
 	InitLayout(canim, canim_inst, sub_mgr);
 
-	MessageHelper::SetCurrFrame(*sub_mgr, 0, 0);
+	MsgHelper::SetCurrFrame(*sub_mgr, 0, 0);
 }
 
 void WxTimelinePanel::InitLayout(n2::CompAnim& canim, n2::CompAnimInst& canim_inst,

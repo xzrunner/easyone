@@ -1,7 +1,8 @@
 #include "anim/WxLayersToolbar.h"
 #include "anim/config.h"
-#include "anim/MessageHelper.h"
+#include "anim/MsgHelper.h"
 #include "anim/MessageID.h"
+#include "anim/AnimHelper.h"
 
 #include <ee0/SubjectMgr.h>
 
@@ -65,9 +66,9 @@ void WxLayersToolbar::OnAddLayer(wxCommandEvent& event)
 	layer->AddKeyFrame(std::make_unique<::anim::KeyFrame>(0));
 
 	m_canim.AddLayer(layer);
-	m_sub_mgr->NotifyObservers(MSG_REFRESH_COMP_INST);
+	m_sub_mgr->NotifyObservers(MSG_REFRESH_ANIM_COMP);
 
-	MessageHelper::SetCurrFrame(*m_sub_mgr, count, 0);
+	MsgHelper::SetCurrFrame(*m_sub_mgr, count, 0);
 }
 
 void WxLayersToolbar::OnDelLayer(wxCommandEvent& event)
@@ -80,6 +81,11 @@ void WxLayersToolbar::OnPressPlay(wxCommandEvent& event)
 	auto& ctrl = m_canim_inst.GetPlayCtrl();
 	ctrl.SetActive(!ctrl.IsActive());
 	m_btn_play->SetLabelText(ctrl.IsActive() ? "||" : ">");
+
+	// update tree panel
+	if (!ctrl.IsActive()) {
+		AnimHelper::UpdateTreePanael(*m_sub_mgr, m_canim_inst);
+	}
 }
 
 }

@@ -1,4 +1,4 @@
-#include "anim/MessageHelper.h"
+#include "anim/MsgHelper.h"
 #include "anim/MessageID.h"
 
 #include <ee0/VariantSet.h>
@@ -9,7 +9,7 @@ namespace eone
 namespace anim
 {
 
-void MessageHelper::SetSelectedRegion(ee0::SubjectMgr& sub_mgr, int col)
+void MsgHelper::SetSelectedRegion(ee0::SubjectMgr& sub_mgr, int col)
 {
 	ee0::VariantSet vars;
 
@@ -21,7 +21,7 @@ void MessageHelper::SetSelectedRegion(ee0::SubjectMgr& sub_mgr, int col)
 	sub_mgr.NotifyObservers(MSG_SET_SELECTED_REGION, vars);
 }
 
-void MessageHelper::SetCurrFrame(ee0::SubjectMgr& sub_mgr,
+void MsgHelper::SetCurrFrame(ee0::SubjectMgr& sub_mgr,
 	                             int layer, int frame)
 {
 	ee0::VariantSet vars;

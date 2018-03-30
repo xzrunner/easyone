@@ -37,7 +37,7 @@ protected:
 
 private:
 	bool OnSetCurrFrame(const ee0::VariantSet& variants);
-	bool OnRefreshCompInst(const ee0::VariantSet& variants);
+	bool OnRefreshAnimComp();
 
 }; // WxStagePage
 

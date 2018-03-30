@@ -1,6 +1,7 @@
 #include "anim/WxStagePage.h"
 #include "anim/WxTimelinePanel.h"
 #include "anim/MessageID.h"
+#include "anim/AnimHelper.h"
 
 #include "frame/WxStagePage.h"
 #include "frame/Blackboard.h"
@@ -12,8 +13,8 @@
 #include <ee2/WxStageDropTarget.h>
 
 #include <guard/check.h>
+#include <logger.h>
 #include <node0/SceneNode.h>
-#include <node0/NodePool.h>
 #include <node2/CompAnim.h>
 #include <node2/CompAnimInst.h>
 
@@ -31,7 +32,7 @@ WxStagePage::WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, const n
 	canim_inst.GetPlayCtrl().SetActive(false);
 
 	m_messages.push_back(MSG_SET_CURR_FRAME);
-	m_messages.push_back(MSG_REFRESH_COMP_INST);
+	m_messages.push_back(MSG_REFRESH_ANIM_COMP);
 
 	if (library) {
 		SetDropTarget(new ee2::WxStageDropTarget(library, this));
@@ -48,8 +49,8 @@ void WxStagePage::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
 	case MSG_SET_CURR_FRAME:
 		dirty = OnSetCurrFrame(variants);
 		break;
-	case MSG_REFRESH_COMP_INST:
-		dirty = OnRefreshCompInst(variants);
+	case MSG_REFRESH_ANIM_COMP:
+		dirty = OnRefreshAnimComp();
 		break;
 	}
 
@@ -103,7 +104,7 @@ const n0::NodeSharedComp& WxStagePage::GetEditedNodeComp() const
 
 void WxStagePage::LoadFromJsonExt(const std::string& dir, const rapidjson::Value& val)
 {
-	m_sub_mgr->NotifyObservers(MSG_REFRESH_COMP_INST);
+	m_sub_mgr->NotifyObservers(MSG_REFRESH_ANIM_COMP);
 }
 
 bool WxStagePage::OnSetCurrFrame(const ee0::VariantSet& variants)
@@ -111,27 +112,18 @@ bool WxStagePage::OnSetCurrFrame(const ee0::VariantSet& variants)
 	auto var = variants.GetVariant("frame");
 	GD_ASSERT(var.m_type == ee0::VT_INT, "err frame");
 	int frame = var.m_val.l; 
-
+	
 	auto& canim_inst = m_node->GetUniqueComp<n2::CompAnimInst>();
-	return canim_inst.SetFrame(frame);
+	bool ret = canim_inst.SetFrame(frame);
+	AnimHelper::UpdateTreePanael(*m_sub_mgr, canim_inst);
+	return ret;
 }
 
-bool WxStagePage::OnRefreshCompInst(const ee0::VariantSet& variants)
+bool WxStagePage::OnRefreshAnimComp()
 {
+	LOGI("refresh anim comp");
 	auto& canim = m_node->GetSharedCompPtr<n2::CompAnim>();
-	auto array = n0::NodePool::Instance()->Query(canim);
-	if (!array) {
-		return false;
-	}
-
-	for (auto& weak : *array)
-	{
-		auto node = weak.lock();
-		if (node) {
-			auto& inst = node->GetUniqueComp<n2::CompAnimInst>();
-			inst.Refresh();
-		}
-	}
+	canim->GetAnimTemplate()->Build(canim->GetAllLayers());
 	return true;
 }
 

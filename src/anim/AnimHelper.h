@@ -2,6 +2,7 @@
 
 namespace anim { class KeyFrame; class Layer; }
 namespace n2 { class CompAnim; class CompAnimInst; }
+namespace ee0 { class SubjectMgr; }
 
 namespace eone
 {
@@ -18,6 +19,9 @@ public:
 	static int GetMaxFrame(const n2::CompAnim& canim, int layer_idx);
 
 	static int GetCurrFrame(const n2::CompAnim& canim, 
+		const n2::CompAnimInst& canim_inst);
+
+	static void UpdateTreePanael(ee0::SubjectMgr& sub_mgr,
 		const n2::CompAnimInst& canim_inst);
 
 }; // AnimHelper

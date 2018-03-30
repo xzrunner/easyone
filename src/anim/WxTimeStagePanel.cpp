@@ -1,7 +1,7 @@
 #include "anim/WxTimeStagePanel.h"
 #include "anim/config.h"
 #include "anim/MessageID.h"
-#include "anim/MessageHelper.h"
+#include "anim/MsgHelper.h"
 #include "anim/AnimHelper.h"
 
 #include <ee0/VariantSet.h>
@@ -11,6 +11,7 @@
 #include <node2/CompAnim.h>
 #include <anim/KeyFrame.h>
 #include <anim/Layer.h>
+#include <anim/KeyFrame.h>
 
 #include <wx/dcbuffer.h>
 #include <wx/menu.h>
@@ -131,8 +132,8 @@ void WxTimeStagePanel::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
 	}
 
 	if (dirty) {
-		Refresh(false);
 		m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
+		Refresh(false);
 	}
 }
 
@@ -364,7 +365,7 @@ bool WxTimeStagePanel::InsertSceneNode(const ee0::VariantSet& variants)
 	GD_ASSERT(node, "err scene node");
 
 	frame->AddNode(*node);
-	m_sub_mgr->NotifyObservers(MSG_REFRESH_COMP_INST);
+	m_sub_mgr->NotifyObservers(MSG_REFRESH_ANIM_COMP);
 
 	return true;
 }
@@ -382,14 +383,14 @@ bool WxTimeStagePanel::DeleteSceneNode(const ee0::VariantSet& variants)
 	GD_ASSERT(node, "err scene node");
 
 	bool ret = frame->RemoveNode(*node);
-	m_sub_mgr->NotifyObservers(MSG_REFRESH_COMP_INST);
+	m_sub_mgr->NotifyObservers(MSG_REFRESH_ANIM_COMP);
 	return ret;
 }
 
 bool WxTimeStagePanel::ClearSceneNode()
 {
 	bool ret = const_cast<n2::CompAnim&>(m_canim).RemoveAllLayers();
-	m_sub_mgr->NotifyObservers(MSG_REFRESH_COMP_INST);
+	m_sub_mgr->NotifyObservers(MSG_REFRESH_ANIM_COMP);
 	return ret;
 }
 
@@ -439,7 +440,7 @@ bool WxTimeStagePanel::ReorderSceneNode(const ee0::VariantSet& variants)
 		ret = true;
 	}
 	if (ret) {
-		m_sub_mgr->NotifyObservers(MSG_REFRESH_COMP_INST);
+		m_sub_mgr->NotifyObservers(MSG_REFRESH_ANIM_COMP);
 	}
 	return ret;
 }
@@ -513,7 +514,7 @@ void WxTimeStagePanel::OnSetSelectedRegion(const ee0::VariantSet& variants)
 			m_col_min = std::min(std::min(m_frame_idx, col), max_frame);
 			m_col_max = std::min(std::max(m_frame_idx, col), max_frame);
 			if (m_col_min == m_col_max) {
-				MessageHelper::SetCurrFrame(*m_sub_mgr, -1, m_col_min);
+				MsgHelper::SetCurrFrame(*m_sub_mgr, -1, m_col_min);
 			}
 			Refresh(false);
 		}
@@ -538,16 +539,20 @@ void WxTimeStagePanel::MousePopupMenu(int x, int y)
 
 void WxTimeStagePanel::OnCreateClassicTween(wxCommandEvent& event)
 {
-	if (auto frame = AnimHelper::GetKeyFrame(m_canim, m_layer_idx, m_frame_idx)) {
+	if (auto frame = AnimHelper::GetKeyFrame(m_canim, m_layer_idx, m_frame_idx)) 
+	{
 		frame->SetTween(true);
+		m_sub_mgr->NotifyObservers(MSG_REFRESH_ANIM_COMP);
 		Refresh(false);
 	}
 }
 
 void WxTimeStagePanel::OnDeleteClassicTween(wxCommandEvent& event)
 {
-	if (auto frame = AnimHelper::GetKeyFrame(m_canim, m_layer_idx, m_frame_idx)) {
+	if (auto frame = AnimHelper::GetKeyFrame(m_canim, m_layer_idx, m_frame_idx)) 
+	{
 		frame->SetTween(false);
+		m_sub_mgr->NotifyObservers(MSG_REFRESH_ANIM_COMP);
 		Refresh(false);
 	}
 }
@@ -564,16 +569,57 @@ void WxTimeStagePanel::OnDeleteFrame(wxCommandEvent& event)
 
 void WxTimeStagePanel::OnInsertKeyFrame(wxCommandEvent& event)
 {
-	if (auto layer = AnimHelper::GetLayer(m_canim, m_layer_idx)) {
-		layer->InsertKeyFrame(m_frame_idx);
-		Refresh(false);
+	auto layer = AnimHelper::GetLayer(m_canim, m_layer_idx);
+	if (!layer) {
+		return;
 	}
+
+	auto new_frame = std::make_unique<::anim::KeyFrame>(m_frame_idx);
+
+	if (!layer->GetAllKeyFrames().empty())
+	{
+		if (layer->GetMaxFrameIdx() < m_frame_idx)
+		{
+			// copy from end
+			auto end_frame = layer->GetEndFrame();
+			if (end_frame) 
+			{
+				*new_frame = *end_frame;
+				new_frame->SetFrameIdx(m_frame_idx);
+			}
+		}
+		else
+		{
+			auto prev = layer->GetPrevKeyFrame(m_frame_idx),
+				 next = layer->GetNextKeyFrame(m_frame_idx);
+			GD_ASSERT(prev, "err prev");
+			// in middle, need tween
+			if (prev->GetTween() && next)
+			{
+				// todo lerp
+			}
+			else
+			{
+				*new_frame = *prev;
+			}
+		}
+	}
+
+	layer->InsertKeyFrame(new_frame);
+	
+	m_sub_mgr->NotifyObservers(MSG_REFRESH_ANIM_COMP);
+
+	MsgHelper::SetCurrFrame(*m_sub_mgr, m_layer_idx, m_frame_idx);
+
+	Refresh(false);
 }
 
 void WxTimeStagePanel::OnDeleteKeyFrame(wxCommandEvent& event)
 {
-	if (auto layer = AnimHelper::GetLayer(m_canim, m_layer_idx)) {
+	if (auto layer = AnimHelper::GetLayer(m_canim, m_layer_idx)) 
+	{
 		layer->RemoveKeyFrame(m_frame_idx);
+		m_sub_mgr->NotifyObservers(MSG_REFRESH_ANIM_COMP);
 		Refresh(false);
 	}
 }
@@ -644,16 +690,20 @@ void WxTimeStagePanel::OnDeleteFrame(wxKeyEvent& event)
 
 void WxTimeStagePanel::OnInsertFrame()
 {
-	if (auto layer = AnimHelper::GetLayer(m_canim, m_layer_idx)) {
+	if (auto layer = AnimHelper::GetLayer(m_canim, m_layer_idx)) 
+	{
 		layer->InsertNullFrame(m_frame_idx);
+		m_sub_mgr->NotifyObservers(MSG_REFRESH_ANIM_COMP);
 		Refresh(false);
 	}
 }
 
 void WxTimeStagePanel::OnDeleteFrame()
 {
-	if (auto layer = AnimHelper::GetLayer(m_canim, m_layer_idx)) {
+	if (auto layer = AnimHelper::GetLayer(m_canim, m_layer_idx)) 
+	{
 		layer->RemoveNullFrame(m_frame_idx);
+		m_sub_mgr->NotifyObservers(MSG_REFRESH_ANIM_COMP);
 		Refresh(false);
 	}
 }

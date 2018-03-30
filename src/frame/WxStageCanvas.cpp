@@ -37,7 +37,9 @@ bool WxStageCanvas::OnUpdate()
 {
 	auto node = static_cast<WxStagePage*>(m_stage)->GetEditedNode();
 	bool dirty = n2::UpdateSystem::Update(node);
-	m_stage->GetSubjectMgr()->NotifyObservers(ee0::MSG_UPDATE_NODES);
+	if (dirty) {
+		m_stage->GetSubjectMgr()->NotifyObservers(ee0::MSG_UPDATE_NODES);
+	}
 	return dirty;
 }
 

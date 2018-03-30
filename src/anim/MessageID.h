@@ -12,7 +12,7 @@ enum MessageID
 
 	MSG_WND_SCROLL,
 
-	MSG_REFRESH_COMP_INST,
+	MSG_REFRESH_ANIM_COMP,
 };
 
 }
