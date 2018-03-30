@@ -112,6 +112,9 @@ bool WxStagePage::OnSetCurrFrame(const ee0::VariantSet& variants)
 	auto var = variants.GetVariant("frame");
 	GD_ASSERT(var.m_type == ee0::VT_INT, "err frame");
 	int frame = var.m_val.l; 
+
+	auto& canim = m_node->GetSharedComp<n2::CompAnim>();
+	frame = std::min(frame, canim.GetAnimTemplate()->GetMaxFrameIdx());
 	
 	auto& canim_inst = m_node->GetUniqueComp<n2::CompAnimInst>();
 	bool ret = canim_inst.SetFrame(frame);
