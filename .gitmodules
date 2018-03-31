@@ -49,18 +49,12 @@
 [submodule "ext/dtex2"]
 	path = ext/dtex2
 	url = git@github.com:xzrunner/dtex2.git
-[submodule "ext/cooking"]
-	path = ext/cooking
-	url = git@github.com:xzrunner/cooking.git
 [submodule "ext/painting2"]
 	path = ext/painting2
 	url = git@github.com:xzrunner/painting2.git
 [submodule "ext/painting3"]
 	path = ext/painting3
 	url = git@github.com:xzrunner/painting3.git
-[submodule "ext/gum"]
-	path = ext/gum
-	url = git@github.com:xzrunner/gum.git
 [submodule "ext/node0"]
 	path = ext/node0
 	url = git@github.com:xzrunner/node0.git
@@ -70,24 +64,12 @@
 [submodule "ext/node3"]
 	path = ext/node3
 	url = git@github.com:xzrunner/node3.git
-[submodule "ext/sprite2"]
-	path = ext/sprite2
-	url = git@github.com:xzrunner/sprite2.git
 [submodule "ext/bs"]
 	path = ext/bs
 	url = git@github.com:xzrunner/bs.git
 [submodule "ext/js"]
 	path = ext/js
 	url = git@github.com:xzrunner/js.git
-[submodule "ext/s2serializer"]
-	path = ext/s2serializer
-	url = git@github.com:xzrunner/s2serializer.git
-[submodule "ext/s2loader"]
-	path = ext/s2loader
-	url = git@github.com:xzrunner/s2loader.git
-[submodule "ext/s2storer"]
-	path = ext/s2storer
-	url = git@github.com:xzrunner/s2storer.git
 [submodule "ext/easyeditor0"]
 	path = ext/easyeditor0
 	url = git@github.com:xzrunner/easyeditor0.git
@@ -103,12 +85,6 @@
 [submodule "ext/gtxt/src/gtxt"]
 	path = ext/gtxt/src/gtxt
 	url = git@github.com:xzrunner/gtxt.git
-[submodule "ext/bimp"]
-	path = ext/bimp
-	url = git@github.com:xzrunner/bimp.git
-[submodule "ext/simp"]
-	path = ext/simp
-	url = git@github.com:xzrunner/simp.git
 [submodule "ext/polymesh"]
 	path = ext/polymesh
 	url = git@github.com:xzrunner/polymesh.git
@@ -118,18 +94,12 @@
 [submodule "ext/uniaudio"]
 	path = ext/uniaudio
 	url = git@github.com:xzrunner/uniaudio.git
-[submodule "ext/flatten"]
-	path = ext/flatten
-	url = git@github.com:xzrunner/flatten.git
 [submodule "ext/camera25/src/camera25"]
 	path = ext/camera25/src/camera25
 	url = git@github.com:xzrunner/camera25.git
 [submodule "ext/rigging/src/rigging"]
 	path = ext/rigging/src/rigging
 	url = git@github.com:xzrunner/rigging.git
-[submodule "ext/timp"]
-	path = ext/timp
-	url = git@github.com:xzrunner/timp.git
 [submodule "ext/external"]
 	path = ext/external
 	url = git@github.com:xzrunner/external.git
