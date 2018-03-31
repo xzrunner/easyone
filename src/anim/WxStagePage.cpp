@@ -17,6 +17,7 @@
 #include <node0/SceneNode.h>
 #include <node2/CompAnim.h>
 #include <node2/CompAnimInst.h>
+#include <anim/AnimTemplate.h>
 
 #include <wx/aui/framemanager.h>
 

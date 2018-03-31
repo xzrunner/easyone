@@ -9,9 +9,6 @@ namespace ee0 { class WxLibraryPanel; }
 
 namespace eone
 {
-
-class WxStagePage;
-
 namespace scene3d
 {
 

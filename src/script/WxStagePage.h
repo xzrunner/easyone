@@ -8,9 +8,6 @@ namespace n0 { class NodeSharedComp; }
 
 namespace eone
 {
-
-class WxStagePage;
-
 namespace script
 {
 
