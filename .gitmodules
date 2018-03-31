@@ -118,3 +118,6 @@
 [submodule "ext/anim"]
 	path = ext/anim
 	url = git@github.com:xzrunner/anim.git
+[submodule "ext/cooking"]
+	path = ext/cooking
+	url = git@github.com:xzrunner/cooking.git
