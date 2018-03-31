@@ -26,8 +26,6 @@
 #include <js/RapidJsonHelper.h>
 #include <node0/SceneNode.h>
 #include <ns/RegistCallback.h>
-#include <gum/Facade.h>
-#include <gum/GTxt.h>
 
 #include <boost/filesystem.hpp>
 
@@ -71,8 +69,6 @@ void Application::LoadFromFile(const std::string& filepath)
 		//} else if (camera == "3d") {
 		//	new_type = PAGE_SCENE3D;
 		//}
-	} else if (new_type_str == "n2_anim") {
-		new_type = PAGE_ANIM;
 	} else if (new_type_str == "n2_scale9") {
 		new_type = PAGE_SCALE9;
 	} else if (new_type_str == "n2_mask") {
@@ -111,12 +107,12 @@ void Application::Clear()
 
 void Application::InitSubmodule()
 {
-	CU_VEC<std::pair<CU_STR, CU_STR>> fonts;
-	CU_VEC<std::pair<CU_STR, CU_STR>> user_fonts;
-	fonts.push_back(std::make_pair("default", "FZCY_GBK.ttf"));
-	gum::GTxt::Instance()->Init(fonts, user_fonts);
+	//CU_VEC<std::pair<CU_STR, CU_STR>> fonts;
+	//CU_VEC<std::pair<CU_STR, CU_STR>> user_fonts;
+	//fonts.push_back(std::make_pair("default", "FZCY_GBK.ttf"));
+	//gum::GTxt::Instance()->Init(fonts, user_fonts);
 
-	gum::Facade::Initialize();
+	//gum::Facade::Initialize();
 }
 
 void Application::InitLayout()

@@ -11,7 +11,6 @@
 #include <node2/CompScale9.h>
 #include <node2/CompAnim.h>
 #include <node2/CompAnimInst.h>
-#include <node2/CompSprite2.h>
 #include <node2/CompBoundingBox.h>
 #include <node2/CompTransform.h>
 #include <anim/KeyFrame.h>
@@ -78,12 +77,6 @@ n0::SceneNodePtr NodeFactory::Create(NodeType type)
 		}
 		break;
 
-	case NODE_SPRITE2:
-		{
-			node->AddSharedComp<n2::CompSprite2>();
-			sz.Build(100, 100);
-		}
-		break;
 	case NODE_SCENE2D:
 		{
 			node->AddSharedComp<n2::CompComplex>();

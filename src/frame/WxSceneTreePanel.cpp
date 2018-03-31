@@ -12,13 +12,11 @@
 #include <guard/check.h>
 #include <node0/SceneNode.h>
 #include <node2/CompImage.h>
-#include <node2/CompSprite2.h>
 #include <node2/CompTransform.h>
 #include <node2/CompBoundingBox.h>
-#include <gum/ResPool.h>
-#include <gum/SymbolPool.h>
-#include <gum/Image.h>
-#include <gum/Texture.h>
+#include <facade/ResPool.h>
+#include <facade/Image.h>
+#include <facade/Texture.h>
 
 #include <wx/sizer.h>
 #include <wx/button.h>
@@ -36,8 +34,6 @@ static const std::vector<std::pair<uint32_t, std::string>> NODE_LIST =
 	std::make_pair(eone::NODE_MESH,    "Mesh"),
 	std::make_pair(eone::NODE_SCALE9,  "Scale9"),
 	std::make_pair(eone::NODE_ANIM,    "Anim"),
-
-	std::make_pair(eone::NODE_SPRITE2, "Sprite2"),
 };
 
 }
@@ -88,7 +84,7 @@ void WxSceneTreePanel::OnCreatePress(wxCommandEvent& event)
 			if (dlg.ShowModal() == wxID_OK)
 			{
 				auto& path = dlg.GetPath();
-				auto img = gum::ResPool::Instance().Fetch<gum::Image>(path.ToStdString());
+				auto img = facade::ResPool::Instance().Fetch<facade::Image>(path.ToStdString());
 
 				node = NodeFactory::Create(NODE_IMAGE);
 				auto& cimage = node->GetSharedComp<n2::CompImage>();
@@ -114,25 +110,6 @@ void WxSceneTreePanel::OnCreatePress(wxCommandEvent& event)
 		break;
 	case NodeType::NODE_ANIM:
 		node = NodeFactory::Create(NODE_ANIM);
-		break;
-
-	case NodeType::NODE_SPRITE2:
-		{
-			wxFileDialog dlg(this, wxT("Choose sprite2"), wxEmptyString, "*.json");
-			if (dlg.ShowModal() == wxID_OK)
-			{
-				auto& path = dlg.GetPath();
-				auto sym = gum::SymbolPool::Instance()->Fetch(path.ToStdString().c_str());
-
-				node = NodeFactory::Create(NODE_SPRITE2);
-				auto& csprite2 = node->GetSharedComp<n2::CompSprite2>();
-				csprite2.SetFilepath(path.ToStdString());
-				csprite2.SetSymbol(sym);
-
-				auto& cbb = node->GetUniqueComp<n2::CompBoundingBox>();
-				cbb.SetSize(*node, sym->GetBounding());
-			}
-		}
 		break;
 	default:
 		return;

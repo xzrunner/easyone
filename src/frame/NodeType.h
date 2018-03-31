@@ -15,8 +15,6 @@ enum NodeType
 	NODE_ANIM,
 	NODE_SCENE2D,
 	NODE_SCENE3D,
-
-	NODE_SPRITE2,
 };
 
 }

@@ -14,7 +14,6 @@
 #include <ee2/WxCompMaskPanel.h>
 #include <ee2/WxCompMeshPanel.h>
 #include <ee2/WxCompScale9Panel.h>
-#include <ee2/WxCompSprite2Panel.h>
 #include <ee2/WxCompScissorPanel.h>
 #include <ee2/WxCompScriptPanel.h>
 #include <ee3/WxCompTransformPanel.h>
@@ -224,14 +223,6 @@ void WxDetailPanel::InitComponents(const n0::SceneNodePtr& node)
 	{
 		auto& comp = m_nwp.GetNode()->GetSharedComp<n2::CompScale9>();
 		auto panel = new ee2::WxCompScale9Panel(this, comp);
-		m_comp_sizer->Insert(m_components.size(), panel);
-		m_components.push_back(panel);
-	}
-
-	if (m_nwp.GetNode()->HasSharedComp<n2::CompSprite2>())
-	{
-		auto& comp = m_nwp.GetNode()->GetSharedComp<n2::CompSprite2>();
-		auto panel = new ee2::WxCompSprite2Panel(this, comp);
 		m_comp_sizer->Insert(m_components.size(), panel);
 		m_components.push_back(panel);
 	}

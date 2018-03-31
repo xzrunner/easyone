@@ -10,8 +10,6 @@ class wxFrame;
 class wxWindow;
 class wxGLCanvas;
 
-namespace gum { class RenderContext; }
-
 namespace eone
 {
 

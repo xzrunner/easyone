@@ -55,6 +55,9 @@
     <Filter Include="12.anim\timeline\right">
       <UniqueIdentifier>{cd790c51-5174-451e-bdad-be7e489e945f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="13.particle3d">
+      <UniqueIdentifier>{3c28f598-8530-4db3-b14e-b3399bc1ae0f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\frame\main.h">
@@ -198,6 +201,9 @@
     <ClInclude Include="..\..\..\src\anim\MsgHelper.h">
       <Filter>12.anim\timeline</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\particle3d\WxStagePage.h">
+      <Filter>13.particle3d</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\frame\main.cpp">
@@ -322,6 +328,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\anim\MsgHelper.cpp">
       <Filter>12.anim\timeline</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\particle3d\WxStagePage.cpp">
+      <Filter>13.particle3d</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

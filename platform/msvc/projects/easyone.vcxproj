@@ -57,7 +57,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\..\src;..\..\..\ext\easyeditor0\include;..\..\..\ext\easyeditor2\include;..\..\..\ext\easyeditor3\include;..\..\..\ext\cu\src;..\..\..\ext\ds\src\ds;..\..\..\ext\sm\src\sm;..\..\..\ext\rigging\src\rigging;..\..\..\ext\sprite2\include;..\..\..\ext\painting2\include;..\..\..\ext\painting3\include;..\..\..\ext\js\include;..\..\..\ext\bimp\include;..\..\..\ext\guard\include;..\..\..\ext\logger\src\logger;..\..\..\ext\polymesh\include;..\..\..\ext\gum\include;..\..\..\ext\node0\include;..\..\..\ext\node2\include;..\..\..\ext\node3\include;..\..\..\ext\memmgr\include;..\..\..\ext\nserializer\include;..\..\..\ext\moon\include;..\..\..\ext\anim\include;..\..\..\ext\external-editor\wx\include;..\..\..\ext\external\json\include;..\..\..\ext\external\rapidjson\include;..\..\..\ext\external\freetype\include;..\..\..\ext\external\c99;..\..\..\ext\external\lua\include;..\..\..\ext\external\boost\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\src;..\..\..\ext\easyeditor0\include;..\..\..\ext\easyeditor2\include;..\..\..\ext\easyeditor3\include;..\..\..\ext\cu\src;..\..\..\ext\ds\src\ds;..\..\..\ext\sm\src\sm;..\..\..\ext\rigging\src\rigging;..\..\..\ext\sprite2\include;..\..\..\ext\painting2\include;..\..\..\ext\painting3\include;..\..\..\ext\js\include;..\..\..\ext\bimp\include;..\..\..\ext\guard\include;..\..\..\ext\logger\src\logger;..\..\..\ext\polymesh\include;..\..\..\ext\facade\include;..\..\..\ext\node0\include;..\..\..\ext\node2\include;..\..\..\ext\node3\include;..\..\..\ext\memmgr\include;..\..\..\ext\nserializer\include;..\..\..\ext\moon\include;..\..\..\ext\anim\include;..\..\..\ext\external-editor\wx\include;..\..\..\ext\external\json\include;..\..\..\ext\external\rapidjson\include;..\..\..\ext\external\freetype\include;..\..\..\ext\external\c99;..\..\..\ext\external\lua\include;..\..\..\ext\external\boost\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -83,7 +83,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>..\..\..\src;..\..\..\ext\easyeditor0\include;..\..\..\ext\easyeditor2\include;..\..\..\ext\easyeditor3\include;..\..\..\ext\cu\src;..\..\..\ext\ds\src\ds;..\..\..\ext\sm\src\sm;..\..\..\ext\rigging\src\rigging;..\..\..\ext\sprite2\include;..\..\..\ext\painting2\include;..\..\..\ext\painting3\include;..\..\..\ext\js\include;..\..\..\ext\bimp\include;..\..\..\ext\guard\include;..\..\..\ext\logger\src\logger;..\..\..\ext\polymesh\include;..\..\..\ext\gum\include;..\..\..\ext\node0\include;..\..\..\ext\node2\include;..\..\..\ext\node3\include;..\..\..\ext\memmgr\include;..\..\..\ext\nserializer\include;..\..\..\ext\moon\include;..\..\..\ext\anim\include;..\..\..\ext\external-editor\wx\include;..\..\..\ext\external\json\include;..\..\..\ext\external\rapidjson\include;..\..\..\ext\external\freetype\include;..\..\..\ext\external\c99;..\..\..\ext\external\lua\include;..\..\..\ext\external\boost\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\src;..\..\..\ext\easyeditor0\include;..\..\..\ext\easyeditor2\include;..\..\..\ext\easyeditor3\include;..\..\..\ext\cu\src;..\..\..\ext\ds\src\ds;..\..\..\ext\sm\src\sm;..\..\..\ext\rigging\src\rigging;..\..\..\ext\sprite2\include;..\..\..\ext\painting2\include;..\..\..\ext\painting3\include;..\..\..\ext\js\include;..\..\..\ext\bimp\include;..\..\..\ext\guard\include;..\..\..\ext\logger\src\logger;..\..\..\ext\polymesh\include;..\..\..\ext\facade\include;..\..\..\ext\node0\include;..\..\..\ext\node2\include;..\..\..\ext\node3\include;..\..\..\ext\memmgr\include;..\..\..\ext\nserializer\include;..\..\..\ext\moon\include;..\..\..\ext\anim\include;..\..\..\ext\external-editor\wx\include;..\..\..\ext\external\json\include;..\..\..\ext\external\rapidjson\include;..\..\..\ext\external\freetype\include;..\..\..\ext\external\c99;..\..\..\ext\external\lua\include;..\..\..\ext\external\boost\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -114,17 +114,11 @@
     <ProjectReference Include="..\..\..\ext\anim\platform\msvc\projects\anim.vcxproj">
       <Project>{8f1c8db8-6b46-40c8-9acf-e6ad237e47d4}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\ext\bimp\platform\msvc\projects\bimp.vcxproj">
-      <Project>{f22a86e7-b73f-4f6a-9ea8-e4ae9cc9d885}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\ext\bs\platform\msvc\projects\bs.vcxproj">
       <Project>{f5e6ae49-23dc-421b-ad33-c422e8590520}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\..\ext\camera25\platform\msvc\projects\camera25.vcxproj">
       <Project>{510eaacb-b026-43f3-a68d-3ec421e46dd0}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\ext\cooking\platform\msvc\projects\cooking.vcxproj">
-      <Project>{4eee80e8-662f-4ec2-a19b-68b1d7f8c46f}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\..\ext\ds\platform\msvc\projects\ds.vcxproj">
       <Project>{e6044d31-8304-4854-99ac-cbef18b9e7d3}</Project>
@@ -141,8 +135,11 @@
     <ProjectReference Include="..\..\..\ext\easyeditor3\platform\msvc\projects\easyeditor3.vcxproj">
       <Project>{ceebd91e-9297-47ea-aded-68d791ba6fd4}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\ext\flatten\platform\msvc\projects\flatten.vcxproj">
-      <Project>{26016761-3f64-45e4-aa37-ddd8714fb159}</Project>
+    <ProjectReference Include="..\..\..\ext\emitter\platform\msvc\projects\emitter.vcxproj">
+      <Project>{dbef5985-8371-4d60-bde1-0cd58f8017f8}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\facade\platform\msvc\projects\facade.vcxproj">
+      <Project>{2370b721-44d7-4c75-82a3-0da31b485cf0}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\..\ext\fs\platform\msvc\projects\fs.vcxproj">
       <Project>{09c39b9e-27f5-4b39-9829-2815fd1c5469}</Project>
@@ -158,9 +155,6 @@
     </ProjectReference>
     <ProjectReference Include="..\..\..\ext\guard\platform\msvc\projects\guard.vcxproj">
       <Project>{cc45ae0e-8c51-4759-9614-8bc321c565a0}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\ext\gum\platform\msvc\projects\gum.vcxproj">
-      <Project>{70c5478d-6d53-4f75-99d4-f06373175c83}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\..\ext\js\platform\msvc\projects\js.vcxproj">
       <Project>{68c18da9-79bb-43a5-9e0c-79740aea954b}</Project>
@@ -216,35 +210,17 @@
     <ProjectReference Include="..\..\..\ext\rigging\platform\msvc\projects\rigging.vcxproj">
       <Project>{dbe6d3f5-4e3d-4df8-b520-a27bce5a5d21}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\ext\s2loader\platform\msvc\projects\s2loader.vcxproj">
-      <Project>{e5a136ee-7ee1-4682-a1b1-c942cb2110e7}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\ext\s2serializer\platform\msvc\projects\s2serializer.vcxproj">
-      <Project>{b6939acb-3794-4b2a-95da-f99ecdf79d0f}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\ext\s2storer\platform\msvc\projects\s2storer.vcxproj">
-      <Project>{6032ddf2-fe43-4d51-afaa-f6b6a6d855ad}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\ext\shaderlab\platform\msvc\projects\shaderlab.vcxproj">
       <Project>{5c357759-ca95-42e1-b907-dfb87a995f6c}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\ext\simp\platform\msvc\projects\simp.vcxproj">
-      <Project>{d19b530f-a257-4465-a92c-381e91b47746}</Project>
-    </ProjectReference>
     <ProjectReference Include="..\..\..\ext\sm\platform\msvc\projects\sm.vcxproj">
       <Project>{81630e0d-e1ef-4837-a0ee-30435ed4fe59}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\ext\sprite2\platform\msvc\projects\sprite2.vcxproj">
-      <Project>{ccdd6dc3-9da2-4215-bac6-6031699fb7e4}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\..\ext\stat\platform\msvc\projects\stat.vcxproj">
       <Project>{16868cde-6def-4136-8cc8-75212f34462e}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\..\ext\texpack\platform\msvc\projects\texpack.vcxproj">
       <Project>{a7737c76-5221-47a5-86b7-84bd56c47730}</Project>
-    </ProjectReference>
-    <ProjectReference Include="..\..\..\ext\timp\platform\msvc\projects\timp.vcxproj">
-      <Project>{27824966-6c3c-4874-abff-499ddddb4d48}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\..\ext\uniaudio\platform\msvc\projects\uniaudio.vcxproj">
       <Project>{fdb8a0eb-d438-43b4-b65f-ff1b80a9d45b}</Project>
@@ -292,6 +268,7 @@
     <ClInclude Include="..\..\..\src\frame\WxStagePanel.h" />
     <ClInclude Include="..\..\..\src\mask\WxEditDialog.h" />
     <ClInclude Include="..\..\..\src\mask\WxStagePage.h" />
+    <ClInclude Include="..\..\..\src\particle3d\WxStagePage.h" />
     <ClInclude Include="..\..\..\src\scale9\ComposeGrids.h" />
     <ClInclude Include="..\..\..\src\scale9\ResizeScale9OP.h" />
     <ClInclude Include="..\..\..\src\scale9\WxEditDialog.h" />
@@ -343,6 +320,10 @@
     <ClCompile Include="..\..\..\src\mask\WxStagePage.cpp">
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/mask/</ObjectFileName>
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/mask/</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\particle3d\WxStagePage.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/particle3d/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/particle3d/</ObjectFileName>
     </ClCompile>
     <ClCompile Include="..\..\..\src\scale9\ComposeGrids.cpp" />
     <ClCompile Include="..\..\..\src\scale9\ResizeScale9OP.cpp" />
