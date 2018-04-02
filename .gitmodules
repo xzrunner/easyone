@@ -121,3 +121,9 @@
 [submodule "ext/cooking"]
 	path = ext/cooking
 	url = git@github.com:xzrunner/cooking.git
+[submodule "ext/facade"]
+	path = ext/facade
+	url = git@github.com:xzrunner/facade.git
+[submodule "ext/emitter"]
+	path = ext/emitter
+	url = git@github.com:xzrunner/emitter.git
