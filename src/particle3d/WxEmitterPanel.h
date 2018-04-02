@@ -10,7 +10,7 @@
 #include <memory>
 
 namespace ee0 { class WxLibraryPanel; }
-namespace n2 { class CompParticle3d; }
+namespace n2 { class CompParticle3d; class CompParticle3dInst; }
 
 namespace eone
 {
@@ -24,10 +24,10 @@ class WxEmitterPanel : public wxPanel
 {
 public:
 	WxEmitterPanel(wxWindow* parent, ee0::WxLibraryPanel* library,
-		n2::CompParticle3d& cp3d);
+		n2::CompParticle3d& cp3d, n2::CompParticle3dInst& cp3d_inst);
 
 private:
-	void InitLayout(n2::CompParticle3d& cp3d);
+	void InitLayout(n2::CompParticle3d& cp3d, n2::CompParticle3dInst& cp3d_inst);
 	void InitEmitter();
 
 public:
@@ -35,16 +35,18 @@ public:
 	{
 	public:
 		WxChildrenPanel(wxWindow* parent, n2::CompParticle3d& cp3d,
-			WxEmitterPanel* et_panel);
+			n2::CompParticle3dInst& cp3d_inst, WxEmitterPanel* et_panel);
 
-		void AddComponent(const n0::CompAssetPtr& casset, 
+		void AddChild(const n0::CompAssetPtr& casset, 
 			const std::string& filepath);
+		void RemoveChild(WxComponentPanel* child);
 
 	private:
 		void OnRemoveAll(wxCommandEvent& event);
 
 	private:
-		n2::CompParticle3d& m_cp3d;
+		n2::CompParticle3d&     m_cp3d;
+		n2::CompParticle3dInst& m_cp3d_inst;
 
 		WxEmitterPanel* m_et_panel;
 

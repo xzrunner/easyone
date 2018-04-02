@@ -12,6 +12,7 @@
 #include <ps_3d.h>
 #include <sm_const.h>
 #include <emitter/P3dTemplate.h>
+#include <emitter/P3dInstance.h>
 
 #include <wx/sizer.h>
 #include <wx/checkbox.h>
@@ -62,9 +63,11 @@ namespace eone
 namespace particle3d
 {
 
-WxPropertyPanel::WxPropertyPanel(wxWindow* parent, et::P3dTemplate& p3d)
+WxPropertyPanel::WxPropertyPanel(wxWindow* parent, et::P3dTemplate& p3d,
+	                             et::P3dInstance& p3d_inst)
 	: wxPanel(parent)
 	, m_p3d(p3d)
+	, m_p3d_inst(p3d_inst)
 {
 	InitLayout();
 }
@@ -346,11 +349,37 @@ void WxPropertyPanel::StoreToEmitter()
 	m_p3d.SetHori(m_min_hori->GetValue(), m_max_hori->GetValue());
 	m_p3d.SetVert(m_min_vert->GetValue(), m_max_vert->GetValue());
 	m_p3d.SetGround(m_ground->GetSelection());
+
+	m_p3d_inst.SetLoop(m_loop->IsChecked());
+	m_p3d_inst.SetLocal(m_local->IsChecked());
 }
 
 void WxPropertyPanel::InitLayout()
 {
 	wxSizer* top_sizer = new wxBoxSizer(wxVERTICAL);
+	top_sizer->AddSpacer(10);
+
+	// State
+	{
+	 	wxStaticBox* bounding = new wxStaticBox(this, wxID_ANY, LANG[LK_STATE]);
+	 	wxSizer* sizer = new wxStaticBoxSizer(bounding, wxHORIZONTAL);
+	 	{
+	 		m_loop = new wxCheckBox(this, wxID_ANY, LANG[LK_LOOP]);	
+	 		m_loop->SetValue(m_p3d_inst.IsLoop());
+	 		Connect(m_loop->GetId(), wxEVT_COMMAND_CHECKBOX_CLICKED, 
+				wxCommandEventHandler(WxPropertyPanel::OnSetLoop));
+	 		sizer->Add(m_loop);
+	 	}
+	 	sizer->AddSpacer(5);
+	 	{
+			m_local = new wxCheckBox(this, wxID_ANY, LANG[LK_LOCAL_DRAW]);
+			m_local->SetValue(m_p3d_inst.IsLocal());
+	 		Connect(m_local->GetId(), wxEVT_COMMAND_CHECKBOX_CLICKED, 
+				wxCommandEventHandler(WxPropertyPanel::OnSetLocalModeDraw));
+	 		sizer->Add(m_local);
+	 	}
+	 	top_sizer->Add(sizer);
+	}
 	top_sizer->AddSpacer(10);
 
 	// Mode
@@ -581,44 +610,47 @@ void WxPropertyPanel::InitLayout()
 void WxPropertyPanel::OnSetStaticMode(wxCommandEvent& event)
 {
 	bool static_mode = event.IsChecked();
-//	OnSetStaticMode(static_mode);
+	m_static_mode->SetValue(static_mode);
+	m_count_ctrl->Enable(!static_mode);
+	m_time_ctrl->Enable(!static_mode);
+	m_p3d.SetStaticMode(static_mode);
 }
 
 void WxPropertyPanel::OnSetLoop(wxCommandEvent& event)
 {
-//	m_stage->m_ps->SetLoop(event.IsChecked());
+	m_p3d_inst.SetLoop(event.IsChecked());
 }
 
 void WxPropertyPanel::OnSetLocalModeDraw(wxCommandEvent& event)
 {
-//	m_stage->m_ps->SetLocal(event.IsChecked());
+	m_p3d_inst.SetLocal(event.IsChecked());
 }
 
 void WxPropertyPanel::OnSetHori(wxSpinEvent& event)
 {
-//	m_stage->m_ps->SetHori(m_min_hori->GetValue(), m_max_hori->GetValue());
+	m_p3d.SetHori(m_min_hori->GetValue(), m_max_hori->GetValue());
 }
 
 void WxPropertyPanel::OnSetVert(wxSpinEvent& event)
 {
-//	m_stage->m_ps->SetVert(m_min_vert->GetValue(), m_max_vert->GetValue());
+	m_p3d.SetVert(m_min_vert->GetValue(), m_max_vert->GetValue());
 }
 
 void WxPropertyPanel::OnSetGround(wxCommandEvent& event)
 {
 	int ground = m_ground->GetSelection();
-//	m_stage->m_ps->SetGround(ground);
+	m_p3d.SetGround(ground);
 }
 
 void WxPropertyPanel::OnSetOrientToMovement(wxCommandEvent& event)
 {
-//	m_stage->m_ps->SetOrientToMovement(event.IsChecked());
+	m_p3d.SetOrientToMovement(event.IsChecked());
 }
 
 void WxPropertyPanel::OnSetBlend(wxCommandEvent& event)
 {
 	int blend = m_blend->GetSelection();
-//	m_stage->m_ps->SetBlend(blend);
+	m_p3d.SetBlend(blend);
 }
 
 }

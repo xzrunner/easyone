@@ -8,6 +8,7 @@
 
 #include <node0/SceneNode.h>
 #include <node2/CompParticle3d.h>
+#include <node2/CompParticle3dInst.h>
 
 namespace eone
 {
@@ -62,7 +63,8 @@ void WxStagePage::OnPageInit()
 		sizer = new wxBoxSizer(wxVERTICAL);
 	}
 	auto& cp3d = m_node->GetSharedComp<n2::CompParticle3d>();
-	sizer->Add(new WxEmitterPanel(panel, m_library, cp3d), 0, wxEXPAND);
+	auto& cp3d_inst = m_node->GetUniqueComp<n2::CompParticle3dInst>();
+	sizer->Add(new WxEmitterPanel(panel, m_library, cp3d, cp3d_inst), 0, wxEXPAND);
 	panel->SetSizer(sizer);
 }
 

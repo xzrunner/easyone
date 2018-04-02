@@ -32,7 +32,6 @@
 #include <node0/SceneNode.h>
 #include <node2/CompMask.h>
 #include <node2/CompScale9.h>
-#include <node2/CompParticle3dInst.h>
 #include <moon/Blackboard.h>
 #include <moon/Context.h>
 
@@ -139,9 +138,8 @@ WxStagePage* StagePageFactory::Create(int page_type, WxStagePanel* stage_panel)
 
 			auto cam = canvas->GetCamera();
 			GD_ASSERT(cam, "null cam");
-			auto& p3d_inst = node->GetUniqueComp<n2::CompParticle3dInst>();
 			auto op = std::make_shared<particle3d::PlayParticlesOP>(
-				p3d_inst.GetP3dInst(), *cam, page->GetSubjectMgr());
+				node, *cam, page->GetSubjectMgr());
 
 			page->GetImpl().SetEditOP(op);
 

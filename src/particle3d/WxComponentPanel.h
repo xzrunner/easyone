@@ -1,5 +1,7 @@
 #pragma once
 
+#include "particle3d/WxEmitterPanel.h"
+
 #include <ee0/GuiCallback.h>
 
 #include <wx/panel.h>
@@ -14,13 +16,11 @@ namespace eone
 namespace particle3d
 {
 
-class WxEmitterPanel;
-
 class WxComponentPanel : public wxPanel, public ee0::GuiCallback
 {
 public:
-	WxComponentPanel(wxWindow* parent, p3d_symbol* sym, 
-		const std::string& filepath, WxEmitterPanel* et_panel);
+	WxComponentPanel(wxWindow* parent, p3d_symbol* sym, const std::string& filepath, 
+		WxEmitterPanel::WxChildrenPanel* children_panel);
 
 	virtual void SetValue(int key, const ee0::VariantSet& variants) override;
 	virtual void GetValue(int key, ee0::VariantSet& variants) const override;
@@ -28,6 +28,8 @@ public:
 	void UpdateBtnColor();
 
 	void SetCount(int count);
+
+	void SetSymbol(p3d_symbol* sym) { m_sym = sym; }
 
 private:
 	void InitLayout();
@@ -48,7 +50,7 @@ private:
 	p3d_symbol* m_sym;
 	std::string m_filepath;
 
-	WxEmitterPanel* m_et_panel;
+	WxEmitterPanel::WxChildrenPanel* m_children_panel;
 
 	std::vector<ee0::WxSliderCtrl*> m_sliders;
 

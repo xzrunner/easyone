@@ -5,7 +5,10 @@
 #include <ee0/WxSliderTwoCtrl.h>
 #include <ee0/SliderItem.h>
 #include <ee0/WxImagePanel.h>
+#include <ee0/VariantSet.h>
 
+#include <guard/check.h>
+#include <sm_const.h>
 #include <ps_3d.h>
 #include <ns/ResFileHelper.h>
 
@@ -36,11 +39,11 @@ namespace particle3d
 
 WxComponentPanel::WxComponentPanel(wxWindow* parent, p3d_symbol* sym, 
 	                               const std::string& filepath,
-	                               WxEmitterPanel* et_panel)
+	                               WxEmitterPanel::WxChildrenPanel* children_panel)
 	: wxPanel(parent)
 	, m_sym(sym)
 	, m_filepath(filepath)
-	, m_et_panel(et_panel)
+	, m_children_panel(children_panel)
 {
 	InitLayout();
 	for (auto& slider : m_sliders) {
@@ -51,12 +54,82 @@ WxComponentPanel::WxComponentPanel(wxWindow* parent, p3d_symbol* sym,
 
 void WxComponentPanel::SetValue(int key, const ee0::VariantSet& variants)
 {
+	switch (key)
+	{
+	case PS_SCALE:
+		{
+			auto var0 = variants.GetVariant("var0");
+			GD_ASSERT(var0.m_type == ee0::VT_FLOAT, "err var");
+			m_sym->scale_start = var0.m_val.flt * 0.01f;
 
+			auto var1 = variants.GetVariant("var1");
+			GD_ASSERT(var1.m_type == ee0::VT_FLOAT, "err var");
+			m_sym->scale_end = var1.m_val.flt * 0.01f;
+		}
+		break;
+	case PS_ROTATE:
+		{
+			auto var0 = variants.GetVariant("var0");
+			auto var1 = variants.GetVariant("var1");
+			GD_ASSERT(var0.m_type == ee0::VT_FLOAT && var1.m_type == ee0::VT_FLOAT, "err var");
+			m_sym->angle     = (var0.m_val.flt + var1.m_val.flt) * 0.5f * SM_DEG_TO_RAD;
+			m_sym->angle_var = (var1.m_val.flt - var0.m_val.flt) * 0.5f * SM_DEG_TO_RAD;
+		}
+		break;
+	case PS_ALPHA:
+		{
+			auto var0 = variants.GetVariant("var0");
+			GD_ASSERT(var0.m_type == ee0::VT_FLOAT, "err var");
+			m_sym->mul_col_begin.a = var0.m_val.flt;
+
+			auto var1 = variants.GetVariant("var1");
+			GD_ASSERT(var1.m_type == ee0::VT_FLOAT, "err var");
+			m_sym->mul_col_end.a = var1.m_val.flt;
+		}
+		break;
+	}
 }
 
 void WxComponentPanel::GetValue(int key, ee0::VariantSet& variants) const
 {
+	switch (key)
+	{
+	case PS_SCALE:
+		{
+			ee0::Variant var0;
+			var0.m_type = ee0::VT_FLOAT;
+			var0.m_val.flt = m_sym->scale_start * 100;
+			variants.SetVariant("var0", var0);
 
+			ee0::Variant var1;
+			var1.m_type = ee0::VT_FLOAT;
+			var1.m_val.flt = m_sym->scale_end * 100;
+			variants.SetVariant("var1", var1);
+		}
+		break;
+	case PS_ROTATE:
+		{
+			ee0::Variant var0, var1;
+			var0.m_type = ee0::VT_FLOAT;
+			var1.m_type = ee0::VT_FLOAT;
+			var0.m_val.flt = (m_sym->angle + m_sym->angle_var) * SM_RAD_TO_DEG;
+			var1.m_val.flt = (m_sym->angle - m_sym->angle_var) * SM_RAD_TO_DEG;
+		}
+		break;
+	case PS_ALPHA:
+		{
+			ee0::Variant var0;
+			var0.m_type = ee0::VT_FLOAT;
+			var0.m_val.flt = m_sym->mul_col_begin.a;
+			variants.SetVariant("var0", var0);
+
+			ee0::Variant var1;
+			var1.m_type = ee0::VT_FLOAT;
+			var1.m_val.flt = m_sym->mul_col_end.a;
+			variants.SetVariant("var1", var1);
+		}
+		break;
+	}
 }
 
 void WxComponentPanel::UpdateBtnColor()
@@ -204,43 +277,11 @@ void WxComponentPanel::InitLayout(wxSizer* top_sizer)
 	top_sizer->Add(s_alpha);
 	top_sizer->AddSpacer(10);
 	m_sliders.push_back(s_alpha);
-
-//	wxBoxSizer* color_sz = new wxBoxSizer(wxHORIZONTAL);
-// 	// Multi Color
-// 	{
-// 		wxStaticBox* bounding = new wxStaticBox(this, wxID_ANY, LANG[LK_COL_MUL]);
-// 		wxBoxSizer* sizer = new wxStaticBoxSizer(bounding, wxVERTICAL);
-// 
-// 		m_mul_col_btn = new wxButton(this, wxID_ANY);
-// 		Connect(m_mul_col_btn->GetId(), wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(WxComponentPanel::OnSetMultiCol));
-// 		sizer->Add(m_mul_col_btn);
-// 
-// 		color_sz->Add(sizer);
-// 	}
-// 	color_sz->AddSpacer(30);
-// 	// Add Color
-// 	{
-// 		wxStaticBox* bounding = new wxStaticBox(this, wxID_ANY, LANG[LK_COL_ADD]);
-// 		wxBoxSizer* sizer = new wxStaticBoxSizer(bounding, wxVERTICAL);
-// 
-// 		m_add_col_btn = new wxButton(this, wxID_ANY);
-// 		Connect(m_add_col_btn->GetId(), wxEVT_COMMAND_BUTTON_CLICKED, wxCommandEventHandler(WxComponentPanel::OnSetAddCol));
-// 		sizer->Add(m_add_col_btn);
-// 
-// 		color_sz->Add(sizer);
-// 	}
-// 	top_sizer->Add(color_sz);
-// 	// Alpha
-// 	ee0::WxSliderTwoCtrl* s_alpha = new ee0::WxSliderTwoCtrl(this, LANG[LK_ALPHA], "alpha", this, PS_ALPHA, 
-// 		ee0::SliderItem(LANG[LK_START], "start", 100, 0, 100), ee0::SliderItem(LANG[LK_END], "end", 100, 0, 100));
-// 	top_sizer->Add(s_alpha);
-// 	top_sizer->AddSpacer(10);
-// 	m_sliders.push_back(s_alpha);
 }
 
 void WxComponentPanel::OnDelete(wxCommandEvent& event)
 {
-//	m_et_panel->OnDelChild(this);
+	m_children_panel->RemoveChild(this);
 }
 
 void WxComponentPanel::OnSetCount(wxSpinEvent& event)

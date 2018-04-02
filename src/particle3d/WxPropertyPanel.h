@@ -5,7 +5,7 @@
 #include <wx/panel.h>
 
 namespace ee0 { class WxSliderCtrl; }
-namespace et { class P3dTemplate; }
+namespace et { class P3dTemplate; class P3dInstance; }
 
 class wxCheckBox;
 class wxChoice;
@@ -20,7 +20,8 @@ class WxComponentPanel;
 class WxPropertyPanel : public wxPanel, public ee0::GuiCallback
 {
 public:
-	WxPropertyPanel(wxWindow* parent, et::P3dTemplate& p3d);
+	WxPropertyPanel(wxWindow* parent, et::P3dTemplate& p3d,
+		et::P3dInstance& p3d_inst);
 
 	virtual void SetValue(int key, const ee0::VariantSet& variants) override;
 	virtual void GetValue(int key, ee0::VariantSet& variants) const override;
@@ -43,8 +44,11 @@ private:
 
 private:
 	et::P3dTemplate& m_p3d;
+	et::P3dInstance& m_p3d_inst;
 
 	std::vector<ee0::WxSliderCtrl*> m_sliders;
+
+	wxCheckBox *m_loop, *m_local;
 
 	wxCheckBox* m_static_mode;
 
