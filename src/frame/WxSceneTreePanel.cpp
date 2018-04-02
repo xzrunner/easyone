@@ -28,12 +28,13 @@ namespace
 
 static const std::vector<std::pair<uint32_t, std::string>> NODE_LIST =
 {
-	std::make_pair(eone::NODE_IMAGE,   "Image"),
-	std::make_pair(eone::NODE_TEXT,    "Text"),
-	std::make_pair(eone::NODE_MASK,    "Mask"),
-	std::make_pair(eone::NODE_MESH,    "Mesh"),
-	std::make_pair(eone::NODE_SCALE9,  "Scale9"),
-	std::make_pair(eone::NODE_ANIM,    "Anim"),
+	std::make_pair(eone::NODE_IMAGE,      "Image"),
+	std::make_pair(eone::NODE_TEXT,       "Text"),
+	std::make_pair(eone::NODE_MASK,       "Mask"),
+	std::make_pair(eone::NODE_MESH,       "Mesh"),
+	std::make_pair(eone::NODE_SCALE9,     "Scale9"),
+	std::make_pair(eone::NODE_ANIM,       "Anim"),
+	std::make_pair(eone::NODE_PARTICLE3D, "Particle3d"),
 };
 
 }
@@ -110,6 +111,9 @@ void WxSceneTreePanel::OnCreatePress(wxCommandEvent& event)
 		break;
 	case NodeType::NODE_ANIM:
 		node = NodeFactory::Create(NODE_ANIM);
+		break;
+	case NodeType::NODE_PARTICLE3D:
+		node = NodeFactory::Create(NODE_PARTICLE3D);
 		break;
 	default:
 		return;

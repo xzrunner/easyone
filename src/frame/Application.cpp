@@ -7,6 +7,7 @@
 #include "frame/WxPreviewCanvas.h"
 #include "frame/WxSceneTreePanel.h"
 #include "frame/WxDetailPanel.h"
+#include "frame/WxToolbarPanel.h"
 #include "frame/NodeSelectOP.h"
 #include "frame/Blackboard.h"
 #include "frame/NodeFactory.h"
@@ -26,6 +27,7 @@
 #include <js/RapidJsonHelper.h>
 #include <node0/SceneNode.h>
 #include <ns/RegistCallback.h>
+#include <facade/Facade.h>
 
 #include <boost/filesystem.hpp>
 
@@ -77,6 +79,8 @@ void Application::LoadFromFile(const std::string& filepath)
 		new_type = PAGE_MESH;
 	} else if (new_type_str == "n2_anim") {
 		new_type = PAGE_ANIM;
+	} else if (new_type_str == "n2_particle3d") {
+		new_type = PAGE_PARTICLE3D;
 	}
 
 	if (old_type != new_type || !page->GetFilepath().empty()) {
@@ -107,6 +111,8 @@ void Application::Clear()
 
 void Application::InitSubmodule()
 {
+	facade::Facade::Init();
+
 	//CU_VEC<std::pair<CU_STR, CU_STR>> fonts;
 	//CU_VEC<std::pair<CU_STR, CU_STR>> user_fonts;
 	//fonts.push_back(std::make_pair("default", "FZCY_GBK.ttf"));
@@ -123,6 +129,7 @@ void Application::InitLayout()
 	auto preview   = CreatePreviewPanel();
 	auto tree      = CreateTreePanel();
 	auto detail    = CreateDetailPanel();
+	auto toolbar   = CreateToolbarPanel();
 
 	m_mgr.AddPane(library, wxAuiPaneInfo().Name(STR_LIBRARY_PANEL).
 		Caption(STR_LIBRARY_PANEL).Left().MinSize(100, 0));
@@ -141,6 +148,9 @@ void Application::InitLayout()
 
 	m_mgr.AddPane(detail, wxAuiPaneInfo().Name(STR_DETAIL_PANEL).
 		Caption(STR_DETAIL_PANEL).Right().Row(0).MinSize(300, 0).PaneBorder(false));
+
+	m_mgr.AddPane(toolbar, wxAuiPaneInfo().Name(STR_TOOLBAR_PANEL).
+		Caption(STR_TOOLBAR_PANEL).Right().Row(0).MinSize(600, 0).PaneBorder(false));
 
 	m_mgr.Update();
 }
@@ -166,7 +176,8 @@ wxWindow* Application::CreateStagePanel()
 	//StagePageFactory::Create(PAGE_SCENE2D, m_stage);
 	//StagePageFactory::Create(PAGE_SCALE9, m_stage);
 	//StagePageFactory::Create(PAGE_SCRIPT, m_stage);
-	StagePageFactory::Create(PAGE_ANIM, m_stage);
+	//StagePageFactory::Create(PAGE_ANIM, m_stage);
+	StagePageFactory::Create(PAGE_PARTICLE3D, m_stage);
 
 	m_stage->Thaw();
 
@@ -206,6 +217,13 @@ wxWindow* Application::CreateDetailPanel()
 	auto curr_page = m_stage->GetCurrentStagePage();
 	return new WxDetailPanel(m_frame, 
 		curr_page->GetSubjectMgr(), curr_page->GetEditedNode(), curr_page->GetMoonCtx());
+}
+
+wxWindow* Application::CreateToolbarPanel()
+{
+	auto toolbar = new WxToolbarPanel(m_frame);
+	Blackboard::Instance()->SetToolbarPanel(toolbar);
+	return toolbar;
 }
 
 }

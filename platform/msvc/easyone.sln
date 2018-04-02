@@ -109,6 +109,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3.emitter", "..\..\ext\emit
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3.facade", "..\..\ext\facade\platform\msvc\projects\facade.vcxproj", "{2370B721-44D7-4C75-82A3-0DA31B485CF0}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "2.cooking", "..\..\ext\cooking\platform\msvc\projects\cooking.vcxproj", "{4EEE80E8-662F-4EC2-A19B-68B1D7F8C46F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -281,6 +283,10 @@ Global
 		{2370B721-44D7-4C75-82A3-0DA31B485CF0}.Debug|Win32.Build.0 = Debug|Win32
 		{2370B721-44D7-4C75-82A3-0DA31B485CF0}.Release|Win32.ActiveCfg = Release|Win32
 		{2370B721-44D7-4C75-82A3-0DA31B485CF0}.Release|Win32.Build.0 = Release|Win32
+		{4EEE80E8-662F-4EC2-A19B-68B1D7F8C46F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{4EEE80E8-662F-4EC2-A19B-68B1D7F8C46F}.Debug|Win32.Build.0 = Debug|Win32
+		{4EEE80E8-662F-4EC2-A19B-68B1D7F8C46F}.Release|Win32.ActiveCfg = Release|Win32
+		{4EEE80E8-662F-4EC2-A19B-68B1D7F8C46F}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -329,6 +335,7 @@ Global
 		{8F1C8DB8-6B46-40C8-9ACF-E6AD237E47D4} = {55D85D01-599C-4F78-A116-BDBAEAF0D939}
 		{DBEF5985-8371-4D60-BDE1-0CD58F8017F8} = {55D85D01-599C-4F78-A116-BDBAEAF0D939}
 		{2370B721-44D7-4C75-82A3-0DA31B485CF0} = {ABB353A2-7879-4D9F-AF21-31A83E1B9D14}
+		{4EEE80E8-662F-4EC2-A19B-68B1D7F8C46F} = {E81D1B45-CF14-47DF-A9FD-98205E914709}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8D54C01A-3C82-4351-A325-2853C3E81322}

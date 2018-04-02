@@ -27,7 +27,7 @@ namespace anim
 {
 
 WxStagePage::WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, const n0::SceneNodePtr& node)
-	: eone::WxStagePage(parent, node, SUB_WND_STAGE_EXT)
+	: eone::WxStagePage(parent, node, LAYOUT_STAGE_EXT)
 {
 	auto& canim_inst = node->GetUniqueComp<n2::CompAnimInst>();
 	canim_inst.GetPlayCtrl().SetActive(false);

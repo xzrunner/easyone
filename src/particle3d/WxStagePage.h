@@ -3,14 +3,11 @@
 #include "frame/WxStagePage.h"
 #include "frame/StagePageType.h"
 
-#include <node0/typedef.h>
-
 namespace ee0 { class WxLibraryPanel; }
-namespace n0 { class NodeSharedComp; }
 
 namespace eone
 {
-namespace anim
+namespace particle3d
 {
 
 class WxStagePage : public eone::WxStagePage
@@ -23,18 +20,15 @@ public:
 	virtual void Traverse(std::function<bool(const n0::SceneNodePtr&)> func,
 		const ee0::VariantSet& variants = ee0::VariantSet(), bool inverse = false) const override;
 
-	virtual int GetPageType() const override { return PAGE_ANIM; }
+	virtual int GetPageType() const override { return PAGE_PARTICLE3D; }
 
 protected:
 	virtual void OnPageInit() override;
 
 	virtual const n0::NodeSharedComp& GetEditedNodeComp() const override;
 
-	virtual void LoadFromJsonExt(const std::string& dir, const rapidjson::Value& val);
-
 private:
-	bool OnSetCurrFrame(const ee0::VariantSet& variants);
-	bool OnRefreshAnimComp();
+	ee0::WxLibraryPanel* m_library;
 
 }; // WxStagePage
 

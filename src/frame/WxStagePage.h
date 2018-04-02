@@ -16,10 +16,11 @@ namespace eone
 class WxStagePage : public ee0::WxStagePage
 {
 public:
-	enum SubWndType
+	enum LayoutType
 	{
-		SUB_WND_PREVIEW = 0,
-		SUB_WND_STAGE_EXT,
+		LAYOUT_PREVIEW = 0,
+		LAYOUT_STAGE_EXT,
+		LAYOUT_TOOLBAR,
 	};
 
 public:
@@ -29,7 +30,7 @@ public:
 	};
 
 public:
-	WxStagePage(wxWindow* parent, const n0::SceneNodePtr& node, SubWndType sub_wnd_type);
+	WxStagePage(wxWindow* parent, const n0::SceneNodePtr& node, LayoutType layout_type);
 
 	virtual void OnNotify(uint32_t msg, const ee0::VariantSet& variants) override;
 
@@ -64,7 +65,7 @@ private:
 protected:
 	n0::SceneNodePtr m_node;
 
-	SubWndType m_sub_wnd_type;
+	LayoutType m_layout_type;
 
 	std::string m_filepath;
 

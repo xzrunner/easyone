@@ -14,15 +14,16 @@ namespace
 
 static const std::vector<std::pair<uint32_t, std::string>> PAGE_LIST =
 {
-	std::make_pair(eone::PAGE_SCENE2D, "Scene2D"),
-	std::make_pair(eone::PAGE_SCENE3D, "Scene3D"),
+	std::make_pair(eone::PAGE_SCENE2D,    "Scene2D"),
+	std::make_pair(eone::PAGE_SCENE3D,    "Scene3D"),
 
-	std::make_pair(eone::PAGE_SCALE9,  "Scale9"),
-	std::make_pair(eone::PAGE_MASK,    "Mask"),
-	std::make_pair(eone::PAGE_MESH,    "Mesh"),
-	std::make_pair(eone::PAGE_ANIM,    "Anim"),
+	std::make_pair(eone::PAGE_SCALE9,     "Scale9"),
+	std::make_pair(eone::PAGE_MASK,       "Mask"),
+	std::make_pair(eone::PAGE_MESH,       "Mesh"),
+	std::make_pair(eone::PAGE_ANIM,       "Anim"),
+	std::make_pair(eone::PAGE_PARTICLE3D, "Particle3d"),
 
-	std::make_pair(eone::PAGE_SCRIPT,  "Script..."),
+	std::make_pair(eone::PAGE_SCRIPT,     "Script..."),
 };
 
 }

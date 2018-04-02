@@ -9,5 +9,6 @@ static const char* STR_STAGE_EXT_PANEL = "StageExt";
 static const char* STR_PREVIEW_PANEL   = "Preview";
 static const char* STR_TREE_PANEL      = "Tree";
 static const char* STR_DETAIL_PANEL    = "Detail";
+static const char* STR_TOOLBAR_PANEL   = "Toolbar";
 
 }

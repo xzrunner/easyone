@@ -19,6 +19,7 @@ class Application;
 class WxStagePanel;
 class WxStageExtPanel;
 class WxPreviewPanel;
+class WxToolbarPanel;
 
 class Blackboard
 {
@@ -41,6 +42,9 @@ public:
 	void SetPreviewPanel(WxPreviewPanel* preview) { m_preview = preview; }
 	WxPreviewPanel* GetPreviewPanel() { return m_preview; }
 
+	void SetToolbarPanel(WxToolbarPanel* toolbar) { m_toolbar = toolbar; }
+	WxToolbarPanel* GetToolbarPanel() { return m_toolbar; }
+
 	void InitRenderContext();
 	const ee0::RenderContext& GetRenderContext() const { return m_rc; }
 	const ee0::WindowContext& GetWindowContext() const { return m_wc; }
@@ -52,6 +56,7 @@ private:
 	WxStagePanel*        m_stage;
 	WxStageExtPanel*     m_stage_ext;
 	WxPreviewPanel*      m_preview;
+	WxToolbarPanel*      m_toolbar;
 
 	wxGLCanvas* m_dummy_canvas;
 	ee0::RenderContext m_rc;

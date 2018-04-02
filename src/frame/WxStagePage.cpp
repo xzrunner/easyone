@@ -18,10 +18,10 @@
 namespace eone
 {
 
-WxStagePage::WxStagePage(wxWindow* parent, const n0::SceneNodePtr& node, SubWndType sub_wnd_type)
+WxStagePage::WxStagePage(wxWindow* parent, const n0::SceneNodePtr& node, LayoutType layout_type)
 	: ee0::WxStagePage(parent)
 	, m_node(node)
-	, m_sub_wnd_type(sub_wnd_type)
+	, m_layout_type(layout_type)
 {
 	m_sub_mgr->RegisterObserver(ee0::MSG_STAGE_PAGE_ON_SHOW, this);
 
@@ -104,15 +104,28 @@ void WxStagePage::UnregisterAllMessages()
 void WxStagePage::InitSubWindow()
 {
 	auto& ui_mgr = Blackboard::Instance()->GetApp()->GetUIManager();
-	switch (m_sub_wnd_type)
+	switch (m_layout_type)
 	{
-	case SUB_WND_PREVIEW:
+	case LAYOUT_PREVIEW:
 		ui_mgr.GetPane(STR_PREVIEW_PANEL).Show();
+		ui_mgr.GetPane(STR_TREE_PANEL).Show();
+		ui_mgr.GetPane(STR_DETAIL_PANEL).Show();
 		ui_mgr.GetPane(STR_STAGE_EXT_PANEL).Hide();
+		ui_mgr.GetPane(STR_TOOLBAR_PANEL).Hide();
 		break;
-	case SUB_WND_STAGE_EXT:
-		ui_mgr.GetPane(STR_PREVIEW_PANEL).Hide();
+	case LAYOUT_STAGE_EXT:
 		ui_mgr.GetPane(STR_STAGE_EXT_PANEL).Show();
+		ui_mgr.GetPane(STR_TREE_PANEL).Show();
+		ui_mgr.GetPane(STR_DETAIL_PANEL).Show();
+		ui_mgr.GetPane(STR_PREVIEW_PANEL).Hide();
+		ui_mgr.GetPane(STR_TOOLBAR_PANEL).Hide();
+		break;
+	case LAYOUT_TOOLBAR:
+		ui_mgr.GetPane(STR_TOOLBAR_PANEL).Show();
+		ui_mgr.GetPane(STR_TREE_PANEL).Hide();
+		ui_mgr.GetPane(STR_DETAIL_PANEL).Hide();
+		ui_mgr.GetPane(STR_PREVIEW_PANEL).Hide();
+		ui_mgr.GetPane(STR_STAGE_EXT_PANEL).Hide();
 		break;
 	}
 	ui_mgr.Update();

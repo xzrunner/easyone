@@ -1,5 +1,7 @@
 #include "frame/NodeFactory.h"
 
+#include "particle3d/config.h"
+
 #include <ee0/CompNodeEditor.h>
 
 #include <node0/SceneNode.h>
@@ -11,10 +13,14 @@
 #include <node2/CompScale9.h>
 #include <node2/CompAnim.h>
 #include <node2/CompAnimInst.h>
+#include <node2/CompParticle3d.h>
+#include <node2/CompParticle3dInst.h>
 #include <node2/CompBoundingBox.h>
 #include <node2/CompTransform.h>
+
 #include <anim/KeyFrame.h>
 #include <anim/Layer.h>
+#include <emitter/P3dTemplate.h>
 
 namespace eone
 {
@@ -74,6 +80,15 @@ n0::SceneNodePtr NodeFactory::Create(NodeType type)
 			canim.AddLayer(layer);
 
 			node->AddUniqueComp<n2::CompAnimInst>(canim.GetAnimTemplate());
+		}
+		break;
+	case NODE_PARTICLE3D:
+		{
+			sz.Build(100, 100);
+
+			node->AddSharedComp<n2::CompParticle3d>(particle3d::MAX_COMPONENTS);
+			auto& cp3d = node->GetSharedCompPtr<n2::CompParticle3d>();
+			node->AddUniqueComp<n2::CompParticle3dInst>(cp3d);
 		}
 		break;
 

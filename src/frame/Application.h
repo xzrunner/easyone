@@ -40,6 +40,7 @@ private:
 	wxWindow* CreatePreviewPanel();
 	wxWindow* CreateTreePanel();
 	wxWindow* CreateDetailPanel();
+	wxWindow* CreateToolbarPanel();
 
 private:
 	wxFrame* m_frame;

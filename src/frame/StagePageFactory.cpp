@@ -18,6 +18,8 @@
 #include "script/WxStagePage.h"
 #include "script/WxStageCanvas.h"
 #include "anim/WxStagePage.h"
+#include "particle3d/WxStagePage.h"
+#include "particle3d/PlayParticlesOP.h"
 
 #include <ee0/WxListSelectDlg.h>
 #include <ee0/MsgHelper.h>
@@ -30,6 +32,7 @@
 #include <node0/SceneNode.h>
 #include <node2/CompMask.h>
 #include <node2/CompScale9.h>
+#include <node2/CompParticle3dInst.h>
 #include <moon/Blackboard.h>
 #include <moon/Context.h>
 
@@ -121,6 +124,24 @@ WxStagePage* StagePageFactory::Create(int page_type, WxStagePanel* stage_panel)
 			auto cam = canvas->GetCamera();
 			GD_ASSERT(cam, "null cam");
 			auto op = std::make_shared<ee2::ArrangeNodeOP>(*page, *cam, ee2::ArrangeNodeCfg(), prev_op);
+
+			page->GetImpl().SetEditOP(op);
+
+			stage_panel->AddNewPage(page, GetPageName(page->GetPageType()));
+		}
+		break;
+	case PAGE_PARTICLE3D:
+		{
+			auto node = NodeFactory::Create(NODE_PARTICLE3D);
+			page = new particle3d::WxStagePage(frame, library, node);
+			auto canvas = std::make_shared<WxStageCanvas>(page, rc);
+			page->GetImpl().SetCanvas(canvas);
+
+			auto cam = canvas->GetCamera();
+			GD_ASSERT(cam, "null cam");
+			auto& p3d_inst = node->GetUniqueComp<n2::CompParticle3dInst>();
+			auto op = std::make_shared<particle3d::PlayParticlesOP>(
+				p3d_inst.GetP3dInst(), *cam, page->GetSubjectMgr());
 
 			page->GetImpl().SetEditOP(op);
 

@@ -58,6 +58,18 @@
     <Filter Include="13.particle3d">
       <UniqueIdentifier>{3c28f598-8530-4db3-b14e-b3399bc1ae0f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="00.frame\toolbar">
+      <UniqueIdentifier>{da6b78c1-d432-41ec-bd6e-c069e9595b48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="13.particle3d\emitter">
+      <UniqueIdentifier>{e5c52811-a3b8-465b-b337-d293ad8e1bab}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="13.particle3d\emitter\left">
+      <UniqueIdentifier>{f0ef49eb-a82f-470c-827c-0077de852607}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="13.particle3d\emitter\right">
+      <UniqueIdentifier>{f2b980dc-bc4f-449e-b3a3-6523ac1b9dba}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\frame\main.h">
@@ -204,6 +216,27 @@
     <ClInclude Include="..\..\..\src\particle3d\WxStagePage.h">
       <Filter>13.particle3d</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\frame\WxToolbarPanel.h">
+      <Filter>00.frame\toolbar</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\particle3d\WxEmitterPanel.h">
+      <Filter>13.particle3d\emitter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\particle3d\WxPropertyPanel.h">
+      <Filter>13.particle3d\emitter\left</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\particle3d\WxComponentPanel.h">
+      <Filter>13.particle3d\emitter\right</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\particle3d\config.h">
+      <Filter>13.particle3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\particle3d\Languages.h">
+      <Filter>13.particle3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\particle3d\PlayParticlesOP.h">
+      <Filter>13.particle3d</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\frame\main.cpp">
@@ -330,6 +363,21 @@
       <Filter>12.anim\timeline</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\particle3d\WxStagePage.cpp">
+      <Filter>13.particle3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\frame\WxToolbarPanel.cpp">
+      <Filter>00.frame\toolbar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\particle3d\WxEmitterPanel.cpp">
+      <Filter>13.particle3d\emitter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\particle3d\WxPropertyPanel.cpp">
+      <Filter>13.particle3d\emitter\left</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\particle3d\WxComponentPanel.cpp">
+      <Filter>13.particle3d\emitter\right</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\particle3d\PlayParticlesOP.cpp">
       <Filter>13.particle3d</Filter>
     </ClCompile>
   </ItemGroup>

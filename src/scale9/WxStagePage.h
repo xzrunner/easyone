@@ -23,7 +23,7 @@ public:
 	virtual int GetPageType() const override { return PAGE_SCALE9; }
 
 protected:
-	virtual void OnPageInit();
+	virtual void OnPageInit() override;
 
 	virtual const n0::NodeSharedComp& GetEditedNodeComp() const override;
 
