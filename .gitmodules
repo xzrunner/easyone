@@ -127,3 +127,6 @@
 [submodule "ext/emitter"]
 	path = ext/emitter
 	url = git@github.com:xzrunner/emitter.git
+[submodule "ext/ecsx"]
+	path = ext/ecsx
+	url = git@github.com:xzrunner/ecsx.git
