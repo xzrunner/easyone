@@ -4,7 +4,6 @@
 #include "particle3d/Languages.h"
 
 #include <ee0/WxLibraryPanel.h>
-#include <ee0/StringHelper.h>
 #include <ee0/WxLibraryItem.h>
 
 #include <ps_3d.h>
@@ -15,6 +14,7 @@
 #include <ns/NodeFactory.h>
 #include <emitter/P3dTemplate.h>
 #include <emitter/P3dInstance.h>
+#include <sx/StringHelper.h>
 
 #include <wx/sizer.h>
 #include <wx/button.h>
@@ -218,7 +218,7 @@ void WxEmitterPanel::WxDropTarget::
 OnDropText(wxCoord x, wxCoord y, const wxString& text)
 {
 	std::vector<std::string> keys;
-	ee0::StringHelper::Split(text.ToStdString().c_str(), ",", keys);
+	sx::StringHelper::Split(text.ToStdString().c_str(), ",", keys);
 	if (keys.size() <= 1) {
 		return;
 	}
