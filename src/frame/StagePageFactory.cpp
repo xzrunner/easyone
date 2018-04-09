@@ -32,6 +32,7 @@
 #include <node0/SceneNode.h>
 #include <node2/CompMask.h>
 #include <node2/CompScale9.h>
+#include <node2/CompParticle3dInst.h>
 #include <moon/Blackboard.h>
 #include <moon/Context.h>
 
