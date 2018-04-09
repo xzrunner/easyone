@@ -10,7 +10,7 @@
 #include <guard/check.h>
 #include <sm_const.h>
 #include <ps_3d.h>
-#include <ns/ResFileHelper.h>
+#include <sx/ResFileHelper.h>
 
 #include <wx/sizer.h>
 #include <wx/statbox.h>
@@ -205,13 +205,13 @@ void WxComponentPanel::InitLayout(wxSizer* top_sizer)
 		hori_sizer->AddSpacer(20);
 		// Right Icon
 		{
-			auto type = ns::ResFileHelper::Type(m_filepath);
+			auto type = sx::ResFileHelper::Type(m_filepath);
 			switch (type)
 			{
-			case ns::FILE_IMAGE:
+			case sx::FILE_IMAGE:
 				hori_sizer->Add(new ee0::WxImagePanel(this, m_filepath, 100));
 				break;
-			case ns::FIME_JSON:
+			case sx::FILE_JSON:
 				break;
 			}
 		}	

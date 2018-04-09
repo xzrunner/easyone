@@ -1,9 +1,9 @@
 #pragma once
 
+#include <ee0/GameObj.h>
 #include <ee0/EditOP.h>
 
 #include <SM_Vector.h>
-#include <node0/typedef.h>
 
 namespace eone
 {
@@ -16,7 +16,7 @@ namespace scale9
 class ResizeScale9OP : public ee0::EditOP
 {
 public:
-	ResizeScale9OP(WxPreviewPanel* stage, const n0::SceneNodePtr& node);
+	ResizeScale9OP(WxPreviewPanel* stage, const ee0::GameObj& obj);
 
 	virtual bool OnMouseLeftDown(int x, int y) override;
 	virtual bool OnMouseLeftUp(int x, int y) override;
@@ -36,7 +36,7 @@ private:
 
 private:
 	WxPreviewPanel*  m_stage;
-	n0::SceneNodePtr m_node;
+	ee0::GameObj m_obj;
 
 	sm::vec2 m_first_pos;
 

@@ -173,11 +173,11 @@ wxWindow* Application::CreateStagePanel()
 	m_stage->Freeze();
 	Blackboard::Instance()->SetStagePanel(m_stage);
 
-	//StagePageFactory::Create(PAGE_SCENE2D, m_stage);
+	StagePageFactory::Create(PAGE_SCENE2D, m_stage);
 	//StagePageFactory::Create(PAGE_SCALE9, m_stage);
 	//StagePageFactory::Create(PAGE_SCRIPT, m_stage);
 	//StagePageFactory::Create(PAGE_ANIM, m_stage);
-	StagePageFactory::Create(PAGE_PARTICLE3D, m_stage);
+	//StagePageFactory::Create(PAGE_PARTICLE3D, m_stage);
 
 	m_stage->Thaw();
 
@@ -209,14 +209,14 @@ wxWindow* Application::CreateTreePanel()
 {
 	auto curr_page = m_stage->GetCurrentStagePage();
 	return new WxSceneTreePanel(m_frame, 
-		curr_page->GetSubjectMgr(), curr_page->GetEditedNode());
+		curr_page->GetSubjectMgr(), curr_page->GetEditedObj());
 }
 
 wxWindow* Application::CreateDetailPanel()
 {
 	auto curr_page = m_stage->GetCurrentStagePage();
 	return new WxDetailPanel(m_frame, 
-		curr_page->GetSubjectMgr(), curr_page->GetEditedNode(), curr_page->GetMoonCtx());
+		curr_page->GetSubjectMgr(), curr_page->GetEditedObj(), curr_page->GetMoonCtx());
 }
 
 wxWindow* Application::CreateToolbarPanel()

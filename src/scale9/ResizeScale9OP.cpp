@@ -27,10 +27,10 @@ namespace eone
 namespace scale9
 {
 
-ResizeScale9OP::ResizeScale9OP(WxPreviewPanel* stage, const n0::SceneNodePtr& node)
+ResizeScale9OP::ResizeScale9OP(WxPreviewPanel* stage, const ee0::GameObj& obj)
 	: ee0::EditOP()
 	, m_stage(stage)
-	, m_node(node)
+	, m_obj(obj)
 	, m_stat(STAT_NULL)
 {
 	auto cam = std::dynamic_pointer_cast<WxPreviewCanvas>(stage->GetImpl().GetCanvas())->GetCamera();
@@ -49,7 +49,7 @@ bool ResizeScale9OP::OnMouseLeftDown(int x, int y)
 	GD_ASSERT(cam, "null cam");
 	m_first_pos = ee0::CameraHelper::TransPosScreenToProject(*cam, x, y);
 
-	auto& cbb = m_node->GetUniqueComp<n2::CompBoundingBox>();
+	auto& cbb = m_obj->GetUniqueComp<n2::CompBoundingBox>();
 	auto& sz = cbb.GetSize();
 	const float hw = sz.Width() * 0.5f,
 		        hh = sz.Height() * 0.5f;
@@ -102,11 +102,11 @@ bool ResizeScale9OP::OnMouseDrag(int x, int y)
 
 	float w = fabs(pos.x) * 2,
 		  h = fabs(pos.y) * 2;
-	auto& cscale9 = m_node->GetSharedComp<n2::CompScale9>();
+	auto& cscale9 = m_obj->GetSharedComp<n2::CompScale9>();
 	cscale9.SetSize(w, h);
 
-	auto& cbb = m_node->GetUniqueComp<n2::CompBoundingBox>();
-	cbb.SetSize(*m_node, sm::rect(w, h));
+	auto& cbb = m_obj->GetUniqueComp<n2::CompBoundingBox>();
+	cbb.SetSize(*m_obj, sm::rect(w, h));
 
 	m_stage->GetSubjectMgr()->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
 
@@ -119,12 +119,12 @@ bool ResizeScale9OP::OnDraw() const
 		return true;
 	}
 
-	auto& cscale9 = m_node->GetSharedComp<n2::CompScale9>();
+	auto& cscale9 = m_obj->GetSharedComp<n2::CompScale9>();
 	if (cscale9.GetType() == n2::CompScale9::S9_NULL) {
 		return false;
 	}
 
-	auto& cbb = m_node->GetUniqueComp<n2::CompBoundingBox>();
+	auto& cbb = m_obj->GetUniqueComp<n2::CompBoundingBox>();
 	auto& sz = cbb.GetSize();
 	const float hw = sz.Width() * 0.5f,
 		        hh = sz.Height() * 0.5f;

@@ -26,10 +26,10 @@ namespace eone
 namespace anim
 {
 
-WxStagePage::WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, const n0::SceneNodePtr& node)
-	: eone::WxStagePage(parent, node, LAYOUT_STAGE_EXT)
+WxStagePage::WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, const ee0::GameObj& obj)
+	: eone::WxStagePage(parent, obj, LAYOUT_STAGE_EXT)
 {
-	auto& canim_inst = node->GetUniqueComp<n2::CompAnimInst>();
+	auto& canim_inst = obj->GetUniqueComp<n2::CompAnimInst>();
 	canim_inst.GetPlayCtrl().SetActive(false);
 
 	m_messages.push_back(MSG_SET_CURR_FRAME);
@@ -60,12 +60,12 @@ void WxStagePage::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
 	}
 }
 
-void WxStagePage::Traverse(std::function<bool(const n0::SceneNodePtr&)> func,
+void WxStagePage::Traverse(std::function<bool(const ee0::GameObj&)> func,
 	                       const ee0::VariantSet& variants, bool inverse) const
 {
 	auto var = variants.GetVariant("type");
 	if (var.m_type == ee0::VT_EMPTY) {
-		m_node->GetSharedComp<n2::CompAnim>().Traverse(func, inverse);
+		m_obj->GetSharedComp<n2::CompAnim>().Traverse(func, inverse);
 		return;
 	}
 
@@ -73,13 +73,13 @@ void WxStagePage::Traverse(std::function<bool(const n0::SceneNodePtr&)> func,
 	switch (var.m_val.l)
 	{
 	case TRAV_DRAW:
-		func(m_node);
+		func(m_obj);
 		break;
 	case TRAV_DRAW_PREVIEW:
-		func(m_node);
+		func(m_obj);
 		break;
 	default:
-		m_node->GetSharedComp<n2::CompAnim>().Traverse(func, inverse);
+		m_obj->GetSharedComp<n2::CompAnim>().Traverse(func, inverse);
 	}
 }
 
@@ -92,15 +92,15 @@ void WxStagePage::OnPageInit()
 	} else {
 		sizer = new wxBoxSizer(wxVERTICAL);
 	}
-	auto& canim = m_node->GetSharedComp<n2::CompAnim>();
-	auto& canim_inst = m_node->GetUniqueComp<n2::CompAnimInst>();
+	auto& canim = m_obj->GetSharedComp<n2::CompAnim>();
+	auto& canim_inst = m_obj->GetUniqueComp<n2::CompAnimInst>();
 	sizer->Add(new WxTimelinePanel(panel, canim, canim_inst, m_sub_mgr), 0, wxEXPAND);
 	panel->SetSizer(sizer);
 }
 
-const n0::NodeSharedComp& WxStagePage::GetEditedNodeComp() const 
+const n0::NodeSharedComp& WxStagePage::GetEditedObjComp() const 
 {
-	return m_node->GetSharedComp<n2::CompAnim>();
+	return m_obj->GetSharedComp<n2::CompAnim>();
 }
 
 void WxStagePage::LoadFromJsonExt(const std::string& dir, const rapidjson::Value& val)
@@ -114,10 +114,10 @@ bool WxStagePage::OnSetCurrFrame(const ee0::VariantSet& variants)
 	GD_ASSERT(var.m_type == ee0::VT_INT, "err frame");
 	int frame = var.m_val.l; 
 
-	auto& canim = m_node->GetSharedComp<n2::CompAnim>();
+	auto& canim = m_obj->GetSharedComp<n2::CompAnim>();
 	frame = std::min(frame, canim.GetAnimTemplate()->GetMaxFrameIdx());
 	
-	auto& canim_inst = m_node->GetUniqueComp<n2::CompAnimInst>();
+	auto& canim_inst = m_obj->GetUniqueComp<n2::CompAnimInst>();
 	bool ret = canim_inst.SetFrame(frame);
 	AnimHelper::UpdateTreePanael(*m_sub_mgr, canim_inst);
 	return ret;
@@ -126,7 +126,7 @@ bool WxStagePage::OnSetCurrFrame(const ee0::VariantSet& variants)
 bool WxStagePage::OnRefreshAnimComp()
 {
 	LOGI("refresh anim comp");
-	auto& canim = m_node->GetSharedCompPtr<n2::CompAnim>();
+	auto& canim = m_obj->GetSharedCompPtr<n2::CompAnim>();
 	canim->GetAnimTemplate()->Build(canim->GetAllLayers());
 	return true;
 }

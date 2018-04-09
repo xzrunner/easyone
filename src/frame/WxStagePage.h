@@ -1,8 +1,7 @@
 #pragma once
 
+#include <ee0/GameObj.h>
 #include <ee0/WxStagePage.h>
-
-#include <node0/typedef.h>
 
 #include <rapidjson/document.h>
 
@@ -30,7 +29,11 @@ public:
 	};
 
 public:
-	WxStagePage(wxWindow* parent, const n0::SceneNodePtr& node, LayoutType layout_type);
+#ifndef EONE_ECS
+	WxStagePage(wxWindow* parent, const ee0::GameObj& obj, LayoutType layout_type);
+#else
+	WxStagePage(wxWindow* parent, const ecsx::Entity& entity, LayoutType layout_type);
+#endif // EONE_ECS
 
 	virtual void OnNotify(uint32_t msg, const ee0::VariantSet& variants) override;
 
@@ -40,7 +43,7 @@ public:
 		rapidjson::MemoryPoolAllocator<>& alloc) const;
 	void LoadFromJson(const std::string& dir, const rapidjson::Value& val);
 
-	const n0::SceneNodePtr& GetEditedNode() const { return m_node; }
+	const ee0::GameObj& GetEditedObj() const { return m_obj; }
 
 	void SetFilepath(const std::string& filepath) { m_filepath = filepath; }
 	const std::string& GetFilepath() const { return m_filepath; }
@@ -48,7 +51,7 @@ public:
 protected:
 	virtual void OnPageInit() {}
 
-	virtual const n0::NodeSharedComp& GetEditedNodeComp() const = 0;
+	virtual const n0::NodeSharedComp& GetEditedObjComp() const = 0;
 
 	virtual void StoreToJsonExt(const std::string& dir, rapidjson::Value& val,
 		rapidjson::MemoryPoolAllocator<>& alloc) const {}
@@ -63,7 +66,7 @@ private:
 	void InitSubWindow();
 
 protected:
-	n0::SceneNodePtr m_node;
+	ee0::GameObj m_obj;
 
 	LayoutType m_layout_type;
 

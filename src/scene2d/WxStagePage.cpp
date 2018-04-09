@@ -17,8 +17,8 @@ namespace eone
 namespace scene2d
 {
 
-WxStagePage::WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, const n0::SceneNodePtr& node)
-	: eone::WxStagePage(parent, node, LAYOUT_PREVIEW)
+WxStagePage::WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, const ee0::GameObj& obj)
+	: eone::WxStagePage(parent, obj, LAYOUT_PREVIEW)
 {
 	m_messages.push_back(ee0::MSG_INSERT_SCENE_NODE);
 	m_messages.push_back(ee0::MSG_DELETE_SCENE_NODE);
@@ -38,16 +38,16 @@ void WxStagePage::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
 	switch (msg)
 	{
 	case ee0::MSG_INSERT_SCENE_NODE:
-		dirty = InsertSceneNode(variants);
+		dirty = InsertSceneObj(variants);
 		break;
 	case ee0::MSG_DELETE_SCENE_NODE:
-		dirty = DeleteSceneNode(variants);
+		dirty = DeleteSceneObj(variants);
 		break;
 	case ee0::MSG_CLEAR_SCENE_NODE:
-		dirty = ClearSceneNode();
+		dirty = ClearSceneObj();
 		break;
 	case ee0::MSG_REORDER_SCENE_NODE:
-		dirty = ReorderSceneNode(variants);
+		dirty = ReorderSceneObj(variants);
 		break;
 	}
 
@@ -56,12 +56,12 @@ void WxStagePage::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
 	}
 }
 
-void WxStagePage::Traverse(std::function<bool(const n0::SceneNodePtr&)> func,
+void WxStagePage::Traverse(std::function<bool(const ee0::GameObj&)> func,
 	                       const ee0::VariantSet& variants, bool inverse) const
 {
 	auto var = variants.GetVariant("type");
 	if (var.m_type == ee0::VT_EMPTY) {
-		m_node->GetSharedComp<n2::CompComplex>().Traverse(func, inverse);
+		m_obj->GetSharedComp<n2::CompComplex>().Traverse(func, inverse);
 		return;
 	}
 	
@@ -69,16 +69,16 @@ void WxStagePage::Traverse(std::function<bool(const n0::SceneNodePtr&)> func,
 	switch (var.m_val.l)
 	{
 	case TRAV_DRAW_PREVIEW:
-		func(m_node);
+		func(m_obj);
 		break;
 	default:
-		m_node->GetSharedComp<n2::CompComplex>().Traverse(func, inverse);
+		m_obj->GetSharedComp<n2::CompComplex>().Traverse(func, inverse);
 	}
 }
 
-const n0::NodeSharedComp& WxStagePage::GetEditedNodeComp() const 
+const n0::NodeSharedComp& WxStagePage::GetEditedObjComp() const 
 {
-	return m_node->GetSharedComp<n2::CompComplex>();
+	return m_obj->GetSharedComp<n2::CompComplex>();
 }
 
 void WxStagePage::StoreToJsonExt(const std::string& dir, rapidjson::Value& val, 
@@ -87,59 +87,59 @@ void WxStagePage::StoreToJsonExt(const std::string& dir, rapidjson::Value& val,
 //	val.AddMember("camera", "2d", alloc);
 }
 
-bool WxStagePage::InsertSceneNode(const ee0::VariantSet& variants)
+bool WxStagePage::InsertSceneObj(const ee0::VariantSet& variants)
 {
-	auto var = variants.GetVariant("node");
-	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: node");
-	n0::SceneNodePtr* node = static_cast<n0::SceneNodePtr*>(var.m_val.pv);
-	GD_ASSERT(node, "err scene node");
+	auto var = variants.GetVariant("obj");
+	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: obj");
+	ee0::GameObj* obj = static_cast<ee0::GameObj*>(var.m_val.pv);
+	GD_ASSERT(obj, "err scene obj");
 
-	auto& ccomplex = m_node->GetSharedComp<n2::CompComplex>();
-	ccomplex.AddChild(*node);
+	auto& ccomplex = m_obj->GetSharedComp<n2::CompComplex>();
+	ccomplex.AddChild(*obj);
 
 	return true;
 }
 
-bool WxStagePage::DeleteSceneNode(const ee0::VariantSet& variants)
+bool WxStagePage::DeleteSceneObj(const ee0::VariantSet& variants)
 {
-	auto var = variants.GetVariant("node");
-	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: node");
-	n0::SceneNodePtr* node = static_cast<n0::SceneNodePtr*>(var.m_val.pv);
-	GD_ASSERT(node, "err scene node");
+	auto var = variants.GetVariant("obj");
+	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: obj");
+	ee0::GameObj* obj = static_cast<ee0::GameObj*>(var.m_val.pv);
+	GD_ASSERT(obj, "err scene obj");
 
-	auto& ccomplex = m_node->GetSharedComp<n2::CompComplex>();
-	return ccomplex.RemoveChild(*node);
+	auto& ccomplex = m_obj->GetSharedComp<n2::CompComplex>();
+	return ccomplex.RemoveChild(*obj);
 }
 
-bool WxStagePage::ClearSceneNode()
+bool WxStagePage::ClearSceneObj()
 {
-	auto& ccomplex = m_node->GetSharedComp<n2::CompComplex>();
+	auto& ccomplex = m_obj->GetSharedComp<n2::CompComplex>();
 	bool dirty = !ccomplex.GetAllChildren().empty();
 	ccomplex.RemoveAllChildren();
 	return dirty;
 }
 
-bool WxStagePage::ReorderSceneNode(const ee0::VariantSet& variants)
+bool WxStagePage::ReorderSceneObj(const ee0::VariantSet& variants)
 {
-	auto node_var = variants.GetVariant("node");
-	GD_ASSERT(node_var.m_type == ee0::VT_PVOID, "no var in vars: node");
-	n0::SceneNodePtr* node = static_cast<n0::SceneNodePtr*>(node_var.m_val.pv);
-	GD_ASSERT(node, "err scene node");
+	auto obj_var = variants.GetVariant("obj");
+	GD_ASSERT(obj_var.m_type == ee0::VT_PVOID, "no var in vars: obj");
+	ee0::GameObj* obj = static_cast<ee0::GameObj*>(obj_var.m_val.pv);
+	GD_ASSERT(obj, "err scene obj");
 
 	auto up_var = variants.GetVariant("up");
 	GD_ASSERT(up_var.m_type == ee0::VT_BOOL, "no var in vars: up");
 	bool up = up_var.m_val.bl;
 
-	auto& ccomplex = m_node->GetSharedComp<n2::CompComplex>();
-	std::vector<n0::SceneNodePtr> all_nodes = ccomplex.GetAllChildren();
-	if (all_nodes.empty()) {
+	auto& ccomplex = m_obj->GetSharedComp<n2::CompComplex>();
+	std::vector<ee0::GameObj> all_objs = ccomplex.GetAllChildren();
+	if (all_objs.empty()) {
 		return false;
 	}
 
 	int idx = -1;
-	for (int i = 0, n = all_nodes.size(); i < n; ++i) 
+	for (int i = 0, n = all_objs.size(); i < n; ++i) 
 	{
-		if (all_nodes[i] == *node) {
+		if (all_objs[i] == *obj) {
 			idx = i;
 			break;
 		}
@@ -147,16 +147,16 @@ bool WxStagePage::ReorderSceneNode(const ee0::VariantSet& variants)
 
 	GD_ASSERT(idx >= 0, "not find");
 
-	if (up && idx != all_nodes.size() - 1)
+	if (up && idx != all_objs.size() - 1)
 	{
-		std::swap(all_nodes[idx], all_nodes[idx + 1]);
-		ccomplex.SetChildren(all_nodes);
+		std::swap(all_objs[idx], all_objs[idx + 1]);
+		ccomplex.SetChildren(all_objs);
 		return true;
 	}
 	else if (!up && idx != 0)
 	{
-		std::swap(all_nodes[idx], all_nodes[idx - 1]);
-		ccomplex.SetChildren(all_nodes);
+		std::swap(all_objs[idx], all_objs[idx - 1]);
+		ccomplex.SetChildren(all_objs);
 		return true;
 	}
 

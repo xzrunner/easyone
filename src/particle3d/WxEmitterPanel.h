@@ -1,8 +1,7 @@
 #pragma once
 
+#include <ee0/GameObj.h>
 #include <ee0/WxDropTarget.h>
-
-#include <node0/typedef.h>
 
 #include <wx/panel.h>
 #include <wx/dnd.h>

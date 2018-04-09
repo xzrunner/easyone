@@ -1,8 +1,7 @@
 #pragma once
 
+#include <ee0/GameObj.h>
 #include <ee0/typedef.h>
-
-#include <node0/typedef.h>
 
 #include <wx/panel.h>
 
@@ -13,10 +12,10 @@ class WxSceneTreePanel : public wxPanel
 {
 public:
 	WxSceneTreePanel(wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr,
-		const n0::SceneNodePtr& root_node);
+		const ee0::GameObj& root_obj);
 
 private:
-	void InitLayout(const n0::SceneNodePtr& root_node);
+	void InitLayout(const ee0::GameObj& root_obj);
 
 	void OnCreatePress(wxCommandEvent& event);
 

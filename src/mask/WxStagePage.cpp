@@ -16,8 +16,8 @@ namespace eone
 namespace mask
 {
 
-WxStagePage::WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, const n0::SceneNodePtr& node)
-	: eone::WxStagePage(parent, node, LAYOUT_PREVIEW)
+WxStagePage::WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, const ee0::GameObj& obj)
+	: eone::WxStagePage(parent, obj, LAYOUT_PREVIEW)
 {
 	m_messages.push_back(ee0::MSG_INSERT_SCENE_NODE);
 	m_messages.push_back(ee0::MSG_DELETE_SCENE_NODE);
@@ -46,13 +46,13 @@ void WxStagePage::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
 	}
 }
 
-void WxStagePage::Traverse(std::function<bool(const n0::SceneNodePtr&)> func,
+void WxStagePage::Traverse(std::function<bool(const ee0::GameObj&)> func,
 	                       const ee0::VariantSet& variants,
 	                       bool inverse) const
 {
 	auto var = variants.GetVariant("type");
 	if (var.m_type == ee0::VT_EMPTY) {
-		m_node->GetSharedComp<n2::CompMask>().Traverse(func, inverse);
+		m_obj->GetSharedComp<n2::CompMask>().Traverse(func, inverse);
 		return;
 	}
 
@@ -60,35 +60,35 @@ void WxStagePage::Traverse(std::function<bool(const n0::SceneNodePtr&)> func,
 	switch (var.m_val.l)
 	{
 	case TRAV_DRAW_PREVIEW:
-		func(m_node);
+		func(m_obj);
 		break;
 	default:
-		m_node->GetSharedComp<n2::CompMask>().Traverse(func, inverse);
+		m_obj->GetSharedComp<n2::CompMask>().Traverse(func, inverse);
 	}
 }
 
-const n0::NodeSharedComp& WxStagePage::GetEditedNodeComp() const
+const n0::NodeSharedComp& WxStagePage::GetEditedObjComp() const
 {
-	return m_node->GetSharedComp<n2::CompMask>();
+	return m_obj->GetSharedComp<n2::CompMask>();
 }
 
 void WxStagePage::InsertSceneNode(const ee0::VariantSet& variants)
 {
-	auto& cmask = m_node->GetSharedComp<n2::CompMask>();
+	auto& cmask = m_obj->GetSharedComp<n2::CompMask>();
 	if (cmask.GetBaseNode() && cmask.GetMaskNode()) {
 		return;
 	}
 
-	auto var = variants.GetVariant("node");
-	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: node");
-	n0::SceneNodePtr* node = static_cast<n0::SceneNodePtr*>(var.m_val.pv);
-	GD_ASSERT(node, "err scene node");
+	auto var = variants.GetVariant("obj");
+	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: obj");
+	ee0::GameObj* obj = static_cast<ee0::GameObj*>(var.m_val.pv);
+	GD_ASSERT(obj, "err scene obj");
 
 	if (!cmask.GetBaseNode()) {
-		cmask.SetBaseNode(*node);
+		cmask.SetBaseNode(*obj);
 	} else {
 		GD_ASSERT(!cmask.GetMaskNode(), "mask not null");
-		cmask.SetMaskNode(*node);
+		cmask.SetMaskNode(*obj);
 	}
 		
 	m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
@@ -96,16 +96,16 @@ void WxStagePage::InsertSceneNode(const ee0::VariantSet& variants)
 
 void WxStagePage::DeleteSceneNode(const ee0::VariantSet& variants)
 {
-	auto var = variants.GetVariant("node");
-	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: node");
-	n0::SceneNodePtr* node = static_cast<n0::SceneNodePtr*>(var.m_val.pv);
-	GD_ASSERT(node, "err scene node");
+	auto var = variants.GetVariant("obj");
+	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: obj");
+	ee0::GameObj* obj = static_cast<ee0::GameObj*>(var.m_val.pv);
+	GD_ASSERT(obj, "err scene obj");
 
-	auto& cmask = m_node->GetSharedComp<n2::CompMask>();
-	if (cmask.GetBaseNode() == *node) {
+	auto& cmask = m_obj->GetSharedComp<n2::CompMask>();
+	if (cmask.GetBaseNode() == *obj) {
 		cmask.SetBaseNode(nullptr);
 	} else {
-		GD_ASSERT(cmask.GetMaskNode() == *node, "err mask");
+		GD_ASSERT(cmask.GetMaskNode() == *obj, "err mask");
 		cmask.SetMaskNode(nullptr);
 	}
 
@@ -114,7 +114,7 @@ void WxStagePage::DeleteSceneNode(const ee0::VariantSet& variants)
 
 void WxStagePage::ClearSceneNode()
 {
-	auto& cmask = m_node->GetSharedComp<n2::CompMask>();
+	auto& cmask = m_obj->GetSharedComp<n2::CompMask>();
 	cmask.SetBaseNode(nullptr);
 	cmask.SetMaskNode(nullptr);
 

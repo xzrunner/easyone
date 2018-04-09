@@ -67,16 +67,16 @@ void WxPreviewCanvas::OnDrawSprites() const
 
 	n2::RenderParams rp;
 	rp.SetEditMode(false);
-	m_stage->GetStagePage().Traverse([&](const n0::SceneNodePtr& node)->bool 
+	m_stage->GetStagePage().Traverse([&](const ee0::GameObj& obj)->bool 
 	{
-		if (node->HasUniqueComp<n2::CompUniquePatch>())
+		if (obj->HasUniqueComp<n2::CompUniquePatch>())
 		{
-			auto patch = &node->GetUniqueComp<n2::CompUniquePatch>();
+			auto patch = &obj->GetUniqueComp<n2::CompUniquePatch>();
 			patch->Rewind();
 			rp.SetPatch(patch);
 		}
 
-		n2::RenderSystem::Draw(node, rp);
+		n2::RenderSystem::Draw(obj, rp);
 
 		return true;
 	}, vars);

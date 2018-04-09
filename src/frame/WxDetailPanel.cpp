@@ -19,8 +19,10 @@
 #include <ee3/WxCompTransformPanel.h>
 
 #include <guard/check.h>
-#include <node0/SceneNode.h>
 #include <moon/Context.h>
+#ifndef EONE_ECS
+#include <node0/SceneNode.h>
+#endif // EONE_ECS
 #include <node2/CompScale9.h>
 #include <node2/CompScissor.h>
 #include <node2/CompScript.h>
@@ -57,10 +59,10 @@ namespace eone
 {
 
 WxDetailPanel::WxDetailPanel(wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr,
-	                         const n0::SceneNodePtr& root_node, const moon::ContextPtr& moon_ctx)
+	                         const ee0::GameObj& root_obj, const moon::ContextPtr& moon_ctx)
 	: wxPanel(parent, wxID_ANY)
 	, m_sub_mgr(sub_mgr)
-	, m_root_node(root_node)
+	, m_root_obj(root_obj)
 	, m_moon_ctx(moon_ctx)
 {
 	SetBackgroundColour(wxColour(229, 229, 229));
@@ -126,32 +128,32 @@ void WxDetailPanel::RegisterMsg(ee0::SubjectMgr& sub_mgr)
 
 void WxDetailPanel::InitComponents(const ee0::VariantSet& variants)
 {
-	n0::SceneNodePtr node, root;
-	size_t node_id = 0;
+	ee0::GameObj obj, root;
+	size_t obj_id = 0;
 
-	auto var_node = variants.GetVariant("node");
-	GD_ASSERT(var_node.m_type == ee0::VT_PVOID, "no var in vars: node");
-	node = *static_cast<n0::SceneNodePtr*>(var_node.m_val.pv);
-	GD_ASSERT(node, "err scene node");
+	auto var_obj = variants.GetVariant("obj");
+	GD_ASSERT(var_obj.m_type == ee0::VT_PVOID, "no var in vars: obj");
+	obj = *static_cast<ee0::GameObj*>(var_obj.m_val.pv);
+	GD_ASSERT(obj, "err scene obj");
 
 	auto var_root = variants.GetVariant("root");
 	if (var_root.m_type != ee0::VT_EMPTY) {
-		GD_ASSERT(var_root.m_type == ee0::VT_PVOID, "no var in vars: node");
-		root = *static_cast<n0::SceneNodePtr*>(var_root.m_val.pv);
+		GD_ASSERT(var_root.m_type == ee0::VT_PVOID, "no var in vars: obj");
+		root = *static_cast<ee0::GameObj*>(var_root.m_val.pv);
 	}
 
 	auto var_id = variants.GetVariant("id");
 	if (var_id.m_type != ee0::VT_EMPTY) {
-		GD_ASSERT(var_id.m_type == ee0::VT_ULONG, "no var in vars: node");
-		node_id = var_id.m_val.ul;
+		GD_ASSERT(var_id.m_type == ee0::VT_ULONG, "no var in vars: obj");
+		obj_id = var_id.m_val.ul;
 	}
 
-	m_nwp.Init(node, root, node_id);
+	m_nwp.Init(obj, root, obj_id);
 
-	InitComponents(node);
+	InitComponents(obj);
 }
 
-void WxDetailPanel::InitComponents(const n0::SceneNodePtr& node)
+void WxDetailPanel::InitComponents(const ee0::GameObj& obj)
 {
 	if (m_nwp.GetNode()->HasUniqueComp<ee0::CompNodeEditor>())
 	{
@@ -248,8 +250,8 @@ void WxDetailPanel::InitComponents(const n0::SceneNodePtr& node)
 
 void WxDetailPanel::InitComponents()
 {
-	m_nwp.Init(m_root_node, m_root_node, 0);
-	InitComponents(m_root_node);
+	m_nwp.Init(m_root_obj, m_root_obj, 0);
+	InitComponents(m_root_obj);
 }
 
 void WxDetailPanel::ClearComponents()
@@ -288,7 +290,7 @@ void WxDetailPanel::StagePageChanged(const ee0::VariantSet& variants)
 	m_sub_mgr = new_page->GetSubjectMgr();
 	RegisterMsg(*m_sub_mgr);
 
-	m_root_node = new_page->GetEditedNode();
+	m_root_obj = new_page->GetEditedObj();
 
 	m_moon_ctx = new_page->GetMoonCtx();
 }

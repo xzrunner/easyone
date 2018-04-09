@@ -17,20 +17,20 @@
 namespace
 {
 
-void OpenEditDialog(ee0::WxStagePage& stage, const n0::SceneNodePtr& node,
+void OpenEditDialog(ee0::WxStagePage& stage, const ee0::GameObj& obj,
 	                const ee0::RenderContext& rc, const ee0::WindowContext& wc)
 {
 	auto stage_panel = eone::Blackboard::Instance()->GetApp()->GetStagePanel();
-	if (node->HasSharedComp<n2::CompMask>())
+	if (obj->HasSharedComp<n2::CompMask>())
 	{
 		auto& canvas = stage.GetImpl().GetCanvas();
-		eone::mask::WxEditDialog dlg(stage_panel, rc, wc, node);
+		eone::mask::WxEditDialog dlg(stage_panel, rc, wc, obj);
 		dlg.ShowModal();
 	}
-	else if (node->HasSharedComp<n2::CompScale9>())
+	else if (obj->HasSharedComp<n2::CompScale9>())
 	{
 		auto& canvas = stage.GetImpl().GetCanvas();
-		eone::scale9::WxEditDialog dlg(stage_panel, rc, wc, node);
+		eone::scale9::WxEditDialog dlg(stage_panel, rc, wc, obj);
 		dlg.ShowModal();
 	}
 }

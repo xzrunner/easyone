@@ -20,13 +20,13 @@ namespace scale9
 {
 
 WxEditDialog::WxEditDialog(wxWindow* parent, const ee0::RenderContext& rc,
-	                       const ee0::WindowContext& wc, const n0::SceneNodePtr& node)
+	                       const ee0::WindowContext& wc, const ee0::GameObj& obj)
 	: wxDialog(parent, wxID_ANY, "Edit Scale9", wxDefaultPosition, wxSize(800, 600), wxCLOSE_BOX | wxCAPTION | wxMAXIMIZE_BOX)
 	, m_rc(rc)
 	, m_wc(wc)
 	, m_mgr(this)
 {
-	InitLayout(node);
+	InitLayout(obj);
 }
 
 WxEditDialog::~WxEditDialog()
@@ -34,9 +34,9 @@ WxEditDialog::~WxEditDialog()
 	m_mgr.UnInit();
 }
 
-void WxEditDialog::InitLayout(const n0::SceneNodePtr& node)
+void WxEditDialog::InitLayout(const ee0::GameObj& obj)
 {
-	m_mgr.AddPane(CreateStagePanel(node),
+	m_mgr.AddPane(CreateStagePanel(obj),
 		wxAuiPaneInfo().Name("Stage").Caption("Stage").
 		Center().PaneBorder(false));
 
@@ -55,9 +55,9 @@ void WxEditDialog::InitLayout(const n0::SceneNodePtr& node)
 	m_mgr.Update();
 }
 
-wxWindow* WxEditDialog::CreateStagePanel(const n0::SceneNodePtr& node)
+wxWindow* WxEditDialog::CreateStagePanel(const ee0::GameObj& obj)
 {
-	m_stage = new scale9::WxStagePage(this, nullptr, node);
+	m_stage = new scale9::WxStagePage(this, nullptr, obj);
 	auto canvas = std::make_shared<ee2::WxStageCanvas>(m_stage, &m_rc, &m_wc);
 	m_stage->GetImpl().SetCanvas(canvas);
 	m_stage->GetImpl().SetEditOP(std::make_shared<NodeSelectOP>(*m_stage, m_rc, m_wc));
@@ -80,13 +80,13 @@ wxWindow* WxEditDialog::CreatePreviewPanel()
 wxWindow* WxEditDialog::CreateTreePanel()
 {
 	return new WxSceneTreePanel(
-		this, m_stage->GetSubjectMgr(), m_stage->GetEditedNode());
+		this, m_stage->GetSubjectMgr(), m_stage->GetEditedObj());
 }
 
 wxWindow* WxEditDialog::CreateDetailPanel()
 {
 	return new WxDetailPanel(
-		this, m_stage->GetSubjectMgr(), m_stage->GetEditedNode(), m_stage->GetMoonCtx());
+		this, m_stage->GetSubjectMgr(), m_stage->GetEditedObj(), m_stage->GetMoonCtx());
 }
 
 }

@@ -24,8 +24,8 @@ namespace eone
 namespace scale9
 {
 
-WxStagePage::WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, const n0::SceneNodePtr& node)
-	: eone::WxStagePage(parent, node, LAYOUT_PREVIEW)
+WxStagePage::WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, const ee0::GameObj& obj)
+	: eone::WxStagePage(parent, obj, LAYOUT_PREVIEW)
 {
 	m_messages.push_back(ee0::MSG_INSERT_SCENE_NODE);
 	m_messages.push_back(ee0::MSG_DELETE_SCENE_NODE);
@@ -54,7 +54,7 @@ void WxStagePage::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
 	}
 }
 
-void WxStagePage::Traverse(std::function<bool(const n0::SceneNodePtr&)> func,
+void WxStagePage::Traverse(std::function<bool(const ee0::GameObj&)> func,
 	                       const ee0::VariantSet& variants,
 	                       bool inverse) const
 {
@@ -68,7 +68,7 @@ void WxStagePage::Traverse(std::function<bool(const n0::SceneNodePtr&)> func,
 	switch (var.m_val.l)
 	{
 	case TRAV_DRAW_PREVIEW:
-		func(m_node);
+		func(m_obj);
 		break;
 	default:
 		TraverseGrids(func);
@@ -78,13 +78,13 @@ void WxStagePage::Traverse(std::function<bool(const n0::SceneNodePtr&)> func,
 void WxStagePage::OnPageInit()
 {
 	auto preview = Blackboard::Instance()->GetPreviewPanel();
-	auto op = std::make_shared<ResizeScale9OP>(preview, m_node);
+	auto op = std::make_shared<ResizeScale9OP>(preview, m_obj);
 	preview->GetImpl().SetEditOP(op);
 }
 
-const n0::NodeSharedComp& WxStagePage::GetEditedNodeComp() const
+const n0::NodeSharedComp& WxStagePage::GetEditedObjComp() const
 {
-	return m_node->GetSharedComp<n2::CompScale9>();
+	return m_obj->GetSharedComp<n2::CompScale9>();
 }
 
 void WxStagePage::LoadFromJsonExt(const std::string& dir, const rapidjson::Value& val)
@@ -92,23 +92,23 @@ void WxStagePage::LoadFromJsonExt(const std::string& dir, const rapidjson::Value
 	auto& grids_val = val["grids"];
 	for (auto itr = grids_val.Begin(); itr != grids_val.End(); ++itr)
 	{
-		auto node = std::make_shared<n0::SceneNode>();
-		ns::NodeSerializer::LoadNodeFromJson(node, dir, *itr);
+		auto obj = std::make_shared<n0::SceneNode>();
+		ns::NodeSerializer::LoadNodeFromJson(obj, dir, *itr);
 
-		auto& ctrans = node->GetUniqueComp<n2::CompTransform>();
+		auto& ctrans = obj->GetUniqueComp<n2::CompTransform>();
 		int col, row;
 		ComposeGrids::Query(ctrans.GetTrans().GetPosition(), &col, &row);
 		if (col == -1 || row == -1) {
 			continue;
 		}
 
-		ctrans.SetPosition(*node, ComposeGrids::GetGridCenter(col, row));
+		ctrans.SetPosition(*obj, ComposeGrids::GetGridCenter(col, row));
 
 		const int idx = row * 3 + col;
 		if (m_grids[idx]) {
 			ee0::MsgHelper::DeleteNode(*m_sub_mgr, m_grids[idx]);
 		}
-		m_grids[idx] = node;
+		m_grids[idx] = obj;
 	}
 
 	m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
@@ -116,35 +116,35 @@ void WxStagePage::LoadFromJsonExt(const std::string& dir, const rapidjson::Value
 
 void WxStagePage::InsertSceneNode(const ee0::VariantSet& variants)
 {
-	auto var = variants.GetVariant("node");
-	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: node");
-	n0::SceneNodePtr* node = static_cast<n0::SceneNodePtr*>(var.m_val.pv);
-	GD_ASSERT(node, "err scene node");
+	auto var = variants.GetVariant("obj");
+	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: obj");
+	ee0::GameObj* obj = static_cast<ee0::GameObj*>(var.m_val.pv);
+	GD_ASSERT(obj, "err scene obj");
 
-	auto& ctrans = (*node)->GetUniqueComp<n2::CompTransform>();
+	auto& ctrans = (*obj)->GetUniqueComp<n2::CompTransform>();
 	int col, row;
 	ComposeGrids::Query(ctrans.GetTrans().GetPosition(), &col, &row);
 	if (col == -1 || row == -1) {
 		return;
 	}
 	
-	ctrans.SetPosition(**node, ComposeGrids::GetGridCenter(col, row));
+	ctrans.SetPosition(**obj, ComposeGrids::GetGridCenter(col, row));
 
 	const int idx = row * 3 + col;
 	if (m_grids[idx]) {
 		ee0::MsgHelper::DeleteNode(*m_sub_mgr, m_grids[idx]);
 	}
-	m_grids[idx] = *node;
+	m_grids[idx] = *obj;
 
-	auto& cscale9 = m_node->GetSharedComp<n2::CompScale9>();
+	auto& cscale9 = m_obj->GetSharedComp<n2::CompScale9>();
 	auto type = n2::CompScale9::CheckType(m_grids);
 	cscale9.Build(type, cscale9.GetWidth(), cscale9.GetHeight(), m_grids, 0, 0, 0, 0);
 
 	// update bounding
 	if (type != n2::CompScale9::S9_NULL) 
 	{
-		auto& cbb = m_node->GetUniqueComp<n2::CompBoundingBox>();
-		cbb.SetSize(*m_node, sm::rect(cscale9.GetWidth(), cscale9.GetHeight()));
+		auto& cbb = m_obj->GetUniqueComp<n2::CompBoundingBox>();
+		cbb.SetSize(*m_obj, sm::rect(cscale9.GetWidth(), cscale9.GetHeight()));
 	}
 	
 	m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
@@ -152,18 +152,18 @@ void WxStagePage::InsertSceneNode(const ee0::VariantSet& variants)
 
 void WxStagePage::DeleteSceneNode(const ee0::VariantSet& variants)
 {
-	auto var = variants.GetVariant("node");
-	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: node");
-	n0::SceneNodePtr* node = static_cast<n0::SceneNodePtr*>(var.m_val.pv);
-	GD_ASSERT(node, "err scene node");
+	auto var = variants.GetVariant("obj");
+	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: obj");
+	ee0::GameObj* obj = static_cast<ee0::GameObj*>(var.m_val.pv);
+	GD_ASSERT(obj, "err scene obj");
 
 	for (int i = 0; i < 9; ++i) {
-		if (m_grids[i] == *node) {
+		if (m_grids[i] == *obj) {
 			m_grids[i].reset();
 		}
 	}
 
-	auto& cscale9 = m_node->GetSharedComp<n2::CompScale9>();
+	auto& cscale9 = m_obj->GetSharedComp<n2::CompScale9>();
 	auto type = n2::CompScale9::CheckType(m_grids);
 	cscale9.Build(type, cscale9.GetWidth(), cscale9.GetHeight(), m_grids, 0, 0, 0, 0);
 
@@ -176,13 +176,13 @@ void WxStagePage::ClearSceneNode()
 		m_grids[i].reset();
 	}
 
-	auto& cscale9 = m_node->GetSharedComp<n2::CompScale9>();
+	auto& cscale9 = m_obj->GetSharedComp<n2::CompScale9>();
 	cscale9.Build(n2::CompScale9::S9_NULL, cscale9.GetWidth(), cscale9.GetHeight(), m_grids, 0, 0, 0, 0);
 
 	m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
 }
 
-void WxStagePage::TraverseGrids(std::function<bool(const n0::SceneNodePtr&)> func) const
+void WxStagePage::TraverseGrids(std::function<bool(const ee0::GameObj&)> func) const
 {
 	for (int i = 0; i < 9; ++i) {
 		if (m_grids[i]) {

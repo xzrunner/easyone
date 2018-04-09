@@ -15,8 +15,8 @@ namespace eone
 namespace particle3d 
 {
 
-WxStagePage::WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, const n0::SceneNodePtr& node)
-	: eone::WxStagePage(parent, node, LAYOUT_TOOLBAR)
+WxStagePage::WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, const ee0::GameObj& obj)
+	: eone::WxStagePage(parent, obj, LAYOUT_TOOLBAR)
 	, m_library(library)
 {
 	if (library) {
@@ -30,12 +30,12 @@ void WxStagePage::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
 
 }
 
-void WxStagePage::Traverse(std::function<bool(const n0::SceneNodePtr&)> func,
+void WxStagePage::Traverse(std::function<bool(const ee0::GameObj&)> func,
 		                   const ee0::VariantSet& variants, bool inverse) const
 {
 	auto var = variants.GetVariant("type");
 	if (var.m_type == ee0::VT_EMPTY) {
-		m_node->GetSharedComp<n2::CompParticle3d>().Traverse(func, inverse);
+		m_obj->GetSharedComp<n2::CompParticle3d>().Traverse(func, inverse);
 		return;
 	}
 
@@ -43,13 +43,13 @@ void WxStagePage::Traverse(std::function<bool(const n0::SceneNodePtr&)> func,
 	switch (var.m_val.l)
 	{
 	case TRAV_DRAW:
-		func(m_node);
+		func(m_obj);
 		break;
 	case TRAV_DRAW_PREVIEW:
-		func(m_node);
+		func(m_obj);
 		break;
 	default:
-		m_node->GetSharedComp<n2::CompParticle3d>().Traverse(func, inverse);
+		m_obj->GetSharedComp<n2::CompParticle3d>().Traverse(func, inverse);
 	}
 }
 
@@ -62,15 +62,15 @@ void WxStagePage::OnPageInit()
 	} else {
 		sizer = new wxBoxSizer(wxVERTICAL);
 	}
-	auto& cp3d = m_node->GetSharedComp<n2::CompParticle3d>();
-	auto& cp3d_inst = m_node->GetUniqueComp<n2::CompParticle3dInst>();
+	auto& cp3d = m_obj->GetSharedComp<n2::CompParticle3d>();
+	auto& cp3d_inst = m_obj->GetUniqueComp<n2::CompParticle3dInst>();
 	sizer->Add(new WxEmitterPanel(panel, m_library, cp3d, cp3d_inst), 0, wxEXPAND);
 	panel->SetSizer(sizer);
 }
 
-const n0::NodeSharedComp& WxStagePage::GetEditedNodeComp() const
+const n0::NodeSharedComp& WxStagePage::GetEditedObjComp() const
 {
-	return m_node->GetSharedComp<n2::CompParticle3d>();
+	return m_obj->GetSharedComp<n2::CompParticle3d>();
 }
 
 }

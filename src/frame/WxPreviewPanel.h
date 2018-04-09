@@ -3,8 +3,6 @@
 #include <ee0/WxEditPanel.h>
 #include <ee0/Observer.h>
 
-#include <node0/typedef.h>
-
 namespace eone
 {
 

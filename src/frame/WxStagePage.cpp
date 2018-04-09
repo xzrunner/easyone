@@ -18,9 +18,9 @@
 namespace eone
 {
 
-WxStagePage::WxStagePage(wxWindow* parent, const n0::SceneNodePtr& node, LayoutType layout_type)
+WxStagePage::WxStagePage(wxWindow* parent, const ee0::GameObj& obj, LayoutType layout_type)
 	: ee0::WxStagePage(parent)
-	, m_node(node)
+	, m_obj(obj)
 	, m_layout_type(layout_type)
 {
 	m_sub_mgr->RegisterObserver(ee0::MSG_STAGE_PAGE_ON_SHOW, this);
@@ -55,7 +55,7 @@ void WxStagePage::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
 void WxStagePage::StoreToJson(const std::string& dir, rapidjson::Value& val,
 	                          rapidjson::MemoryPoolAllocator<>& alloc) const
 {
-	ns::CompSerializer::Instance()->ToJson(GetEditedNodeComp(), dir, val, alloc);
+	ns::CompSerializer::Instance()->ToJson(GetEditedObjComp(), dir, val, alloc);
 	StoreToJsonExt(dir, val, alloc);
 }
 
@@ -64,12 +64,12 @@ void WxStagePage::LoadFromJson(const std::string& dir, const rapidjson::Value& v
 	m_sub_mgr->NotifyObservers(ee0::MSG_NODE_SELECTION_CLEAR);
 	m_sub_mgr->NotifyObservers(ee0::MSG_CLEAR_SCENE_NODE);
 
-	ns::CompSerializer::Instance()->FromJson(m_node, dir, val);
+	ns::CompSerializer::Instance()->FromJson(m_obj, dir, val);
 	LoadFromJsonExt(dir, val);
 
-	auto& casset = m_node->GetSharedComp<n0::CompAsset>();
-	auto& cbb = m_node->GetUniqueComp<n2::CompBoundingBox>();
-	cbb.SetSize(*m_node, casset.GetBounding());
+	auto& casset = m_obj->GetSharedComp<n0::CompAsset>();
+	auto& cbb = m_obj->GetUniqueComp<n2::CompBoundingBox>();
+	cbb.SetSize(*m_obj, casset.GetBounding());
 
 	m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
 }

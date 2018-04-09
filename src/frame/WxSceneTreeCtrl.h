@@ -1,9 +1,8 @@
 #pragma once
 
+#include <ee0/GameObj.h>
 #include <ee0/Observer.h>
 #include <ee0/typedef.h>
-
-#include <node0/typedef.h>
 
 #include <wx/treectrl.h>
 
@@ -16,7 +15,7 @@ class WxSceneTreeCtrl : public wxTreeCtrl, public ee0::Observer
 {
 public:
 	WxSceneTreeCtrl(wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr,
-		const n0::SceneNodePtr& root_node);
+		const ee0::GameObj& root_obj);
 
 	virtual void OnNotify(uint32_t msg, const ee0::VariantSet& variants) override;
 
@@ -32,19 +31,19 @@ private:
 	void OnEndDrag(wxTreeEvent& event);
 	void OnKeyDown(wxKeyEvent& event);
 
-	void SelectSceneNode(const ee0::VariantSet& variants);
-	void UnselectSceneNode(const ee0::VariantSet& variants);
+	void SelectSceneObj(const ee0::VariantSet& variants);
+	void UnselectSceneObj(const ee0::VariantSet& variants);
 
-	void SelectSceneNode(const n0::SceneNodePtr& node, bool multiple);
-	void UnselectSceneNode(const n0::SceneNodePtr& node);
+	void SelectSceneObj(const ee0::GameObj& obj, bool multiple);
+	void UnselectSceneObj(const ee0::GameObj& obj);
 
-	void InsertSceneNode(const ee0::VariantSet& variants);
-	void InsertSceneNode(wxTreeItemId parent, const n0::SceneNodePtr& child,
-		const n0::SceneNodePtr& root, size_t node_id);
-	void DeleteSceneNode(const ee0::VariantSet& variants);
-	void DeleteSceneNode(const n0::SceneNodePtr& node);
-	void ClearSceneNode();
-	void ReorderSceneNode(const ee0::VariantSet& variants);
+	void InsertSceneObj(const ee0::VariantSet& variants);
+	void InsertSceneObj(wxTreeItemId parent, const ee0::GameObj& child,
+		const ee0::GameObj& root, size_t obj_id);
+	void DeleteSceneObj(const ee0::VariantSet& variants);
+	void DeleteSceneObj(const ee0::GameObj& obj);
+	void ClearSceneObj();
+	void ReorderSceneObj(const ee0::VariantSet& variants);
 	bool ReorderItem(wxTreeItemId item, bool up);
 	void ReorderSelectionToMsg(bool up);
 
@@ -53,10 +52,10 @@ private:
 	void ClearALLSelected();
 
 	void CopyChildrenTree(wxTreeItemId from, wxTreeItemId to);
-	void MoveSceneNode(wxTreeItemId src, wxTreeItemId dst_parent);
-	void DeleteEmptyNodeToRoot(wxTreeItemId item);
+	void MoveSceneObj(wxTreeItemId src, wxTreeItemId dst_parent);
+	void DeleteEmptyObjToRoot(wxTreeItemId item);
 
-	void RebuildTree(const n0::SceneNodePtr& node);
+	void RebuildTree(const ee0::GameObj& obj);
 	void RebuildTree(const ee0::VariantSet& variants);
 
 	void ChangeName(const ee0::VariantSet& variants);
@@ -66,8 +65,8 @@ private:
 	void SelectLeft();
 	void SelectRight();
 
-	void DeleteSelectedNode();
-	void DeleteNodeOutside(wxTreeItemId item);
+	void DeleteSelectedObj();
+	void DeleteObjOutside(wxTreeItemId item);
 	void CleanRootEmptyChild();
 		
 	wxTreeItemId GetSingleSelected() const;
@@ -80,7 +79,7 @@ private:
 
 private:
 	ee0::SubjectMgrPtr m_sub_mgr;
-	n0::SceneNodePtr   m_root_node;
+	ee0::GameObj m_root_obj;
 
 	wxTreeItemId m_root;
 

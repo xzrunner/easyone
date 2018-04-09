@@ -1,6 +1,6 @@
 #pragma once
 
-#include <node0/typedef.h>
+#include <ee0/GameObj.h>
 
 #include <wx/treectrl.h>
 
@@ -11,21 +11,21 @@ class WxSceneTreeItem : public wxTreeItemData
 {
 public:
 	WxSceneTreeItem(const WxSceneTreeItem& item);
-	WxSceneTreeItem(const n0::SceneNodePtr& node, 
-		const n0::SceneNodePtr& root, int node_id);
+	WxSceneTreeItem(const ee0::GameObj& obj, 
+		const ee0::GameObj& root, int obj_id);
 
-	const n0::SceneNodePtr& GetNode() const { return m_node; }
+	const ee0::GameObj& GetObj() const { return m_obj; }
 
-	const n0::SceneNodePtr& GetRoot() const { return m_root; }
+	const ee0::GameObj& GetRoot() const { return m_root; }
 
-	int GetNodeID() const { return m_node_id; }
-	void SetNodeID(int id) { m_node_id = id; }
+	int GetObjID() const { return m_obj_id; }
+	void SetObjID(int id) { m_obj_id = id; }
 
 private:
-	n0::SceneNodePtr m_node = nullptr;
+	ee0::GameObj m_obj = nullptr;
 
-	n0::SceneNodePtr m_root = nullptr;
-	int m_node_id = -1;
+	ee0::GameObj m_root = nullptr;
+	int m_obj_id = -1;
 
 }; // WxSceneTreeItem
 

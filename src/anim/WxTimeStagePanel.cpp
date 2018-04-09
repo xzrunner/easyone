@@ -4,6 +4,7 @@
 #include "anim/MsgHelper.h"
 #include "anim/AnimHelper.h"
 
+#include <ee0/GameObj.h>
 #include <ee0/VariantSet.h>
 #include <ee0/SubjectMgr.h>
 
@@ -359,12 +360,12 @@ bool WxTimeStagePanel::InsertSceneNode(const ee0::VariantSet& variants)
 		return false;
 	}
 
-	auto var = variants.GetVariant("node");
-	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: node");
-	n0::SceneNodePtr* node = static_cast<n0::SceneNodePtr*>(var.m_val.pv);
-	GD_ASSERT(node, "err scene node");
+	auto var = variants.GetVariant("obj");
+	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: obj");
+	ee0::GameObj* obj = static_cast<ee0::GameObj*>(var.m_val.pv);
+	GD_ASSERT(obj, "err scene obj");
 
-	frame->AddNode(*node);
+	frame->AddNode(*obj);
 	m_sub_mgr->NotifyObservers(MSG_REFRESH_ANIM_COMP);
 
 	return true;
@@ -377,12 +378,12 @@ bool WxTimeStagePanel::DeleteSceneNode(const ee0::VariantSet& variants)
 		return false;
 	}
 
-	auto var = variants.GetVariant("node");
-	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: node");
-	n0::SceneNodePtr* node = static_cast<n0::SceneNodePtr*>(var.m_val.pv);
-	GD_ASSERT(node, "err scene node");
+	auto var = variants.GetVariant("obj");
+	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: obj");
+	ee0::GameObj* obj = static_cast<ee0::GameObj*>(var.m_val.pv);
+	GD_ASSERT(obj, "err scene obj");
 
-	bool ret = frame->RemoveNode(*node);
+	bool ret = frame->RemoveNode(*obj);
 	m_sub_mgr->NotifyObservers(MSG_REFRESH_ANIM_COMP);
 	return ret;
 }
@@ -401,24 +402,24 @@ bool WxTimeStagePanel::ReorderSceneNode(const ee0::VariantSet& variants)
 		return false;
 	}
 
-	auto node_var = variants.GetVariant("node");
-	GD_ASSERT(node_var.m_type == ee0::VT_PVOID, "no var in vars: node");
-	n0::SceneNodePtr* node = static_cast<n0::SceneNodePtr*>(node_var.m_val.pv);
-	GD_ASSERT(node, "err scene node");
+	auto obj_var = variants.GetVariant("obj");
+	GD_ASSERT(obj_var.m_type == ee0::VT_PVOID, "no var in vars: obj");
+	ee0::GameObj* obj = static_cast<ee0::GameObj*>(obj_var.m_val.pv);
+	GD_ASSERT(obj, "err scene obj");
 
 	auto up_var = variants.GetVariant("up");
 	GD_ASSERT(up_var.m_type == ee0::VT_BOOL, "no var in vars: up");
 	bool up = up_var.m_val.bl;
 
-	std::vector<n0::SceneNodePtr> all_nodes = frame->GetAllNodes();
-	if (all_nodes.empty()) {
+	std::vector<ee0::GameObj> all_objs = frame->GetAllNodes();
+	if (all_objs.empty()) {
 		return false;
 	}
 
 	int idx = -1;
-	for (int i = 0, n = all_nodes.size(); i < n; ++i)
+	for (int i = 0, n = all_objs.size(); i < n; ++i)
 	{
-		if (all_nodes[i] == *node) {
+		if (all_objs[i] == *obj) {
 			idx = i;
 			break;
 		}
@@ -427,16 +428,16 @@ bool WxTimeStagePanel::ReorderSceneNode(const ee0::VariantSet& variants)
 	GD_ASSERT(idx >= 0, "not find");
 
 	bool ret = false;
-	if (up && idx != all_nodes.size() - 1)
+	if (up && idx != all_objs.size() - 1)
 	{
-		std::swap(all_nodes[idx], all_nodes[idx + 1]);
-		frame->SetNodes(all_nodes);
+		std::swap(all_objs[idx], all_objs[idx + 1]);
+		frame->SetNodes(all_objs);
 		ret = true;
 	}
 	else if (!up && idx != 0)
 	{
-		std::swap(all_nodes[idx], all_nodes[idx - 1]);
-		frame->SetNodes(all_nodes);
+		std::swap(all_objs[idx], all_objs[idx - 1]);
+		frame->SetNodes(all_objs);
 		ret = true;
 	}
 	if (ret) {

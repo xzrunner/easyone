@@ -43,14 +43,14 @@ namespace eone
 {
 
 WxSceneTreePanel::WxSceneTreePanel(wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr,
-	                               const n0::SceneNodePtr& root_node)
+	                               const ee0::GameObj& root_obj)
 	: wxPanel(parent, wxID_ANY)
 	, m_sub_mgr(sub_mgr)
 {
-	InitLayout(root_node);
+	InitLayout(root_obj);
 }
 
-void WxSceneTreePanel::InitLayout(const n0::SceneNodePtr& root_node)
+void WxSceneTreePanel::InitLayout(const ee0::GameObj& root_obj)
 {
 	wxSizer* top_sizer = new wxBoxSizer(wxVERTICAL);
 	{
@@ -60,20 +60,20 @@ void WxSceneTreePanel::InitLayout(const n0::SceneNodePtr& root_node)
 		top_sizer->Add(m_create_btn, 0, wxALIGN_CENTER_HORIZONTAL);
 	}
 	{
-		top_sizer->Add(new WxSceneTreeCtrl(this, m_sub_mgr, root_node), 1, wxEXPAND);
+		top_sizer->Add(new WxSceneTreeCtrl(this, m_sub_mgr, root_obj), 1, wxEXPAND);
 	}
 	SetSizer(top_sizer);
 }
 
 void WxSceneTreePanel::OnCreatePress(wxCommandEvent& event)
 {
-	ee0::WxListSelectDlg dlg(this, "Create node", 
+	ee0::WxListSelectDlg dlg(this, "Create obj", 
 		NODE_LIST, m_create_btn->GetScreenPosition());
 	if (dlg.ShowModal() != wxID_OK) {
 		return;
 	}
 
-	n0::SceneNodePtr node = nullptr;
+	ee0::GameObj obj = nullptr;
 
 	auto id = dlg.GetSelectedID();
 	switch (id)
@@ -87,43 +87,43 @@ void WxSceneTreePanel::OnCreatePress(wxCommandEvent& event)
 				auto& path = dlg.GetPath();
 				auto img = facade::ResPool::Instance().Fetch<facade::Image>(path.ToStdString());
 
-				node = NodeFactory::Create(NODE_IMAGE);
-				auto& cimage = node->GetSharedComp<n2::CompImage>();
+				obj = NodeFactory::Create(NODE_IMAGE);
+				auto& cimage = obj->GetSharedComp<n2::CompImage>();
 				cimage.SetFilepath(path.ToStdString());
 				cimage.SetTexture(img->GetTexture());
 
-				auto& cbb = node->GetUniqueComp<n2::CompBoundingBox>();
-				cbb.SetSize(*node, sm::rect(img->GetWidth(), img->GetHeight()));
+				auto& cbb = obj->GetUniqueComp<n2::CompBoundingBox>();
+				cbb.SetSize(*obj, sm::rect(img->GetWidth(), img->GetHeight()));
 			}
 		}
 		break;
 	case NodeType::NODE_TEXT:
-		node = NodeFactory::Create(NODE_TEXT);
+		obj = NodeFactory::Create(NODE_TEXT);
 		break;
 	case NodeType::NODE_MASK:
-		node = NodeFactory::Create(NODE_MASK);
+		obj = NodeFactory::Create(NODE_MASK);
 		break;
 	case NodeType::NODE_MESH:
-		node = NodeFactory::Create(NODE_MESH);
+		obj = NodeFactory::Create(NODE_MESH);
 		break;
 	case NodeType::NODE_SCALE9:
-		node = NodeFactory::Create(NODE_SCALE9);
+		obj = NodeFactory::Create(NODE_SCALE9);
 		break;
 	case NodeType::NODE_ANIM:
-		node = NodeFactory::Create(NODE_ANIM);
+		obj = NodeFactory::Create(NODE_ANIM);
 		break;
 	case NodeType::NODE_PARTICLE3D:
-		node = NodeFactory::Create(NODE_PARTICLE3D);
+		obj = NodeFactory::Create(NODE_PARTICLE3D);
 		break;
 	default:
 		return;
 	}
 
-	if (!node) {
+	if (!obj) {
 		return;
 	}
 
-	ee0::MsgHelper::InsertNode(*m_sub_mgr, node, true);
+	ee0::MsgHelper::InsertNode(*m_sub_mgr, obj, true);
 }
 
 }

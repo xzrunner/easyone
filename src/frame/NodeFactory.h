@@ -1,10 +1,8 @@
 #pragma once
 
+#include <ee0/GameObj.h>
+
 #include "frame/NodeType.h"
-
-#include <node0/typedef.h>
-
-#include <rapidjson/document.h>
 
 namespace eone
 {
@@ -12,7 +10,7 @@ namespace eone
 class NodeFactory
 {
 public:
-	static n0::SceneNodePtr Create(NodeType type);
+	static ee0::GameObj Create(NodeType type);
 
 }; // NodeFactory
 

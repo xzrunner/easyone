@@ -17,8 +17,8 @@ namespace eone
 namespace scene3d
 {
 
-WxStagePage::WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, const n0::SceneNodePtr& node)
-	: eone::WxStagePage(parent, node, LAYOUT_PREVIEW)
+WxStagePage::WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, const ee0::GameObj& obj)
+	: eone::WxStagePage(parent, obj, LAYOUT_PREVIEW)
 {
 	m_messages.push_back(ee0::MSG_INSERT_SCENE_NODE);
 	m_messages.push_back(ee0::MSG_DELETE_SCENE_NODE);
@@ -47,13 +47,13 @@ void WxStagePage::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
 	}
 }
 
-void WxStagePage::Traverse(std::function<bool(const n0::SceneNodePtr&)> func,
+void WxStagePage::Traverse(std::function<bool(const ee0::GameObj&)> func,
 	                       const ee0::VariantSet& variants,
 	                       bool inverse) const
 {
 	auto var = variants.GetVariant("type");
 	if (var.m_type == ee0::VT_EMPTY) {
-		m_node->GetSharedComp<n2::CompComplex>().Traverse(func, inverse);
+		m_obj->GetSharedComp<n2::CompComplex>().Traverse(func, inverse);
 		return;
 	}
 	
@@ -61,16 +61,16 @@ void WxStagePage::Traverse(std::function<bool(const n0::SceneNodePtr&)> func,
 	switch (var.m_val.l)
 	{
 	case TRAV_DRAW_PREVIEW:
-		func(m_node);
+		func(m_obj);
 		break;
 	default:
-		m_node->GetSharedComp<n2::CompComplex>().Traverse(func, inverse);
+		m_obj->GetSharedComp<n2::CompComplex>().Traverse(func, inverse);
 	}
 }
 
-const n0::NodeSharedComp& WxStagePage::GetEditedNodeComp() const
+const n0::NodeSharedComp& WxStagePage::GetEditedObjComp() const
 {
-	return m_node->GetSharedComp<n2::CompComplex>();
+	return m_obj->GetSharedComp<n2::CompComplex>();
 }
 
 void WxStagePage::StoreToJsonExt(const std::string& dir, rapidjson::Value& val, 
@@ -81,14 +81,14 @@ void WxStagePage::StoreToJsonExt(const std::string& dir, rapidjson::Value& val,
 
 void WxStagePage::InsertSceneNode(const ee0::VariantSet& variants)
 {
-	auto var = variants.GetVariant("node");
-	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: node");
-	n0::SceneNodePtr* node = static_cast<n0::SceneNodePtr*>(var.m_val.pv);
-	GD_ASSERT(node, "err scene node");
+	auto var = variants.GetVariant("obj");
+	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: obj");
+	ee0::GameObj* obj = static_cast<ee0::GameObj*>(var.m_val.pv);
+	GD_ASSERT(obj, "err scene obj");
 
-	auto& ccomplex = m_node->GetSharedComp<n2::CompComplex>();
+	auto& ccomplex = m_obj->GetSharedComp<n2::CompComplex>();
 	if (m_node_selection.IsEmpty()) {
-		ccomplex.AddChild(*node);
+		ccomplex.AddChild(*obj);
 	}
 
 	m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
@@ -96,20 +96,20 @@ void WxStagePage::InsertSceneNode(const ee0::VariantSet& variants)
 
 void WxStagePage::DeleteSceneNode(const ee0::VariantSet& variants)
 {
-	auto var = variants.GetVariant("node");
-	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: node");
-	n0::SceneNodePtr* node = static_cast<n0::SceneNodePtr*>(var.m_val.pv);
-	GD_ASSERT(node, "err scene node");
+	auto var = variants.GetVariant("obj");
+	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: obj");
+	ee0::GameObj* obj = static_cast<ee0::GameObj*>(var.m_val.pv);
+	GD_ASSERT(obj, "err scene obj");
 
-	auto& ccomplex = m_node->GetSharedComp<n2::CompComplex>();
-	if (ccomplex.RemoveChild(*node)) {
+	auto& ccomplex = m_obj->GetSharedComp<n2::CompComplex>();
+	if (ccomplex.RemoveChild(*obj)) {
 		m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
 	}
 }
 
 void WxStagePage::ClearSceneNode()
 {
-	auto& ccomplex = m_node->GetSharedComp<n2::CompComplex>();
+	auto& ccomplex = m_obj->GetSharedComp<n2::CompComplex>();
 	ccomplex.RemoveAllChildren();
 	m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
 }

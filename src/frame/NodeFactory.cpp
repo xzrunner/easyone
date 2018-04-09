@@ -25,45 +25,45 @@
 namespace eone
 {
 
-n0::SceneNodePtr NodeFactory::Create(NodeType type)
+ee0::GameObj NodeFactory::Create(NodeType type)
 {
 	if (type == NODE_UNKNOWN) {
 		return nullptr;
 	}
 
-	n0::SceneNodePtr node = std::make_shared<n0::SceneNode>();
+	ee0::GameObj obj = std::make_shared<n0::SceneNode>();
 	sm::rect sz;
 
 	switch (type)
 	{
 	case NODE_IMAGE:
 		{
-			auto& cimage = node->AddSharedComp<n2::CompImage>();
+			auto& cimage = obj->AddSharedComp<n2::CompImage>();
 			sz.Build(100, 100);
 		}
 		break;
 	case NODE_TEXT:
 		{
-			auto& ctext = node->AddSharedComp<n2::CompText>();
+			auto& ctext = obj->AddSharedComp<n2::CompText>();
 			auto& tb = ctext.GetText().tb;
 			sz.Build(static_cast<float>(tb.width), static_cast<float>(tb.height));
 		}
 		break;
 	case NODE_MASK:
 		{
-			node->AddSharedComp<n2::CompMask>();
+			obj->AddSharedComp<n2::CompMask>();
 			sz.Build(100, 100);
 		}
 		break;
 	case NODE_MESH:
 		{
-			node->AddSharedComp<n2::CompMesh>();
+			obj->AddSharedComp<n2::CompMesh>();
 			sz.Build(100, 100);
 		}
 		break;
 	case NODE_SCALE9:
 		{
-			node->AddSharedComp<n2::CompScale9>();
+			obj->AddSharedComp<n2::CompScale9>();
 			sz.Build(100, 100);
 		}
 		break;
@@ -76,40 +76,40 @@ n0::SceneNodePtr NodeFactory::Create(NodeType type)
 
 			layer->AddKeyFrame(std::make_unique<anim::KeyFrame>(0));
 
-			auto& canim = node->AddSharedComp<n2::CompAnim>();
+			auto& canim = obj->AddSharedComp<n2::CompAnim>();
 			canim.AddLayer(layer);
 
-			node->AddUniqueComp<n2::CompAnimInst>(canim.GetAnimTemplate());
+			obj->AddUniqueComp<n2::CompAnimInst>(canim.GetAnimTemplate());
 		}
 		break;
 	case NODE_PARTICLE3D:
 		{
 			sz.Build(100, 100);
 
-			node->AddSharedComp<n2::CompParticle3d>(particle3d::MAX_COMPONENTS);
-			auto& cp3d = node->GetSharedCompPtr<n2::CompParticle3d>();
-			node->AddUniqueComp<n2::CompParticle3dInst>(cp3d);
+			obj->AddSharedComp<n2::CompParticle3d>(particle3d::MAX_COMPONENTS);
+			auto& cp3d = obj->GetSharedCompPtr<n2::CompParticle3d>();
+			obj->AddUniqueComp<n2::CompParticle3dInst>(cp3d);
 		}
 		break;
 
 	case NODE_SCENE2D:
 		{
-			node->AddSharedComp<n2::CompComplex>();
+			obj->AddSharedComp<n2::CompComplex>();
 			sz.Build(100, 100);
 		}
 		break;
 	}
 
 	// transform
-	auto& ctrans = node->AddUniqueComp<n2::CompTransform>();
+	auto& ctrans = obj->AddUniqueComp<n2::CompTransform>();
 
 	// aabb
-	node->AddUniqueComp<n2::CompBoundingBox>(sz);
+	obj->AddUniqueComp<n2::CompBoundingBox>(sz);
 
 	// editor
-	node->AddUniqueComp<ee0::CompNodeEditor>();
+	obj->AddUniqueComp<ee0::CompNodeEditor>();
 
-	return node;
+	return obj;
 }
 
 }

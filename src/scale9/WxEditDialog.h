@@ -1,6 +1,6 @@
 #pragma once
 
-#include <node0/typedef.h>
+#include <ee0/GameObj.h>
 
 #include <wx/dialog.h>
 #include <wx/aui/framemanager.h>
@@ -20,13 +20,13 @@ class WxEditDialog : public wxDialog
 {
 public:
 	WxEditDialog(wxWindow* parent, const ee0::RenderContext& rc,
-		const ee0::WindowContext& wc, const n0::SceneNodePtr& node);
+		const ee0::WindowContext& wc, const ee0::GameObj& obj);
 	virtual ~WxEditDialog();
 
 private:
-	void InitLayout(const n0::SceneNodePtr& node);
+	void InitLayout(const ee0::GameObj& obj);
 
-	wxWindow* CreateStagePanel(const n0::SceneNodePtr& node);
+	wxWindow* CreateStagePanel(const ee0::GameObj& obj);
 	wxWindow* CreatePreviewPanel();
 	wxWindow* CreateTreePanel();
 	wxWindow* CreateDetailPanel();

@@ -26,13 +26,13 @@ void WxStageCanvas::DrawBackground() const
 
 void WxStageCanvas::DrawNodes() const
 {
-	m_stage->Traverse([&](const n0::SceneNodePtr& node)->bool 
+	m_stage->Traverse([&](const ee0::GameObj& obj)->bool 
 	{
-		auto& ctrans = node->GetUniqueComp<n2::CompTransform>();
+		auto& ctrans = obj->GetUniqueComp<n2::CompTransform>();
 		auto old_scale = ctrans.GetTrans().GetScale();
-		ctrans.SetScale(*node, sm::vec2(1, 1));
-		n2::RenderSystem::Draw(node);
-		ctrans.SetScale(*node, old_scale);
+		ctrans.SetScale(*obj, sm::vec2(1, 1));
+		n2::RenderSystem::Draw(obj);
+		ctrans.SetScale(*obj, old_scale);
 		return true;
 	});
 }

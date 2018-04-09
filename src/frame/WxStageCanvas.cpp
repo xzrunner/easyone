@@ -25,18 +25,18 @@ void WxStageCanvas::DrawNodes() const
 {	
 	ee2::WxStageCanvas::DrawNodes();
 
-	auto node = static_cast<WxStagePage*>(m_stage)->GetEditedNode();
-	if (node->HasUniqueComp<n2::CompScissor>()) 
+	auto obj = static_cast<WxStagePage*>(m_stage)->GetEditedObj();
+	if (obj->HasUniqueComp<n2::CompScissor>()) 
 	{
-		auto& cscissor = node->GetUniqueComp<n2::CompScissor>();
+		auto& cscissor = obj->GetUniqueComp<n2::CompScissor>();
 		n2::RenderSystem::DrawScissorRect(cscissor.GetRect(), sm::Matrix2D());
 	}
 }
 
 bool WxStageCanvas::OnUpdate()
 {
-	auto node = static_cast<WxStagePage*>(m_stage)->GetEditedNode();
-	bool dirty = n2::UpdateSystem::Update(node);
+	auto obj = static_cast<WxStagePage*>(m_stage)->GetEditedObj();
+	bool dirty = n2::UpdateSystem::Update(obj);
 	if (dirty) {
 		m_stage->GetSubjectMgr()->NotifyObservers(ee0::MSG_UPDATE_NODES);
 	}

@@ -75,9 +75,9 @@ void AnimHelper::UpdateTreePanael(ee0::SubjectMgr& sub_mgr,
 {
 	auto root = NodeFactory::Create(NODE_SCENE2D);
 	auto& ccomplex = root->GetSharedComp<n2::CompComplex>();
-	canim_inst.TraverseCurrNodes([&](const n0::SceneNodePtr& node)->bool
+	canim_inst.TraverseCurrNodes([&](const ee0::GameObj& obj)->bool
 	{
-		ccomplex.AddChild(node);
+		ccomplex.AddChild(obj);
 		return true;
 	});
 
@@ -86,7 +86,7 @@ void AnimHelper::UpdateTreePanael(ee0::SubjectMgr& sub_mgr,
 	ee0::Variant var;
 	var.m_type = ee0::VT_PVOID;
 	var.m_val.pv = &root;
-	vars.SetVariant("node", var);
+	vars.SetVariant("obj", var);
 
 	sub_mgr.NotifyObservers(MSG_TREE_PANEL_REBUILD, vars);
 }

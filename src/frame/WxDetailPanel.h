@@ -2,8 +2,11 @@
 
 #include <ee0/Observer.h>
 #include <ee0/typedef.h>
+#include <ee0/GameObj.h>
 
+#ifndef EONE_ECS
 #include <node0/NodeWithPos.h>
+#endif // EONE_ECS
 #include <moon/typedef.h>
 
 #include <wx/panel.h>
@@ -17,7 +20,7 @@ class WxDetailPanel : public wxPanel, public ee0::Observer
 {
 public:
 	WxDetailPanel(wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr,
-		const n0::SceneNodePtr& root_node, const moon::ContextPtr& moon_ctx);
+		const ee0::GameObj& root_obj, const moon::ContextPtr& moon_ctx);
 
 	virtual void OnNotify(uint32_t msg, const ee0::VariantSet& variants) override;
 
@@ -26,7 +29,7 @@ private:
 	void RegisterMsg(ee0::SubjectMgr& sub_mgr);
 
 	void InitComponents(const ee0::VariantSet& variants);
-	void InitComponents(const n0::SceneNodePtr& node);
+	void InitComponents(const ee0::GameObj& obj);
 	void InitComponents();
 	void ClearComponents();
 	void UpdateComponents();
@@ -36,7 +39,7 @@ private:
 
 private:
 	ee0::SubjectMgrPtr m_sub_mgr;
-	n0::SceneNodePtr   m_root_node;
+	ee0::GameObj            m_root_obj;
 	moon::ContextPtr   m_moon_ctx;
 
 	wxSizer* m_comp_sizer;

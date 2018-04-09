@@ -6,20 +6,20 @@ namespace eone
 {
 
 WxSceneTreeItem::WxSceneTreeItem(const WxSceneTreeItem& item)
-	: m_node(item.m_node)
+	: m_obj(item.m_obj)
 	, m_root(item.m_root)
-	, m_node_id(item.m_node_id)
+	, m_obj_id(item.m_obj_id)
 {
 }
 
-WxSceneTreeItem::WxSceneTreeItem(const n0::SceneNodePtr& node, 
-	                             const n0::SceneNodePtr& root, 
-	                             int node_id)
-	: m_node(node)
+WxSceneTreeItem::WxSceneTreeItem(const ee0::GameObj& obj, 
+	                             const ee0::GameObj& root, 
+	                             int obj_id)
+	: m_obj(obj)
 	, m_root(root)
-	, m_node_id(node_id)
+	, m_obj_id(obj_id)
 {
-	GD_ASSERT((node && root) || (!node && !root), "err");
+	GD_ASSERT((obj && root) || (!obj && !root), "err");
 }
 
 }
