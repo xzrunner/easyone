@@ -57,7 +57,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\..\src;..\..\..\ext\easyeditor0\include;..\..\..\ext\easyeditor2\include;..\..\..\ext\easyeditor3\include;..\..\..\ext\cu\src;..\..\..\ext\ds\src\ds;..\..\..\ext\sm\src\sm;..\..\..\ext\ps\src\ps;..\..\..\ext\rigging\src\rigging;..\..\..\ext\sprite2\include;..\..\..\ext\painting2\include;..\..\..\ext\painting3\include;..\..\..\ext\js\include;..\..\..\ext\bimp\include;..\..\..\ext\guard\include;..\..\..\ext\logger\src\logger;..\..\..\ext\polymesh\include;..\..\..\ext\facade\include;..\..\..\ext\node0\include;..\..\..\ext\node2\include;..\..\..\ext\node3\include;..\..\..\ext\memmgr\include;..\..\..\ext\nserializer\include;..\..\..\ext\moon\include;..\..\..\ext\anim\include;..\..\..\ext\emitter\include;..\..\..\ext\external-editor\wx\include;..\..\..\ext\external\json\include;..\..\..\ext\external\rapidjson\include;..\..\..\ext\external\freetype\include;..\..\..\ext\external\c99;..\..\..\ext\external\lua\include;..\..\..\ext\external\boost\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\src;..\..\..\ext\easyeditor0\include;..\..\..\ext\easyeditor2\include;..\..\..\ext\easyeditor3\include;..\..\..\ext\cu\src;..\..\..\ext\ds\src\ds;..\..\..\ext\sm\src\sm;..\..\..\ext\ps\src\ps;..\..\..\ext\rigging\src\rigging;..\..\..\ext\sprite2\include;..\..\..\ext\painting2\include;..\..\..\ext\painting3\include;..\..\..\ext\js\include;..\..\..\ext\bimp\include;..\..\..\ext\guard\include;..\..\..\ext\logger\src\logger;..\..\..\ext\polymesh\include;..\..\..\ext\facade\include;..\..\..\ext\node0\include;..\..\..\ext\node2\include;..\..\..\ext\node3\include;..\..\..\ext\ecsx\include;..\..\..\ext\entity2\include;..\..\..\ext\memmgr\include;..\..\..\ext\nserializer\include;..\..\..\ext\serializerx\include;..\..\..\ext\moon\include;..\..\..\ext\anim\include;..\..\..\ext\emitter\include;..\..\..\ext\external-editor\wx\include;..\..\..\ext\external\json\include;..\..\..\ext\external\rapidjson\include;..\..\..\ext\external\freetype\include;..\..\..\ext\external\c99;..\..\..\ext\external\lua\include;..\..\..\ext\external\boost\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -83,7 +83,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>..\..\..\src;..\..\..\ext\easyeditor0\include;..\..\..\ext\easyeditor2\include;..\..\..\ext\easyeditor3\include;..\..\..\ext\cu\src;..\..\..\ext\ds\src\ds;..\..\..\ext\sm\src\sm;..\..\..\ext\ps\src\ps;..\..\..\ext\rigging\src\rigging;..\..\..\ext\sprite2\include;..\..\..\ext\painting2\include;..\..\..\ext\painting3\include;..\..\..\ext\js\include;..\..\..\ext\bimp\include;..\..\..\ext\guard\include;..\..\..\ext\logger\src\logger;..\..\..\ext\polymesh\include;..\..\..\ext\facade\include;..\..\..\ext\node0\include;..\..\..\ext\node2\include;..\..\..\ext\node3\include;..\..\..\ext\memmgr\include;..\..\..\ext\nserializer\include;..\..\..\ext\moon\include;..\..\..\ext\anim\include;..\..\..\ext\emitter\include;..\..\..\ext\external-editor\wx\include;..\..\..\ext\external\json\include;..\..\..\ext\external\rapidjson\include;..\..\..\ext\external\freetype\include;..\..\..\ext\external\c99;..\..\..\ext\external\lua\include;..\..\..\ext\external\boost\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\src;..\..\..\ext\easyeditor0\include;..\..\..\ext\easyeditor2\include;..\..\..\ext\easyeditor3\include;..\..\..\ext\cu\src;..\..\..\ext\ds\src\ds;..\..\..\ext\sm\src\sm;..\..\..\ext\ps\src\ps;..\..\..\ext\rigging\src\rigging;..\..\..\ext\sprite2\include;..\..\..\ext\painting2\include;..\..\..\ext\painting3\include;..\..\..\ext\js\include;..\..\..\ext\bimp\include;..\..\..\ext\guard\include;..\..\..\ext\logger\src\logger;..\..\..\ext\polymesh\include;..\..\..\ext\facade\include;..\..\..\ext\node0\include;..\..\..\ext\node2\include;..\..\..\ext\node3\include;..\..\..\ext\ecsx\include;..\..\..\ext\entity2\include;..\..\..\ext\memmgr\include;..\..\..\ext\nserializer\include;..\..\..\ext\serializerx\include;..\..\..\ext\moon\include;..\..\..\ext\anim\include;..\..\..\ext\emitter\include;..\..\..\ext\external-editor\wx\include;..\..\..\ext\external\json\include;..\..\..\ext\external\rapidjson\include;..\..\..\ext\external\freetype\include;..\..\..\ext\external\c99;..\..\..\ext\external\lua\include;..\..\..\ext\external\boost\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -138,8 +138,17 @@
     <ProjectReference Include="..\..\..\ext\easyeditor3\platform\msvc\projects\easyeditor3.vcxproj">
       <Project>{ceebd91e-9297-47ea-aded-68d791ba6fd4}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\ecsx\platform\msvc\projects\ecsx.vcxproj">
+      <Project>{5dcdf0b6-9fbf-4ca8-8276-a66236ae8fe6}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\ext\emitter\platform\msvc\projects\emitter.vcxproj">
       <Project>{dbef5985-8371-4d60-bde1-0cd58f8017f8}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\entity2\platform\msvc\projects\entity2.vcxproj">
+      <Project>{0755788f-c3b4-47f5-a0fa-f0187ad8e4ea}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\eserializer\platform\msvc\projects\eserializer.vcxproj">
+      <Project>{968dd532-4a13-4df8-849b-6d70c91544c3}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\..\ext\facade\platform\msvc\projects\facade.vcxproj">
       <Project>{2370b721-44d7-4c75-82a3-0da31b485cf0}</Project>
@@ -213,6 +222,9 @@
     <ProjectReference Include="..\..\..\ext\rigging\platform\msvc\projects\rigging.vcxproj">
       <Project>{dbe6d3f5-4e3d-4df8-b520-a27bce5a5d21}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\serializerx\platform\msvc\projects\serializerx.vcxproj">
+      <Project>{e8c6ffa3-644e-45c9-be61-8633db5202f9}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\ext\shaderlab\platform\msvc\projects\shaderlab.vcxproj">
       <Project>{5c357759-ca95-42e1-b907-dfb87a995f6c}</Project>
     </ProjectReference>
@@ -247,6 +259,7 @@
     <ClInclude Include="..\..\..\src\anim\WxTimeStagePanel.h" />
     <ClInclude Include="..\..\..\src\anim\WxTimeStageScrolled.h" />
     <ClInclude Include="..\..\..\src\frame\Blackboard.h" />
+    <ClInclude Include="..\..\..\src\frame\EntityFactory.h" />
     <ClInclude Include="..\..\..\src\frame\MessageID.h" />
     <ClInclude Include="..\..\..\src\frame\NodeFactory.h" />
     <ClInclude Include="..\..\..\src\frame\NodeSelectOP.h" />
@@ -305,6 +318,7 @@
     <ClCompile Include="..\..\..\src\anim\WxTimeStagePanel.cpp" />
     <ClCompile Include="..\..\..\src\anim\WxTimeStageScrolled.cpp" />
     <ClCompile Include="..\..\..\src\frame\Blackboard.cpp" />
+    <ClCompile Include="..\..\..\src\frame\EntityFactory.cpp" />
     <ClCompile Include="..\..\..\src\frame\NodeFactory.cpp" />
     <ClCompile Include="..\..\..\src\frame\NodeSelectOP.cpp" />
     <ClCompile Include="..\..\..\src\frame\StagePageFactory.cpp" />

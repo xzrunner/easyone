@@ -237,6 +237,9 @@
     <ClInclude Include="..\..\..\src\particle3d\PlayParticlesOP.h">
       <Filter>13.particle3d</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\frame\EntityFactory.h">
+      <Filter>00.frame\tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\frame\main.cpp">
@@ -379,6 +382,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\particle3d\PlayParticlesOP.cpp">
       <Filter>13.particle3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\frame\EntityFactory.cpp">
+      <Filter>00.frame\tools</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
