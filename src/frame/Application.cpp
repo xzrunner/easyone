@@ -19,6 +19,7 @@
 #include <ee0/CompNodeEditor.h>
 #include <ee0/MsgHelper.h>
 #include <ee0/SubjectMgr.h>
+#include <ee0/ConfigFile.h>
 #include <ee2/WxStageCanvas.h>
 #include <ee3/WxStageCanvas.h>
 #include <ee3/NodeArrangeOP.h>
@@ -28,6 +29,7 @@
 #include <node0/SceneNode.h>
 #include <ns/RegistCallback.h>
 #include <facade/Facade.h>
+#include <facade/GTxt.h>
 
 #include <boost/filesystem.hpp>
 
@@ -39,8 +41,8 @@ Application::Application(wxFrame* frame)
 	, m_mgr(frame)
 	, m_stage(nullptr)
 {
-	InitSubmodule();
 	Blackboard::Instance()->InitRenderContext();
+	InitSubmodule();
 	InitLayout();
 	InitCallback();
 }
@@ -113,10 +115,8 @@ void Application::InitSubmodule()
 {
 	facade::Facade::Init();
 
-	//CU_VEC<std::pair<CU_STR, CU_STR>> fonts;
-	//CU_VEC<std::pair<CU_STR, CU_STR>> user_fonts;
-	//fonts.push_back(std::make_pair("default", "FZCY_GBK.ttf"));
-	//gum::GTxt::Instance()->Init(fonts, user_fonts);
+	auto cfg = ee0::ConfigFile::Instance();
+	facade::GTxt::Instance()->LoadFonts(cfg->GetFonts(), cfg->GetUserFonts());
 
 	//gum::Facade::Initialize();
 }
