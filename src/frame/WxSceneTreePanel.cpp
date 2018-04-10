@@ -124,6 +124,7 @@ void WxSceneTreePanel::OnCreatePress(wxCommandEvent& event)
 	}
 
 	ee0::MsgHelper::InsertNode(*m_sub_mgr, obj, true);
+	m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
 }
 
 }
