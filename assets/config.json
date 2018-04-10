@@ -1,0 +1,23 @@
+{
+
+	"font" :
+	[
+		{
+			"name" : "Ë¼Ô´ºÚÌåM",
+			"filepath" : "default2.ttf"
+		},
+		{
+
+			"name" : "»ª¿µÙ³½ðºÚW8(P)",
+			"filepath" : "hkljhw8.ttf"
+		}
+	],
+
+	"user_font" :
+	[
+		{
+			"name" : "Í¼Æ¬×Ö",
+			"filepath" : "user_font_library.json"
+		}
+	]
+}

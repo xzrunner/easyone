@@ -1,0 +1,97 @@
+{
+
+	"chars" :
+
+	[
+
+		{
+
+			"str" : "Íò",
+
+			"filepath" : "userfont\\zi_wan.png"
+
+		},	
+
+		{
+
+			"str" : "0",
+
+			"filepath" : "userfont\\zi_0.png"
+
+		},
+
+		{
+
+			"str" : "1",
+
+			"filepath" : "userfont\\zi_1.png"
+
+		},
+
+		{
+
+			"str" : "2",
+
+			"filepath" : "userfont\\zi_2.png"
+
+		},
+
+		{
+
+			"str" : "3",
+
+			"filepath" : "userfont\\zi_3.png"
+
+		},
+
+		{
+
+			"str" : "4",
+
+			"filepath" : "userfont\\zi_4.png"
+
+		},
+
+		{
+
+			"str" : "5",
+
+			"filepath" : "userfont\\zi_5.png"
+
+		},
+
+		{
+
+			"str" : "6",
+
+			"filepath" : "userfont\\zi_6.png"
+
+		},
+
+		{
+
+			"str" : "7",
+
+			"filepath" : "userfont\\zi_7.png"
+
+		},
+
+		{
+
+			"str" : "8",
+
+			"filepath" : "userfont\\zi_8.png"
+
+		},
+
+		{
+
+			"str" : "9",
+
+			"filepath" : "userfont\\zi_9.png"
+
+		}	
+
+	]
+
+}
