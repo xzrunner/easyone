@@ -1,9 +1,10 @@
-#include "frame/NodeFactory.h"
+#include "frame/GameObjFactory.h"
 
 #include "particle3d/config.h"
 
 #include <ee0/CompNodeEditor.h>
 
+#ifndef GAME_OBJ_ECS
 #include <node0/SceneNode.h>
 #include <node2/CompComplex.h>
 #include <node2/CompImage.h>
@@ -17,6 +18,10 @@
 #include <node2/CompParticle3dInst.h>
 #include <node2/CompBoundingBox.h>
 #include <node2/CompTransform.h>
+#else
+#include <entity2/CompImage.h>
+#include <entity2/CompBoundingBox.h>
+#endif // GAME_OBJ_ECS
 
 #include <anim/KeyFrame.h>
 #include <anim/Layer.h>
@@ -25,9 +30,11 @@
 namespace eone
 {
 
-ee0::GameObj NodeFactory::Create(NodeType type)
+#ifndef GAME_OBJ_ECS
+
+ee0::GameObj GameObjFactory::Create(GameObjType type)
 {
-	if (type == NODE_UNKNOWN) {
+	if (type == GAME_OBJ_UNKNOWN) {
 		return nullptr;
 	}
 
@@ -36,38 +43,38 @@ ee0::GameObj NodeFactory::Create(NodeType type)
 
 	switch (type)
 	{
-	case NODE_IMAGE:
+	case GAME_OBJ_IMAGE:
 		{
 			auto& cimage = obj->AddSharedComp<n2::CompImage>();
 			sz.Build(100, 100);
 		}
 		break;
-	case NODE_TEXT:
+	case GAME_OBJ_TEXT:
 		{
 			auto& ctext = obj->AddSharedComp<n2::CompText>();
 			auto& tb = ctext.GetText().tb;
 			sz.Build(static_cast<float>(tb.width), static_cast<float>(tb.height));
 		}
 		break;
-	case NODE_MASK:
+	case GAME_OBJ_MASK:
 		{
 			obj->AddSharedComp<n2::CompMask>();
 			sz.Build(100, 100);
 		}
 		break;
-	case NODE_MESH:
+	case GAME_OBJ_MESH:
 		{
 			obj->AddSharedComp<n2::CompMesh>();
 			sz.Build(100, 100);
 		}
 		break;
-	case NODE_SCALE9:
+	case GAME_OBJ_SCALE9:
 		{
 			obj->AddSharedComp<n2::CompScale9>();
 			sz.Build(100, 100);
 		}
 		break;
-	case NODE_ANIM:
+	case GAME_OBJ_ANIM:
 		{
 			sz.Build(100, 100);
 
@@ -82,7 +89,7 @@ ee0::GameObj NodeFactory::Create(NodeType type)
 			obj->AddUniqueComp<n2::CompAnimInst>(canim.GetAnimTemplate());
 		}
 		break;
-	case NODE_PARTICLE3D:
+	case GAME_OBJ_PARTICLE3D:
 		{
 			sz.Build(100, 100);
 
@@ -92,7 +99,7 @@ ee0::GameObj NodeFactory::Create(NodeType type)
 		}
 		break;
 
-	case NODE_SCENE2D:
+	case GAME_OBJ_SCENE2D:
 		{
 			obj->AddSharedComp<n2::CompComplex>();
 			sz.Build(100, 100);
@@ -111,5 +118,33 @@ ee0::GameObj NodeFactory::Create(NodeType type)
 
 	return obj;
 }
+
+#else
+
+ee0::GameObj GameObjFactory::Create(ecsx::World& world, GameObjType type)
+{
+	GD_ASSERT(type != GAME_OBJ_UNKNOWN, "err type");
+
+	auto entity = world.CreateEntity();
+	sm::rect sz;
+
+	switch (type)
+	{
+		case GAME_OBJ_IMAGE:
+		{
+			auto& cimage = entity.AddComponent<e2::CompImage>();
+			sz.Build(100, 100);
+		}
+		break;
+	}
+
+	// aabb
+	auto& cbb = entity.AddComponent<e2::CompBoundingBox>();
+	cbb.aabb.Build(sz);
+
+	return entity;
+}
+
+#endif // GAME_OBJ_ECS
 
 }

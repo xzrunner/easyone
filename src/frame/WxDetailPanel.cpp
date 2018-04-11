@@ -20,9 +20,9 @@
 
 #include <guard/check.h>
 #include <moon/Context.h>
-#ifndef EONE_ECS
+#ifndef GAME_OBJ_ECS
 #include <node0/SceneNode.h>
-#endif // EONE_ECS
+#endif // GAME_OBJ_ECS
 #include <node2/CompScale9.h>
 #include <node2/CompScissor.h>
 #include <node2/CompScript.h>
@@ -76,13 +76,13 @@ void WxDetailPanel::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
 {
 	switch (msg)
 	{
-	case ee0::MSG_NODE_SELECTION_INSERT:
+	case ee0::MSG_GAME_OBJ_SELECTION_INSERT:
 		ClearComponents();
 		InitComponents(variants);
 		break;
 	case ee0::MSG_DELETE_SCENE_NODE:
 	case ee0::MSG_CLEAR_SCENE_NODE:
-	case ee0::MSG_NODE_SELECTION_CLEAR:
+	case ee0::MSG_GAME_OBJ_SELECTION_CLEAR:
 		ClearComponents();
 		InitComponents();
 		break;
@@ -119,8 +119,8 @@ void WxDetailPanel::RegisterMsg(ee0::SubjectMgr& sub_mgr)
 	sub_mgr.RegisterObserver(ee0::MSG_DELETE_SCENE_NODE, this);
 	sub_mgr.RegisterObserver(ee0::MSG_CLEAR_SCENE_NODE, this);
 
-	sub_mgr.RegisterObserver(ee0::MSG_NODE_SELECTION_INSERT, this);
-	sub_mgr.RegisterObserver(ee0::MSG_NODE_SELECTION_CLEAR, this);
+	sub_mgr.RegisterObserver(ee0::MSG_GAME_OBJ_SELECTION_INSERT, this);
+	sub_mgr.RegisterObserver(ee0::MSG_GAME_OBJ_SELECTION_CLEAR, this);
 
 	sub_mgr.RegisterObserver(ee0::MSG_UPDATE_COMPONENTS, this);
 	sub_mgr.RegisterObserver(ee0::MSG_STAGE_PAGE_CHANGED, this);

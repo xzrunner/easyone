@@ -1,6 +1,6 @@
 #include "anim/AnimHelper.h"
 
-#include "frame/NodeFactory.h"
+#include "frame/GameObjFactory.h"
 #include "frame/MessageID.h"
 
 #include <ee0/SubjectMgr.h>
@@ -73,7 +73,7 @@ int AnimHelper::GetCurrFrame(const n2::CompAnim& canim,
 void AnimHelper::UpdateTreePanael(ee0::SubjectMgr& sub_mgr,
 	                              const n2::CompAnimInst& canim_inst)
 {
-	auto root = NodeFactory::Create(NODE_SCENE2D);
+	auto root = GameObjFactory::Create(GAME_OBJ_SCENE2D);
 	auto& ccomplex = root->GetSharedComp<n2::CompComplex>();
 	canim_inst.TraverseCurrNodes([&](const ee0::GameObj& obj)->bool
 	{

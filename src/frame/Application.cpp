@@ -10,7 +10,7 @@
 #include "frame/WxToolbarPanel.h"
 #include "frame/NodeSelectOP.h"
 #include "frame/Blackboard.h"
-#include "frame/NodeFactory.h"
+#include "frame/GameObjFactory.h"
 #include "frame/StagePageType.h"
 #include "frame/StagePageFactory.h"
 #include "frame/Blackboard.h"
@@ -107,7 +107,7 @@ void Application::StoreToFile(const std::string& filepath) const
 void Application::Clear()
 {
 	auto& sub_mgr = m_stage->GetCurrentStagePage()->GetSubjectMgr();
-	sub_mgr->NotifyObservers(ee0::MSG_NODE_SELECTION_CLEAR);
+	sub_mgr->NotifyObservers(ee0::MSG_GAME_OBJ_SELECTION_CLEAR);
 	sub_mgr->NotifyObservers(ee0::MSG_CLEAR_SCENE_NODE);
 }
 

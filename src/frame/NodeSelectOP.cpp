@@ -55,7 +55,7 @@ bool NodeSelectOP::OnMouseLeftDClick(int x, int y)
 		return true;
 	}
 
-	auto& selection = m_stage.GetNodeSelection();
+	auto& selection = m_stage.GetSelection();
 	if (selection.Size() != 1) {
 		return false;
 	}

@@ -87,7 +87,7 @@ void WxStagePage::InsertSceneNode(const ee0::VariantSet& variants)
 	GD_ASSERT(obj, "err scene obj");
 
 	auto& ccomplex = m_obj->GetSharedComp<n2::CompComplex>();
-	if (m_node_selection.IsEmpty()) {
+	if (m_selection.IsEmpty()) {
 		ccomplex.AddChild(*obj);
 	}
 

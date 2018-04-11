@@ -29,11 +29,11 @@ public:
 	};
 
 public:
-#ifndef EONE_ECS
+#ifndef GAME_OBJ_ECS
 	WxStagePage(wxWindow* parent, const ee0::GameObj& obj, LayoutType layout_type);
 #else
 	WxStagePage(wxWindow* parent, const ecsx::Entity& entity, LayoutType layout_type);
-#endif // EONE_ECS
+#endif // GAME_OBJ_ECS
 
 	virtual void OnNotify(uint32_t msg, const ee0::VariantSet& variants) override;
 

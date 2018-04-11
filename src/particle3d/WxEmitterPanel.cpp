@@ -11,7 +11,7 @@
 #include <node0/CompAsset.h>
 #include <node2/CompParticle3d.h>
 #include <node2/CompParticle3dInst.h>
-#include <ns/NodeFactory.h>
+#include <ns/GameObjFactory.h>
 #include <emitter/P3dTemplate.h>
 #include <emitter/P3dInstance.h>
 #include <sx/StringHelper.h>
@@ -230,7 +230,7 @@ OnDropText(wxCoord x, wxCoord y, const wxString& text)
 		if (!item) {
 			continue;
 		}
-		auto casset = ns::NodeFactory::CreateAssetComp(item->GetFilepath());
+		auto casset = ns::GameObjFactory::CreateAssetComp(item->GetFilepath());
 		if (!casset) {
 			continue;
 		}

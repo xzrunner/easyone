@@ -132,12 +132,6 @@
     <ClInclude Include="..\..\..\src\scene2d\WxStagePage.h">
       <Filter>01.scene2d</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\frame\NodeFactory.h">
-      <Filter>00.frame\tools</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\frame\NodeType.h">
-      <Filter>00.frame\tools</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\frame\WxStagePage.h">
       <Filter>00.frame\stage</Filter>
     </ClInclude>
@@ -237,7 +231,10 @@
     <ClInclude Include="..\..\..\src\particle3d\PlayParticlesOP.h">
       <Filter>13.particle3d</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\frame\EntityFactory.h">
+    <ClInclude Include="..\..\..\src\frame\GameObjType.h">
+      <Filter>00.frame\tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\frame\GameObjFactory.h">
       <Filter>00.frame\tools</Filter>
     </ClInclude>
   </ItemGroup>
@@ -301,9 +298,6 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\scene2d\WxStagePage.cpp">
       <Filter>01.scene2d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\frame\NodeFactory.cpp">
-      <Filter>00.frame\tools</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\frame\WxStagePage.cpp">
       <Filter>00.frame\stage</Filter>
@@ -383,7 +377,7 @@
     <ClCompile Include="..\..\..\src\particle3d\PlayParticlesOP.cpp">
       <Filter>13.particle3d</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\frame\EntityFactory.cpp">
+    <ClCompile Include="..\..\..\src\frame\GameObjFactory.cpp">
       <Filter>00.frame\tools</Filter>
     </ClCompile>
   </ItemGroup>

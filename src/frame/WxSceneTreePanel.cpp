@@ -1,7 +1,7 @@
 #include "frame/WxSceneTreePanel.h"
 #include "frame/WxSceneTreeCtrl.h"
-#include "frame/NodeFactory.h"
-#include "frame/NodeType.h"
+#include "frame/GameObjFactory.h"
+#include "frame/GameObjType.h"
 
 #include <ee0/MessageID.h>
 #include <ee0/VariantSet.h>
@@ -26,15 +26,15 @@
 namespace
 {
 
-static const std::vector<std::pair<uint32_t, std::string>> NODE_LIST =
+static const std::vector<std::pair<uint32_t, std::string>> GAME_OBJ_LIST =
 {
-	std::make_pair(eone::NODE_IMAGE,      "Image"),
-	std::make_pair(eone::NODE_TEXT,       "Text"),
-	std::make_pair(eone::NODE_MASK,       "Mask"),
-	std::make_pair(eone::NODE_MESH,       "Mesh"),
-	std::make_pair(eone::NODE_SCALE9,     "Scale9"),
-	std::make_pair(eone::NODE_ANIM,       "Anim"),
-	std::make_pair(eone::NODE_PARTICLE3D, "Particle3d"),
+	std::make_pair(eone::GAME_OBJ_IMAGE,      "Image"),
+	std::make_pair(eone::GAME_OBJ_TEXT,       "Text"),
+	std::make_pair(eone::GAME_OBJ_MASK,       "Mask"),
+	std::make_pair(eone::GAME_OBJ_MESH,       "Mesh"),
+	std::make_pair(eone::GAME_OBJ_SCALE9,     "Scale9"),
+	std::make_pair(eone::GAME_OBJ_ANIM,       "Anim"),
+	std::make_pair(eone::GAME_OBJ_PARTICLE3D, "Particle3d"),
 };
 
 }
@@ -68,7 +68,7 @@ void WxSceneTreePanel::InitLayout(const ee0::GameObj& root_obj)
 void WxSceneTreePanel::OnCreatePress(wxCommandEvent& event)
 {
 	ee0::WxListSelectDlg dlg(this, "Create obj", 
-		NODE_LIST, m_create_btn->GetScreenPosition());
+		GAME_OBJ_LIST, m_create_btn->GetScreenPosition());
 	if (dlg.ShowModal() != wxID_OK) {
 		return;
 	}
@@ -78,7 +78,7 @@ void WxSceneTreePanel::OnCreatePress(wxCommandEvent& event)
 	auto id = dlg.GetSelectedID();
 	switch (id)
 	{
-	case NodeType::NODE_IMAGE:
+	case GameObjType::GAME_OBJ_IMAGE:
 		{
 			std::string filter = "*.png;*.jpg;*.bmp;*.pvr;*.pkm";
 			wxFileDialog dlg(this, wxT("Choose image"), wxEmptyString, filter);
@@ -87,7 +87,7 @@ void WxSceneTreePanel::OnCreatePress(wxCommandEvent& event)
 				auto& path = dlg.GetPath();
 				auto img = facade::ResPool::Instance().Fetch<facade::Image>(path.ToStdString());
 
-				obj = NodeFactory::Create(NODE_IMAGE);
+				obj = GameObjFactory::Create(GAME_OBJ_IMAGE);
 				auto& cimage = obj->GetSharedComp<n2::CompImage>();
 				cimage.SetFilepath(path.ToStdString());
 				cimage.SetTexture(img->GetTexture());
@@ -97,23 +97,23 @@ void WxSceneTreePanel::OnCreatePress(wxCommandEvent& event)
 			}
 		}
 		break;
-	case NodeType::NODE_TEXT:
-		obj = NodeFactory::Create(NODE_TEXT);
+	case GameObjType::GAME_OBJ_TEXT:
+		obj = GameObjFactory::Create(GAME_OBJ_TEXT);
 		break;
-	case NodeType::NODE_MASK:
-		obj = NodeFactory::Create(NODE_MASK);
+	case GameObjType::GAME_OBJ_MASK:
+		obj = GameObjFactory::Create(GAME_OBJ_MASK);
 		break;
-	case NodeType::NODE_MESH:
-		obj = NodeFactory::Create(NODE_MESH);
+	case GameObjType::GAME_OBJ_MESH:
+		obj = GameObjFactory::Create(GAME_OBJ_MESH);
 		break;
-	case NodeType::NODE_SCALE9:
-		obj = NodeFactory::Create(NODE_SCALE9);
+	case GameObjType::GAME_OBJ_SCALE9:
+		obj = GameObjFactory::Create(GAME_OBJ_SCALE9);
 		break;
-	case NodeType::NODE_ANIM:
-		obj = NodeFactory::Create(NODE_ANIM);
+	case GameObjType::GAME_OBJ_ANIM:
+		obj = GameObjFactory::Create(GAME_OBJ_ANIM);
 		break;
-	case NodeType::NODE_PARTICLE3D:
-		obj = NodeFactory::Create(NODE_PARTICLE3D);
+	case GameObjType::GAME_OBJ_PARTICLE3D:
+		obj = GameObjFactory::Create(GAME_OBJ_PARTICLE3D);
 		break;
 	default:
 		return;

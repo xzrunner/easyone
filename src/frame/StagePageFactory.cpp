@@ -1,5 +1,5 @@
 #include "frame/StagePageFactory.h"
-#include "frame/NodeFactory.h"
+#include "frame/GameObjFactory.h"
 #include "frame/StagePageType.h"
 #include "frame/WxStagePanel.h"
 #include "frame/WxStageCanvas.h"
@@ -55,7 +55,7 @@ WxStagePage* StagePageFactory::Create(int page_type, WxStagePanel* stage_panel)
 	{
 	case PAGE_SCENE2D:
 		{
-			auto obj = NodeFactory::Create(NODE_SCENE2D);
+			auto obj = GameObjFactory::Create(GAME_OBJ_SCENE2D);
 			page = new scene2d::WxStagePage(frame, library, obj);
 			auto canvas = std::make_shared<WxStageCanvas>(page, rc);
 			page->GetImpl().SetCanvas(canvas);
@@ -73,7 +73,7 @@ WxStagePage* StagePageFactory::Create(int page_type, WxStagePanel* stage_panel)
 		break;
 	case PAGE_SCENE3D:
 		{
-			auto obj = NodeFactory::Create(NODE_SCENE3D);
+			auto obj = GameObjFactory::Create(GAME_OBJ_SCENE3D);
 			page = new scene3d::WxStagePage(frame, library, obj);
 			auto canvas = std::make_shared<ee3::WxStageCanvas>(page, &rc, nullptr);
 			page->GetImpl().SetCanvas(canvas);
@@ -84,7 +84,7 @@ WxStagePage* StagePageFactory::Create(int page_type, WxStagePanel* stage_panel)
 		break;
 	case PAGE_SCALE9:
 		{
-			auto obj = NodeFactory::Create(NODE_SCALE9);
+			auto obj = GameObjFactory::Create(GAME_OBJ_SCALE9);
 			page = new scale9::WxStagePage(frame, library, obj);
 			auto canvas = std::make_shared<scale9::WxStageCanvas>(page, rc);
 			page->GetImpl().SetCanvas(canvas);
@@ -96,7 +96,7 @@ WxStagePage* StagePageFactory::Create(int page_type, WxStagePanel* stage_panel)
 		break;
 	case PAGE_MASK:
 		{
-			auto obj = NodeFactory::Create(NODE_MASK);
+			auto obj = GameObjFactory::Create(GAME_OBJ_MASK);
 			page = new mask::WxStagePage(frame, library, obj);
 			auto canvas = std::make_shared<WxStageCanvas>(page, rc);
 			page->GetImpl().SetCanvas(canvas);
@@ -114,7 +114,7 @@ WxStagePage* StagePageFactory::Create(int page_type, WxStagePanel* stage_panel)
 		break;
 	case PAGE_ANIM:
 		{
-			auto obj = NodeFactory::Create(NODE_ANIM);
+			auto obj = GameObjFactory::Create(GAME_OBJ_ANIM);
 			page = new anim::WxStagePage(frame, library, obj);
 			auto canvas = std::make_shared<WxStageCanvas>(page, rc);
 			page->GetImpl().SetCanvas(canvas);
@@ -132,7 +132,7 @@ WxStagePage* StagePageFactory::Create(int page_type, WxStagePanel* stage_panel)
 		break;
 	case PAGE_PARTICLE3D:
 		{
-			auto obj = NodeFactory::Create(NODE_PARTICLE3D);
+			auto obj = GameObjFactory::Create(GAME_OBJ_PARTICLE3D);
 			page = new particle3d::WxStagePage(frame, library, obj);
 			auto canvas = std::make_shared<WxStageCanvas>(page, rc);
 			page->GetImpl().SetCanvas(canvas);
@@ -157,7 +157,7 @@ WxStagePage* StagePageFactory::Create(int page_type, WxStagePanel* stage_panel)
 				break;
 			}
 			
-			auto obj = NodeFactory::Create(NODE_SCENE2D);
+			auto obj = GameObjFactory::Create(GAME_OBJ_SCENE2D);
 			page = new script::WxStagePage(frame, library, obj);
 			auto canvas = std::make_shared<script::WxStageCanvas>(page, rc, dlg.GetPath().ToStdString());
 			page->GetImpl().SetCanvas(canvas);

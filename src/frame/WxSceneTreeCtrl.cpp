@@ -61,22 +61,22 @@ void WxSceneTreeCtrl::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
 		ReorderSceneObj(variants);
 		break;
 
-	case ee0::MSG_NODE_SELECTION_INSERT:
+	case ee0::MSG_GAME_OBJ_SELECTION_INSERT:
 		if (!m_disable_select) {
 			SelectSceneObj(variants);
 		}
 		break;
-	case ee0::MSG_NODE_SELECTION_DELETE:
+	case ee0::MSG_GAME_OBJ_SELECTION_DELETE:
 		UnselectSceneObj(variants);
 		break;
-	case ee0::MSG_NODE_SELECTION_CLEAR:
+	case ee0::MSG_GAME_OBJ_SELECTION_CLEAR:
 		ClearALLSelected();
 		break;
 	case ee0::MSG_STAGE_PAGE_CHANGED:
 		StagePageChanged(variants);
 		break;
 
-	case ee0::MSG_UPDATE_NODE_NAME:
+	case ee0::MSG_UPDATE_GAME_OBJ_NAME:
 		ChangeName(variants);
 		break;
 
@@ -135,12 +135,12 @@ void WxSceneTreeCtrl::RegisterMsg(ee0::SubjectMgr& sub_mgr)
 	sub_mgr.RegisterObserver(ee0::MSG_CLEAR_SCENE_NODE, this);
 	sub_mgr.RegisterObserver(ee0::MSG_REORDER_SCENE_NODE, this);
 
-	sub_mgr.RegisterObserver(ee0::MSG_NODE_SELECTION_INSERT, this);
-	sub_mgr.RegisterObserver(ee0::MSG_NODE_SELECTION_DELETE, this);
-	sub_mgr.RegisterObserver(ee0::MSG_NODE_SELECTION_CLEAR, this);
+	sub_mgr.RegisterObserver(ee0::MSG_GAME_OBJ_SELECTION_INSERT, this);
+	sub_mgr.RegisterObserver(ee0::MSG_GAME_OBJ_SELECTION_DELETE, this);
+	sub_mgr.RegisterObserver(ee0::MSG_GAME_OBJ_SELECTION_CLEAR, this);
 	sub_mgr.RegisterObserver(ee0::MSG_STAGE_PAGE_CHANGED, this);
 
-	sub_mgr.RegisterObserver(ee0::MSG_UPDATE_NODE_NAME, this);
+	sub_mgr.RegisterObserver(ee0::MSG_UPDATE_GAME_OBJ_NAME, this);
 
 	sub_mgr.RegisterObserver(MSG_TREE_PANEL_REBUILD, this);
 }
@@ -189,11 +189,11 @@ void WxSceneTreeCtrl::OnSelChanged(wxTreeEvent& event)
 			vars.SetVariant("clear", var_clear);
 		}
 
-		m_sub_mgr->NotifyObservers(ee0::MSG_NODE_SELECTION_INSERT, vars);
+		m_sub_mgr->NotifyObservers(ee0::MSG_GAME_OBJ_SELECTION_INSERT, vars);
 	} 
 	else 
 	{
-		m_sub_mgr->NotifyObservers(ee0::MSG_NODE_SELECTION_DELETE, vars);
+		m_sub_mgr->NotifyObservers(ee0::MSG_GAME_OBJ_SELECTION_DELETE, vars);
 	}
 }
 
@@ -784,7 +784,7 @@ void WxSceneTreeCtrl::DeleteSelectedObj()
 	DeleteObjOutside(selected);
 	CleanRootEmptyChild();
 	
-	m_sub_mgr->NotifyObservers(ee0::MSG_NODE_SELECTION_CLEAR);
+	m_sub_mgr->NotifyObservers(ee0::MSG_GAME_OBJ_SELECTION_CLEAR);
 
 	RebuildTree(m_root_obj);
 

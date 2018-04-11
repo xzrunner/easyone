@@ -4,9 +4,9 @@
 #include <ee0/typedef.h>
 #include <ee0/GameObj.h>
 
-#ifndef EONE_ECS
+#ifndef GAME_OBJ_ECS
 #include <node0/NodeWithPos.h>
-#endif // EONE_ECS
+#endif // GAME_OBJ_ECS
 #include <moon/typedef.h>
 
 #include <wx/panel.h>
