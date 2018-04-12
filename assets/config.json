@@ -1,23 +1,42 @@
 {
 
 	"font" :
+
 	[
-		{
-			"name" : "Ë¼Ô´ºÚÌåM",
-			"filepath" : "default2.ttf"
-		},
+
 		{
 
-			"name" : "»ª¿µÙ³½ðºÚW8(P)",
+			"name" : "˼Դ����M",
+
+			"filepath" : "default2.ttf"
+
+		},
+
+		{
+
+			"name" : "����ٳ���W8(P)",
+
 			"filepath" : "hkljhw8.ttf"
+
 		}
 	],
 
-	"user_font" :
+	"user_font" : 
+
 	[
+
 		{
-			"name" : "Í¼Æ¬×Ö",
+
+			"name" : "ͼƬ��",
+
 			"filepath" : "user_font_library.json"
+
 		}
-	]
+
+	],
+
+	"debug_draw" : false,
+
+	"draw_stat" : true
+
 }
