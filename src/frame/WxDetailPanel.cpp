@@ -203,7 +203,7 @@ void WxDetailPanel::InitComponents(const ee0::GameObj& obj)
 	if (m_nwp.GetNode()->HasSharedComp<n2::CompText>())
 	{
 		auto& comp = m_nwp.GetNode()->GetSharedComp<n2::CompText>();
-		auto panel = new ee2::WxCompTextPanel(this, comp, m_sub_mgr);
+		auto panel = new ee2::WxCompTextPanel(this, comp, *m_nwp.GetNode(), m_sub_mgr);
 		m_comp_sizer->Insert(m_components.size(), panel);
 		m_components.push_back(panel);
 	}
