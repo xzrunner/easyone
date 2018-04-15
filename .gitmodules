@@ -139,3 +139,9 @@
 [submodule "ext/eserializer"]
 	path = ext/eserializer
 	url = git@github.com:xzrunner/eserializer.git
+[submodule "ext/model"]
+	path = ext/model
+	url = git@github.com:xzrunner/model.git
+[submodule "ext/entity3"]
+	path = ext/entity3
+	url = git@github.com:xzrunner/entity3.git
