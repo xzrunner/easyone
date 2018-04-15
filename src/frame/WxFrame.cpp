@@ -45,7 +45,11 @@ void WxFrame::OnNew(wxCommandEvent& event)
 
 	auto app = std::static_pointer_cast<Application>(m_app);
 	auto type = dlg.GetSelectedID();
+#ifndef GAME_OBJ_ECS
 	StagePageFactory::Create(type, app->GetStagePanel());
+#else
+	StagePageFactory::Create(app->GetWorld(), type, app->GetStagePanel());
+#endif // GAME_OBJ_ECS
 
 	WxStagePage* curr_page = static_cast<WxStagePage*>(app->GetStagePanel()->GetPage(app->GetStagePanel()->GetSelection()));
 	curr_page->GetSubjectMgr()->NotifyObservers(ee0::MSG_STAGE_PAGE_ON_SHOW);

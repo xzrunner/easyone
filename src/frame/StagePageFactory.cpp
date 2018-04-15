@@ -41,7 +41,12 @@
 namespace eone
 {
 
-WxStagePage* StagePageFactory::Create(int page_type, WxStagePanel* stage_panel)
+WxStagePage* StagePageFactory::Create(
+#ifdef GAME_OBJ_ECS
+	ecsx::World& world,
+#endif // GAME_OBJ_ECS
+	int page_type, 
+	WxStagePanel* stage_panel)
 {
 	WxStagePage* page = nullptr;
 
@@ -55,16 +60,16 @@ WxStagePage* StagePageFactory::Create(int page_type, WxStagePanel* stage_panel)
 	{
 	case PAGE_SCENE2D:
 		{
-			auto obj = GameObjFactory::Create(GAME_OBJ_SCENE2D);
-			page = new scene2d::WxStagePage(frame, library, obj);
-			auto canvas = std::make_shared<WxStageCanvas>(page, rc);
+			auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_SCENE2D);
+			page = new scene2d::WxStagePage(frame, library, ECS_WORLD_VAR obj);
+			auto canvas = std::make_shared<WxStageCanvas>(page, ECS_WORLD_VAR rc);
 			page->GetImpl().SetCanvas(canvas);
 
-			auto prev_op = std::make_shared<NodeSelectOP>(*page, rc, wc);
+			auto prev_op = std::make_shared<NodeSelectOP>(ECS_WORLD_VAR *page, rc, wc);
 
 			auto cam = canvas->GetCamera();
 			GD_ASSERT(cam, "null cam");
-			auto op = std::make_shared<ee2::ArrangeNodeOP>(*page, *cam, ee2::ArrangeNodeCfg(), prev_op);
+			auto op = std::make_shared<ee2::ArrangeNodeOP>(*page, *cam, ECS_WORLD_VAR ee2::ArrangeNodeCfg(), prev_op);
 
 			page->GetImpl().SetEditOP(op);
 
@@ -73,8 +78,8 @@ WxStagePage* StagePageFactory::Create(int page_type, WxStagePanel* stage_panel)
 		break;
 	case PAGE_SCENE3D:
 		{
-			auto obj = GameObjFactory::Create(GAME_OBJ_SCENE3D);
-			page = new scene3d::WxStagePage(frame, library, obj);
+			auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_SCENE3D);
+			page = new scene3d::WxStagePage(frame, library, ECS_WORLD_VAR obj);
 			auto canvas = std::make_shared<ee3::WxStageCanvas>(page, &rc, nullptr);
 			page->GetImpl().SetCanvas(canvas);
 			page->GetImpl().SetEditOP(std::make_shared<ee3::NodeArrangeOP>(*page));
@@ -84,28 +89,29 @@ WxStagePage* StagePageFactory::Create(int page_type, WxStagePanel* stage_panel)
 		break;
 	case PAGE_SCALE9:
 		{
-			auto obj = GameObjFactory::Create(GAME_OBJ_SCALE9);
-			page = new scale9::WxStagePage(frame, library, obj);
+			auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_SCALE9);
+			page = new scale9::WxStagePage(frame, library, ECS_WORLD_VAR obj);
 			auto canvas = std::make_shared<scale9::WxStageCanvas>(page, rc);
 			page->GetImpl().SetCanvas(canvas);
 
-			page->GetImpl().SetEditOP(std::make_shared<NodeSelectOP>(*page, rc, wc));
+			page->GetImpl().SetEditOP(std::make_shared<NodeSelectOP>(ECS_WORLD_VAR *page, rc, wc));
 
 			stage_panel->AddNewPage(page, GetPageName(page->GetPageType()));
 		}
 		break;
 	case PAGE_MASK:
 		{
-			auto obj = GameObjFactory::Create(GAME_OBJ_MASK);
-			page = new mask::WxStagePage(frame, library, obj);
-			auto canvas = std::make_shared<WxStageCanvas>(page, rc);
+			auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_MASK);
+			page = new mask::WxStagePage(frame, library, ECS_WORLD_VAR obj);
+			auto canvas = std::make_shared<WxStageCanvas>(page, ECS_WORLD_VAR rc);
 			page->GetImpl().SetCanvas(canvas);
 
-			auto prev_op = std::make_shared<NodeSelectOP>(*page, rc, wc);
+			auto prev_op = std::make_shared<NodeSelectOP>(ECS_WORLD_VAR *page, rc, wc);
 
 			auto cam = canvas->GetCamera();
 			GD_ASSERT(cam, "null cam");
-			auto op = std::make_shared<ee2::ArrangeNodeOP>(*page, *cam, ee2::ArrangeNodeCfg(), prev_op);
+			auto op = std::make_shared<ee2::ArrangeNodeOP>(
+				*page, *cam, ECS_WORLD_VAR ee2::ArrangeNodeCfg(), prev_op);
 
 			page->GetImpl().SetEditOP(op);
 
@@ -114,16 +120,17 @@ WxStagePage* StagePageFactory::Create(int page_type, WxStagePanel* stage_panel)
 		break;
 	case PAGE_ANIM:
 		{
-			auto obj = GameObjFactory::Create(GAME_OBJ_ANIM);
-			page = new anim::WxStagePage(frame, library, obj);
-			auto canvas = std::make_shared<WxStageCanvas>(page, rc);
+			auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_ANIM);
+			page = new anim::WxStagePage(frame, library, ECS_WORLD_VAR obj);
+			auto canvas = std::make_shared<WxStageCanvas>(page, ECS_WORLD_VAR rc);
 			page->GetImpl().SetCanvas(canvas);
 
-			auto prev_op = std::make_shared<NodeSelectOP>(*page, rc, wc);
+			auto prev_op = std::make_shared<NodeSelectOP>(ECS_WORLD_VAR *page, rc, wc);
 
 			auto cam = canvas->GetCamera();
 			GD_ASSERT(cam, "null cam");
-			auto op = std::make_shared<ee2::ArrangeNodeOP>(*page, *cam, ee2::ArrangeNodeCfg(), prev_op);
+			auto op = std::make_shared<ee2::ArrangeNodeOP>(
+				*page, *cam, ECS_WORLD_VAR ee2::ArrangeNodeCfg(), prev_op);
 
 			page->GetImpl().SetEditOP(op);
 
@@ -132,11 +139,12 @@ WxStagePage* StagePageFactory::Create(int page_type, WxStagePanel* stage_panel)
 		break;
 	case PAGE_PARTICLE3D:
 		{
-			auto obj = GameObjFactory::Create(GAME_OBJ_PARTICLE3D);
-			page = new particle3d::WxStagePage(frame, library, obj);
-			auto canvas = std::make_shared<WxStageCanvas>(page, rc);
+			auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_PARTICLE3D);
+			page = new particle3d::WxStagePage(frame, library, ECS_WORLD_VAR obj);
+			auto canvas = std::make_shared<WxStageCanvas>(page, ECS_WORLD_VAR rc);
 			page->GetImpl().SetCanvas(canvas);
 
+#ifndef GAME_OBJ_ECS
 			auto cam = canvas->GetCamera();
 			GD_ASSERT(cam, "null cam");
 			auto& p3d_inst = obj->GetUniqueComp<n2::CompParticle3dInst>();
@@ -144,6 +152,9 @@ WxStagePage* StagePageFactory::Create(int page_type, WxStagePanel* stage_panel)
 				obj, *cam, page->GetSubjectMgr());
 
 			page->GetImpl().SetEditOP(op);
+#else
+			// todo ecs
+#endif // GAME_OBJ_ECS
 
 			stage_panel->AddNewPage(page, GetPageName(page->GetPageType()));
 		}
@@ -157,8 +168,8 @@ WxStagePage* StagePageFactory::Create(int page_type, WxStagePanel* stage_panel)
 				break;
 			}
 			
-			auto obj = GameObjFactory::Create(GAME_OBJ_SCENE2D);
-			page = new script::WxStagePage(frame, library, obj);
+			auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_SCENE2D);
+			page = new script::WxStagePage(frame, library, ECS_WORLD_VAR obj);
 			auto canvas = std::make_shared<script::WxStageCanvas>(page, rc, dlg.GetPath().ToStdString());
 			page->GetImpl().SetCanvas(canvas);
 
@@ -167,11 +178,12 @@ WxStagePage* StagePageFactory::Create(int page_type, WxStagePanel* stage_panel)
 
 			canvas->ScriptLoad();
 
-			auto prev_op = std::make_shared<NodeSelectOP>(*page, rc, wc);
+			auto prev_op = std::make_shared<NodeSelectOP>(ECS_WORLD_VAR *page, rc, wc);
 
 			auto cam = canvas->GetCamera();
 			GD_ASSERT(cam, "null cam");
-			auto op = std::make_shared<ee2::ArrangeNodeOP>(*page, *cam, ee2::ArrangeNodeCfg(), prev_op);
+			auto op = std::make_shared<ee2::ArrangeNodeOP>(
+				*page, *cam, ECS_WORLD_VAR ee2::ArrangeNodeCfg(), prev_op);
 
 			page->GetImpl().SetEditOP(op);
 
@@ -183,7 +195,11 @@ WxStagePage* StagePageFactory::Create(int page_type, WxStagePanel* stage_panel)
 	return page;
 }
 
-void StagePageFactory::CreatePreviewOP()
+void StagePageFactory::CreatePreviewOP(
+#ifdef GAME_OBJ_ECS
+	ecsx::World& world
+#endif // GAME_OBJ_ECS
+)
 {
 	auto bb = Blackboard::Instance();
 	auto preview = bb->GetPreviewPanel();
@@ -210,8 +226,7 @@ void StagePageFactory::CreatePreviewOP()
 		break;
 	case PAGE_SCALE9:
 		{
-			auto preview_op = std::make_shared<scale9::ResizeScale9OP>(
-				preview, curr_page->GetEditedObj());
+			auto preview_op = std::make_shared<scale9::ResizeScale9OP>(preview, ECS_WORLD_VAR curr_page->GetEditedObj());
 			preview->GetImpl().SetEditOP(preview_op);
 		}
 		break;

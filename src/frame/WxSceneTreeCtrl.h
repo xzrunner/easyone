@@ -6,6 +6,10 @@
 
 #include <wx/treectrl.h>
 
+#ifdef GAME_OBJ_ECS
+namespace ecsx { class World; }
+#endif // GAME_OBJ_ECS
+
 namespace eone
 {
 
@@ -14,8 +18,14 @@ class WxSceneTreePanel;
 class WxSceneTreeCtrl : public wxTreeCtrl, public ee0::Observer
 {
 public:
-	WxSceneTreeCtrl(wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr,
-		const ee0::GameObj& root_obj);
+	WxSceneTreeCtrl(
+		wxWindow* parent, 
+		const ee0::SubjectMgrPtr& sub_mgr,
+#ifdef GAME_OBJ_ECS
+		ecsx::World& world,
+#endif // GAME_OBJ_ECS
+		const ee0::GameObj& root_obj
+	);
 
 	virtual void OnNotify(uint32_t msg, const ee0::VariantSet& variants) override;
 
@@ -79,7 +89,10 @@ private:
 
 private:
 	ee0::SubjectMgrPtr m_sub_mgr;
-	ee0::GameObj m_root_obj;
+#ifdef GAME_OBJ_ECS
+	ecsx::World&       m_world;
+#endif // GAME_OBJ_ECS
+	ee0::GameObj       m_root_obj;
 
 	wxTreeItemId m_root;
 

@@ -10,16 +10,27 @@
 #include <painting2/PrimitiveDraw.h>
 #include <painting2/Blackboard.h>
 #include <painting2/WindowContext.h>
+#ifndef GAME_OBJ_ECS
 #include <node0/SceneNode.h>
 #include <node2/RenderSystem.h>
 #include <node2/CompUniquePatch.h>
+#else
+#include <entity2/SysRender.h>
+#endif // GAME_OBJ_ECS
 
 namespace eone
 {
 
-WxPreviewCanvas::WxPreviewCanvas(WxPreviewPanel* stage, const ee0::RenderContext& rc)
+WxPreviewCanvas::WxPreviewCanvas(WxPreviewPanel* stage, 
+#ifdef GAME_OBJ_ECS
+	                             const ecsx::World& world,
+#endif // GAME_OBJ_ECS
+	                             const ee0::RenderContext& rc)
 	: ee0::WxStageCanvas(stage, stage->GetImpl(), &rc, nullptr, HAS_2D)
 	, m_stage(stage)
+#ifdef GAME_OBJ_ECS
+	, m_world(world)
+#endif // GAME_OBJ_ECS
 {
 	auto cam = std::make_shared<pt2::OrthoCamera>();
 	cam->Set(sm::vec2(0, 0), 2);
@@ -65,10 +76,15 @@ void WxPreviewCanvas::OnDrawSprites() const
 	var.m_val.l = WxStagePage::TRAV_DRAW_PREVIEW;
 	vars.SetVariant("type", var);
 
+#ifndef GAME_OBJ_ECS
 	n2::RenderParams rp;
 	rp.SetEditMode(false);
+#else
+	e2::RenderParams rp;
+#endif // GAME_OBJ_ECS
 	m_stage->GetStagePage().Traverse([&](const ee0::GameObj& obj)->bool 
 	{
+#ifndef GAME_OBJ_ECS
 		if (obj->HasUniqueComp<n2::CompUniquePatch>())
 		{
 			auto patch = &obj->GetUniqueComp<n2::CompUniquePatch>();
@@ -77,6 +93,9 @@ void WxPreviewCanvas::OnDrawSprites() const
 		}
 
 		n2::RenderSystem::Draw(obj, rp);
+#else
+		e2::SysRender::Draw(m_world, obj, rp);
+#endif // GAME_OBJ_ECS
 
 		return true;
 	}, vars);

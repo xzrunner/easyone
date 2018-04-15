@@ -9,17 +9,23 @@
 #include <ee0/SubjectMgr.h>
 
 #include <guard/check.h>
+#ifndef GAME_OBJ_ECS
 #include <node0/CompAsset.h>
 #include <node0/SceneNode.h>
 #include <node2/CompBoundingBox.h>
 #include <ns/CompSerializer.h>
+#else
+#endif // GAME_OBJ_ECS
 #include <moon/Blackboard.h>
 
 namespace eone
 {
 
-WxStagePage::WxStagePage(wxWindow* parent, const ee0::GameObj& obj, LayoutType layout_type)
+WxStagePage::WxStagePage(wxWindow* parent, ECS_WORLD_PARAM const ee0::GameObj& obj, LayoutType layout_type)
 	: ee0::WxStagePage(parent)
+#ifdef GAME_OBJ_ECS
+	, m_world(world)
+#endif // GAME_OBJ_ECS
 	, m_obj(obj)
 	, m_layout_type(layout_type)
 {
@@ -55,7 +61,11 @@ void WxStagePage::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
 void WxStagePage::StoreToJson(const std::string& dir, rapidjson::Value& val,
 	                          rapidjson::MemoryPoolAllocator<>& alloc) const
 {
+#ifndef GAME_OBJ_ECS
 	ns::CompSerializer::Instance()->ToJson(GetEditedObjComp(), dir, val, alloc);
+#else
+	// todo ecs
+#endif // GAME_OBJ_ECS
 	StoreToJsonExt(dir, val, alloc);
 }
 
@@ -64,12 +74,20 @@ void WxStagePage::LoadFromJson(const std::string& dir, const rapidjson::Value& v
 	m_sub_mgr->NotifyObservers(ee0::MSG_NODE_SELECTION_CLEAR);
 	m_sub_mgr->NotifyObservers(ee0::MSG_CLEAR_SCENE_NODE);
 
+#ifndef GAME_OBJ_ECS
 	ns::CompSerializer::Instance()->FromJson(m_obj, dir, val);
+#else
+	// todo ecs
+#endif // GAME_OBJ_ECS
 	LoadFromJsonExt(dir, val);
 
+#ifndef GAME_OBJ_ECS
 	auto& casset = m_obj->GetSharedComp<n0::CompAsset>();
 	auto& cbb = m_obj->GetUniqueComp<n2::CompBoundingBox>();
 	cbb.SetSize(*m_obj, casset.GetBounding());
+#else
+	// todo ecs
+#endif // GAME_OBJ_ECS
 
 	m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
 }

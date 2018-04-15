@@ -7,6 +7,7 @@
 
 namespace n0 { class NodeSharedComp; }
 namespace ee0 { class VariantSet; }
+ECS_WORLD_DECL
 
 namespace eone
 {
@@ -29,11 +30,7 @@ public:
 	};
 
 public:
-#ifndef GAME_OBJ_ECS
-	WxStagePage(wxWindow* parent, const ee0::GameObj& obj, LayoutType layout_type);
-#else
-	WxStagePage(wxWindow* parent, const ecsx::Entity& entity, LayoutType layout_type);
-#endif // GAME_OBJ_ECS
+	WxStagePage(wxWindow* parent, ECS_WORLD_PARAM const ee0::GameObj& obj, LayoutType layout_type);
 
 	virtual void OnNotify(uint32_t msg, const ee0::VariantSet& variants) override;
 
@@ -51,7 +48,10 @@ public:
 protected:
 	virtual void OnPageInit() {}
 
+	// todo ecs
+#ifndef GAME_OBJ_ECS
 	virtual const n0::NodeSharedComp& GetEditedObjComp() const = 0;
+#endif // GAME_OBJ_ECS
 
 	virtual void StoreToJsonExt(const std::string& dir, rapidjson::Value& val,
 		rapidjson::MemoryPoolAllocator<>& alloc) const {}
@@ -66,6 +66,9 @@ private:
 	void InitSubWindow();
 
 protected:
+#ifdef GAME_OBJ_ECS
+	ecsx::World& m_world;
+#endif // GAME_OBJ_ECS
 	ee0::GameObj m_obj;
 
 	LayoutType m_layout_type;

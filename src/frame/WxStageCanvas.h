@@ -10,7 +10,13 @@ class WxStagePage;
 class WxStageCanvas : public ee2::WxStageCanvas
 {
 public:
-	WxStageCanvas(WxStagePage* stage, const ee0::RenderContext& rc);
+	WxStageCanvas(
+		WxStagePage* stage, 
+#ifdef GAME_OBJ_ECS
+		ecsx::World& world,
+#endif // GAME_OBJ_ECS
+		const ee0::RenderContext& rc
+	);
 
 protected:
 	virtual void DrawNodes() const override;

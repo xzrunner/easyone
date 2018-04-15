@@ -86,7 +86,13 @@ void Application::LoadFromFile(const std::string& filepath)
 	}
 
 	if (old_type != new_type || !page->GetFilepath().empty()) {
-		page = StagePageFactory::Create(new_type, m_stage);
+		page = StagePageFactory::Create(
+#ifdef GAME_OBJ_ECS
+			m_world,
+#endif // GAME_OBJ_ECS
+			new_type, 
+			m_stage
+		);
 		page->GetSubjectMgr()->NotifyObservers(ee0::MSG_STAGE_PAGE_ON_SHOW);
 	}
 
@@ -173,7 +179,13 @@ wxWindow* Application::CreateStagePanel()
 	m_stage->Freeze();
 	Blackboard::Instance()->SetStagePanel(m_stage);
 
-	StagePageFactory::Create(PAGE_SCENE2D, m_stage);
+	StagePageFactory::Create(
+#ifdef GAME_OBJ_ECS
+		m_world,
+#endif // GAME_OBJ_ECS
+		PAGE_SCENE2D, 
+		m_stage
+	);
 	//StagePageFactory::Create(PAGE_SCALE9, m_stage);
 	//StagePageFactory::Create(PAGE_SCRIPT, m_stage);
 	//StagePageFactory::Create(PAGE_ANIM, m_stage);
@@ -197,10 +209,19 @@ wxWindow* Application::CreatePreviewPanel()
 	auto preview = new WxPreviewPanel(m_frame, sub_mgr, m_stage->GetCurrentStagePage());
 	Blackboard::Instance()->SetPreviewPanel(preview);
 
-	auto canvas = std::make_shared<WxPreviewCanvas>(preview,
-		Blackboard::Instance()->GetRenderContext());
+	auto canvas = std::make_shared<WxPreviewCanvas>(
+		preview,
+#ifdef GAME_OBJ_ECS
+		m_world,
+#endif // GAME_OBJ_ECS
+		Blackboard::Instance()->GetRenderContext()
+	);
 	preview->GetImpl().SetCanvas(canvas);
-	StagePageFactory::CreatePreviewOP();
+	StagePageFactory::CreatePreviewOP(
+#ifdef GAME_OBJ_ECS
+		m_world
+#endif // GAME_OBJ_ECS
+	);
 
 	return preview;
 }
@@ -208,15 +229,28 @@ wxWindow* Application::CreatePreviewPanel()
 wxWindow* Application::CreateTreePanel()
 {
 	auto curr_page = m_stage->GetCurrentStagePage();
-	return new WxSceneTreePanel(m_frame, 
-		curr_page->GetSubjectMgr(), curr_page->GetEditedObj());
+	return new WxSceneTreePanel(
+		m_frame, 
+		curr_page->GetSubjectMgr(), 
+#ifdef GAME_OBJ_ECS
+		m_world,
+#endif // GAME_OBJ_ECS
+		curr_page->GetEditedObj()
+	);
 }
 
 wxWindow* Application::CreateDetailPanel()
 {
 	auto curr_page = m_stage->GetCurrentStagePage();
-	return new WxDetailPanel(m_frame, 
-		curr_page->GetSubjectMgr(), curr_page->GetEditedObj(), curr_page->GetMoonCtx());
+	return new WxDetailPanel(
+		m_frame, 
+		curr_page->GetSubjectMgr(), 
+#ifdef GAME_OBJ_ECS
+		m_world,
+#endif // GAME_OBJ_ECS
+		curr_page->GetEditedObj(), 
+		curr_page->GetMoonCtx()
+	);
 }
 
 wxWindow* Application::CreateToolbarPanel()

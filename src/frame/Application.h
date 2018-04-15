@@ -1,6 +1,11 @@
 #pragma once
 
 #include <ee0/Application.h>
+#include <ee0/Config.h>
+
+#ifdef GAME_OBJ_ECS
+#include <ecsx/World.h>
+#endif // GAME_OBJ_ECS
 
 #include <wx/aui/framemanager.h>
 
@@ -29,6 +34,10 @@ public:
 
 	wxAuiManager& GetUIManager() { return m_mgr; }
 
+#ifdef GAME_OBJ_ECS
+	ecsx::World& GetWorld() { return m_world; }
+#endif // GAME_OBJ_ECS
+
 private:
 	void InitSubmodule();
 	void InitLayout();
@@ -48,6 +57,10 @@ private:
 	wxAuiManager m_mgr;
 
 	WxStagePanel* m_stage;
+
+#ifdef GAME_OBJ_ECS
+	ecsx::World m_world;
+#endif // GAME_OBJ_ECS
 
 }; // Application
 

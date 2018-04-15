@@ -5,7 +5,7 @@
 #include <ee0/SubjectMgr.h>
 #include <ee0/VariantSet.h>
 #include <ee0/WxCompPanel.h>
-#include <ee0/WxCompNodeEditorPanel.h>
+#include <ee0/WxCompObjEditorPanel.h>
 #include <ee2/WxCompTransformPanel.h>
 #include <ee2/WxCompColComPanel.h>
 #include <ee2/WxCompColMapPanel.h>
@@ -22,10 +22,23 @@
 #include <moon/Context.h>
 #ifndef GAME_OBJ_ECS
 #include <node0/SceneNode.h>
-#endif // GAME_OBJ_ECS
 #include <node2/CompScale9.h>
 #include <node2/CompScissor.h>
 #include <node2/CompScript.h>
+#include <node2/CompTransform.h>
+#include <node3/CompTransform.h>
+#else
+#include <ecsx/World.h>
+#include <entity2/CompTransform.h>
+#include <entity2/CompImage.h>
+#include <entity2/CompText.h>
+#include <entity2/CompMask.h>
+#include <entity2/CompMesh.h>
+#include <entity2/CompScale9.h>
+#include <entity2/CompScissor.h>
+#include <entity2/CompScript.h>
+#include <entity3/CompTransform.h>
+#endif // GAME_OBJ_ECS
 
 #include <wx/sizer.h>
 #include <wx/button.h>
@@ -58,10 +71,18 @@ static const std::vector<std::pair<uint32_t, std::string>> COMP_LIST =
 namespace eone
 {
 
-WxDetailPanel::WxDetailPanel(wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr,
-	                         const ee0::GameObj& root_obj, const moon::ContextPtr& moon_ctx)
+WxDetailPanel::WxDetailPanel(wxWindow* parent, 
+	                         const ee0::SubjectMgrPtr& sub_mgr,
+#ifdef GAME_OBJ_ECS
+	                         ecsx::World& world,
+#endif // GAME_OBJ_ECS
+	                         const ee0::GameObj& root_obj, 
+	                         const moon::ContextPtr& moon_ctx)
 	: wxPanel(parent, wxID_ANY)
 	, m_sub_mgr(sub_mgr)
+#ifdef GAME_OBJ_ECS
+	, m_world(world)
+#endif // GAME_OBJ_ECS
 	, m_root_obj(root_obj)
 	, m_moon_ctx(moon_ctx)
 {
@@ -134,7 +155,11 @@ void WxDetailPanel::InitComponents(const ee0::VariantSet& variants)
 	auto var_obj = variants.GetVariant("obj");
 	GD_ASSERT(var_obj.m_type == ee0::VT_PVOID, "no var in vars: obj");
 	obj = *static_cast<ee0::GameObj*>(var_obj.m_val.pv);
+#ifndef GAME_OBJ_ECS
 	GD_ASSERT(obj, "err scene obj");
+#else
+	GD_ASSERT(!obj.IsNull(), "err scene obj");
+#endif // GAME_OBJ_ECS
 
 	auto var_root = variants.GetVariant("root");
 	if (var_root.m_type != ee0::VT_EMPTY) {
@@ -148,99 +173,212 @@ void WxDetailPanel::InitComponents(const ee0::VariantSet& variants)
 		obj_id = var_id.m_val.ul;
 	}
 
-	m_nwp.Init(obj, root, obj_id);
+#ifndef GAME_OBJ_ECS
+	m_owp.Init(obj, root, obj_id);
+#endif // GAME_OBJ_ECS
 
 	InitComponents(obj);
 }
 
 void WxDetailPanel::InitComponents(const ee0::GameObj& obj)
 {
-	if (m_nwp.GetNode()->HasUniqueComp<ee0::CompNodeEditor>())
+#ifndef GAME_OBJ_ECS
+	if (m_owp.GetNode()->HasUniqueComp<ee0::CompNodeEditor>())
+#else
+	if (m_world.HasComponent<ee0::CompEntityEditor>(m_owp))
+#endif // GAME_OBJ_ECS
 	{
-		auto& comp = m_nwp.GetNode()->GetUniqueComp<ee0::CompNodeEditor>();
-		auto panel = new ee0::WxCompNodeEditorPanel(this, comp, m_sub_mgr, m_nwp.GetNode());
+		auto panel = new ee0::WxCompObjEditorPanel(
+#ifndef GAME_OBJ_ECS
+			this, m_sub_mgr, m_owp.GetNode()
+#else
+			this, m_sub_mgr, m_world, m_owp
+#endif // GAME_OBJ_ECS
+		);
 		m_comp_sizer->Insert(m_components.size(), panel);
 		m_components.push_back(panel);
 	}
 
-	if (m_nwp.GetNode()->HasUniqueComp<n3::CompTransform>())
+#ifndef GAME_OBJ_ECS
+	if (m_owp.GetNode()->HasUniqueComp<n3::CompTransform>())
+#else
+	if (m_world.HasComponent<e3::CompPosition>(m_owp) ||
+		m_world.HasComponent<e3::CompAngle>(m_owp) ||
+		m_world.HasComponent<e3::CompScale>(m_owp))
+#endif // GAME_OBJ_ECS
 	{
-		auto& comp = m_nwp.GetNode()->GetUniqueComp<n3::CompTransform>();
-		auto panel = new ee3::WxCompTransformPanel(this, comp, m_sub_mgr);
+		auto panel = new ee3::WxCompTransformPanel(
+#ifndef GAME_OBJ_ECS
+			this, m_sub_mgr, m_owp.GetNode()
+#else
+			this, m_sub_mgr, m_world, m_owp
+#endif // GAME_OBJ_ECS
+		);
 		m_comp_sizer->Insert(m_components.size(), panel);
 		m_components.push_back(panel);
 	}
 
-	if (m_nwp.GetNode()->HasUniqueComp<n2::CompTransform>())
+#ifndef GAME_OBJ_ECS
+	if (m_owp.GetNode()->HasUniqueComp<n2::CompTransform>())
+#else
+	if (m_world.HasComponent<e2::CompPosition>(m_owp) ||
+		m_world.HasComponent<e2::CompAngle>(m_owp) ||
+		m_world.HasComponent<e2::CompScale>(m_owp) ||
+		m_world.HasComponent<e2::CompShear>(m_owp) ||
+		m_world.HasComponent<e2::CompOffset>(m_owp))
+#endif // GAME_OBJ_ECS
 	{
-		auto& comp = m_nwp.GetNode()->GetUniqueComp<n2::CompTransform>();
-		auto panel = new ee2::WxCompTransformPanel(this, comp, m_sub_mgr, m_nwp);
+		auto panel = new ee2::WxCompTransformPanel(
+#ifndef GAME_OBJ_ECS
+			this, m_sub_mgr, m_owp
+#else
+			this, m_sub_mgr, m_world, m_owp
+#endif // GAME_OBJ_ECS
+		);
 		m_comp_sizer->Insert(m_components.size(), panel);
 		m_components.push_back(panel);
 	}
-	if (m_nwp.GetNode()->HasUniqueComp<n2::CompColorCommon>())
+#ifndef GAME_OBJ_ECS
+	if (m_owp.GetNode()->HasUniqueComp<n2::CompColorCommon>())
+#else
+	if (m_world.HasComponent<e2::CompColorCommon>(m_owp))
+#endif // GAME_OBJ_ECS
 	{
-		auto& comp = m_nwp.GetNode()->GetUniqueComp<n2::CompColorCommon>();
+#ifndef GAME_OBJ_ECS
+		auto& comp = m_owp.GetNode()->GetUniqueComp<n2::CompColorCommon>();
+#else
+		auto& comp = m_world.GetComponent<e2::CompColorCommon>(m_owp);
+#endif // GAME_OBJ_ECS
 		auto panel = new ee2::WxCompColComPanel(this, comp, m_sub_mgr);
 		m_comp_sizer->Insert(m_components.size(), panel);
 		m_components.push_back(panel);
 	}
-	if (m_nwp.GetNode()->HasUniqueComp<n2::CompColorMap>())
+#ifndef GAME_OBJ_ECS
+	if (m_owp.GetNode()->HasUniqueComp<n2::CompColorMap>())
+#else
+	if (m_world.HasComponent<e2::CompColorMap>(m_owp))
+#endif // GAME_OBJ_ECS
 	{
-		auto& comp = m_nwp.GetNode()->GetUniqueComp<n2::CompColorMap>();
+#ifndef GAME_OBJ_ECS
+		auto& comp = m_owp.GetNode()->GetUniqueComp<n2::CompColorMap>();
+#else
+		auto& comp = m_world.GetComponent<e2::CompColorMap>(m_owp);
+#endif // GAME_OBJ_ECS
 		auto panel = new ee2::WxCompColMapPanel(this, comp, m_sub_mgr);
 		m_comp_sizer->Insert(m_components.size(), panel);
 		m_components.push_back(panel);
 	}
 
-	if (m_nwp.GetNode()->HasSharedComp<n2::CompImage>())
+#ifndef GAME_OBJ_ECS
+	if (m_owp.GetNode()->HasSharedComp<n2::CompImage>())
+#else
+	if (m_world.HasComponent<e2::CompImage>(m_owp))
+#endif // GAME_OBJ_ECS
 	{
-		auto& comp = m_nwp.GetNode()->GetSharedComp<n2::CompImage>();
-		auto panel = new ee2::WxCompImagePanel(this, comp);
+		auto panel = new ee2::WxCompImagePanel(
+#ifndef GAME_OBJ_ECS
+			this, m_owp.GetNode()
+#else
+			this, m_world, m_owp
+#endif // GAME_OBJ_ECS
+		);
 		m_comp_sizer->Insert(m_components.size(), panel);
 		m_components.push_back(panel);
 	}
-	if (m_nwp.GetNode()->HasSharedComp<n2::CompText>())
+#ifndef GAME_OBJ_ECS
+	if (m_owp.GetNode()->HasSharedComp<n2::CompText>())
+#else
+	if (m_world.HasComponent<e2::CompText>(m_owp))
+#endif // GAME_OBJ_ECS
 	{
-		auto& comp = m_nwp.GetNode()->GetSharedComp<n2::CompText>();
-		auto panel = new ee2::WxCompTextPanel(this, comp, *m_nwp.GetNode(), m_sub_mgr);
+		auto panel = new ee2::WxCompTextPanel(
+#ifndef GAME_OBJ_ECS
+			this, m_owp.GetNode(), m_sub_mgr
+#else
+			this, m_world, m_owp, m_sub_mgr
+#endif // GAME_OBJ_ECS
+		);
 		m_comp_sizer->Insert(m_components.size(), panel);
 		m_components.push_back(panel);
 	}
-	if (m_nwp.GetNode()->HasSharedComp<n2::CompMask>())
+#ifndef GAME_OBJ_ECS
+	if (m_owp.GetNode()->HasSharedComp<n2::CompMask>())
+#else
+	if (m_world.HasComponent<e2::CompMask>(m_owp))
+#endif // GAME_OBJ_ECS
 	{
-		auto& comp = m_nwp.GetNode()->GetSharedComp<n2::CompMask>();
-		auto panel = new ee2::WxCompMaskPanel(this, comp, *m_nwp.GetNode());
+		auto panel = new ee2::WxCompMaskPanel(
+#ifndef GAME_OBJ_ECS
+			this, m_owp.GetNode()
+#else
+			this, m_world, m_owp
+#endif // GAME_OBJ_ECS
+		);
 		m_comp_sizer->Insert(m_components.size(), panel);
 		m_components.push_back(panel);
 	}
-	if (m_nwp.GetNode()->HasSharedComp<n2::CompMesh>())
+#ifndef GAME_OBJ_ECS
+	if (m_owp.GetNode()->HasSharedComp<n2::CompMesh>())
+#else
+	if (m_world.HasComponent<e2::CompMesh>(m_owp))
+#endif // GAME_OBJ_ECS
 	{
-		auto& comp = m_nwp.GetNode()->GetSharedComp<n2::CompMesh>();
-		auto panel = new ee2::WxCompMeshPanel(this, comp, *m_nwp.GetNode());
+		auto panel = new ee2::WxCompMeshPanel(
+#ifndef GAME_OBJ_ECS
+			this, m_owp.GetNode()
+#else
+			this, m_world, m_owp
+#endif // GAME_OBJ_ECS
+		);
 		m_comp_sizer->Insert(m_components.size(), panel);
 		m_components.push_back(panel);
 	}
-	if (m_nwp.GetNode()->HasSharedComp<n2::CompScale9>())
+#ifndef GAME_OBJ_ECS
+	if (m_owp.GetNode()->HasSharedComp<n2::CompScale9>())
+#else
+	if (m_world.HasComponent<e2::CompScale9>(m_owp))
+#endif // GAME_OBJ_ECS
 	{
-		auto& comp = m_nwp.GetNode()->GetSharedComp<n2::CompScale9>();
-		auto panel = new ee2::WxCompScale9Panel(this, comp);
+		auto panel = new ee2::WxCompScale9Panel(
+#ifndef GAME_OBJ_ECS
+			this, m_owp.GetNode()
+#else
+			this, m_world, m_owp
+#endif // GAME_OBJ_ECS
+		);
 		m_comp_sizer->Insert(m_components.size(), panel);
 		m_components.push_back(panel);
 	}
 
-	if (m_nwp.GetNode()->HasUniqueComp<n2::CompScissor>())
+#ifndef GAME_OBJ_ECS
+	if (m_owp.GetNode()->HasUniqueComp<n2::CompScissor>())
+#else
+	if (m_world.HasComponent<e2::CompScissor>(m_owp))
+#endif // GAME_OBJ_ECS
 	{
-		auto& comp = m_nwp.GetNode()->GetUniqueComp<n2::CompScissor>();
+#ifndef GAME_OBJ_ECS
+		auto& comp = m_owp.GetNode()->GetUniqueComp<n2::CompScissor>();
+#else
+		auto& comp = m_world.GetComponent<e2::CompScissor>(m_owp);
+#endif // GAME_OBJ_ECS
 		auto panel = new ee2::WxCompScissorPanel(this, comp, m_sub_mgr);
 		m_comp_sizer->Insert(m_components.size(), panel);
 		m_components.push_back(panel);
 	}
 
-	if (m_nwp.GetNode()->HasUniqueComp<n2::CompScript>())
+#ifndef GAME_OBJ_ECS
+	if (m_owp.GetNode()->HasUniqueComp<n2::CompScript>())
+#else
+	if (m_world.HasComponent<e2::CompScript>(m_owp))
+#endif // GAME_OBJ_ECS
 	{
-		auto& comp = m_nwp.GetNode()->GetUniqueComp<n2::CompScript>();
-		auto panel = new ee2::WxCompScriptPanel(this, comp, m_sub_mgr, m_nwp.GetNode());
+		auto panel = new ee2::WxCompScriptPanel(
+#ifndef GAME_OBJ_ECS
+			this, m_sub_mgr, m_owp.GetNode()
+#else
+			this, m_sub_mgr, m_world, m_owp
+#endif // GAME_OBJ_ECS
+		);
 		m_comp_sizer->Insert(m_components.size(), panel);
 		m_components.push_back(panel);
 	}
@@ -250,13 +388,17 @@ void WxDetailPanel::InitComponents(const ee0::GameObj& obj)
 
 void WxDetailPanel::InitComponents()
 {
-	m_nwp.Init(m_root_obj, m_root_obj, 0);
+#ifndef GAME_OBJ_ECS
+	m_owp.Init(m_root_obj, m_root_obj, 0);
+#endif // GAME_OBJ_ECS
 	InitComponents(m_root_obj);
 }
 
 void WxDetailPanel::ClearComponents()
 {
-	m_nwp.Reset();
+#ifndef GAME_OBJ_ECS
+	m_owp.Reset();
+#endif // GAME_OBJ_ECS
 	if (m_children.empty()) {
 		return;
 	}
@@ -271,7 +413,11 @@ void WxDetailPanel::ClearComponents()
 
 void WxDetailPanel::UpdateComponents()
 {
-	if (!m_nwp.GetNode()) {
+#ifndef GAME_OBJ_ECS
+	if (!m_owp.GetNode()) {
+#else
+	if (!m_owp.IsNull()) {
+#endif // GAME_OBJ_ECS
 		return;
 	}
 	for (auto& comp : m_components) {
@@ -308,7 +454,11 @@ void WxDetailPanel::OnAddPress(wxCommandEvent& event)
 	{
 	case CompType::COMP_COLOR_COMMON:
 		{
-			auto& comp = m_nwp.GetNode()->AddUniqueComp<n2::CompColorCommon>();
+#ifndef GAME_OBJ_ECS
+			auto& comp = m_owp.GetNode()->AddUniqueComp<n2::CompColorCommon>();
+#else
+		    auto& comp = m_world.GetComponent<e2::CompColorCommon>(m_owp);
+#endif // GAME_OBJ_ECS
 			auto panel = new ee2::WxCompColComPanel(this, comp, m_sub_mgr);
 			m_comp_sizer->Insert(m_components.size(), panel);
 			m_components.push_back(panel);
@@ -316,7 +466,11 @@ void WxDetailPanel::OnAddPress(wxCommandEvent& event)
 		break;
 	case CompType::COMP_COLOR_MAP:
 		{
-			auto& comp = m_nwp.GetNode()->AddUniqueComp<n2::CompColorMap>();
+#ifndef GAME_OBJ_ECS
+			auto& comp = m_owp.GetNode()->AddUniqueComp<n2::CompColorMap>();
+#else
+			auto& comp = m_world.GetComponent<e2::CompColorMap>(m_owp);
+#endif // GAME_OBJ_ECS
 			auto panel = new ee2::WxCompColMapPanel(this, comp, m_sub_mgr);
 			m_comp_sizer->Insert(m_components.size(), panel);
 			m_components.push_back(panel);
@@ -324,8 +478,13 @@ void WxDetailPanel::OnAddPress(wxCommandEvent& event)
 		break;
 	case CompType::COMP_SCISSOR:
 		{
-			auto& comp = m_nwp.GetNode()->AddUniqueComp<n2::CompScissor>();
+#ifndef GAME_OBJ_ECS
+			auto& comp = m_owp.GetNode()->AddUniqueComp<n2::CompScissor>();
 			comp.SetRect(sm::rect(100, 100));
+#else
+			auto& comp = m_world.GetComponent<e2::CompScissor>(m_owp);
+			comp.rect = sm::rect(100, 100);
+#endif // GAME_OBJ_ECS
 			auto panel = new ee2::WxCompScissorPanel(this, comp, m_sub_mgr);
 			m_comp_sizer->Insert(m_components.size(), panel);
 			m_components.push_back(panel);
@@ -335,8 +494,13 @@ void WxDetailPanel::OnAddPress(wxCommandEvent& event)
 		break;
 	case CompType::COMP_SCRIPT:
 		{
-			auto& comp = m_nwp.GetNode()->AddUniqueComp<n2::CompScript>();
-			auto panel = new ee2::WxCompScriptPanel(this, comp, m_sub_mgr, m_nwp.GetNode());
+			auto panel = new ee2::WxCompScriptPanel(
+#ifndef GAME_OBJ_ECS
+				this, m_sub_mgr, m_owp.GetNode()
+#else
+				this, m_sub_mgr, m_world, m_owp
+#endif // GAME_OBJ_ECS
+			);
 			m_comp_sizer->Insert(m_components.size(), panel);
 			m_components.push_back(panel);
 		}

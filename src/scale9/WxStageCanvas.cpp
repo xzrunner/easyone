@@ -14,8 +14,9 @@ namespace scale9
 {
 
 WxStageCanvas::WxStageCanvas(eone::WxStagePage* stage,
+	                         ECS_WORLD_PARAM
 	                         const ee0::RenderContext& rc)
-	: ee2::WxStageCanvas(stage, &rc)
+	: ee2::WxStageCanvas(stage, ECS_WORLD_VAR &rc)
 {
 }
 

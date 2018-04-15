@@ -73,6 +73,8 @@ int AnimHelper::GetCurrFrame(const n2::CompAnim& canim,
 void AnimHelper::UpdateTreePanael(ee0::SubjectMgr& sub_mgr,
 	                              const n2::CompAnimInst& canim_inst)
 {
+	// todo ecs
+#ifndef GAME_OBJ_ECS
 	auto root = GameObjFactory::Create(GAME_OBJ_SCENE2D);
 	auto& ccomplex = root->GetSharedComp<n2::CompComplex>();
 	canim_inst.TraverseCurrNodes([&](const ee0::GameObj& obj)->bool
@@ -89,6 +91,7 @@ void AnimHelper::UpdateTreePanael(ee0::SubjectMgr& sub_mgr,
 	vars.SetVariant("obj", var);
 
 	sub_mgr.NotifyObservers(MSG_TREE_PANEL_REBUILD, vars);
+#endif // GAME_OBJ_ECS
 }
 
 }

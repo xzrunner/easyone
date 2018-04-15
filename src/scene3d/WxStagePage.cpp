@@ -17,15 +17,15 @@ namespace eone
 namespace scene3d
 {
 
-WxStagePage::WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, const ee0::GameObj& obj)
-	: eone::WxStagePage(parent, obj, LAYOUT_PREVIEW)
+WxStagePage::WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, ECS_WORLD_PARAM const ee0::GameObj& obj)
+	: eone::WxStagePage(parent, ECS_WORLD_VAR obj, LAYOUT_PREVIEW)
 {
 	m_messages.push_back(ee0::MSG_INSERT_SCENE_NODE);
 	m_messages.push_back(ee0::MSG_DELETE_SCENE_NODE);
 	m_messages.push_back(ee0::MSG_CLEAR_SCENE_NODE);
 
 	if (library) {
-		SetDropTarget(new ee3::WxStageDropTarget(library, this));
+		SetDropTarget(new ee3::WxStageDropTarget(ECS_WORLD_VAR library, this));
 	}
 }
 
@@ -52,8 +52,12 @@ void WxStagePage::Traverse(std::function<bool(const ee0::GameObj&)> func,
 	                       bool inverse) const
 {
 	auto var = variants.GetVariant("type");
-	if (var.m_type == ee0::VT_EMPTY) {
+	if (var.m_type == ee0::VT_EMPTY) 
+	{
+		// todo ecs
+#ifndef GAME_OBJ_ECS
 		m_obj->GetSharedComp<n2::CompComplex>().Traverse(func, inverse);
+#endif // GAME_OBJ_ECS
 		return;
 	}
 	
@@ -63,15 +67,20 @@ void WxStagePage::Traverse(std::function<bool(const ee0::GameObj&)> func,
 	case TRAV_DRAW_PREVIEW:
 		func(m_obj);
 		break;
+		// todo ecs
+#ifndef GAME_OBJ_ECS
 	default:
 		m_obj->GetSharedComp<n2::CompComplex>().Traverse(func, inverse);
+#endif // GAME_OBJ_ECS
 	}
 }
 
+#ifndef GAME_OBJ_ECS
 const n0::NodeSharedComp& WxStagePage::GetEditedObjComp() const
 {
 	return m_obj->GetSharedComp<n2::CompComplex>();
 }
+#endif // GAME_OBJ_ECS
 
 void WxStagePage::StoreToJsonExt(const std::string& dir, rapidjson::Value& val, 
 	                             rapidjson::MemoryPoolAllocator<>& alloc) const
@@ -86,10 +95,13 @@ void WxStagePage::InsertSceneNode(const ee0::VariantSet& variants)
 	ee0::GameObj* obj = static_cast<ee0::GameObj*>(var.m_val.pv);
 	GD_ASSERT(obj, "err scene obj");
 
+	// todo ecs
+#ifndef GAME_OBJ_ECS
 	auto& ccomplex = m_obj->GetSharedComp<n2::CompComplex>();
 	if (m_selection.IsEmpty()) {
 		ccomplex.AddChild(*obj);
 	}
+#endif // GAME_OBJ_ECS
 
 	m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
 }
@@ -101,17 +113,23 @@ void WxStagePage::DeleteSceneNode(const ee0::VariantSet& variants)
 	ee0::GameObj* obj = static_cast<ee0::GameObj*>(var.m_val.pv);
 	GD_ASSERT(obj, "err scene obj");
 
+	// todo ecs
+#ifndef GAME_OBJ_ECS
 	auto& ccomplex = m_obj->GetSharedComp<n2::CompComplex>();
 	if (ccomplex.RemoveChild(*obj)) {
 		m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
 	}
+#endif // GAME_OBJ_ECS
 }
 
 void WxStagePage::ClearSceneNode()
 {
+	// todo ecs
+#ifndef GAME_OBJ_ECS
 	auto& ccomplex = m_obj->GetSharedComp<n2::CompComplex>();
 	ccomplex.RemoveAllChildren();
 	m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
+#endif // GAME_OBJ_ECS
 }
 
 }

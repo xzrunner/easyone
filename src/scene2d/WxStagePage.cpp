@@ -9,16 +9,20 @@
 #include <ee2/WxStageDropTarget.h>
 
 #include <guard/check.h>
+#ifndef GAME_OBJ_ECS
 #include <node0/SceneNode.h>
 #include <node2/CompComplex.h>
+#else
+#include <entity2/CompComplex.h>
+#endif // GAME_OBJ_ECS
 
 namespace eone
 {
 namespace scene2d
 {
 
-WxStagePage::WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, const ee0::GameObj& obj)
-	: eone::WxStagePage(parent, obj, LAYOUT_PREVIEW)
+WxStagePage::WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, ECS_WORLD_PARAM const ee0::GameObj& obj)
+	: eone::WxStagePage(parent, ECS_WORLD_VAR obj, LAYOUT_PREVIEW)
 {
 	m_messages.push_back(ee0::MSG_INSERT_SCENE_NODE);
 	m_messages.push_back(ee0::MSG_DELETE_SCENE_NODE);
@@ -26,7 +30,7 @@ WxStagePage::WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, const e
 	m_messages.push_back(ee0::MSG_REORDER_SCENE_NODE);
 
 	if (library) {
-		SetDropTarget(new ee2::WxStageDropTarget(library, this));
+		SetDropTarget(new ee2::WxStageDropTarget(ECS_WORLD_VAR library, this));
 	}
 }
 
@@ -60,8 +64,12 @@ void WxStagePage::Traverse(std::function<bool(const ee0::GameObj&)> func,
 	                       const ee0::VariantSet& variants, bool inverse) const
 {
 	auto var = variants.GetVariant("type");
-	if (var.m_type == ee0::VT_EMPTY) {
+	if (var.m_type == ee0::VT_EMPTY) 
+	{
+		// todo ecs
+#ifndef GAME_OBJ_ECS
 		m_obj->GetSharedComp<n2::CompComplex>().Traverse(func, inverse);
+#endif // GAME_OBJ_ECS
 		return;
 	}
 	
@@ -71,15 +79,21 @@ void WxStagePage::Traverse(std::function<bool(const ee0::GameObj&)> func,
 	case TRAV_DRAW_PREVIEW:
 		func(m_obj);
 		break;
+		// todo ecs
+#ifndef GAME_OBJ_ECS
 	default:
 		m_obj->GetSharedComp<n2::CompComplex>().Traverse(func, inverse);
+#endif // GAME_OBJ_ECS
 	}
 }
 
+// todo ecs
+#ifndef GAME_OBJ_ECS
 const n0::NodeSharedComp& WxStagePage::GetEditedObjComp() const 
 {
 	return m_obj->GetSharedComp<n2::CompComplex>();
 }
+#endif // GAME_OBJ_ECS
 
 void WxStagePage::StoreToJsonExt(const std::string& dir, rapidjson::Value& val, 
 	                             rapidjson::MemoryPoolAllocator<>& alloc) const
@@ -94,8 +108,13 @@ bool WxStagePage::InsertSceneObj(const ee0::VariantSet& variants)
 	ee0::GameObj* obj = static_cast<ee0::GameObj*>(var.m_val.pv);
 	GD_ASSERT(obj, "err scene obj");
 
+#ifndef GAME_OBJ_ECS
 	auto& ccomplex = m_obj->GetSharedComp<n2::CompComplex>();
 	ccomplex.AddChild(*obj);
+#else
+	auto& ccomplex = m_world.GetComponent<e2::CompComplex>(m_obj);
+	ccomplex.children.push_back(*obj);
+#endif // GAME_OBJ_ECS
 
 	return true;
 }
@@ -107,15 +126,34 @@ bool WxStagePage::DeleteSceneObj(const ee0::VariantSet& variants)
 	ee0::GameObj* obj = static_cast<ee0::GameObj*>(var.m_val.pv);
 	GD_ASSERT(obj, "err scene obj");
 
+#ifndef GAME_OBJ_ECS
 	auto& ccomplex = m_obj->GetSharedComp<n2::CompComplex>();
 	return ccomplex.RemoveChild(*obj);
+#else
+	auto& ccomplex = m_world.GetComponent<e2::CompComplex>(m_obj);
+	for (auto itr = ccomplex.children.begin(); itr != ccomplex.children.end(); ++itr) 
+	{
+		if (*itr == *obj) {
+			ccomplex.children.erase(itr);
+			return true;
+		}
+	}
+	return false;
+#endif // GAME_OBJ_ECS
 }
 
 bool WxStagePage::ClearSceneObj()
 {
+#ifndef GAME_OBJ_ECS
 	auto& ccomplex = m_obj->GetSharedComp<n2::CompComplex>();
 	bool dirty = !ccomplex.GetAllChildren().empty();
 	ccomplex.RemoveAllChildren();
+#else
+	auto& ccomplex = m_world.GetComponent<e2::CompComplex>(m_obj);
+	bool dirty = !ccomplex.children.empty();
+	// todo clear components
+	ccomplex.children.clear();
+#endif // GAME_OBJ_ECS
 	return dirty;
 }
 
@@ -130,8 +168,13 @@ bool WxStagePage::ReorderSceneObj(const ee0::VariantSet& variants)
 	GD_ASSERT(up_var.m_type == ee0::VT_BOOL, "no var in vars: up");
 	bool up = up_var.m_val.bl;
 
+#ifndef GAME_OBJ_ECS
 	auto& ccomplex = m_obj->GetSharedComp<n2::CompComplex>();
-	std::vector<ee0::GameObj> all_objs = ccomplex.GetAllChildren();
+	auto all_objs = ccomplex.GetAllChildren();
+#else
+	auto& ccomplex = m_world.GetComponent<e2::CompComplex>(m_obj);
+	auto all_objs = ccomplex.children;
+#endif // GAME_OBJ_ECS
 	if (all_objs.empty()) {
 		return false;
 	}
@@ -150,13 +193,21 @@ bool WxStagePage::ReorderSceneObj(const ee0::VariantSet& variants)
 	if (up && idx != all_objs.size() - 1)
 	{
 		std::swap(all_objs[idx], all_objs[idx + 1]);
+#ifndef GAME_OBJ_ECS
 		ccomplex.SetChildren(all_objs);
+#else
+		ccomplex.children = all_objs;
+#endif // GAME_OBJ_ECS
 		return true;
 	}
 	else if (!up && idx != 0)
 	{
 		std::swap(all_objs[idx], all_objs[idx - 1]);
+#ifndef GAME_OBJ_ECS
 		ccomplex.SetChildren(all_objs);
+#else
+		ccomplex.children = all_objs;
+#endif // GAME_OBJ_ECS
 		return true;
 	}
 

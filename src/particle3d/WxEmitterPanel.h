@@ -36,8 +36,11 @@ public:
 		WxChildrenPanel(wxWindow* parent, n2::CompParticle3d& cp3d,
 			n2::CompParticle3dInst& cp3d_inst, WxEmitterPanel* et_panel);
 
+		// todo ecs
+#ifndef GAME_OBJ_ECS
 		void AddChild(const n0::CompAssetPtr& casset, 
 			const std::string& filepath);
+#endif // GAME_OBJ_ECS
 		void RemoveChild(WxComponentPanel* child);
 
 	private:

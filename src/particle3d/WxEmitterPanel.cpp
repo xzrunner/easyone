@@ -135,6 +135,7 @@ WxChildrenPanel(wxWindow* parent, n2::CompParticle3d& cp3d,
 	SetSizer(sizer);
 }
 
+#ifndef GAME_OBJ_ECS
 void WxEmitterPanel::WxChildrenPanel::
 AddChild(const n0::CompAssetPtr& casset,
 	         const std::string& filepath)
@@ -146,6 +147,7 @@ AddChild(const n0::CompAssetPtr& casset,
 	m_children.push_back(child);
 	Layout();
 }
+#endif // GAME_OBJ_ECS
 
 void WxEmitterPanel::WxChildrenPanel::
 RemoveChild(WxComponentPanel* child)
@@ -235,7 +237,11 @@ OnDropText(wxCoord x, wxCoord y, const wxString& text)
 			continue;
 		}
 
+#ifndef GAME_OBJ_ECS
 		m_components->AddChild(casset, item->GetFilepath());
+#else
+		// todo ecs
+#endif // GAME_OBJ_ECS
 	}
 }
 

@@ -355,6 +355,7 @@ void WxTimeStagePanel::DrawSelected(wxBufferedPaintDC& dc)
 
 bool WxTimeStagePanel::InsertSceneNode(const ee0::VariantSet& variants)
 {
+#ifndef GAME_OBJ_ECS
 	auto frame = AnimHelper::GetKeyFrame(m_canim, m_layer_idx, m_frame_idx);
 	if (!frame) {
 		return false;
@@ -367,12 +368,16 @@ bool WxTimeStagePanel::InsertSceneNode(const ee0::VariantSet& variants)
 
 	frame->AddNode(*obj);
 	m_sub_mgr->NotifyObservers(MSG_REFRESH_ANIM_COMP);
+#else
+	// todo ecs
+#endif // GAME_OBJ_ECS
 
 	return true;
 }
 
 bool WxTimeStagePanel::DeleteSceneNode(const ee0::VariantSet& variants)
 {
+#ifndef GAME_OBJ_ECS
 	auto frame = AnimHelper::GetKeyFrame(m_canim, m_layer_idx, m_frame_idx);
 	if (!frame) {
 		return false;
@@ -386,6 +391,10 @@ bool WxTimeStagePanel::DeleteSceneNode(const ee0::VariantSet& variants)
 	bool ret = frame->RemoveNode(*obj);
 	m_sub_mgr->NotifyObservers(MSG_REFRESH_ANIM_COMP);
 	return ret;
+#else
+	// todo ecs
+	return false;
+#endif // GAME_OBJ_ECS
 }
 
 bool WxTimeStagePanel::ClearSceneNode()
@@ -397,6 +406,7 @@ bool WxTimeStagePanel::ClearSceneNode()
 
 bool WxTimeStagePanel::ReorderSceneNode(const ee0::VariantSet& variants)
 {
+#ifndef GAME_OBJ_ECS
 	auto frame = AnimHelper::GetKeyFrame(m_canim, m_layer_idx, m_frame_idx);
 	if (!frame) {
 		return false;
@@ -444,6 +454,10 @@ bool WxTimeStagePanel::ReorderSceneNode(const ee0::VariantSet& variants)
 		m_sub_mgr->NotifyObservers(MSG_REFRESH_ANIM_COMP);
 	}
 	return ret;
+#else
+	// todo ecs
+	return false;
+#endif // GAME_OBJ_ECS
 }
 
 void WxTimeStagePanel::OnSetCurrFrame(const ee0::VariantSet& variants)

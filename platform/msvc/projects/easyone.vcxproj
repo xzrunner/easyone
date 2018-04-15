@@ -57,7 +57,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\..\src;..\..\..\ext\easyeditor0\include;..\..\..\ext\easyeditor2\include;..\..\..\ext\easyeditor3\include;..\..\..\ext\cu\src;..\..\..\ext\ds\src\ds;..\..\..\ext\sm\src\sm;..\..\..\ext\ps\src\ps;..\..\..\ext\rigging\src\rigging;..\..\..\ext\sprite2\include;..\..\..\ext\painting2\include;..\..\..\ext\painting3\include;..\..\..\ext\js\include;..\..\..\ext\bimp\include;..\..\..\ext\guard\include;..\..\..\ext\logger\src\logger;..\..\..\ext\polymesh\include;..\..\..\ext\facade\include;..\..\..\ext\node0\include;..\..\..\ext\node2\include;..\..\..\ext\node3\include;..\..\..\ext\ecsx\include;..\..\..\ext\entity2\include;..\..\..\ext\memmgr\include;..\..\..\ext\nserializer\include;..\..\..\ext\serializerx\include;..\..\..\ext\moon\include;..\..\..\ext\anim\include;..\..\..\ext\emitter\include;..\..\..\ext\external-editor\wx\include;..\..\..\ext\external\json\include;..\..\..\ext\external\rapidjson\include;..\..\..\ext\external\freetype\include;..\..\..\ext\external\c99;..\..\..\ext\external\lua\include;..\..\..\ext\external\boost\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\src;..\..\..\ext\easyeditor0\include;..\..\..\ext\easyeditor2\include;..\..\..\ext\easyeditor3\include;..\..\..\ext\cu\src;..\..\..\ext\ds\src\ds;..\..\..\ext\sm\src\sm;..\..\..\ext\ps\src\ps;..\..\..\ext\rigging\src\rigging;..\..\..\ext\sprite2\include;..\..\..\ext\painting2\include;..\..\..\ext\painting3\include;..\..\..\ext\js\include;..\..\..\ext\bimp\include;..\..\..\ext\guard\include;..\..\..\ext\logger\src\logger;..\..\..\ext\polymesh\include;..\..\..\ext\facade\include;..\..\..\ext\node0\include;..\..\..\ext\node2\include;..\..\..\ext\node3\include;..\..\..\ext\ecsx\include;..\..\..\ext\entity2\include;..\..\..\ext\entity3\include;..\..\..\ext\memmgr\include;..\..\..\ext\nserializer\include;..\..\..\ext\serializerx\include;..\..\..\ext\moon\include;..\..\..\ext\anim\include;..\..\..\ext\emitter\include;..\..\..\ext\external-editor\wx\include;..\..\..\ext\external\json\include;..\..\..\ext\external\rapidjson\include;..\..\..\ext\external\freetype\include;..\..\..\ext\external\c99;..\..\..\ext\external\lua\include;..\..\..\ext\external\boost\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -83,7 +83,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>..\..\..\src;..\..\..\ext\easyeditor0\include;..\..\..\ext\easyeditor2\include;..\..\..\ext\easyeditor3\include;..\..\..\ext\cu\src;..\..\..\ext\ds\src\ds;..\..\..\ext\sm\src\sm;..\..\..\ext\ps\src\ps;..\..\..\ext\rigging\src\rigging;..\..\..\ext\sprite2\include;..\..\..\ext\painting2\include;..\..\..\ext\painting3\include;..\..\..\ext\js\include;..\..\..\ext\bimp\include;..\..\..\ext\guard\include;..\..\..\ext\logger\src\logger;..\..\..\ext\polymesh\include;..\..\..\ext\facade\include;..\..\..\ext\node0\include;..\..\..\ext\node2\include;..\..\..\ext\node3\include;..\..\..\ext\ecsx\include;..\..\..\ext\entity2\include;..\..\..\ext\memmgr\include;..\..\..\ext\nserializer\include;..\..\..\ext\serializerx\include;..\..\..\ext\moon\include;..\..\..\ext\anim\include;..\..\..\ext\emitter\include;..\..\..\ext\external-editor\wx\include;..\..\..\ext\external\json\include;..\..\..\ext\external\rapidjson\include;..\..\..\ext\external\freetype\include;..\..\..\ext\external\c99;..\..\..\ext\external\lua\include;..\..\..\ext\external\boost\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\src;..\..\..\ext\easyeditor0\include;..\..\..\ext\easyeditor2\include;..\..\..\ext\easyeditor3\include;..\..\..\ext\cu\src;..\..\..\ext\ds\src\ds;..\..\..\ext\sm\src\sm;..\..\..\ext\ps\src\ps;..\..\..\ext\rigging\src\rigging;..\..\..\ext\sprite2\include;..\..\..\ext\painting2\include;..\..\..\ext\painting3\include;..\..\..\ext\js\include;..\..\..\ext\bimp\include;..\..\..\ext\guard\include;..\..\..\ext\logger\src\logger;..\..\..\ext\polymesh\include;..\..\..\ext\facade\include;..\..\..\ext\node0\include;..\..\..\ext\node2\include;..\..\..\ext\node3\include;..\..\..\ext\ecsx\include;..\..\..\ext\entity2\include;..\..\..\ext\entity3\include;..\..\..\ext\memmgr\include;..\..\..\ext\nserializer\include;..\..\..\ext\serializerx\include;..\..\..\ext\moon\include;..\..\..\ext\anim\include;..\..\..\ext\emitter\include;..\..\..\ext\external-editor\wx\include;..\..\..\ext\external\json\include;..\..\..\ext\external\rapidjson\include;..\..\..\ext\external\freetype\include;..\..\..\ext\external\c99;..\..\..\ext\external\lua\include;..\..\..\ext\external\boost\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -147,6 +147,9 @@
     <ProjectReference Include="..\..\..\ext\entity2\platform\msvc\projects\entity2.vcxproj">
       <Project>{0755788f-c3b4-47f5-a0fa-f0187ad8e4ea}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\entity3\platform\msvc\projects\entity3.vcxproj">
+      <Project>{52581a88-0e44-40d5-a49b-16c49d4b6b92}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\ext\eserializer\platform\msvc\projects\eserializer.vcxproj">
       <Project>{968dd532-4a13-4df8-849b-6d70c91544c3}</Project>
     </ProjectReference>
@@ -176,6 +179,9 @@
     </ProjectReference>
     <ProjectReference Include="..\..\..\ext\memmgr\platform\msvc\projects\memmgr.vcxproj">
       <Project>{5ffa0de4-1489-4267-8a79-52decc2d0351}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\model\platform\msvc\projects\model.vcxproj">
+      <Project>{4aba57ff-958f-4077-9010-b25fc862469b}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\..\ext\moon\platform\msvc\projects\moon.vcxproj">
       <Project>{9fb05942-dcae-4a6f-8f99-86e20de9dfcc}</Project>

@@ -14,11 +14,12 @@ namespace eone
 class GameObjFactory
 {
 public:
-#ifndef GAME_OBJ_ECS
-	static ee0::GameObj Create(GameObjType type);
-#else
-	static ee0::GameObj Create(ecsx::World& world, GameObjType type);
+	static ee0::GameObj Create(
+#ifdef GAME_OBJ_ECS
+		ecsx::World& world, 
 #endif // GAME_OBJ_ECS
+		GameObjType type
+	);
 
 }; // GameObjFactory
 

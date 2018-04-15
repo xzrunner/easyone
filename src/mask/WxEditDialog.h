@@ -6,6 +6,7 @@
 #include <wx/aui/framemanager.h>
 
 namespace ee0 { class RenderContext; class WindowContext; }
+ECS_WORLD_DECL
 
 namespace eone
 {
@@ -20,7 +21,7 @@ class WxEditDialog : public wxDialog
 {
 public:
 	WxEditDialog(wxWindow* parent, const ee0::RenderContext& rc, 
-		const ee0::WindowContext& wc, const ee0::GameObj& obj);
+		const ee0::WindowContext& wc, ECS_WORLD_PARAM const ee0::GameObj& obj);
 	virtual ~WxEditDialog();
 
 private:
@@ -34,6 +35,10 @@ private:
 private:
 	const ee0::RenderContext& m_rc;
 	const ee0::WindowContext& m_wc;
+
+#ifdef GAME_OBJ_ECS
+	ecsx::World& m_world;
+#endif // GAME_OBJ_ECS
 
 	wxAuiManager m_mgr;
 

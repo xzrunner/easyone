@@ -1,12 +1,14 @@
 #pragma once
 
 #include <ee0/GameObj.h>
+#include <ee0/Config.h>
 
 #include "frame/WxStagePage.h"
 #include "frame/StagePageType.h"
 
 namespace ee0 { class WxLibraryPanel; }
 namespace n0 { class NodeSharedComp; }
+ECS_WORLD_DECL
 
 namespace eone
 {
@@ -16,7 +18,7 @@ namespace anim
 class WxStagePage : public eone::WxStagePage
 {
 public:
-	WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, const ee0::GameObj& obj);
+	WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, ECS_WORLD_PARAM const ee0::GameObj& obj);
 
 	virtual void OnNotify(uint32_t msg, const ee0::VariantSet& variants) override;
 
@@ -28,7 +30,9 @@ public:
 protected:
 	virtual void OnPageInit() override;
 
+#ifndef GAME_OBJ_ECS
 	virtual const n0::NodeSharedComp& GetEditedObjComp() const override;
+#endif // GAME_OBJ_ECS
 
 	virtual void LoadFromJsonExt(const std::string& dir, const rapidjson::Value& val);
 

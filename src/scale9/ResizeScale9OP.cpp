@@ -9,10 +9,16 @@
 
 #include <guard/check.h>
 #include <SM_Calc.h>
+#ifndef GAME_OBJ_ECS
 #include <node0/SceneNode.h>
 #include <node2/CompBoundingBox.h>
 #include <node2/CompScale9.h>
 #include <node2/CompTransform.h>
+#else
+#include <ecsx/World.h>
+#include <entity2/CompBoundingBox.h>
+#include <entity2/CompScale9.h>
+#endif // GAME_OBJ_ECS
 #include <painting2/PrimitiveDraw.h>
 
 namespace
@@ -27,9 +33,16 @@ namespace eone
 namespace scale9
 {
 
-ResizeScale9OP::ResizeScale9OP(WxPreviewPanel* stage, const ee0::GameObj& obj)
+ResizeScale9OP::ResizeScale9OP(WxPreviewPanel* stage, 
+#ifdef GAME_OBJ_ECS
+	                           ecsx::World& world,
+#endif // GAME_OBJ_ECS
+	                           const ee0::GameObj& obj)
 	: ee0::EditOP()
 	, m_stage(stage)
+#ifdef GAME_OBJ_ECS
+	, m_world(world)
+#endif // GAME_OBJ_ECS
 	, m_obj(obj)
 	, m_stat(STAT_NULL)
 {
@@ -49,8 +62,11 @@ bool ResizeScale9OP::OnMouseLeftDown(int x, int y)
 	GD_ASSERT(cam, "null cam");
 	m_first_pos = ee0::CameraHelper::TransPosScreenToProject(*cam, x, y);
 
-	auto& cbb = m_obj->GetUniqueComp<n2::CompBoundingBox>();
-	auto& sz = cbb.GetSize();
+#ifndef GAME_OBJ_ECS
+	auto& sz = m_obj->GetUniqueComp<n2::CompBoundingBox>().GetSize();
+#else
+	auto& sz = m_world.GetComponent<e2::CompBoundingBox>(m_obj).rect;
+#endif // GAME_OBJ_ECS
 	const float hw = sz.Width() * 0.5f,
 		        hh = sz.Height() * 0.5f;
 	if (sm::is_point_in_rect(m_first_pos, sm::rect(sm::vec2(-hw, -hh), REGION, REGION))) {
@@ -102,11 +118,19 @@ bool ResizeScale9OP::OnMouseDrag(int x, int y)
 
 	float w = fabs(pos.x) * 2,
 		  h = fabs(pos.y) * 2;
+#ifndef GAME_OBJ_ECS
 	auto& cscale9 = m_obj->GetSharedComp<n2::CompScale9>();
 	cscale9.SetSize(w, h);
 
 	auto& cbb = m_obj->GetUniqueComp<n2::CompBoundingBox>();
 	cbb.SetSize(*m_obj, sm::rect(w, h));
+#else
+	auto& cscale9 = m_world.GetComponent<e2::CompScale9>(m_obj);
+	cscale9.SetSize(m_world, w, h);
+
+	auto& cbb = m_world.GetComponent<e2::CompBoundingBox>(m_obj);
+	cbb.rect = sm::rect(w, h);
+#endif // GAME_OBJ_ECS
 
 	m_stage->GetSubjectMgr()->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
 
@@ -119,13 +143,21 @@ bool ResizeScale9OP::OnDraw() const
 		return true;
 	}
 
+#ifndef GAME_OBJ_ECS
 	auto& cscale9 = m_obj->GetSharedComp<n2::CompScale9>();
 	if (cscale9.GetType() == n2::CompScale9::S9_NULL) {
 		return false;
 	}
 
-	auto& cbb = m_obj->GetUniqueComp<n2::CompBoundingBox>();
-	auto& sz = cbb.GetSize();
+	auto& sz = m_obj->GetUniqueComp<n2::CompBoundingBox>().GetSize();
+#else
+	auto& cscale9 = m_world.GetComponent<e2::CompScale9>(m_obj);
+	if (cscale9.type == e2::CompScale9::S9_NULL) {
+		return false;
+	}
+
+	auto& sz = m_world.GetComponent<e2::CompBoundingBox>(m_obj).rect;
+#endif // GAME_OBJ_ECS
 	const float hw = sz.Width() * 0.5f,
 		        hh = sz.Height() * 0.5f;
 	const float r = REGION;

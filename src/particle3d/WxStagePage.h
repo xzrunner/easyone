@@ -4,6 +4,7 @@
 #include "frame/StagePageType.h"
 
 namespace ee0 { class WxLibraryPanel; }
+ECS_WORLD_DECL
 
 namespace eone
 {
@@ -13,7 +14,8 @@ namespace particle3d
 class WxStagePage : public eone::WxStagePage
 {
 public:
-	WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, const ee0::GameObj& obj);
+	WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, 
+		ECS_WORLD_PARAM const ee0::GameObj& obj);
 
 	virtual void OnNotify(uint32_t msg, const ee0::VariantSet& variants) override;
 
@@ -25,7 +27,9 @@ public:
 protected:
 	virtual void OnPageInit() override;
 
+#ifndef GAME_OBJ_ECS
 	virtual const n0::NodeSharedComp& GetEditedObjComp() const override;
+#endif // GAME_OBJ_ECS
 
 private:
 	ee0::WxLibraryPanel* m_library;

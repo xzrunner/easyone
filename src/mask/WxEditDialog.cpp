@@ -20,10 +20,13 @@ namespace mask
 {
 
 WxEditDialog::WxEditDialog(wxWindow* parent, const ee0::RenderContext& rc,
-	                       const ee0::WindowContext& wc, const ee0::GameObj& obj)
+	                       const ee0::WindowContext& wc, ECS_WORLD_PARAM const ee0::GameObj& obj)
 	: wxDialog(parent, wxID_ANY, "Edit Mask", wxDefaultPosition, wxSize(800, 600), wxCLOSE_BOX | wxCAPTION | wxMAXIMIZE_BOX)
 	, m_rc(rc)
 	, m_wc(wc)
+#ifdef GAME_OBJ_ECS
+	, m_world(world)
+#endif // GAME_OBJ_ECS
 	, m_mgr(this)
 {
 	InitLayout(obj);
@@ -57,10 +60,10 @@ void WxEditDialog::InitLayout(const ee0::GameObj& obj)
 
 wxWindow* WxEditDialog::CreateStagePanel(const ee0::GameObj& obj)
 {
-	m_stage = new mask::WxStagePage(this, nullptr, obj);
-	auto canvas = std::make_shared<ee2::WxStageCanvas>(m_stage, &m_rc, &m_wc);
+	m_stage = new mask::WxStagePage(this, nullptr, ECS_WORLD_SELF_VAR obj);
+	auto canvas = std::make_shared<ee2::WxStageCanvas>(m_stage, ECS_WORLD_SELF_VAR &m_rc, &m_wc);
 	m_stage->GetImpl().SetCanvas(canvas);
-	m_stage->GetImpl().SetEditOP(std::make_shared<NodeSelectOP>(*m_stage, m_rc, m_wc));
+	m_stage->GetImpl().SetEditOP(std::make_shared<NodeSelectOP>(ECS_WORLD_SELF_VAR *m_stage, m_rc, m_wc));
 	return m_stage;
 }
 
@@ -69,7 +72,7 @@ wxWindow* WxEditDialog::CreatePreviewPanel()
 	auto& sub_mgr = m_stage->GetSubjectMgr();
 	m_preview = new WxPreviewPanel(this, sub_mgr, m_stage);
 
-	auto canvas = std::make_shared<WxPreviewCanvas>(m_preview, m_rc);
+	auto canvas = std::make_shared<WxPreviewCanvas>(m_preview, ECS_WORLD_SELF_VAR m_rc);
 	m_preview->GetImpl().SetCanvas(canvas);
 	auto op = std::make_shared<ee2::CamControlOP>(*canvas->GetCamera(), sub_mgr);
 	m_preview->GetImpl().SetEditOP(op);
@@ -80,13 +83,13 @@ wxWindow* WxEditDialog::CreatePreviewPanel()
 wxWindow* WxEditDialog::CreateTreePanel()
 {
 	return new WxSceneTreePanel(
-		this, m_stage->GetSubjectMgr(), m_stage->GetEditedObj());
+		this, m_stage->GetSubjectMgr(), ECS_WORLD_SELF_VAR m_stage->GetEditedObj());
 }
 
 wxWindow* WxEditDialog::CreateDetailPanel()
 {
 	return new WxDetailPanel(
-		this, m_stage->GetSubjectMgr(), m_stage->GetEditedObj(), m_stage->GetMoonCtx());
+		this, m_stage->GetSubjectMgr(), ECS_WORLD_SELF_VAR m_stage->GetEditedObj(), m_stage->GetMoonCtx());
 }
 
 }

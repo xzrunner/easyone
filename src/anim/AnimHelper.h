@@ -1,5 +1,7 @@
 #pragma once
 
+#include <ee0/GameObj.h>
+
 namespace anim { class KeyFrame; class Layer; }
 namespace n2 { class CompAnim; class CompAnimInst; }
 namespace ee0 { class SubjectMgr; }

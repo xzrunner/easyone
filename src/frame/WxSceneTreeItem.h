@@ -10,6 +10,7 @@ namespace eone
 class WxSceneTreeItem : public wxTreeItemData
 {
 public:
+	WxSceneTreeItem();
 	WxSceneTreeItem(const WxSceneTreeItem& item);
 	WxSceneTreeItem(const ee0::GameObj& obj, 
 		const ee0::GameObj& root, int obj_id);
@@ -22,10 +23,10 @@ public:
 	void SetObjID(int id) { m_obj_id = id; }
 
 private:
-	ee0::GameObj m_obj = nullptr;
+	ee0::GameObj m_obj;
 
-	ee0::GameObj m_root = nullptr;
-	int m_obj_id = -1;
+	ee0::GameObj m_root;
+	int m_obj_id;
 
 }; // WxSceneTreeItem
 
