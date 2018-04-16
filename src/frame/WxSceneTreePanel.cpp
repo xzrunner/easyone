@@ -48,17 +48,11 @@ static const std::vector<std::pair<uint32_t, std::string>> GAME_OBJ_LIST =
 namespace eone
 {
 
-WxSceneTreePanel::WxSceneTreePanel(wxWindow* parent, 
-                                   const ee0::SubjectMgrPtr& sub_mgr,
-#ifdef GAME_OBJ_ECS
-	                               ecsx::World& world, 
-#endif // GAME_OBJ_ECS
-	                               const ee0::GameObj& root_obj)
+WxSceneTreePanel::WxSceneTreePanel(wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr,
+	                               ECS_WORLD_PARAM const ee0::GameObj& root_obj)
 	: wxPanel(parent, wxID_ANY)
 	, m_sub_mgr(sub_mgr)
-#ifdef GAME_OBJ_ECS
-	, m_world(world)
-#endif // GAME_OBJ_ECS
+	ECS_WORLD_SELF_ASSIGN
 {
 	InitLayout(root_obj);
 }
@@ -73,11 +67,7 @@ void WxSceneTreePanel::InitLayout(const ee0::GameObj& root_obj)
 		top_sizer->Add(m_create_btn, 0, wxALIGN_CENTER_HORIZONTAL);
 	}
 	{
-#ifndef GAME_OBJ_ECS
-		auto ctrl = new WxSceneTreeCtrl(this, m_sub_mgr, root_obj);
-#else
-		auto ctrl = new WxSceneTreeCtrl(this, m_sub_mgr, m_world, root_obj);
-#endif // GAME_OBJ_ECS
+		auto ctrl = new WxSceneTreeCtrl(this, m_sub_mgr, ECS_WORLD_SELF_VAR root_obj);
 		top_sizer->Add(ctrl, 1, wxEXPAND);
 	}
 	SetSizer(top_sizer);
@@ -184,15 +174,9 @@ void WxSceneTreePanel::OnCreatePress(wxCommandEvent& event)
 		return;
 	}
 
-#ifndef GAME_OBJ_ECS
-	if (!obj) {
+	if (!GAME_OBJ_VALID(obj)) {
 		return;
 	}
-#else
-	if (obj.IsNull()) {
-		return;
-	}
-#endif // GAME_OBJ_ECS
 
 	ee0::MsgHelper::InsertNode(*m_sub_mgr, obj, true);
 	m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);

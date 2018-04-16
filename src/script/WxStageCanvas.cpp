@@ -26,9 +26,10 @@ namespace script
 {
 	
 WxStageCanvas::WxStageCanvas(eone::WxStagePage* stage,
+	                         ECS_WORLD_PARAM
 	                         const ee0::RenderContext& rc,
 	                         const std::string& filepath)
-	: ee2::WxStageCanvas(stage, &rc)
+	: ee2::WxStageCanvas(stage, ECS_WORLD_VAR &rc)
 	, m_script(stage->GetMoonCtx()->GetState(), filepath.c_str())
 {
 	for (auto& msg : MESSAGES) {

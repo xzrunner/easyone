@@ -5,9 +5,7 @@
 
 #include <SM_Vector.h>
 
-#ifdef GAME_OBJ_ECS
-namespace ecsx { class World; }
-#endif // GAME_OBJ_ECS
+ECS_WORLD_DECL
 
 namespace eone
 {
@@ -20,13 +18,7 @@ namespace scale9
 class ResizeScale9OP : public ee0::EditOP
 {
 public:
-	ResizeScale9OP(
-		WxPreviewPanel* stage, 
-#ifdef GAME_OBJ_ECS
-		ecsx::World& world,
-#endif // GAME_OBJ_ECS
-		const ee0::GameObj& obj
-	);
+	ResizeScale9OP(WxPreviewPanel* stage, ECS_WORLD_PARAM const ee0::GameObj& obj);
 
 	virtual bool OnMouseLeftDown(int x, int y) override;
 	virtual bool OnMouseLeftUp(int x, int y) override;
@@ -47,9 +39,7 @@ private:
 private:
 	WxPreviewPanel*  m_stage;
 
-#ifdef GAME_OBJ_ECS
-	ecsx::World& m_world;
-#endif // GAME_OBJ_ECS
+	ECS_WORLD_SELF_DEF
 	ee0::GameObj m_obj;
 
 	sm::vec2 m_first_pos;

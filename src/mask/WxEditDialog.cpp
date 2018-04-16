@@ -24,9 +24,7 @@ WxEditDialog::WxEditDialog(wxWindow* parent, const ee0::RenderContext& rc,
 	: wxDialog(parent, wxID_ANY, "Edit Mask", wxDefaultPosition, wxSize(800, 600), wxCLOSE_BOX | wxCAPTION | wxMAXIMIZE_BOX)
 	, m_rc(rc)
 	, m_wc(wc)
-#ifdef GAME_OBJ_ECS
-	, m_world(world)
-#endif // GAME_OBJ_ECS
+	ECS_WORLD_SELF_ASSIGN
 	, m_mgr(this)
 {
 	InitLayout(obj);

@@ -23,9 +23,7 @@ namespace eone
 
 WxStagePage::WxStagePage(wxWindow* parent, ECS_WORLD_PARAM const ee0::GameObj& obj, LayoutType layout_type)
 	: ee0::WxStagePage(parent)
-#ifdef GAME_OBJ_ECS
-	, m_world(world)
-#endif // GAME_OBJ_ECS
+	ECS_WORLD_SELF_ASSIGN
 	, m_obj(obj)
 	, m_layout_type(layout_type)
 {

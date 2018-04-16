@@ -33,16 +33,11 @@ namespace eone
 namespace scale9
 {
 
-ResizeScale9OP::ResizeScale9OP(WxPreviewPanel* stage, 
-#ifdef GAME_OBJ_ECS
-	                           ecsx::World& world,
-#endif // GAME_OBJ_ECS
+ResizeScale9OP::ResizeScale9OP(WxPreviewPanel* stage, ECS_WORLD_PARAM
 	                           const ee0::GameObj& obj)
 	: ee0::EditOP()
 	, m_stage(stage)
-#ifdef GAME_OBJ_ECS
-	, m_world(world)
-#endif // GAME_OBJ_ECS
+	ECS_WORLD_SELF_ASSIGN
 	, m_obj(obj)
 	, m_stat(STAT_NULL)
 {

@@ -23,12 +23,8 @@
 namespace
 {
 
-void OpenEditDialog(ee0::WxStagePage& stage, 
-#ifdef GAME_OBJ_ECS
-	                ecsx::World& world,
-#endif // GAME_OBJ_ECS
-                    const ee0::GameObj& obj,
-	                const ee0::RenderContext& rc, 
+void OpenEditDialog(ee0::WxStagePage& stage, ECS_WORLD_PARAM
+                    const ee0::GameObj& obj, const ee0::RenderContext& rc, 
 	                const ee0::WindowContext& wc)
 {
 	auto stage_panel = eone::Blackboard::Instance()->GetApp()->GetStagePanel();
@@ -49,7 +45,7 @@ void OpenEditDialog(ee0::WxStagePage& stage,
 #endif // GAME_OBJ_ECS
 	{
 		auto& canvas = stage.GetImpl().GetCanvas();
-		eone::scale9::WxEditDialog dlg(stage_panel, rc, wc, obj);
+		eone::scale9::WxEditDialog dlg(stage_panel, rc, wc, ECS_WORLD_VAR obj);
 		dlg.ShowModal();
 	}
 }
@@ -59,19 +55,10 @@ void OpenEditDialog(ee0::WxStagePage& stage,
 namespace eone
 {
 
-NodeSelectOP::NodeSelectOP(
-#ifdef GAME_OBJ_ECS
-	                       ecsx::World& world,
-#endif // GAME_OBJ_ECS
-	                       WxStagePage& stage,
-	                       const ee0::RenderContext& rc,
-	                       const ee0::WindowContext& wc)
-#ifndef GAME_OBJ_ECS
-	: ee2::NodeSelectOP(stage)
-#else
-	: ee2::NodeSelectOP(world, stage)
-	, m_world(world)
-#endif // GAME_OBJ_ECS
+NodeSelectOP::NodeSelectOP(ECS_WORLD_PARAM WxStagePage& stage,
+	                       const ee0::RenderContext& rc, const ee0::WindowContext& wc)
+	: ee2::NodeSelectOP(ECS_WORLD_VAR stage)
+	ECS_WORLD_SELF_ASSIGN
 	, m_rc(rc)
 	, m_wc(wc)
 {

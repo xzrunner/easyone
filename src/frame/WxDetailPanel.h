@@ -12,9 +12,7 @@
 #include <wx/panel.h>
 
 namespace ee0 { class WxCompPanel; }
-#ifdef GAME_OBJ_ECS
-namespace ecsx { class World; }
-#endif // GAME_OBJ_ECS
+ECS_WORLD_DECL
 
 namespace eone
 {
@@ -22,15 +20,8 @@ namespace eone
 class WxDetailPanel : public wxPanel, public ee0::Observer
 {
 public:
-	WxDetailPanel(
-		wxWindow* parent,
-		const ee0::SubjectMgrPtr& sub_mgr,
-#ifdef GAME_OBJ_ECS
-		ecsx::World& world,
-#endif // GAME_OBJ_ECS
-		const ee0::GameObj& root_obj, 
-		const moon::ContextPtr& moon_ctx
-	);
+	WxDetailPanel(wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr,
+		ECS_WORLD_PARAM const ee0::GameObj& root_obj, const moon::ContextPtr& moon_ctx);
 
 	virtual void OnNotify(uint32_t msg, const ee0::VariantSet& variants) override;
 
@@ -49,9 +40,7 @@ private:
 
 private:
 	ee0::SubjectMgrPtr m_sub_mgr;
-#ifdef GAME_OBJ_ECS
-	ecsx::World&       m_world;
-#endif // GAME_OBJ_ECS
+	ECS_WORLD_SELF_DEF
 	ee0::GameObj       m_root_obj;
 	moon::ContextPtr   m_moon_ctx;
 

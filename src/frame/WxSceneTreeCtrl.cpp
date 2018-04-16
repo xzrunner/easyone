@@ -39,18 +39,12 @@ BEGIN_EVENT_TABLE(WxSceneTreeCtrl, wxTreeCtrl)
 	EVT_KEY_DOWN(WxSceneTreeCtrl::OnKeyDown)
 END_EVENT_TABLE()
 
-WxSceneTreeCtrl::WxSceneTreeCtrl(wxWindow* parent, 
-                                 const ee0::SubjectMgrPtr& sub_mgr,
-#ifdef GAME_OBJ_ECS
-	                             ecsx::World& world,
-#endif // GAME_OBJ_ECS
-	                             const ee0::GameObj& root_obj)
+WxSceneTreeCtrl::WxSceneTreeCtrl(wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr,
+	                             ECS_WORLD_PARAM const ee0::GameObj& root_obj)
 	: wxTreeCtrl(parent, ID_SCENE_TREE_CTRL, wxDefaultPosition, wxDefaultSize,
 		/*wxTR_HIDE_ROOT | */wxTR_EDIT_LABELS | wxTR_MULTIPLE | wxTR_NO_LINES | wxTR_DEFAULT_STYLE)
 	, m_sub_mgr(sub_mgr)
-#ifdef GAME_OBJ_ECS
-	, m_world(world)
-#endif // GAME_OBJ_ECS
+	ECS_WORLD_SELF_ASSIGN
 	, m_root_obj(root_obj)
 	, m_disable_select(false)
 {
@@ -170,11 +164,7 @@ void WxSceneTreeCtrl::OnSelChanged(wxTreeEvent& event)
 
 	auto data = (WxSceneTreeItem*)GetItemData(id);
 	auto& obj = data->GetObj();
-#ifndef GAME_OBJ_ECS
-	GD_ASSERT(obj, "err scene obj.");
-#else
-	GD_ASSERT(!obj.IsNull(), "err scene obj.");
-#endif // GAME_OBJ_ECS
+	GD_ASSERT(GAME_OBJ_VALID(obj), "err scene obj.");
 
 	ee0::VariantSet vars;
 
@@ -268,11 +258,7 @@ void WxSceneTreeCtrl::OnEndDrag(wxTreeEvent& event)
 	auto old_obj = data_src->GetObj();
 
 	// move to root
-#ifndef GAME_OBJ_ECS
-	if (data_dst->GetObj() == nullptr)
-#else
-	if (data_dst->GetObj().IsNull())
-#endif // GAME_OBJ_ECS
+	if (!GAME_OBJ_VALID(data_dst->GetObj()))
 	{
 		new_item = InsertItem(new_item_parent, 0, name.c_str(), -1, -1,
 			new WxSceneTreeItem(data_src->GetObj(), data_src->GetObj(), 0));
@@ -686,11 +672,7 @@ void WxSceneTreeCtrl::MoveSceneObj(wxTreeItemId src, wxTreeItemId dst_parent)
 	CleanRootEmptyChild();
 
 	// insert to new place
-#ifndef GAME_OBJ_ECS
-	if (dst_parent_obj)
-#else
-	if (!dst_parent_obj.IsNull())
-#endif // GAME_OBJ_ECS
+	if (GAME_OBJ_VALID(dst_parent_obj))
 	{
 #ifndef GAME_OBJ_ECS
 		auto& ccomplex = dst_parent_obj->GetSharedComp<n2::CompComplex>();
@@ -893,11 +875,7 @@ void WxSceneTreeCtrl::DeleteSelectedObj()
 void WxSceneTreeCtrl::DeleteObjOutside(wxTreeItemId item)
 {
 	auto data = (WxSceneTreeItem*)GetItemData(item);
-#ifndef GAME_OBJ_ECS
-	if (data->GetRoot() && data->GetObjID() != 0)
-#else
-	if (!data->GetRoot().IsNull() && data->GetObjID() != 0)
-#endif // GAME_OBJ_ECS
+	if (GAME_OBJ_VALID(data->GetRoot()) && data->GetObjID() != 0)
 	{
 		// todo ecs
 #ifndef GAME_OBJ_ECS
@@ -956,7 +934,7 @@ void WxSceneTreeCtrl::CleanRootEmptyChild()
 #endif // GAME_OBJ_ECS
 		{
 #ifndef GAME_OBJ_ECS
-			bool empty = data->GetObj()->GetSharedComp<n2::CompComplex>()..GetAllChildren().empty();
+			bool empty = data->GetObj()->GetSharedComp<n2::CompComplex>().GetAllChildren().empty();
 #else
 			bool empty = m_world.GetComponent<e2::CompComplex>(data->GetObj()).children.empty();
 #endif // GAME_OBJ_ECS

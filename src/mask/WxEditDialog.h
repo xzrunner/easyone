@@ -36,9 +36,7 @@ private:
 	const ee0::RenderContext& m_rc;
 	const ee0::WindowContext& m_wc;
 
-#ifdef GAME_OBJ_ECS
-	ecsx::World& m_world;
-#endif // GAME_OBJ_ECS
+	ECS_WORLD_SELF_DEF
 
 	wxAuiManager m_mgr;
 

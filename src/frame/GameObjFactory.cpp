@@ -40,19 +40,10 @@
 namespace eone
 {
 
-ee0::GameObj GameObjFactory::Create(
-#ifdef GAME_OBJ_ECS
-	ecsx::World& world,
-#endif // GAME_OBJ_ECS
-	GameObjType type
-)
+ee0::GameObj GameObjFactory::Create(ECS_WORLD_PARAM GameObjType type)
 {
 	if (type == GAME_OBJ_UNKNOWN) {
-#ifndef GAME_OBJ_ECS
-		return nullptr;
-#else
-		return ee0::GameObj();
-#endif // GAME_OBJ_ECS
+		return GAME_OBJ_NULL;
 	}
 
 #ifndef GAME_OBJ_ECS

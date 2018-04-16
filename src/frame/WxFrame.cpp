@@ -11,7 +11,7 @@
 
 namespace
 {
-
+	
 static const std::vector<std::pair<uint32_t, std::string>> PAGE_LIST =
 {
 	std::make_pair(eone::PAGE_SCENE2D,    "Scene2D"),

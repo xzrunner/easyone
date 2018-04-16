@@ -21,16 +21,11 @@
 namespace eone
 {
 
-WxPreviewCanvas::WxPreviewCanvas(WxPreviewPanel* stage, 
-#ifdef GAME_OBJ_ECS
-	                             const ecsx::World& world,
-#endif // GAME_OBJ_ECS
+WxPreviewCanvas::WxPreviewCanvas(WxPreviewPanel* stage, ECS_WORLD_PARAM
 	                             const ee0::RenderContext& rc)
 	: ee0::WxStageCanvas(stage, stage->GetImpl(), &rc, nullptr, HAS_2D)
 	, m_stage(stage)
-#ifdef GAME_OBJ_ECS
-	, m_world(world)
-#endif // GAME_OBJ_ECS
+	ECS_WORLD_SELF_ASSIGN
 {
 	auto cam = std::make_shared<pt2::OrthoCamera>();
 	cam->Set(sm::vec2(0, 0), 2);

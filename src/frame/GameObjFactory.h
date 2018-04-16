@@ -4,9 +4,7 @@
 
 #include "frame/GameObjType.h"
 
-#ifdef GAME_OBJ_ECS
-namespace ecsx { class World; }
-#endif // GAME_OBJ_ECS
+ECS_WORLD_DECL
 
 namespace eone
 {
@@ -14,12 +12,7 @@ namespace eone
 class GameObjFactory
 {
 public:
-	static ee0::GameObj Create(
-#ifdef GAME_OBJ_ECS
-		ecsx::World& world, 
-#endif // GAME_OBJ_ECS
-		GameObjType type
-	);
+	static ee0::GameObj Create(ECS_WORLD_PARAM GameObjType type);
 
 }; // GameObjFactory
 

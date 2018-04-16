@@ -19,10 +19,7 @@
 namespace eone
 {
 
-WxStageCanvas::WxStageCanvas(WxStagePage* stage,
-#ifdef GAME_OBJ_ECS
-		                     ecsx::World& world,
-#endif // GAME_OBJ_ECS
+WxStageCanvas::WxStageCanvas(WxStagePage* stage, ECS_WORLD_PARAM
 	                         const ee0::RenderContext& rc)
 #ifndef GAME_OBJ_ECS
 	: ee2::WxStageCanvas(stage, &rc)

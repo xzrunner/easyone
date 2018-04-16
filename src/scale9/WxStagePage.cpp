@@ -110,7 +110,7 @@ void WxStagePage::LoadFromJsonExt(const std::string& dir, const rapidjson::Value
 
 #ifndef GAME_OBJ_ECS
 		auto& ctrans = obj->GetUniqueComp<n2::CompTransform>();
-		auto& pos = ctrans.GetPosition();
+		auto& pos = ctrans.GetTrans().GetPosition();
 #else
 		auto& pos = e2::SysTransform::GetPosition(m_world, obj);
 #endif // GAME_OBJ_ECS
@@ -146,7 +146,7 @@ void WxStagePage::InsertSceneNode(const ee0::VariantSet& variants)
 	int col, row;
 #ifndef GAME_OBJ_ECS
 	auto& ctrans = (*obj)->GetUniqueComp<n2::CompTransform>();
-	auto& pos = ctrans.GetPosition();
+	auto& pos = ctrans.GetTrans().GetPosition();
 #else
 	auto pos = e2::SysTransform::GetPosition(m_world, *obj);
 #endif // GAME_OBJ_ECS

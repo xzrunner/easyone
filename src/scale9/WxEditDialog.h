@@ -1,11 +1,13 @@
 #pragma once
 
 #include <ee0/GameObj.h>
+#include <ee0/Config.h>
 
 #include <wx/dialog.h>
 #include <wx/aui/framemanager.h>
 
 namespace ee0 { class WxStagePage; class RenderContext; class WindowContext; }
+ECS_WORLD_DECL
 
 namespace eone
 {
@@ -20,7 +22,7 @@ class WxEditDialog : public wxDialog
 {
 public:
 	WxEditDialog(wxWindow* parent, const ee0::RenderContext& rc,
-		const ee0::WindowContext& wc, const ee0::GameObj& obj);
+		const ee0::WindowContext& wc, ECS_WORLD_PARAM const ee0::GameObj& obj);
 	virtual ~WxEditDialog();
 
 private:
@@ -34,6 +36,7 @@ private:
 private:
 	const ee0::RenderContext& m_rc;
 	const ee0::WindowContext& m_wc;
+	ECS_WORLD_SELF_DEF
 
 	wxAuiManager m_mgr;
 

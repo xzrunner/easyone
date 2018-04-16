@@ -5,9 +5,7 @@
 
 #include <wx/panel.h>
 
-#ifdef GAME_OBJ_ECS
-namespace ecsx { class World; }
-#endif // GAME_OBJ_ECS
+ECS_WORLD_DECL
 
 namespace eone
 {
@@ -15,13 +13,8 @@ namespace eone
 class WxSceneTreePanel : public wxPanel
 {
 public:
-	WxSceneTreePanel(
-		wxWindow* parent, 
-		const ee0::SubjectMgrPtr& sub_mgr,
-#ifdef GAME_OBJ_ECS
-		ecsx::World& world,
-#endif // GAME_OBJ_ECS
-		const ee0::GameObj& root_obj);
+	WxSceneTreePanel(wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr,
+		ECS_WORLD_PARAM const ee0::GameObj& root_obj);
 
 private:
 	void InitLayout(const ee0::GameObj& root_obj);
@@ -30,9 +23,7 @@ private:
 
 private:
 	ee0::SubjectMgrPtr m_sub_mgr;
-#ifdef GAME_OBJ_ECS
-	ecsx::World&       m_world;
-#endif // GAME_OBJ_ECS
+	ECS_WORLD_SELF_DEF
 
 	wxButton* m_create_btn;
 

@@ -41,12 +41,7 @@
 namespace eone
 {
 
-WxStagePage* StagePageFactory::Create(
-#ifdef GAME_OBJ_ECS
-	ecsx::World& world,
-#endif // GAME_OBJ_ECS
-	int page_type, 
-	WxStagePanel* stage_panel)
+WxStagePage* StagePageFactory::Create(ECS_WORLD_PARAM int page_type, WxStagePanel* stage_panel)
 {
 	WxStagePage* page = nullptr;
 
@@ -91,7 +86,7 @@ WxStagePage* StagePageFactory::Create(
 		{
 			auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_SCALE9);
 			page = new scale9::WxStagePage(frame, library, ECS_WORLD_VAR obj);
-			auto canvas = std::make_shared<scale9::WxStageCanvas>(page, rc);
+			auto canvas = std::make_shared<scale9::WxStageCanvas>(page, ECS_WORLD_VAR rc);
 			page->GetImpl().SetCanvas(canvas);
 
 			page->GetImpl().SetEditOP(std::make_shared<NodeSelectOP>(ECS_WORLD_VAR *page, rc, wc));
@@ -170,7 +165,7 @@ WxStagePage* StagePageFactory::Create(
 			
 			auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_SCENE2D);
 			page = new script::WxStagePage(frame, library, ECS_WORLD_VAR obj);
-			auto canvas = std::make_shared<script::WxStageCanvas>(page, rc, dlg.GetPath().ToStdString());
+			auto canvas = std::make_shared<script::WxStageCanvas>(page, ECS_WORLD_VAR rc, dlg.GetPath().ToStdString());
 			page->GetImpl().SetCanvas(canvas);
 
 			auto dir = boost::filesystem::path(dlg.GetPath().ToStdString()).parent_path();

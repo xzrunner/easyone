@@ -22,6 +22,10 @@
 #include <moon/Context.h>
 #ifndef GAME_OBJ_ECS
 #include <node0/SceneNode.h>
+#include <node2/CompImage.h>
+#include <node2/CompText.h>
+#include <node2/CompMask.h>
+#include <node2/CompMesh.h>v
 #include <node2/CompScale9.h>
 #include <node2/CompScissor.h>
 #include <node2/CompScript.h>
@@ -71,18 +75,12 @@ static const std::vector<std::pair<uint32_t, std::string>> COMP_LIST =
 namespace eone
 {
 
-WxDetailPanel::WxDetailPanel(wxWindow* parent, 
-	                         const ee0::SubjectMgrPtr& sub_mgr,
-#ifdef GAME_OBJ_ECS
-	                         ecsx::World& world,
-#endif // GAME_OBJ_ECS
-	                         const ee0::GameObj& root_obj, 
+WxDetailPanel::WxDetailPanel(wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr,
+	                         ECS_WORLD_PARAM const ee0::GameObj& root_obj, 
 	                         const moon::ContextPtr& moon_ctx)
 	: wxPanel(parent, wxID_ANY)
 	, m_sub_mgr(sub_mgr)
-#ifdef GAME_OBJ_ECS
-	, m_world(world)
-#endif // GAME_OBJ_ECS
+	ECS_WORLD_SELF_ASSIGN
 	, m_root_obj(root_obj)
 	, m_moon_ctx(moon_ctx)
 {
@@ -155,11 +153,7 @@ void WxDetailPanel::InitComponents(const ee0::VariantSet& variants)
 	auto var_obj = variants.GetVariant("obj");
 	GD_ASSERT(var_obj.m_type == ee0::VT_PVOID, "no var in vars: obj");
 	obj = *static_cast<ee0::GameObj*>(var_obj.m_val.pv);
-#ifndef GAME_OBJ_ECS
-	GD_ASSERT(obj, "err scene obj");
-#else
-	GD_ASSERT(!obj.IsNull(), "err scene obj");
-#endif // GAME_OBJ_ECS
+	GD_ASSERT(GAME_OBJ_VALID(obj), "err scene obj");
 
 	auto var_root = variants.GetVariant("root");
 	if (var_root.m_type != ee0::VT_EMPTY) {

@@ -66,9 +66,7 @@ private:
 	void InitSubWindow();
 
 protected:
-#ifdef GAME_OBJ_ECS
-	ecsx::World& m_world;
-#endif // GAME_OBJ_ECS
+	ECS_WORLD_SELF_DEF
 	ee0::GameObj m_obj;
 
 	LayoutType m_layout_type;

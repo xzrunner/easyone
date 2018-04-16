@@ -28,11 +28,7 @@ WxSceneTreeItem::WxSceneTreeItem(const ee0::GameObj& obj,
 	, m_root(root)
 	, m_obj_id(obj_id)
 {
-#ifndef GAME_OBJ_ECS
-	GD_ASSERT((obj && root) || (!obj && !root), "err");
-#else
-	GD_ASSERT((!obj.IsNull() && !root.IsNull()) || (obj.IsNull() && root.IsNull()), "err");
-#endif // GAME_OBJ_ECS
+	GD_ASSERT((GAME_OBJ_VALID(obj) && GAME_OBJ_VALID(root)) || (!GAME_OBJ_VALID(obj) && !GAME_OBJ_VALID(root)), "err");
 }
 
 }
