@@ -127,7 +127,7 @@ bool WxStagePage::InsertSceneObj(const ee0::VariantSet& variants)
 	ccomplex.AddChild(*obj);
 #else
 	auto& ccomplex = m_world.GetComponent<e2::CompComplex>(m_obj);
-	ccomplex.children.push_back(*obj);
+	ccomplex.children->push_back(*obj);
 #endif // GAME_OBJ_ECS
 
 	return true;
@@ -145,10 +145,11 @@ bool WxStagePage::DeleteSceneObj(const ee0::VariantSet& variants)
 	return ccomplex.RemoveChild(*obj);
 #else
 	auto& ccomplex = m_world.GetComponent<e2::CompComplex>(m_obj);
-	for (auto itr = ccomplex.children.begin(); itr != ccomplex.children.end(); ++itr) 
+	auto& children = *ccomplex.children;
+	for (auto itr = children.begin(); itr != children.end(); ++itr)
 	{
 		if (*itr == *obj) {
-			ccomplex.children.erase(itr);
+			ccomplex.children->erase(itr);
 			return true;
 		}
 	}
@@ -164,9 +165,9 @@ bool WxStagePage::ClearSceneObj()
 	ccomplex.RemoveAllChildren();
 #else
 	auto& ccomplex = m_world.GetComponent<e2::CompComplex>(m_obj);
-	bool dirty = !ccomplex.children.empty();
+	bool dirty = !ccomplex.children->empty();
 	// todo clear components
-	ccomplex.children.clear();
+	ccomplex.children->clear();
 #endif // GAME_OBJ_ECS
 	return dirty;
 }
@@ -187,7 +188,7 @@ bool WxStagePage::ReorderSceneObj(const ee0::VariantSet& variants)
 	auto all_objs = ccomplex.GetAllChildren();
 #else
 	auto& ccomplex = m_world.GetComponent<e2::CompComplex>(m_obj);
-	auto all_objs = ccomplex.children;
+	auto all_objs = *ccomplex.children;
 #endif // GAME_OBJ_ECS
 	if (all_objs.empty()) {
 		return false;
@@ -210,7 +211,7 @@ bool WxStagePage::ReorderSceneObj(const ee0::VariantSet& variants)
 #ifndef GAME_OBJ_ECS
 		ccomplex.SetChildren(all_objs);
 #else
-		ccomplex.children = all_objs;
+		*ccomplex.children = all_objs;
 #endif // GAME_OBJ_ECS
 		return true;
 	}
@@ -220,7 +221,7 @@ bool WxStagePage::ReorderSceneObj(const ee0::VariantSet& variants)
 #ifndef GAME_OBJ_ECS
 		ccomplex.SetChildren(all_objs);
 #else
-		ccomplex.children = all_objs;
+		*ccomplex.children = all_objs;
 #endif // GAME_OBJ_ECS
 		return true;
 	}

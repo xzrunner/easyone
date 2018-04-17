@@ -228,7 +228,7 @@ void WxSceneTreeCtrl::OnLabelEdited(wxTreeEvent& event)
 	ceditor.SetName(event.GetLabel().ToStdString());
 #else
 	auto& ceditor = m_world.GetComponent<ee0::CompEntityEditor>(data_dst->GetObj());
-	ceditor.name = event.GetLabel().ToStdString();
+	ceditor.name = std::make_unique<std::string>(event.GetLabel().ToStdString());
 #endif // GAME_OBJ_ECS
 }
 
@@ -409,7 +409,11 @@ void WxSceneTreeCtrl::InsertSceneObj(wxTreeItemId parent, const ee0::GameObj& ob
 	auto& name = obj->GetUniqueComp<ee0::CompNodeEditor>().GetName();
 	bool is_complex = obj->HasSharedComp<n2::CompComplex>();
 #else
-	auto& name = m_world.GetComponent<ee0::CompEntityEditor>(obj).name;
+	std::string name;
+	auto& ceditor = m_world.GetComponent<ee0::CompEntityEditor>(obj);
+	if (ceditor.name) {
+		name = *ceditor.name;
+	}
 	bool is_complex = m_world.HasComponent<e2::CompComplex>(obj);
 #endif // GAME_OBJ_ECS
 	wxTreeItemId id = InsertItem(parent, 0, name);
@@ -423,7 +427,7 @@ void WxSceneTreeCtrl::InsertSceneObj(wxTreeItemId parent, const ee0::GameObj& ob
 		obj_id = obj_id + 1;
 #else
 		auto& ccomplex = m_world.GetComponent<e2::CompComplex>(obj);
-		auto& children = ccomplex.children;
+		auto& children = *ccomplex.children;
 #endif // GAME_OBJ_ECS
 		for (auto& child : children) 
 		{
@@ -682,7 +686,7 @@ void WxSceneTreeCtrl::MoveSceneObj(wxTreeItemId src, wxTreeItemId dst_parent)
 			dst_parent_data->GetRoot(), dst_parent_data->GetObjID());
 #else
 		auto& ccomplex = m_world.AddComponent<e2::CompComplex>(dst_parent_obj);
-		ccomplex.children.push_back(src_obj);
+		ccomplex.children->push_back(src_obj);
 #endif // GAME_OBJ_ECS
 	}
 	else
@@ -724,7 +728,7 @@ void WxSceneTreeCtrl::DeleteEmptyObjToRoot(wxTreeItemId item)
 		if (ccomplex.GetAllChildren().empty()) 
 #else
 		auto& ccomplex = m_world.GetComponent<e2::CompComplex>(data->GetObj());
-		if (ccomplex.children.empty())
+		if (ccomplex.children->empty())
 #endif // GAME_OBJ_ECS
 		{
 			wxTreeItemId old = curr;
@@ -785,7 +789,11 @@ void WxSceneTreeCtrl::ChangeName(const ee0::VariantSet& variants)
 #ifndef GAME_OBJ_ECS
 	auto& name = data->GetObj()->GetUniqueComp<ee0::CompNodeEditor>().GetName();
 #else
-	auto& name = m_world.GetComponent<ee0::CompEntityEditor>(data->GetObj()).name;
+	std::string name;
+	auto& ceditor = m_world.GetComponent<ee0::CompEntityEditor>(data->GetObj());
+	if (ceditor.name) {
+		name = *ceditor.name;
+	}
 #endif // GAME_OBJ_ECS
 	SetItemText(selected, name);
 }
@@ -936,7 +944,7 @@ void WxSceneTreeCtrl::CleanRootEmptyChild()
 #ifndef GAME_OBJ_ECS
 			bool empty = data->GetObj()->GetSharedComp<n2::CompComplex>().GetAllChildren().empty();
 #else
-			bool empty = m_world.GetComponent<e2::CompComplex>(data->GetObj()).children.empty();
+			bool empty = m_world.GetComponent<e2::CompComplex>(data->GetObj()).children->empty();
 #endif // GAME_OBJ_ECS
 			if (empty) 
 			{
