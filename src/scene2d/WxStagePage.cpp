@@ -83,6 +83,20 @@ void WxStagePage::Traverse(std::function<bool(const ee0::GameObj&)> func,
 #ifndef GAME_OBJ_ECS
 	default:
 		m_obj->GetSharedComp<n2::CompComplex>().Traverse(func, inverse);
+#else
+	default:
+		{
+			auto& ccomplex = m_world.GetComponent<e2::CompComplex>(m_obj);
+			if (!inverse) {
+				for (auto& child : *ccomplex.children) {
+					func(child);
+				}
+			} else {
+				for (auto itr = ccomplex.children->rbegin(); itr != ccomplex.children->rend(); ++itr) {
+					func(*itr);
+				}
+			}
+		}
 #endif // GAME_OBJ_ECS
 	}
 }
