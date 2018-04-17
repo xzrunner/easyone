@@ -31,6 +31,7 @@
 #include <entity2/CompScale9.h>
 #include <entity2/CompComplex.h>
 #include <entity2/CompBoundingBox.h>
+#include <entity2/CompTransform.h>
 #endif // GAME_OBJ_ECS
 
 #include <anim/KeyFrame.h>
@@ -151,7 +152,9 @@ ee0::GameObj GameObjFactory::Create(ECS_WORLD_PARAM GameObjType type)
 
 	// transform
 #ifndef GAME_OBJ_ECS
-	obj->AddUniqueComp<n2::CompTransform>();	
+	obj->AddUniqueComp<n2::CompTransform>();
+#else
+	world.AddComponent<e2::CompLocalMat>(obj);
 #endif // GAME_OBJ_ECS
 
 	// aabb
