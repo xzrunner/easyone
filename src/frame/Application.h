@@ -42,6 +42,9 @@ private:
 	void InitSubmodule();
 	void InitLayout();
 	void InitCallback();
+#ifdef GAME_OBJ_ECS
+	void InitWorld();
+#endif // GAME_OBJ_ECS
 
 	wxWindow* CreateLibraryPanel();
 	wxWindow* CreateStagePanel();

@@ -16,7 +16,11 @@
 #include "frame/Blackboard.h"
 #include "frame/typedef.h"
 
+#ifndef GAME_OBJ_ECS
 #include <ee0/CompNodeEditor.h>
+#else
+#include <ee0/CompEntityEditor.h>
+#endif // GAME_OBJ_ECS
 #include <ee0/MsgHelper.h>
 #include <ee0/SubjectMgr.h>
 #include <ee0/ConfigFile.h>
@@ -26,8 +30,14 @@
 #include <ee3/Serializer.h>
 
 #include <js/RapidJsonHelper.h>
+#ifndef GAME_OBJ_ECS
 #include <node0/SceneNode.h>
 #include <ns/RegistCallback.h>
+#else
+#include <entity2/CompTransform.h>
+#include <entity2/CompBoundingBox.h>
+#include <entity2/CompComplex.h>
+#endif // GAME_OBJ_ECS
 #include <facade/Facade.h>
 #include <facade/GTxt.h>
 
@@ -43,6 +53,9 @@ Application::Application(wxFrame* frame)
 {
 	Blackboard::Instance()->InitRenderContext();
 	InitSubmodule();
+#ifdef GAME_OBJ_ECS
+	InitWorld();
+#endif // GAME_OBJ_ECS
 	InitLayout();
 	InitCallback();
 }
@@ -163,8 +176,27 @@ void Application::InitLayout()
 
 void Application::InitCallback()
 {
+#ifndef GAME_OBJ_ECS
 	ns::RegistCallback::Init();
+#endif // GAME_OBJ_ECS
 }
+
+#ifdef GAME_OBJ_ECS
+void Application::InitWorld()
+{
+	m_world.SetCompStorage<e2::CompPosition>(ecsx::COMP_STORAGE_DENSE);
+	m_world.SetCompStorage<e2::CompAngle>(ecsx::COMP_STORAGE_DENSE);
+	m_world.SetCompStorage<e2::CompScale>(ecsx::COMP_STORAGE_DENSE);
+	m_world.SetCompStorage<e2::CompShear>(ecsx::COMP_STORAGE_DENSE);
+	m_world.SetCompStorage<e2::CompOffset>(ecsx::COMP_STORAGE_DENSE);
+	m_world.SetCompStorage<e2::CompLocalMat>(ecsx::COMP_STORAGE_DENSE);
+
+	m_world.SetCompStorage<e2::CompBoundingBox>(ecsx::COMP_STORAGE_DENSE);
+	m_world.SetCompStorage<ee0::CompEntityEditor>(ecsx::COMP_STORAGE_DENSE);
+
+	m_world.SetCompStorage<e2::CompComplex>(ecsx::COMP_STORAGE_SPARSE);
+}
+#endif // GAME_OBJ_ECS
 
 wxWindow* Application::CreateLibraryPanel()
 {
