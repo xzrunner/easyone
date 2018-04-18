@@ -128,7 +128,7 @@
 	path = ext/emitter
 	url = git@github.com:xzrunner/emitter.git
 [submodule "ext/ecsx"]
-	path = ext/ecsx
+	path = ext/entity0
 	url = git@github.com:xzrunner/ecsx.git
 [submodule "ext/serializerx"]
 	path = ext/serializerx
