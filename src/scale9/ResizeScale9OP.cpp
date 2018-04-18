@@ -15,7 +15,7 @@
 #include <node2/CompScale9.h>
 #include <node2/CompTransform.h>
 #else
-#include <ecsx/World.h>
+#include <entity0/World.h>
 #include <entity2/CompBoundingBox.h>
 #include <entity2/CompScale9.h>
 #endif // GAME_OBJ_ECS

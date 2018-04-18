@@ -21,7 +21,7 @@
 #include <node2/CompTransform.h>
 #include <node2/SceneTreeHelper.h>
 #else
-#include <ecsx/World.h>
+#include <entity0/World.h>
 #include <entity2/CompComplex.h>
 #endif // GAME_OBJ_ECS
 
@@ -173,7 +173,7 @@ void WxSceneTreeCtrl::OnSelChanged(wxTreeEvent& event)
 #ifndef GAME_OBJ_ECS
 	var_obj.m_val.pv = &std::const_pointer_cast<n0::SceneNode>(obj);
 #else
-	var_obj.m_val.pv = &const_cast<ecsx::Entity&>(obj);
+	var_obj.m_val.pv = &const_cast<e0::Entity&>(obj);
 #endif // GAME_OBJ_ECS
 	vars.SetVariant("obj", var_obj);
 
@@ -182,7 +182,7 @@ void WxSceneTreeCtrl::OnSelChanged(wxTreeEvent& event)
 #ifndef GAME_OBJ_ECS
 	var_root.m_val.pv = &std::const_pointer_cast<n0::SceneNode>(data->GetRoot());
 #else
-	var_root.m_val.pv = &const_cast<ecsx::Entity&>(data->GetRoot());
+	var_root.m_val.pv = &const_cast<e0::Entity&>(data->GetRoot());
 #endif // GAME_OBJ_ECS
 	vars.SetVariant("root", var_root);
 
@@ -703,7 +703,7 @@ void WxSceneTreeCtrl::MoveSceneObj(wxTreeItemId src, wxTreeItemId dst_parent)
 #ifndef GAME_OBJ_ECS
 		var_obj.m_val.pv = &std::const_pointer_cast<n0::SceneNode>(src_obj);
 #else
-		var_obj.m_val.pv = &const_cast<ecsx::Entity&>(src_obj);
+		var_obj.m_val.pv = &const_cast<e0::Entity&>(src_obj);
 #endif // GAME_OBJ_ECS
 		vars.SetVariant("obj", var_obj);
 
@@ -916,7 +916,7 @@ void WxSceneTreeCtrl::DeleteObjOutside(wxTreeItemId item)
 #ifndef GAME_OBJ_ECS
 		var_obj.m_val.pv = &std::const_pointer_cast<n0::SceneNode>(data->GetObj());
 #else
-		var_obj.m_val.pv = &const_cast<ecsx::Entity&>(data->GetObj());
+		var_obj.m_val.pv = &const_cast<e0::Entity&>(data->GetObj());
 #endif // GAME_OBJ_ECS
 		vars.SetVariant("obj", var_obj);
 

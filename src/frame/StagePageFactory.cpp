@@ -192,7 +192,7 @@ WxStagePage* StagePageFactory::Create(ECS_WORLD_PARAM int page_type, WxStagePane
 
 void StagePageFactory::CreatePreviewOP(
 #ifdef GAME_OBJ_ECS
-	ecsx::World& world
+	e0::World& world
 #endif // GAME_OBJ_ECS
 )
 {

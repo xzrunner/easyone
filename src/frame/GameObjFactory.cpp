@@ -23,7 +23,7 @@
 #include <node2/CompBoundingBox.h>
 #include <node2/CompTransform.h>
 #else
-#include <ecsx/World.h>
+#include <entity0/World.h>
 #include <entity2/CompImage.h>
 #include <entity2/CompText.h>
 #include <entity2/CompMask.h>

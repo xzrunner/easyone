@@ -4,7 +4,7 @@
 #include <ee0/Config.h>
 
 #ifdef GAME_OBJ_ECS
-#include <ecsx/World.h>
+#include <entity0/World.h>
 #endif // GAME_OBJ_ECS
 
 #include <wx/aui/framemanager.h>
@@ -35,7 +35,7 @@ public:
 	wxAuiManager& GetUIManager() { return m_mgr; }
 
 #ifdef GAME_OBJ_ECS
-	ecsx::World& GetWorld() { return m_world; }
+	e0::World& GetWorld() { return m_world; }
 #endif // GAME_OBJ_ECS
 
 private:
@@ -62,7 +62,7 @@ private:
 	WxStagePanel* m_stage;
 
 #ifdef GAME_OBJ_ECS
-	ecsx::World m_world;
+	e0::World m_world;
 #endif // GAME_OBJ_ECS
 
 }; // Application

@@ -17,7 +17,7 @@ public:
 
 	static void CreatePreviewOP(
 #ifdef GAME_OBJ_ECS
-		ecsx::World& world
+		e0::World& world
 #endif // GAME_OBJ_ECS
 	);
 

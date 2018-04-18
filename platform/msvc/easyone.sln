@@ -109,9 +109,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3.facade", "..\..\ext\facad
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "2.cooking", "..\..\ext\cooking\platform\msvc\projects\cooking.vcxproj", "{4EEE80E8-662F-4EC2-A19B-68B1D7F8C46F}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3.ecsx", "..\..\ext\ecsx\platform\msvc\projects\ecsx.vcxproj", "{5DCDF0B6-9FBF-4CA8-8276-A66236AE8FE6}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3.entity0", "..\..\ext\entity0\platform\msvc\projects\entity0.vcxproj", "{5DCDF0B6-9FBF-4CA8-8276-A66236AE8FE6}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3.ecsx_test", "..\..\ext\ecsx\platform\msvc\projects\ecsx_test.vcxproj", "{C8504C2B-AA09-496A-8D17-C2A9215A90C3}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3.entity0_test", "..\..\ext\entity0\platform\msvc\projects\entity0_test.vcxproj", "{C8504C2B-AA09-496A-8D17-C2A9215A90C3}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "ecs", "ecs", "{AF58CA2D-C53F-4E40-8A5C-EB3787FCB3D7}"
 EndProject

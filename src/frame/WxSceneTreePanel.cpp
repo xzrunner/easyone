@@ -16,7 +16,7 @@
 #include <node2/CompTransform.h>
 #include <node2/CompBoundingBox.h>
 #else
-#include <ecsx/World.h>
+#include <entity0/World.h>
 #include <entity2/CompImage.h>
 #include <entity2/CompBoundingBox.h>
 #endif // GAME_OBJ_ECS

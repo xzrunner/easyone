@@ -184,17 +184,17 @@ void Application::InitCallback()
 #ifdef GAME_OBJ_ECS
 void Application::InitWorld()
 {
-	m_world.SetCompStorage<e2::CompPosition>(ecsx::COMP_STORAGE_DENSE);
-	m_world.SetCompStorage<e2::CompAngle>(ecsx::COMP_STORAGE_DENSE);
-	m_world.SetCompStorage<e2::CompScale>(ecsx::COMP_STORAGE_DENSE);
-	m_world.SetCompStorage<e2::CompShear>(ecsx::COMP_STORAGE_DENSE);
-	m_world.SetCompStorage<e2::CompOffset>(ecsx::COMP_STORAGE_DENSE);
-	m_world.SetCompStorage<e2::CompLocalMat>(ecsx::COMP_STORAGE_DENSE);
+	m_world.SetCompStorage<e2::CompPosition>(e0::COMP_STORAGE_DENSE);
+	m_world.SetCompStorage<e2::CompAngle>(e0::COMP_STORAGE_DENSE);
+	m_world.SetCompStorage<e2::CompScale>(e0::COMP_STORAGE_DENSE);
+	m_world.SetCompStorage<e2::CompShear>(e0::COMP_STORAGE_DENSE);
+	m_world.SetCompStorage<e2::CompOffset>(e0::COMP_STORAGE_DENSE);
+	m_world.SetCompStorage<e2::CompLocalMat>(e0::COMP_STORAGE_DENSE);
 
-	m_world.SetCompStorage<e2::CompBoundingBox>(ecsx::COMP_STORAGE_DENSE);
-	m_world.SetCompStorage<ee0::CompEntityEditor>(ecsx::COMP_STORAGE_DENSE);
+	m_world.SetCompStorage<e2::CompBoundingBox>(e0::COMP_STORAGE_DENSE);
+	m_world.SetCompStorage<ee0::CompEntityEditor>(e0::COMP_STORAGE_DENSE);
 
-	m_world.SetCompStorage<e2::CompComplex>(ecsx::COMP_STORAGE_SPARSE);
+	m_world.SetCompStorage<e2::CompComplex>(e0::COMP_STORAGE_SPARSE);
 }
 #endif // GAME_OBJ_ECS
 
