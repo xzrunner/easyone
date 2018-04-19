@@ -123,52 +123,22 @@ void WxSceneTreePanel::OnCreatePress(wxCommandEvent& event)
 		}
 		break;
 	case GameObjType::GAME_OBJ_TEXT:
-		obj = GameObjFactory::Create(
-#ifdef GAME_OBJ_ECS
-			m_world,
-#endif // GAME_OBJ_ECS
-			GAME_OBJ_TEXT
-		);
+		obj = GameObjFactory::Create(ECS_WORLD_SELF_VAR GAME_OBJ_TEXT);
 		break;
 	case GameObjType::GAME_OBJ_MASK:
-		obj = GameObjFactory::Create(
-#ifdef GAME_OBJ_ECS
-			m_world,
-#endif // GAME_OBJ_ECS
-			GAME_OBJ_MASK
-		);
+		obj = GameObjFactory::Create(ECS_WORLD_SELF_VAR GAME_OBJ_MASK);
 		break;
 	case GameObjType::GAME_OBJ_MESH:
-		obj = GameObjFactory::Create(
-#ifdef GAME_OBJ_ECS
-			m_world,
-#endif // GAME_OBJ_ECS
-			GAME_OBJ_MESH
-		);
+		obj = GameObjFactory::Create(ECS_WORLD_SELF_VAR GAME_OBJ_MESH);
 		break;
 	case GameObjType::GAME_OBJ_SCALE9:
-		obj = GameObjFactory::Create(
-#ifdef GAME_OBJ_ECS
-			m_world,
-#endif // GAME_OBJ_ECS
-			GAME_OBJ_SCALE9
-		);
+		obj = GameObjFactory::Create(ECS_WORLD_SELF_VAR GAME_OBJ_SCALE9);
 		break;
 	case GameObjType::GAME_OBJ_ANIM:
-		obj = GameObjFactory::Create(
-#ifdef GAME_OBJ_ECS
-			m_world,
-#endif // GAME_OBJ_ECS
-			GAME_OBJ_ANIM
-		);
+		obj = GameObjFactory::Create(ECS_WORLD_SELF_VAR GAME_OBJ_ANIM);
 		break;
 	case GameObjType::GAME_OBJ_PARTICLE3D:
-		obj = GameObjFactory::Create(
-#ifdef GAME_OBJ_ECS
-			m_world,
-#endif // GAME_OBJ_ECS
-			GAME_OBJ_PARTICLE3D
-		);
+		obj = GameObjFactory::Create(ECS_WORLD_SELF_VAR GAME_OBJ_PARTICLE3D);
 		break;
 	default:
 		return;

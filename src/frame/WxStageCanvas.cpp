@@ -21,11 +21,7 @@ namespace eone
 
 WxStageCanvas::WxStageCanvas(WxStagePage* stage, ECS_WORLD_PARAM
 	                         const ee0::RenderContext& rc)
-#ifndef GAME_OBJ_ECS
-	: ee2::WxStageCanvas(stage, &rc)
-#else
-	: ee2::WxStageCanvas(stage, world, &rc)
-#endif // GAME_OBJ_ECS
+	: ee2::WxStageCanvas(stage, ECS_WORLD_VAR &rc)
 {
 }
 

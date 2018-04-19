@@ -211,17 +211,11 @@ wxWindow* Application::CreateStagePanel()
 	m_stage->Freeze();
 	Blackboard::Instance()->SetStagePanel(m_stage);
 
-	StagePageFactory::Create(
-#ifdef GAME_OBJ_ECS
-		m_world,
-#endif // GAME_OBJ_ECS
-		PAGE_SCENE2D, 
-		m_stage
-	);
-	//StagePageFactory::Create(PAGE_SCALE9, m_stage);
-	//StagePageFactory::Create(PAGE_SCRIPT, m_stage);
-	//StagePageFactory::Create(PAGE_ANIM, m_stage);
-	//StagePageFactory::Create(PAGE_PARTICLE3D, m_stage);
+	StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_SCENE2D, m_stage);
+	//StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_SCALE9, m_stage);
+	//StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_SCRIPT, m_stage);
+	//StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_ANIM, m_stage);
+	//StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_PARTICLE3D, m_stage);
 
 	m_stage->Thaw();
 
@@ -242,12 +236,7 @@ wxWindow* Application::CreatePreviewPanel()
 	Blackboard::Instance()->SetPreviewPanel(preview);
 
 	auto canvas = std::make_shared<WxPreviewCanvas>(
-		preview,
-#ifdef GAME_OBJ_ECS
-		m_world,
-#endif // GAME_OBJ_ECS
-		Blackboard::Instance()->GetRenderContext()
-	);
+		preview, ECS_WORLD_SELF_VAR Blackboard::Instance()->GetRenderContext());
 	preview->GetImpl().SetCanvas(canvas);
 	StagePageFactory::CreatePreviewOP(
 #ifdef GAME_OBJ_ECS
@@ -261,28 +250,15 @@ wxWindow* Application::CreatePreviewPanel()
 wxWindow* Application::CreateTreePanel()
 {
 	auto curr_page = m_stage->GetCurrentStagePage();
-	return new WxSceneTreePanel(
-		m_frame, 
-		curr_page->GetSubjectMgr(), 
-#ifdef GAME_OBJ_ECS
-		m_world,
-#endif // GAME_OBJ_ECS
-		curr_page->GetEditedObj()
-	);
+	return new WxSceneTreePanel(m_frame, curr_page->GetSubjectMgr(), 
+		ECS_WORLD_SELF_VAR curr_page->GetEditedObj());
 }
 
 wxWindow* Application::CreateDetailPanel()
 {
 	auto curr_page = m_stage->GetCurrentStagePage();
-	return new WxDetailPanel(
-		m_frame, 
-		curr_page->GetSubjectMgr(), 
-#ifdef GAME_OBJ_ECS
-		m_world,
-#endif // GAME_OBJ_ECS
-		curr_page->GetEditedObj(), 
-		curr_page->GetMoonCtx()
-	);
+	return new WxDetailPanel(m_frame, curr_page->GetSubjectMgr(), 
+		ECS_WORLD_SELF_VAR curr_page->GetEditedObj(), curr_page->GetMoonCtx());
 }
 
 wxWindow* Application::CreateToolbarPanel()
