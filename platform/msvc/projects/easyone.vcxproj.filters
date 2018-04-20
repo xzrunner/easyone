@@ -70,6 +70,9 @@
     <Filter Include="13.particle3d\emitter\right">
       <UniqueIdentifier>{f2b980dc-bc4f-449e-b3a3-6523ac1b9dba}</UniqueIdentifier>
     </Filter>
+    <Filter Include="00.frame\list">
+      <UniqueIdentifier>{f4addaff-1dc3-4085-ae43-b09290f407fb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\frame\main.h">
@@ -237,6 +240,9 @@
     <ClInclude Include="..\..\..\src\frame\GameObjFactory.h">
       <Filter>00.frame\tools</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\frame\WxItemsListCtrl.h">
+      <Filter>00.frame\list</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\frame\main.cpp">
@@ -379,6 +385,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\frame\GameObjFactory.cpp">
       <Filter>00.frame\tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\frame\WxItemsListCtrl.cpp">
+      <Filter>00.frame\list</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
