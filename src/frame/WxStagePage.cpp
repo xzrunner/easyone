@@ -124,21 +124,21 @@ void WxStagePage::InitSubWindow()
 	{
 	case LAYOUT_PREVIEW:
 		ui_mgr.GetPane(STR_PREVIEW_PANEL).Show();
-		ui_mgr.GetPane(STR_TREE_PANEL).Show();
+		ui_mgr.GetPane(STR_WORLD_PANEL).Show();
 		ui_mgr.GetPane(STR_DETAIL_PANEL).Show();
 		ui_mgr.GetPane(STR_STAGE_EXT_PANEL).Hide();
 		ui_mgr.GetPane(STR_TOOLBAR_PANEL).Hide();
 		break;
 	case LAYOUT_STAGE_EXT:
 		ui_mgr.GetPane(STR_STAGE_EXT_PANEL).Show();
-		ui_mgr.GetPane(STR_TREE_PANEL).Show();
+		ui_mgr.GetPane(STR_WORLD_PANEL).Show();
 		ui_mgr.GetPane(STR_DETAIL_PANEL).Show();
 		ui_mgr.GetPane(STR_PREVIEW_PANEL).Hide();
 		ui_mgr.GetPane(STR_TOOLBAR_PANEL).Hide();
 		break;
 	case LAYOUT_TOOLBAR:
 		ui_mgr.GetPane(STR_TOOLBAR_PANEL).Show();
-		ui_mgr.GetPane(STR_TREE_PANEL).Hide();
+		ui_mgr.GetPane(STR_WORLD_PANEL).Hide();
 		ui_mgr.GetPane(STR_DETAIL_PANEL).Hide();
 		ui_mgr.GetPane(STR_PREVIEW_PANEL).Hide();
 		ui_mgr.GetPane(STR_STAGE_EXT_PANEL).Hide();

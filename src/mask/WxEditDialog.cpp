@@ -1,6 +1,6 @@
 #include "mask/WxEditDialog.h"
 
-#include "frame/WxSceneTreePanel.h"
+#include "frame/WxWorldPanel.h"
 #include "frame/WxDetailPanel.h"
 #include "frame/NodeSelectOP.h"
 #include "frame/WxPreviewPanel.h"
@@ -80,7 +80,7 @@ wxWindow* WxEditDialog::CreatePreviewPanel()
 
 wxWindow* WxEditDialog::CreateTreePanel()
 {
-	return new WxSceneTreePanel(
+	return new WxWorldPanel(
 		this, m_stage->GetSubjectMgr(), ECS_WORLD_SELF_VAR m_stage->GetEditedObj());
 }
 

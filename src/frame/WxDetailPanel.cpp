@@ -1,5 +1,6 @@
 #include "frame/WxDetailPanel.h"
 #include "frame/WxStagePage.h"
+#include "frame/config.h"
 
 #include <ee0/WxListSelectDlg.h>
 #include <ee0/SubjectMgr.h>
@@ -84,7 +85,7 @@ WxDetailPanel::WxDetailPanel(wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr
 	, m_root_obj(root_obj)
 	, m_moon_ctx(moon_ctx)
 {
-	SetBackgroundColour(wxColour(229, 229, 229));
+	SetBackgroundColour(PANEL_COLOR);
 
 	InitLayout();
 	RegisterMsg(*m_sub_mgr);

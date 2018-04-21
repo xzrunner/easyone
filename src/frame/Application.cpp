@@ -5,7 +5,7 @@
 #include "frame/WxStageExtPanel.h"
 #include "frame/WxPreviewPanel.h"
 #include "frame/WxPreviewCanvas.h"
-#include "frame/WxSceneTreePanel.h"
+#include "frame/WxWorldPanel.h"
 #include "frame/WxDetailPanel.h"
 #include "frame/WxToolbarPanel.h"
 #include "frame/NodeSelectOP.h"
@@ -146,7 +146,7 @@ void Application::InitLayout()
 	auto stage     = CreateStagePanel();
 	auto stage_ext = CreateStageExtPanel();
 	auto preview   = CreatePreviewPanel();
-	auto tree      = CreateTreePanel();
+	auto world     = CreateWorldPanel();
 	auto detail    = CreateDetailPanel();
 	auto toolbar   = CreateToolbarPanel();
 
@@ -162,14 +162,14 @@ void Application::InitLayout()
 	m_mgr.AddPane(preview, wxAuiPaneInfo().Name(STR_PREVIEW_PANEL).
 		Caption(STR_PREVIEW_PANEL).CenterPane().PaneBorder(false));
 
-	m_mgr.AddPane(tree, wxAuiPaneInfo().Name(STR_TREE_PANEL).
-		Caption(STR_TREE_PANEL).Right().Row(1).MinSize(200, 0).PaneBorder(false));
+	m_mgr.AddPane(world, wxAuiPaneInfo().Name(STR_WORLD_PANEL).
+		Caption(STR_WORLD_PANEL).Right().Row(1).MinSize(200, 0).PaneBorder(false));
 
 	m_mgr.AddPane(detail, wxAuiPaneInfo().Name(STR_DETAIL_PANEL).
 		Caption(STR_DETAIL_PANEL).Right().Row(0).MinSize(300, 0).PaneBorder(false));
 
 	m_mgr.AddPane(toolbar, wxAuiPaneInfo().Name(STR_TOOLBAR_PANEL).
-		Caption(STR_TOOLBAR_PANEL).Right().Row(0).MinSize(600, 0).PaneBorder(false));
+		Caption(STR_TOOLBAR_PANEL).Right().Row(0).MinSize(300, 0).PaneBorder(false));
 
 	m_mgr.Update();
 }
@@ -247,10 +247,10 @@ wxWindow* Application::CreatePreviewPanel()
 	return preview;
 }
 
-wxWindow* Application::CreateTreePanel()
+wxWindow* Application::CreateWorldPanel()
 {
 	auto curr_page = m_stage->GetCurrentStagePage();
-	return new WxSceneTreePanel(m_frame, curr_page->GetSubjectMgr(), 
+	return new WxWorldPanel(m_frame, curr_page->GetSubjectMgr(),
 		ECS_WORLD_SELF_VAR curr_page->GetEditedObj());
 }
 

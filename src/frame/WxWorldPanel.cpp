@@ -1,13 +1,12 @@
-#include "frame/WxSceneTreePanel.h"
+#include "frame/WxWorldPanel.h"
 #include "frame/WxSceneTreeCtrl.h"
+#include "frame/WxItemsListCtrl.h"
 #include "frame/GameObjFactory.h"
 #include "frame/GameObjType.h"
 
-#include <ee0/MessageID.h>
-#include <ee0/VariantSet.h>
-#include <ee0/SubjectMgr.h>
 #include <ee0/WxListSelectDlg.h>
 #include <ee0/MsgHelper.h>
+#include <ee0/SubjectMgr.h>
 
 #include <guard/check.h>
 #ifndef GAME_OBJ_ECS
@@ -25,8 +24,9 @@
 #include <facade/Texture.h>
 
 #include <wx/sizer.h>
+#include <wx/notebook.h>
 #include <wx/button.h>
-#include <wx/dialog.h>
+#include <wx/srchctrl.h>
 #include <wx/filedlg.h>
 
 namespace
@@ -48,32 +48,56 @@ static const std::vector<std::pair<uint32_t, std::string>> GAME_OBJ_LIST =
 namespace eone
 {
 
-WxSceneTreePanel::WxSceneTreePanel(wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr,
-	                               ECS_WORLD_PARAM const ee0::GameObj& root_obj)
+WxWorldPanel::WxWorldPanel(wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr,
+	                       ECS_WORLD_PARAM const ee0::GameObj& root_obj)
 	: wxPanel(parent, wxID_ANY)
 	, m_sub_mgr(sub_mgr)
-	ECS_WORLD_SELF_ASSIGN
 {
-	InitLayout(root_obj);
+	InitLayout(sub_mgr, ECS_WORLD_VAR root_obj);
 }
 
-void WxSceneTreePanel::InitLayout(const ee0::GameObj& root_obj)
+void WxWorldPanel::InitLayout(const ee0::SubjectMgrPtr& sub_mgr, 
+	                          ECS_WORLD_PARAM const ee0::GameObj& root_obj)
 {
 	wxSizer* top_sizer = new wxBoxSizer(wxVERTICAL);
+
+	// header
 	{
-		m_create_btn = new wxButton(this, wxID_ANY, "Create Node");
-		Connect(m_create_btn->GetId(), wxEVT_COMMAND_BUTTON_CLICKED,
-			wxCommandEventHandler(WxSceneTreePanel::OnCreatePress));
-		top_sizer->Add(m_create_btn, 0, wxALIGN_CENTER_HORIZONTAL);
+		wxSizer* sizer = new wxBoxSizer(wxHORIZONTAL);
+
+		m_create_btn = new wxButton(this, wxID_ANY, "+", wxDefaultPosition, wxSize(20, 20));
+		Connect(m_create_btn->GetId(), wxEVT_COMMAND_BUTTON_CLICKED, 
+			wxCommandEventHandler(WxWorldPanel::OnAddPress));
+		sizer->Add(m_create_btn, 0, wxLEFT | wxRIGHT, 5);
+
+		m_search_ctrl = new wxSearchCtrl(this, wxID_ANY, "", 
+			wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
+		Connect(m_search_ctrl->GetId(), wxEVT_SEARCHCTRL_SEARCH_BTN,
+			wxCommandEventHandler(WxWorldPanel::OnSearch));
+		Connect(m_search_ctrl->GetId(), wxEVT_TEXT_ENTER,
+			wxCommandEventHandler(WxWorldPanel::OnSearch));
+		sizer->Add(m_search_ctrl);
+
+		top_sizer->Add(sizer);
 	}
-	{
-		auto ctrl = new WxSceneTreeCtrl(this, m_sub_mgr, ECS_WORLD_SELF_VAR root_obj);
-		top_sizer->Add(ctrl, 1, wxEXPAND);
-	}
+	
+	m_notebook = new wxNotebook(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxNB_BOTTOM);
+	//Connect(m_notebook->GetId(), wxEVT_COMMAND_NOTEBOOK_PAGE_CHANGED,
+	//	wxBookCtrlEventHandler(WxWorldPanel::OnPageChanged));
+	//Connect(m_notebook->GetId(), wxEVT_COMMAND_NOTEBOOK_PAGE_CHANGING,
+	//	wxBookCtrlEventHandler(WxWorldPanel::OnPageChanging));
+
+	top_sizer->Add(m_notebook, 1, wxEXPAND);
+
+	m_notebook->AddPage(m_tree_page = new WxSceneTreeCtrl(
+		m_notebook, sub_mgr, ECS_WORLD_VAR root_obj), "Tree");
+	m_notebook->AddPage(m_list_page = new WxItemsListCtrl(
+		m_notebook, sub_mgr), "List");
+
 	SetSizer(top_sizer);
 }
 
-void WxSceneTreePanel::OnCreatePress(wxCommandEvent& event)
+void WxWorldPanel::OnAddPress(wxCommandEvent& event)
 {
 	ee0::WxListSelectDlg dlg(this, "Create obj", 
 		GAME_OBJ_LIST, m_create_btn->GetScreenPosition());
@@ -150,6 +174,13 @@ void WxSceneTreePanel::OnCreatePress(wxCommandEvent& event)
 
 	ee0::MsgHelper::InsertNode(*m_sub_mgr, obj, true);
 	m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
+}
+
+void WxWorldPanel::OnSearch(wxCommandEvent& event)
+{
+	auto str = event.GetString().ToStdString();
+	m_tree_page->OnSearch(str);
+	m_list_page->OnSearch(str);
 }
 
 }

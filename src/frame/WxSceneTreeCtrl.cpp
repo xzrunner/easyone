@@ -1,7 +1,7 @@
 #include "frame/WxSceneTreeCtrl.h"
-#include "frame/WxSceneTreeItem.h"
 #include "frame/WxStagePage.h"
 #include "frame/MessageID.h"
+#include "frame/config.h"
 
 #include <ee0/SubjectMgr.h>
 #ifndef GAME_OBJ_ECS
@@ -48,7 +48,7 @@ WxSceneTreeCtrl::WxSceneTreeCtrl(wxWindow* parent, const ee0::SubjectMgrPtr& sub
 	, m_root_obj(root_obj)
 	, m_disable_select(false)
 {
-	SetBackgroundColour(wxColour(229, 229, 229));
+	SetBackgroundColour(PANEL_COLOR);
 
 	InitRoot();
 	RegisterMsg(*m_sub_mgr);
@@ -96,6 +96,22 @@ void WxSceneTreeCtrl::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
 	}
 }
 
+void WxSceneTreeCtrl::OnSearch(const std::string& str)
+{
+	ClearALLSelected();
+	Traverse(m_root, [&](wxTreeItemId item)->bool
+	{
+		std::string name = GetItemText(item);
+		if (name.find(str) != std::string::npos) 
+		{
+			m_disable_select = true;
+			SelectItem(item, false);
+			m_disable_select = false;
+		}
+		return true;
+	});
+}
+
 void WxSceneTreeCtrl::Traverse(wxTreeItemId id, std::function<bool(wxTreeItemId)> func) const
 {
 	std::queue<wxTreeItemId> buf;
@@ -134,7 +150,7 @@ void WxSceneTreeCtrl::Traverse(wxTreeItemId id, std::function<bool(wxTreeItemId)
 void WxSceneTreeCtrl::InitRoot()
 {
 	m_root = AddRoot("ROOT");
-	SetItemData(m_root, new WxSceneTreeItem());
+	SetItemData(m_root, new Item());
 	SetItemBold(m_root, true);
 }
 
@@ -162,7 +178,7 @@ void WxSceneTreeCtrl::OnSelChanged(wxTreeEvent& event)
 		return;
 	}
 
-	auto data = (WxSceneTreeItem*)GetItemData(id);
+	auto data = (Item*)GetItemData(id);
 	auto& obj = data->GetObj();
 	GD_ASSERT(GAME_OBJ_VALID(obj), "err scene obj.");
 
@@ -218,7 +234,7 @@ void WxSceneTreeCtrl::OnSelChanged(wxTreeEvent& event)
 void WxSceneTreeCtrl::OnLabelEdited(wxTreeEvent& event)
 {
 	wxTreeItemId edited_item = event.GetItem();
-	auto data_dst = (WxSceneTreeItem*)GetItemData(edited_item);
+	auto data_dst = (Item*)GetItemData(edited_item);
 	if (!data_dst) {
 		return;
 	}
@@ -245,7 +261,7 @@ void WxSceneTreeCtrl::OnEndDrag(wxTreeEvent& event)
 	if (!old_item.IsOk() || !new_item_parent.IsOk()) {
 		return;
 	}
-	auto data_dst = (WxSceneTreeItem*)GetItemData(new_item_parent);
+	auto data_dst = (Item*)GetItemData(new_item_parent);
 	if (!data_dst) {
 		return;
 	}
@@ -253,7 +269,7 @@ void WxSceneTreeCtrl::OnEndDrag(wxTreeEvent& event)
 	wxTreeItemId new_item;
 
 	// old info
-	auto data_src = (WxSceneTreeItem*)GetItemData(old_item);
+	auto data_src = (Item*)GetItemData(old_item);
 	std::string name = GetItemText(old_item);
 	auto old_obj = data_src->GetObj();
 
@@ -261,7 +277,7 @@ void WxSceneTreeCtrl::OnEndDrag(wxTreeEvent& event)
 	if (!GAME_OBJ_VALID(data_dst->GetObj()))
 	{
 		new_item = InsertItem(new_item_parent, 0, name.c_str(), -1, -1,
-			new WxSceneTreeItem(data_src->GetObj(), data_src->GetObj(), 0));
+			new Item(data_src->GetObj(), data_src->GetObj(), 0));
 	}
 	else
 	{
@@ -280,7 +296,7 @@ void WxSceneTreeCtrl::OnEndDrag(wxTreeEvent& event)
 		int new_obj_id = -1;
 #endif // GAME_OBJ_ECS
 		new_item = InsertItem(new_item_parent, 0, name.c_str(), -1, -1,
-			new WxSceneTreeItem(data_src->GetObj(), data_dst->GetRoot(), new_obj_id));
+			new Item(data_src->GetObj(), data_dst->GetRoot(), new_obj_id));
 	}
 
 #ifndef GAME_OBJ_ECS
@@ -354,7 +370,7 @@ void WxSceneTreeCtrl::SelectSceneObj(const ee0::GameObj& obj, bool multiple)
 {
 	Traverse(m_root, [&](wxTreeItemId item)->bool
 	{
-		auto pdata = (WxSceneTreeItem*)GetItemData(item);
+		auto pdata = (Item*)GetItemData(item);
 		if (pdata->GetObj() == obj)
 		{
 			m_disable_select = true;
@@ -373,7 +389,7 @@ void WxSceneTreeCtrl::UnselectSceneObj(const ee0::GameObj& obj)
 {
 	Traverse(m_root, [&](wxTreeItemId item)->bool
 	{
-		auto pdata = (WxSceneTreeItem*)GetItemData(item);
+		auto pdata = (Item*)GetItemData(item);
 		if (pdata->GetObj() == obj) 
 		{
 			m_disable_select = true;
@@ -404,7 +420,7 @@ void WxSceneTreeCtrl::InsertSceneObj(const ee0::VariantSet& variants)
 void WxSceneTreeCtrl::InsertSceneObj(wxTreeItemId parent, const ee0::GameObj& obj,
 	                                  const ee0::GameObj& root, size_t obj_id)
 {
-	auto item = new WxSceneTreeItem(obj, root, obj_id);
+	auto item = new Item(obj, root, obj_id);
 #ifndef GAME_OBJ_ECS
 	auto& name = obj->GetUniqueComp<ee0::CompNodeEditor>().GetName();
 	bool is_complex = obj->HasSharedComp<n2::CompComplex>();
@@ -457,7 +473,7 @@ void WxSceneTreeCtrl::DeleteSceneObj(const ee0::GameObj& obj)
 {
 	Traverse(m_root, [&](wxTreeItemId item)->bool
 	{
-		auto pdata = (WxSceneTreeItem*)GetItemData(item);
+		auto pdata = (Item*)GetItemData(item);
 		if (pdata->GetObj() == obj) {
 			DeleteEmptyObjToRoot(item);
 			return false;
@@ -492,7 +508,7 @@ void WxSceneTreeCtrl::ReorderSceneObj(const ee0::VariantSet& variants)
 	wxTreeItemId selected;
 	Traverse(m_root, [&](wxTreeItemId item)->bool
 	{
-		auto pdata = (WxSceneTreeItem*)GetItemData(item);
+		auto pdata = (Item*)GetItemData(item);
 		if (pdata->GetObj() == *obj) {
 			selected = item;
 			return false;
@@ -527,16 +543,16 @@ bool WxSceneTreeCtrl::ReorderItem(wxTreeItemId item, bool up)
 	}
 
 	// old info
-	auto pdata = (WxSceneTreeItem*)GetItemData(item);
+	auto pdata = (Item*)GetItemData(item);
 	auto old_obj = pdata->GetObj();
 	std::string name = GetItemText(item);
 	// insert
 	wxTreeItemId parent = GetItemParent(item);
 	wxTreeItemId new_item;
 	if (insert_prev.IsOk()) {
-		new_item = InsertItem(parent, insert_prev, name.c_str(), -1, -1, new WxSceneTreeItem(*pdata));
+		new_item = InsertItem(parent, insert_prev, name.c_str(), -1, -1, new Item(*pdata));
 	} else {
-		new_item = InsertItem(parent, 0, name.c_str(), -1, -1, new WxSceneTreeItem(*pdata));
+		new_item = InsertItem(parent, 0, name.c_str(), -1, -1, new Item(*pdata));
 	}
 #ifndef GAME_OBJ_ECS
 	bool is_complex = pdata->GetObj()->HasSharedComp<n2::CompComplex>();
@@ -562,7 +578,7 @@ void WxSceneTreeCtrl::ReorderSelectionToMsg(bool up)
 	int count = GetSelections(items);
 	for (int i = 0; i < count; ++i) 
 	{
-		auto data = (WxSceneTreeItem*)GetItemData(items[i]);
+		auto data = (Item*)GetItemData(items[i]);
 #ifndef GAME_OBJ_ECS
 		selection.Add(ee0::GameObjWithPos(
 			data->GetObj(), data->GetRoot(), data->GetObjID()));
@@ -627,9 +643,9 @@ void WxSceneTreeCtrl::CopyChildrenTree(wxTreeItemId from, wxTreeItemId to)
 			str_p_n = GetItemText(new_parent);
 		}
 
-		auto data = (WxSceneTreeItem*)GetItemData(id);
+		auto data = (Item*)GetItemData(id);
 		std::string name = GetItemText(id);
-		wxTreeItemId new_item = AppendItem(new_parent, name.c_str(), -1, -1, new WxSceneTreeItem(*data));
+		wxTreeItemId new_item = AppendItem(new_parent, name.c_str(), -1, -1, new Item(*data));
 		ExpandAll();
 		old2new.insert(std::make_pair(id, new_item));
 
@@ -639,10 +655,10 @@ void WxSceneTreeCtrl::CopyChildrenTree(wxTreeItemId from, wxTreeItemId to)
 
 void WxSceneTreeCtrl::MoveSceneObj(wxTreeItemId src, wxTreeItemId dst_parent)
 {
-	auto src_data = (WxSceneTreeItem*)GetItemData(src);
+	auto src_data = (Item*)GetItemData(src);
 	auto src_obj = src_data->GetObj();
 
-	auto dst_parent_data = (WxSceneTreeItem*)GetItemData(dst_parent);
+	auto dst_parent_data = (Item*)GetItemData(dst_parent);
 	auto dst_parent_obj = dst_parent_data->GetObj();
 
 	// todo esc
@@ -722,7 +738,7 @@ void WxSceneTreeCtrl::DeleteEmptyObjToRoot(wxTreeItemId item)
 			break;
 		}
 
-		auto data = (WxSceneTreeItem*)GetItemData(parent);
+		auto data = (Item*)GetItemData(parent);
 #ifndef GAME_OBJ_ECS
 		auto& ccomplex = data->GetObj()->GetSharedComp<n2::CompComplex>();
 		if (ccomplex.GetAllChildren().empty()) 
@@ -776,7 +792,7 @@ void WxSceneTreeCtrl::ChangeName(const ee0::VariantSet& variants)
 		return;
 	}
 
-	auto data = (WxSceneTreeItem*)GetItemData(selected);
+	auto data = (Item*)GetItemData(selected);
 	GD_ASSERT(data, "err data");
 	
 	auto var = variants.GetVariant("obj");
@@ -882,13 +898,13 @@ void WxSceneTreeCtrl::DeleteSelectedObj()
 
 void WxSceneTreeCtrl::DeleteObjOutside(wxTreeItemId item)
 {
-	auto data = (WxSceneTreeItem*)GetItemData(item);
+	auto data = (Item*)GetItemData(item);
 	if (GAME_OBJ_VALID(data->GetRoot()) && data->GetObjID() != 0)
 	{
 		// todo ecs
 #ifndef GAME_OBJ_ECS
 		wxTreeItemId parent = GetItemParent(item);
-		auto pdata = (WxSceneTreeItem*)GetItemData(parent);
+		auto pdata = (Item*)GetItemData(parent);
 		auto& ccomplex = pdata->GetObj()->GetSharedComp<n2::CompComplex>();
 		bool succ = ccomplex.RemoveChild(data->GetObj());
 		GD_ASSERT(succ, "fail to remove");
@@ -934,7 +950,7 @@ void WxSceneTreeCtrl::CleanRootEmptyChild()
 	wxTreeItemId child = GetFirstChild(m_root, cookie);
 	while (child.IsOk()) 
 	{
-		auto data = (WxSceneTreeItem*)GetItemData(child);
+		auto data = (Item*)GetItemData(child);
 #ifndef GAME_OBJ_ECS
 		if (data->GetObj()->HasSharedComp<n2::CompComplex>())
 #else

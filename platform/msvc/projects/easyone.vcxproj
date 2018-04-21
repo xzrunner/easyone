@@ -265,6 +265,7 @@
     <ClInclude Include="..\..\..\src\anim\WxTimeStagePanel.h" />
     <ClInclude Include="..\..\..\src\anim\WxTimeStageScrolled.h" />
     <ClInclude Include="..\..\..\src\frame\Blackboard.h" />
+    <ClInclude Include="..\..\..\src\frame\config.h" />
     <ClInclude Include="..\..\..\src\frame\MessageID.h" />
     <ClInclude Include="..\..\..\src\frame\GameObjFactory.h" />
     <ClInclude Include="..\..\..\src\frame\NodeSelectOP.h" />
@@ -278,17 +279,16 @@
     <ClInclude Include="..\..\..\src\frame\WxItemsListCtrl.h" />
     <ClInclude Include="..\..\..\src\frame\WxPreviewCanvas.h" />
     <ClInclude Include="..\..\..\src\frame\WxPreviewPanel.h" />
-    <ClInclude Include="..\..\..\src\frame\WxSceneTreePanel.h" />
     <ClInclude Include="..\..\..\src\frame\Application.h" />
     <ClInclude Include="..\..\..\src\frame\WxLibraryPanel.h" />
     <ClInclude Include="..\..\..\src\frame\WxSceneTreeCtrl.h" />
-    <ClInclude Include="..\..\..\src\frame\WxSceneTreeItem.h" />
     <ClInclude Include="..\..\..\src\frame\WxSettingsDialog.h" />
     <ClInclude Include="..\..\..\src\frame\WxStageCanvas.h" />
     <ClInclude Include="..\..\..\src\frame\WxStageExtPanel.h" />
     <ClInclude Include="..\..\..\src\frame\WxStagePage.h" />
     <ClInclude Include="..\..\..\src\frame\WxStagePanel.h" />
     <ClInclude Include="..\..\..\src\frame\WxToolbarPanel.h" />
+    <ClInclude Include="..\..\..\src\frame\WxWorldPanel.h" />
     <ClInclude Include="..\..\..\src\mask\WxEditDialog.h" />
     <ClInclude Include="..\..\..\src\mask\WxStagePage.h" />
     <ClInclude Include="..\..\..\src\particle3d\config.h" />
@@ -333,17 +333,16 @@
     <ClCompile Include="..\..\..\src\frame\WxItemsListCtrl.cpp" />
     <ClCompile Include="..\..\..\src\frame\WxPreviewCanvas.cpp" />
     <ClCompile Include="..\..\..\src\frame\WxPreviewPanel.cpp" />
-    <ClCompile Include="..\..\..\src\frame\WxSceneTreePanel.cpp" />
     <ClCompile Include="..\..\..\src\frame\Application.cpp" />
     <ClCompile Include="..\..\..\src\frame\WxLibraryPanel.cpp" />
     <ClCompile Include="..\..\..\src\frame\WxSceneTreeCtrl.cpp" />
-    <ClCompile Include="..\..\..\src\frame\WxSceneTreeItem.cpp" />
     <ClCompile Include="..\..\..\src\frame\WxSettingsDialog.cpp" />
     <ClCompile Include="..\..\..\src\frame\WxStageCanvas.cpp" />
     <ClCompile Include="..\..\..\src\frame\WxStageExtPanel.cpp" />
     <ClCompile Include="..\..\..\src\frame\WxStagePage.cpp" />
     <ClCompile Include="..\..\..\src\frame\WxStagePanel.cpp" />
     <ClCompile Include="..\..\..\src\frame\WxToolbarPanel.cpp" />
+    <ClCompile Include="..\..\..\src\frame\WxWorldPanel.cpp" />
     <ClCompile Include="..\..\..\src\mask\WxEditDialog.cpp">
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/mask/</ObjectFileName>
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/mask/</ObjectFileName>

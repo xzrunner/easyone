@@ -50,7 +50,7 @@ private:
 	wxWindow* CreateStagePanel();
 	wxWindow* CreateStageExtPanel();
 	wxWindow* CreatePreviewPanel();
-	wxWindow* CreateTreePanel();
+	wxWindow* CreateWorldPanel();
 	wxWindow* CreateDetailPanel();
 	wxWindow* CreateToolbarPanel();
 
