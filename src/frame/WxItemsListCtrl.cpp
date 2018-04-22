@@ -99,7 +99,9 @@ void WxItemsListCtrl::OnSearch(const std::string& str)
 	int idx = 0;
 	m_list->Traverse([&](const ee0::WxLibraryItem& item)->bool 
 	{
-		if (item.GetFilepath().find(str) != std::string::npos) {
+		auto& obj = *dynamic_cast<WxItemsListUserData*>(item.GetUD().get());
+		auto& name = obj.GetObj()->GetUniqueComp<ee0::CompNodeEditor>().GetName();
+		if (name.find(str) != std::string::npos) {
 			m_list->Select(idx);
 		}
 		++idx;
