@@ -277,6 +277,8 @@
     <ClInclude Include="..\..\..\src\frame\main.h" />
     <ClInclude Include="..\..\..\src\frame\WxFrame.h" />
     <ClInclude Include="..\..\..\src\frame\WxItemsListCtrl.h" />
+    <ClInclude Include="..\..\..\src\frame\WxItemsListList.h" />
+    <ClInclude Include="..\..\..\src\frame\WxItemsListUserData.h" />
     <ClInclude Include="..\..\..\src\frame\WxPreviewCanvas.h" />
     <ClInclude Include="..\..\..\src\frame\WxPreviewPanel.h" />
     <ClInclude Include="..\..\..\src\frame\Application.h" />
@@ -325,12 +327,14 @@
     <ClCompile Include="..\..\..\src\anim\WxTimeStageScrolled.cpp" />
     <ClCompile Include="..\..\..\src\frame\Blackboard.cpp" />
     <ClCompile Include="..\..\..\src\frame\GameObjFactory.cpp" />
+    <ClCompile Include="..\..\..\src\frame\GameObjType.cpp" />
     <ClCompile Include="..\..\..\src\frame\NodeSelectOP.cpp" />
     <ClCompile Include="..\..\..\src\frame\StagePageFactory.cpp" />
     <ClCompile Include="..\..\..\src\frame\WxDetailPanel.cpp" />
     <ClCompile Include="..\..\..\src\frame\main.cpp" />
     <ClCompile Include="..\..\..\src\frame\WxFrame.cpp" />
     <ClCompile Include="..\..\..\src\frame\WxItemsListCtrl.cpp" />
+    <ClCompile Include="..\..\..\src\frame\WxItemsListList.cpp" />
     <ClCompile Include="..\..\..\src\frame\WxPreviewCanvas.cpp" />
     <ClCompile Include="..\..\..\src\frame\WxPreviewPanel.cpp" />
     <ClCompile Include="..\..\..\src\frame\Application.cpp" />

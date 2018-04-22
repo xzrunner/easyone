@@ -1,5 +1,8 @@
 #include "frame/WxItemsListCtrl.h"
+#include "frame/WxItemsListList.h"
+#include "frame/WxItemsListUserData.h"
 #include "frame/WxStagePage.h"
+#include "frame/GameObjType.h"
 #include "frame/config.h"
 
 #include <ee0/SubjectMgr.h>
@@ -11,14 +14,34 @@
 #endif // GAME_OBJ_ECS
 #include <ee0/WxLibraryItem.h>
 #include <ee0/WxImageVList.h>
+#include <ee0/MsgHelper.h>
 
 #ifndef GAME_OBJ_ECS
 #include <node0/SceneNode.h>
+#include <node0/CompAsset.h>
 #else
 #include <entity0/World.h>
 #endif // GAME_OBJ_ECS
 
 #include <guard/check.h>
+
+namespace
+{
+
+static const std::vector<std::pair<uint32_t, std::string>> GAME_OBJ_LIST =
+{
+	std::make_pair(eone::GAME_OBJ_UNKNOWN,    "All"),
+	std::make_pair(eone::GAME_OBJ_IMAGE,      "Image"),
+	std::make_pair(eone::GAME_OBJ_TEXT,       "Text"),
+	std::make_pair(eone::GAME_OBJ_MASK,       "Mask"),
+	std::make_pair(eone::GAME_OBJ_MESH,       "Mesh"),
+	std::make_pair(eone::GAME_OBJ_SCALE9,     "Scale9"),
+	std::make_pair(eone::GAME_OBJ_ANIM,       "Anim"),
+	std::make_pair(eone::GAME_OBJ_PARTICLE3D, "Particle3d"),
+	std::make_pair(eone::GAME_OBJ_SCENE2D,    "Complex"),
+};
+
+}
 
 namespace eone
 {
@@ -86,12 +109,36 @@ void WxItemsListCtrl::OnSearch(const std::string& str)
 
 void WxItemsListCtrl::InitLayout()
 {
-	wxSizer* sizer = new wxBoxSizer(wxVERTICAL);
+	wxSizer* top_sizer = new wxBoxSizer(wxVERTICAL);
 
-	m_list = new ee0::WxImageVList(this, "", true, false, true);
-	sizer->Add(m_list, 1, wxEXPAND);
+	// header
+	{
+		wxSizer* sizer = new wxBoxSizer(wxHORIZONTAL);
 
-	SetSizer(sizer);
+		wxArrayString choices;
+		for (auto& type : GAME_OBJ_LIST) {
+			choices.Add(type.second);
+		}
+		m_filter = new wxChoice(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, choices);
+		Connect(m_filter->GetId(), wxEVT_COMMAND_CHOICE_SELECTED,
+			wxCommandEventHandler(WxItemsListCtrl::OnSetFilter));
+		m_filter->SetSelection(0);
+		sizer->Add(m_filter);
+
+		sizer->AddSpacer(10);
+
+		auto select_all_btn = new wxButton(this, wxID_ANY, "Select All");
+		Connect(select_all_btn->GetId(), wxEVT_COMMAND_BUTTON_CLICKED,
+			wxCommandEventHandler(WxItemsListCtrl::OnSelectAll));
+		sizer->Add(select_all_btn);
+
+		top_sizer->Add(sizer);
+	}
+
+	m_list = new WxItemsListList(this, m_sub_mgr);
+	top_sizer->Add(m_list, 1, wxEXPAND);
+
+	SetSizer(top_sizer);
 }
 
 void WxItemsListCtrl::RegisterMsg(ee0::SubjectMgr& sub_mgr)
@@ -107,6 +154,42 @@ void WxItemsListCtrl::RegisterMsg(ee0::SubjectMgr& sub_mgr)
 	sub_mgr.RegisterObserver(ee0::MSG_STAGE_PAGE_CHANGED, this);
 }
 
+void WxItemsListCtrl::OnSetFilter(wxCommandEvent& event)
+{
+	auto filter_type = GAME_OBJ_LIST[event.GetSelection()].first;
+	m_list->Traverse([&](const ee0::WxLibraryItem& item)->bool
+	{
+		const_cast<ee0::WxLibraryItem&>(item).SetHide(false);
+		if (filter_type != GAME_OBJ_UNKNOWN) 
+		{
+			auto& obj = *dynamic_cast<WxItemsListUserData*>(item.GetUD().get());
+			auto type = GetObjType(obj.GetObj());
+			const_cast<ee0::WxLibraryItem&>(item).SetHide(type != filter_type);
+		}
+		return true;
+	});
+	m_list->Refresh();
+}
+
+void WxItemsListCtrl::OnSelectAll(wxCommandEvent& event)
+{
+	std::vector<ee0::GameObjWithPos> objs;
+	m_list->Traverse([&](const ee0::WxLibraryItem& item)->bool
+	{
+		if (item.IsHide()) {
+			return true;
+		}
+		auto& obj = *dynamic_cast<WxItemsListUserData*>(item.GetUD().get());
+#ifndef GAME_OBJ_ECS
+		objs.push_back(n0::NodeWithPos(obj.GetObj(), obj.GetRoot(), obj.GetObjID()));
+#else
+		objs.push_back(obj.GetObj());
+#endif // GAME_OBJ_ECS
+		return true;
+	});
+	ee0::MsgHelper::InsertSelection(*m_sub_mgr, objs);
+}
+
 void WxItemsListCtrl::InsertSceneObj(const ee0::VariantSet& variants)
 {
 	auto var = variants.GetVariant("obj");
@@ -114,8 +197,22 @@ void WxItemsListCtrl::InsertSceneObj(const ee0::VariantSet& variants)
 	ee0::GameObj* obj = static_cast<ee0::GameObj*>(var.m_val.pv);
 	GD_ASSERT(obj, "err scene obj");
 
-	auto filepath = GetItemFilepath(*obj);
-	m_list->Insert(std::make_shared<ee0::WxLibraryItem>(filepath), 0);
+	std::string filepath;
+#ifndef GAME_OBJ_ECS
+	filepath = (*obj)->GetUniqueComp<ee0::CompNodeEditor>().GetFilepath();
+#else
+	auto& ceditor = m_world.GetComponent<ee0::CompEntityEditor>(*obj);
+	if (ceditor.filepath) {
+		filepath = *ceditor.filepath;
+	} else {
+		filtpath = "";
+	}
+#endif // GAME_OBJ_ECS
+	auto item = std::make_shared<ee0::WxLibraryItem>(filepath);
+	std::unique_ptr<ee0::WxLibraryItem::UserData> ud 
+		= std::make_unique<WxItemsListUserData>(*obj, *obj, 0);
+	item->SetUD(ud);
+	m_list->Insert(item, 0);
 }
 
 void WxItemsListCtrl::DeleteSceneObj(const ee0::VariantSet& variants)
@@ -127,8 +224,7 @@ void WxItemsListCtrl::DeleteSceneObj(const ee0::VariantSet& variants)
 	ee0::GameObj* obj = static_cast<ee0::GameObj*>(var.m_val.pv);
 	GD_ASSERT(obj, "err scene obj");
 
-	auto filepath = GetItemFilepath(*obj);
-	int idx = m_list->QueryItemIndex(filepath);
+	int idx = QueryItemIndex(*obj);
 	GD_ASSERT(idx != -1, "not find");
 	m_list->Remove(idx);
 }
@@ -152,8 +248,7 @@ void WxItemsListCtrl::ReorderSceneObj(const ee0::VariantSet& variants)
 	GD_ASSERT(up_var.m_type == ee0::VT_BOOL, "no var in vars: up");
 	bool up = up_var.m_val.bl;
 
-	auto filepath = GetItemFilepath(*obj);
-	int idx = m_list->QueryItemIndex(filepath);
+	int idx = QueryItemIndex(*obj);
 	GD_ASSERT(idx != -1, "not find");
 
 	int n = m_list->GetItemsSize();
@@ -191,10 +286,10 @@ void WxItemsListCtrl::SelectSceneObj(const ee0::VariantSet& variants)
 	}
 
 	int idx = 0;
-	auto filepath = GetItemFilepath(*obj);
 	m_list->Traverse([&](const ee0::WxLibraryItem& item)->bool
 	{
-		if (item.GetFilepath() == filepath) {
+		auto& item_obj = dynamic_cast<WxItemsListUserData*>(item.GetUD().get())->GetObj();
+		if (item_obj == *obj) {
 			m_list->Select(idx);
 		}
 		++idx;
@@ -210,10 +305,10 @@ void WxItemsListCtrl::UnselectSceneObj(const ee0::VariantSet& variants)
 	GD_ASSERT(obj, "err scene obj");
 
 	int idx = 0;
-	auto filepath = GetItemFilepath(*obj);
 	m_list->Traverse([&](const ee0::WxLibraryItem& item)->bool
 	{
-		if (item.GetFilepath() == filepath) {
+		auto& item_obj = dynamic_cast<WxItemsListUserData*>(item.GetUD().get())->GetObj();
+		if (item_obj == *obj) {
 			m_list->Select(idx, false);
 		}
 		++idx;
@@ -240,18 +335,17 @@ void WxItemsListCtrl::StagePageChanged(const ee0::VariantSet& variants)
 	ClearSceneObj();
 }
 
-std::string WxItemsListCtrl::GetItemFilepath(const ee0::GameObj& obj)
+int WxItemsListCtrl::QueryItemIndex(const ee0::GameObj& obj) const
 {
-#ifndef GAME_OBJ_ECS
-	return obj->GetUniqueComp<ee0::CompNodeEditor>().GetFilepath();
-#else
-	auto& ceditor = m_world.GetComponent<ee0::CompEntityEditor>(*obj);
-	if (ceditor.filepath) {
-		return *ceditor.filepath;
-	} else {
-		return "";
+	for (int i = 0, n = m_list->GetItemsSize(); i < n; ++i)
+	{
+		auto item = m_list->GetItemByIndex(i);
+		auto& item_obj = dynamic_cast<WxItemsListUserData*>(item->GetUD().get())->GetObj();
+		if (item_obj == obj) {
+			return i;
+		}
 	}
-#endif // GAME_OBJ_ECS
+	return -1;
 }
 
 }

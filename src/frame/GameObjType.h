@@ -1,5 +1,7 @@
 #pragma once
 
+#include <ee0/GameObj.h>
+
 namespace eone
 {
 
@@ -17,5 +19,7 @@ enum GameObjType
 	GAME_OBJ_SCENE2D,
 	GAME_OBJ_SCENE3D,
 };
+
+GameObjType GetObjType(const ee0::GameObj& obj);
 
 }
