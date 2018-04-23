@@ -154,8 +154,8 @@ void Application::InitLayout()
 
 	m_mgr.AddPane(library, wxAuiPaneInfo().Name(STR_LIBRARY_PANEL).
 		Caption(STR_LIBRARY_PANEL).Left().MinSize(150, 0));
-	m_mgr.AddPane(record, wxAuiPaneInfo().Name(STR_LOG_PANEL).
-		Caption(STR_LOG_PANEL).Left());
+	m_mgr.AddPane(record, wxAuiPaneInfo().Name(STR_RECORD_PANEL).
+		Caption(STR_RECORD_PANEL).Left());
 
 	m_mgr.AddPane(stage, wxAuiPaneInfo().Name(STR_STAGE_PANEL).
 		Caption(STR_STAGE_PANEL).CenterPane().PaneBorder(false));
