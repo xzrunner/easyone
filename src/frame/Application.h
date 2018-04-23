@@ -47,6 +47,7 @@ private:
 #endif // GAME_OBJ_ECS
 
 	wxWindow* CreateLibraryPanel();
+	wxWindow* CreateRecordPanel();
 	wxWindow* CreateStagePanel();
 	wxWindow* CreateStageExtPanel();
 	wxWindow* CreatePreviewPanel();

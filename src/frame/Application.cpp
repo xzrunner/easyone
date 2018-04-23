@@ -1,5 +1,6 @@
 #include "frame/Application.h"
 #include "frame/WxLibraryPanel.h"
+#include "frame/WxRecordPanel.h"
 #include "frame/WxStagePanel.h"
 #include "frame/WxStagePage.h"
 #include "frame/WxStageExtPanel.h"
@@ -149,10 +150,13 @@ void Application::InitLayout()
 	auto world     = CreateWorldPanel();
 	auto detail    = CreateDetailPanel();
 	auto toolbar   = CreateToolbarPanel();
+	auto record    = CreateRecordPanel();
 
 	m_mgr.AddPane(library, wxAuiPaneInfo().Name(STR_LIBRARY_PANEL).
-		Caption(STR_LIBRARY_PANEL).Left().MinSize(100, 0));
-	
+		Caption(STR_LIBRARY_PANEL).Left().MinSize(150, 0));
+	m_mgr.AddPane(record, wxAuiPaneInfo().Name(STR_LOG_PANEL).
+		Caption(STR_LOG_PANEL).Left());
+
 	m_mgr.AddPane(stage, wxAuiPaneInfo().Name(STR_STAGE_PANEL).
 		Caption(STR_STAGE_PANEL).CenterPane().PaneBorder(false));
 
@@ -203,6 +207,12 @@ wxWindow* Application::CreateLibraryPanel()
 	auto library = new WxLibraryPanel(m_frame);
 	Blackboard::Instance()->SetLiraryPanel(library);
 	return library;
+}
+
+wxWindow* Application::CreateRecordPanel()
+{
+	auto& sub_mgr = m_stage->GetCurrentStagePage()->GetSubjectMgr();
+	return new WxRecordPanel(m_frame, sub_mgr);	
 }
 
 wxWindow* Application::CreateStagePanel()

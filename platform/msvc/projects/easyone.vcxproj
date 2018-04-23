@@ -279,6 +279,7 @@
     <ClInclude Include="..\..\..\src\frame\WxItemsListCtrl.h" />
     <ClInclude Include="..\..\..\src\frame\WxItemsListList.h" />
     <ClInclude Include="..\..\..\src\frame\WxItemsListUserData.h" />
+    <ClInclude Include="..\..\..\src\frame\WxRecordPanel.h" />
     <ClInclude Include="..\..\..\src\frame\WxPreviewCanvas.h" />
     <ClInclude Include="..\..\..\src\frame\WxPreviewPanel.h" />
     <ClInclude Include="..\..\..\src\frame\Application.h" />
@@ -335,6 +336,7 @@
     <ClCompile Include="..\..\..\src\frame\WxFrame.cpp" />
     <ClCompile Include="..\..\..\src\frame\WxItemsListCtrl.cpp" />
     <ClCompile Include="..\..\..\src\frame\WxItemsListList.cpp" />
+    <ClCompile Include="..\..\..\src\frame\WxRecordPanel.cpp" />
     <ClCompile Include="..\..\..\src\frame\WxPreviewCanvas.cpp" />
     <ClCompile Include="..\..\..\src\frame\WxPreviewPanel.cpp" />
     <ClCompile Include="..\..\..\src\frame\Application.cpp" />

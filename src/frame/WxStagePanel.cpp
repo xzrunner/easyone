@@ -86,7 +86,7 @@ std::string WxStagePanel::StoreCurrPage(const std::string& filepath)
 
 	js::RapidJsonHelper::WriteToFile(_filepath.c_str(), doc);
 
-	page->GetImpl().GetEditRecord().OnSave();
+	page->GetEditRecord().OnSave();
 	ee0::MsgHelper::SetEditorDirty(*page->GetSubjectMgr(), false);
 
 	return _filepath;

@@ -85,7 +85,7 @@
     <Filter Include="00.frame\3.right\detail">
       <UniqueIdentifier>{7653a908-a019-47e9-9c73-82f1621d2f93}</UniqueIdentifier>
     </Filter>
-    <Filter Include="00.frame\2.center\log">
+    <Filter Include="00.frame\1.left\record">
       <UniqueIdentifier>{83cf082a-2a64-43ca-bb0c-71b3b5e8f2ce}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -264,6 +264,9 @@
     <ClInclude Include="..\..\..\src\frame\WxItemsListUserData.h">
       <Filter>00.frame\3.right\world\list</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\frame\WxRecordPanel.h">
+      <Filter>00.frame\1.left\record</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\frame\main.cpp">
@@ -412,6 +415,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\frame\WxItemsListList.cpp">
       <Filter>00.frame\3.right\world\list</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\frame\WxRecordPanel.cpp">
+      <Filter>00.frame\1.left\record</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
