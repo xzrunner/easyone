@@ -285,6 +285,7 @@
     <ClInclude Include="..\..\..\src\frame\Application.h" />
     <ClInclude Include="..\..\..\src\frame\WxLibraryPanel.h" />
     <ClInclude Include="..\..\..\src\frame\WxSceneTreeCtrl.h" />
+    <ClInclude Include="..\..\..\src\frame\WxScriptPanel.h" />
     <ClInclude Include="..\..\..\src\frame\WxSettingsDialog.h" />
     <ClInclude Include="..\..\..\src\frame\WxStageCanvas.h" />
     <ClInclude Include="..\..\..\src\frame\WxStageExtPanel.h" />
@@ -342,6 +343,7 @@
     <ClCompile Include="..\..\..\src\frame\Application.cpp" />
     <ClCompile Include="..\..\..\src\frame\WxLibraryPanel.cpp" />
     <ClCompile Include="..\..\..\src\frame\WxSceneTreeCtrl.cpp" />
+    <ClCompile Include="..\..\..\src\frame\WxScriptPanel.cpp" />
     <ClCompile Include="..\..\..\src\frame\WxSettingsDialog.cpp" />
     <ClCompile Include="..\..\..\src\frame\WxStageCanvas.cpp" />
     <ClCompile Include="..\..\..\src\frame\WxStageExtPanel.cpp" />
