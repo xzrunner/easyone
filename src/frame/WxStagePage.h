@@ -65,6 +65,8 @@ private:
 
 	void InitSubWindow();
 
+	void SetMoonContext();
+
 protected:
 	ECS_WORLD_SELF_DEF
 	ee0::GameObj m_obj;

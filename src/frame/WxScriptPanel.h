@@ -2,6 +2,10 @@
 
 #include <wx/panel.h>
 
+namespace ee0 { class WxCodeCtrl; }
+
+class wxTextCtrl;
+
 namespace eone
 {
 
@@ -12,6 +16,13 @@ public:
 
 private:
 	void InitLayout();
+
+	void OnRunPress(wxCommandEvent& event);
+
+private:
+	ee0::WxCodeCtrl* m_input;
+
+	wxTextCtrl* m_output;
 
 }; // WxScriptPanel
 

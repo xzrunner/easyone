@@ -54,6 +54,7 @@ private:
 	wxWindow* CreateWorldPanel();
 	wxWindow* CreateDetailPanel();
 	wxWindow* CreateToolbarPanel();
+	wxWindow* CreateScriptPanel();
 
 private:
 	wxFrame* m_frame;

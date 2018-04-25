@@ -11,5 +11,6 @@ static const char* STR_PREVIEW_PANEL   = "Preview";
 static const char* STR_WORLD_PANEL     = "World";
 static const char* STR_DETAIL_PANEL    = "Detail";
 static const char* STR_TOOLBAR_PANEL   = "Toolbar";
+static const char* STR_SCRIPT_PANEL    = "Script";
 
 }

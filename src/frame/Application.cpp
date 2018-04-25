@@ -16,6 +16,7 @@
 #include "frame/StagePageFactory.h"
 #include "frame/Blackboard.h"
 #include "frame/typedef.h"
+#include "frame/WxScriptPanel.h"
 
 #ifndef GAME_OBJ_ECS
 #include <ee0/CompNodeEditor.h>
@@ -151,6 +152,7 @@ void Application::InitLayout()
 	auto detail    = CreateDetailPanel();
 	auto toolbar   = CreateToolbarPanel();
 	auto record    = CreateRecordPanel();
+	auto script    = CreateScriptPanel();
 
 	m_mgr.AddPane(library, wxAuiPaneInfo().Name(STR_LIBRARY_PANEL).
 		Caption(STR_LIBRARY_PANEL).Left().MinSize(150, 0));
@@ -171,6 +173,9 @@ void Application::InitLayout()
 
 	m_mgr.AddPane(detail, wxAuiPaneInfo().Name(STR_DETAIL_PANEL).
 		Caption(STR_DETAIL_PANEL).Right().Row(0).MinSize(300, 0).PaneBorder(false));
+
+	m_mgr.AddPane(script, wxAuiPaneInfo().Name(STR_SCRIPT_PANEL).
+		Caption(STR_SCRIPT_PANEL).Right().Row(0).MinSize(300, 0).PaneBorder(false));
 
 	m_mgr.AddPane(toolbar, wxAuiPaneInfo().Name(STR_TOOLBAR_PANEL).
 		Caption(STR_TOOLBAR_PANEL).Right().Row(0).MinSize(300, 0).PaneBorder(false));
@@ -276,6 +281,11 @@ wxWindow* Application::CreateToolbarPanel()
 	auto toolbar = new WxToolbarPanel(m_frame);
 	Blackboard::Instance()->SetToolbarPanel(toolbar);
 	return toolbar;
+}
+
+wxWindow* Application::CreateScriptPanel()
+{
+	return new WxScriptPanel(m_frame);
 }
 
 }
