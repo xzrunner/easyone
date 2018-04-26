@@ -24,8 +24,14 @@
 					"name": "Select all",
 					"file": "default/select_all.lua",
 					"desc": "select all scene nodes"
+				},
+				{
+					"type": "action",
+					"name": "Select same",
+					"file": "default/select_same_assets.lua",
+					"desc": "select same asset with curr selection"
 				}
 			]
-		}		
+		}
 	]
 }

@@ -11,8 +11,8 @@
 #include <node2/RenderSystem.h>
 #include <node2/UpdateSystem.h>
 #else
-
 #endif // GAME_OBJ_ECS
+#include <moon/Blackboard.h>
 
 #include <wx/frame.h>
 
@@ -60,9 +60,12 @@ void WxStageCanvas::OnMouseImpl(wxMouseEvent& event)
 {
 	sm::vec2 pos = ee0::CameraHelper::TransPosScreenToProject(
 		*GetCamera(), event.GetX(), event.GetY());
+
 	wxString msg;
 	msg.Printf("Mouse: %.1f, %.1f", pos.x, pos.y);
 	Blackboard::Instance()->GetFrame()->SetStatusText(msg);
+
+	moon::Blackboard::Instance()->SetMousePos(pos);
 }
 
 }

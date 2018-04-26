@@ -17,8 +17,6 @@
 #else
 #endif // GAME_OBJ_ECS
 #include <moon/Blackboard.h>
-#include <moon/SceneGraph.h>
-#include <moon/Context.h>
 
 namespace eone
 {
@@ -152,13 +150,7 @@ void WxStagePage::InitSubWindow()
 void WxStagePage::SetMoonContext()
 {
 	auto bb = moon::Blackboard::Instance();
-
 	bb->SetContext(GetMoonCtx());
-
-	auto scene = bb->GetContext()->GetModuleMgr().GetModule<moon::SceneGraph>(
-		moon::Module::M_SCENE_GRAPH);
-	scene->SetRoot(m_obj);
-
 	bb->SetSubMgr(m_sub_mgr);
 }
 
