@@ -9,6 +9,8 @@
 #include <ee0/WxListSelectDlg.h>
 #include <ee0/SubjectMgr.h>
 
+#include <moon/Blackboard.h>
+
 namespace
 {
 	
@@ -34,6 +36,7 @@ namespace eone
 WxFrame::WxFrame()
 	: ee0::WxFrame("EasyOne", true)
 {
+	moon::Blackboard::Instance()->SetWindow(this);
 }
 
 void WxFrame::OnNew(wxCommandEvent& event)

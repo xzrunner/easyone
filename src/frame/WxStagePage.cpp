@@ -152,10 +152,14 @@ void WxStagePage::InitSubWindow()
 void WxStagePage::SetMoonContext()
 {
 	auto bb = moon::Blackboard::Instance();
+
 	bb->SetContext(GetMoonCtx());
+
 	auto scene = bb->GetContext()->GetModuleMgr().GetModule<moon::SceneGraph>(
 		moon::Module::M_SCENE_GRAPH);
 	scene->SetRoot(m_obj);
+
+	bb->SetSubMgr(m_sub_mgr);
 }
 
 }
