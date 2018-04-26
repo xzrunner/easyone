@@ -1,0 +1,31 @@
+{
+	"children":
+	[
+		{
+			"type": "menu",
+			"name": "Add",
+			"children":
+			[
+				{
+					"type": "action",
+					"name": "Add scene node",
+					"file": "default/add_scene_node.lua",
+					"desc": "add scene node from file"
+				}
+			]
+		},
+		{
+			"type": "menu",
+			"name": "Select",
+			"children":
+			[
+				{
+					"type": "action",
+					"name": "Select all",
+					"file": "default/select_all.lua",
+					"desc": "select all scene nodes"
+				}
+			]
+		}		
+	]
+}
