@@ -7,6 +7,7 @@
 #include "frame/typedef.h"
 
 #include <ee0/SubjectMgr.h>
+#include <ee0/CompNodeEditor.h>
 
 #include <guard/check.h>
 #ifndef GAME_OBJ_ECS
@@ -17,6 +18,10 @@
 #else
 #endif // GAME_OBJ_ECS
 #include <moon/Blackboard.h>
+#include <moon/Context.h>
+#include <moon/ScriptHelper.h>
+
+#include <boost/filesystem.hpp>
 
 namespace eone
 {
@@ -26,6 +31,7 @@ WxStagePage::WxStagePage(wxWindow* parent, ECS_WORLD_PARAM const ee0::GameObj& o
 	ECS_WORLD_SELF_ASSIGN
 	, m_obj(obj)
 	, m_layout_type(layout_type)
+	, m_backup(m_sub_mgr)
 {
 	m_sub_mgr->RegisterObserver(ee0::MSG_STAGE_PAGE_ON_SHOW, this);
 
@@ -65,6 +71,8 @@ void WxStagePage::StoreToJson(const std::string& dir, rapidjson::Value& val,
 	// todo ecs
 #endif // GAME_OBJ_ECS
 	StoreToJsonExt(dir, val, alloc);
+
+	m_backup.Clear();
 }
 
 void WxStagePage::LoadFromJson(const std::string& dir, const rapidjson::Value& val)
@@ -79,6 +87,12 @@ void WxStagePage::LoadFromJson(const std::string& dir, const rapidjson::Value& v
 #endif // GAME_OBJ_ECS
 	LoadFromJsonExt(dir, val);
 
+	ResetNextID();
+
+	LoadFromBackup();
+
+	ResetNextID();
+
 #ifndef GAME_OBJ_ECS
 	auto& casset = m_obj->GetSharedComp<n0::CompAsset>();
 	auto& cbb = m_obj->GetUniqueComp<n2::CompBoundingBox>();
@@ -88,6 +102,27 @@ void WxStagePage::LoadFromJson(const std::string& dir, const rapidjson::Value& v
 #endif // GAME_OBJ_ECS
 
 	m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
+}
+
+void WxStagePage::SetFilepath(const std::string& filepath) 
+{ 
+	m_filepath = filepath;
+	m_backup.SetFilepath(GetBackupPath());
+}
+
+std::string WxStagePage::GetBackupPath() const
+{
+	return m_filepath + ".backup";
+}
+
+void WxStagePage::LoadFromBackup()
+{
+	auto filepath = GetBackupPath();
+	if (boost::filesystem::exists(filepath)) 
+	{
+		auto L = moon::Blackboard::Instance()->GetContext()->GetState();
+		auto err = moon::ScriptHelper::DoFile(L, filepath.c_str());
+	}
 }
 
 void WxStagePage::SetEditorDirty(const ee0::VariantSet& variants)
@@ -152,6 +187,18 @@ void WxStagePage::SetMoonContext()
 	auto bb = moon::Blackboard::Instance();
 	bb->SetContext(GetMoonCtx());
 	bb->SetSubMgr(m_sub_mgr);
+}
+
+void WxStagePage::ResetNextID()
+{
+	uint32_t max_id = 0;
+	Traverse([&](const ee0::GameObj& obj)->bool 
+	{
+		auto& ceditor = obj->GetUniqueComp<ee0::CompNodeEditor>();
+		max_id = std::max(max_id, ceditor.GetID());
+		return true;
+	});
+	SetNextObjID(max_id + 1);
 }
 
 }

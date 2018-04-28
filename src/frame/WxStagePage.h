@@ -1,5 +1,7 @@
 #pragma once
 
+#include "frame/EditBackup.h"
+
 #include <ee0/GameObj.h>
 #include <ee0/WxStagePage.h>
 
@@ -42,7 +44,7 @@ public:
 
 	const ee0::GameObj& GetEditedObj() const { return m_obj; }
 
-	void SetFilepath(const std::string& filepath) { m_filepath = filepath; }
+	void SetFilepath(const std::string& filepath);
 	const std::string& GetFilepath() const { return m_filepath; }
 
 protected:
@@ -58,6 +60,9 @@ protected:
 	virtual void LoadFromJsonExt(const std::string& dir, const rapidjson::Value& val) {}
 
 private:
+	std::string GetBackupPath() const;
+	void LoadFromBackup();
+
 	void SetEditorDirty(const ee0::VariantSet& variants);
 
 	void RegisterAllMessages();
@@ -66,6 +71,8 @@ private:
 	void InitSubWindow();
 
 	void SetMoonContext();
+
+	void ResetNextID();
 
 protected:
 	ECS_WORLD_SELF_DEF
@@ -76,6 +83,8 @@ protected:
 	std::string m_filepath;
 
 	std::vector<uint32_t> m_messages;
+
+	EditBackup m_backup;
 
 }; // WxStagePage
 

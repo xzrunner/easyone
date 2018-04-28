@@ -266,6 +266,7 @@
     <ClInclude Include="..\..\..\src\anim\WxTimeStageScrolled.h" />
     <ClInclude Include="..\..\..\src\frame\Blackboard.h" />
     <ClInclude Include="..\..\..\src\frame\config.h" />
+    <ClInclude Include="..\..\..\src\frame\EditBackup.h" />
     <ClInclude Include="..\..\..\src\frame\MessageID.h" />
     <ClInclude Include="..\..\..\src\frame\GameObjFactory.h" />
     <ClInclude Include="..\..\..\src\frame\NodeSelectOP.h" />
@@ -328,6 +329,7 @@
     <ClCompile Include="..\..\..\src\anim\WxTimeStagePanel.cpp" />
     <ClCompile Include="..\..\..\src\anim\WxTimeStageScrolled.cpp" />
     <ClCompile Include="..\..\..\src\frame\Blackboard.cpp" />
+    <ClCompile Include="..\..\..\src\frame\EditBackup.cpp" />
     <ClCompile Include="..\..\..\src\frame\GameObjFactory.cpp" />
     <ClCompile Include="..\..\..\src\frame\GameObjType.cpp" />
     <ClCompile Include="..\..\..\src\frame\NodeSelectOP.cpp" />

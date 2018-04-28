@@ -35,6 +35,7 @@
 #ifndef GAME_OBJ_ECS
 #include <node0/SceneNode.h>
 #include <ns/RegistCallback.h>
+#include <ns/Blackboard.h>
 #else
 #include <entity2/CompTransform.h>
 #include <entity2/CompBoundingBox.h>
@@ -111,10 +112,11 @@ void Application::LoadFromFile(const std::string& filepath)
 		page->GetSubjectMgr()->NotifyObservers(ee0::MSG_STAGE_PAGE_ON_SHOW);
 	}
 
+	page->SetFilepath(filepath);
+
 	auto dir = boost::filesystem::path(filepath).parent_path().string();
 	page->LoadFromJson(dir, doc);
 
-	page->SetFilepath(filepath);
 	m_frame->SetTitle(filepath);
 }
 
@@ -187,6 +189,11 @@ void Application::InitCallback()
 {
 #ifndef GAME_OBJ_ECS
 	ns::RegistCallback::Init();
+	ns::Blackboard::Instance()->SetGenNodeIdFunc([]()->uint32_t {
+		auto stage = static_cast<WxStagePage*>(
+			Blackboard::Instance()->GetStagePanel()->GetCurrentPage());
+		return stage->FetchObjID();
+	});
 #endif // GAME_OBJ_ECS
 }
 
