@@ -29,6 +29,8 @@ private:
 	void InitLayout();
 	void RegisterMsg(ee0::SubjectMgr& sub_mgr);
 
+	void InitHeader(wxSizer* sizer);
+
 	void InitComponents(const ee0::VariantSet& variants);
 	void InitComponents(const ee0::GameObj& obj);
 	void InitComponents();

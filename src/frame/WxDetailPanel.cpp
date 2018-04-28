@@ -7,6 +7,8 @@
 #include <ee0/VariantSet.h>
 #include <ee0/WxCompPanel.h>
 #include <ee0/WxCompObjEditorPanel.h>
+#include <ee0/CompCustomProperties.h>
+#include <ee0/WxCompCustomProperties.h>
 #include <ee2/WxCompTransformPanel.h>
 #include <ee2/WxCompColComPanel.h>
 #include <ee2/WxCompColMapPanel.h>
@@ -61,14 +63,16 @@ enum CompType
 	COMP_COLOR_MAP,
 	COMP_SCISSOR,
 	COMP_SCRIPT,
+	COMP_CUSTOM_PROPERTIES,
 };
 
 static const std::vector<std::pair<uint32_t, std::string>> COMP_LIST =
 {
-	std::make_pair(COMP_COLOR_COMMON, "ColorCommon"),
-	std::make_pair(COMP_COLOR_MAP,    "ColorMap"),
-	std::make_pair(COMP_SCISSOR,      "Scissor"),
-	std::make_pair(COMP_SCRIPT,       "Script"),
+	std::make_pair(COMP_COLOR_COMMON,      "ColorCommon"),
+	std::make_pair(COMP_COLOR_MAP,         "ColorMap"),
+	std::make_pair(COMP_SCISSOR,           "Scissor"),
+	std::make_pair(COMP_SCRIPT,            "Script"),
+	std::make_pair(COMP_CUSTOM_PROPERTIES, "CustomProperties"),
 };
 
 }
@@ -120,17 +124,12 @@ void WxDetailPanel::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
 void WxDetailPanel::InitLayout()
 {
 	wxSizer* top_sizer = new wxBoxSizer(wxVERTICAL);
-	{
-		m_comp_sizer = new wxBoxSizer(wxVERTICAL);
-		top_sizer->Add(m_comp_sizer);
-	}
-	top_sizer->AddSpacer(100);
-	{
-		m_add_btn = new wxButton(this, wxID_ANY, "Add Component");
-		Connect(m_add_btn->GetId(), wxEVT_COMMAND_BUTTON_CLICKED,
-			wxCommandEventHandler(WxDetailPanel::OnAddPress));
-		top_sizer->Add(m_add_btn, 0, wxALIGN_CENTER_HORIZONTAL);
-	}
+
+	InitHeader(top_sizer);
+
+	m_comp_sizer = new wxBoxSizer(wxVERTICAL);
+	top_sizer->Add(m_comp_sizer);
+
 	SetSizer(top_sizer);
 }
 
@@ -144,6 +143,18 @@ void WxDetailPanel::RegisterMsg(ee0::SubjectMgr& sub_mgr)
 
 	sub_mgr.RegisterObserver(ee0::MSG_UPDATE_COMPONENTS, this);
 	sub_mgr.RegisterObserver(ee0::MSG_STAGE_PAGE_CHANGED, this);
+}
+
+void WxDetailPanel::InitHeader(wxSizer* top_sizer)
+{
+	wxSizer* sizer = new wxBoxSizer(wxHORIZONTAL);
+
+	m_add_btn = new wxButton(this, wxID_ANY, "+", wxDefaultPosition, wxSize(20, 20));
+	Connect(m_add_btn->GetId(), wxEVT_COMMAND_BUTTON_CLICKED,
+		wxCommandEventHandler(WxDetailPanel::OnAddPress));
+	sizer->Add(m_add_btn, 0, wxLEFT | wxRIGHT, 5);
+
+	top_sizer->Add(sizer);
 }
 
 void WxDetailPanel::InitComponents(const ee0::VariantSet& variants)
@@ -378,6 +389,22 @@ void WxDetailPanel::InitComponents(const ee0::GameObj& obj)
 		m_components.push_back(panel);
 	}
 
+#ifndef GAME_OBJ_ECS
+	if (m_owp.GetNode()->HasUniqueComp<ee0::CompCustomProperties>())
+#else
+	if (m_world.HasComponent<ee0::CompCustomProperties>(m_owp))
+#endif // GAME_OBJ_ECS
+	{
+		auto node = m_owp.GetNode();
+		if (!node->HasUniqueComp<ee0::CompCustomProperties>()) {
+			node->AddUniqueComp<ee0::CompCustomProperties>();
+		}
+		auto& cprop = node->GetUniqueComp<ee0::CompCustomProperties>();
+		auto panel = new ee0::WxCompCustomProperties(this, cprop);
+		m_comp_sizer->Insert(m_components.size(), panel);
+		m_components.push_back(panel);
+	}
+
 	Layout();
 }
 
@@ -496,6 +523,18 @@ void WxDetailPanel::OnAddPress(wxCommandEvent& event)
 				this, m_sub_mgr, m_world, m_owp
 #endif // GAME_OBJ_ECS
 			);
+			m_comp_sizer->Insert(m_components.size(), panel);
+			m_components.push_back(panel);
+		}
+		break;
+	case CompType::COMP_CUSTOM_PROPERTIES:
+		{
+			auto node = m_owp.GetNode();
+			if (!node->HasUniqueComp<ee0::CompCustomProperties>()) {
+				node->AddUniqueComp<ee0::CompCustomProperties>();
+			}
+			auto& cprop = node->GetUniqueComp<ee0::CompCustomProperties>();
+			auto panel = new ee0::WxCompCustomProperties(this, cprop);
 			m_comp_sizer->Insert(m_components.size(), panel);
 			m_components.push_back(panel);
 		}
