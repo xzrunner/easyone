@@ -10,7 +10,7 @@
 
 #ifndef GAME_OBJ_ECS
 #include <node0/SceneNode.h>
-#include <node2/CompComplex.h>
+#include <node0/CompComplex.h>
 #include <node2/CompImage.h>
 #include <node2/CompText.h>
 #include <node2/CompMask.h>
@@ -141,7 +141,7 @@ ee0::GameObj GameObjFactory::Create(ECS_WORLD_PARAM GameObjType type)
 	case GAME_OBJ_SCENE2D:
 		{
 #ifndef GAME_OBJ_ECS
-			obj->AddSharedComp<n2::CompComplex>();
+			obj->AddSharedComp<n0::CompComplex>();
 #else
 			world.AddComponent<e2::CompComplex>(obj);
 #endif // GAME_OBJ_ECS

@@ -17,7 +17,7 @@
 #include <node0/SceneNode.h>
 #include <node0/CompAsset.h>
 #include <node0/SceneTreeHelper.h>
-#include <node2/CompComplex.h>
+#include <node0/CompComplex.h>
 #include <node2/CompTransform.h>
 #include <node2/SceneTreeHelper.h>
 #else
@@ -282,7 +282,7 @@ void WxSceneTreeCtrl::OnEndDrag(wxTreeEvent& event)
 	else
 	{
 #ifndef GAME_OBJ_ECS
-		if (!data_dst->GetObj()->HasSharedComp<n2::CompComplex>()) {
+		if (!data_dst->GetObj()->HasSharedComp<n0::CompComplex>()) {
 #else
 		if (!m_world.HasComponent<e2::CompComplex>(data_dst->GetObj())) {
 #endif // GAME_OBJ_ECS
@@ -300,7 +300,7 @@ void WxSceneTreeCtrl::OnEndDrag(wxTreeEvent& event)
 	}
 
 #ifndef GAME_OBJ_ECS
-	SetItemBold(new_item, data_src->GetObj()->HasSharedComp<n2::CompComplex>());
+	SetItemBold(new_item, data_src->GetObj()->HasSharedComp<n0::CompComplex>());
 #else
 	SetItemBold(new_item, m_world.HasComponent<e2::CompComplex>(data_src->GetObj()));
 #endif // GAME_OBJ_ECS
@@ -423,7 +423,7 @@ void WxSceneTreeCtrl::InsertSceneObj(wxTreeItemId parent, const ee0::GameObj& ob
 	auto item = new Item(obj, root, obj_id);
 #ifndef GAME_OBJ_ECS
 	auto& name = obj->GetUniqueComp<ee0::CompNodeEditor>().GetName();
-	bool is_complex = obj->HasSharedComp<n2::CompComplex>();
+	bool is_complex = obj->HasSharedComp<n0::CompComplex>();
 #else
 	std::string name;
 	auto& ceditor = m_world.GetComponent<ee0::CompEntityEditor>(obj);
@@ -438,7 +438,7 @@ void WxSceneTreeCtrl::InsertSceneObj(wxTreeItemId parent, const ee0::GameObj& ob
 	if (is_complex)
 	{
 #ifndef GAME_OBJ_ECS
-		auto& ccomplex = obj->GetSharedComp<n2::CompComplex>();
+		auto& ccomplex = obj->GetSharedComp<n0::CompComplex>();
 		auto& children = ccomplex.GetAllChildren();
 		obj_id = obj_id + 1;
 #else
@@ -555,7 +555,7 @@ bool WxSceneTreeCtrl::ReorderItem(wxTreeItemId item, bool up)
 		new_item = InsertItem(parent, 0, name.c_str(), -1, -1, new Item(*pdata));
 	}
 #ifndef GAME_OBJ_ECS
-	bool is_complex = pdata->GetObj()->HasSharedComp<n2::CompComplex>();
+	bool is_complex = pdata->GetObj()->HasSharedComp<n0::CompComplex>();
 #else
 	bool is_complex = m_world.HasComponent<e2::CompComplex>(pdata->GetObj());
 #endif // GAME_OBJ_ECS
@@ -695,7 +695,7 @@ void WxSceneTreeCtrl::MoveSceneObj(wxTreeItemId src, wxTreeItemId dst_parent)
 	if (GAME_OBJ_VALID(dst_parent_obj))
 	{
 #ifndef GAME_OBJ_ECS
-		auto& ccomplex = dst_parent_obj->GetSharedComp<n2::CompComplex>();
+		auto& ccomplex = dst_parent_obj->GetSharedComp<n0::CompComplex>();
 		ccomplex.AddChild(src_obj);
 
 		n2::SceneTreeHelper::UpdateAABB(dst_parent_obj, 
@@ -740,7 +740,7 @@ void WxSceneTreeCtrl::DeleteEmptyObjToRoot(wxTreeItemId item)
 
 		auto data = (Item*)GetItemData(parent);
 #ifndef GAME_OBJ_ECS
-		auto& ccomplex = data->GetObj()->GetSharedComp<n2::CompComplex>();
+		auto& ccomplex = data->GetObj()->GetSharedComp<n0::CompComplex>();
 		if (ccomplex.GetAllChildren().empty()) 
 #else
 		auto& ccomplex = m_world.GetComponent<e2::CompComplex>(data->GetObj());
@@ -905,7 +905,7 @@ void WxSceneTreeCtrl::DeleteObjOutside(wxTreeItemId item)
 #ifndef GAME_OBJ_ECS
 		wxTreeItemId parent = GetItemParent(item);
 		auto pdata = (Item*)GetItemData(parent);
-		auto& ccomplex = pdata->GetObj()->GetSharedComp<n2::CompComplex>();
+		auto& ccomplex = pdata->GetObj()->GetSharedComp<n0::CompComplex>();
 		bool succ = ccomplex.RemoveChild(data->GetObj());
 		GD_ASSERT(succ, "fail to remove");
 
@@ -952,13 +952,13 @@ void WxSceneTreeCtrl::CleanRootEmptyChild()
 	{
 		auto data = (Item*)GetItemData(child);
 #ifndef GAME_OBJ_ECS
-		if (data->GetObj()->HasSharedComp<n2::CompComplex>())
+		if (data->GetObj()->HasSharedComp<n0::CompComplex>())
 #else
 		if (m_world.HasComponent<e2::CompComplex>(data->GetObj()))
 #endif // GAME_OBJ_ECS
 		{
 #ifndef GAME_OBJ_ECS
-			bool empty = data->GetObj()->GetSharedComp<n2::CompComplex>().GetAllChildren().empty();
+			bool empty = data->GetObj()->GetSharedComp<n0::CompComplex>().GetAllChildren().empty();
 #else
 			bool empty = m_world.GetComponent<e2::CompComplex>(data->GetObj()).children->empty();
 #endif // GAME_OBJ_ECS

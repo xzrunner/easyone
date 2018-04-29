@@ -6,9 +6,9 @@
 #include <ee0/SubjectMgr.h>
 
 #include <node0/SceneNode.h>
+#include <node0/CompComplex.h>
 #include <node2/CompAnim.h>
 #include <node2/CompAnimInst.h>
-#include <node2/CompComplex.h>
 #include <anim/Layer.h>
 #include <anim/KeyFrame.h>
 #include <anim/Utility.h>
@@ -76,7 +76,7 @@ void AnimHelper::UpdateTreePanael(ee0::SubjectMgr& sub_mgr,
 	// todo ecs
 #ifndef GAME_OBJ_ECS
 	auto root = GameObjFactory::Create(GAME_OBJ_SCENE2D);
-	auto& ccomplex = root->GetSharedComp<n2::CompComplex>();
+	auto& ccomplex = root->GetSharedComp<n0::CompComplex>();
 	canim_inst.TraverseCurrNodes([&](const ee0::GameObj& obj)->bool
 	{
 		ccomplex.AddChild(obj);

@@ -10,7 +10,7 @@
 
 #include <guard/check.h>
 #include <node0/SceneNode.h>
-#include <node2/CompComplex.h>
+#include <node0/CompComplex.h>
 
 namespace eone
 {
@@ -31,7 +31,7 @@ void WxStagePage::Traverse(std::function<bool(const ee0::GameObj&)> func,
 	{
 		// todo ecs
 #ifndef GAME_OBJ_ECS
-		m_obj->GetSharedComp<n2::CompComplex>().Traverse(func, inverse);
+		m_obj->GetSharedComp<n0::CompComplex>().Traverse(func, inverse);
 #endif // GAME_OBJ_ECS
 		return;
 	}
@@ -45,7 +45,7 @@ void WxStagePage::Traverse(std::function<bool(const ee0::GameObj&)> func,
 		// todo ecs
 #ifndef GAME_OBJ_ECS
 	default:
-		m_obj->GetSharedComp<n2::CompComplex>().Traverse(func, inverse);
+		m_obj->GetSharedComp<n0::CompComplex>().Traverse(func, inverse);
 #endif // GAME_OBJ_ECS
 	}
 }
@@ -53,7 +53,7 @@ void WxStagePage::Traverse(std::function<bool(const ee0::GameObj&)> func,
 #ifndef GAME_OBJ_ECS
 const n0::NodeSharedComp& WxStagePage::GetEditedObjComp() const 
 {
-	return m_obj->GetSharedComp<n2::CompComplex>();
+	return m_obj->GetSharedComp<n0::CompComplex>();
 }
 #endif // GAME_OBJ_ECS
 
