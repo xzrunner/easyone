@@ -14,6 +14,7 @@
 #include <node0/CompAsset.h>
 #include <node0/SceneNode.h>
 #include <node2/CompBoundingBox.h>
+#include <node2/AABBSystem.h>
 #include <ns/CompSerializer.h>
 #else
 #endif // GAME_OBJ_ECS
@@ -94,9 +95,10 @@ void WxStagePage::LoadFromJson(const std::string& dir, const rapidjson::Value& v
 	ResetNextID();
 
 #ifndef GAME_OBJ_ECS
-	auto& casset = m_obj->GetSharedComp<n0::CompAsset>();
 	auto& cbb = m_obj->GetUniqueComp<n2::CompBoundingBox>();
-	cbb.SetSize(*m_obj, casset.GetBounding());
+	auto aabb = n2::AABBSystem::GetBounding(
+		m_obj->GetSharedComp<n0::CompAsset>());
+	cbb.SetSize(*m_obj, aabb);
 #else
 	// todo ecs
 #endif // GAME_OBJ_ECS
