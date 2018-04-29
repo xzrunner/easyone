@@ -28,6 +28,9 @@
     <Filter Include="algorithms">
       <UniqueIdentifier>{0d29e445-bc3a-4701-b6f1-65162003b27c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="complex\bounding">
+      <UniqueIdentifier>{3cdf295c-f706-4124-bd1b-fcaf302f577e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\sm\sm_c_vector.cpp">
@@ -104,9 +107,6 @@
     <ClInclude Include="..\..\..\src\sm\SM_Plane.h">
       <Filter>complex\plane</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\sm\SM_Rect.h">
-      <Filter>complex\rect</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\sm\SM_ConvexHull.h">
       <Filter>algorithms</Filter>
     </ClInclude>
@@ -118,6 +118,12 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\sm\SM_Triangulation.h">
       <Filter>algorithms</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sm\SM_Rect.h">
+      <Filter>complex\bounding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sm\SM_Cube.h">
+      <Filter>complex\bounding</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -149,7 +155,10 @@
       <Filter>complex\plane</Filter>
     </None>
     <None Include="..\..\..\src\sm\SM_Rect.inl">
-      <Filter>complex\rect</Filter>
+      <Filter>complex\bounding</Filter>
+    </None>
+    <None Include="..\..\..\src\sm\SM_Cube.inl">
+      <Filter>complex\bounding</Filter>
     </None>
   </ItemGroup>
 </Project>

@@ -93,6 +93,7 @@
     <ClInclude Include="..\..\..\src\sm\sm_const.h" />
     <ClInclude Include="..\..\..\src\sm\SM_ConvexHull.h" />
     <ClInclude Include="..\..\..\src\sm\SM_CosineSmooth.h" />
+    <ClInclude Include="..\..\..\src\sm\SM_Cube.h" />
     <ClInclude Include="..\..\..\src\sm\sm_c_calc.h" />
     <ClInclude Include="..\..\..\src\sm\sm_c_matrix.h" />
     <ClInclude Include="..\..\..\src\sm\sm_c_vector.h" />
@@ -111,6 +112,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\src\sm\SM_Calc.inl" />
+    <None Include="..\..\..\src\sm\SM_Cube.inl" />
     <None Include="..\..\..\src\sm\SM_Math.inl" />
     <None Include="..\..\..\src\sm\SM_Matrix.inl" />
     <None Include="..\..\..\src\sm\SM_Matrix2D.inl" />
