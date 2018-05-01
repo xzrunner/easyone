@@ -22,9 +22,6 @@
     <Filter Include="complex\plane">
       <UniqueIdentifier>{94af6f74-ffc9-4054-bf14-12a3afef07c0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="complex\rect">
-      <UniqueIdentifier>{98822cc9-86ec-4ace-a984-6e3a60052d16}</UniqueIdentifier>
-    </Filter>
     <Filter Include="algorithms">
       <UniqueIdentifier>{0d29e445-bc3a-4701-b6f1-65162003b27c}</UniqueIdentifier>
     </Filter>
