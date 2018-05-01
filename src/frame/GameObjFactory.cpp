@@ -139,6 +139,7 @@ ee0::GameObj GameObjFactory::Create(ECS_WORLD_PARAM GameObjType type)
 		break;
 
 	case GAME_OBJ_SCENE2D:
+	case GAME_OBJ_SCENE3D:
 		{
 #ifndef GAME_OBJ_ECS
 			obj->AddSharedComp<n0::CompComplex>();

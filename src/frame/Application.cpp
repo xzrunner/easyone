@@ -233,7 +233,8 @@ wxWindow* Application::CreateStagePanel()
 	m_stage->Freeze();
 	Blackboard::Instance()->SetStagePanel(m_stage);
 
-	StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_SCENE2D, m_stage);
+	//StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_SCENE2D, m_stage);
+	StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_SCENE3D, m_stage);
 	//StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_SCALE9, m_stage);
 	//StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_SCRIPT, m_stage);
 	//StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_ANIM, m_stage);
