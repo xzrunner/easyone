@@ -109,12 +109,6 @@ const n0::NodeSharedComp& WxStagePage::GetEditedObjComp() const
 }
 #endif // GAME_OBJ_ECS
 
-void WxStagePage::StoreToJsonExt(const std::string& dir, rapidjson::Value& val, 
-	                             rapidjson::MemoryPoolAllocator<>& alloc) const
-{
-//	val.AddMember("camera", "2d", alloc);
-}
-
 bool WxStagePage::InsertSceneObj(const ee0::VariantSet& variants)
 {
 	auto var = variants.GetVariant("obj");

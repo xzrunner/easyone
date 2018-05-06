@@ -31,9 +31,6 @@ protected:
 	virtual const n0::NodeSharedComp& GetEditedObjComp() const override;
 #endif // GAME_OBJ_ECS
 
-	virtual void StoreToJsonExt(const std::string& dir, rapidjson::Value& val,
-		rapidjson::MemoryPoolAllocator<>& alloc) const;
-
 private:
 	bool InsertSceneObj(const ee0::VariantSet& variants);
 	bool DeleteSceneObj(const ee0::VariantSet& variants);

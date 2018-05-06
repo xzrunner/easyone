@@ -82,13 +82,12 @@ void Application::LoadFromFile(const std::string& filepath)
 	
 	int new_type = PAGE_INVALID;
 	std::string new_type_str = doc["comp_type"].GetString();
-	if (new_type_str == "n2_complex") {
-		//std::string camera = doc["camera"].GetString();
-		//if (camera == "2d") {
+	if (new_type_str == "n0_complex") {
+		if (doc.HasMember("is_scene3d") && doc["is_scene3d"].GetBool()) {
+			new_type = PAGE_SCENE3D;
+		} else {
 			new_type = PAGE_SCENE2D;
-		//} else if (camera == "3d") {
-		//	new_type = PAGE_SCENE3D;
-		//}
+		}
 	} else if (new_type_str == "n2_scale9") {
 		new_type = PAGE_SCALE9;
 	} else if (new_type_str == "n2_mask") {

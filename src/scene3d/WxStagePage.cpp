@@ -85,7 +85,7 @@ const n0::NodeSharedComp& WxStagePage::GetEditedObjComp() const
 void WxStagePage::StoreToJsonExt(const std::string& dir, rapidjson::Value& val, 
 	                             rapidjson::MemoryPoolAllocator<>& alloc) const
 {
-//	val.AddMember("camera", "3d", alloc);
+	val.AddMember("is_scene3d", true, alloc);
 }
 
 void WxStagePage::InsertSceneNode(const ee0::VariantSet& variants)
