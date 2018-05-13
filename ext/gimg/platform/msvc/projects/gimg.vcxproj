@@ -85,6 +85,7 @@
     <ClCompile Include="..\..\..\..\external\etcpack\source\etcimage.cxx" />
     <ClCompile Include="..\..\..\..\external\etcpack\source\etcpack.cxx" />
     <ClCompile Include="..\..\..\src\gimg\gimg_bmp.c" />
+    <ClCompile Include="..\..\..\src\gimg\gimg_dds.c" />
     <ClCompile Include="..\..\..\src\gimg\gimg_etc1.c" />
     <ClCompile Include="..\..\..\src\gimg\gimg_etc2.c" />
     <ClCompile Include="..\..\..\src\gimg\gimg_export.c" />
@@ -100,6 +101,7 @@
     <ClInclude Include="..\..\..\..\external\etcpack\etcpack_lib.h" />
     <ClInclude Include="..\..\..\..\external\etcpack\source\etcimage.h" />
     <ClInclude Include="..\..\..\src\gimg\gimg_bmp.h" />
+    <ClInclude Include="..\..\..\src\gimg\gimg_dds.h" />
     <ClInclude Include="..\..\..\src\gimg\gimg_etc1.h" />
     <ClInclude Include="..\..\..\src\gimg\gimg_etc2.h" />
     <ClInclude Include="..\..\..\src\gimg\gimg_export.h" />
