@@ -208,10 +208,10 @@ void WxComponentPanel::InitLayout(wxSizer* top_sizer)
 			auto type = sx::ResFileHelper::Type(m_filepath);
 			switch (type)
 			{
-			case sx::FILE_IMAGE:
+			case sx::RES_FILE_IMAGE:
 				hori_sizer->Add(new ee0::WxImagePanel(this, m_filepath, 100));
 				break;
-			case sx::FILE_JSON:
+			case sx::RES_FILE_JSON:
 				break;
 			}
 		}	
