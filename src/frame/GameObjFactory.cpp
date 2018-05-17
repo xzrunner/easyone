@@ -22,6 +22,9 @@
 #include <node2/CompParticle3dInst.h>
 #include <node2/CompBoundingBox.h>
 #include <node2/CompTransform.h>
+#include <node3/CompModel.h>
+#include <node3/CompTransform.h>
+#include <node3/CompAABB.h>
 #else
 #include <entity0/World.h>
 #include <entity2/CompImage.h>
@@ -53,8 +56,10 @@ ee0::GameObj GameObjFactory::Create(ECS_WORLD_PARAM GameObjType type)
 	auto obj = world.CreateEntity();
 #endif // GAME_OBJ_ECS
 
-	sm::rect sz;
+	bool is_2d = true;
 
+	sm::rect sz;
+	pt3::AABB sz3;
 	switch (type)
 	{
 	case GAME_OBJ_IMAGE:
@@ -138,8 +143,16 @@ ee0::GameObj GameObjFactory::Create(ECS_WORLD_PARAM GameObjType type)
 		}
 		break;
 
+	case GAME_OBJ_MODEL:
+		{
+			is_2d = false;
+#ifndef GAME_OBJ_ECS
+			obj->AddSharedComp<n3::CompModel>();
+#endif // GAME_OBJ_ECS
+		}
+		break;
+
 	case GAME_OBJ_SCENE2D:
-	case GAME_OBJ_SCENE3D:
 		{
 #ifndef GAME_OBJ_ECS
 			obj->AddSharedComp<n0::CompComplex>();
@@ -149,21 +162,53 @@ ee0::GameObj GameObjFactory::Create(ECS_WORLD_PARAM GameObjType type)
 			sz.Build(100, 100);
 		}
 		break;
+	case GAME_OBJ_SCENE3D:
+		{
+			is_2d = false;
+#ifndef GAME_OBJ_ECS
+			obj->AddSharedComp<n0::CompComplex>();
+#else
+			world.AddComponent<e2::CompComplex>(obj);
+#endif // GAME_OBJ_ECS
+		}
+		break;
 	}
 
 	// transform
+	if (is_2d)
+	{
 #ifndef GAME_OBJ_ECS
-	obj->AddUniqueComp<n2::CompTransform>();
+		obj->AddUniqueComp<n2::CompTransform>();
 #else
-	world.AddComponent<e2::CompLocalMat>(obj);
+		world.AddComponent<e2::CompLocalMat>(obj);
 #endif // GAME_OBJ_ECS
+	}
+	else
+	{
+#ifndef GAME_OBJ_ECS
+		obj->AddUniqueComp<n3::CompTransform>();
+#else
+		world.AddComponent<e3::CompLocalMat>(obj);
+#endif // GAME_OBJ_ECS
+	}
 
 	// aabb
+	if (is_2d)
+	{
 #ifndef GAME_OBJ_ECS
-	obj->AddUniqueComp<n2::CompBoundingBox>(sz);
+		obj->AddUniqueComp<n2::CompBoundingBox>(sz);
 #else
-	world.AddComponent<e2::CompBoundingBox>(obj, sz);
+		world.AddComponent<e2::CompBoundingBox>(obj, sz);
 #endif // GAME_OBJ_ECS
+	}
+	else
+	{
+#ifndef GAME_OBJ_ECS
+		obj->AddUniqueComp<n3::CompAABB>(sm::cube(1, 1, 1));
+#else
+		world.AddComponent<e3::CompBoundingBox>(obj, sz);
+#endif // GAME_OBJ_ECS
+	}
 
 	// editor
 #ifndef GAME_OBJ_ECS

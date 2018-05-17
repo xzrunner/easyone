@@ -12,6 +12,8 @@ public:
 
 protected:
 	virtual void OnNew(wxCommandEvent& event) override;
+	virtual void OnOpen(wxCommandEvent& event) override;
+
 	virtual void OnSettings(wxCommandEvent& event) override;
 
 }; // WxFrame

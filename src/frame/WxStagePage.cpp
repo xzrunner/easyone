@@ -10,12 +10,17 @@
 #include <ee0/CompNodeEditor.h>
 
 #include <guard/check.h>
+#include <js/RapidJsonHelper.h>
+#include <sx/ResFileHelper.h>
 #ifndef GAME_OBJ_ECS
 #include <node0/CompAsset.h>
 #include <node0/SceneNode.h>
 #include <node2/CompBoundingBox.h>
 #include <node2/AABBSystem.h>
+#include <node3/CompModel.h>
+#include <node3/CompTransform.h>
 #include <ns/CompSerializer.h>
+#include <ns/NodeFactory.h>
 #else
 #endif // GAME_OBJ_ECS
 #include <moon/Blackboard.h>
@@ -76,17 +81,39 @@ void WxStagePage::StoreToJson(const std::string& dir, rapidjson::Value& val,
 	m_backup.Clear();
 }
 
-void WxStagePage::LoadFromJson(const std::string& dir, const rapidjson::Value& val)
+void WxStagePage::LoadFromFile(const std::string& filepath)
 {
 	m_sub_mgr->NotifyObservers(ee0::MSG_NODE_SELECTION_CLEAR);
 	m_sub_mgr->NotifyObservers(ee0::MSG_CLEAR_SCENE_NODE);
 
-#ifndef GAME_OBJ_ECS
-	ns::CompSerializer::Instance()->FromJson(m_obj, dir, val);
-#else
-	// todo ecs
-#endif // GAME_OBJ_ECS
-	LoadFromJsonExt(dir, val);
+	bool is_2d = true;
+
+	auto type = sx::ResFileHelper::Type(filepath);
+	switch (type)
+	{
+	case sx::RES_FILE_IMAGE:
+		ns::NodeFactory::CreateNodeAssetComp(m_obj, filepath);
+		break;
+	case sx::RES_FILE_JSON:
+		{
+			auto dir = boost::filesystem::path(filepath).parent_path().string();
+
+			rapidjson::Document doc;
+			js::RapidJsonHelper::ReadFromFile(filepath.c_str(), doc);
+
+	#ifndef GAME_OBJ_ECS
+			ns::CompSerializer::Instance()->FromJson(m_obj, dir, doc);
+	#else
+			// todo ecs
+	#endif // GAME_OBJ_ECS
+			LoadFromJsonExt(dir, doc);
+		}
+		break;
+	case sx::RES_FILE_MODEL:
+		ns::NodeFactory::CreateNodeAssetComp(m_obj, filepath);
+		is_2d = false;
+		break;
+	}
 
 	ResetNextID();
 
@@ -95,10 +122,13 @@ void WxStagePage::LoadFromJson(const std::string& dir, const rapidjson::Value& v
 	ResetNextID();
 
 #ifndef GAME_OBJ_ECS
-	auto& cbb = m_obj->GetUniqueComp<n2::CompBoundingBox>();
-	auto aabb = n2::AABBSystem::GetBounding(
-		m_obj->GetSharedComp<n0::CompAsset>());
-	cbb.SetSize(*m_obj, aabb);
+	if (is_2d)
+	{
+		auto& cbb = m_obj->GetUniqueComp<n2::CompBoundingBox>();
+		auto aabb = n2::AABBSystem::GetBounding(
+			m_obj->GetSharedComp<n0::CompAsset>());
+		cbb.SetSize(*m_obj, aabb);
+	}
 #else
 	// todo ecs
 #endif // GAME_OBJ_ECS
@@ -106,8 +136,8 @@ void WxStagePage::LoadFromJson(const std::string& dir, const rapidjson::Value& v
 	m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
 }
 
-void WxStagePage::SetFilepath(const std::string& filepath) 
-{ 
+void WxStagePage::SetFilepath(const std::string& filepath)
+{
 	m_filepath = filepath;
 	m_backup.SetFilepath(GetBackupPath());
 }
@@ -120,7 +150,7 @@ std::string WxStagePage::GetBackupPath() const
 void WxStagePage::LoadFromBackup()
 {
 	auto filepath = GetBackupPath();
-	if (boost::filesystem::exists(filepath)) 
+	if (boost::filesystem::exists(filepath))
 	{
 		auto L = moon::Blackboard::Instance()->GetContext()->GetState();
 		auto err = moon::ScriptHelper::DoFile(L, filepath.c_str());
@@ -194,7 +224,7 @@ void WxStagePage::SetMoonContext()
 void WxStagePage::ResetNextID()
 {
 	uint32_t max_id = 0;
-	Traverse([&](const ee0::GameObj& obj)->bool 
+	Traverse([&](const ee0::GameObj& obj)->bool
 	{
 		auto& ceditor = obj->GetUniqueComp<ee0::CompNodeEditor>();
 		max_id = std::max(max_id, ceditor.GetID());

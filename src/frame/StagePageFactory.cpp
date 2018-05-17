@@ -20,6 +20,7 @@
 #include "anim/WxStagePage.h"
 #include "particle3d/WxStagePage.h"
 #include "particle3d/PlayParticlesOP.h"
+#include "model/WxStagePage.h"
 
 #include <ee0/WxListSelectDlg.h>
 #include <ee0/MsgHelper.h>
@@ -155,6 +156,18 @@ WxStagePage* StagePageFactory::Create(ECS_WORLD_PARAM int page_type, WxStagePane
 		}
 		break;
 
+	case PAGE_MODEL:
+		{
+			auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_MODEL);
+			page = new model::WxStagePage(frame, library, ECS_WORLD_VAR obj);
+			auto canvas = std::make_shared<ee3::WxStageCanvas>(page, &rc, nullptr);
+			page->GetImpl().SetCanvas(canvas);
+			page->GetImpl().SetEditOP(std::make_shared<ee3::NodeArrangeOP>(*page));
+
+			stage_panel->AddNewPage(page, GetPageName(page->GetPageType()));
+		}
+		break;
+
 	case PAGE_SCRIPT:
 		{
 			std::string filter = "*.lua";
@@ -162,7 +175,7 @@ WxStagePage* StagePageFactory::Create(ECS_WORLD_PARAM int page_type, WxStagePane
 			if (dlg.ShowModal() != wxID_OK) {
 				break;
 			}
-			
+
 			auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_SCENE2D);
 			page = new script::WxStagePage(frame, library, ECS_WORLD_VAR obj);
 			auto canvas = std::make_shared<script::WxStageCanvas>(page, ECS_WORLD_VAR rc, dlg.GetPath().ToStdString());

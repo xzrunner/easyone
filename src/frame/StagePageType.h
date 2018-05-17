@@ -18,10 +18,12 @@ enum StagePageType
 	PAGE_ANIM,
 	PAGE_PARTICLE3D,
 
+	PAGE_MODEL,
+
 	PAGE_SCRIPT,
 };
 
-inline 
+inline
 std::string GetPageName(int type)
 {
 	switch (type)
@@ -41,6 +43,9 @@ std::string GetPageName(int type)
 		return "Anim";
 	case PAGE_PARTICLE3D:
 		return "Particle3D";
+
+	case PAGE_MODEL:
+		return "Model";
 
 	case PAGE_SCRIPT:
 		return "Script";

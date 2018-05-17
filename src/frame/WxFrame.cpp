@@ -13,7 +13,7 @@
 
 namespace
 {
-	
+
 static const std::vector<std::pair<uint32_t, std::string>> PAGE_LIST =
 {
 	std::make_pair(eone::PAGE_SCENE2D,    "Scene2D"),
@@ -24,6 +24,8 @@ static const std::vector<std::pair<uint32_t, std::string>> PAGE_LIST =
 	std::make_pair(eone::PAGE_MESH,       "Mesh"),
 	std::make_pair(eone::PAGE_ANIM,       "Anim"),
 	std::make_pair(eone::PAGE_PARTICLE3D, "Particle3d"),
+
+	std::make_pair(eone::PAGE_SCALE9,     "Scale9"),
 
 	std::make_pair(eone::PAGE_SCRIPT,     "Script..."),
 };
@@ -56,6 +58,14 @@ void WxFrame::OnNew(wxCommandEvent& event)
 
 	WxStagePage* curr_page = static_cast<WxStagePage*>(app->GetStagePanel()->GetPage(app->GetStagePanel()->GetSelection()));
 	curr_page->GetSubjectMgr()->NotifyObservers(ee0::MSG_STAGE_PAGE_ON_SHOW);
+}
+
+void WxFrame::OnOpen(wxCommandEvent& event)
+{
+	wxFileDialog dlg(this, wxT("Open"), wxEmptyString, wxEmptyString);
+	if (dlg.ShowModal() == wxID_OK) {
+		m_app->LoadFromFile(dlg.GetPath().ToStdString());
+	}
 }
 
 void WxFrame::OnSettings(wxCommandEvent& event)

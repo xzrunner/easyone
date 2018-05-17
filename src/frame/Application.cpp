@@ -77,44 +77,45 @@ void Application::LoadFromFile(const std::string& filepath)
 	auto page = m_stage->GetCurrentStagePage();
 	int old_type = page->GetPageType();
 
-	rapidjson::Document doc;
-	js::RapidJsonHelper::ReadFromFile(filepath.c_str(), doc);
-	
 	int new_type = PAGE_INVALID;
-	std::string new_type_str = doc["comp_type"].GetString();
-	if (new_type_str == "n0_complex") {
-		if (doc.HasMember("is_scene3d") && doc["is_scene3d"].GetBool()) {
-			new_type = PAGE_SCENE3D;
-		} else {
-			new_type = PAGE_SCENE2D;
+
+	auto ext = boost::filesystem::extension(filepath);
+	if (ext == ".json")
+	{
+		rapidjson::Document doc;
+		js::RapidJsonHelper::ReadFromFile(filepath.c_str(), doc);
+
+		std::string new_type_str = doc["comp_type"].GetString();
+		if (new_type_str == "n0_complex") {
+			if (doc.HasMember("is_scene3d") && doc["is_scene3d"].GetBool()) {
+				new_type = PAGE_SCENE3D;
+			} else {
+				new_type = PAGE_SCENE2D;
+			}
+		} else if (new_type_str == "n2_scale9") {
+			new_type = PAGE_SCALE9;
+		} else if (new_type_str == "n2_mask") {
+			new_type = PAGE_MASK;
+		} else if (new_type_str == "n2_mesh") {
+			new_type = PAGE_MESH;
+		} else if (new_type_str == "n2_anim") {
+			new_type = PAGE_ANIM;
+		} else if (new_type_str == "n2_particle3d") {
+			new_type = PAGE_PARTICLE3D;
 		}
-	} else if (new_type_str == "n2_scale9") {
-		new_type = PAGE_SCALE9;
-	} else if (new_type_str == "n2_mask") {
-		new_type = PAGE_MASK;
-	} else if (new_type_str == "n2_mesh") {
-		new_type = PAGE_MESH;
-	} else if (new_type_str == "n2_anim") {
-		new_type = PAGE_ANIM;
-	} else if (new_type_str == "n2_particle3d") {
-		new_type = PAGE_PARTICLE3D;
+	}
+	else if (ext == ".X")
+	{
+		new_type = PAGE_MODEL;
 	}
 
 	if (old_type != new_type || !page->GetFilepath().empty()) {
-		page = StagePageFactory::Create(
-#ifdef GAME_OBJ_ECS
-			m_world,
-#endif // GAME_OBJ_ECS
-			new_type, 
-			m_stage
-		);
+		page = StagePageFactory::Create(ECS_WORLD_SELF_VAR new_type, m_stage);
 		page->GetSubjectMgr()->NotifyObservers(ee0::MSG_STAGE_PAGE_ON_SHOW);
 	}
 
 	page->SetFilepath(filepath);
-
-	auto dir = boost::filesystem::path(filepath).parent_path().string();
-	page->LoadFromJson(dir, doc);
+	page->LoadFromFile(filepath);
 
 	m_frame->SetTitle(filepath);
 }
@@ -223,7 +224,7 @@ wxWindow* Application::CreateLibraryPanel()
 wxWindow* Application::CreateRecordPanel()
 {
 	auto& sub_mgr = m_stage->GetCurrentStagePage()->GetSubjectMgr();
-	return new WxRecordPanel(m_frame, sub_mgr);	
+	return new WxRecordPanel(m_frame, sub_mgr);
 }
 
 wxWindow* Application::CreateStagePanel()
@@ -234,10 +235,13 @@ wxWindow* Application::CreateStagePanel()
 
 	//StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_SCENE2D, m_stage);
 	StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_SCENE3D, m_stage);
+
 	//StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_SCALE9, m_stage);
 	//StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_SCRIPT, m_stage);
 	//StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_ANIM, m_stage);
 	//StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_PARTICLE3D, m_stage);
+
+	//StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_MODEL, m_stage);
 
 	m_stage->Thaw();
 
@@ -279,7 +283,7 @@ wxWindow* Application::CreateWorldPanel()
 wxWindow* Application::CreateDetailPanel()
 {
 	auto curr_page = m_stage->GetCurrentStagePage();
-	return new WxDetailPanel(m_frame, curr_page->GetSubjectMgr(), 
+	return new WxDetailPanel(m_frame, curr_page->GetSubjectMgr(),
 		ECS_WORLD_SELF_VAR curr_page->GetEditedObj(), curr_page->GetMoonCtx());
 }
 

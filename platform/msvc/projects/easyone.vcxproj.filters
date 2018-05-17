@@ -16,9 +16,6 @@
     <Filter Include="11.mask">
       <UniqueIdentifier>{a0814d30-c873-4c45-817c-38f4d2014634}</UniqueIdentifier>
     </Filter>
-    <Filter Include="20.script">
-      <UniqueIdentifier>{e5403ed2-e587-4720-82ab-24d87ef5a467}</UniqueIdentifier>
-    </Filter>
     <Filter Include="12.anim">
       <UniqueIdentifier>{ef791827-85c5-499e-90fb-91382d36370b}</UniqueIdentifier>
     </Filter>
@@ -90,6 +87,12 @@
     </Filter>
     <Filter Include="00.frame\3.right\script">
       <UniqueIdentifier>{aebe23ba-7c5c-4957-8e0d-623fbdddc193}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="40.script">
+      <UniqueIdentifier>{e5403ed2-e587-4720-82ab-24d87ef5a467}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="30.model">
+      <UniqueIdentifier>{3dcda7bc-0138-4aba-88f0-7b5f9c3fed8b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -169,10 +172,10 @@
       <Filter>00.frame\2.center\stage</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\script\WxStagePage.h">
-      <Filter>20.script</Filter>
+      <Filter>40.script</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\script\WxStageCanvas.h">
-      <Filter>20.script</Filter>
+      <Filter>40.script</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\anim\WxStagePage.h">
       <Filter>12.anim</Filter>
@@ -276,6 +279,9 @@
     <ClInclude Include="..\..\..\src\frame\EditBackup.h">
       <Filter>00.frame\tools</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\model\WxStagePage.h">
+      <Filter>30.model</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\frame\main.cpp">
@@ -351,10 +357,10 @@
       <Filter>00.frame\2.center\stage</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\script\WxStagePage.cpp">
-      <Filter>20.script</Filter>
+      <Filter>40.script</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\script\WxStageCanvas.cpp">
-      <Filter>20.script</Filter>
+      <Filter>40.script</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\anim\WxStagePage.cpp">
       <Filter>12.anim</Filter>
@@ -433,6 +439,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\frame\EditBackup.cpp">
       <Filter>00.frame\tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\model\WxStagePage.cpp">
+      <Filter>30.model</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

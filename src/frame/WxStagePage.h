@@ -2,6 +2,7 @@
 
 #include "frame/EditBackup.h"
 
+
 #include <ee0/GameObj.h>
 #include <ee0/WxStagePage.h>
 
@@ -40,7 +41,7 @@ public:
 
 	void StoreToJson(const std::string& dir, rapidjson::Value& val,
 		rapidjson::MemoryPoolAllocator<>& alloc) const;
-	void LoadFromJson(const std::string& dir, const rapidjson::Value& val);
+	void LoadFromFile(const std::string& filepath);
 
 	const ee0::GameObj& GetEditedObj() const { return m_obj; }
 
