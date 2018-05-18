@@ -2,7 +2,8 @@
 #include "frame/GameObjFactory.h"
 #include "frame/StagePageType.h"
 #include "frame/WxStagePanel.h"
-#include "frame/WxStageCanvas.h"
+#include "frame/WxStageCanvas2D.h"
+#include "frame/WxStageCanvas3D.h"
 #include "frame/NodeSelectOP.h"
 #include "frame/Blackboard.h"
 #include "frame/Application.h"
@@ -58,7 +59,7 @@ WxStagePage* StagePageFactory::Create(ECS_WORLD_PARAM int page_type, WxStagePane
 		{
 			auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_SCENE2D);
 			page = new scene2d::WxStagePage(frame, library, ECS_WORLD_VAR obj);
-			auto canvas = std::make_shared<WxStageCanvas>(page, ECS_WORLD_VAR rc);
+			auto canvas = std::make_shared<WxStageCanvas2D>(page, ECS_WORLD_VAR rc);
 			page->GetImpl().SetCanvas(canvas);
 
 			auto prev_op = std::make_shared<NodeSelectOP>(ECS_WORLD_VAR *page, rc, wc);
@@ -76,7 +77,7 @@ WxStagePage* StagePageFactory::Create(ECS_WORLD_PARAM int page_type, WxStagePane
 		{
 			auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_SCENE3D);
 			page = new scene3d::WxStagePage(frame, library, ECS_WORLD_VAR obj);
-			auto canvas = std::make_shared<ee3::WxStageCanvas>(page, &rc, nullptr);
+			auto canvas = std::make_shared<WxStageCanvas3D>(page, rc);
 			page->GetImpl().SetCanvas(canvas);
 			page->GetImpl().SetEditOP(std::make_shared<ee3::NodeArrangeOP>(*page));
 
@@ -99,7 +100,7 @@ WxStagePage* StagePageFactory::Create(ECS_WORLD_PARAM int page_type, WxStagePane
 		{
 			auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_MASK);
 			page = new mask::WxStagePage(frame, library, ECS_WORLD_VAR obj);
-			auto canvas = std::make_shared<WxStageCanvas>(page, ECS_WORLD_VAR rc);
+			auto canvas = std::make_shared<WxStageCanvas2D>(page, ECS_WORLD_VAR rc);
 			page->GetImpl().SetCanvas(canvas);
 
 			auto prev_op = std::make_shared<NodeSelectOP>(ECS_WORLD_VAR *page, rc, wc);
@@ -118,7 +119,7 @@ WxStagePage* StagePageFactory::Create(ECS_WORLD_PARAM int page_type, WxStagePane
 		{
 			auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_ANIM);
 			page = new anim::WxStagePage(frame, library, ECS_WORLD_VAR obj);
-			auto canvas = std::make_shared<WxStageCanvas>(page, ECS_WORLD_VAR rc);
+			auto canvas = std::make_shared<WxStageCanvas2D>(page, ECS_WORLD_VAR rc);
 			page->GetImpl().SetCanvas(canvas);
 
 			auto prev_op = std::make_shared<NodeSelectOP>(ECS_WORLD_VAR *page, rc, wc);
@@ -137,7 +138,7 @@ WxStagePage* StagePageFactory::Create(ECS_WORLD_PARAM int page_type, WxStagePane
 		{
 			auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_PARTICLE3D);
 			page = new particle3d::WxStagePage(frame, library, ECS_WORLD_VAR obj);
-			auto canvas = std::make_shared<WxStageCanvas>(page, ECS_WORLD_VAR rc);
+			auto canvas = std::make_shared<WxStageCanvas2D>(page, ECS_WORLD_VAR rc);
 			page->GetImpl().SetCanvas(canvas);
 
 #ifndef GAME_OBJ_ECS
@@ -160,7 +161,7 @@ WxStagePage* StagePageFactory::Create(ECS_WORLD_PARAM int page_type, WxStagePane
 		{
 			auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_MODEL);
 			page = new model::WxStagePage(frame, library, ECS_WORLD_VAR obj);
-			auto canvas = std::make_shared<ee3::WxStageCanvas>(page, &rc, nullptr);
+			auto canvas = std::make_shared<WxStageCanvas3D>(page, rc);
 			page->GetImpl().SetCanvas(canvas);
 			page->GetImpl().SetEditOP(std::make_shared<ee3::NodeArrangeOP>(*page));
 

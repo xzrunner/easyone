@@ -7,10 +7,10 @@ namespace eone
 
 class WxStagePage;
 
-class WxStageCanvas : public ee2::WxStageCanvas
+class WxStageCanvas2D : public ee2::WxStageCanvas
 {
 public:
-	WxStageCanvas(WxStagePage* stage, ECS_WORLD_PARAM
+	WxStageCanvas2D(WxStagePage* stage, ECS_WORLD_PARAM
 		const ee0::RenderContext& rc);
 
 protected:
@@ -20,6 +20,6 @@ protected:
 
 	virtual void OnMouseImpl(wxMouseEvent& event) override;
 
-}; // WxStageCanvas
+}; // WxStageCanvas2D
 
 }

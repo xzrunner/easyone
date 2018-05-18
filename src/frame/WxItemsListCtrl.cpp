@@ -197,7 +197,7 @@ void WxItemsListCtrl::InsertSceneObj(const ee0::VariantSet& variants)
 	auto var = variants.GetVariant("obj");
 	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: obj");
 	ee0::GameObj* obj = static_cast<ee0::GameObj*>(var.m_val.pv);
-	GD_ASSERT(obj, "err scene obj");
+	GD_ASSERT(obj, "err model obj");
 
 	std::string filepath;
 #ifndef GAME_OBJ_ECS
@@ -224,7 +224,7 @@ void WxItemsListCtrl::DeleteSceneObj(const ee0::VariantSet& variants)
 	auto var = variants.GetVariant("obj");
 	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: obj");
 	ee0::GameObj* obj = static_cast<ee0::GameObj*>(var.m_val.pv);
-	GD_ASSERT(obj, "err scene obj");
+	GD_ASSERT(obj, "err model obj");
 
 	int idx = QueryItemIndex(*obj);
 	GD_ASSERT(idx != -1, "not find");
@@ -244,7 +244,7 @@ void WxItemsListCtrl::ReorderSceneObj(const ee0::VariantSet& variants)
 	auto obj_var = variants.GetVariant("obj");
 	GD_ASSERT(obj_var.m_type == ee0::VT_PVOID, "no var in vars: obj");
 	ee0::GameObj* obj = static_cast<ee0::GameObj*>(obj_var.m_val.pv);
-	GD_ASSERT(obj, "err scene obj");
+	GD_ASSERT(obj, "err model obj");
 
 	auto up_var = variants.GetVariant("up");
 	GD_ASSERT(up_var.m_type == ee0::VT_BOOL, "no var in vars: up");
@@ -279,7 +279,7 @@ void WxItemsListCtrl::SelectSceneObj(const ee0::VariantSet& variants)
 	auto var = variants.GetVariant("obj");
 	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: obj");
 	ee0::GameObj* obj = static_cast<ee0::GameObj*>(var.m_val.pv);
-	GD_ASSERT(obj, "err scene obj");
+	GD_ASSERT(obj, "err model obj");
 
 	bool multiple = false;
 	auto var_multi = variants.GetVariant("multiple");
@@ -304,7 +304,7 @@ void WxItemsListCtrl::UnselectSceneObj(const ee0::VariantSet& variants)
 	auto var = variants.GetVariant("obj");
 	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: obj");
 	ee0::GameObj* obj = static_cast<ee0::GameObj*>(var.m_val.pv);
-	GD_ASSERT(obj, "err scene obj");
+	GD_ASSERT(obj, "err model obj");
 
 	int idx = 0;
 	m_list->Traverse([&](const ee0::WxLibraryItem& item)->bool

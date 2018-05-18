@@ -94,6 +94,9 @@
     <Filter Include="30.model">
       <UniqueIdentifier>{3dcda7bc-0138-4aba-88f0-7b5f9c3fed8b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="00.frame\2.center\stage\canvas">
+      <UniqueIdentifier>{f1c58060-7ecb-4d97-a8e3-e3075cdb4e94}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\frame\main.h">
@@ -167,9 +170,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\frame\WxSettingsDialog.h">
       <Filter>00.frame\frame</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\frame\WxStageCanvas.h">
-      <Filter>00.frame\2.center\stage</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\script\WxStagePage.h">
       <Filter>40.script</Filter>
@@ -282,6 +282,12 @@
     <ClInclude Include="..\..\..\src\model\WxStagePage.h">
       <Filter>30.model</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\frame\WxStageCanvas2D.h">
+      <Filter>00.frame\2.center\stage\canvas</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\frame\WxStageCanvas3D.h">
+      <Filter>00.frame\2.center\stage\canvas</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\frame\main.cpp">
@@ -352,9 +358,6 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\frame\WxSettingsDialog.cpp">
       <Filter>00.frame\frame</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\frame\WxStageCanvas.cpp">
-      <Filter>00.frame\2.center\stage</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\script\WxStagePage.cpp">
       <Filter>40.script</Filter>
@@ -442,6 +445,12 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\model\WxStagePage.cpp">
       <Filter>30.model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\frame\WxStageCanvas2D.cpp">
+      <Filter>00.frame\2.center\stage\canvas</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\frame\WxStageCanvas3D.cpp">
+      <Filter>00.frame\2.center\stage\canvas</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
