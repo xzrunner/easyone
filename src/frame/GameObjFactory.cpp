@@ -23,6 +23,7 @@
 #include <node2/CompBoundingBox.h>
 #include <node2/CompTransform.h>
 #include <node3/CompModel.h>
+#include <node3/CompModelInst.h>
 #include <node3/CompTransform.h>
 #include <node3/CompAABB.h>
 #else
@@ -148,6 +149,7 @@ ee0::GameObj GameObjFactory::Create(ECS_WORLD_PARAM GameObjType type)
 			is_2d = false;
 #ifndef GAME_OBJ_ECS
 			obj->AddSharedComp<n3::CompModel>();
+			obj->AddUniqueComp<n3::CompModelInst>();
 #endif // GAME_OBJ_ECS
 		}
 		break;
