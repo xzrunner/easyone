@@ -5,7 +5,6 @@
 
 #include <ee0/SubjectMgr.h>
 #ifndef GAME_OBJ_ECS
-#include <ee0/CompNodeEditor.h>
 #else
 #include <ee0/CompEntityEditor.h>
 #endif // GAME_OBJ_ECS
@@ -16,6 +15,7 @@
 #ifndef GAME_OBJ_ECS
 #include <node0/SceneNode.h>
 #include <node0/CompAsset.h>
+#include <node0/CompIdentity.h>
 #include <node0/SceneTreeHelper.h>
 #include <node0/CompComplex.h>
 #include <node2/CompTransform.h>
@@ -102,7 +102,7 @@ void WxSceneTreeCtrl::OnSearch(const std::string& str)
 	Traverse(m_root, [&](wxTreeItemId item)->bool
 	{
 		std::string name = GetItemText(item);
-		if (name.find(str) != std::string::npos) 
+		if (name.find(str) != std::string::npos)
 		{
 			m_disable_select = true;
 			SelectItem(item, false);
@@ -116,15 +116,15 @@ void WxSceneTreeCtrl::Traverse(wxTreeItemId id, std::function<bool(wxTreeItemId)
 {
 	std::queue<wxTreeItemId> buf;
 	buf.push(id);
-	while (!buf.empty()) 
+	while (!buf.empty())
 	{
 		wxTreeItemId item = buf.front(); buf.pop();
 
 		wxTreeItemIdValue cookie;
 		wxTreeItemId id = GetFirstChild(item, cookie);
-		if (id.IsOk()) 
+		if (id.IsOk())
 		{
-			if (item != id) 
+			if (item != id)
 			{
 				// visit index
 				if (!func(item)) {
@@ -136,8 +136,8 @@ void WxSceneTreeCtrl::Traverse(wxTreeItemId id, std::function<bool(wxTreeItemId)
 				buf.push(id);
 				id = GetNextSibling(id);
 			}
-		} 
-		else 
+		}
+		else
 		{
 			// visit leaf
 			if (!func(item)) {
@@ -212,10 +212,10 @@ void WxSceneTreeCtrl::OnSelChanged(wxTreeEvent& event)
 	var_skip.m_val.pv = static_cast<Observer*>(this);
 	vars.SetVariant("skip_observer", var_skip);
 
-	if (IsSelected(id)) 
+	if (IsSelected(id))
 	{
 		bool add = wxGetKeyState(WXK_CONTROL);
-		if (!add) 
+		if (!add)
 		{
 			ee0::Variant var_clear;
 			var_clear.m_type = ee0::VT_BOOL;
@@ -224,8 +224,8 @@ void WxSceneTreeCtrl::OnSelChanged(wxTreeEvent& event)
 		}
 
 		m_sub_mgr->NotifyObservers(ee0::MSG_NODE_SELECTION_INSERT, vars);
-	} 
-	else 
+	}
+	else
 	{
 		m_sub_mgr->NotifyObservers(ee0::MSG_NODE_SELECTION_DELETE, vars);
 	}
@@ -240,8 +240,8 @@ void WxSceneTreeCtrl::OnLabelEdited(wxTreeEvent& event)
 	}
 
 #ifndef GAME_OBJ_ECS
-	auto& ceditor = data_dst->GetObj()->GetUniqueComp<ee0::CompNodeEditor>();
-	ceditor.SetName(event.GetLabel().ToStdString());
+	auto& cid = data_dst->GetObj()->GetUniqueComp<n0::CompIdentity>();
+	cid.SetName(event.GetLabel().ToStdString());
 #else
 	auto& ceditor = m_world.GetComponent<ee0::CompEntityEditor>(data_dst->GetObj());
 	ceditor.name = std::make_unique<std::string>(event.GetLabel().ToStdString());
@@ -390,14 +390,14 @@ void WxSceneTreeCtrl::UnselectSceneObj(const ee0::GameObj& obj)
 	Traverse(m_root, [&](wxTreeItemId item)->bool
 	{
 		auto pdata = (Item*)GetItemData(item);
-		if (pdata->GetObj() == obj) 
+		if (pdata->GetObj() == obj)
 		{
 			m_disable_select = true;
 			UnselectItem(item);
 			m_disable_select = false;
 			return false;
-		} 
-		else 
+		}
+		else
 		{
 			return true;
 		}
@@ -422,7 +422,7 @@ void WxSceneTreeCtrl::InsertSceneObj(wxTreeItemId parent, const ee0::GameObj& ob
 {
 	auto item = new Item(obj, root, obj_id);
 #ifndef GAME_OBJ_ECS
-	auto& name = obj->GetUniqueComp<ee0::CompNodeEditor>().GetName();
+	auto& name = obj->GetUniqueComp<n0::CompIdentity>().GetName();
 	bool is_complex = obj->HasSharedComp<n0::CompComplex>();
 #else
 	std::string name;
@@ -445,7 +445,7 @@ void WxSceneTreeCtrl::InsertSceneObj(wxTreeItemId parent, const ee0::GameObj& ob
 		auto& ccomplex = m_world.GetComponent<e2::CompComplex>(obj);
 		auto& children = *ccomplex.children;
 #endif // GAME_OBJ_ECS
-		for (auto& child : children) 
+		for (auto& child : children)
 		{
 			InsertSceneObj(id, child, root, obj_id);
 #ifndef GAME_OBJ_ECS
@@ -525,15 +525,15 @@ bool WxSceneTreeCtrl::ReorderItem(wxTreeItemId item, bool up)
 	GD_ASSERT(item.IsOk(), "err item");
 
 	wxTreeItemId insert_prev;
-	if (up) 
+	if (up)
 	{
 		wxTreeItemId prev = GetPrevSibling(item);
 		if (!prev.IsOk()) {
 			return false;
 		}
 		insert_prev = GetPrevSibling(prev);
-	} 
-	else 
+	}
+	else
 	{
 		wxTreeItemId next = GetNextSibling(item);
 		if (!next.IsOk()) {
@@ -576,7 +576,7 @@ void WxSceneTreeCtrl::ReorderSelectionToMsg(bool up)
 	ee0::SelectionSet<ee0::GameObjWithPos> selection;
 	wxArrayTreeItemIds items;
 	int count = GetSelections(items);
-	for (int i = 0; i < count; ++i) 
+	for (int i = 0; i < count; ++i)
 	{
 		auto data = (Item*)GetItemData(items[i]);
 #ifndef GAME_OBJ_ECS
@@ -698,7 +698,7 @@ void WxSceneTreeCtrl::MoveSceneObj(wxTreeItemId src, wxTreeItemId dst_parent)
 		auto& ccomplex = dst_parent_obj->GetSharedComp<n0::CompComplex>();
 		ccomplex.AddChild(src_obj);
 
-		n2::SceneTreeHelper::UpdateAABB(dst_parent_obj, 
+		n2::SceneTreeHelper::UpdateAABB(dst_parent_obj,
 			dst_parent_data->GetRoot(), dst_parent_data->GetObjID());
 #else
 		auto& ccomplex = m_world.AddComponent<e2::CompComplex>(dst_parent_obj);
@@ -741,7 +741,7 @@ void WxSceneTreeCtrl::DeleteEmptyObjToRoot(wxTreeItemId item)
 		auto data = (Item*)GetItemData(parent);
 #ifndef GAME_OBJ_ECS
 		auto& ccomplex = data->GetObj()->GetSharedComp<n0::CompComplex>();
-		if (ccomplex.GetAllChildren().empty()) 
+		if (ccomplex.GetAllChildren().empty())
 #else
 		auto& ccomplex = m_world.GetComponent<e2::CompComplex>(data->GetObj());
 		if (ccomplex.children->empty())
@@ -750,8 +750,8 @@ void WxSceneTreeCtrl::DeleteEmptyObjToRoot(wxTreeItemId item)
 			wxTreeItemId old = curr;
 			curr = GetItemParent(curr);
 			Delete(old);
-		} 
-		else 
+		}
+		else
 		{
 			Delete(curr);
 			break;
@@ -794,7 +794,7 @@ void WxSceneTreeCtrl::ChangeName(const ee0::VariantSet& variants)
 
 	auto data = (Item*)GetItemData(selected);
 	GD_ASSERT(data, "err data");
-	
+
 	auto var = variants.GetVariant("obj");
 	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: obj");
 	ee0::GameObj* obj = static_cast<ee0::GameObj*>(var.m_val.pv);
@@ -803,7 +803,7 @@ void WxSceneTreeCtrl::ChangeName(const ee0::VariantSet& variants)
 	GD_ASSERT(data->GetObj() == *obj, "err obj");
 
 #ifndef GAME_OBJ_ECS
-	auto& name = data->GetObj()->GetUniqueComp<ee0::CompNodeEditor>().GetName();
+	auto& name = data->GetObj()->GetUniqueComp<n0::CompIdentity>().GetName();
 #else
 	std::string name;
 	auto& ceditor = m_world.GetComponent<ee0::CompEntityEditor>(data->GetObj());
@@ -888,7 +888,7 @@ void WxSceneTreeCtrl::DeleteSelectedObj()
 
 	DeleteObjOutside(selected);
 	CleanRootEmptyChild();
-	
+
 	m_sub_mgr->NotifyObservers(ee0::MSG_NODE_SELECTION_CLEAR);
 
 	RebuildTree(m_root_obj);
@@ -948,7 +948,7 @@ void WxSceneTreeCtrl::CleanRootEmptyChild()
 
 	wxTreeItemIdValue cookie;
 	wxTreeItemId child = GetFirstChild(m_root, cookie);
-	while (child.IsOk()) 
+	while (child.IsOk())
 	{
 		auto data = (Item*)GetItemData(child);
 #ifndef GAME_OBJ_ECS
@@ -962,14 +962,14 @@ void WxSceneTreeCtrl::CleanRootEmptyChild()
 #else
 			bool empty = m_world.GetComponent<e2::CompComplex>(data->GetObj()).children->empty();
 #endif // GAME_OBJ_ECS
-			if (empty) 
+			if (empty)
 			{
 				ee0::MsgHelper::DeleteNode(*m_sub_mgr, data->GetObj());
 				child = GetNextSibling(child);
 				continue;
 			}
 		}
-		
+
 		child = GetNextSibling(child);
 	}
 }

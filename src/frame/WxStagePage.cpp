@@ -7,13 +7,13 @@
 #include "frame/typedef.h"
 
 #include <ee0/SubjectMgr.h>
-#include <ee0/CompNodeEditor.h>
 
 #include <guard/check.h>
 #include <js/RapidJsonHelper.h>
 #include <sx/ResFileHelper.h>
 #ifndef GAME_OBJ_ECS
 #include <node0/CompAsset.h>
+#include <node0/CompIdentity.h>
 #include <node0/SceneNode.h>
 #include <node2/CompBoundingBox.h>
 #include <node2/AABBSystem.h>

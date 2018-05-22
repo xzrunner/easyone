@@ -18,11 +18,6 @@
 #include "frame/typedef.h"
 #include "frame/WxScriptPanel.h"
 
-#ifndef GAME_OBJ_ECS
-#include <ee0/CompNodeEditor.h>
-#else
-#include <ee0/CompEntityEditor.h>
-#endif // GAME_OBJ_ECS
 #include <ee0/MsgHelper.h>
 #include <ee0/SubjectMgr.h>
 #include <ee0/ConfigFile.h>

@@ -8,7 +8,6 @@
 #include <ee0/SubjectMgr.h>
 #include <ee0/WxImageVList.h>
 #ifndef GAME_OBJ_ECS
-#include <ee0/CompNodeEditor.h>
 #else
 #include <ee0/CompEntityEditor.h>
 #endif // GAME_OBJ_ECS
@@ -19,6 +18,7 @@
 #ifndef GAME_OBJ_ECS
 #include <node0/SceneNode.h>
 #include <node0/CompAsset.h>
+#include <node0/CompIdentity.h>
 #else
 #include <entity0/World.h>
 #endif // GAME_OBJ_ECS
@@ -97,10 +97,10 @@ void WxItemsListCtrl::OnSearch(const std::string& str)
 	m_list->DeselectAll();
 
 	int idx = 0;
-	m_list->Traverse([&](const ee0::WxLibraryItem& item)->bool 
+	m_list->Traverse([&](const ee0::WxLibraryItem& item)->bool
 	{
 		auto& obj = *dynamic_cast<WxItemsListUserData*>(item.GetUD().get());
-		auto& name = obj.GetObj()->GetUniqueComp<ee0::CompNodeEditor>().GetName();
+		auto& name = obj.GetObj()->GetUniqueComp<n0::CompIdentity>().GetName();
 		if (name.find(str) != std::string::npos) {
 			m_list->Select(idx);
 		}
@@ -162,7 +162,7 @@ void WxItemsListCtrl::OnSetFilter(wxCommandEvent& event)
 	m_list->Traverse([&](const ee0::WxLibraryItem& item)->bool
 	{
 		const_cast<ee0::WxLibraryItem&>(item).SetHide(false);
-		if (filter_type != GAME_OBJ_UNKNOWN) 
+		if (filter_type != GAME_OBJ_UNKNOWN)
 		{
 			auto& obj = *dynamic_cast<WxItemsListUserData*>(item.GetUD().get());
 			auto type = GetObjType(obj.GetObj());
@@ -201,7 +201,7 @@ void WxItemsListCtrl::InsertSceneObj(const ee0::VariantSet& variants)
 
 	std::string filepath;
 #ifndef GAME_OBJ_ECS
-	filepath = (*obj)->GetUniqueComp<ee0::CompNodeEditor>().GetFilepath();
+	filepath = (*obj)->GetUniqueComp<n0::CompIdentity>().GetFilepath();
 #else
 	auto& ceditor = m_world.GetComponent<ee0::CompEntityEditor>(*obj);
 	if (ceditor.filepath) {
@@ -211,7 +211,7 @@ void WxItemsListCtrl::InsertSceneObj(const ee0::VariantSet& variants)
 	}
 #endif // GAME_OBJ_ECS
 	auto item = std::make_shared<ee0::WxLibraryItem>(filepath);
-	std::unique_ptr<ee0::WxLibraryItem::UserData> ud 
+	std::unique_ptr<ee0::WxLibraryItem::UserData> ud
 		= std::make_unique<WxItemsListUserData>(*obj, *obj, 0);
 	item->SetUD(ud);
 	m_list->Insert(item, 0);

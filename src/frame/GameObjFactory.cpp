@@ -11,6 +11,7 @@
 #ifndef GAME_OBJ_ECS
 #include <node0/SceneNode.h>
 #include <node0/CompComplex.h>
+#include <node0/CompIdentity.h>
 #include <node2/CompImage.h>
 #include <node2/CompText.h>
 #include <node2/CompMask.h>
@@ -211,6 +212,12 @@ ee0::GameObj GameObjFactory::Create(ECS_WORLD_PARAM GameObjType type)
 		world.AddComponent<e3::CompBoundingBox>(obj, sz);
 #endif // GAME_OBJ_ECS
 	}
+
+	// id
+#ifndef GAME_OBJ_ECS
+	obj->AddUniqueComp<n0::CompIdentity>();
+#else
+#endif // GAME_OBJ_ECS
 
 	// editor
 #ifndef GAME_OBJ_ECS
