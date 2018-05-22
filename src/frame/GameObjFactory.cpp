@@ -3,12 +3,6 @@
 #include "particle3d/config.h"
 
 #ifndef GAME_OBJ_ECS
-#include <ee0/CompNodeEditor.h>
-#else
-#include <ee0/CompEntityEditor.h>
-#endif // GAME_OBJ_ECS
-
-#ifndef GAME_OBJ_ECS
 #include <node0/SceneNode.h>
 #include <node0/CompComplex.h>
 #include <node0/CompIdentity.h>
@@ -217,13 +211,6 @@ ee0::GameObj GameObjFactory::Create(ECS_WORLD_PARAM GameObjType type)
 #ifndef GAME_OBJ_ECS
 	obj->AddUniqueComp<n0::CompIdentity>();
 #else
-#endif // GAME_OBJ_ECS
-
-	// editor
-#ifndef GAME_OBJ_ECS
-	obj->AddUniqueComp<ee0::CompNodeEditor>();
-#else
-	world.AddComponent<ee0::CompEntityEditor>(obj);
 #endif // GAME_OBJ_ECS
 
 	return obj;

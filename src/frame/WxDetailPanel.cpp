@@ -6,7 +6,7 @@
 #include <ee0/SubjectMgr.h>
 #include <ee0/VariantSet.h>
 #include <ee0/WxCompPanel.h>
-#include <ee0/WxCompEditorPanel.h>
+#include <ee0/WxCompFlagPanel.h>
 #include <ee0/WxCompIdPanel.h>
 #include <ee0/CompCustomProperties.h>
 #include <ee0/WxCompCustomProperties.h>
@@ -27,6 +27,7 @@
 #ifndef GAME_OBJ_ECS
 #include <node0/SceneNode.h>
 #include <node0/CompIdentity.h>
+#include <node0/CompFlags.h>
 #include <node2/CompImage.h>
 #include <node2/CompText.h>
 #include <node2/CompMask.h>
@@ -206,12 +207,12 @@ void WxDetailPanel::InitComponents(const ee0::GameObj& obj)
 	}
 
 #ifndef GAME_OBJ_ECS
-	if (m_owp.GetNode()->HasUniqueComp<ee0::CompNodeEditor>())
+	if (m_owp.GetNode()->HasUniqueComp<n0::CompFlags>())
 #else
 	if (m_world.HasComponent<ee0::CompEntityEditor>(m_owp))
 #endif // GAME_OBJ_ECS
 	{
-		auto panel = new ee0::WxCompEditorPanel(
+		auto panel = new ee0::WxCompFlagPanel(
 #ifndef GAME_OBJ_ECS
 			this, m_sub_mgr, m_owp.GetNode()
 #else
