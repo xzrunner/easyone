@@ -86,8 +86,6 @@ void WxStagePage::LoadFromFile(const std::string& filepath)
 	m_sub_mgr->NotifyObservers(ee0::MSG_NODE_SELECTION_CLEAR);
 	m_sub_mgr->NotifyObservers(ee0::MSG_CLEAR_SCENE_NODE);
 
-	bool is_2d = true;
-
 	auto type = sx::ResFileHelper::Type(filepath);
 	switch (type)
 	{
@@ -111,7 +109,6 @@ void WxStagePage::LoadFromFile(const std::string& filepath)
 		break;
 	case sx::RES_FILE_MODEL:
 		ns::NodeFactory::CreateNodeAssetComp(m_obj, filepath);
-		is_2d = false;
 		break;
 	}
 
@@ -122,7 +119,7 @@ void WxStagePage::LoadFromFile(const std::string& filepath)
 	ResetNextID();
 
 #ifndef GAME_OBJ_ECS
-	if (is_2d)
+	if (m_obj->HasUniqueComp<n2::CompBoundingBox>())
 	{
 		auto& cbb = m_obj->GetUniqueComp<n2::CompBoundingBox>();
 		auto aabb = n2::AABBSystem::GetBounding(
@@ -226,8 +223,8 @@ void WxStagePage::ResetNextID()
 	uint32_t max_id = 0;
 	Traverse([&](const ee0::GameObj& obj)->bool
 	{
-		auto& ceditor = obj->GetUniqueComp<ee0::CompNodeEditor>();
-		max_id = std::max(max_id, ceditor.GetID());
+		auto& cid = obj->GetUniqueComp<n0::CompIdentity>();
+		max_id = std::max(max_id, cid.GetID());
 		return true;
 	});
 	SetNextObjID(max_id + 1);
