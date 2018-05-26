@@ -8,8 +8,8 @@
 #include <ee0/WxCompPanel.h>
 #include <ee0/WxCompFlagPanel.h>
 #include <ee0/WxCompIdPanel.h>
-#include <ee0/CompCustomProperties.h>
-#include <ee0/WxCompCustomProperties.h>
+#include <ee0/CompCustomProp.h>
+#include <ee0/WxCompCustomPropPanel.h>
 #include <ee2/WxCompTransformPanel.h>
 #include <ee2/WxCompColComPanel.h>
 #include <ee2/WxCompColMapPanel.h>
@@ -408,17 +408,17 @@ void WxDetailPanel::InitComponents(const ee0::GameObj& obj)
 	}
 
 #ifndef GAME_OBJ_ECS
-	if (m_owp.GetNode()->HasUniqueComp<ee0::CompCustomProperties>())
+	if (m_owp.GetNode()->HasUniqueComp<ee0::CompCustomProp>())
 #else
-	if (m_world.HasComponent<ee0::CompCustomProperties>(m_owp))
+	if (m_world.HasComponent<ee0::CompCustomProp>(m_owp))
 #endif // GAME_OBJ_ECS
 	{
 		auto node = m_owp.GetNode();
-		if (!node->HasUniqueComp<ee0::CompCustomProperties>()) {
-			node->AddUniqueComp<ee0::CompCustomProperties>();
+		if (!node->HasUniqueComp<ee0::CompCustomProp>()) {
+			node->AddUniqueComp<ee0::CompCustomProp>();
 		}
-		auto& cprop = node->GetUniqueComp<ee0::CompCustomProperties>();
-		auto panel = new ee0::WxCompCustomProperties(this, cprop);
+		auto& cprop = node->GetUniqueComp<ee0::CompCustomProp>();
+		auto panel = new ee0::WxCompCustomPropPanel(this, cprop);
 		m_comp_sizer->Insert(m_components.size(), panel);
 		m_components.push_back(panel);
 	}
@@ -548,11 +548,11 @@ void WxDetailPanel::OnAddPress(wxCommandEvent& event)
 	case CompType::COMP_CUSTOM_PROPERTIES:
 		{
 			auto node = m_owp.GetNode();
-			if (!node->HasUniqueComp<ee0::CompCustomProperties>()) {
-				node->AddUniqueComp<ee0::CompCustomProperties>();
+			if (!node->HasUniqueComp<ee0::CompCustomProp>()) {
+				node->AddUniqueComp<ee0::CompCustomProp>();
 			}
-			auto& cprop = node->GetUniqueComp<ee0::CompCustomProperties>();
-			auto panel = new ee0::WxCompCustomProperties(this, cprop);
+			auto& cprop = node->GetUniqueComp<ee0::CompCustomProp>();
+			auto panel = new ee0::WxCompCustomPropPanel(this, cprop);
 			m_comp_sizer->Insert(m_components.size(), panel);
 			m_components.push_back(panel);
 		}
