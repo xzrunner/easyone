@@ -89,7 +89,7 @@ void WxStagePage::OnPageInit()
 }
 
 #ifndef GAME_OBJ_ECS
-const n0::NodeSharedComp& WxStagePage::GetEditedObjComp() const
+const n0::NodeComp& WxStagePage::GetEditedObjComp() const
 {
 	return m_obj->GetSharedComp<n2::CompScale9>();
 }
@@ -102,7 +102,7 @@ void WxStagePage::LoadFromJsonExt(const std::string& dir, const rapidjson::Value
 	{
 #ifndef GAME_OBJ_ECS
 		auto obj = std::make_shared<n0::SceneNode>();
-		ns::NodeSerializer::LoadNodeFromJson(obj, dir, *itr);
+		ns::NodeSerializer::LoadFromJson(obj, dir, *itr);
 #else
 		auto obj = m_world.CreateEntity();
 		// todo ecs load

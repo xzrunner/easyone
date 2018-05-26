@@ -7,7 +7,7 @@
 #include "frame/StagePageType.h"
 
 namespace ee0 { class WxLibraryPanel; }
-namespace n0 { class NodeSharedComp; }
+namespace n0 { class NodeComp; }
 ECS_WORLD_DECL
 
 namespace eone
@@ -31,7 +31,7 @@ protected:
 	virtual void OnPageInit() override;
 
 #ifndef GAME_OBJ_ECS
-	virtual const n0::NodeSharedComp& GetEditedObjComp() const override;
+	virtual const n0::NodeComp& GetEditedObjComp() const override;
 #endif // GAME_OBJ_ECS
 
 	virtual void LoadFromJsonExt(const std::string& dir, const rapidjson::Value& val);

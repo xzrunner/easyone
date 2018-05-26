@@ -103,7 +103,7 @@ void WxStagePage::Traverse(std::function<bool(const ee0::GameObj&)> func,
 
 // todo ecs
 #ifndef GAME_OBJ_ECS
-const n0::NodeSharedComp& WxStagePage::GetEditedObjComp() const 
+const n0::NodeComp& WxStagePage::GetEditedObjComp() const 
 {
 	return m_obj->GetSharedComp<n0::CompComplex>();
 }

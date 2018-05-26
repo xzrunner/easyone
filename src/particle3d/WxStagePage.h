@@ -28,7 +28,7 @@ protected:
 	virtual void OnPageInit() override;
 
 #ifndef GAME_OBJ_ECS
-	virtual const n0::NodeSharedComp& GetEditedObjComp() const override;
+	virtual const n0::NodeComp& GetEditedObjComp() const override;
 #endif // GAME_OBJ_ECS
 
 private:

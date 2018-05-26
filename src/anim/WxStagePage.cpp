@@ -115,7 +115,7 @@ void WxStagePage::OnPageInit()
 }
 
 #ifndef GAME_OBJ_ECS
-const n0::NodeSharedComp& WxStagePage::GetEditedObjComp() const 
+const n0::NodeComp& WxStagePage::GetEditedObjComp() const 
 {
 	return m_obj->GetSharedComp<n2::CompAnim>();
 }

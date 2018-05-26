@@ -8,7 +8,7 @@
 
 #include <rapidjson/document.h>
 
-namespace n0 { class NodeSharedComp; }
+namespace n0 { class NodeComp; }
 namespace ee0 { class VariantSet; }
 ECS_WORLD_DECL
 
@@ -53,7 +53,7 @@ protected:
 
 	// todo ecs
 #ifndef GAME_OBJ_ECS
-	virtual const n0::NodeSharedComp& GetEditedObjComp() const = 0;
+	virtual const n0::NodeComp& GetEditedObjComp() const = 0;
 #endif // GAME_OBJ_ECS
 
 	virtual void StoreToJsonExt(const std::string& dir, rapidjson::Value& val,
