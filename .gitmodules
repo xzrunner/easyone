@@ -145,3 +145,9 @@
 [submodule "ext/entity3"]
 	path = ext/entity3
 	url = git@github.com:xzrunner/entity3.git
+[submodule "ext/terr"]
+	path = ext/terr
+	url = git@github.com:xzrunner/terr.git
+[submodule "ext/vtex"]
+	path = ext/vtex
+	url = git@github.com:xzrunner/vtex.git
