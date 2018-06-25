@@ -127,6 +127,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3.model", "..\..\ext\model\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3.entity2", "..\..\ext\entity2\platform\msvc\projects\entity2.vcxproj", "{0755788F-C3B4-47F5-A0FA-F0187AD8E4EA}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3.terr", "..\..\ext\terr\platform\msvc\projects\terr.vcxproj", "{AB6D016B-C413-4BF5-83DC-823C441A74F0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -333,6 +335,10 @@ Global
 		{0755788F-C3B4-47F5-A0FA-F0187AD8E4EA}.Release|Win32.ActiveCfg = Release|Win32
 		{0755788F-C3B4-47F5-A0FA-F0187AD8E4EA}.Release|Win32.Build.0 = Release|Win32
 		{0755788F-C3B4-47F5-A0FA-F0187AD8E4EA}.Release|Win32.Deploy.0 = Release|Win32
+		{AB6D016B-C413-4BF5-83DC-823C441A74F0}.Debug|Win32.ActiveCfg = Debug|Win32
+		{AB6D016B-C413-4BF5-83DC-823C441A74F0}.Debug|Win32.Build.0 = Debug|Win32
+		{AB6D016B-C413-4BF5-83DC-823C441A74F0}.Release|Win32.ActiveCfg = Release|Win32
+		{AB6D016B-C413-4BF5-83DC-823C441A74F0}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -390,6 +396,7 @@ Global
 		{52581A88-0E44-40D5-A49B-16C49D4B6B92} = {AF58CA2D-C53F-4E40-8A5C-EB3787FCB3D7}
 		{4ABA57FF-958F-4077-9010-B25FC862469B} = {55D85D01-599C-4F78-A116-BDBAEAF0D939}
 		{0755788F-C3B4-47F5-A0FA-F0187AD8E4EA} = {AF58CA2D-C53F-4E40-8A5C-EB3787FCB3D7}
+		{AB6D016B-C413-4BF5-83DC-823C441A74F0} = {55D85D01-599C-4F78-A116-BDBAEAF0D939}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8D54C01A-3C82-4351-A325-2853C3E81322}

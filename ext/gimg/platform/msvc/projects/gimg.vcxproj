@@ -94,6 +94,7 @@
     <ClCompile Include="..\..\..\src\gimg\gimg_png.c" />
     <ClCompile Include="..\..\..\src\gimg\gimg_ppm.c" />
     <ClCompile Include="..\..\..\src\gimg\gimg_pvr.c" />
+    <ClCompile Include="..\..\..\src\gimg\gimg_tga.c" />
     <ClCompile Include="..\..\..\src\gimg\gimg_utility.c" />
   </ItemGroup>
   <ItemGroup>
@@ -111,6 +112,7 @@
     <ClInclude Include="..\..\..\src\gimg\gimg_png.h" />
     <ClInclude Include="..\..\..\src\gimg\gimg_ppm.h" />
     <ClInclude Include="..\..\..\src\gimg\gimg_pvr.h" />
+    <ClInclude Include="..\..\..\src\gimg\gimg_tga.h" />
     <ClInclude Include="..\..\..\src\gimg\gimg_typedef.h" />
     <ClInclude Include="..\..\..\src\gimg\gimg_utility.h" />
   </ItemGroup>

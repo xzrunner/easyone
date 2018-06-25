@@ -67,6 +67,9 @@
     <ClCompile Include="..\..\..\src\gimg\gimg_dds.c">
       <Filter>formats</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\gimg\gimg_tga.c">
+      <Filter>formats</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\gimg\gimg_bmp.h">
@@ -111,6 +114,9 @@
       <Filter>external\etcpack</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\gimg\gimg_dds.h">
+      <Filter>formats</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\gimg\gimg_tga.h">
       <Filter>formats</Filter>
     </ClInclude>
   </ItemGroup>
