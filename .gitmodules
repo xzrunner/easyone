@@ -151,3 +151,6 @@
 [submodule "ext/vtex"]
 	path = ext/vtex
 	url = git@github.com:xzrunner/vtex.git
+[submodule "ext/quake"]
+	path = ext/quake
+	url = git@github.com:xzrunner/quake.git
