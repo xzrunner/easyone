@@ -129,6 +129,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3.entity2", "..\..\ext\enti
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3.terr", "..\..\ext\terr\platform\msvc\projects\terr.vcxproj", "{AB6D016B-C413-4BF5-83DC-823C441A74F0}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3.quake", "..\..\ext\quake\platform\msvc\projects\quake.vcxproj", "{E12E3322-1408-4380-8219-659C02B2020C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -339,6 +341,10 @@ Global
 		{AB6D016B-C413-4BF5-83DC-823C441A74F0}.Debug|Win32.Build.0 = Debug|Win32
 		{AB6D016B-C413-4BF5-83DC-823C441A74F0}.Release|Win32.ActiveCfg = Release|Win32
 		{AB6D016B-C413-4BF5-83DC-823C441A74F0}.Release|Win32.Build.0 = Release|Win32
+		{E12E3322-1408-4380-8219-659C02B2020C}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E12E3322-1408-4380-8219-659C02B2020C}.Debug|Win32.Build.0 = Debug|Win32
+		{E12E3322-1408-4380-8219-659C02B2020C}.Release|Win32.ActiveCfg = Release|Win32
+		{E12E3322-1408-4380-8219-659C02B2020C}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -397,6 +403,7 @@ Global
 		{4ABA57FF-958F-4077-9010-B25FC862469B} = {55D85D01-599C-4F78-A116-BDBAEAF0D939}
 		{0755788F-C3B4-47F5-A0FA-F0187AD8E4EA} = {AF58CA2D-C53F-4E40-8A5C-EB3787FCB3D7}
 		{AB6D016B-C413-4BF5-83DC-823C441A74F0} = {55D85D01-599C-4F78-A116-BDBAEAF0D939}
+		{E12E3322-1408-4380-8219-659C02B2020C} = {55D85D01-599C-4F78-A116-BDBAEAF0D939}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8D54C01A-3C82-4351-A325-2853C3E81322}

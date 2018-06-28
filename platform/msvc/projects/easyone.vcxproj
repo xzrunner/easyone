@@ -222,6 +222,9 @@
     <ProjectReference Include="..\..\..\ext\ps\platform\msvc\projects\ps.vcxproj">
       <Project>{ee2229a3-ad5f-46e7-afab-729f8aa18036}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\quake\platform\msvc\projects\quake.vcxproj">
+      <Project>{e12e3322-1408-4380-8219-659c02b2020c}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\ext\rapidvg\platform\msvc\projects\rapidvg.vcxproj">
       <Project>{66207e9a-031c-402b-9e3e-fa5599a1c89b}</Project>
     </ProjectReference>
