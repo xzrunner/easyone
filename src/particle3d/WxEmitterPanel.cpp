@@ -11,7 +11,7 @@
 #include <node0/CompAsset.h>
 #include <node2/CompParticle3d.h>
 #include <node2/CompParticle3dInst.h>
-#include <ns/NodeFactory.h>
+#include <ns/CompFactory.h>
 #include <emitter/P3dTemplate.h>
 #include <emitter/P3dInstance.h>
 #include <sx/StringHelper.h>
@@ -26,7 +26,7 @@ namespace
 class WxPropertyScrolled : public wxScrolledWindow
 {
 public:
-	WxPropertyScrolled(wxWindow* parent, n2::CompParticle3d& cp3d, 
+	WxPropertyScrolled(wxWindow* parent, n2::CompParticle3d& cp3d,
 		               n2::CompParticle3dInst& cp3d_inst)
 		: wxScrolledWindow(parent)
 	{
@@ -47,7 +47,7 @@ public:
 class WxChildrenScrolled : public wxScrolledWindow
 {
 public:
-	WxChildrenScrolled(wxWindow* parent, n2::CompParticle3d& cp3d, 
+	WxChildrenScrolled(wxWindow* parent, n2::CompParticle3d& cp3d,
 		               n2::CompParticle3dInst& cp3d_inst,
 		               eone::particle3d::WxEmitterPanel* et_panel)
 		: wxScrolledWindow(parent)
@@ -95,7 +95,7 @@ void WxEmitterPanel::InitLayout(n2::CompParticle3d& cp3d, n2::CompParticle3dInst
 	auto children = new WxChildrenScrolled(this, cp3d, cp3d_inst, this);
 	sizer->Add(children, 1, wxEXPAND);
 	m_children_panel = children->m_children_panel;
-	
+
 	SetSizer(sizer);
 }
 
@@ -122,7 +122,7 @@ WxChildrenPanel(wxWindow* parent, n2::CompParticle3d& cp3d,
 	// Remove All
 	{
 		wxButton* btn = new wxButton(this, wxID_ANY, LANG[LK_REMOVE_ALL]);
-		Connect(btn->GetId(), wxEVT_COMMAND_BUTTON_CLICKED, 
+		Connect(btn->GetId(), wxEVT_COMMAND_BUTTON_CLICKED,
 			wxCommandEventHandler(WxEmitterPanel::WxChildrenPanel::OnRemoveAll));
 		sizer->Add(btn, 0, wxALIGN_CENTER_HORIZONTAL);
 	}
@@ -193,7 +193,7 @@ OnRemoveAll(wxCommandEvent& event)
 
 	m_cp3d_inst.GetP3dInst().Clear();
 
-	for (int i = 0, n = m_children.size(); i < n; ++i) 
+	for (int i = 0, n = m_children.size(); i < n; ++i)
 	{
 		m_children_sizer->Detach(m_children[i]);
 		delete m_children[i];
@@ -232,7 +232,7 @@ OnDropText(wxCoord x, wxCoord y, const wxString& text)
 		if (!item) {
 			continue;
 		}
-		auto casset = ns::NodeFactory::CreateAssetComp(item->GetFilepath());
+		auto casset = ns::CompFactory::Instance()->CreateAsset(item->GetFilepath());
 		if (!casset) {
 			continue;
 		}

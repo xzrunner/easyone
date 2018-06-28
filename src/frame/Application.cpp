@@ -80,7 +80,7 @@ void Application::LoadFromFile(const std::string& filepath)
 		rapidjson::Document doc;
 		js::RapidJsonHelper::ReadFromFile(filepath.c_str(), doc);
 
-		std::string new_type_str = doc["comp_type"].GetString();
+		std::string new_type_str = doc[ns::CompSerializer::COMP_TYPE_NAME].GetString();
 		if (new_type_str == "n0_complex") {
 			if (doc.HasMember("is_scene3d") && doc["is_scene3d"].GetBool()) {
 				new_type = PAGE_SCENE3D;

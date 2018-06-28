@@ -20,7 +20,7 @@
 #include <node3/CompModel.h>
 #include <node3/CompTransform.h>
 #include <ns/CompSerializer.h>
-#include <ns/NodeFactory.h>
+#include <ns/CompFactory.h>
 #else
 #endif // GAME_OBJ_ECS
 #include <moon/Blackboard.h>
@@ -86,30 +86,18 @@ void WxStagePage::LoadFromFile(const std::string& filepath)
 	m_sub_mgr->NotifyObservers(ee0::MSG_NODE_SELECTION_CLEAR);
 	m_sub_mgr->NotifyObservers(ee0::MSG_CLEAR_SCENE_NODE);
 
-	auto type = sx::ResFileHelper::Type(filepath);
-	switch (type)
+	auto casset = ns::CompFactory::Instance()->CreateAsset(filepath);
+	if (m_obj->HasSharedComp<n0::CompAsset>()) {
+		m_obj->RemoveSharedComp<n0::CompAsset>();
+	}
+	m_obj->AddSharedCompNoCreate<n0::CompAsset>(casset);
+
+	if (sx::ResFileHelper::Type(filepath) == sx::RES_FILE_JSON)
 	{
-	case sx::RES_FILE_IMAGE:
-		ns::NodeFactory::CreateNodeAssetComp(m_obj, filepath);
-		break;
-	case sx::RES_FILE_JSON:
-		{
-			auto dir = boost::filesystem::path(filepath).parent_path().string();
-
-			rapidjson::Document doc;
-			js::RapidJsonHelper::ReadFromFile(filepath.c_str(), doc);
-
-	#ifndef GAME_OBJ_ECS
-			ns::CompSerializer::Instance()->FromJson(m_obj, dir, doc);
-	#else
-			// todo ecs
-	#endif // GAME_OBJ_ECS
-			LoadFromJsonExt(dir, doc);
-		}
-		break;
-	case sx::RES_FILE_MODEL:
-		ns::NodeFactory::CreateNodeAssetComp(m_obj, filepath);
-		break;
+		auto dir = boost::filesystem::path(filepath).parent_path().string();
+		rapidjson::Document doc;
+		js::RapidJsonHelper::ReadFromFile(filepath.c_str(), doc);
+		LoadFromJsonExt(dir, doc);
 	}
 
 	ResetNextID();
