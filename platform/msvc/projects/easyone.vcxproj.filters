@@ -97,6 +97,9 @@
     <Filter Include="00.frame\2.center\stage\canvas">
       <UniqueIdentifier>{f1c58060-7ecb-4d97-a8e3-e3075cdb4e94}</UniqueIdentifier>
     </Filter>
+    <Filter Include="14.terrain">
+      <UniqueIdentifier>{69bc9418-eaa2-4e86-961c-10ce77c57495}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\frame\main.h">
@@ -288,6 +291,9 @@
     <ClInclude Include="..\..\..\src\frame\WxStageCanvas3D.h">
       <Filter>00.frame\2.center\stage\canvas</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\terrain\WxStagePage.h">
+      <Filter>14.terrain</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\frame\main.cpp">
@@ -451,6 +457,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\frame\WxStageCanvas3D.cpp">
       <Filter>00.frame\2.center\stage\canvas</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\terrain\WxStagePage.cpp">
+      <Filter>14.terrain</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
