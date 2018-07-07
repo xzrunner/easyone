@@ -29,7 +29,8 @@
 #include <ee2/ArrangeNodeOP.h>
 #include <ee3/WxStageCanvas.h>
 #include <ee3/NodeArrangeOP.h>
-#include <ee3/CamControlOP.h>
+#include <ee3/WorldTravelOP.h>
+#include <ee3/CameraMoveOP.h>
 
 #include <node0/SceneNode.h>
 #include <node2/CompMask.h>
@@ -79,7 +80,9 @@ WxStagePage* StagePageFactory::Create(ECS_WORLD_PARAM int page_type, WxStagePane
 			page = new scene3d::WxStagePage(frame, library, ECS_WORLD_VAR obj);
 			auto canvas = std::make_shared<WxStageCanvas3D>(page, rc);
 			page->GetImpl().SetCanvas(canvas);
-			page->GetImpl().SetEditOP(std::make_shared<ee3::NodeArrangeOP>(*page));
+//			page->GetImpl().SetEditOP(std::make_shared<ee3::NodeArrangeOP>(*page));
+			page->GetImpl().SetEditOP(std::make_shared<ee3::CameraMoveOP>(
+				canvas->GetCamera(), canvas->GetViewport(), page->GetSubjectMgr()));
 
 			stage_panel->AddNewPage(page, GetPageName(page->GetPageType()));
 		}
@@ -228,7 +231,7 @@ void StagePageFactory::CreatePreviewOP(
 		break;
 	case PAGE_SCENE3D:
 		{
-			//auto preview_op = std::make_shared<ee3::CamControlOP>(
+			//auto preview_op = std::make_shared<ee3::WorldTravelOP>(
 			//	canvas->GetCamera(), canvas->GetViewport(), page->GetSubjectMgr());
 			//preview->GetImpl().SetEditOP(preview_op);
 		}
