@@ -115,13 +115,13 @@ void WxStagePage::OnPageInit()
 }
 
 #ifndef GAME_OBJ_ECS
-const n0::NodeComp& WxStagePage::GetEditedObjComp() const 
+const n0::NodeComp& WxStagePage::GetEditedObjComp() const
 {
 	return m_obj->GetSharedComp<n2::CompAnim>();
 }
 #endif // GAME_OBJ_ECS
 
-void WxStagePage::LoadFromJsonExt(const std::string& dir, const rapidjson::Value& val)
+void WxStagePage::LoadFromFileImpl(const std::string& filepath)
 {
 	m_sub_mgr->NotifyObservers(MSG_REFRESH_ANIM_COMP);
 }
@@ -131,11 +131,11 @@ bool WxStagePage::OnSetCurrFrame(const ee0::VariantSet& variants)
 #ifndef GAME_OBJ_ECS
 	auto var = variants.GetVariant("frame");
 	GD_ASSERT(var.m_type == ee0::VT_INT, "err frame");
-	int frame = var.m_val.l; 
+	int frame = var.m_val.l;
 
 	auto& canim = m_obj->GetSharedComp<n2::CompAnim>();
 	frame = std::min(frame, canim.GetAnimTemplate()->GetMaxFrameIdx());
-	
+
 	auto& canim_inst = m_obj->GetUniqueComp<n2::CompAnimInst>();
 	bool ret = canim_inst.SetFrame(frame);
 	AnimHelper::UpdateTreePanael(*m_sub_mgr, canim_inst);

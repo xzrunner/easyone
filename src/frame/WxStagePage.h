@@ -2,7 +2,6 @@
 
 #include "frame/EditBackup.h"
 
-
 #include <ee0/GameObj.h>
 #include <ee0/WxStagePage.h>
 
@@ -14,7 +13,6 @@ ECS_WORLD_DECL
 
 namespace eone
 {
-
 
 class WxStagePage : public ee0::WxStagePage
 {
@@ -58,7 +56,7 @@ protected:
 
 	virtual void StoreToJsonExt(const std::string& dir, rapidjson::Value& val,
 		rapidjson::MemoryPoolAllocator<>& alloc) const {}
-	virtual void LoadFromJsonExt(const std::string& dir, const rapidjson::Value& val) {}
+	virtual void LoadFromFileImpl(const std::string& filepath) {}
 
 private:
 	std::string GetBackupPath() const;

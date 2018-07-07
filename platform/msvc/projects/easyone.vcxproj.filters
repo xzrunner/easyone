@@ -294,6 +294,9 @@
     <ClInclude Include="..\..\..\src\terrain\WxStagePage.h">
       <Filter>14.terrain</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\scene3d\QuakeMapLoader.h">
+      <Filter>02.scene3d</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\frame\main.cpp">
@@ -461,5 +464,13 @@
     <ClCompile Include="..\..\..\src\terrain\WxStagePage.cpp">
       <Filter>14.terrain</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\scene3d\QuakeMapLoader.cpp">
+      <Filter>02.scene3d</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\src\scene3d\scene.glsl">
+      <Filter>02.scene3d</Filter>
+    </None>
   </ItemGroup>
 </Project>

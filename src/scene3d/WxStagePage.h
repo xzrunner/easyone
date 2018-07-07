@@ -30,9 +30,12 @@ protected:
 #endif // GAME_OBJ_ECS
 
 	virtual void StoreToJsonExt(const std::string& dir, rapidjson::Value& val,
-		rapidjson::MemoryPoolAllocator<>& alloc) const;
+		rapidjson::MemoryPoolAllocator<>& alloc) const override;
+	virtual void LoadFromFileImpl(const std::string& filepath) override;
 
 private:
+	void InitShaders();
+
 	void InsertSceneNode(const ee0::VariantSet& variants);
 	void DeleteSceneNode(const ee0::VariantSet& variants);
 	void ClearSceneNode();

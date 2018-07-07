@@ -103,6 +103,10 @@ void Application::LoadFromFile(const std::string& filepath)
 	{
 		new_type = PAGE_MODEL;
 	}
+	else if (ext == ".map")
+	{
+		new_type = PAGE_SCENE3D;
+	}
 
 	if (old_type != new_type || !page->GetFilepath().empty()) {
 		page = StagePageFactory::Create(ECS_WORLD_SELF_VAR new_type, m_stage);

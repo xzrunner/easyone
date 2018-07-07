@@ -13,6 +13,8 @@
 #include <ee2/WxStageDropTarget.h>
 
 #include <guard/check.h>
+#include <js/RapidJsonHelper.h>
+#include <sx/ResFileHelper.h>
 #ifndef GAME_OBJ_ECS
 #include <node0/SceneNode.h>
 #include <node2/CompTransform.h>
@@ -24,6 +26,8 @@
 #include <entity2/CompScale9.h>
 #include <entity2/CompBoundingBox.h>
 #endif // GAME_OBJ_ECS
+
+#include <boost/filesystem.hpp>
 
 namespace eone
 {
@@ -95,9 +99,17 @@ const n0::NodeComp& WxStagePage::GetEditedObjComp() const
 }
 #endif // GAME_OBJ_ECS
 
-void WxStagePage::LoadFromJsonExt(const std::string& dir, const rapidjson::Value& val)
+void WxStagePage::LoadFromFileImpl(const std::string& filepath)
 {
-	auto& grids_val = val["grids"];
+	if (sx::ResFileHelper::Type(filepath) != sx::RES_FILE_JSON) {
+		return;
+	}
+
+	auto dir = boost::filesystem::path(filepath).parent_path().string();
+	rapidjson::Document doc;
+	js::RapidJsonHelper::ReadFromFile(filepath.c_str(), doc);
+
+	auto& grids_val = doc["grids"];
 	for (auto itr = grids_val.Begin(); itr != grids_val.End(); ++itr)
 	{
 #ifndef GAME_OBJ_ECS
@@ -179,7 +191,7 @@ void WxStagePage::InsertSceneNode(const ee0::VariantSet& variants)
 
 	// update bounding
 #ifndef GAME_OBJ_ECS
-	if (type != n2::CompScale9::S9_NULL) 
+	if (type != n2::CompScale9::S9_NULL)
 	{
 		auto& cbb = m_obj->GetUniqueComp<n2::CompBoundingBox>();
 		cbb.SetSize(*m_obj, sm::rect(cscale9.GetWidth(), cscale9.GetHeight()));
@@ -191,7 +203,7 @@ void WxStagePage::InsertSceneNode(const ee0::VariantSet& variants)
 		cbb.rect = sm::rect(cscale9.width, cscale9.height);
 	}
 #endif // GAME_OBJ_ECS
-	
+
 	m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
 }
 
@@ -202,7 +214,7 @@ void WxStagePage::DeleteSceneNode(const ee0::VariantSet& variants)
 	ee0::GameObj* obj = static_cast<ee0::GameObj*>(var.m_val.pv);
 	GD_ASSERT(obj, "err scene obj");
 
-	for (auto& grid : m_grids) 
+	for (auto& grid : m_grids)
 	{
 		if (grid == *obj)
 		{
@@ -228,14 +240,14 @@ void WxStagePage::DeleteSceneNode(const ee0::VariantSet& variants)
 
 void WxStagePage::ClearSceneNode()
 {
-	for (auto& grid : m_grids) 
+	for (auto& grid : m_grids)
 	{
 #ifndef GAME_OBJ_ECS
 		grid.reset();
 #else
 		grid.Reset();
 		m_world.DestroyEntity(grid);
-#endif // GAME_OBJ_ECS	
+#endif // GAME_OBJ_ECS
 	}
 
 #ifndef GAME_OBJ_ECS

@@ -29,13 +29,13 @@ protected:
 	virtual const n0::NodeComp& GetEditedObjComp() const override;
 #endif // GAME_OBJ_ECS
 
-	virtual void LoadFromJsonExt(const std::string& dir, const rapidjson::Value& val);
+	virtual void LoadFromFileImpl(const std::string& filepath) override;
 
 private:
 	void InsertSceneNode(const ee0::VariantSet& variants);
 	void DeleteSceneNode(const ee0::VariantSet& variants);
 	void ClearSceneNode();
-	
+
 	void TraverseGrids(std::function<bool(const ee0::GameObj&)> func) const;
 
 private:

@@ -9,8 +9,6 @@
 #include <ee0/SubjectMgr.h>
 
 #include <guard/check.h>
-#include <js/RapidJsonHelper.h>
-#include <sx/ResFileHelper.h>
 #ifndef GAME_OBJ_ECS
 #include <node0/CompAsset.h>
 #include <node0/CompIdentity.h>
@@ -92,13 +90,7 @@ void WxStagePage::LoadFromFile(const std::string& filepath)
 	}
 	m_obj->AddSharedCompNoCreate<n0::CompAsset>(casset);
 
-	if (sx::ResFileHelper::Type(filepath) == sx::RES_FILE_JSON)
-	{
-		auto dir = boost::filesystem::path(filepath).parent_path().string();
-		rapidjson::Document doc;
-		js::RapidJsonHelper::ReadFromFile(filepath.c_str(), doc);
-		LoadFromJsonExt(dir, doc);
-	}
+	LoadFromFileImpl(filepath);
 
 	ResetNextID();
 

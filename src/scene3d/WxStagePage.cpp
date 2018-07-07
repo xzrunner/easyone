@@ -1,4 +1,6 @@
 #include "scene3d/WxStagePage.h"
+#include "scene3d/QuakeMapLoader.h"
+#include "scene3d/scene.glsl"
 
 #include "frame/WxStagePage.h"
 #include "frame/Blackboard.h"
@@ -11,6 +13,13 @@
 #include <guard/check.h>
 #include <node0/SceneNode.h>
 #include <node0/CompComplex.h>
+#include <sx/ResFileHelper.h>
+#include <unirender/VertexAttrib.h>
+#include <unirender/Shader.h>
+#include <unirender/Blackboard.h>
+#include <painting3/EffectsManager.h>
+
+#include <unirender/RenderContext.h>
 
 namespace eone
 {
@@ -20,6 +29,8 @@ namespace scene3d
 WxStagePage::WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, ECS_WORLD_PARAM const ee0::GameObj& obj)
 	: eone::WxStagePage(parent, ECS_WORLD_VAR obj, LAYOUT_PREVIEW)
 {
+	InitShaders();
+
 	m_messages.push_back(ee0::MSG_INSERT_SCENE_NODE);
 	m_messages.push_back(ee0::MSG_DELETE_SCENE_NODE);
 	m_messages.push_back(ee0::MSG_CLEAR_SCENE_NODE);
@@ -52,7 +63,7 @@ void WxStagePage::Traverse(std::function<bool(const ee0::GameObj&)> func,
 	                       bool inverse) const
 {
 	auto var = variants.GetVariant("type");
-	if (var.m_type == ee0::VT_EMPTY) 
+	if (var.m_type == ee0::VT_EMPTY)
 	{
 		// todo ecs
 #ifndef GAME_OBJ_ECS
@@ -60,7 +71,7 @@ void WxStagePage::Traverse(std::function<bool(const ee0::GameObj&)> func,
 #endif // GAME_OBJ_ECS
 		return;
 	}
-	
+
 	GD_ASSERT(var.m_type == ee0::VT_LONG, "err type");
 	switch (var.m_val.l)
 	{
@@ -82,10 +93,35 @@ const n0::NodeComp& WxStagePage::GetEditedObjComp() const
 }
 #endif // GAME_OBJ_ECS
 
-void WxStagePage::StoreToJsonExt(const std::string& dir, rapidjson::Value& val, 
+void WxStagePage::StoreToJsonExt(const std::string& dir, rapidjson::Value& val,
 	                             rapidjson::MemoryPoolAllocator<>& alloc) const
 {
 	val.AddMember("is_scene3d", true, alloc);
+}
+
+void WxStagePage::LoadFromFileImpl(const std::string& filepath)
+{
+	if (sx::ResFileHelper::Type(filepath) != sx::RES_FILE_MAP) {
+		return;
+	}
+
+	QuakeMapLoader::LoadFromFile(*m_sub_mgr, filepath);
+}
+
+void WxStagePage::InitShaders()
+{
+	CU_VEC<ur::VertexAttrib> layout;
+	layout.push_back(ur::VertexAttrib("position", 3, 4, 32, 0));
+	layout.push_back(ur::VertexAttrib("texcoord", 2, 4, 32, 24));
+
+	std::vector<std::string> textures;
+
+	auto& rc = ur::Blackboard::Instance()->GetRenderContext();
+	auto shader = std::make_shared<ur::Shader>(
+		&rc, scene_vs, scene_fs, textures, layout);
+	pt3::EffectsManager::Instance()->SetUserEffect(shader);
+
+	rc.SetPolygonMode(ur::POLYGON_LINE);
 }
 
 void WxStagePage::InsertSceneNode(const ee0::VariantSet& variants)

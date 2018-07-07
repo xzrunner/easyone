@@ -34,7 +34,7 @@ protected:
 	virtual const n0::NodeComp& GetEditedObjComp() const override;
 #endif // GAME_OBJ_ECS
 
-	virtual void LoadFromJsonExt(const std::string& dir, const rapidjson::Value& val);
+	virtual void LoadFromFileImpl(const std::string& filepath);
 
 private:
 	bool OnSetCurrFrame(const ee0::VariantSet& variants);
