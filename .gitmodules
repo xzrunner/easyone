@@ -154,3 +154,6 @@
 [submodule "ext/quake"]
 	path = ext/quake
 	url = git@github.com:xzrunner/quake.git
+[submodule "ext/lexer"]
+	path = ext/lexer
+	url = git@github.com:xzrunner/lexer.git
