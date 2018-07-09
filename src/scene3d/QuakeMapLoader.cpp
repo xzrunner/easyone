@@ -162,6 +162,7 @@ void QuakeMapLoader::LoadEntities(const std::vector<std::unique_ptr<quake::MapEn
 			// create meshes
 			std::unique_ptr<model::Model::Mesh> mesh = nullptr;
 			std::vector<Vertex> vertices;
+			sm::cube aabb;
 			std::string curr_tex_name;
 			ur::TexturePtr curr_tex = nullptr;
 			for (auto& f : faces)
@@ -169,10 +170,14 @@ void QuakeMapLoader::LoadEntities(const std::vector<std::unique_ptr<quake::MapEn
 				// new material
 				if (f.tex_name != curr_tex_name)
 				{
-					if (!vertices.empty()) {
+					if (!vertices.empty())
+					{
 						CreateMeshRenderBuf(*mesh, vertices);
 						model->meshes.push_back(std::move(mesh));
 						vertices.clear();
+
+						model->aabb = aabb;
+						aabb.MakeEmpty();
 					}
 
 					mesh = std::make_unique<model::Model::Mesh>();
@@ -190,24 +195,23 @@ void QuakeMapLoader::LoadEntities(const std::vector<std::unique_ptr<quake::MapEn
 					curr_tex = tex;
 				}
 
-				for (int i = 0; i < 3; ++i)
+				assert(f.vertices.size() > 2);
+				for (int i = 1; i < f.vertices.size() - 1; ++i)
 				{
-					Vertex v;
-
-					v.pos = f.vertices[i];
-
-					auto& s = f.scale;
-					v.texcoord.x = (v.pos.Dot(X_AXIS / s.x) + f.offset.x) / curr_tex->Width();
-					v.texcoord.y = (v.pos.Dot(Y_AXIS / s.y) + f.offset.y) / curr_tex->Height();
-
-					vertices.push_back(v);
+					vertices.push_back(CreateVertex(f, f.vertices[0], curr_tex, aabb));
+					vertices.push_back(CreateVertex(f, f.vertices[i], curr_tex, aabb));
+					vertices.push_back(CreateVertex(f, f.vertices[i + 1], curr_tex, aabb));
 				}
 			}
 
-			if (!vertices.empty()) {
+			if (!vertices.empty())
+			{
 				CreateMeshRenderBuf(*mesh, vertices);
 				model->meshes.push_back(std::move(mesh));
 				vertices.clear();
+
+				model->aabb = aabb;
+				aabb.MakeEmpty();
 			}
 		}
 		models.push_back(std::move(model));
