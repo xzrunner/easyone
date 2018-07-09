@@ -28,14 +28,13 @@
 namespace
 {
 
+const float SCALE = 0.01f;
+
 struct Vertex
 {
 	sm::vec3 pos;
 	sm::vec2 texcoord;
 };
-
-const sm::vec3 X_AXIS(1, 0, 0);
-const sm::vec3 Y_AXIS(0, 0, -1);
 
 void CreateMeshRenderBuf(model::Model::Mesh& mesh, const std::vector<Vertex>& vertices)
 {
@@ -50,7 +49,7 @@ void CreateMeshRenderBuf(model::Model::Mesh& mesh, const std::vector<Vertex>& ve
 	vi.in = 0;
 	vi.indices = nullptr;
 
-	vi.va_list.push_back(ur::VertexAttrib("pos", 3, 4, 20, 0));	// pos
+	vi.va_list.push_back(ur::VertexAttrib("pos",      3, 4, 20, 0));	// pos
 	vi.va_list.push_back(ur::VertexAttrib("texcoord", 2, 4, 20, 12));	// texcoord
 
 	ur::Blackboard::Instance()->GetRenderContext().CreateVAO(
@@ -58,6 +57,22 @@ void CreateMeshRenderBuf(model::Model::Mesh& mesh, const std::vector<Vertex>& ve
 	mesh.geometry.sub_geometries.push_back(model::SubmeshGeometry(false, vi.vn, 0));
 	mesh.geometry.sub_geometry_materials.push_back(0);
 	mesh.geometry.vertex_type |= model::VERTEX_FLAG_TEXCOORDS;
+}
+
+Vertex CreateVertex(const quake::BrushFace& face, const sm::vec3& pos, const ur::TexturePtr& tex, sm::cube& aabb)
+{
+	Vertex v;
+
+	v.pos = pos * SCALE;
+	aabb.Combine(v.pos);
+
+	if (tex) {
+		v.texcoord = face.CalcTexCoords(pos, tex->Width(), tex->Height());
+	} else {
+		v.texcoord.Set(0, 0);
+	}
+
+	return v;
 }
 
 }
@@ -75,6 +90,11 @@ void QuakeMapLoader::LoadFromFile(ee0::SubjectMgr& sub_mgr,
 
 	quake::MapParser parser(str);
 	parser.Parse();
+	for (auto& e : parser.GetAllEntities()) {
+		for (auto& b : e->brushes) {
+			b.BuildVertices();
+		}
+	}
 
 	auto dir = boost::filesystem::path(filepath).parent_path().string();
 
