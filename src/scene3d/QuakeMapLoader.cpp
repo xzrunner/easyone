@@ -175,7 +175,7 @@ void QuakeMapLoader::LoadEntities(const std::vector<std::unique_ptr<quake::MapEn
 
 			// sort by texture
 			auto faces = b.faces;
-			std::sort(faces.begin(), faces.end(), [](const quake::MapFace& lhs, const quake::MapFace& rhs) {
+			std::sort(faces.begin(), faces.end(), [](const quake::BrushFace& lhs, const quake::BrushFace& rhs) {
 				return lhs.tex_name < rhs.tex_name;
 			});
 
