@@ -75,6 +75,7 @@ void Application::LoadFromFile(const std::string& filepath)
 	int new_type = PAGE_INVALID;
 
 	auto ext = boost::filesystem::extension(filepath);
+	std::transform(ext.begin(), ext.end(), ext.begin(), tolower);
 	if (ext == ".json")
 	{
 		rapidjson::Document doc;
