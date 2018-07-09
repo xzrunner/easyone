@@ -119,9 +119,11 @@ void WxStagePage::InitShaders()
 	auto& rc = ur::Blackboard::Instance()->GetRenderContext();
 	auto shader = std::make_shared<ur::Shader>(
 		&rc, scene_vs, scene_fs, textures, layout);
-	pt3::EffectsManager::Instance()->SetUserEffect(shader);
 
-	rc.SetPolygonMode(ur::POLYGON_LINE);
+	pt3::EffectsManager::Instance()->SetUserEffect(shader);
+	pt3::EffectsManager::Instance()->Use(pt3::EffectsManager::EFFECT_USER);
+
+	shader->SetFloat("u_brightness", 1.4f);
 }
 
 void WxStagePage::InsertSceneNode(const ee0::VariantSet& variants)
