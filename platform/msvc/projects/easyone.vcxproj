@@ -317,6 +317,7 @@
     <ClInclude Include="..\..\..\src\scale9\WxStageCanvas.h" />
     <ClInclude Include="..\..\..\src\scale9\WxStagePage.h" />
     <ClInclude Include="..\..\..\src\scene2d\WxStagePage.h" />
+    <ClInclude Include="..\..\..\src\scene3d\DrawFaceShader.h" />
     <ClInclude Include="..\..\..\src\scene3d\QuakeMapLoader.h" />
     <ClInclude Include="..\..\..\src\scene3d\WxStagePage.h" />
     <ClInclude Include="..\..\..\src\script\WxStageCanvas.h" />
@@ -405,6 +406,7 @@
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/scene2d/</ObjectFileName>
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/scene2d/</ObjectFileName>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\scene3d\DrawFaceShader.cpp" />
     <ClCompile Include="..\..\..\src\scene3d\QuakeMapLoader.cpp" />
     <ClCompile Include="..\..\..\src\scene3d\WxStagePage.cpp">
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/scene3d/</ObjectFileName>

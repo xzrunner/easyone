@@ -297,6 +297,9 @@
     <ClInclude Include="..\..\..\src\scene3d\QuakeMapLoader.h">
       <Filter>02.scene3d</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\scene3d\DrawFaceShader.h">
+      <Filter>02.scene3d</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\frame\main.cpp">
@@ -465,6 +468,9 @@
       <Filter>14.terrain</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\scene3d\QuakeMapLoader.cpp">
+      <Filter>02.scene3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\scene3d\DrawFaceShader.cpp">
       <Filter>02.scene3d</Filter>
     </ClCompile>
   </ItemGroup>

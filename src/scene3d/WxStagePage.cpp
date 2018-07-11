@@ -1,6 +1,7 @@
 #include "scene3d/WxStagePage.h"
 #include "scene3d/QuakeMapLoader.h"
 #include "scene3d/scene.glsl"
+#include "scene3d/DrawFaceShader.h"
 
 #include "frame/WxStagePage.h"
 #include "frame/Blackboard.h"
@@ -117,11 +118,15 @@ void WxStagePage::InitShaders()
 	std::vector<std::string> textures;
 
 	auto& rc = ur::Blackboard::Instance()->GetRenderContext();
-	auto shader = std::make_shared<ur::Shader>(
+	auto shader = std::make_shared<DrawFaceShader>(
 		&rc, scene_vs, scene_fs, textures, layout);
 
-	pt3::EffectsManager::Instance()->SetUserEffect(shader);
+	pt3::EffectsManager::Instance()->SetUserEffect(
+		std::static_pointer_cast<ur::Shader>(shader));
 	pt3::EffectsManager::Instance()->Use(pt3::EffectsManager::EFFECT_USER);
+
+	float col[4] = { 0.5f, 0.5f, 0.5f, 0.5f };
+	shader->SetVec4("u_face_color", col);
 
 	shader->SetFloat("u_brightness", 1.4f);
 }
