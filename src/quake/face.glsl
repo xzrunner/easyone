@@ -1,4 +1,4 @@
-const char* scene_vs = R"(
+const char* face_vs = R"(
 
 attribute vec4 position;
 attribute vec2 texcoord;
@@ -16,7 +16,7 @@ void main()
 
 )";
 
-const char* scene_fs = R"(
+const char* face_fs = R"(
 
 uniform sampler2D u_texture0;
 

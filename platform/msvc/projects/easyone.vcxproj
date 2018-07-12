@@ -311,14 +311,17 @@
     <ClInclude Include="..\..\..\src\particle3d\WxEmitterPanel.h" />
     <ClInclude Include="..\..\..\src\particle3d\WxStagePage.h" />
     <ClInclude Include="..\..\..\src\particle3d\WxPropertyPanel.h" />
+    <ClInclude Include="..\..\..\src\quake\DrawEdgeShader.h" />
+    <ClInclude Include="..\..\..\src\quake\DrawFaceShader.h" />
+    <ClInclude Include="..\..\..\src\quake\QuakeMapLoader.h" />
+    <ClInclude Include="..\..\..\src\quake\WxStageCanvas.h" />
+    <ClInclude Include="..\..\..\src\quake\WxStagePage.h" />
     <ClInclude Include="..\..\..\src\scale9\ComposeGrids.h" />
     <ClInclude Include="..\..\..\src\scale9\ResizeScale9OP.h" />
     <ClInclude Include="..\..\..\src\scale9\WxEditDialog.h" />
     <ClInclude Include="..\..\..\src\scale9\WxStageCanvas.h" />
     <ClInclude Include="..\..\..\src\scale9\WxStagePage.h" />
     <ClInclude Include="..\..\..\src\scene2d\WxStagePage.h" />
-    <ClInclude Include="..\..\..\src\scene3d\DrawFaceShader.h" />
-    <ClInclude Include="..\..\..\src\scene3d\QuakeMapLoader.h" />
     <ClInclude Include="..\..\..\src\scene3d\WxStagePage.h" />
     <ClInclude Include="..\..\..\src\script\WxStageCanvas.h" />
     <ClInclude Include="..\..\..\src\script\WxStagePage.h" />
@@ -388,6 +391,17 @@
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/</ObjectFileName>
     </ClCompile>
     <ClCompile Include="..\..\..\src\particle3d\WxPropertyPanel.cpp" />
+    <ClCompile Include="..\..\..\src\quake\DrawEdgeShader.cpp" />
+    <ClCompile Include="..\..\..\src\quake\DrawFaceShader.cpp" />
+    <ClCompile Include="..\..\..\src\quake\QuakeMapLoader.cpp" />
+    <ClCompile Include="..\..\..\src\quake\WxStageCanvas.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/quake/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/quake/</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\quake\WxStagePage.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/quake/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/quake/</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="..\..\..\src\scale9\ComposeGrids.cpp" />
     <ClCompile Include="..\..\..\src\scale9\ResizeScale9OP.cpp" />
     <ClCompile Include="..\..\..\src\scale9\WxEditDialog.cpp">
@@ -406,8 +420,6 @@
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/scene2d/</ObjectFileName>
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/scene2d/</ObjectFileName>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\scene3d\DrawFaceShader.cpp" />
-    <ClCompile Include="..\..\..\src\scene3d\QuakeMapLoader.cpp" />
     <ClCompile Include="..\..\..\src\scene3d\WxStagePage.cpp">
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/scene3d/</ObjectFileName>
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/scene3d/</ObjectFileName>
@@ -426,7 +438,8 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\src\scene3d\scene.glsl" />
+    <None Include="..\..\..\src\quake\edge.glsl" />
+    <None Include="..\..\..\src\quake\face.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

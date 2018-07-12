@@ -4,6 +4,8 @@
 
 namespace eone
 {
+namespace quake
+{
 
 class DrawFaceShader : public ur::Shader
 {
@@ -15,4 +17,5 @@ public:
 
 }; // DrawFaceShader
 
+}
 }

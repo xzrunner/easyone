@@ -100,6 +100,12 @@
     <Filter Include="14.terrain">
       <UniqueIdentifier>{69bc9418-eaa2-4e86-961c-10ce77c57495}</UniqueIdentifier>
     </Filter>
+    <Filter Include="50.quake">
+      <UniqueIdentifier>{f6b3457a-0b5f-4899-a4a3-9993706ed2f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="50.quake\shader">
+      <UniqueIdentifier>{85bb3817-caed-471a-8086-74d08e3bdce2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\frame\main.h">
@@ -294,11 +300,20 @@
     <ClInclude Include="..\..\..\src\terrain\WxStagePage.h">
       <Filter>14.terrain</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\scene3d\QuakeMapLoader.h">
-      <Filter>02.scene3d</Filter>
+    <ClInclude Include="..\..\..\src\quake\WxStagePage.h">
+      <Filter>50.quake</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\scene3d\DrawFaceShader.h">
-      <Filter>02.scene3d</Filter>
+    <ClInclude Include="..\..\..\src\quake\DrawEdgeShader.h">
+      <Filter>50.quake\shader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\quake\DrawFaceShader.h">
+      <Filter>50.quake\shader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\quake\QuakeMapLoader.h">
+      <Filter>50.quake</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\quake\WxStageCanvas.h">
+      <Filter>50.quake</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -467,16 +482,28 @@
     <ClCompile Include="..\..\..\src\terrain\WxStagePage.cpp">
       <Filter>14.terrain</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\scene3d\QuakeMapLoader.cpp">
-      <Filter>02.scene3d</Filter>
+    <ClCompile Include="..\..\..\src\quake\WxStagePage.cpp">
+      <Filter>50.quake</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\scene3d\DrawFaceShader.cpp">
-      <Filter>02.scene3d</Filter>
+    <ClCompile Include="..\..\..\src\quake\DrawEdgeShader.cpp">
+      <Filter>50.quake\shader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\quake\DrawFaceShader.cpp">
+      <Filter>50.quake\shader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\quake\QuakeMapLoader.cpp">
+      <Filter>50.quake</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\quake\WxStageCanvas.cpp">
+      <Filter>50.quake</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\src\scene3d\scene.glsl">
-      <Filter>02.scene3d</Filter>
+    <None Include="..\..\..\src\quake\edge.glsl">
+      <Filter>50.quake\shader</Filter>
+    </None>
+    <None Include="..\..\..\src\quake\face.glsl">
+      <Filter>50.quake\shader</Filter>
     </None>
   </ItemGroup>
 </Project>

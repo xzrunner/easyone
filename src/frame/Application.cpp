@@ -106,7 +106,7 @@ void Application::LoadFromFile(const std::string& filepath)
 	}
 	else if (ext == ".map")
 	{
-		new_type = PAGE_SCENE3D;
+		new_type = PAGE_QUAKE;
 	}
 
 	if (old_type != new_type || !page->GetFilepath().empty()) {
@@ -234,7 +234,7 @@ wxWindow* Application::CreateStagePanel()
 	Blackboard::Instance()->SetStagePanel(m_stage);
 
 	//StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_SCENE2D, m_stage);
-	StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_SCENE3D, m_stage);
+	//StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_SCENE3D, m_stage);
 
 	//StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_SCALE9, m_stage);
 	//StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_SCRIPT, m_stage);
@@ -242,6 +242,8 @@ wxWindow* Application::CreateStagePanel()
 	//StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_PARTICLE3D, m_stage);
 
 	//StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_MODEL, m_stage);
+
+	StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_QUAKE, m_stage);
 
 	m_stage->Thaw();
 

@@ -1,4 +1,4 @@
-#include "scene3d/QuakeMapLoader.h"
+#include "quake/QuakeMapLoader.h"
 
 #include <ee0/MsgHelper.h>
 
@@ -59,7 +59,7 @@ void CreateMeshRenderBuf(model::Model::Mesh& mesh, const std::vector<Vertex>& ve
 	mesh.geometry.vertex_type |= model::VERTEX_FLAG_TEXCOORDS;
 }
 
-Vertex CreateVertex(const quake::BrushFace& face, const sm::vec3& pos, const ur::TexturePtr& tex, sm::cube& aabb)
+Vertex CreateVertex(const ::quake::BrushFace& face, const sm::vec3& pos, const ur::TexturePtr& tex, sm::cube& aabb)
 {
 	Vertex v;
 
@@ -67,7 +67,8 @@ Vertex CreateVertex(const quake::BrushFace& face, const sm::vec3& pos, const ur:
 	aabb.Combine(v.pos);
 
 	if (tex) {
-		v.texcoord = face.CalcTexCoords(pos, tex->Width(), tex->Height());
+		v.texcoord = face.CalcTexCoords(
+			pos, static_cast<float>(tex->Width()), static_cast<float>(tex->Height()));
 	} else {
 		v.texcoord.Set(0, 0);
 	}
@@ -79,6 +80,8 @@ Vertex CreateVertex(const quake::BrushFace& face, const sm::vec3& pos, const ur:
 
 namespace eone
 {
+namespace quake
+{
 
 void QuakeMapLoader::LoadFromFile(ee0::SubjectMgr& sub_mgr,
 	                              const std::string& filepath)
@@ -88,7 +91,7 @@ void QuakeMapLoader::LoadFromFile(ee0::SubjectMgr& sub_mgr,
 		std::istreambuf_iterator<char>());
 	fin.close();
 
-	quake::MapParser parser(str);
+	::quake::MapParser parser(str);
 	parser.Parse();
 	for (auto& e : parser.GetAllEntities()) {
 		for (auto& b : e->brushes) {
@@ -135,7 +138,7 @@ void QuakeMapLoader::LoadFromFile(ee0::SubjectMgr& sub_mgr,
 	}
 }
 
-void QuakeMapLoader::LoadTextures(const quake::MapEntity& world,
+void QuakeMapLoader::LoadTextures(const ::quake::MapEntity& world,
 	                              const std::string& dir)
 {
 	std::string tex_path;
@@ -151,8 +154,8 @@ void QuakeMapLoader::LoadTextures(const quake::MapEntity& world,
 	std::vector<std::string> paths;
 	boost::split(paths, tex_path, boost::is_any_of(";"));
 
-	quake::Palette palette;
-	quake::WadFileLoader loader(palette);
+	::quake::Palette palette;
+	::quake::WadFileLoader loader(palette);
 	for (auto& path : paths)
 	{
 		if (path.empty()) {
@@ -163,10 +166,10 @@ void QuakeMapLoader::LoadTextures(const quake::MapEntity& world,
 	}
 }
 
-void QuakeMapLoader::LoadEntities(const std::vector<std::unique_ptr<quake::MapEntity>>& entities,
+void QuakeMapLoader::LoadEntities(const std::vector<std::unique_ptr<::quake::MapEntity>>& entities,
 	                              std::vector<std::shared_ptr<model::Model>>& models)
 {
-	auto tex_mgr = quake::TextureManager::Instance();
+	auto tex_mgr = ::quake::TextureManager::Instance();
 	int count = 0;
 	for (auto& e : entities)
 	{
@@ -179,7 +182,7 @@ void QuakeMapLoader::LoadEntities(const std::vector<std::unique_ptr<quake::MapEn
 
 			// sort by texture
 			auto faces = b.faces;
-			std::sort(faces.begin(), faces.end(), [](const quake::BrushFace& lhs, const quake::BrushFace& rhs) {
+			std::sort(faces.begin(), faces.end(), [](const ::quake::BrushFace& lhs, const ::quake::BrushFace& rhs) {
 				return lhs.tex_name < rhs.tex_name;
 			});
 
@@ -220,7 +223,7 @@ void QuakeMapLoader::LoadEntities(const std::vector<std::unique_ptr<quake::MapEn
 				}
 
 				assert(f.vertices.size() > 2);
-				for (int i = 1; i < f.vertices.size() - 1; ++i)
+				for (size_t i = 1; i < f.vertices.size() - 1; ++i)
 				{
 					vertices.push_back(CreateVertex(f, f.vertices[0], curr_tex, aabb));
 					vertices.push_back(CreateVertex(f, f.vertices[i], curr_tex, aabb));
@@ -242,4 +245,5 @@ void QuakeMapLoader::LoadEntities(const std::vector<std::unique_ptr<quake::MapEn
 	}
 }
 
+}
 }
