@@ -1,8 +1,5 @@
 #include "quake/WxStagePage.h"
 #include "quake/QuakeMapLoader.h"
-#include "quake/DrawFaceShader.h"
-
-#include "quake/face.glsl"
 
 #include "frame/WxStagePage.h"
 #include "frame/Blackboard.h"
@@ -16,12 +13,6 @@
 #include <node0/SceneNode.h>
 #include <node0/CompComplex.h>
 #include <sx/ResFileHelper.h>
-#include <unirender/VertexAttrib.h>
-#include <unirender/Shader.h>
-#include <unirender/Blackboard.h>
-#include <painting3/EffectsManager.h>
-
-#include <unirender/RenderContext.h>
 
 namespace eone
 {
@@ -31,8 +22,6 @@ namespace quake
 WxStagePage::WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, ECS_WORLD_PARAM const ee0::GameObj& obj)
 	: eone::WxStagePage(parent, ECS_WORLD_VAR obj, LAYOUT_PREVIEW)
 {
-	InitShaders();
-
 	m_messages.push_back(ee0::MSG_INSERT_SCENE_NODE);
 	m_messages.push_back(ee0::MSG_DELETE_SCENE_NODE);
 	m_messages.push_back(ee0::MSG_CLEAR_SCENE_NODE);
@@ -108,28 +97,6 @@ void WxStagePage::LoadFromFileImpl(const std::string& filepath)
 	}
 
 	QuakeMapLoader::LoadFromFile(*m_sub_mgr, filepath);
-}
-
-void WxStagePage::InitShaders()
-{
-	CU_VEC<ur::VertexAttrib> layout;
-	layout.push_back(ur::VertexAttrib("position", 3, 4, 32, 0));
-	layout.push_back(ur::VertexAttrib("texcoord", 2, 4, 32, 24));
-
-	std::vector<std::string> textures;
-
-	auto& rc = ur::Blackboard::Instance()->GetRenderContext();
-	auto shader = std::make_shared<DrawFaceShader>(
-		&rc, face_vs, face_fs, textures, layout);
-
-	pt3::EffectsManager::Instance()->SetUserEffect(
-		std::static_pointer_cast<ur::Shader>(shader));
-	pt3::EffectsManager::Instance()->Use(pt3::EffectsManager::EFFECT_USER);
-
-	float col[4] = { 0.5f, 0.5f, 0.5f, 0.5f };
-	shader->SetVec4("u_face_color", col);
-
-	shader->SetFloat("u_brightness", 1.4f);
 }
 
 void WxStagePage::InsertSceneNode(const ee0::VariantSet& variants)

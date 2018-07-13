@@ -25,9 +25,9 @@ WxStageCanvas2D::WxStageCanvas2D(WxStagePage* stage, ECS_WORLD_PARAM
 {
 }
 
-void WxStageCanvas2D::DrawNodes() const
+void WxStageCanvas2D::DrawForeground() const
 {
-	ee2::WxStageCanvas::DrawNodes();
+	ee2::WxStageCanvas::DrawForeground();
 
 #ifndef GAME_OBJ_ECS
 	auto obj = static_cast<WxStagePage*>(m_stage)->GetEditedObj();

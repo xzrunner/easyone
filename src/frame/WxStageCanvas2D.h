@@ -14,7 +14,7 @@ public:
 		const ee0::RenderContext& rc);
 
 protected:
-	virtual void DrawNodes() const override;
+	virtual void DrawForeground() const override;
 
 	virtual bool OnUpdate() override;
 

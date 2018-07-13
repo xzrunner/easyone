@@ -30,9 +30,9 @@ void WxStageCanvas::DrawBackground() const
 	ComposeGrids::Draw();
 }
 
-void WxStageCanvas::DrawNodes() const
+void WxStageCanvas::DrawForeground() const
 {
-	m_stage->Traverse([&](const ee0::GameObj& obj)->bool 
+	m_stage->Traverse([&](const ee0::GameObj& obj)->bool
 	{
 #ifndef GAME_OBJ_ECS
 		auto& ctrans = obj->GetUniqueComp<n2::CompTransform>();

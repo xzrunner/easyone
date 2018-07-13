@@ -2,6 +2,8 @@
 
 #include <frame/WxStageCanvas3D.h>
 
+namespace ur { class Shader; }
+
 namespace eone
 {
 
@@ -17,7 +19,14 @@ public:
 		const ee0::RenderContext& rc);
 
 protected:
-	virtual void OnDrawSprites() const override;
+	virtual void DrawForeground() const override;
+
+private:
+	void InitShaders() const;
+
+private:
+	mutable std::shared_ptr<ur::Shader> m_face_shader;
+	mutable std::shared_ptr<ur::Shader> m_edge_shader;
 
 }; // WxStageCanvas
 

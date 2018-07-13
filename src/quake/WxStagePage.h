@@ -34,8 +34,6 @@ protected:
 	virtual void LoadFromFileImpl(const std::string& filepath) override;
 
 private:
-	void InitShaders();
-
 	void InsertSceneNode(const ee0::VariantSet& variants);
 	void DeleteSceneNode(const ee0::VariantSet& variants);
 	void ClearSceneNode();
