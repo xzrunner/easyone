@@ -173,7 +173,12 @@ void QuakeMapLoader::LoadEntities(const std::vector<std::unique_ptr<::quake::Map
 	int count = 0;
 	for (auto& e : entities)
 	{
+		if (e->brushes.empty()) {
+			continue;
+		}
+
 		auto model = std::make_unique<model::Model>();
+		sm::cube aabb;
 		for (auto& b : e->brushes)
 		{
 			if (b.faces.empty()) {
@@ -189,7 +194,6 @@ void QuakeMapLoader::LoadEntities(const std::vector<std::unique_ptr<::quake::Map
 			// create meshes
 			std::unique_ptr<model::Model::Mesh> mesh = nullptr;
 			std::vector<Vertex> vertices;
-			sm::cube aabb;
 			std::string curr_tex_name;
 			ur::TexturePtr curr_tex = nullptr;
 			for (auto& f : faces)
@@ -202,9 +206,6 @@ void QuakeMapLoader::LoadEntities(const std::vector<std::unique_ptr<::quake::Map
 						CreateMeshRenderBuf(*mesh, vertices);
 						model->meshes.push_back(std::move(mesh));
 						vertices.clear();
-
-						model->aabb = aabb;
-						aabb.MakeEmpty();
 					}
 
 					mesh = std::make_unique<model::Model::Mesh>();
@@ -236,11 +237,12 @@ void QuakeMapLoader::LoadEntities(const std::vector<std::unique_ptr<::quake::Map
 				CreateMeshRenderBuf(*mesh, vertices);
 				model->meshes.push_back(std::move(mesh));
 				vertices.clear();
-
-				model->aabb = aabb;
-				aabb.MakeEmpty();
 			}
 		}
+
+		model->aabb = aabb;
+		aabb.MakeEmpty();
+
 		models.push_back(std::move(model));
 	}
 }
