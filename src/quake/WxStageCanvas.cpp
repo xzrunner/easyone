@@ -8,6 +8,7 @@
 #include <unirender/Shader.h>
 #include <unirender/Blackboard.h>
 #include <painting3/EffectsManager.h>
+#include <painting3/PrimitiveDraw.h>
 
 namespace eone
 {
@@ -29,6 +30,14 @@ void WxStageCanvas::DrawBackground() const
 		inited = true;
 	}
 
+	static const int LEN = 100;
+	pt3::PrimitiveDraw::SetColor(0xff0000ff);
+	pt3::PrimitiveDraw::Line(sm::vec3(-LEN, 0, 0), sm::vec3(LEN, 0, 0));
+	pt3::PrimitiveDraw::SetColor(0xff00ff00);
+	pt3::PrimitiveDraw::Line(sm::vec3(0, -LEN, 0), sm::vec3(0, LEN, 0));
+	pt3::PrimitiveDraw::SetColor(0xffff0000);
+	pt3::PrimitiveDraw::Line(sm::vec3(0, 0, -LEN), sm::vec3(0, 0, LEN));
+}
 
 void WxStageCanvas::DrawForeground() const
 {

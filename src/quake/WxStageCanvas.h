@@ -19,6 +19,7 @@ public:
 		const ee0::RenderContext& rc);
 
 protected:
+	virtual void DrawBackground() const override;
 	virtual void DrawForeground() const override;
 
 private:
