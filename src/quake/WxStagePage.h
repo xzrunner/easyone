@@ -6,6 +6,7 @@
 #include "frame/StagePageType.h"
 
 namespace ee0 { class WxLibraryPanel; }
+namespace pt3 { class Camera; class Viewport; }
 
 namespace eone
 {
@@ -24,6 +25,8 @@ public:
 
 	virtual int GetPageType() const override { return PAGE_QUAKE; }
 
+	void InitEditOP(pt3::Camera& cam, const pt3::Viewport& vp);
+
 protected:
 #ifndef GAME_OBJ_ECS
 	virtual const n0::NodeComp& GetEditedObjComp() const override;
@@ -37,6 +40,10 @@ private:
 	void InsertSceneNode(const ee0::VariantSet& variants);
 	void DeleteSceneNode(const ee0::VariantSet& variants);
 	void ClearSceneNode();
+
+private:
+	std::shared_ptr<ee0::EditOP> m_default_op;
+	std::shared_ptr<ee0::EditOP> m_rotate_op;
 
 }; // WxStagePage
 

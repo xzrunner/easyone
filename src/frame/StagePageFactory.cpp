@@ -82,7 +82,8 @@ WxStagePage* StagePageFactory::Create(ECS_WORLD_PARAM int page_type, WxStagePane
 			page = new scene3d::WxStagePage(frame, library, ECS_WORLD_VAR obj);
 			auto canvas = std::make_shared<WxStageCanvas3D>(page, rc);
 			page->GetImpl().SetCanvas(canvas);
-			page->GetImpl().SetEditOP(std::make_shared<ee3::NodeArrangeOP>(*page));
+			auto op = std::make_shared<ee3::NodeArrangeOP>(*page, canvas->GetCamera(), canvas->GetViewport());
+			page->GetImpl().SetEditOP(op);
 
 			stage_panel->AddNewPage(page, GetPageName(page->GetPageType()));
 		}
@@ -166,7 +167,8 @@ WxStagePage* StagePageFactory::Create(ECS_WORLD_PARAM int page_type, WxStagePane
 			page = new model::WxStagePage(frame, library, ECS_WORLD_VAR obj);
 			auto canvas = std::make_shared<WxStageCanvas3D>(page, rc);
 			page->GetImpl().SetCanvas(canvas);
-			page->GetImpl().SetEditOP(std::make_shared<ee3::NodeArrangeOP>(*page));
+			auto op = std::make_shared<ee3::NodeArrangeOP>(*page, canvas->GetCamera(), canvas->GetViewport());
+			page->GetImpl().SetEditOP(op);
 
 			stage_panel->AddNewPage(page, GetPageName(page->GetPageType()));
 		}
@@ -206,11 +208,12 @@ WxStagePage* StagePageFactory::Create(ECS_WORLD_PARAM int page_type, WxStagePane
 	case PAGE_QUAKE:
 		{
 			auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_SCENE3D);
-			page = new quake::WxStagePage(frame, library, ECS_WORLD_VAR obj);
+			auto quake_page = new quake::WxStagePage(frame, library, ECS_WORLD_VAR obj);
+			page = quake_page;
 			auto canvas = std::make_shared<quake::WxStageCanvas>(page, rc);
 			page->GetImpl().SetCanvas(canvas);
-			page->GetImpl().SetEditOP(std::make_shared<ee3::CameraMoveOP>(
-				canvas->GetCamera(), canvas->GetViewport(), page->GetSubjectMgr()));
+
+			quake_page->InitEditOP(canvas->GetCamera(), canvas->GetViewport());
 
 			stage_panel->AddNewPage(page, GetPageName(page->GetPageType()));
 		}

@@ -20,7 +20,7 @@ WxStageCanvas::WxStageCanvas(eone::WxStagePage* stage, ECS_WORLD_PARAM
 {
 }
 
-void WxStageCanvas::DrawForeground() const
+void WxStageCanvas::DrawBackground() const
 {
 	// todo: fail to put InitShaders() in ctor
 	static bool inited = false;
@@ -29,17 +29,20 @@ void WxStageCanvas::DrawForeground() const
 		inited = true;
 	}
 
+
+void WxStageCanvas::DrawForeground() const
+{
 	// pass 1 draw face
 	pt3::EffectsManager::Instance()->SetUserEffect(
 		std::static_pointer_cast<ur::Shader>(m_face_shader));
 	pt3::EffectsManager::Instance()->Use(pt3::EffectsManager::EFFECT_USER);
 	DrawNodes();
 
-	// pass 2 draw edge
-	pt3::EffectsManager::Instance()->SetUserEffect(
-		std::static_pointer_cast<ur::Shader>(m_edge_shader));
-	pt3::EffectsManager::Instance()->Use(pt3::EffectsManager::EFFECT_USER);
-	DrawNodes();
+	//// pass 2 draw edge
+	//pt3::EffectsManager::Instance()->SetUserEffect(
+	//	std::static_pointer_cast<ur::Shader>(m_edge_shader));
+	//pt3::EffectsManager::Instance()->Use(pt3::EffectsManager::EFFECT_USER);
+	//DrawNodes();
 }
 
 void WxStageCanvas::InitShaders() const
