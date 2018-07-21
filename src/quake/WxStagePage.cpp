@@ -9,6 +9,7 @@
 #include <ee0/SubjectMgr.h>
 #include <ee3/WxStageDropTarget.h>
 #include <ee3/NodeRotateOP.h>
+#include <ee3/NodeTranslateOP.h>
 #include <ee3/NodeSelectOP.h>
 #include <ee3/NodeArrangeOP.h>
 
@@ -85,13 +86,16 @@ void WxStagePage::InitEditOP(pt3::Camera& cam, const pt3::Viewport& vp)
 	auto& impl = GetImpl();
 
 	// arrange node
-	auto prev_op = std::make_shared<ee3::NodeSelectOP>(*this);
-	auto op = std::make_shared<ee3::NodeArrangeOP>(*this, cam, vp);
-	op->SetPrevEditOP(prev_op);
-	impl.SetEditOP(op);
+	{
+		auto prev_op = std::make_shared<ee3::NodeSelectOP>(*this);
+		auto op = std::make_shared<ee3::NodeArrangeOP>(*this, cam, vp);
+		op->SetPrevEditOP(prev_op);
+		impl.SetEditOP(op);
 
-	m_default_op = op;
-	m_rotate_op = std::make_shared<ee3::NodeRotateOP>(*this, cam, vp);
+		m_default_op = op;
+	}
+	m_rotate_op    = std::make_shared<ee3::NodeRotateOP>(*this, cam, vp);
+	m_translate_op = std::make_shared<ee3::NodeTranslateOP>(*this, cam, vp);
 
 	GetImpl().SetOnKeyDownFunc([&](int key_code) {
 		switch (key_code)
@@ -99,10 +103,18 @@ void WxStagePage::InitEditOP(pt3::Camera& cam, const pt3::Viewport& vp)
 		case 'R':
 			if (!GetSelection().IsEmpty()) {
 				impl.SetEditOP(m_rotate_op);
+				m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
+			}
+			break;
+		case 'T':
+			if (!GetSelection().IsEmpty()) {
+				impl.SetEditOP(m_translate_op);
+				m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
 			}
 			break;
 		case WXK_ESCAPE:
 			impl.SetEditOP(m_default_op);
+			m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
 			break;
 		}
 	});

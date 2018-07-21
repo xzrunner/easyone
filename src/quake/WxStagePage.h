@@ -1,6 +1,7 @@
 #pragma once
 
 #include <ee0/GameObj.h>
+#include <ee0/typedef.h>
 
 #include "frame/WxStagePage.h"
 #include "frame/StagePageType.h"
@@ -42,8 +43,9 @@ private:
 	void ClearSceneNode();
 
 private:
-	std::shared_ptr<ee0::EditOP> m_default_op;
-	std::shared_ptr<ee0::EditOP> m_rotate_op;
+	ee0::EditOPPtr m_default_op   = nullptr;
+	ee0::EditOPPtr m_rotate_op    = nullptr;
+	ee0::EditOPPtr m_translate_op = nullptr;
 
 }; // WxStagePage
 
