@@ -1,10 +1,13 @@
 #include "quake/WxStagePage.h"
 #include "quake/QuakeMapLoader.h"
+#include "quake/WxPreviewPanel.h"
+#include "quake/WxPreviewCanvas.h"
 
 #include "frame/WxStagePage.h"
 #include "frame/Blackboard.h"
 #include "frame/Application.h"
 #include "frame/typedef.h"
+#include "frame/WxStageExtPanel.h"
 
 #include <ee0/SubjectMgr.h>
 #include <ee3/WxStageDropTarget.h>
@@ -12,6 +15,7 @@
 #include <ee3/NodeTranslateOP.h>
 #include <ee3/NodeSelectOP.h>
 #include <ee3/NodeArrangeOP.h>
+#include <ee3/CameraMoveOP.h>
 
 #include <guard/check.h>
 #include <node0/SceneNode.h>
@@ -24,7 +28,7 @@ namespace quake
 {
 
 WxStagePage::WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, ECS_WORLD_PARAM const ee0::GameObj& obj)
-	: eone::WxStagePage(parent, ECS_WORLD_VAR obj, LAYOUT_PREVIEW)
+	: eone::WxStagePage(parent, ECS_WORLD_VAR obj, LAYOUT_STAGE_EXT)
 {
 	m_messages.push_back(ee0::MSG_INSERT_SCENE_NODE);
 	m_messages.push_back(ee0::MSG_DELETE_SCENE_NODE);
@@ -118,6 +122,32 @@ void WxStagePage::InitEditOP(pt3::Camera& cam, const pt3::Viewport& vp)
 			break;
 		}
 	});
+}
+
+void WxStagePage::OnPageInit()
+{
+	auto bb = Blackboard::Instance();
+
+	auto panel = bb->GetStageExtPanel();
+	auto sizer = panel->GetSizer();
+	if (sizer) {
+		sizer->Clear(true);
+	} else {
+		sizer = new wxBoxSizer(wxHORIZONTAL);
+	}
+
+	auto preview_panel = new WxPreviewPanel(panel);
+	sizer->Add(preview_panel, 1, wxEXPAND);
+
+	auto preview_canvas = std::make_shared<WxPreviewCanvas>(
+		preview_panel, bb->GetRenderContext());
+	preview_panel->GetImpl().SetCanvas(preview_canvas);
+
+	auto preview_op = std::make_shared<ee3::CameraMoveOP>(
+		preview_canvas->GetCamera(), preview_canvas->GetViewport(), preview_panel->GetSubjectMgr());
+	preview_panel->GetImpl().SetEditOP(preview_op);
+
+	panel->SetSizer(sizer);
 }
 
 #ifndef GAME_OBJ_ECS

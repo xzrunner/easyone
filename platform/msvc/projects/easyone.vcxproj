@@ -314,6 +314,8 @@
     <ClInclude Include="..\..\..\src\quake\DrawEdgeShader.h" />
     <ClInclude Include="..\..\..\src\quake\DrawFaceShader.h" />
     <ClInclude Include="..\..\..\src\quake\QuakeMapLoader.h" />
+    <ClInclude Include="..\..\..\src\quake\WxPreviewCanvas.h" />
+    <ClInclude Include="..\..\..\src\quake\WxPreviewPanel.h" />
     <ClInclude Include="..\..\..\src\quake\WxStageCanvas.h" />
     <ClInclude Include="..\..\..\src\quake\WxStagePage.h" />
     <ClInclude Include="..\..\..\src\scale9\ComposeGrids.h" />
@@ -394,6 +396,14 @@
     <ClCompile Include="..\..\..\src\quake\DrawEdgeShader.cpp" />
     <ClCompile Include="..\..\..\src\quake\DrawFaceShader.cpp" />
     <ClCompile Include="..\..\..\src\quake\QuakeMapLoader.cpp" />
+    <ClCompile Include="..\..\..\src\quake\WxPreviewCanvas.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/quake/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/quake/</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\quake\WxPreviewPanel.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/quake/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/quake/</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="..\..\..\src\quake\WxStageCanvas.cpp">
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/quake/</ObjectFileName>
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/quake/</ObjectFileName>

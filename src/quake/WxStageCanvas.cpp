@@ -47,11 +47,11 @@ void WxStageCanvas::DrawForeground() const
 	pt3::EffectsManager::Instance()->Use(pt3::EffectsManager::EFFECT_USER);
 	DrawNodes();
 
-	//// pass 2 draw edge
-	//pt3::EffectsManager::Instance()->SetUserEffect(
-	//	std::static_pointer_cast<ur::Shader>(m_edge_shader));
-	//pt3::EffectsManager::Instance()->Use(pt3::EffectsManager::EFFECT_USER);
-	//DrawNodes();
+	// pass 2 draw edge
+	pt3::EffectsManager::Instance()->SetUserEffect(
+		std::static_pointer_cast<ur::Shader>(m_edge_shader));
+	pt3::EffectsManager::Instance()->Use(pt3::EffectsManager::EFFECT_USER);
+	DrawNodes();
 }
 
 void WxStageCanvas::InitShaders() const
