@@ -13,7 +13,7 @@ public:
 	DrawEdgeShader(ur::RenderContext* rc, const char* vs, const char* fs,
 		const std::vector<std::string>& textures, const CU_VEC<ur::VertexAttrib>& va_list);
 
-	virtual ur::DRAW_MODE GetDrawMode() const { return ur::DRAW_LINE_STRIP; }
+	virtual ur::DRAW_MODE GetDrawMode() const { return ur::DRAW_LINES; }
 	virtual void DrawBefore(const ur::TexturePtr& tex);
 
 }; // DrawEdgeShader
