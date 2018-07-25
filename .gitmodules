@@ -157,3 +157,6 @@
 [submodule "ext/lexer"]
 	path = ext/lexer
 	url = git@github.com:xzrunner/lexer.git
+[submodule "ext/halfedge"]
+	path = ext/halfedge
+	url = git@github.com:xzrunner/halfedge.git
