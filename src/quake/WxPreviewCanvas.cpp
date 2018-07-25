@@ -47,8 +47,9 @@ void WxPreviewCanvas::DrawForeground() const
 //		ctrans.Translate(sm::vec3(0, 10, 0));
 	}
 
-	auto mat = GetCamera().GetModelViewMat();
-	n3::RenderSystem::Draw(m_node, mat);
+	n3::RenderParams params;
+	params.mt = GetCamera().GetModelViewMat();
+	n3::RenderSystem::Draw(m_node, params);
 }
 
 void WxPreviewCanvas::RegisterMsg(ee0::SubjectMgr& sub_mgr)
