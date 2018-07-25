@@ -32,7 +32,7 @@
 #include <ee3/WxStageCanvas.h>
 #include <ee3/NodeArrangeOP.h>
 #include <ee3/WorldTravelOP.h>
-#include <ee3/CameraMoveOP.h>
+#include <ee3/CameraDriveOP.h>
 
 #include <node0/SceneNode.h>
 #include <node2/CompMask.h>
