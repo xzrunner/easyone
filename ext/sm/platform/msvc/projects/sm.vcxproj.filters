@@ -28,6 +28,9 @@
     <Filter Include="complex\bounding">
       <UniqueIdentifier>{3cdf295c-f706-4124-bd1b-fcaf302f577e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="complex\ray">
+      <UniqueIdentifier>{b862ed5e-fba1-4816-9b77-e5532e29761c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\sm\sm_c_vector.cpp">
@@ -56,6 +59,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\sm\SM_Triangulation.cpp">
       <Filter>algorithms</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sm\SM_RayIntersect.cpp">
+      <Filter>complex\ray</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -121,6 +127,12 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\sm\SM_Cube.h">
       <Filter>complex\bounding</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sm\SM_Ray.h">
+      <Filter>complex\ray</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sm\SM_RayIntersect.h">
+      <Filter>complex\ray</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

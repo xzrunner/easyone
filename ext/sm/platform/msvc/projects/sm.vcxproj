@@ -84,6 +84,7 @@
     <ClCompile Include="..\..\..\src\sm\sm_c_vector.cpp" />
     <ClCompile Include="..\..\..\src\sm\SM_DouglasPeucker.cpp" />
     <ClCompile Include="..\..\..\src\sm\SM_Matrix2D.cpp" />
+    <ClCompile Include="..\..\..\src\sm\SM_RayIntersect.cpp" />
     <ClCompile Include="..\..\..\src\sm\SM_Test.cpp" />
     <ClCompile Include="..\..\..\src\sm\SM_Triangulation.cpp" />
   </ItemGroup>
@@ -105,6 +106,8 @@
     <ClInclude Include="..\..\..\src\sm\SM_Plane.h" />
     <ClInclude Include="..\..\..\src\sm\SM_Process.h" />
     <ClInclude Include="..\..\..\src\sm\SM_Quaternion.h" />
+    <ClInclude Include="..\..\..\src\sm\SM_Ray.h" />
+    <ClInclude Include="..\..\..\src\sm\SM_RayIntersect.h" />
     <ClInclude Include="..\..\..\src\sm\SM_Rect.h" />
     <ClInclude Include="..\..\..\src\sm\SM_Test.h" />
     <ClInclude Include="..\..\..\src\sm\SM_Triangulation.h" />

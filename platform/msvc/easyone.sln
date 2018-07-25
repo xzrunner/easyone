@@ -133,6 +133,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3.quake", "..\..\ext\quake\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "1.lexer", "..\..\ext\lexer\platform\msvc\projects\lexer.vcxproj", "{7719A1D1-AF73-4E1D-BD99-E9B706195639}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "1.halfedge", "..\..\ext\halfedge\platform\msvc\projects\halfedge.vcxproj", "{D9B1B541-5BCC-4A5F-8A7A-2CED3CEAD3DD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -351,6 +353,10 @@ Global
 		{7719A1D1-AF73-4E1D-BD99-E9B706195639}.Debug|Win32.Build.0 = Debug|Win32
 		{7719A1D1-AF73-4E1D-BD99-E9B706195639}.Release|Win32.ActiveCfg = Release|Win32
 		{7719A1D1-AF73-4E1D-BD99-E9B706195639}.Release|Win32.Build.0 = Release|Win32
+		{D9B1B541-5BCC-4A5F-8A7A-2CED3CEAD3DD}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D9B1B541-5BCC-4A5F-8A7A-2CED3CEAD3DD}.Debug|Win32.Build.0 = Debug|Win32
+		{D9B1B541-5BCC-4A5F-8A7A-2CED3CEAD3DD}.Release|Win32.ActiveCfg = Release|Win32
+		{D9B1B541-5BCC-4A5F-8A7A-2CED3CEAD3DD}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -411,6 +417,7 @@ Global
 		{AB6D016B-C413-4BF5-83DC-823C441A74F0} = {55D85D01-599C-4F78-A116-BDBAEAF0D939}
 		{E12E3322-1408-4380-8219-659C02B2020C} = {55D85D01-599C-4F78-A116-BDBAEAF0D939}
 		{7719A1D1-AF73-4E1D-BD99-E9B706195639} = {59546CF5-AB13-4F20-9611-28BDE9C720E4}
+		{D9B1B541-5BCC-4A5F-8A7A-2CED3CEAD3DD} = {3E445281-8F17-4763-9112-39A38C12FE16}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8D54C01A-3C82-4351-A325-2853C3E81322}
