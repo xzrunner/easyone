@@ -15,7 +15,9 @@
 #include <ee3/NodeTranslateOP.h>
 #include <ee3/NodeSelectOP.h>
 #include <ee3/NodeArrangeOP.h>
-#include <ee3/CameraMoveOP.h>
+#include <ee3/CameraDriveOP.h>
+#include <ee3/MeshFaceOP.h>
+#include <ee3/PolyArrangeOP.h>
 
 #include <guard/check.h>
 #include <node0/SceneNode.h>
@@ -89,21 +91,20 @@ void WxStagePage::InitEditOP(pt3::Camera& cam, const pt3::Viewport& vp)
 {
 	auto& impl = GetImpl();
 
-	// arrange node
-	{
-		auto prev_op = std::make_shared<ee3::NodeSelectOP>(*this);
-		auto op = std::make_shared<ee3::NodeArrangeOP>(*this, cam, vp);
-		op->SetPrevEditOP(prev_op);
-		impl.SetEditOP(op);
-
-		m_default_op = op;
-	}
+	m_default_op   = std::make_shared<ee3::PolyArrangeOP>(*this, cam, vp);
+	m_drive_op     = std::make_shared<ee3::CameraDriveOP>(cam, vp, m_sub_mgr);
 	m_rotate_op    = std::make_shared<ee3::NodeRotateOP>(*this, cam, vp);
 	m_translate_op = std::make_shared<ee3::NodeTranslateOP>(*this, cam, vp);
+	m_face_op      = std::make_shared<ee3::MeshFaceOP>(*this, cam, vp);
+
+	impl.SetEditOP(m_default_op);
 
 	GetImpl().SetOnKeyDownFunc([&](int key_code) {
 		switch (key_code)
 		{
+		case 'D':
+			impl.SetEditOP(m_drive_op);
+			break;
 		case 'R':
 			if (!GetSelection().IsEmpty()) {
 				impl.SetEditOP(m_rotate_op);
@@ -113,6 +114,12 @@ void WxStagePage::InitEditOP(pt3::Camera& cam, const pt3::Viewport& vp)
 		case 'T':
 			if (!GetSelection().IsEmpty()) {
 				impl.SetEditOP(m_translate_op);
+				m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
+			}
+			break;
+		case 'F':
+			if (!GetSelection().IsEmpty()) {
+				impl.SetEditOP(m_face_op);
 				m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
 			}
 			break;
@@ -143,7 +150,7 @@ void WxStagePage::OnPageInit()
 		preview_panel, bb->GetRenderContext());
 	preview_panel->GetImpl().SetCanvas(preview_canvas);
 
-	auto preview_op = std::make_shared<ee3::CameraMoveOP>(
+	auto preview_op = std::make_shared<ee3::CameraDriveOP>(
 		preview_canvas->GetCamera(), preview_canvas->GetViewport(), preview_panel->GetSubjectMgr());
 	preview_panel->GetImpl().SetEditOP(preview_op);
 

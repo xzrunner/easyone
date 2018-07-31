@@ -46,8 +46,10 @@ private:
 
 private:
 	ee0::EditOPPtr m_default_op   = nullptr;
+	ee0::EditOPPtr m_drive_op     = nullptr;
 	ee0::EditOPPtr m_rotate_op    = nullptr;
 	ee0::EditOPPtr m_translate_op = nullptr;
+	ee0::EditOPPtr m_face_op      = nullptr;
 
 }; // WxStagePage
 
