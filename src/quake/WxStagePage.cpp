@@ -17,6 +17,7 @@
 #include <ee3/NodeArrangeOP.h>
 #include <ee3/CameraDriveOP.h>
 #include <ee3/MeshFaceOP.h>
+#include <ee3/PolySelectOP.h>
 #include <ee3/PolyArrangeOP.h>
 
 #include <guard/check.h>
@@ -91,20 +92,28 @@ void WxStagePage::InitEditOP(pt3::Camera& cam, const pt3::Viewport& vp)
 {
 	auto& impl = GetImpl();
 
-	m_default_op   = std::make_shared<ee3::PolyArrangeOP>(*this, cam, vp);
-	m_drive_op     = std::make_shared<ee3::CameraDriveOP>(cam, vp, m_sub_mgr);
-	m_rotate_op    = std::make_shared<ee3::NodeRotateOP>(*this, cam, vp);
+	auto cam_op = std::make_shared<ee3::CameraDriveOP>(cam, vp, m_sub_mgr);
+	// arrange op with select, default
+	{
+		auto select_op  = std::make_shared<ee3::PolySelectOP>(*this, cam, vp);
+		auto arrange_op = std::make_shared<ee3::PolyArrangeOP>(cam, vp, m_sub_mgr, select_op->GetSelected());
+		arrange_op->SetPrevEditOP(select_op)->SetPrevEditOP(cam_op);
+		m_default_op = arrange_op;
+	}
+	// rotate
+	m_rotate_op = std::make_shared<ee3::NodeRotateOP>(*this, cam, vp);
+	m_rotate_op->SetPrevEditOP(cam_op);
+	// translate
 	m_translate_op = std::make_shared<ee3::NodeTranslateOP>(*this, cam, vp);
-	m_face_op      = std::make_shared<ee3::MeshFaceOP>(*this, cam, vp);
+	m_translate_op->SetPrevEditOP(cam_op);
+	// face
+	m_face_op = std::make_shared<ee3::MeshFaceOP>(*this, cam, vp);
 
 	impl.SetEditOP(m_default_op);
 
 	GetImpl().SetOnKeyDownFunc([&](int key_code) {
 		switch (key_code)
 		{
-		case 'D':
-			impl.SetEditOP(m_drive_op);
-			break;
 		case 'R':
 			if (!GetSelection().IsEmpty()) {
 				impl.SetEditOP(m_rotate_op);
