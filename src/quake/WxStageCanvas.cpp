@@ -5,8 +5,8 @@
 #include "quake/edge.glsl"
 
 #include <unirender/VertexAttrib.h>
-#include <unirender/Shader.h>
 #include <unirender/Blackboard.h>
+#include <painting2/PrimitiveDraw.h>
 #include <painting3/EffectsManager.h>
 #include <painting3/PrimitiveDraw.h>
 
@@ -31,12 +31,16 @@ void WxStageCanvas::DrawBackground() const
 	}
 
 	static const int LEN = 100;
+	pt2::PrimitiveDraw::PointSize(5);
 	pt3::PrimitiveDraw::SetColor(0xff0000ff);
 	pt3::PrimitiveDraw::Line(sm::vec3(-LEN, 0, 0), sm::vec3(LEN, 0, 0));
+	pt3::PrimitiveDraw::Point(sm::vec3(LEN, 0, 0));
 	pt3::PrimitiveDraw::SetColor(0xff00ff00);
 	pt3::PrimitiveDraw::Line(sm::vec3(0, -LEN, 0), sm::vec3(0, LEN, 0));
+	pt3::PrimitiveDraw::Point(sm::vec3(0, LEN, 0));
 	pt3::PrimitiveDraw::SetColor(0xffff0000);
 	pt3::PrimitiveDraw::Line(sm::vec3(0, 0, -LEN), sm::vec3(0, 0, LEN));
+	pt3::PrimitiveDraw::Point(sm::vec3(0, 0, LEN));
 }
 
 void WxStageCanvas::DrawForeground() const
