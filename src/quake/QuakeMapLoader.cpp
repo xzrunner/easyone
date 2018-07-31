@@ -34,11 +34,7 @@ void QuakeMapLoader::LoadFromFile(ee0::SubjectMgr& sub_mgr,
 		node->AddUniqueComp<n3::CompModelInst>(model, 0);
 
 		// transform
-		auto& ctrans = node->AddUniqueComp<n3::CompTransform>();
-		ctrans.SetScale(sm::vec3(-1, 1, 1));	// todo: this make back face to front face
-												//       so make vertices order to CCW
-		ctrans.Rotate(sm::Quaternion::CreateFromEulerAngle(0, -SM_PI * 0.5f, 0));
-		ctrans.Translate(sm::vec3(0, 10, 0));
+		node->AddUniqueComp<n3::CompTransform>();
 
 		// aabb
 		node->AddUniqueComp<n3::CompAABB>(pt3::AABB(model->aabb));
