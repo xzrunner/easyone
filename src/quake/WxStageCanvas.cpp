@@ -9,6 +9,8 @@
 #include <painting2/PrimitiveDraw.h>
 #include <painting3/EffectsManager.h>
 #include <painting3/PrimitiveDraw.h>
+#include <node3/RenderSystem.h>
+#include <facade/RenderContext.h>
 
 namespace eone
 {
@@ -45,17 +47,20 @@ void WxStageCanvas::DrawBackground() const
 
 void WxStageCanvas::DrawForeground() const
 {
+	auto& rc = const_cast<ee0::RenderContext&>(GetRenderContext()).facade_rc;
+	auto& ur_rc = rc->GetUrRc();
+
 	// pass 1 draw face
 	pt3::EffectsManager::Instance()->SetUserEffect(
 		std::static_pointer_cast<ur::Shader>(m_face_shader));
 	pt3::EffectsManager::Instance()->Use(pt3::EffectsManager::EFFECT_USER);
-	DrawNodes();
+	DrawNodes(n3::RenderParams::DRAW_MESH);
 
 	// pass 2 draw edge
 	pt3::EffectsManager::Instance()->SetUserEffect(
 		std::static_pointer_cast<ur::Shader>(m_edge_shader));
 	pt3::EffectsManager::Instance()->Use(pt3::EffectsManager::EFFECT_USER);
-	DrawNodes();
+	DrawNodes(n3::RenderParams::DRAW_BORDER_MESH);
 }
 
 void WxStageCanvas::InitShaders() const
