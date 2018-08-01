@@ -16,6 +16,7 @@
 #include <ee3/NodeSelectOP.h>
 #include <ee3/NodeArrangeOP.h>
 #include <ee3/CameraDriveOP.h>
+#include <ee3/VertexSelectOP.h>
 #include <ee3/VertexTranslateOP.h>
 #include <ee3/MeshFaceOP.h>
 #include <ee3/PolySelectOP.h>
@@ -112,8 +113,10 @@ void WxStagePage::InitEditOP(pt3::PerspCam& cam, const pt3::Viewport& vp)
 	m_translate_op = std::make_shared<ee3::NodeTranslateOP>(*this, cam, vp);
 	m_translate_op->SetPrevEditOP(m_camera_op);
 	// vertex
-	m_vertex_op = std::make_shared<ee3::VertexTranslateOP>(cam, vp, m_sub_mgr, selected);
-	m_vertex_op->SetPrevEditOP(m_select_op);
+	auto select_vert_op = std::make_shared<ee3::VertexSelectOP>(cam, vp, m_sub_mgr, selected);
+	select_vert_op->SetPrevEditOP(m_select_op);
+	m_vertex_op = std::make_shared<ee3::VertexTranslateOP>(cam, vp, m_sub_mgr);
+	m_vertex_op->SetPrevEditOP(select_vert_op);
 	// face
 	m_face_op = std::make_shared<ee3::MeshFaceOP>(*this, cam, vp);
 
