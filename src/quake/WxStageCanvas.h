@@ -2,8 +2,6 @@
 
 #include <frame/WxStageCanvas3D.h>
 
-namespace ur { class Shader; }
-
 namespace eone
 {
 
@@ -24,10 +22,6 @@ protected:
 
 private:
 	void InitShaders() const;
-
-private:
-	mutable std::shared_ptr<ur::Shader> m_face_shader;
-	mutable std::shared_ptr<ur::Shader> m_edge_shader;
 
 }; // WxStageCanvas
 

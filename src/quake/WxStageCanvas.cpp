@@ -12,10 +12,20 @@
 #include <node3/RenderSystem.h>
 #include <facade/RenderContext.h>
 
+namespace
+{
+
+std::shared_ptr<ur::Shader> FACE_SHADER = nullptr;
+std::shared_ptr<ur::Shader> EDGE_SHADER = nullptr;
+
+}
+
 namespace eone
 {
 namespace quake
 {
+
+
 
 WxStageCanvas::WxStageCanvas(eone::WxStagePage* stage, ECS_WORLD_PARAM
 	                         const ee0::RenderContext& rc)
@@ -25,11 +35,8 @@ WxStageCanvas::WxStageCanvas(eone::WxStagePage* stage, ECS_WORLD_PARAM
 
 void WxStageCanvas::DrawBackground() const
 {
-	// todo: fail to put InitShaders() in ctor
-	static bool inited = false;
-	if (!inited) {
+	if (!FACE_SHADER || !EDGE_SHADER) {
 		InitShaders();
-		inited = true;
 	}
 
 	static const int LEN = 100;
@@ -52,13 +59,13 @@ void WxStageCanvas::DrawForeground() const
 
 	// pass 1 draw face
 	pt3::EffectsManager::Instance()->SetUserEffect(
-		std::static_pointer_cast<ur::Shader>(m_face_shader));
+		std::static_pointer_cast<ur::Shader>(FACE_SHADER));
 	pt3::EffectsManager::Instance()->Use(pt3::EffectsManager::EFFECT_USER);
 	DrawNodes(n3::RenderParams::DRAW_MESH);
 
 	// pass 2 draw edge
 	pt3::EffectsManager::Instance()->SetUserEffect(
-		std::static_pointer_cast<ur::Shader>(m_edge_shader));
+		std::static_pointer_cast<ur::Shader>(EDGE_SHADER));
 	pt3::EffectsManager::Instance()->Use(pt3::EffectsManager::EFFECT_USER);
 	DrawNodes(n3::RenderParams::DRAW_BORDER_MESH);
 }
@@ -72,9 +79,9 @@ void WxStageCanvas::InitShaders() const
 	std::vector<std::string> textures;
 
 	auto& rc = ur::Blackboard::Instance()->GetRenderContext();
-	m_face_shader = std::make_shared<DrawFaceShader>(
+	FACE_SHADER = std::make_shared<DrawFaceShader>(
 		&rc, face_vs, face_fs, textures, layout);
-	m_edge_shader = std::make_shared<DrawEdgeShader>(
+	EDGE_SHADER = std::make_shared<DrawEdgeShader>(
 		&rc, edge_vs, edge_fs, textures, layout);
 }
 
