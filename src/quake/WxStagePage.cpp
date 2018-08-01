@@ -148,10 +148,8 @@ void WxStagePage::InitEditOP(pt3::PerspCam& cam, const pt3::Viewport& vp)
 			m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
 			break;
 		case WXK_SPACE:
-			if (GetSelection().IsEmpty()) {
-				SwitchToNextViewport();
-				m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
-			}
+			SwitchToNextViewport();
+			m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
 			break;
 		}
 	});
