@@ -16,7 +16,7 @@
 #include <ee3/NodeSelectOP.h>
 #include <ee3/NodeArrangeOP.h>
 #include <ee3/CameraDriveOP.h>
-#include <ee3/MeshVertexOP.h>
+#include <ee3/VertexTranslateOP.h>
 #include <ee3/MeshFaceOP.h>
 #include <ee3/PolySelectOP.h>
 #include <ee3/PolyArrangeOP.h>
@@ -97,53 +97,61 @@ void WxStagePage::InitEditOP(pt3::PerspCam& cam, const pt3::Viewport& vp)
 {
 	auto& impl = GetImpl();
 
-	auto cam_op = std::make_shared<ee3::CameraDriveOP>(cam, vp, m_sub_mgr);
+	m_camera_op = std::make_shared<ee3::CameraDriveOP>(cam, vp, m_sub_mgr);
 	auto select_op = std::make_shared<ee3::PolySelectOP>(*this, cam, vp);
+	m_select_op = select_op;
 	auto& selected = select_op->GetSelected();
-	select_op->SetPrevEditOP(cam_op);
+	m_select_op->SetPrevEditOP(m_camera_op);
 	// arrange op with select, default
 	m_default_op = std::make_shared<ee3::PolyArrangeOP>(cam, vp, m_sub_mgr, selected);
-	m_default_op->SetPrevEditOP(select_op);
+	m_default_op->SetPrevEditOP(m_select_op);
 	// rotate
 	m_rotate_op = std::make_shared<ee3::NodeRotateOP>(*this, cam, vp);
-	m_rotate_op->SetPrevEditOP(cam_op);
+	m_rotate_op->SetPrevEditOP(m_camera_op);
 	// translate
 	m_translate_op = std::make_shared<ee3::NodeTranslateOP>(*this, cam, vp);
-	m_translate_op->SetPrevEditOP(cam_op);
+	m_translate_op->SetPrevEditOP(m_camera_op);
 	// vertex
-	m_vertex_op = std::make_shared<ee3::MeshVertexOP>(cam, vp, m_sub_mgr, selected);
-	m_vertex_op->SetPrevEditOP(select_op);
+	m_vertex_op = std::make_shared<ee3::VertexTranslateOP>(cam, vp, m_sub_mgr, selected);
+	m_vertex_op->SetPrevEditOP(m_select_op);
 	// face
 	m_face_op = std::make_shared<ee3::MeshFaceOP>(*this, cam, vp);
 
 	impl.SetEditOP(m_default_op);
 
-	GetImpl().SetOnKeyDownFunc([&](int key_code) {
+	GetImpl().SetOnKeyDownFunc([&](int key_code)
+	{
+		auto select_op = std::dynamic_pointer_cast<ee3::PolySelectOP>(m_select_op);
 		switch (key_code)
 		{
 		case 'R':
 			if (!GetSelection().IsEmpty()) {
+				select_op->SetCanSelectNull(false);
 				impl.SetEditOP(m_rotate_op);
 				m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
 			}
 			break;
 		case 'T':
 			if (!GetSelection().IsEmpty()) {
+				select_op->SetCanSelectNull(false);
 				impl.SetEditOP(m_translate_op);
 				m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
 			}
 			break;
 		case 'V':
+			select_op->SetCanSelectNull(false);
 			impl.SetEditOP(m_vertex_op);
 			m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
 			break;
 		case 'F':
 			if (!GetSelection().IsEmpty()) {
+				select_op->SetCanSelectNull(false);
 				impl.SetEditOP(m_face_op);
 				m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
 			}
 			break;
 		case WXK_ESCAPE:
+			select_op->SetCanSelectNull(true);
 			impl.SetEditOP(m_default_op);
 			m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
 			break;

@@ -67,6 +67,9 @@ private:
 	};
 
 private:
+	ee0::EditOPPtr m_camera_op    = nullptr;
+	ee0::EditOPPtr m_select_op    = nullptr;
+
 	ee0::EditOPPtr m_default_op   = nullptr;
 	ee0::EditOPPtr m_rotate_op    = nullptr;
 	ee0::EditOPPtr m_translate_op = nullptr;
