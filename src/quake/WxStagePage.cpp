@@ -23,6 +23,10 @@
 #include <guard/check.h>
 #include <node0/SceneNode.h>
 #include <node0/CompComplex.h>
+#include <painting3/PerspCam.h>
+#include <painting3/OrthoCam.h>
+#include <painting3/Blackboard.h>
+#include <painting3/WindowContext.h>
 #include <sx/ResFileHelper.h>
 
 namespace eone
@@ -88,7 +92,7 @@ void WxStagePage::Traverse(std::function<bool(const ee0::GameObj&)> func,
 	}
 }
 
-void WxStagePage::InitEditOP(pt3::Camera& cam, const pt3::Viewport& vp)
+void WxStagePage::InitEditOP(pt3::PerspCam& cam, const pt3::Viewport& vp)
 {
 	auto& impl = GetImpl();
 
@@ -136,8 +140,29 @@ void WxStagePage::InitEditOP(pt3::Camera& cam, const pt3::Viewport& vp)
 			impl.SetEditOP(m_default_op);
 			m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
 			break;
+		case WXK_SPACE:
+			if (GetSelection().IsEmpty()) {
+				SwitchToNextViewport();
+				m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
+			}
+			break;
 		}
 	});
+}
+
+void WxStagePage::InitViewports()
+{
+	m_curr_vp = VP_3D;
+
+	auto canvas = std::dynamic_pointer_cast<ee3::WxStageCanvas>(GetImpl().GetCanvas());
+	assert(canvas);
+	auto cam = canvas->GetCamera();
+	assert(cam->Type() == pt3::CAM_PERSPECTIVE);
+	m_vps[VP_3D].cam = cam;
+
+	m_vps[VP_XZ].cam = std::make_shared<pt3::OrthoCam>(pt3::OrthoCam::VP_XZ);
+	m_vps[VP_XY].cam = std::make_shared<pt3::OrthoCam>(pt3::OrthoCam::VP_XY);
+	m_vps[VP_ZY].cam = std::make_shared<pt3::OrthoCam>(pt3::OrthoCam::VP_ZY);
 }
 
 void WxStagePage::OnPageInit()
@@ -159,8 +184,11 @@ void WxStagePage::OnPageInit()
 		preview_panel, bb->GetRenderContext());
 	preview_panel->GetImpl().SetCanvas(preview_canvas);
 
+	auto cam = preview_canvas->GetCamera();
+	assert(cam->Type() == pt3::CAM_PERSPECTIVE);
+	auto& persp_cam = *(std::dynamic_pointer_cast<pt3::PerspCam>(cam));
 	auto preview_op = std::make_shared<ee3::CameraDriveOP>(
-		preview_canvas->GetCamera(), preview_canvas->GetViewport(), preview_panel->GetSubjectMgr());
+		persp_cam, preview_canvas->GetViewport(), preview_panel->GetSubjectMgr());
 	preview_panel->GetImpl().SetEditOP(preview_op);
 
 	panel->SetSizer(sizer);
@@ -230,6 +258,24 @@ void WxStagePage::ClearSceneNode()
 	ccomplex.RemoveAllChildren();
 	m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
 #endif // GAME_OBJ_ECS
+}
+
+void WxStagePage::SwitchToNextViewport()
+{
+	m_curr_vp = static_cast<ViewportType>((m_curr_vp + 1) % VP_MAX_COUNT);
+	auto& cam = m_vps[m_curr_vp].cam;
+
+	auto canvas = std::dynamic_pointer_cast<ee3::WxStageCanvas>(GetImpl().GetCanvas());
+
+	auto& vp = canvas->GetViewport();
+	cam->OnSize(vp.Width(), vp.Height());
+
+	auto& wc = pt3::Blackboard::Instance()->GetWindowContext();
+	if (wc) {
+		wc->SetProjection(cam->GetProjectionMat());
+	}
+
+	canvas->SetCamera(cam);
 }
 
 }

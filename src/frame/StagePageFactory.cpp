@@ -40,6 +40,7 @@
 #include <node2/CompParticle3dInst.h>
 #include <moon/Blackboard.h>
 #include <moon/Context.h>
+#include <painting3/PerspCam.h>
 
 #include <boost/filesystem.hpp>
 
@@ -82,7 +83,12 @@ WxStagePage* StagePageFactory::Create(ECS_WORLD_PARAM int page_type, WxStagePane
 			page = new scene3d::WxStagePage(frame, library, ECS_WORLD_VAR obj);
 			auto canvas = std::make_shared<WxStageCanvas3D>(page, rc);
 			page->GetImpl().SetCanvas(canvas);
-			auto op = std::make_shared<ee3::NodeArrangeOP>(*page, canvas->GetCamera(), canvas->GetViewport());
+
+			auto cam = canvas->GetCamera();
+			assert(cam->Type() == pt3::CAM_PERSPECTIVE);
+			auto& persp_cam = *(std::dynamic_pointer_cast<pt3::PerspCam>(cam));
+
+			auto op = std::make_shared<ee3::NodeArrangeOP>(*page, persp_cam, canvas->GetViewport());
 			page->GetImpl().SetEditOP(op);
 
 			stage_panel->AddNewPage(page, GetPageName(page->GetPageType()));
@@ -167,7 +173,12 @@ WxStagePage* StagePageFactory::Create(ECS_WORLD_PARAM int page_type, WxStagePane
 			page = new model::WxStagePage(frame, library, ECS_WORLD_VAR obj);
 			auto canvas = std::make_shared<WxStageCanvas3D>(page, rc);
 			page->GetImpl().SetCanvas(canvas);
-			auto op = std::make_shared<ee3::NodeArrangeOP>(*page, canvas->GetCamera(), canvas->GetViewport());
+
+			auto cam = canvas->GetCamera();
+			assert(cam->Type() == pt3::CAM_PERSPECTIVE);
+			auto& persp_cam = *(std::dynamic_pointer_cast<pt3::PerspCam>(cam));
+
+			auto op = std::make_shared<ee3::NodeArrangeOP>(*page, persp_cam, canvas->GetViewport());
 			page->GetImpl().SetEditOP(op);
 
 			stage_panel->AddNewPage(page, GetPageName(page->GetPageType()));
@@ -212,8 +223,12 @@ WxStagePage* StagePageFactory::Create(ECS_WORLD_PARAM int page_type, WxStagePane
 			page = quake_page;
 			auto canvas = std::make_shared<quake::WxStageCanvas>(page, rc);
 			page->GetImpl().SetCanvas(canvas);
+			quake_page->InitViewports();
 
-			quake_page->InitEditOP(canvas->GetCamera(), canvas->GetViewport());
+			auto cam = canvas->GetCamera();
+			assert(cam->Type() == pt3::CAM_PERSPECTIVE);
+			auto& persp_cam = *(std::dynamic_pointer_cast<pt3::PerspCam>(cam));
+			quake_page->InitEditOP(persp_cam, canvas->GetViewport());
 
 			stage_panel->AddNewPage(page, GetPageName(page->GetPageType()));
 		}

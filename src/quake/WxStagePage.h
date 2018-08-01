@@ -3,11 +3,13 @@
 #include <ee0/GameObj.h>
 #include <ee0/typedef.h>
 
+#include <painting3/PerspCam.h>
+
 #include "frame/WxStagePage.h"
 #include "frame/StagePageType.h"
 
 namespace ee0 { class WxLibraryPanel; }
-namespace pt3 { class Camera; class Viewport; }
+namespace pt3 { class PerspCam; class Viewport; }
 
 namespace eone
 {
@@ -26,7 +28,9 @@ public:
 
 	virtual int GetPageType() const override { return PAGE_QUAKE; }
 
-	void InitEditOP(pt3::Camera& cam, const pt3::Viewport& vp);
+	void InitEditOP(pt3::PerspCam& cam, const pt3::Viewport& vp);
+
+	void InitViewports();
 
 protected:
 	virtual void OnPageInit() override;
@@ -44,11 +48,32 @@ private:
 	void DeleteSceneNode(const ee0::VariantSet& variants);
 	void ClearSceneNode();
 
+	void SwitchToNextViewport();
+
+private:
+	struct Viewport
+	{
+		pt3::ICameraPtr cam;
+	};
+
+	enum ViewportType
+	{
+		VP_3D = 0,
+		VP_XZ,
+		VP_XY,
+		VP_ZY,
+
+		VP_MAX_COUNT,
+	};
+
 private:
 	ee0::EditOPPtr m_default_op   = nullptr;
 	ee0::EditOPPtr m_rotate_op    = nullptr;
 	ee0::EditOPPtr m_translate_op = nullptr;
 	ee0::EditOPPtr m_face_op      = nullptr;
+
+	Viewport     m_vps[VP_MAX_COUNT];
+	ViewportType m_curr_vp;
 
 }; // WxStagePage
 
