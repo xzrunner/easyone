@@ -41,6 +41,8 @@ namespace quake
 
 WxStagePage::WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, ECS_WORLD_PARAM const ee0::GameObj& obj)
 	: eone::WxStagePage(parent, ECS_WORLD_VAR obj, LAYOUT_STAGE_EXT)
+	, m_cam_mgr(false)
+	, m_preview_cam_mgr(true)
 {
 	m_messages.push_back(ee0::MSG_INSERT_SCENE_NODE);
 	m_messages.push_back(ee0::MSG_DELETE_SCENE_NODE);
@@ -101,7 +103,7 @@ void WxStagePage::InitEditOP(pt3::PerspCam& cam, const pt3::Viewport& vp)
 {
 	auto& impl = GetImpl();
 
-	m_camera_op = std::make_shared<ee3::CameraDriveOP>(cam, vp, m_sub_mgr);
+	m_camera_op = std::make_shared<ee3::CameraDriveOP>(m_cam_mgr, vp, m_sub_mgr);
 	auto select_op = std::make_shared<ee3::mesh::PolySelectOP>(*this, cam, vp);
 	m_select_op = select_op;
 	auto& selected = select_op->GetSelected();
@@ -187,17 +189,11 @@ void WxStagePage::InitEditOP(pt3::PerspCam& cam, const pt3::Viewport& vp)
 
 void WxStagePage::InitViewports()
 {
-	m_curr_vp = VP_3D;
-
 	auto canvas = std::dynamic_pointer_cast<ee3::WxStageCanvas>(GetImpl().GetCanvas());
 	assert(canvas);
 	auto cam = canvas->GetCamera();
 	assert(cam->Type() == pt3::CAM_PERSPECTIVE);
-	m_vps[VP_3D].cam = cam;
-
-	m_vps[VP_XZ].cam = std::make_shared<pt3::OrthoCam>(pt3::OrthoCam::VP_XZ);
-	m_vps[VP_XY].cam = std::make_shared<pt3::OrthoCam>(pt3::OrthoCam::VP_XY);
-	m_vps[VP_ZY].cam = std::make_shared<pt3::OrthoCam>(pt3::OrthoCam::VP_ZY);
+	m_cam_mgr.SetCamera(cam, ee3::CameraMgr::CAM_3D);
 }
 
 void WxStagePage::OnPageInit()
@@ -221,9 +217,9 @@ void WxStagePage::OnPageInit()
 
 	auto cam = preview_canvas->GetCamera();
 	assert(cam->Type() == pt3::CAM_PERSPECTIVE);
-	auto& persp_cam = *(std::dynamic_pointer_cast<pt3::PerspCam>(cam));
+	m_preview_cam_mgr.SetCamera(cam, ee3::CameraMgr::CAM_3D);
 	auto preview_op = std::make_shared<ee3::CameraDriveOP>(
-		persp_cam, preview_canvas->GetViewport(), preview_panel->GetSubjectMgr());
+		m_preview_cam_mgr, preview_canvas->GetViewport(), preview_panel->GetSubjectMgr());
 	preview_panel->GetImpl().SetEditOP(preview_op);
 
 	panel->SetSizer(sizer);
@@ -297,8 +293,7 @@ void WxStagePage::ClearSceneNode()
 
 void WxStagePage::SwitchToNextViewport()
 {
-	m_curr_vp = static_cast<ViewportType>((m_curr_vp + 1) % VP_MAX_COUNT);
-	auto& cam = m_vps[m_curr_vp].cam;
+	auto& cam = m_cam_mgr.SwitchToNext();
 
 	auto canvas = std::dynamic_pointer_cast<ee3::WxStageCanvas>(GetImpl().GetCanvas());
 

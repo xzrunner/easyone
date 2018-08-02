@@ -2,6 +2,7 @@
 
 #include <ee0/GameObj.h>
 #include <ee0/typedef.h>
+#include <ee3/CameraMgr.h>
 
 #include <painting3/PerspCam.h>
 
@@ -51,22 +52,6 @@ private:
 	void SwitchToNextViewport();
 
 private:
-	struct Viewport
-	{
-		pt3::ICameraPtr cam;
-	};
-
-	enum ViewportType
-	{
-		VP_3D = 0,
-		VP_XZ,
-		VP_XY,
-		VP_ZY,
-
-		VP_MAX_COUNT,
-	};
-
-private:
 	ee0::EditOPPtr m_camera_op    = nullptr;
 	ee0::EditOPPtr m_select_op    = nullptr;
 
@@ -78,8 +63,8 @@ private:
 	ee0::EditOPPtr m_edge_op      = nullptr;
 	ee0::EditOPPtr m_face_op      = nullptr;
 
-	Viewport     m_vps[VP_MAX_COUNT];
-	ViewportType m_curr_vp;
+	ee3::CameraMgr m_cam_mgr;
+	ee3::CameraMgr m_preview_cam_mgr;
 
 }; // WxStagePage
 
