@@ -18,7 +18,10 @@
 #include <ee3/CameraDriveOP.h>
 #include <ee3/VertexSelectOP.h>
 #include <ee3/VertexTranslateOP.h>
-#include <ee3/MeshFaceOP.h>
+#include <ee3/EdgeSelectOP.h>
+#include <ee3/EdgeTranslateOP.h>
+#include <ee3/FaceSelectOP.h>
+#include <ee3/FaceTranslateOP.h>
 #include <ee3/PolySelectOP.h>
 #include <ee3/PolyArrangeOP.h>
 
@@ -99,12 +102,12 @@ void WxStagePage::InitEditOP(pt3::PerspCam& cam, const pt3::Viewport& vp)
 	auto& impl = GetImpl();
 
 	m_camera_op = std::make_shared<ee3::CameraDriveOP>(cam, vp, m_sub_mgr);
-	auto select_op = std::make_shared<ee3::PolySelectOP>(*this, cam, vp);
+	auto select_op = std::make_shared<ee3::mesh::PolySelectOP>(*this, cam, vp);
 	m_select_op = select_op;
 	auto& selected = select_op->GetSelected();
 	m_select_op->SetPrevEditOP(m_camera_op);
 	// arrange op with select, default
-	m_default_op = std::make_shared<ee3::PolyArrangeOP>(cam, vp, m_sub_mgr, selected);
+	m_default_op = std::make_shared<ee3::mesh::PolyArrangeOP>(cam, vp, m_sub_mgr, selected);
 	m_default_op->SetPrevEditOP(m_select_op);
 	// rotate
 	m_rotate_op = std::make_shared<ee3::NodeRotateOP>(*this, cam, vp);
@@ -113,18 +116,29 @@ void WxStagePage::InitEditOP(pt3::PerspCam& cam, const pt3::Viewport& vp)
 	m_translate_op = std::make_shared<ee3::NodeTranslateOP>(*this, cam, vp);
 	m_translate_op->SetPrevEditOP(m_camera_op);
 	// vertex
-	auto select_vert_op = std::make_shared<ee3::VertexSelectOP>(cam, vp, m_sub_mgr, selected);
+	auto select_vert_op = std::make_shared<ee3::mesh::VertexSelectOP>(cam, vp, m_sub_mgr, selected);
 	select_vert_op->SetPrevEditOP(m_select_op);
-	m_vertex_op = std::make_shared<ee3::VertexTranslateOP>(cam, vp, m_sub_mgr);
+	m_vertex_op = std::make_shared<ee3::mesh::VertexTranslateOP>(
+		cam, vp, m_sub_mgr, selected, select_vert_op->GetSelected());
 	m_vertex_op->SetPrevEditOP(select_vert_op);
+	// edge
+	auto select_edge_op = std::make_shared<ee3::mesh::EdgeSelectOP>(cam, vp, m_sub_mgr, selected);
+	select_edge_op->SetPrevEditOP(m_select_op);
+	m_edge_op = std::make_shared<ee3::mesh::EdgeTranslateOP>(
+		cam, vp, m_sub_mgr, selected, select_edge_op->GetSelected());
+	m_edge_op->SetPrevEditOP(select_edge_op);
 	// face
-	m_face_op = std::make_shared<ee3::MeshFaceOP>(*this, cam, vp);
+	auto select_face_op = std::make_shared<ee3::mesh::FaceSelectOP>(cam, vp, m_sub_mgr, selected);
+	select_face_op->SetPrevEditOP(m_select_op);
+	m_face_op = std::make_shared<ee3::mesh::FaceTranslateOP>(
+		cam, vp, m_sub_mgr, selected, select_face_op->GetSelected());
+	m_face_op->SetPrevEditOP(select_face_op);
 
 	impl.SetEditOP(m_default_op);
 
 	GetImpl().SetOnKeyDownFunc([&](int key_code)
 	{
-		auto select_op = std::dynamic_pointer_cast<ee3::PolySelectOP>(m_select_op);
+		auto select_op = std::dynamic_pointer_cast<ee3::mesh::PolySelectOP>(m_select_op);
 		switch (key_code)
 		{
 		case 'R':
@@ -141,18 +155,23 @@ void WxStagePage::InitEditOP(pt3::PerspCam& cam, const pt3::Viewport& vp)
 				m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
 			}
 			break;
+
 		case 'V':
 			select_op->SetCanSelectNull(false);
 			impl.SetEditOP(m_vertex_op);
 			m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
 			break;
-		case 'F':
-			if (!GetSelection().IsEmpty()) {
-				select_op->SetCanSelectNull(false);
-				impl.SetEditOP(m_face_op);
-				m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
-			}
+		case 'E':
+			select_op->SetCanSelectNull(false);
+			impl.SetEditOP(m_edge_op);
+			m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
 			break;
+		case 'F':
+			select_op->SetCanSelectNull(false);
+			impl.SetEditOP(m_face_op);
+			m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
+			break;
+
 		case WXK_ESCAPE:
 			select_op->SetCanSelectNull(true);
 			impl.SetEditOP(m_default_op);

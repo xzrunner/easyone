@@ -75,6 +75,7 @@ private:
 	ee0::EditOPPtr m_translate_op = nullptr;
 
 	ee0::EditOPPtr m_vertex_op    = nullptr;
+	ee0::EditOPPtr m_edge_op      = nullptr;
 	ee0::EditOPPtr m_face_op      = nullptr;
 
 	Viewport     m_vps[VP_MAX_COUNT];
