@@ -62,7 +62,8 @@ wxWindow* WxEditDialog::CreateStagePanel(const ee0::GameObj& obj)
 	m_stage = new scale9::WxStagePage(this, nullptr, ECS_WORLD_SELF_VAR obj);
 	auto canvas = std::make_shared<ee2::WxStageCanvas>(m_stage, ECS_WORLD_SELF_VAR &m_rc, &m_wc);
 	m_stage->GetImpl().SetCanvas(canvas);
-	m_stage->GetImpl().SetEditOP(std::make_shared<NodeSelectOP>(ECS_WORLD_SELF_VAR *m_stage, m_rc, m_wc));
+	m_stage->GetImpl().SetEditOP(std::make_shared<NodeSelectOP>(
+		canvas->GetCamera(), ECS_WORLD_SELF_VAR *m_stage, m_rc, m_wc));
 	return m_stage;
 }
 
@@ -73,7 +74,7 @@ wxWindow* WxEditDialog::CreatePreviewPanel()
 
 	auto canvas = std::make_shared<WxPreviewCanvas>(m_preview, ECS_WORLD_SELF_VAR m_rc);
 	m_preview->GetImpl().SetCanvas(canvas);
-	auto op = std::make_shared<ee2::CamControlOP>(*canvas->GetCamera(), sub_mgr);
+	auto op = std::make_shared<ee2::CamControlOP>(canvas->GetCamera(), sub_mgr);
 	m_preview->GetImpl().SetEditOP(op);
 
 	return m_preview;

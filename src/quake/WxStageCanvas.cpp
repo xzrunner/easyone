@@ -9,6 +9,7 @@
 #include <painting2/PrimitiveDraw.h>
 #include <painting3/EffectsManager.h>
 #include <painting3/PrimitiveDraw.h>
+#include <painting3/PerspCam.h>
 #include <node3/RenderSystem.h>
 #include <facade/RenderContext.h>
 
@@ -41,6 +42,7 @@ void WxStageCanvas::DrawBackground() const
 
 	static const int LEN = 100;
 	pt2::PrimitiveDraw::PointSize(5);
+	pt2::PrimitiveDraw::LineWidth(2);
 	pt3::PrimitiveDraw::SetColor(0xff0000ff);
 	pt3::PrimitiveDraw::Line(sm::vec3(-LEN, 0, 0), sm::vec3(LEN, 0, 0));
 	pt3::PrimitiveDraw::Point(sm::vec3(LEN, 0, 0));
@@ -58,12 +60,17 @@ void WxStageCanvas::DrawForeground() const
 	auto& ur_rc = rc->GetUrRc();
 
 	// pass 1 draw face
-	pt3::EffectsManager::Instance()->SetUserEffect(
-		std::static_pointer_cast<ur::Shader>(FACE_SHADER));
-	pt3::EffectsManager::Instance()->Use(pt3::EffectsManager::EFFECT_USER);
-	DrawNodes(n3::RenderParams::DRAW_MESH);
+	auto& cam = GetCamera();
+	if (cam->TypeID() == pt0::GetCamTypeID<pt3::PerspCam>())
+	{
+		pt3::EffectsManager::Instance()->SetUserEffect(
+			std::static_pointer_cast<ur::Shader>(FACE_SHADER));
+		pt3::EffectsManager::Instance()->Use(pt3::EffectsManager::EFFECT_USER);
+		DrawNodes(n3::RenderParams::DRAW_MESH);
+	}
 
 	// pass 2 draw edge
+	pt2::PrimitiveDraw::LineWidth(1);
 	pt3::EffectsManager::Instance()->SetUserEffect(
 		std::static_pointer_cast<ur::Shader>(EDGE_SHADER));
 	pt3::EffectsManager::Instance()->Use(pt3::EffectsManager::EFFECT_USER);

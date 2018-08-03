@@ -66,11 +66,11 @@ WxStagePage* StagePageFactory::Create(ECS_WORLD_PARAM int page_type, WxStagePane
 			auto canvas = std::make_shared<WxStageCanvas2D>(page, ECS_WORLD_VAR rc);
 			page->GetImpl().SetCanvas(canvas);
 
-			auto prev_op = std::make_shared<NodeSelectOP>(ECS_WORLD_VAR *page, rc, wc);
+			auto prev_op = std::make_shared<NodeSelectOP>(
+				canvas->GetCamera(), ECS_WORLD_VAR *page, rc, wc);
 
-			auto cam = canvas->GetCamera();
-			GD_ASSERT(cam, "null cam");
-			auto op = std::make_shared<ee2::ArrangeNodeOP>(*page, *cam, ECS_WORLD_VAR ee2::ArrangeNodeCfg(), prev_op);
+			auto op = std::make_shared<ee2::ArrangeNodeOP>(
+				canvas->GetCamera(), *page, ECS_WORLD_VAR ee2::ArrangeNodeCfg(), prev_op);
 
 			page->GetImpl().SetEditOP(op);
 
@@ -84,11 +84,8 @@ WxStagePage* StagePageFactory::Create(ECS_WORLD_PARAM int page_type, WxStagePane
 			auto canvas = std::make_shared<WxStageCanvas3D>(page, rc);
 			page->GetImpl().SetCanvas(canvas);
 
-			auto cam = canvas->GetCamera();
-			assert(cam->Type() == pt3::CAM_PERSPECTIVE);
-			auto& persp_cam = *(std::dynamic_pointer_cast<pt3::PerspCam>(cam));
-
-			auto op = std::make_shared<ee3::NodeArrangeOP>(*page, persp_cam, canvas->GetViewport());
+			auto op = std::make_shared<ee3::NodeArrangeOP>(
+				canvas->GetCamera(), *page, canvas->GetViewport());
 			page->GetImpl().SetEditOP(op);
 
 			stage_panel->AddNewPage(page, GetPageName(page->GetPageType()));
@@ -101,7 +98,8 @@ WxStagePage* StagePageFactory::Create(ECS_WORLD_PARAM int page_type, WxStagePane
 			auto canvas = std::make_shared<scale9::WxStageCanvas>(page, ECS_WORLD_VAR rc);
 			page->GetImpl().SetCanvas(canvas);
 
-			page->GetImpl().SetEditOP(std::make_shared<NodeSelectOP>(ECS_WORLD_VAR *page, rc, wc));
+			page->GetImpl().SetEditOP(std::make_shared<NodeSelectOP>(
+				canvas->GetCamera(), ECS_WORLD_VAR *page, rc, wc));
 
 			stage_panel->AddNewPage(page, GetPageName(page->GetPageType()));
 		}
@@ -113,12 +111,11 @@ WxStagePage* StagePageFactory::Create(ECS_WORLD_PARAM int page_type, WxStagePane
 			auto canvas = std::make_shared<WxStageCanvas2D>(page, ECS_WORLD_VAR rc);
 			page->GetImpl().SetCanvas(canvas);
 
-			auto prev_op = std::make_shared<NodeSelectOP>(ECS_WORLD_VAR *page, rc, wc);
+			auto prev_op = std::make_shared<NodeSelectOP>(
+				canvas->GetCamera(), ECS_WORLD_VAR *page, rc, wc);
 
-			auto cam = canvas->GetCamera();
-			GD_ASSERT(cam, "null cam");
 			auto op = std::make_shared<ee2::ArrangeNodeOP>(
-				*page, *cam, ECS_WORLD_VAR ee2::ArrangeNodeCfg(), prev_op);
+				canvas->GetCamera(), *page, ECS_WORLD_VAR ee2::ArrangeNodeCfg(), prev_op);
 
 			page->GetImpl().SetEditOP(op);
 
@@ -132,12 +129,11 @@ WxStagePage* StagePageFactory::Create(ECS_WORLD_PARAM int page_type, WxStagePane
 			auto canvas = std::make_shared<WxStageCanvas2D>(page, ECS_WORLD_VAR rc);
 			page->GetImpl().SetCanvas(canvas);
 
-			auto prev_op = std::make_shared<NodeSelectOP>(ECS_WORLD_VAR *page, rc, wc);
+			auto prev_op = std::make_shared<NodeSelectOP>(
+				canvas->GetCamera(), ECS_WORLD_VAR *page, rc, wc);
 
-			auto cam = canvas->GetCamera();
-			GD_ASSERT(cam, "null cam");
 			auto op = std::make_shared<ee2::ArrangeNodeOP>(
-				*page, *cam, ECS_WORLD_VAR ee2::ArrangeNodeCfg(), prev_op);
+				canvas->GetCamera(), *page, ECS_WORLD_VAR ee2::ArrangeNodeCfg(), prev_op);
 
 			page->GetImpl().SetEditOP(op);
 
@@ -152,11 +148,9 @@ WxStagePage* StagePageFactory::Create(ECS_WORLD_PARAM int page_type, WxStagePane
 			page->GetImpl().SetCanvas(canvas);
 
 #ifndef GAME_OBJ_ECS
-			auto cam = canvas->GetCamera();
-			GD_ASSERT(cam, "null cam");
 			auto& p3d_inst = obj->GetUniqueComp<n2::CompParticle3dInst>();
 			auto op = std::make_shared<particle3d::PlayParticlesOP>(
-				obj, *cam, page->GetSubjectMgr());
+				canvas->GetCamera(), obj, page->GetSubjectMgr());
 
 			page->GetImpl().SetEditOP(op);
 #else
@@ -174,11 +168,8 @@ WxStagePage* StagePageFactory::Create(ECS_WORLD_PARAM int page_type, WxStagePane
 			auto canvas = std::make_shared<WxStageCanvas3D>(page, rc);
 			page->GetImpl().SetCanvas(canvas);
 
-			auto cam = canvas->GetCamera();
-			assert(cam->Type() == pt3::CAM_PERSPECTIVE);
-			auto& persp_cam = *(std::dynamic_pointer_cast<pt3::PerspCam>(cam));
-
-			auto op = std::make_shared<ee3::NodeArrangeOP>(*page, persp_cam, canvas->GetViewport());
+			auto op = std::make_shared<ee3::NodeArrangeOP>(
+				canvas->GetCamera(), *page, canvas->GetViewport());
 			page->GetImpl().SetEditOP(op);
 
 			stage_panel->AddNewPage(page, GetPageName(page->GetPageType()));
@@ -203,12 +194,11 @@ WxStagePage* StagePageFactory::Create(ECS_WORLD_PARAM int page_type, WxStagePane
 
 			canvas->ScriptLoad();
 
-			auto prev_op = std::make_shared<NodeSelectOP>(ECS_WORLD_VAR *page, rc, wc);
+			auto prev_op = std::make_shared<NodeSelectOP>(
+				canvas->GetCamera(), ECS_WORLD_VAR *page, rc, wc);
 
-			auto cam = canvas->GetCamera();
-			GD_ASSERT(cam, "null cam");
 			auto op = std::make_shared<ee2::ArrangeNodeOP>(
-				*page, *cam, ECS_WORLD_VAR ee2::ArrangeNodeCfg(), prev_op);
+				canvas->GetCamera(), *page, ECS_WORLD_VAR ee2::ArrangeNodeCfg(), prev_op);
 
 			page->GetImpl().SetEditOP(op);
 
@@ -225,10 +215,7 @@ WxStagePage* StagePageFactory::Create(ECS_WORLD_PARAM int page_type, WxStagePane
 			page->GetImpl().SetCanvas(canvas);
 			quake_page->InitViewports();
 
-			auto cam = canvas->GetCamera();
-			assert(cam->Type() == pt3::CAM_PERSPECTIVE);
-			auto& persp_cam = *(std::dynamic_pointer_cast<pt3::PerspCam>(cam));
-			quake_page->InitEditOP(persp_cam, canvas->GetViewport());
+			quake_page->InitEditOP(canvas->GetCamera(), canvas->GetViewport());
 
 			stage_panel->AddNewPage(page, GetPageName(page->GetPageType()));
 		}
@@ -256,7 +243,7 @@ void StagePageFactory::CreatePreviewOP(
 	case PAGE_SCENE2D:
 		{
 			auto preview_op = std::make_shared<ee2::CamControlOP>(
-				*canvas->GetCamera(), sub_mgr);
+				canvas->GetCamera(), sub_mgr);
 			preview->GetImpl().SetEditOP(preview_op);
 		}
 		break;
@@ -269,14 +256,15 @@ void StagePageFactory::CreatePreviewOP(
 		break;
 	case PAGE_SCALE9:
 		{
-			auto preview_op = std::make_shared<scale9::ResizeScale9OP>(preview, ECS_WORLD_VAR curr_page->GetEditedObj());
+			auto preview_op = std::make_shared<scale9::ResizeScale9OP>(
+				canvas->GetCamera(), preview, ECS_WORLD_VAR curr_page->GetEditedObj());
 			preview->GetImpl().SetEditOP(preview_op);
 		}
 		break;
 	case PAGE_MASK:
 		{
 			auto preview_op = std::make_shared<ee2::CamControlOP>(
-				*canvas->GetCamera(), sub_mgr);
+				canvas->GetCamera(), sub_mgr);
 			preview->GetImpl().SetEditOP(preview_op);
 		}
 		break;

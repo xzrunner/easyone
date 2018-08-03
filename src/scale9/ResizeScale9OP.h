@@ -18,7 +18,8 @@ namespace scale9
 class ResizeScale9OP : public ee0::EditOP
 {
 public:
-	ResizeScale9OP(WxPreviewPanel* stage, ECS_WORLD_PARAM const ee0::GameObj& obj);
+	ResizeScale9OP(const std::shared_ptr<pt0::Camera>& camera,
+		WxPreviewPanel* stage, ECS_WORLD_PARAM const ee0::GameObj& obj);
 
 	virtual bool OnMouseLeftDown(int x, int y) override;
 	virtual bool OnMouseLeftUp(int x, int y) override;

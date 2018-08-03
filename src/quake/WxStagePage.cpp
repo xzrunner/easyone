@@ -42,7 +42,6 @@ namespace quake
 WxStagePage::WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, ECS_WORLD_PARAM const ee0::GameObj& obj)
 	: eone::WxStagePage(parent, ECS_WORLD_VAR obj, LAYOUT_STAGE_EXT)
 	, m_cam_mgr(false)
-	, m_preview_cam_mgr(true)
 {
 	m_messages.push_back(ee0::MSG_INSERT_SCENE_NODE);
 	m_messages.push_back(ee0::MSG_DELETE_SCENE_NODE);
@@ -99,12 +98,12 @@ void WxStagePage::Traverse(std::function<bool(const ee0::GameObj&)> func,
 	}
 }
 
-void WxStagePage::InitEditOP(pt3::PerspCam& cam, const pt3::Viewport& vp)
+void WxStagePage::InitEditOP(const std::shared_ptr<pt0::Camera>& cam, const pt3::Viewport& vp)
 {
 	auto& impl = GetImpl();
 
-	m_camera_op = std::make_shared<ee3::CameraDriveOP>(m_cam_mgr, vp, m_sub_mgr);
-	auto select_op = std::make_shared<ee3::mesh::PolySelectOP>(*this, cam, vp);
+	m_camera_op = std::make_shared<ee3::CameraDriveOP>(m_cam_mgr.GetCamera(ee3::CameraMgr::CAM_3D), vp, m_sub_mgr);
+	auto select_op = std::make_shared<ee3::mesh::PolySelectOP>(cam, *this, vp);
 	m_select_op = select_op;
 	auto& selected = select_op->GetSelected();
 	m_select_op->SetPrevEditOP(m_camera_op);
@@ -112,10 +111,10 @@ void WxStagePage::InitEditOP(pt3::PerspCam& cam, const pt3::Viewport& vp)
 	m_default_op = std::make_shared<ee3::mesh::PolyArrangeOP>(cam, vp, m_sub_mgr, selected);
 	m_default_op->SetPrevEditOP(m_select_op);
 	// rotate
-	m_rotate_op = std::make_shared<ee3::NodeRotateOP>(*this, cam, vp);
+	m_rotate_op = std::make_shared<ee3::NodeRotateOP>(cam, *this, vp);
 	m_rotate_op->SetPrevEditOP(m_camera_op);
 	// translate
-	m_translate_op = std::make_shared<ee3::NodeTranslateOP>(*this, cam, vp);
+	m_translate_op = std::make_shared<ee3::NodeTranslateOP>(cam, *this, vp);
 	m_translate_op->SetPrevEditOP(m_camera_op);
 	// vertex
 	auto select_vert_op = std::make_shared<ee3::mesh::VertexSelectOP>(cam, vp, m_sub_mgr, selected);
@@ -192,7 +191,7 @@ void WxStagePage::InitViewports()
 	auto canvas = std::dynamic_pointer_cast<ee3::WxStageCanvas>(GetImpl().GetCanvas());
 	assert(canvas);
 	auto cam = canvas->GetCamera();
-	assert(cam->Type() == pt3::CAM_PERSPECTIVE);
+	assert(cam->TypeID() == pt0::GetCamTypeID<pt3::PerspCam>());
 	m_cam_mgr.SetCamera(cam, ee3::CameraMgr::CAM_3D);
 }
 
@@ -215,11 +214,8 @@ void WxStagePage::OnPageInit()
 		preview_panel, bb->GetRenderContext());
 	preview_panel->GetImpl().SetCanvas(preview_canvas);
 
-	auto cam = preview_canvas->GetCamera();
-	assert(cam->Type() == pt3::CAM_PERSPECTIVE);
-	m_preview_cam_mgr.SetCamera(cam, ee3::CameraMgr::CAM_3D);
 	auto preview_op = std::make_shared<ee3::CameraDriveOP>(
-		m_preview_cam_mgr, preview_canvas->GetViewport(), preview_panel->GetSubjectMgr());
+		preview_canvas->GetCamera(), preview_canvas->GetViewport(), preview_panel->GetSubjectMgr());
 	preview_panel->GetImpl().SetEditOP(preview_op);
 
 	panel->SetSizer(sizer);
@@ -294,6 +290,19 @@ void WxStagePage::ClearSceneNode()
 void WxStagePage::SwitchToNextViewport()
 {
 	auto& cam = m_cam_mgr.SwitchToNext();
+
+	{
+		m_camera_op->SetCamera(cam);
+		m_select_op->SetCamera(cam);
+
+		m_default_op->SetCamera(cam);
+		m_rotate_op->SetCamera(cam);
+		m_translate_op->SetCamera(cam);
+
+		m_vertex_op->SetCamera(cam);
+		m_edge_op->SetCamera(cam);
+		m_face_op->SetCamera(cam);
+	}
 
 	auto canvas = std::dynamic_pointer_cast<ee3::WxStageCanvas>(GetImpl().GetCanvas());
 

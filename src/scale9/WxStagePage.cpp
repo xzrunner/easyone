@@ -10,6 +10,7 @@
 
 #include <ee0/MsgHelper.h>
 #include <ee0/SubjectMgr.h>
+#include <ee0/WxStageCanvas.h>
 #include <ee2/WxStageDropTarget.h>
 
 #include <guard/check.h>
@@ -88,7 +89,8 @@ void WxStagePage::Traverse(std::function<bool(const ee0::GameObj&)> func,
 void WxStagePage::OnPageInit()
 {
 	auto preview = Blackboard::Instance()->GetPreviewPanel();
-	auto op = std::make_shared<ResizeScale9OP>(preview, ECS_WORLD_SELF_VAR m_obj);
+	auto op = std::make_shared<ResizeScale9OP>(
+		preview->GetImpl().GetCanvas()->GetCamera(), preview, ECS_WORLD_SELF_VAR m_obj);
 	preview->GetImpl().SetEditOP(op);
 }
 

@@ -5,7 +5,7 @@
 #include <ee0/Config.h>
 
 namespace ee0 { class SubjectMgr; }
-namespace pt2 { class Camera; }
+namespace pt0 { class Camera; }
 ECS_WORLD_DECL
 
 namespace eone
@@ -22,8 +22,8 @@ public:
 
 	void RegisterMsg(ee0::SubjectMgr& sub_mgr);
 
-	std::shared_ptr<pt2::Camera>& GetCamera() { return m_cam; }
-	const std::shared_ptr<pt2::Camera>& GetCamera() const { return m_cam; }
+	std::shared_ptr<pt0::Camera>& GetCamera() { return m_cam; }
+	const std::shared_ptr<pt0::Camera>& GetCamera() const { return m_cam; }
 
 protected:
 	virtual void OnSize(int w, int h) override;
@@ -33,7 +33,7 @@ private:
 	WxPreviewPanel* m_stage;
 	ECS_WORLD_SELF_DEF
 
-	std::shared_ptr<pt2::Camera> m_cam = nullptr;
+	std::shared_ptr<pt0::Camera> m_cam = nullptr;
 
 }; // WxPreviewCanvas
 

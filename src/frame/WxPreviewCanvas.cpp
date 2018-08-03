@@ -23,14 +23,10 @@ namespace eone
 
 WxPreviewCanvas::WxPreviewCanvas(WxPreviewPanel* stage, ECS_WORLD_PARAM
 	                             const ee0::RenderContext& rc)
-	: ee0::WxStageCanvas(stage, stage->GetImpl(), &rc, nullptr, HAS_2D)
+	: ee0::WxStageCanvas(stage, stage->GetImpl(), std::make_shared<pt2::OrthoCamera>(sm::vec2(0, 0), 2.0f), &rc, nullptr, HAS_2D)
 	, m_stage(stage)
 	ECS_WORLD_SELF_ASSIGN
 {
-	auto cam = std::make_shared<pt2::OrthoCamera>();
-	cam->Set(sm::vec2(0, 0), 2);
-	m_cam = cam;
-
 	RegisterMsg(*stage->GetSubjectMgr());
 }
 

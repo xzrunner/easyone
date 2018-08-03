@@ -55,9 +55,10 @@ void OpenEditDialog(ee0::WxStagePage& stage, ECS_WORLD_PARAM
 namespace eone
 {
 
-NodeSelectOP::NodeSelectOP(ECS_WORLD_PARAM WxStagePage& stage,
+NodeSelectOP::NodeSelectOP(const std::shared_ptr<pt0::Camera>& camera,
+	                       ECS_WORLD_PARAM WxStagePage& stage,
 	                       const ee0::RenderContext& rc, const ee0::WindowContext& wc)
-	: ee2::NodeSelectOP(ECS_WORLD_VAR stage)
+	: ee2::NodeSelectOP(camera, ECS_WORLD_VAR stage)
 	ECS_WORLD_SELF_ASSIGN
 	, m_rc(rc)
 	, m_wc(wc)

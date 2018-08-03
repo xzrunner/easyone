@@ -4,13 +4,11 @@
 #include <ee0/typedef.h>
 #include <ee3/CameraMgr.h>
 
-#include <painting3/PerspCam.h>
-
 #include "frame/WxStagePage.h"
 #include "frame/StagePageType.h"
 
 namespace ee0 { class WxLibraryPanel; }
-namespace pt3 { class PerspCam; class Viewport; }
+namespace pt3 { class Viewport; }
 
 namespace eone
 {
@@ -29,7 +27,7 @@ public:
 
 	virtual int GetPageType() const override { return PAGE_QUAKE; }
 
-	void InitEditOP(pt3::PerspCam& cam, const pt3::Viewport& vp);
+	void InitEditOP(const std::shared_ptr<pt0::Camera>& cam, const pt3::Viewport& vp);
 
 	void InitViewports();
 
@@ -64,7 +62,6 @@ private:
 	ee0::EditOPPtr m_face_op      = nullptr;
 
 	ee3::CameraMgr m_cam_mgr;
-	ee3::CameraMgr m_preview_cam_mgr;
 
 }; // WxStagePage
 

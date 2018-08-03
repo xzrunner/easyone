@@ -12,9 +12,10 @@ namespace eone
 namespace particle3d
 {
 
-PlayParticlesOP::PlayParticlesOP(const n0::SceneNodePtr& node, pt2::Camera& cam,
+PlayParticlesOP::PlayParticlesOP(const std::shared_ptr<pt0::Camera>& camera,
+	                             const n0::SceneNodePtr& node,
 	                             const ee0::SubjectMgrPtr& sub_mgr)
-	: ee2::CamControlOP(cam, sub_mgr)
+	: ee2::CamControlOP(camera, sub_mgr)
 	, m_node(node)
 {
 }
@@ -25,7 +26,7 @@ bool PlayParticlesOP::OnMouseLeftDown(int x, int y)
 		return true;
 	}
 
-	auto pos = ee0::CameraHelper::TransPosScreenToProject(m_cam, x, y);
+	auto pos = ee0::CameraHelper::TransPosScreenToProject(*m_camera, x, y);
 
 	auto& ctrans = m_node->GetUniqueComp<n2::CompTransform>();
 	ctrans.SetPosition(*m_node, pos);
@@ -43,7 +44,7 @@ bool PlayParticlesOP::OnMouseDrag(int x, int y)
 		return true;
 	}
 
-	auto pos = ee0::CameraHelper::TransPosScreenToProject(m_cam, x, y);
+	auto pos = ee0::CameraHelper::TransPosScreenToProject(*m_camera, x, y);
 
 	auto& ctrans = m_node->GetUniqueComp<n2::CompTransform>();
 	ctrans.SetPosition(*m_node, pos);

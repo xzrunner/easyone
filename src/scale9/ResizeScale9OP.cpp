@@ -33,9 +33,10 @@ namespace eone
 namespace scale9
 {
 
-ResizeScale9OP::ResizeScale9OP(WxPreviewPanel* stage, ECS_WORLD_PARAM
+ResizeScale9OP::ResizeScale9OP(const std::shared_ptr<pt0::Camera>& camera,
+	                           WxPreviewPanel* stage, ECS_WORLD_PARAM
 	                           const ee0::GameObj& obj)
-	: ee0::EditOP()
+	: ee0::EditOP(camera)
 	, m_stage(stage)
 	ECS_WORLD_SELF_ASSIGN
 	, m_obj(obj)
@@ -44,7 +45,7 @@ ResizeScale9OP::ResizeScale9OP(WxPreviewPanel* stage, ECS_WORLD_PARAM
 	auto cam = std::dynamic_pointer_cast<WxPreviewCanvas>(stage->GetImpl().GetCanvas())->GetCamera();
 	GD_ASSERT(cam, "null cam");
 
-	SetPrevEditOP(std::make_shared<ee2::CamControlOP>(*cam, stage->GetSubjectMgr()));
+	SetPrevEditOP(std::make_shared<ee2::CamControlOP>(camera, stage->GetSubjectMgr()));
 }
 
 bool ResizeScale9OP::OnMouseLeftDown(int x, int y)
