@@ -160,3 +160,6 @@
 [submodule "ext/halfedge"]
 	path = ext/halfedge
 	url = git@github.com:xzrunner/halfedge.git
+[submodule "ext/painting0"]
+	path = ext/painting0
+	url = git@github.com:xzrunner/painting0.git
