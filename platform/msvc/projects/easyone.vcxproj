@@ -316,6 +316,7 @@
     <ClInclude Include="..\..\..\src\particle3d\WxPropertyPanel.h" />
     <ClInclude Include="..\..\..\src\quake\DrawEdgeShader.h" />
     <ClInclude Include="..\..\..\src\quake\DrawFaceShader.h" />
+    <ClInclude Include="..\..\..\src\quake\EditorMgr.h" />
     <ClInclude Include="..\..\..\src\quake\QuakeMapLoader.h" />
     <ClInclude Include="..\..\..\src\quake\WxPreviewCanvas.h" />
     <ClInclude Include="..\..\..\src\quake\WxPreviewPanel.h" />
@@ -398,6 +399,7 @@
     <ClCompile Include="..\..\..\src\particle3d\WxPropertyPanel.cpp" />
     <ClCompile Include="..\..\..\src\quake\DrawEdgeShader.cpp" />
     <ClCompile Include="..\..\..\src\quake\DrawFaceShader.cpp" />
+    <ClCompile Include="..\..\..\src\quake\EditorMgr.cpp" />
     <ClCompile Include="..\..\..\src\quake\QuakeMapLoader.cpp" />
     <ClCompile Include="..\..\..\src\quake\WxPreviewCanvas.cpp">
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/quake/</ObjectFileName>

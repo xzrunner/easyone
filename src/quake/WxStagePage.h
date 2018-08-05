@@ -1,11 +1,12 @@
 #pragma once
 
-#include <ee0/GameObj.h>
-#include <ee0/typedef.h>
-#include <ee3/CameraMgr.h>
+#include "quake/EditorMgr.h"
 
 #include "frame/WxStagePage.h"
 #include "frame/StagePageType.h"
+
+#include <ee0/GameObj.h>
+#include <ee3/CameraMgr.h>
 
 namespace ee0 { class WxLibraryPanel; }
 namespace pt3 { class Viewport; }
@@ -31,6 +32,8 @@ public:
 
 	void InitViewports();
 
+	void SwitchToNextViewport();
+
 protected:
 	virtual void OnPageInit() override;
 
@@ -47,19 +50,8 @@ private:
 	void DeleteSceneNode(const ee0::VariantSet& variants);
 	void ClearSceneNode();
 
-	void SwitchToNextViewport();
-
 private:
-	ee0::EditOPPtr m_camera_op    = nullptr;
-	ee0::EditOPPtr m_select_op    = nullptr;
-
-	ee0::EditOPPtr m_default_op   = nullptr;
-	ee0::EditOPPtr m_rotate_op    = nullptr;
-	ee0::EditOPPtr m_translate_op = nullptr;
-
-	ee0::EditOPPtr m_vertex_op    = nullptr;
-	ee0::EditOPPtr m_edge_op      = nullptr;
-	ee0::EditOPPtr m_face_op      = nullptr;
+	EditorMgr m_editor_mgr;
 
 	ee3::CameraMgr m_cam_mgr;
 

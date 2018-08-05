@@ -330,6 +330,9 @@
     <ClInclude Include="..\..\..\src\quake\WxPreviewCanvas.h">
       <Filter>50.quake\view\preview</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\quake\EditorMgr.h">
+      <Filter>50.quake\view\stage</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\frame\main.cpp">
@@ -517,6 +520,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\quake\WxPreviewCanvas.cpp">
       <Filter>50.quake\view\preview</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\quake\EditorMgr.cpp">
+      <Filter>50.quake\view\stage</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
