@@ -107,8 +107,11 @@ void WxStagePage::InitEditOP(const std::shared_ptr<pt0::Camera>& cam, const pt3:
 	m_select_op = select_op;
 	auto& selected = select_op->GetSelected();
 	m_select_op->SetPrevEditOP(m_camera_op);
+	std::function<void()> update_cb = [select_op]() {
+		select_op->UpdateCachedPolyBorder();
+	};
 	// arrange op with select, default
-	m_default_op = std::make_shared<ee3::mesh::PolyArrangeOP>(cam, vp, m_sub_mgr, selected);
+	m_default_op = std::make_shared<ee3::mesh::PolyArrangeOP>(cam, vp, m_sub_mgr, selected, update_cb);
 	m_default_op->SetPrevEditOP(m_select_op);
 	// rotate
 	m_rotate_op = std::make_shared<ee3::NodeRotateOP>(cam, *this, vp);
@@ -120,19 +123,19 @@ void WxStagePage::InitEditOP(const std::shared_ptr<pt0::Camera>& cam, const pt3:
 	auto select_vert_op = std::make_shared<ee3::mesh::VertexSelectOP>(cam, vp, m_sub_mgr, selected);
 	select_vert_op->SetPrevEditOP(m_select_op);
 	m_vertex_op = std::make_shared<ee3::mesh::VertexTranslateOP>(
-		cam, vp, m_sub_mgr, selected, select_vert_op->GetSelected());
+		cam, vp, m_sub_mgr, selected, select_vert_op->GetSelected(), update_cb);
 	m_vertex_op->SetPrevEditOP(select_vert_op);
 	// edge
 	auto select_edge_op = std::make_shared<ee3::mesh::EdgeSelectOP>(cam, vp, m_sub_mgr, selected);
 	select_edge_op->SetPrevEditOP(m_select_op);
 	m_edge_op = std::make_shared<ee3::mesh::EdgeTranslateOP>(
-		cam, vp, m_sub_mgr, selected, select_edge_op->GetSelected());
+		cam, vp, m_sub_mgr, selected, select_edge_op->GetSelected(), update_cb);
 	m_edge_op->SetPrevEditOP(select_edge_op);
 	// face
 	auto select_face_op = std::make_shared<ee3::mesh::FaceSelectOP>(cam, vp, m_sub_mgr, selected);
 	select_face_op->SetPrevEditOP(m_select_op);
 	m_face_op = std::make_shared<ee3::mesh::FaceTranslateOP>(
-		cam, vp, m_sub_mgr, selected, select_face_op->GetSelected());
+		cam, vp, m_sub_mgr, selected, select_face_op->GetSelected(), update_cb);
 	m_face_op->SetPrevEditOP(select_face_op);
 
 	impl.SetEditOP(m_default_op);
