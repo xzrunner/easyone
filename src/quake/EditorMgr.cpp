@@ -10,6 +10,7 @@
 #include <ee3/NodeSelectOP.h>
 #include <ee3/NodeArrangeOP.h>
 #include <ee3/CameraDriveOP.h>
+#include <ee3/CameraFlyOP.h>
 #include <ee3/VertexSelectOP.h>
 #include <ee3/VertexTranslateOP.h>
 #include <ee3/EdgeSelectOP.h>
@@ -34,23 +35,26 @@ void EditorMgr::Init(const ee3::CameraMgr& cam_mgr,
 	                 const pt3::Viewport& vp)
 {
 	auto sub_mgr = m_stage.GetSubjectMgr();
-	m_camera_op = std::make_shared<ee3::CameraDriveOP>(cam_mgr.GetCamera(ee3::CameraMgr::CAM_3D), vp, sub_mgr);
+
+	auto& cam3d = cam_mgr.GetCamera(ee3::CameraMgr::CAM_3D);
+	m_cam_drive_op = std::make_shared<ee3::CameraDriveOP>(cam3d, vp, sub_mgr);
+	m_cam_fly_op   = std::make_shared<ee3::CameraFlyOP>(cam3d, sub_mgr);
+	m_camera_op = m_cam_drive_op;
+
 	auto select_op = std::make_shared<ee3::mesh::PolySelectOP>(cam, m_stage, vp);
 	m_select_op = select_op;
 	auto& selected = select_op->GetSelected();
-	m_select_op->SetPrevEditOP(m_camera_op);
 	std::function<void()> update_cb = [select_op]() {
 		select_op->UpdateCachedPolyBorder();
 	};
+
 	// arrange op with select, default
 	m_default_op = std::make_shared<ee3::mesh::PolyArrangeOP>(cam, vp, sub_mgr, selected, update_cb);
 	m_default_op->SetPrevEditOP(m_select_op);
 	// rotate
 	m_rotate_op = std::make_shared<ee3::NodeRotateOP>(cam, m_stage, vp);
-	m_rotate_op->SetPrevEditOP(m_camera_op);
 	// translate
 	m_translate_op = std::make_shared<ee3::NodeTranslateOP>(cam, m_stage, vp);
-	m_translate_op->SetPrevEditOP(m_camera_op);
 	// vertex
 	auto select_vert_op = std::make_shared<ee3::mesh::VertexSelectOP>(cam, vp, sub_mgr, selected);
 	select_vert_op->SetPrevEditOP(m_select_op);
@@ -69,6 +73,8 @@ void EditorMgr::Init(const ee3::CameraMgr& cam_mgr,
 	m_face_op = std::make_shared<ee3::mesh::FaceTranslateOP>(
 		cam, vp, sub_mgr, selected, select_face_op->GetSelected(), update_cb);
 	m_face_op->SetPrevEditOP(select_face_op);
+
+	ChangedCamOP(m_camera_op);
 
 	auto& impl = m_stage.GetImpl();
 	impl.SetEditOP(m_default_op);
@@ -108,6 +114,18 @@ void EditorMgr::Init(const ee3::CameraMgr& cam_mgr,
 			sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
 			break;
 
+		case 'Y':
+			if (m_camera_op == m_cam_drive_op) {
+				m_camera_op = m_cam_fly_op;
+//				m_stage.SetCursor(wxNullCursor);
+			} else {
+				m_camera_op = m_cam_drive_op;
+//				m_stage.SetCursor(wxCursor(wxCURSOR_BLANK));
+			}
+			ChangedCamOP(m_camera_op);
+			sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
+			break;
+
 		case WXK_ESCAPE:
 			select_op->SetCanSelectNull(true);
 			impl.SetEditOP(m_default_op);
@@ -123,7 +141,8 @@ void EditorMgr::Init(const ee3::CameraMgr& cam_mgr,
 
 void EditorMgr::SetCamera(const pt0::CameraPtr& cam)
 {
-	m_camera_op->SetCamera(cam);
+	m_cam_drive_op->SetCamera(cam);
+	m_cam_fly_op->SetCamera(cam);
 	m_select_op->SetCamera(cam);
 
 	m_default_op->SetCamera(cam);
@@ -133,6 +152,13 @@ void EditorMgr::SetCamera(const pt0::CameraPtr& cam)
 	m_vertex_op->SetCamera(cam);
 	m_edge_op->SetCamera(cam);
 	m_face_op->SetCamera(cam);
+}
+
+void EditorMgr::ChangedCamOP(const ee0::EditOPPtr& cam_op)
+{
+	m_select_op->SetPrevEditOP(cam_op);
+	m_rotate_op->SetPrevEditOP(cam_op);
+	m_translate_op->SetPrevEditOP(cam_op);
 }
 
 }

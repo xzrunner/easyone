@@ -27,18 +27,23 @@ public:
 	void SetCamera(const pt0::CameraPtr& cam);
 
 private:
+	void ChangedCamOP(const ee0::EditOPPtr& cam_op);
+
+private:
 	WxStagePage& m_stage;
 
-	ee0::EditOPPtr m_camera_op = nullptr;
-	ee0::EditOPPtr m_select_op = nullptr;
+	ee0::EditOPPtr m_cam_drive_op = nullptr;
+	ee0::EditOPPtr m_cam_fly_op   = nullptr;
+	ee0::EditOPPtr m_camera_op    = nullptr;
+	ee0::EditOPPtr m_select_op    = nullptr;
 
-	ee0::EditOPPtr m_default_op = nullptr;
-	ee0::EditOPPtr m_rotate_op = nullptr;
+	ee0::EditOPPtr m_default_op   = nullptr;
+	ee0::EditOPPtr m_rotate_op    = nullptr;
 	ee0::EditOPPtr m_translate_op = nullptr;
 
-	ee0::EditOPPtr m_vertex_op = nullptr;
-	ee0::EditOPPtr m_edge_op = nullptr;
-	ee0::EditOPPtr m_face_op = nullptr;
+	ee0::EditOPPtr m_vertex_op    = nullptr;
+	ee0::EditOPPtr m_edge_op      = nullptr;
+	ee0::EditOPPtr m_face_op      = nullptr;
 
 }; // EditorMgr
 
