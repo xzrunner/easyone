@@ -20,6 +20,14 @@
 #include <ee3/PolySelectOP.h>
 #include <ee3/PolyArrangeOP.h>
 
+#if defined(__WXGTK__)
+   #define HIDE_CURSOR wxSetCursor(wxCURSOR_BLANK)
+   #define SHOW_CURSOR wxSetCursor(*wxSTANDARD_CURSOR)
+#elif defined(__WXMSW__)
+   #define HIDE_CURSOR ShowCursor(0)
+   #define SHOW_CURSOR ShowCursor(1)
+#endif
+
 namespace eone
 {
 namespace quake
@@ -117,10 +125,10 @@ void EditorMgr::Init(const ee3::CameraMgr& cam_mgr,
 		case 'Y':
 			if (m_camera_op == m_cam_drive_op) {
 				m_camera_op = m_cam_fly_op;
-//				m_stage.SetCursor(wxNullCursor);
+				HIDE_CURSOR;
 			} else {
 				m_camera_op = m_cam_drive_op;
-//				m_stage.SetCursor(wxCursor(wxCURSOR_BLANK));
+				SHOW_CURSOR;
 			}
 			ChangedCamOP(m_camera_op);
 			sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
