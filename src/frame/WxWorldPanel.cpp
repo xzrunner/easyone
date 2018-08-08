@@ -123,12 +123,7 @@ void WxWorldPanel::OnAddPress(wxCommandEvent& event)
 				auto& path = dlg.GetPath();
 				auto img = facade::ResPool::Instance().Fetch<facade::Image>(path.ToStdString());
 
-				obj = GameObjFactory::Create(
-#ifdef GAME_OBJ_ECS
-					m_world,
-#endif // GAME_OBJ_ECS
-					GAME_OBJ_IMAGE
-				);
+				obj = GameObjFactory::Create(ECS_WORLD_SELF_VAR GAME_OBJ_IMAGE);
 
 #ifndef GAME_OBJ_ECS
 				auto& cimage = obj->GetSharedComp<n2::CompImage>();

@@ -206,6 +206,25 @@ WxStagePage* StagePageFactory::Create(ECS_WORLD_PARAM int page_type, WxStagePane
 		}
 		break;
 
+	case PAGE_BLUEPRINT:
+		{
+			auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX2D);
+			page = new scene2d::WxStagePage(frame, library, ECS_WORLD_VAR obj);
+			auto canvas = std::make_shared<WxStageCanvas2D>(page, ECS_WORLD_VAR rc);
+			page->GetImpl().SetCanvas(canvas);
+
+			auto prev_op = std::make_shared<NodeSelectOP>(
+				canvas->GetCamera(), ECS_WORLD_VAR *page, rc, wc);
+
+			auto op = std::make_shared<ee2::ArrangeNodeOP>(
+				canvas->GetCamera(), *page, ECS_WORLD_VAR ee2::ArrangeNodeCfg(), prev_op);
+
+			page->GetImpl().SetEditOP(op);
+
+			stage_panel->AddNewPage(page, GetPageName(page->GetPageType()));
+		}
+		break;
+
 	case PAGE_QUAKE:
 		{
 			auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_SCENE3D);

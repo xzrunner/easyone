@@ -32,6 +32,19 @@
 					"desc": "select same asset with curr selection"
 				}
 			]
+		},
+		{
+			"type": "menu",
+			"name": "Blueprint",
+			"children":
+			[
+				{
+					"type": "action",
+					"name": "Add bp node",
+					"file": "blueprint/add_test_node.lua",
+					"desc": "add bp node"
+				}
+			]
 		}
 	]
 }

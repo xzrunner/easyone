@@ -115,6 +115,9 @@
     <Filter Include="50.quake\view\preview">
       <UniqueIdentifier>{fc0d4e42-d230-4e57-b44d-1edfec6ada2c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="41.bprint">
+      <UniqueIdentifier>{2a19c5fb-533d-4152-bb7a-6a5db2f2050b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\frame\main.h">
@@ -333,6 +336,9 @@
     <ClInclude Include="..\..\..\src\quake\EditorMgr.h">
       <Filter>50.quake\view\stage</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\bprint\WxStagePage.h">
+      <Filter>41.bprint</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\frame\main.cpp">
@@ -523,6 +529,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\quake\EditorMgr.cpp">
       <Filter>50.quake\view\stage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\bprint\WxStagePage.cpp">
+      <Filter>41.bprint</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

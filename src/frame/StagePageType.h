@@ -21,6 +21,7 @@ enum StagePageType
 	PAGE_MODEL,
 
 	PAGE_SCRIPT,
+	PAGE_BLUEPRINT,
 
 	PAGE_QUAKE,
 };
@@ -51,6 +52,8 @@ std::string GetPageName(int type)
 
 	case PAGE_SCRIPT:
 		return "Script";
+	case PAGE_BLUEPRINT:
+		return "Blueprint";
 
 	case PAGE_QUAKE:
 		return "Quake";

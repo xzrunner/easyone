@@ -33,13 +33,13 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "1.bs", "..\..\ext\bs\platfo
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "1.guard", "..\..\ext\guard\platform\msvc\projects\guard.vcxproj", "{CC45AE0E-8C51-4759-9614-8BC321C565A0}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.tools", "1.tools", "{3E445281-8F17-4763-9112-39A38C12FE16}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0.tools", "0.tools", "{3E445281-8F17-4763-9112-39A38C12FE16}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "1.js", "..\..\ext\js\platform\msvc\projects\js.vcxproj", "{68C18DA9-79BB-43A5-9E0C-79740AEA954B}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3.node3", "..\..\ext\node3\platform\msvc\projects\node3.vcxproj", "{6030CF6B-1A8B-421B-92CE-4EB965751636}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.assets", "3.assets", "{55D85D01-599C-4F78-A116-BDBAEAF0D939}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.assets", "1.assets", "{55D85D01-599C-4F78-A116-BDBAEAF0D939}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "0.ds", "..\..\ext\ds\platform\msvc\projects\ds.vcxproj", "{E6044D31-8304-4854-99AC-CBEF18B9E7D3}"
 EndProject
@@ -47,13 +47,13 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "2.ps", "..\..\ext\ps\platfo
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "9.editor", "9.editor", "{41A08A2D-64C4-40E6-9194-A9C29BB61F33}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5.scenegraph", "5.scenegraph", "{7790CA62-FFDB-4335-9D04-93C7906F1108}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.scenegraph", "3.scenegraph", "{7790CA62-FFDB-4335-9D04-93C7906F1108}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "4.easyeditor3", "..\..\ext\easyeditor3\platform\msvc\projects\easyeditor3.vcxproj", "{CEEBD91E-9297-47EA-ADED-68D791BA6FD4}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "4.easyeditor2", "..\..\ext\easyeditor2\platform\msvc\projects\easyeditor2.vcxproj", "{58699389-F675-489E-A912-C9110D8D6E3D}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "8.framework", "8.framework", "{36465FC4-9876-4BD0-A734-B8E8893FBCCF}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "7.framework", "7.framework", "{36465FC4-9876-4BD0-A734-B8E8893FBCCF}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "4.easyeditor0", "..\..\ext\easyeditor0\platform\msvc\projects\easyeditor0.vcxproj", "{9A81990C-3C18-4ADF-A9EB-46990625C107}"
 EndProject
@@ -65,11 +65,11 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3.painting2", "..\..\ext\pa
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3.painting3", "..\..\ext\painting3\platform\msvc\projects\painting3.vcxproj", "{0BA2F6EF-159C-4330-8A7B-74C931CFF5F9}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "6.render", "6.render", "{E81D1B45-CF14-47DF-A9FD-98205E914709}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.render", "4.render", "{E81D1B45-CF14-47DF-A9FD-98205E914709}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "6.serializer", "6.serializer", "{C39783B3-85DA-4D10-AFD0-16D546F5F3D7}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.serializer", "4.serializer", "{C39783B3-85DA-4D10-AFD0-16D546F5F3D7}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "7.wrapper", "7.wrapper", "{ABB353A2-7879-4D9F-AF21-31A83E1B9D14}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "6.wrapper", "6.wrapper", "{ABB353A2-7879-4D9F-AF21-31A83E1B9D14}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "1.dtex2", "..\..\ext\dtex2\platform\msvc\projects\dtex2.vcxproj", "{A502C49C-7014-4D77-8BD9-B3F917AD34B0}"
 EndProject
@@ -89,7 +89,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "1.camera25", "..\..\ext\cam
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0.utilities", "0.utilities", "{2663E49F-E633-423F-B021-31013DE65AD7}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.preprocess", "4.preprocess", "{71D877EC-55A6-43CA-AD4F-47F0246AF149}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.preprocess", "2.preprocess", "{71D877EC-55A6-43CA-AD4F-47F0246AF149}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "1.stat", "..\..\ext\stat\platform\msvc\projects\stat.vcxproj", "{16868CDE-6DEF-4136-8CC8-75212F34462E}"
 EndProject
@@ -136,6 +136,10 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "1.halfedge", "..\..\ext\halfedge\platform\msvc\projects\halfedge.vcxproj", "{D9B1B541-5BCC-4A5F-8A7A-2CED3CEAD3DD}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3.painting0", "..\..\ext\painting0\platform\msvc\projects\painting0.vcxproj", "{AC2CAD0C-553D-4FB9-A1A8-C206E59E021A}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "4.blueprint", "..\..\ext\blueprint\platform\msvc\projects\blueprint.vcxproj", "{6F9A7D73-3025-43E1-8F6F-69558C7D3B9F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "8.editor_lib", "8.editor_lib", "{3F90F0BC-4357-48B0-A92E-DA2826502647}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -363,6 +367,10 @@ Global
 		{AC2CAD0C-553D-4FB9-A1A8-C206E59E021A}.Debug|Win32.Build.0 = Debug|Win32
 		{AC2CAD0C-553D-4FB9-A1A8-C206E59E021A}.Release|Win32.ActiveCfg = Release|Win32
 		{AC2CAD0C-553D-4FB9-A1A8-C206E59E021A}.Release|Win32.Build.0 = Release|Win32
+		{6F9A7D73-3025-43E1-8F6F-69558C7D3B9F}.Debug|Win32.ActiveCfg = Debug|Win32
+		{6F9A7D73-3025-43E1-8F6F-69558C7D3B9F}.Debug|Win32.Build.0 = Debug|Win32
+		{6F9A7D73-3025-43E1-8F6F-69558C7D3B9F}.Release|Win32.ActiveCfg = Release|Win32
+		{6F9A7D73-3025-43E1-8F6F-69558C7D3B9F}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -425,6 +433,7 @@ Global
 		{7719A1D1-AF73-4E1D-BD99-E9B706195639} = {59546CF5-AB13-4F20-9611-28BDE9C720E4}
 		{D9B1B541-5BCC-4A5F-8A7A-2CED3CEAD3DD} = {3E445281-8F17-4763-9112-39A38C12FE16}
 		{AC2CAD0C-553D-4FB9-A1A8-C206E59E021A} = {E81D1B45-CF14-47DF-A9FD-98205E914709}
+		{6F9A7D73-3025-43E1-8F6F-69558C7D3B9F} = {3F90F0BC-4357-48B0-A92E-DA2826502647}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8D54C01A-3C82-4351-A325-2853C3E81322}

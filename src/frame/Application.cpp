@@ -38,8 +38,16 @@
 #endif // GAME_OBJ_ECS
 #include <facade/Facade.h>
 #include <facade/GTxt.h>
+#include <moon/moon.h>
 
 #include <boost/filesystem.hpp>
+
+namespace
+{
+
+extern "C" int luaopen_moon_bp(lua_State* L);
+
+}
 
 namespace eone
 {
@@ -136,7 +144,10 @@ void Application::Clear()
 
 void Application::InitSubmodule()
 {
-	facade::Facade::Init();
+	facade::Facade::Instance()->AddInitCB([] {
+		moon_add_module("moon.bp", luaopen_moon_bp);
+	});
+	facade::Facade::Instance()->Init();
 
 	auto cfg = ee0::ConfigFile::Instance();
 	facade::GTxt::Instance()->LoadFonts(cfg->GetFonts(), cfg->GetUserFonts());
@@ -243,7 +254,9 @@ wxWindow* Application::CreateStagePanel()
 
 	//StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_MODEL, m_stage);
 
-	StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_QUAKE, m_stage);
+	//StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_QUAKE, m_stage);
+
+	StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_BLUEPRINT, m_stage);
 
 	m_stage->Thaw();
 
