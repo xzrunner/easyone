@@ -1,3 +1,0 @@
-# blueprint
-
-Visual scripting.
