@@ -38,7 +38,7 @@ static const std::vector<std::pair<uint32_t, std::string>> GAME_OBJ_LIST =
 	std::make_pair(eone::GAME_OBJ_SCALE9,     "Scale9"),
 	std::make_pair(eone::GAME_OBJ_ANIM,       "Anim"),
 	std::make_pair(eone::GAME_OBJ_PARTICLE3D, "Particle3d"),
-	std::make_pair(eone::GAME_OBJ_SCENE2D,    "Complex"),
+	std::make_pair(eone::GAME_OBJ_COMPLEX,    "Complex"),
 };
 
 }

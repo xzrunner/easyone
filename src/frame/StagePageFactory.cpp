@@ -61,7 +61,7 @@ WxStagePage* StagePageFactory::Create(ECS_WORLD_PARAM int page_type, WxStagePane
 	{
 	case PAGE_SCENE2D:
 		{
-			auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_SCENE2D);
+			auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX2D);
 			page = new scene2d::WxStagePage(frame, library, ECS_WORLD_VAR obj);
 			auto canvas = std::make_shared<WxStageCanvas2D>(page, ECS_WORLD_VAR rc);
 			page->GetImpl().SetCanvas(canvas);
@@ -79,7 +79,7 @@ WxStagePage* StagePageFactory::Create(ECS_WORLD_PARAM int page_type, WxStagePane
 		break;
 	case PAGE_SCENE3D:
 		{
-			auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_SCENE3D);
+			auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX3D);
 			page = new scene3d::WxStagePage(frame, library, ECS_WORLD_VAR obj);
 			auto canvas = std::make_shared<WxStageCanvas3D>(page, rc);
 			page->GetImpl().SetCanvas(canvas);
@@ -184,7 +184,7 @@ WxStagePage* StagePageFactory::Create(ECS_WORLD_PARAM int page_type, WxStagePane
 				break;
 			}
 
-			auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_SCENE2D);
+			auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX2D);
 			page = new script::WxStagePage(frame, library, ECS_WORLD_VAR obj);
 			auto canvas = std::make_shared<script::WxStageCanvas>(page, ECS_WORLD_VAR rc, dlg.GetPath().ToStdString());
 			page->GetImpl().SetCanvas(canvas);
@@ -227,7 +227,7 @@ WxStagePage* StagePageFactory::Create(ECS_WORLD_PARAM int page_type, WxStagePane
 
 	case PAGE_QUAKE:
 		{
-			auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_SCENE3D);
+			auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX3D);
 			auto quake_page = new quake::WxStagePage(frame, library, ECS_WORLD_VAR obj);
 			page = quake_page;
 			auto canvas = std::make_shared<quake::WxStageCanvas>(page, rc);

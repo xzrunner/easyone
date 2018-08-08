@@ -37,7 +37,7 @@ GameObjType GetObjType(const ee0::GameObj& obj)
 	} else if (asset_type == n0::GetAssetUniqueTypeID<n3::CompModel>()) {
 		return GAME_OBJ_MODEL;
 	} else if (asset_type == n0::GetAssetUniqueTypeID<n0::CompComplex>()) {
-		return GAME_OBJ_SCENE2D;
+		return GAME_OBJ_COMPLEX;
 	} else {
 		return GAME_OBJ_UNKNOWN;
 	}

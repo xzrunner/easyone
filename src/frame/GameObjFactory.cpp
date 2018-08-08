@@ -149,25 +149,25 @@ ee0::GameObj GameObjFactory::Create(ECS_WORLD_PARAM GameObjType type)
 		}
 		break;
 
-	case GAME_OBJ_SCENE2D:
-		{
-#ifndef GAME_OBJ_ECS
-			obj->AddSharedComp<n0::CompComplex>();
-#else
-			world.AddComponent<e2::CompComplex>(obj);
-#endif // GAME_OBJ_ECS
-			sz.Build(100, 100);
-		}
+	case GAME_OBJ_COMPLEX:
+		GD_REPORT_ASSERT("err type.");
 		break;
-	case GAME_OBJ_SCENE3D:
-		{
-			is_2d = false;
+	case GAME_OBJ_COMPLEX2D:
+		is_2d = true;
 #ifndef GAME_OBJ_ECS
-			obj->AddSharedComp<n0::CompComplex>();
+		obj->AddSharedComp<n0::CompComplex>();
 #else
-			world.AddComponent<e2::CompComplex>(obj);
+		world.AddComponent<e2::CompComplex>(obj);
 #endif // GAME_OBJ_ECS
-		}
+		sz.Build(100, 100);
+		break;
+	case GAME_OBJ_COMPLEX3D:
+		is_2d = false;
+#ifndef GAME_OBJ_ECS
+		obj->AddSharedComp<n0::CompComplex>();
+#else
+		world.AddComponent<e2::CompComplex>(obj);
+#endif // GAME_OBJ_ECS
 		break;
 	}
 

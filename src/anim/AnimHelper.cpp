@@ -75,7 +75,7 @@ void AnimHelper::UpdateTreePanael(ee0::SubjectMgr& sub_mgr,
 {
 	// todo ecs
 #ifndef GAME_OBJ_ECS
-	auto root = GameObjFactory::Create(GAME_OBJ_SCENE2D);
+	auto root = GameObjFactory::Create(GAME_OBJ_COMPLEX2D);
 	auto& ccomplex = root->GetSharedComp<n0::CompComplex>();
 	canim_inst.TraverseCurrNodes([&](const ee0::GameObj& obj)->bool
 	{
