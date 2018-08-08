@@ -83,7 +83,7 @@ void WxPreviewCanvas::OnDrawSprites() const
 			rp.SetPatch(patch);
 		}
 
-		n2::RenderSystem::Draw(obj, rp);
+		n2::RenderSystem::Instance()->Draw(obj, rp);
 #else
 		e2::SysRender::Draw(m_world, obj, rp);
 #endif // GAME_OBJ_ECS

@@ -34,7 +34,7 @@ void WxStageCanvas2D::DrawForeground() const
 	if (obj->HasUniqueComp<n2::CompScissor>())
 	{
 		auto& cscissor = obj->GetUniqueComp<n2::CompScissor>();
-		n2::RenderSystem::DrawScissorRect(cscissor.GetRect(), sm::Matrix2D());
+		n2::RenderSystem::Instance()->DrawScissorRect(cscissor.GetRect(), sm::Matrix2D());
 	}
 #else
 	// todo ecs

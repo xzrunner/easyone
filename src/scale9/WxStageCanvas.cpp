@@ -38,7 +38,7 @@ void WxStageCanvas::DrawForeground() const
 		auto& ctrans = obj->GetUniqueComp<n2::CompTransform>();
 		auto old_scale = ctrans.GetTrans().GetScale();
 		ctrans.SetScale(*obj, sm::vec2(1, 1));
-		n2::RenderSystem::Draw(obj);
+		n2::RenderSystem::Instance()->Draw(obj);
 		ctrans.SetScale(*obj, old_scale);
 #else
 		auto old_scale = e2::SysTransform::GetScale(m_world, obj);
