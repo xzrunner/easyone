@@ -22,9 +22,6 @@ public:
 
 	void RegisterMsg(ee0::SubjectMgr& sub_mgr);
 
-	std::shared_ptr<pt0::Camera>& GetCamera() { return m_cam; }
-	const std::shared_ptr<pt0::Camera>& GetCamera() const { return m_cam; }
-
 protected:
 	virtual void OnSize(int w, int h) override;
 	virtual void OnDrawSprites() const override;
@@ -32,8 +29,6 @@ protected:
 private:
 	WxPreviewPanel* m_stage;
 	ECS_WORLD_SELF_DEF
-
-	std::shared_ptr<pt0::Camera> m_cam = nullptr;
 
 }; // WxPreviewCanvas
 
