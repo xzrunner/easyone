@@ -39,10 +39,30 @@
 			"children":
 			[
 				{
-					"type": "action",
-					"name": "Add bp node",
-					"file": "blueprint/add_test_node.lua",
-					"desc": "add bp node"
+					"type": "menu",
+					"name": "FlowControl",
+					"children":
+					[
+						{
+							"type": "action",
+							"name": "Branch",
+							"file": "blueprint/flow_ctrl_branch.lua",
+							"desc": "branch"
+						}
+					]
+				},
+				{
+					"type": "menu",
+					"name": "Event",
+					"children":
+					[
+						{
+							"type": "action",
+							"name": "Begin play",
+							"file": "blueprint/event_begin_play.lua",
+							"desc": "begin play"
+						}
+					]
 				}
 			]
 		}
