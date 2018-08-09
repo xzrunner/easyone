@@ -172,6 +172,7 @@ void WxStagePage::InitSubWindow()
 		ui_mgr.GetPane(STR_DETAIL_PANEL).Show();
 		ui_mgr.GetPane(STR_STAGE_EXT_PANEL).Hide();
 		ui_mgr.GetPane(STR_TOOLBAR_PANEL).Hide();
+		ui_mgr.GetPane(STR_SCRIPT_PANEL).Show();
 		break;
 	case LAYOUT_STAGE_EXT:
 		ui_mgr.GetPane(STR_STAGE_EXT_PANEL).Show();
@@ -179,6 +180,7 @@ void WxStagePage::InitSubWindow()
 		ui_mgr.GetPane(STR_DETAIL_PANEL).Show();
 		ui_mgr.GetPane(STR_PREVIEW_PANEL).Hide();
 		ui_mgr.GetPane(STR_TOOLBAR_PANEL).Hide();
+		ui_mgr.GetPane(STR_SCRIPT_PANEL).Show();
 		break;
 	case LAYOUT_TOOLBAR:
 		ui_mgr.GetPane(STR_TOOLBAR_PANEL).Show();
@@ -186,6 +188,15 @@ void WxStagePage::InitSubWindow()
 		ui_mgr.GetPane(STR_DETAIL_PANEL).Hide();
 		ui_mgr.GetPane(STR_PREVIEW_PANEL).Hide();
 		ui_mgr.GetPane(STR_STAGE_EXT_PANEL).Hide();
+		ui_mgr.GetPane(STR_SCRIPT_PANEL).Show();
+		break;
+	case LAYOUT_ONLY_STAGE:
+		ui_mgr.GetPane(STR_TOOLBAR_PANEL).Hide();
+		ui_mgr.GetPane(STR_WORLD_PANEL).Hide();
+		ui_mgr.GetPane(STR_DETAIL_PANEL).Hide();
+		ui_mgr.GetPane(STR_PREVIEW_PANEL).Hide();
+		ui_mgr.GetPane(STR_STAGE_EXT_PANEL).Hide();
+		ui_mgr.GetPane(STR_SCRIPT_PANEL).Hide();
 		break;
 	}
 	ui_mgr.Update();

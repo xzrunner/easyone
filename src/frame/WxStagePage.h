@@ -22,6 +22,7 @@ public:
 		LAYOUT_PREVIEW = 0,
 		LAYOUT_STAGE_EXT,
 		LAYOUT_TOOLBAR,
+		LAYOUT_ONLY_STAGE,
 	};
 
 public:

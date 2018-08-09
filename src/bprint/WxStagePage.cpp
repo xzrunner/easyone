@@ -22,7 +22,7 @@ namespace bprint
 {
 
 WxStagePage::WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, ECS_WORLD_PARAM const ee0::GameObj& obj)
-	: eone::WxStagePage(parent, ECS_WORLD_VAR obj, LAYOUT_PREVIEW)
+	: eone::WxStagePage(parent, ECS_WORLD_VAR obj, LAYOUT_ONLY_STAGE)
 {
 	m_messages.push_back(ee0::MSG_INSERT_SCENE_NODE);
 	m_messages.push_back(ee0::MSG_DELETE_SCENE_NODE);
@@ -60,7 +60,7 @@ void WxStagePage::Traverse(std::function<bool(const ee0::GameObj&)> func,
 	                       const ee0::VariantSet& variants, bool inverse) const
 {
 	auto var = variants.GetVariant("type");
-	if (var.m_type == ee0::VT_EMPTY) 
+	if (var.m_type == ee0::VT_EMPTY)
 	{
 		// todo ecs
 #ifndef GAME_OBJ_ECS
@@ -68,7 +68,7 @@ void WxStagePage::Traverse(std::function<bool(const ee0::GameObj&)> func,
 #endif // GAME_OBJ_ECS
 		return;
 	}
-	
+
 	GD_ASSERT(var.m_type == ee0::VT_LONG, "err type");
 	switch (var.m_val.l)
 	{
@@ -99,7 +99,7 @@ void WxStagePage::Traverse(std::function<bool(const ee0::GameObj&)> func,
 
 // todo ecs
 #ifndef GAME_OBJ_ECS
-const n0::NodeComp& WxStagePage::GetEditedObjComp() const 
+const n0::NodeComp& WxStagePage::GetEditedObjComp() const
 {
 	return m_obj->GetSharedComp<n0::CompComplex>();
 }
