@@ -42,6 +42,7 @@
 #include <moon/Blackboard.h>
 #include <moon/Context.h>
 #include <painting3/PerspCam.h>
+#include <blueprint/ConnectPinsOP.h>
 
 #include <boost/filesystem.hpp>
 
@@ -215,7 +216,7 @@ WxStagePage* StagePageFactory::Create(ECS_WORLD_PARAM int page_type, WxStagePane
 			auto canvas = std::make_shared<WxStageCanvas2D>(page, ECS_WORLD_VAR rc);
 			page->GetImpl().SetCanvas(canvas);
 
-			auto prev_op = std::make_shared<NodeSelectOP>(
+			auto select_op = std::make_shared<NodeSelectOP>(
 				canvas->GetCamera(), ECS_WORLD_VAR *page, rc, wc);
 
 			ee2::ArrangeNodeCfg cfg;
@@ -223,9 +224,11 @@ WxStagePage* StagePageFactory::Create(ECS_WORLD_PARAM int page_type, WxStagePane
 			cfg.is_deform_open     = false;
 			cfg.is_offset_open     = false;
 			cfg.is_rotate_open     = false;
-			auto op = std::make_shared<ee2::ArrangeNodeOP>(
-				canvas->GetCamera(), *page, ECS_WORLD_VAR cfg, prev_op);
+			auto arrange_op = std::make_shared<ee2::ArrangeNodeOP>(
+				canvas->GetCamera(), *page, ECS_WORLD_VAR cfg, select_op);
 
+			auto op = std::make_shared<bp::ConnectPinsOP>(canvas->GetCamera(), *page);
+			op->SetPrevEditOP(arrange_op);
 			page->GetImpl().SetEditOP(op);
 
 			stage_panel->AddNewPage(page, GetPageName(page->GetPageType()));
