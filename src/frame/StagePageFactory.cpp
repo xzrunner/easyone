@@ -22,6 +22,7 @@
 #include "particle3d/WxStagePage.h"
 #include "particle3d/PlayParticlesOP.h"
 #include "model/WxStagePage.h"
+#include "bprint/WxStagePage.h"
 #include "quake/WxStagePage.h"
 #include "quake/WxStageCanvas.h"
 
@@ -64,6 +65,7 @@ WxStagePage* StagePageFactory::Create(ECS_WORLD_PARAM int page_type, WxStagePane
 			auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX2D);
 			page = new scene2d::WxStagePage(frame, library, ECS_WORLD_VAR obj);
 			auto canvas = std::make_shared<WxStageCanvas2D>(page, ECS_WORLD_VAR rc);
+
 			page->GetImpl().SetCanvas(canvas);
 
 			auto prev_op = std::make_shared<NodeSelectOP>(
@@ -209,15 +211,20 @@ WxStagePage* StagePageFactory::Create(ECS_WORLD_PARAM int page_type, WxStagePane
 	case PAGE_BLUEPRINT:
 		{
 			auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX2D);
-			page = new scene2d::WxStagePage(frame, library, ECS_WORLD_VAR obj);
+			page = new bprint::WxStagePage(frame, library, ECS_WORLD_VAR obj);
 			auto canvas = std::make_shared<WxStageCanvas2D>(page, ECS_WORLD_VAR rc);
 			page->GetImpl().SetCanvas(canvas);
 
 			auto prev_op = std::make_shared<NodeSelectOP>(
 				canvas->GetCamera(), ECS_WORLD_VAR *page, rc, wc);
 
+			ee2::ArrangeNodeCfg cfg;
+			cfg.is_auto_align_open = false;
+			cfg.is_deform_open     = false;
+			cfg.is_offset_open     = false;
+			cfg.is_rotate_open     = false;
 			auto op = std::make_shared<ee2::ArrangeNodeOP>(
-				canvas->GetCamera(), *page, ECS_WORLD_VAR ee2::ArrangeNodeCfg(), prev_op);
+				canvas->GetCamera(), *page, ECS_WORLD_VAR cfg, prev_op);
 
 			page->GetImpl().SetEditOP(op);
 
