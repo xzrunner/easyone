@@ -65,7 +65,7 @@ void WxStagePage::Traverse(std::function<bool(const ee0::GameObj&)> func,
 	switch (var.m_val.l)
 	{
 	case TRAV_DRAW_PREVIEW:
-		func(m_obj);
+		//func(m_obj);
 		break;
 		// todo ecs
 #ifndef GAME_OBJ_ECS

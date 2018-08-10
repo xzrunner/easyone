@@ -109,7 +109,7 @@ void Application::LoadFromFile(const std::string& filepath)
 			new_type = PAGE_PARTICLE3D;
 		}
 	}
-	else if (ext == ".X")
+	else if (ext == ".x")
 	{
 		new_type = PAGE_MODEL;
 	}
@@ -255,11 +255,11 @@ wxWindow* Application::CreateStagePanel()
 	//StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_ANIM, m_stage);
 	//StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_PARTICLE3D, m_stage);
 
-	//StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_MODEL, m_stage);
+	StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_MODEL, m_stage);
 
 	//StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_QUAKE, m_stage);
 
-	StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_BLUEPRINT, m_stage);
+	//StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_BLUEPRINT, m_stage);
 
 	m_stage->Thaw();
 
