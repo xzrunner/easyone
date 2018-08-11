@@ -310,6 +310,7 @@
     <ClInclude Include="..\..\..\src\frame\WxWorldPanel.h" />
     <ClInclude Include="..\..\..\src\mask\WxEditDialog.h" />
     <ClInclude Include="..\..\..\src\mask\WxStagePage.h" />
+    <ClInclude Include="..\..\..\src\model\WxStageCanvas.h" />
     <ClInclude Include="..\..\..\src\model\WxStagePage.h" />
     <ClInclude Include="..\..\..\src\particle3d\config.h" />
     <ClInclude Include="..\..\..\src\particle3d\Languages.h" />
@@ -390,6 +391,10 @@
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/mask/</ObjectFileName>
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/mask/</ObjectFileName>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\model\WxStageCanvas.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/model/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/model/</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="..\..\..\src\model\WxStagePage.cpp">
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/model/</ObjectFileName>
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/model/</ObjectFileName>
@@ -461,6 +466,8 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\..\src\model\shape.glsl" />
+    <None Include="..\..\..\src\model\skinned.glsl" />
     <None Include="..\..\..\src\quake\edge.glsl" />
     <None Include="..\..\..\src\quake\face.glsl" />
   </ItemGroup>

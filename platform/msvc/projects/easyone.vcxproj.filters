@@ -118,6 +118,12 @@
     <Filter Include="41.bprint">
       <UniqueIdentifier>{2a19c5fb-533d-4152-bb7a-6a5db2f2050b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="31.anim3">
+      <UniqueIdentifier>{303c6513-429e-45d1-8e02-9625e7967cce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="30.model\shader">
+      <UniqueIdentifier>{76198664-43ae-4e3b-a438-9b93b0f158bf}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\frame\main.h">
@@ -339,6 +345,9 @@
     <ClInclude Include="..\..\..\src\bprint\WxStagePage.h">
       <Filter>41.bprint</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\model\WxStageCanvas.h">
+      <Filter>30.model</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\frame\main.cpp">
@@ -533,6 +542,9 @@
     <ClCompile Include="..\..\..\src\bprint\WxStagePage.cpp">
       <Filter>41.bprint</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\model\WxStageCanvas.cpp">
+      <Filter>30.model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\..\src\quake\edge.glsl">
@@ -540,6 +552,12 @@
     </None>
     <None Include="..\..\..\src\quake\face.glsl">
       <Filter>50.quake\shader</Filter>
+    </None>
+    <None Include="..\..\..\src\model\skinned.glsl">
+      <Filter>30.model\shader</Filter>
+    </None>
+    <None Include="..\..\..\src\model\shape.glsl">
+      <Filter>30.model\shader</Filter>
     </None>
   </ItemGroup>
 </Project>

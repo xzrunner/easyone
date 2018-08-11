@@ -26,8 +26,6 @@ namespace eone
 namespace quake
 {
 
-
-
 WxStageCanvas::WxStageCanvas(eone::WxStagePage* stage, ECS_WORLD_PARAM
 	                         const ee0::RenderContext& rc)
 	: WxStageCanvas3D(stage, ECS_WORLD_VAR rc, true)

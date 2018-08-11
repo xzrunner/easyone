@@ -22,6 +22,7 @@
 #include "particle3d/WxStagePage.h"
 #include "particle3d/PlayParticlesOP.h"
 #include "model/WxStagePage.h"
+#include "model/WxStageCanvas.h"
 #include "bprint/WxStagePage.h"
 #include "quake/WxStagePage.h"
 #include "quake/WxStageCanvas.h"
@@ -34,11 +35,14 @@
 #include <ee3/NodeArrangeOP.h>
 #include <ee3/WorldTravelOP.h>
 #include <ee3/CameraDriveOP.h>
+#include <ee3/EditSeletonOP.h>
 
 #include <node0/SceneNode.h>
 #include <node2/CompMask.h>
 #include <node2/CompScale9.h>
 #include <node2/CompParticle3dInst.h>
+#include <node3/CompModel.h>
+#include <node3/CompModelInst.h>
 #include <moon/Blackboard.h>
 #include <moon/Context.h>
 #include <painting3/PerspCam.h>
@@ -168,11 +172,16 @@ WxStagePage* StagePageFactory::Create(ECS_WORLD_PARAM int page_type, WxStagePane
 		{
 			auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_MODEL);
 			page = new model::WxStagePage(frame, library, ECS_WORLD_VAR obj);
-			auto canvas = std::make_shared<WxStageCanvas3D>(page, rc);
+			auto canvas = std::make_shared<model::WxStageCanvas>(page, rc);
 			page->GetImpl().SetCanvas(canvas);
 
-			auto op = std::make_shared<ee3::NodeArrangeOP>(
+			auto prev_op = std::make_shared<ee3::CameraDriveOP>(
+				canvas->GetCamera(), canvas->GetViewport(), page->GetSubjectMgr());
+
+			auto op = std::make_shared<ee3::EditSeletonOP>(
 				canvas->GetCamera(), *page, canvas->GetViewport());
+			op->SetPrevEditOP(prev_op);
+
 			page->GetImpl().SetEditOP(op);
 
 			stage_panel->AddNewPage(page, GetPageName(page->GetPageType()));

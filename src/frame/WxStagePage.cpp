@@ -15,8 +15,6 @@
 #include <node0/SceneNode.h>
 #include <node2/CompBoundingBox.h>
 #include <node2/AABBSystem.h>
-#include <node3/CompModel.h>
-#include <node3/CompModelInst.h>
 #include <node3/CompTransform.h>
 #include <ns/CompSerializer.h>
 #include <ns/CompFactory.h>
@@ -90,13 +88,6 @@ void WxStagePage::LoadFromFile(const std::string& filepath)
 		m_obj->RemoveSharedComp<n0::CompAsset>();
 	}
 	m_obj->AddSharedCompNoCreate<n0::CompAsset>(casset);
-
-	// todo
-	if (casset->AssetTypeID() == n0::GetAssetUniqueTypeID<n3::CompModel>()) {
-		auto cmodel = std::static_pointer_cast<n3::CompModel>(casset);
-		auto& cmode_inst = m_obj->GetUniqueComp<n3::CompModelInst>();
-		cmode_inst.SetModel(cmodel->GetModel(), 0);
-	}
 
 	LoadFromFileImpl(filepath);
 

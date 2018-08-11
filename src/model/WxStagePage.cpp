@@ -7,10 +7,13 @@
 
 #include <ee0/SubjectMgr.h>
 #include <ee3/WxStageDropTarget.h>
+#include <ee3/EditSeletonOP.h>
 
 #include <guard/check.h>
 #include <node0/SceneNode.h>
 #include <node3/CompModel.h>
+#include <node3/CompModelInst.h>
+#include <ns/CompFactory.h>
 
 namespace eone
 {
@@ -87,6 +90,21 @@ void WxStagePage::StoreToJsonExt(const std::string& dir, rapidjson::Value& val,
 	                             rapidjson::MemoryPoolAllocator<>& alloc) const
 {
 	val.AddMember("is_scene3d", true, alloc);
+}
+
+void WxStagePage::LoadFromFileImpl(const std::string& filepath)
+{
+	auto casset = ns::CompFactory::Instance()->CreateAsset(filepath);
+	assert(casset->AssetTypeID() == n0::GetAssetUniqueTypeID<n3::CompModel>());
+
+	auto cmodel = std::static_pointer_cast<n3::CompModel>(casset);
+	auto& cmode_inst = m_obj->GetUniqueComp<n3::CompModelInst>();
+	cmode_inst.SetModel(cmodel->GetModel(), 0);
+
+	auto op = std::dynamic_pointer_cast<ee3::EditSeletonOP>(
+		GetImpl().GetEditOP()
+	);
+	op->SetModel(cmode_inst.GetModel().get());
 }
 
 void WxStagePage::InsertSceneNode(const ee0::VariantSet& variants)
