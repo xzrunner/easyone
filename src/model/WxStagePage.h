@@ -24,7 +24,11 @@ public:
 
 	virtual int GetPageType() const override { return PAGE_MODEL; }
 
+	ee0::SubjectMgrPtr GetPreviewSubMgr() const { return m_preview_submgr; }
+
 protected:
+	virtual void OnPageInit() override;
+
 #ifndef GAME_OBJ_ECS
 	virtual const n0::NodeComp& GetEditedObjComp() const override;
 #endif // GAME_OBJ_ECS
@@ -37,6 +41,9 @@ private:
 	void InsertSceneNode(const ee0::VariantSet& variants);
 	void DeleteSceneNode(const ee0::VariantSet& variants);
 	void ClearSceneNode();
+
+private:
+	ee0::SubjectMgrPtr m_preview_submgr = nullptr;
 
 }; // WxStagePage
 

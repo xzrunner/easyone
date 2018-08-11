@@ -4,6 +4,7 @@
 #include "frame/Blackboard.h"
 #include "frame/Application.h"
 #include "frame/typedef.h"
+#include "frame/AppStyle.h"
 
 #include <ee0/SubjectMgr.h>
 #include <ee2/WxStageDropTarget.h>
@@ -17,9 +18,9 @@ namespace eone
 namespace script
 {
 
-WxStagePage::WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, 
+WxStagePage::WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library,
 	                     ECS_WORLD_PARAM const ee0::GameObj& obj)
-	: eone::WxStagePage(parent, ECS_WORLD_VAR obj, LAYOUT_PREVIEW)
+	: eone::WxStagePage(parent, ECS_WORLD_VAR obj, SHOW_LIBRARY | SHOW_RECORD | SHOW_STAGE | SHOW_PREVIEW | SHOW_WORLD | SHOW_DETAIL | SHOW_SCRIPT)
 {
 }
 
@@ -27,7 +28,7 @@ void WxStagePage::Traverse(std::function<bool(const ee0::GameObj&)> func,
 	                       const ee0::VariantSet& variants, bool inverse) const
 {
 	auto var = variants.GetVariant("type");
-	if (var.m_type == ee0::VT_EMPTY) 
+	if (var.m_type == ee0::VT_EMPTY)
 	{
 		// todo ecs
 #ifndef GAME_OBJ_ECS
@@ -51,13 +52,13 @@ void WxStagePage::Traverse(std::function<bool(const ee0::GameObj&)> func,
 }
 
 #ifndef GAME_OBJ_ECS
-const n0::NodeComp& WxStagePage::GetEditedObjComp() const 
+const n0::NodeComp& WxStagePage::GetEditedObjComp() const
 {
 	return m_obj->GetSharedComp<n0::CompComplex>();
 }
 #endif // GAME_OBJ_ECS
 
-void WxStagePage::StoreToJsonExt(const std::string& dir, rapidjson::Value& val, 
+void WxStagePage::StoreToJsonExt(const std::string& dir, rapidjson::Value& val,
 	                             rapidjson::MemoryPoolAllocator<>& alloc) const
 {
 //	val.AddMember("camera", "2d", alloc);

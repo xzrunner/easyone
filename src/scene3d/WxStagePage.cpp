@@ -4,6 +4,7 @@
 #include "frame/Blackboard.h"
 #include "frame/Application.h"
 #include "frame/typedef.h"
+#include "frame/AppStyle.h"
 
 #include <ee0/SubjectMgr.h>
 #include <ee3/WxStageDropTarget.h>
@@ -25,7 +26,7 @@ namespace scene3d
 {
 
 WxStagePage::WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, ECS_WORLD_PARAM const ee0::GameObj& obj)
-	: eone::WxStagePage(parent, ECS_WORLD_VAR obj, LAYOUT_PREVIEW)
+	: eone::WxStagePage(parent, ECS_WORLD_VAR obj, SHOW_LIBRARY | SHOW_RECORD | SHOW_STAGE | SHOW_PREVIEW | SHOW_WORLD | SHOW_DETAIL | SHOW_SCRIPT)
 {
 	m_messages.push_back(ee0::MSG_INSERT_SCENE_NODE);
 	m_messages.push_back(ee0::MSG_DELETE_SCENE_NODE);

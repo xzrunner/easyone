@@ -5,6 +5,7 @@
 #include "frame/Blackboard.h"
 #include "frame/Application.h"
 #include "frame/typedef.h"
+#include "frame/AppStyle.h"
 
 #include <ee0/SubjectMgr.h>
 
@@ -29,11 +30,11 @@
 namespace eone
 {
 
-WxStagePage::WxStagePage(wxWindow* parent, ECS_WORLD_PARAM const ee0::GameObj& obj, LayoutType layout_type)
+WxStagePage::WxStagePage(wxWindow* parent, ECS_WORLD_PARAM const ee0::GameObj& obj, uint32_t app_style)
 	: ee0::WxStagePage(parent)
 	ECS_WORLD_SELF_ASSIGN
 	, m_obj(obj)
-	, m_layout_type(layout_type)
+	, m_app_style(app_style)
 	, m_backup(m_sub_mgr)
 {
 	m_sub_mgr->RegisterObserver(ee0::MSG_STAGE_PAGE_ON_SHOW, this);
@@ -163,40 +164,50 @@ void WxStagePage::UnregisterAllMessages()
 void WxStagePage::InitSubWindow()
 {
 	auto& ui_mgr = Blackboard::Instance()->GetApp()->GetUIManager();
-	switch (m_layout_type)
-	{
-	case LAYOUT_PREVIEW:
-		ui_mgr.GetPane(STR_PREVIEW_PANEL).Show();
-		ui_mgr.GetPane(STR_WORLD_PANEL).Show();
-		ui_mgr.GetPane(STR_DETAIL_PANEL).Show();
-		ui_mgr.GetPane(STR_STAGE_EXT_PANEL).Hide();
-		ui_mgr.GetPane(STR_TOOLBAR_PANEL).Hide();
-		ui_mgr.GetPane(STR_SCRIPT_PANEL).Show();
-		break;
-	case LAYOUT_STAGE_EXT:
+	if (m_app_style & SHOW_LIBRARY) {
+		ui_mgr.GetPane(STR_LIBRARY_PANEL).Show();
+	} else {
+		ui_mgr.GetPane(STR_LIBRARY_PANEL).Hide();
+	}
+	if (m_app_style & SHOW_RECORD) {
+		ui_mgr.GetPane(STR_RECORD_PANEL).Show();
+	} else {
+		ui_mgr.GetPane(STR_RECORD_PANEL).Hide();
+	}
+	if (m_app_style & SHOW_STAGE) {
+		ui_mgr.GetPane(STR_STAGE_PANEL).Show();
+	} else {
+		ui_mgr.GetPane(STR_STAGE_PANEL).Hide();
+	}
+	if (m_app_style & SHOW_STAGE_EXT) {
 		ui_mgr.GetPane(STR_STAGE_EXT_PANEL).Show();
+	} else {
+		ui_mgr.GetPane(STR_STAGE_EXT_PANEL).Hide();
+	}
+	if (m_app_style & SHOW_PREVIEW) {
+		ui_mgr.GetPane(STR_PREVIEW_PANEL).Show();
+	} else {
+		ui_mgr.GetPane(STR_PREVIEW_PANEL).Hide();
+	}
+	if (m_app_style & SHOW_WORLD) {
 		ui_mgr.GetPane(STR_WORLD_PANEL).Show();
+	} else {
+		ui_mgr.GetPane(STR_WORLD_PANEL).Hide();
+	}
+	if (m_app_style & SHOW_DETAIL) {
 		ui_mgr.GetPane(STR_DETAIL_PANEL).Show();
-		ui_mgr.GetPane(STR_PREVIEW_PANEL).Hide();
-		ui_mgr.GetPane(STR_TOOLBAR_PANEL).Hide();
-		ui_mgr.GetPane(STR_SCRIPT_PANEL).Show();
-		break;
-	case LAYOUT_TOOLBAR:
+	} else {
+		ui_mgr.GetPane(STR_DETAIL_PANEL).Hide();
+	}
+	if (m_app_style & SHOW_TOOLBAR) {
 		ui_mgr.GetPane(STR_TOOLBAR_PANEL).Show();
-		ui_mgr.GetPane(STR_WORLD_PANEL).Hide();
-		ui_mgr.GetPane(STR_DETAIL_PANEL).Hide();
-		ui_mgr.GetPane(STR_PREVIEW_PANEL).Hide();
-		ui_mgr.GetPane(STR_STAGE_EXT_PANEL).Hide();
-		ui_mgr.GetPane(STR_SCRIPT_PANEL).Show();
-		break;
-	case LAYOUT_ONLY_STAGE:
+	} else {
 		ui_mgr.GetPane(STR_TOOLBAR_PANEL).Hide();
-		ui_mgr.GetPane(STR_WORLD_PANEL).Hide();
-		ui_mgr.GetPane(STR_DETAIL_PANEL).Hide();
-		ui_mgr.GetPane(STR_PREVIEW_PANEL).Hide();
-		ui_mgr.GetPane(STR_STAGE_EXT_PANEL).Hide();
+	}
+	if (m_app_style & SHOW_SCRIPT) {
+		ui_mgr.GetPane(STR_SCRIPT_PANEL).Show();
+	} else {
 		ui_mgr.GetPane(STR_SCRIPT_PANEL).Hide();
-		break;
 	}
 	ui_mgr.Update();
 }

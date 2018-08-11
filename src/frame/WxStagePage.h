@@ -17,22 +17,13 @@ namespace eone
 class WxStagePage : public ee0::WxStagePage
 {
 public:
-	enum LayoutType
-	{
-		LAYOUT_PREVIEW = 0,
-		LAYOUT_STAGE_EXT,
-		LAYOUT_TOOLBAR,
-		LAYOUT_ONLY_STAGE,
-	};
-
-public:
 	enum TraverseType
 	{
 		TRAV_DRAW_PREVIEW = 1000,
 	};
 
 public:
-	WxStagePage(wxWindow* parent, ECS_WORLD_PARAM const ee0::GameObj& obj, LayoutType layout_type);
+	WxStagePage(wxWindow* parent, ECS_WORLD_PARAM const ee0::GameObj& obj, uint32_t app_style);
 
 	virtual void OnNotify(uint32_t msg, const ee0::VariantSet& variants) override;
 
@@ -78,7 +69,7 @@ protected:
 	ECS_WORLD_SELF_DEF
 	ee0::GameObj m_obj;
 
-	LayoutType m_layout_type;
+	uint32_t m_app_style;
 
 	std::string m_filepath;
 

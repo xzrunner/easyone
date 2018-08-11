@@ -35,7 +35,7 @@
 #include <ee3/NodeArrangeOP.h>
 #include <ee3/WorldTravelOP.h>
 #include <ee3/CameraDriveOP.h>
-#include <ee3/EditSeletonOP.h>
+#include <ee3/EditSkeletonOP.h>
 
 #include <node0/SceneNode.h>
 #include <node2/CompMask.h>
@@ -178,8 +178,8 @@ WxStagePage* StagePageFactory::Create(ECS_WORLD_PARAM int page_type, WxStagePane
 			auto prev_op = std::make_shared<ee3::CameraDriveOP>(
 				canvas->GetCamera(), canvas->GetViewport(), page->GetSubjectMgr());
 
-			auto op = std::make_shared<ee3::EditSeletonOP>(
-				canvas->GetCamera(), *page, canvas->GetViewport());
+			auto op = std::make_shared<ee3::EditSkeletonOP>(
+				canvas->GetCamera(), canvas->GetViewport(), page->GetSubjectMgr());
 			op->SetPrevEditOP(prev_op);
 
 			page->GetImpl().SetEditOP(op);

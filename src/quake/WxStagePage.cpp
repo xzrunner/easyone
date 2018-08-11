@@ -8,6 +8,7 @@
 #include "frame/Application.h"
 #include "frame/typedef.h"
 #include "frame/WxStageExtPanel.h"
+#include "frame/AppStyle.h"
 
 #include <ee0/SubjectMgr.h>
 #include <ee3/WxStageDropTarget.h>
@@ -28,7 +29,7 @@ namespace quake
 {
 
 WxStagePage::WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, ECS_WORLD_PARAM const ee0::GameObj& obj)
-	: eone::WxStagePage(parent, ECS_WORLD_VAR obj, LAYOUT_STAGE_EXT)
+	: eone::WxStagePage(parent, ECS_WORLD_VAR obj, SHOW_LIBRARY | SHOW_RECORD | SHOW_STAGE | SHOW_STAGE_EXT | SHOW_WORLD | SHOW_DETAIL | SHOW_SCRIPT)
 	, m_editor_mgr(*this)
 	, m_cam_mgr(false)
 {

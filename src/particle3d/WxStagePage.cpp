@@ -3,6 +3,7 @@
 
 #include "frame/Blackboard.h"
 #include "frame/WxToolbarPanel.h"
+#include "frame/AppStyle.h"
 
 #include <ee2/WxStageDropTarget.h>
 
@@ -12,11 +13,11 @@
 
 namespace eone
 {
-namespace particle3d 
+namespace particle3d
 {
 
 WxStagePage::WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, ECS_WORLD_PARAM const ee0::GameObj& obj)
-	: eone::WxStagePage(parent, ECS_WORLD_VAR obj, LAYOUT_TOOLBAR)
+	: eone::WxStagePage(parent, ECS_WORLD_VAR obj, SHOW_LIBRARY | SHOW_RECORD | SHOW_STAGE | SHOW_SCRIPT)
 	, m_library(library)
 {
 	if (library) {

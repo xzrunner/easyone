@@ -124,6 +124,15 @@
     <Filter Include="30.model\shader">
       <UniqueIdentifier>{76198664-43ae-4e3b-a438-9b93b0f158bf}</UniqueIdentifier>
     </Filter>
+    <Filter Include="30.model\view">
+      <UniqueIdentifier>{b64f9923-3d77-4435-909e-2bf91d6cf011}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="30.model\view\stage">
+      <UniqueIdentifier>{ea565ae8-a723-4e0f-badb-f136732eda78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="30.model\view\preview">
+      <UniqueIdentifier>{da8dc5bc-7e31-4c1a-97cf-542e2a3109ff}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\frame\main.h">
@@ -306,9 +315,6 @@
     <ClInclude Include="..\..\..\src\frame\EditBackup.h">
       <Filter>00.frame\tools</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\model\WxStagePage.h">
-      <Filter>30.model</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\frame\WxStageCanvas2D.h">
       <Filter>00.frame\2.center\stage\canvas</Filter>
     </ClInclude>
@@ -345,8 +351,23 @@
     <ClInclude Include="..\..\..\src\bprint\WxStagePage.h">
       <Filter>41.bprint</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\frame\AppStyle.h">
+      <Filter>00.frame\frame</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\src\model\WxStageCanvas.h">
-      <Filter>30.model</Filter>
+      <Filter>30.model\view\stage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\model\WxStagePage.h">
+      <Filter>30.model\view\stage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\model\WxPreviewPanel.h">
+      <Filter>30.model\view\preview</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\model\WxPreviewCanvas.h">
+      <Filter>30.model\view\preview</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\model\RenderSystem.h">
+      <Filter>30.model\view</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -503,9 +524,6 @@
     <ClCompile Include="..\..\..\src\frame\EditBackup.cpp">
       <Filter>00.frame\tools</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\model\WxStagePage.cpp">
-      <Filter>30.model</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\frame\WxStageCanvas2D.cpp">
       <Filter>00.frame\2.center\stage\canvas</Filter>
     </ClCompile>
@@ -543,7 +561,19 @@
       <Filter>41.bprint</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\model\WxStageCanvas.cpp">
-      <Filter>30.model</Filter>
+      <Filter>30.model\view\stage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\model\WxStagePage.cpp">
+      <Filter>30.model\view\stage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\model\WxPreviewPanel.cpp">
+      <Filter>30.model\view\preview</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\model\WxPreviewCanvas.cpp">
+      <Filter>30.model\view\preview</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\model\RenderSystem.cpp">
+      <Filter>30.model\view</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
