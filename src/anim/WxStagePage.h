@@ -40,6 +40,8 @@ private:
 	bool OnSetCurrFrame(const ee0::VariantSet& variants);
 	bool OnRefreshAnimComp();
 
+	void RefreshAllNodes();
+
 }; // WxStagePage
 
 }

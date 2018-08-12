@@ -1,7 +1,4 @@
 #include "anim/WxStagePage.h"
-#include "anim/WxTimelinePanel.h"
-#include "anim/MessageID.h"
-#include "anim/AnimHelper.h"
 
 #include "frame/WxStagePage.h"
 #include "frame/Blackboard.h"
@@ -9,6 +6,8 @@
 #include "frame/typedef.h"
 #include "frame/WxStageExtPanel.h"
 #include "frame/AppStyle.h"
+#include "frame/GameObjFactory.h"
+#include "frame/MessageID.h"
 
 #include <ee0/SubjectMgr.h>
 #include <ee2/WxStageDropTarget.h>
@@ -17,12 +16,17 @@
 #include <logger.h>
 #ifndef GAME_OBJ_ECS
 #include <node0/SceneNode.h>
+#include <node0/CompComplex.h>
 #include <node2/CompAnim.h>
 #include <node2/CompAnimInst.h>
 #else
 
 #endif // GAME_OBJ_ECS
 #include <anim/AnimTemplate.h>
+#include <eanim/MessageID.h>
+#include <eanim/AnimHelper.h>
+#include <eanim/WxTimelinePanel.h>
+#include <eanim/Callback.h>
 
 #include <wx/aui/framemanager.h>
 
@@ -40,8 +44,8 @@ WxStagePage::WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, ECS_WOR
 	canim_inst.GetPlayCtrl().SetActive(false);
 #endif // GAME_OBJ_ECS
 
-	m_messages.push_back(MSG_SET_CURR_FRAME);
-	m_messages.push_back(MSG_REFRESH_ANIM_COMP);
+	m_messages.push_back(eanim::MSG_SET_CURR_FRAME);
+	m_messages.push_back(eanim::MSG_REFRESH_ANIM_COMP);
 
 	if (library) {
 		SetDropTarget(new ee2::WxStageDropTarget(ECS_WORLD_VAR library, this));
@@ -55,10 +59,10 @@ void WxStagePage::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
 	bool dirty = false;
 	switch (msg)
 	{
-	case MSG_SET_CURR_FRAME:
+	case eanim::MSG_SET_CURR_FRAME:
 		dirty = OnSetCurrFrame(variants);
 		break;
-	case MSG_REFRESH_ANIM_COMP:
+	case eanim::MSG_REFRESH_ANIM_COMP:
 		dirty = OnRefreshAnimComp();
 		break;
 	}
@@ -110,7 +114,27 @@ void WxStagePage::OnPageInit()
 #ifndef GAME_OBJ_ECS
 	auto& canim = m_obj->GetSharedComp<n2::CompAnim>();
 	auto& canim_inst = m_obj->GetUniqueComp<n2::CompAnimInst>();
-	sizer->Add(new WxTimelinePanel(panel, canim, canim_inst, m_sub_mgr), 0, wxEXPAND);
+
+	// set callback
+	eanim::Callback::Funs funs;
+	funs.refresh_all_nodes = [&]() {
+		RefreshAllNodes();
+	};
+	funs.get_all_layers = [&]()->const std::vector<::anim::LayerPtr>& {
+		return canim.GetAllLayers();
+	};
+	funs.add_layer = [&](::anim::LayerPtr& layer) {
+		canim.AddLayer(layer);
+	};
+	funs.swap_layer = [&](int from, int to) {
+		const_cast<n2::CompAnim&>(canim).SwapLayers(from, to);
+	};
+	funs.remove_all_layers = [&]()->bool {
+		return canim.RemoveAllLayers();
+	};
+	eanim::Callback::RegisterCallback(funs);
+
+	sizer->Add(new eanim::WxTimelinePanel(panel, m_sub_mgr, canim_inst.GetPlayCtrl()), 0, wxEXPAND);
 #endif // GAME_OBJ_ECS
 	panel->SetSizer(sizer);
 }
@@ -124,7 +148,7 @@ const n0::NodeComp& WxStagePage::GetEditedObjComp() const
 
 void WxStagePage::LoadFromFileImpl(const std::string& filepath)
 {
-	m_sub_mgr->NotifyObservers(MSG_REFRESH_ANIM_COMP);
+	m_sub_mgr->NotifyObservers(eanim::MSG_REFRESH_ANIM_COMP);
 }
 
 bool WxStagePage::OnSetCurrFrame(const ee0::VariantSet& variants)
@@ -139,7 +163,7 @@ bool WxStagePage::OnSetCurrFrame(const ee0::VariantSet& variants)
 
 	auto& canim_inst = m_obj->GetUniqueComp<n2::CompAnimInst>();
 	bool ret = canim_inst.SetFrame(frame);
-	AnimHelper::UpdateTreePanael(*m_sub_mgr, canim_inst);
+	RefreshAllNodes();
 	return ret;
 #else
 	// todo ecs
@@ -156,6 +180,30 @@ bool WxStagePage::OnRefreshAnimComp()
 	canim->GetAnimTemplate()->Build(canim->GetAllLayers());
 #endif // GAME_OBJ_ECS
 	return true;
+}
+
+void WxStagePage::RefreshAllNodes()
+{
+	// todo ecs
+#ifndef GAME_OBJ_ECS
+	auto root = GameObjFactory::Create(GAME_OBJ_COMPLEX2D);
+	auto& ccomplex = root->GetSharedComp<n0::CompComplex>();
+	auto& canim_inst = m_obj->GetUniqueComp<n2::CompAnimInst>();
+	canim_inst.TraverseCurrNodes([&](const ee0::GameObj& obj)->bool
+	{
+		ccomplex.AddChild(obj);
+		return true;
+	});
+
+	ee0::VariantSet vars;
+
+	ee0::Variant var;
+	var.m_type = ee0::VT_PVOID;
+	var.m_val.pv = &root;
+	vars.SetVariant("obj", var);
+
+	m_sub_mgr->NotifyObservers(MSG_TREE_PANEL_REBUILD, vars);
+#endif // GAME_OBJ_ECS
 }
 
 }

@@ -166,3 +166,6 @@
 [submodule "ext/blueprint"]
 	path = ext/blueprint
 	url = git@github.com:xzrunner/blueprint.git
+[submodule "ext/eanim"]
+	path = ext/eanim
+	url = git@github.com:xzrunner/eanim.git
