@@ -24,18 +24,6 @@ WxStageCanvas::WxStageCanvas(eone::WxStagePage* stage, ECS_WORLD_PARAM
 {
 }
 
-void WxStageCanvas::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
-{
-	WxStageCanvas3D::OnNotify(msg, variants);
-
-	switch (msg)
-	{
-	case ee0::MSG_SET_CANVAS_DIRTY:
-		static_cast<model::WxStagePage*>(m_stage)->GetPreviewSubMgr()->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
-		break;
-	}
-}
-
 void WxStageCanvas::DrawBackground() const
 {
 }

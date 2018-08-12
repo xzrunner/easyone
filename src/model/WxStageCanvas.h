@@ -13,8 +13,6 @@ public:
 	WxStageCanvas(eone::WxStagePage* stage, ECS_WORLD_PARAM
 		const ee0::RenderContext& rc);
 
-	virtual void OnNotify(uint32_t msg, const ee0::VariantSet& variants) override;
-
 protected:
 	virtual void DrawBackground() const;
 	virtual void DrawForeground() const;

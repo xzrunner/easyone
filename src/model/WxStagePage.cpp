@@ -26,11 +26,9 @@ namespace model
 {
 
 WxStagePage::WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, ECS_WORLD_PARAM const ee0::GameObj& obj)
-	: eone::WxStagePage(parent, ECS_WORLD_VAR obj, SHOW_STAGE | SHOW_STAGE_EXT | SHOW_DETAIL)
+	: eone::WxStagePage(parent, ECS_WORLD_VAR obj, SHOW_STAGE | SHOW_STAGE_EXT)
 {
-	m_messages.push_back(ee0::MSG_INSERT_SCENE_NODE);
-	m_messages.push_back(ee0::MSG_DELETE_SCENE_NODE);
-	m_messages.push_back(ee0::MSG_CLEAR_SCENE_NODE);
+	m_messages.push_back(ee0::MSG_SET_CANVAS_DIRTY);
 
 	if (library) {
 		SetDropTarget(new ee3::WxStageDropTarget(ECS_WORLD_VAR library, this));
@@ -41,18 +39,12 @@ void WxStagePage::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
 {
 	eone::WxStagePage::OnNotify(msg, variants);
 
-	//switch (msg)
-	//{
-	//case ee0::MSG_INSERT_SCENE_NODE:
-	//	InsertSceneNode(variants);
-	//	break;
-	//case ee0::MSG_DELETE_SCENE_NODE:
-	//	DeleteSceneNode(variants);
-	//	break;
-	//case ee0::MSG_CLEAR_SCENE_NODE:
-	//	ClearSceneNode();
-	//	break;
-	//}
+	switch (msg)
+	{
+	case ee0::MSG_SET_CANVAS_DIRTY:
+		m_preview_submgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
+		break;
+	}
 }
 
 void WxStagePage::Traverse(std::function<bool(const ee0::GameObj&)> func,
@@ -120,12 +112,6 @@ const n0::NodeComp& WxStagePage::GetEditedObjComp() const
 }
 #endif // GAME_OBJ_ECS
 
-void WxStagePage::StoreToJsonExt(const std::string& dir, rapidjson::Value& val,
-	                             rapidjson::MemoryPoolAllocator<>& alloc) const
-{
-	val.AddMember("is_scene3d", true, alloc);
-}
-
 void WxStagePage::LoadFromFileImpl(const std::string& filepath)
 {
 	auto casset = ns::CompFactory::Instance()->CreateAsset(filepath);
@@ -139,18 +125,6 @@ void WxStagePage::LoadFromFileImpl(const std::string& filepath)
 		GetImpl().GetEditOP()
 	);
 	op->SetModel(cmode_inst.GetModel().get());
-}
-
-void WxStagePage::InsertSceneNode(const ee0::VariantSet& variants)
-{
-}
-
-void WxStagePage::DeleteSceneNode(const ee0::VariantSet& variants)
-{
-}
-
-void WxStagePage::ClearSceneNode()
-{
 }
 
 }
