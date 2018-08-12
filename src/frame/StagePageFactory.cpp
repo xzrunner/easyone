@@ -23,6 +23,8 @@
 #include "particle3d/PlayParticlesOP.h"
 #include "model/WxStagePage.h"
 #include "model/WxStageCanvas.h"
+#include "anim3/WxStagePage.h"
+#include "anim3/WxStageCanvas.h"
 #include "bprint/WxStagePage.h"
 #include "quake/WxStagePage.h"
 #include "quake/WxStageCanvas.h"
@@ -173,6 +175,25 @@ WxStagePage* StagePageFactory::Create(ECS_WORLD_PARAM int page_type, WxStagePane
 			auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_MODEL);
 			page = new model::WxStagePage(frame, library, ECS_WORLD_VAR obj);
 			auto canvas = std::make_shared<model::WxStageCanvas>(page, rc);
+			page->GetImpl().SetCanvas(canvas);
+
+			auto prev_op = std::make_shared<ee3::CameraDriveOP>(
+				canvas->GetCamera(), canvas->GetViewport(), page->GetSubjectMgr());
+
+			auto op = std::make_shared<ee3::EditSkeletonOP>(
+				canvas->GetCamera(), canvas->GetViewport(), page->GetSubjectMgr());
+			op->SetPrevEditOP(prev_op);
+
+			page->GetImpl().SetEditOP(op);
+
+			stage_panel->AddNewPage(page, GetPageName(page->GetPageType()));
+		}
+		break;
+	case PAGE_ANIM3:
+		{
+			auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_MODEL);
+			page = new anim3::WxStagePage(frame, library, ECS_WORLD_VAR obj);
+			auto canvas = std::make_shared<anim3::WxStageCanvas>(page, rc);
 			page->GetImpl().SetCanvas(canvas);
 
 			auto prev_op = std::make_shared<ee3::CameraDriveOP>(
