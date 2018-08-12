@@ -57,7 +57,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\..\src;..\..\..\ext\easyeditor0\include;..\..\..\ext\easyeditor2\include;..\..\..\ext\easyeditor3\include;..\..\..\ext\cu\src;..\..\..\ext\ds\src\ds;..\..\..\ext\sm\src\sm;..\..\..\ext\ps\src\ps;..\..\..\ext\rigging\src\rigging;..\..\..\ext\sprite2\include;..\..\..\ext\unirender\include;..\..\..\ext\shaderlab\include;..\..\..\ext\painting0\include;..\..\..\ext\painting2\include;..\..\..\ext\painting3\include;..\..\..\ext\model\include;..\..\..\ext\js\include;..\..\..\ext\bimp\include;..\..\..\ext\guard\include;..\..\..\ext\logger\src\logger;..\..\..\ext\polymesh\include;..\..\..\ext\facade\include;..\..\..\ext\node0\include;..\..\..\ext\node2\include;..\..\..\ext\node3\include;..\..\..\ext\entity0\include;..\..\..\ext\entity2\include;..\..\..\ext\entity3\include;..\..\..\ext\memmgr\include;..\..\..\ext\nserializer\include;..\..\..\ext\serializerx\include;..\..\..\ext\moon\include;..\..\..\ext\anim\include;..\..\..\ext\emitter\include;..\..\..\ext\lexer\include;..\..\..\ext\quake\include;..\..\..\ext\halfedge\include;..\..\..\ext\blueprint\include;..\..\..\ext\external-editor\wx\include;..\..\..\ext\external\json\include;..\..\..\ext\external\rapidjson\include;..\..\..\ext\external\freetype\include;..\..\..\ext\external\c99;..\..\..\ext\external\lua\include;..\..\..\ext\external\boost\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\src;..\..\..\ext\easyeditor0\include;..\..\..\ext\easyeditor2\include;..\..\..\ext\easyeditor3\include;..\..\..\ext\cu\src;..\..\..\ext\ds\src\ds;..\..\..\ext\sm\src\sm;..\..\..\ext\ps\src\ps;..\..\..\ext\rigging\src\rigging;..\..\..\ext\sprite2\include;..\..\..\ext\unirender\include;..\..\..\ext\shaderlab\include;..\..\..\ext\painting0\include;..\..\..\ext\painting2\include;..\..\..\ext\painting3\include;..\..\..\ext\model\include;..\..\..\ext\js\include;..\..\..\ext\bimp\include;..\..\..\ext\guard\include;..\..\..\ext\logger\src\logger;..\..\..\ext\polymesh\include;..\..\..\ext\facade\include;..\..\..\ext\node0\include;..\..\..\ext\node2\include;..\..\..\ext\node3\include;..\..\..\ext\entity0\include;..\..\..\ext\entity2\include;..\..\..\ext\entity3\include;..\..\..\ext\memmgr\include;..\..\..\ext\nserializer\include;..\..\..\ext\serializerx\include;..\..\..\ext\moon\include;..\..\..\ext\anim\include;..\..\..\ext\emitter\include;..\..\..\ext\lexer\include;..\..\..\ext\quake\include;..\..\..\ext\halfedge\include;..\..\..\ext\blueprint\include;..\..\..\ext\eanim\include;..\..\..\ext\external-editor\wx\include;..\..\..\ext\external\json\include;..\..\..\ext\external\rapidjson\include;..\..\..\ext\external\freetype\include;..\..\..\ext\external\c99;..\..\..\ext\external\lua\include;..\..\..\ext\external\boost\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -83,7 +83,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>..\..\..\src;..\..\..\ext\easyeditor0\include;..\..\..\ext\easyeditor2\include;..\..\..\ext\easyeditor3\include;..\..\..\ext\cu\src;..\..\..\ext\ds\src\ds;..\..\..\ext\sm\src\sm;..\..\..\ext\ps\src\ps;..\..\..\ext\rigging\src\rigging;..\..\..\ext\sprite2\include;..\..\..\ext\unirender\include;..\..\..\ext\shaderlab\include;..\..\..\ext\painting0\include;..\..\..\ext\painting2\include;..\..\..\ext\painting3\include;..\..\..\ext\model\include;..\..\..\ext\js\include;..\..\..\ext\bimp\include;..\..\..\ext\guard\include;..\..\..\ext\logger\src\logger;..\..\..\ext\polymesh\include;..\..\..\ext\facade\include;..\..\..\ext\node0\include;..\..\..\ext\node2\include;..\..\..\ext\node3\include;..\..\..\ext\entity0\include;..\..\..\ext\entity2\include;..\..\..\ext\entity3\include;..\..\..\ext\memmgr\include;..\..\..\ext\nserializer\include;..\..\..\ext\serializerx\include;..\..\..\ext\moon\include;..\..\..\ext\anim\include;..\..\..\ext\emitter\include;..\..\..\ext\lexer\include;..\..\..\ext\quake\include;..\..\..\ext\halfedge\include;..\..\..\ext\blueprint\include;..\..\..\ext\external-editor\wx\include;..\..\..\ext\external\json\include;..\..\..\ext\external\rapidjson\include;..\..\..\ext\external\freetype\include;..\..\..\ext\external\c99;..\..\..\ext\external\lua\include;..\..\..\ext\external\boost\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\src;..\..\..\ext\easyeditor0\include;..\..\..\ext\easyeditor2\include;..\..\..\ext\easyeditor3\include;..\..\..\ext\cu\src;..\..\..\ext\ds\src\ds;..\..\..\ext\sm\src\sm;..\..\..\ext\ps\src\ps;..\..\..\ext\rigging\src\rigging;..\..\..\ext\sprite2\include;..\..\..\ext\unirender\include;..\..\..\ext\shaderlab\include;..\..\..\ext\painting0\include;..\..\..\ext\painting2\include;..\..\..\ext\painting3\include;..\..\..\ext\model\include;..\..\..\ext\js\include;..\..\..\ext\bimp\include;..\..\..\ext\guard\include;..\..\..\ext\logger\src\logger;..\..\..\ext\polymesh\include;..\..\..\ext\facade\include;..\..\..\ext\node0\include;..\..\..\ext\node2\include;..\..\..\ext\node3\include;..\..\..\ext\entity0\include;..\..\..\ext\entity2\include;..\..\..\ext\entity3\include;..\..\..\ext\memmgr\include;..\..\..\ext\nserializer\include;..\..\..\ext\serializerx\include;..\..\..\ext\moon\include;..\..\..\ext\anim\include;..\..\..\ext\emitter\include;..\..\..\ext\lexer\include;..\..\..\ext\quake\include;..\..\..\ext\halfedge\include;..\..\..\ext\blueprint\include;..\..\..\ext\eanim\include;..\..\..\ext\external-editor\wx\include;..\..\..\ext\external\json\include;..\..\..\ext\external\rapidjson\include;..\..\..\ext\external\freetype\include;..\..\..\ext\external\c99;..\..\..\ext\external\lua\include;..\..\..\ext\external\boost\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -131,6 +131,9 @@
     </ProjectReference>
     <ProjectReference Include="..\..\..\ext\dtex2\platform\msvc\projects\dtex2.vcxproj">
       <Project>{a502c49c-7014-4d77-8bd9-b3f917ad34b0}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\eanim\platform\msvc\projects\eanim.vcxproj">
+      <Project>{14f15be2-c5cb-4280-9243-3f69574a3d21}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\..\ext\easyeditor0\platform\msvc\projects\easyeditor0.vcxproj">
       <Project>{9a81990c-3c18-4adf-a9eb-46990625c107}</Project>
@@ -263,19 +266,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\..\src\anim\AnimHelper.h" />
-    <ClInclude Include="..\..\..\src\anim\MsgHelper.h" />
-    <ClInclude Include="..\..\..\src\anim\MessageID.h" />
-    <ClInclude Include="..\..\..\src\anim\config.h" />
-    <ClInclude Include="..\..\..\src\anim\TimeStageEdit.h" />
-    <ClInclude Include="..\..\..\src\anim\WxLayersPanel.h" />
-    <ClInclude Include="..\..\..\src\anim\WxLayersScrolled.h" />
-    <ClInclude Include="..\..\..\src\anim\WxLayersToolbar.h" />
+    <ClInclude Include="..\..\..\src\anim3\WxStageCanvas.h" />
+    <ClInclude Include="..\..\..\src\anim3\WxStagePage.h" />
     <ClInclude Include="..\..\..\src\anim\WxStagePage.h" />
-    <ClInclude Include="..\..\..\src\anim\WxTimelinePanel.h" />
-    <ClInclude Include="..\..\..\src\anim\WxTimeScaleCtrl.h" />
-    <ClInclude Include="..\..\..\src\anim\WxTimeStagePanel.h" />
-    <ClInclude Include="..\..\..\src\anim\WxTimeStageScrolled.h" />
     <ClInclude Include="..\..\..\src\bprint\WxStagePage.h" />
     <ClInclude Include="..\..\..\src\frame\AppStyle.h" />
     <ClInclude Include="..\..\..\src\frame\Blackboard.h" />
@@ -343,20 +336,18 @@
     <ClInclude Include="..\..\..\src\terrain\WxStagePage.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\..\src\anim\AnimHelper.cpp" />
-    <ClCompile Include="..\..\..\src\anim\MsgHelper.cpp" />
-    <ClCompile Include="..\..\..\src\anim\TimeStageEdit.cpp" />
-    <ClCompile Include="..\..\..\src\anim\WxLayersPanel.cpp" />
-    <ClCompile Include="..\..\..\src\anim\WxLayersScrolled.cpp" />
-    <ClCompile Include="..\..\..\src\anim\WxLayersToolbar.cpp" />
+    <ClCompile Include="..\..\..\src\anim3\WxStageCanvas.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/anim3/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/anim3/</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\anim3\WxStagePage.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/anim3/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/anim3/</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="..\..\..\src\anim\WxStagePage.cpp">
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/anim/</ObjectFileName>
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/anim/</ObjectFileName>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\anim\WxTimelinePanel.cpp" />
-    <ClCompile Include="..\..\..\src\anim\WxTimeScaleCtrl.cpp" />
-    <ClCompile Include="..\..\..\src\anim\WxTimeStagePanel.cpp" />
-    <ClCompile Include="..\..\..\src\anim\WxTimeStageScrolled.cpp" />
     <ClCompile Include="..\..\..\src\bprint\WxStagePage.cpp">
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/bprint/</ObjectFileName>
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/bprint/</ObjectFileName>
