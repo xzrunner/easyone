@@ -111,7 +111,13 @@ void Application::LoadFromFile(const std::string& filepath)
 	}
 	else if (ext == ".x")
 	{
-		new_type = PAGE_MODEL;
+		if (old_type == PAGE_MODEL) {
+			new_type = PAGE_MODEL;
+		} else if (old_type == PAGE_ANIM3) {
+			new_type = PAGE_ANIM3;
+		} else {
+			new_type = PAGE_MODEL;
+		}
 	}
 	else if (ext == ".map")
 	{
@@ -254,11 +260,11 @@ wxWindow* Application::CreateStagePanel()
 
 	//StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_SCALE9, m_stage);
 	//StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_SCRIPT, m_stage);
-	StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_ANIM, m_stage);
+	//StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_ANIM, m_stage);
 	//StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_PARTICLE3D, m_stage);
 
 	//StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_MODEL, m_stage);
-	//StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_ANIM3, m_stage);
+	StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_ANIM3, m_stage);
 
 	//StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_QUAKE, m_stage);
 

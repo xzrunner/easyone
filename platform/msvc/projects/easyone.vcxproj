@@ -266,6 +266,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\..\src\anim3\CompBone.h" />
+    <ClInclude Include="..\..\..\src\anim3\WxPropertyPanel.h" />
     <ClInclude Include="..\..\..\src\anim3\WxStageCanvas.h" />
     <ClInclude Include="..\..\..\src\anim3\WxStagePage.h" />
     <ClInclude Include="..\..\..\src\anim\WxStagePage.h" />
@@ -336,6 +338,11 @@
     <ClInclude Include="..\..\..\src\terrain\WxStagePage.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\src\anim3\CompBone.cpp" />
+    <ClCompile Include="..\..\..\src\anim3\WxPropertyPanel.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/anim3/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/anim3/</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="..\..\..\src\anim3\WxStageCanvas.cpp">
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/anim3/</ObjectFileName>
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/anim3/</ObjectFileName>
@@ -407,16 +414,22 @@
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/model/</ObjectFileName>
     </ClCompile>
     <ClCompile Include="..\..\..\src\particle3d\PlayParticlesOP.cpp" />
-    <ClCompile Include="..\..\..\src\particle3d\WxComponentPanel.cpp" />
+    <ClCompile Include="..\..\..\src\particle3d\WxComponentPanel.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/particle3d/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/particle3d/</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="..\..\..\src\particle3d\WxStagePage.cpp">
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/particle3d/</ObjectFileName>
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/particle3d/</ObjectFileName>
     </ClCompile>
     <ClCompile Include="..\..\..\src\particle3d\WxEmitterPanel.cpp">
-      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/</ObjectFileName>
-      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/particle3d/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/particle3d/</ObjectFileName>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\particle3d\WxPropertyPanel.cpp" />
+    <ClCompile Include="..\..\..\src\particle3d\WxPropertyPanel.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/particle3d/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/particle3d/</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="..\..\..\src\quake\DrawEdgeShader.cpp" />
     <ClCompile Include="..\..\..\src\quake\DrawFaceShader.cpp" />
     <ClCompile Include="..\..\..\src\quake\EditorMgr.cpp" />

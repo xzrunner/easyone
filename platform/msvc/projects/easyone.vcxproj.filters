@@ -124,6 +124,21 @@
     <Filter Include="30.model\view\preview">
       <UniqueIdentifier>{da8dc5bc-7e31-4c1a-97cf-542e2a3109ff}</UniqueIdentifier>
     </Filter>
+    <Filter Include="31.anim3\view">
+      <UniqueIdentifier>{647f55e2-f2b1-40e5-aeb4-f7e4f0d0cbad}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="31.anim3\dataset">
+      <UniqueIdentifier>{e34863c3-d3e4-4633-9c66-5d4406c4eaef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="31.anim3\editop">
+      <UniqueIdentifier>{220877e3-d0e8-45f6-8e99-d4e49190c1d1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="31.anim3\view\stage">
+      <UniqueIdentifier>{66a0271a-4377-48ee-ab3e-e14e8563e995}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="31.anim3\view\toolbar">
+      <UniqueIdentifier>{d125071b-873b-42e0-b907-8da574b2882f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\frame\main.h">
@@ -324,11 +339,17 @@
     <ClInclude Include="..\..\..\src\model\RenderSystem.h">
       <Filter>30.model\view</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\anim3\WxStagePage.h">
-      <Filter>31.anim3</Filter>
+    <ClInclude Include="..\..\..\src\anim3\CompBone.h">
+      <Filter>31.anim3\dataset</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\anim3\WxStageCanvas.h">
-      <Filter>31.anim3</Filter>
+      <Filter>31.anim3\view\stage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\anim3\WxStagePage.h">
+      <Filter>31.anim3\view\stage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\anim3\WxPropertyPanel.h">
+      <Filter>31.anim3\view\toolbar</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -506,11 +527,17 @@
     <ClCompile Include="..\..\..\src\model\RenderSystem.cpp">
       <Filter>30.model\view</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\anim3\WxStagePage.cpp">
-      <Filter>31.anim3</Filter>
+    <ClCompile Include="..\..\..\src\anim3\CompBone.cpp">
+      <Filter>31.anim3\dataset</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\anim3\WxStageCanvas.cpp">
-      <Filter>31.anim3</Filter>
+      <Filter>31.anim3\view\stage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\anim3\WxStagePage.cpp">
+      <Filter>31.anim3\view\stage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\anim3\WxPropertyPanel.cpp">
+      <Filter>31.anim3\view\toolbar</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
