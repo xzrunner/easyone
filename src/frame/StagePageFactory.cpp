@@ -37,7 +37,7 @@
 #include <ee3/NodeArrangeOP.h>
 #include <ee3/WorldTravelOP.h>
 #include <ee3/CameraDriveOP.h>
-#include <ee3/EditSkeletonOP.h>
+#include <ee3/SkeletonJointOP.h>
 
 #include <node0/SceneNode.h>
 #include <node2/CompMask.h>
@@ -173,19 +173,12 @@ WxStagePage* StagePageFactory::Create(ECS_WORLD_PARAM int page_type, WxStagePane
 	case PAGE_MODEL:
 		{
 			auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_MODEL);
-			page = new model::WxStagePage(frame, library, ECS_WORLD_VAR obj);
-			auto canvas = std::make_shared<model::WxStageCanvas>(page, rc);
-			page->GetImpl().SetCanvas(canvas);
-
-			auto prev_op = std::make_shared<ee3::CameraDriveOP>(
-				canvas->GetCamera(), canvas->GetViewport(), page->GetSubjectMgr());
-
-			auto op = std::make_shared<ee3::EditSkeletonOP>(
-				canvas->GetCamera(), canvas->GetViewport(), page->GetSubjectMgr());
-			op->SetPrevEditOP(prev_op);
-
-			page->GetImpl().SetEditOP(op);
-
+			auto mpage = new model::WxStagePage(frame, library, ECS_WORLD_VAR obj);
+			page = mpage;
+			auto canvas = std::make_shared<model::WxStageCanvas>(mpage, rc);
+			mpage->GetImpl().SetCanvas(canvas);
+			mpage->InitEditOp(canvas->GetCamera(), canvas->GetViewport());
+			
 			stage_panel->AddNewPage(page, GetPageName(page->GetPageType()));
 		}
 		break;
@@ -199,7 +192,7 @@ WxStagePage* StagePageFactory::Create(ECS_WORLD_PARAM int page_type, WxStagePane
 			auto prev_op = std::make_shared<ee3::CameraDriveOP>(
 				canvas->GetCamera(), canvas->GetViewport(), page->GetSubjectMgr());
 
-			auto op = std::make_shared<ee3::EditSkeletonOP>(
+			auto op = std::make_shared<ee3::SkeletonJointOP>(
 				canvas->GetCamera(), canvas->GetViewport(), page->GetSubjectMgr());
 			op->SetPrevEditOP(prev_op);
 

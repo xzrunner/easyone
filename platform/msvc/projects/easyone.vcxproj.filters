@@ -139,6 +139,9 @@
     <Filter Include="31.anim3\view\toolbar">
       <UniqueIdentifier>{d125071b-873b-42e0-b907-8da574b2882f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="30.model\view\toolbar">
+      <UniqueIdentifier>{cd750af6-a7cf-44b7-a07e-a6a2bc527d35}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\frame\main.h">
@@ -351,6 +354,9 @@
     <ClInclude Include="..\..\..\src\anim3\WxPropertyPanel.h">
       <Filter>31.anim3\view\toolbar</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\model\WxToolbarPanel.h">
+      <Filter>30.model\view\toolbar</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\frame\main.cpp">
@@ -538,6 +544,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\anim3\WxPropertyPanel.cpp">
       <Filter>31.anim3\view\toolbar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\model\WxToolbarPanel.cpp">
+      <Filter>30.model\view\toolbar</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

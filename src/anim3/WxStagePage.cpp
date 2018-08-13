@@ -12,7 +12,7 @@
 
 #include <ee0/SubjectMgr.h>
 #include <ee3/WxStageDropTarget.h>
-#include <ee3/EditSkeletonOP.h>
+#include <ee3/SkeletonJointOP.h>
 #include <ee3/WorldTravelOP.h>
 
 #include <eanim/Callback.h>
@@ -119,7 +119,7 @@ void WxStagePage::LoadFromFileImpl(const std::string& filepath)
 	auto& cmode_inst = m_obj->GetUniqueComp<n3::CompModelInst>();
 	cmode_inst.SetModel(cmodel->GetModel(), ANIM_IDX);
 
-	auto op = std::dynamic_pointer_cast<ee3::EditSkeletonOP>(
+	auto op = std::dynamic_pointer_cast<ee3::SkeletonJointOP>(
 		GetImpl().GetEditOP()
 	);
 	op->SetModel(cmode_inst.GetModel().get());

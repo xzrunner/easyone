@@ -5,7 +5,10 @@
 #include "frame/WxStagePage.h"
 #include "frame/StagePageType.h"
 
+namespace pt0 { class Camera; }
+namespace pt3 { class Viewport; }
 namespace ee0 { class WxLibraryPanel; }
+namespace ee3 { class SkeletonJointOP; class SkeletonIKOP; }
 
 namespace eone
 {
@@ -15,6 +18,14 @@ namespace model
 class WxStagePage : public eone::WxStagePage
 {
 public:
+	enum EditOpType
+	{
+		OP_ROTATE_JOINT = 0,
+		OP_TRANSLATE_JOINT,
+		OP_IK,
+	};
+
+public:
 	WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, ECS_WORLD_PARAM const ee0::GameObj& obj);
 
 	virtual void OnNotify(uint32_t msg, const ee0::VariantSet& variants) override;
@@ -23,6 +34,9 @@ public:
 		const ee0::VariantSet& variants = ee0::VariantSet(), bool inverse = false) const override;
 
 	virtual int GetPageType() const override { return PAGE_MODEL; }
+
+	void InitEditOp(const std::shared_ptr<pt0::Camera>& camera, const pt3::Viewport& vp);
+	void SetEditOp(EditOpType type);
 
 protected:
 	virtual void OnPageInit() override;
@@ -34,7 +48,14 @@ protected:
 	virtual void LoadFromFileImpl(const std::string& filepath) override;
 
 private:
+	void InitPreviewPanel();
+	void InitToolbarPanel();
+
+private:
 	ee0::SubjectMgrPtr m_preview_submgr = nullptr;
+
+	std::shared_ptr<ee3::SkeletonJointOP> m_sk_op = nullptr;
+	std::shared_ptr<ee3::SkeletonIKOP>    m_ik_op = nullptr;
 
 }; // WxStagePage
 

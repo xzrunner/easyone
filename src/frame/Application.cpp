@@ -181,10 +181,10 @@ void Application::InitLayout()
 	m_mgr.AddPane(record, wxAuiPaneInfo().Name(STR_RECORD_PANEL).
 		Caption(STR_RECORD_PANEL).Left());
 
-	//m_mgr.AddPane(stage, wxAuiPaneInfo().Name(STR_STAGE_PANEL).
-	//	Caption(STR_STAGE_PANEL).CenterPane().Row(1).PaneBorder(false));
 	m_mgr.AddPane(stage, wxAuiPaneInfo().Name(STR_STAGE_PANEL).
-		Caption(STR_STAGE_PANEL).CenterPane().PaneBorder(false));
+		Caption(STR_STAGE_PANEL).CenterPane().Row(1).PaneBorder(false));
+	//m_mgr.AddPane(stage, wxAuiPaneInfo().Name(STR_STAGE_PANEL).
+	//	Caption(STR_STAGE_PANEL).CenterPane().PaneBorder(false));
 
 	m_mgr.AddPane(stage_ext, wxAuiPaneInfo().Name(STR_STAGE_EXT_PANEL).
 		Caption(STR_STAGE_EXT_PANEL).CenterPane().PaneBorder(false));
@@ -263,8 +263,8 @@ wxWindow* Application::CreateStagePanel()
 	//StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_ANIM, m_stage);
 	//StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_PARTICLE3D, m_stage);
 
-	//StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_MODEL, m_stage);
-	StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_ANIM3, m_stage);
+	StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_MODEL, m_stage);
+	//StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_ANIM3, m_stage);
 
 	//StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_QUAKE, m_stage);
 

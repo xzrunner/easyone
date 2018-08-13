@@ -1,6 +1,7 @@
 #include "model/WxStagePage.h"
 #include "model/WxPreviewPanel.h"
 #include "model/WxPreviewCanvas.h"
+#include "model/WxToolbarPanel.h"
 
 #include "frame/WxStagePage.h"
 #include "frame/Blackboard.h"
@@ -8,11 +9,14 @@
 #include "frame/typedef.h"
 #include "frame/AppStyle.h"
 #include "frame/WxStageExtPanel.h"
+#include "frame/WxToolbarPanel.h"
 
 #include <ee0/SubjectMgr.h>
 #include <ee3/WxStageDropTarget.h>
-#include <ee3/EditSkeletonOP.h>
+#include <ee3/SkeletonJointOP.h>
+#include <ee3/SkeletonIKOP.h>
 #include <ee3/WorldTravelOP.h>
+#include <ee3/CameraDriveOP.h>
 
 #include <guard/check.h>
 #include <node0/SceneNode.h>
@@ -26,7 +30,7 @@ namespace model
 {
 
 WxStagePage::WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, ECS_WORLD_PARAM const ee0::GameObj& obj)
-	: eone::WxStagePage(parent, ECS_WORLD_VAR obj, SHOW_STAGE | SHOW_STAGE_EXT)
+	: eone::WxStagePage(parent, ECS_WORLD_VAR obj, SHOW_STAGE | SHOW_STAGE_EXT | SHOW_TOOLBAR)
 {
 	m_messages.push_back(ee0::MSG_SET_CANVAS_DIRTY);
 
@@ -76,7 +80,66 @@ void WxStagePage::Traverse(std::function<bool(const ee0::GameObj&)> func,
 	}
 }
 
+void WxStagePage::InitEditOp(const std::shared_ptr<pt0::Camera>& camera, 
+	                         const pt3::Viewport& vp)
+{
+	auto prev_op = std::make_shared<ee3::CameraDriveOP>(camera, vp, m_sub_mgr);
+
+	m_sk_op = std::make_shared<ee3::SkeletonJointOP>(camera, vp, m_sub_mgr);
+	m_sk_op->SetPrevEditOP(prev_op);
+
+	m_ik_op = std::make_shared<ee3::SkeletonIKOP>(camera, vp, m_sub_mgr);
+	m_ik_op->SetPrevEditOP(prev_op);
+
+	GetImpl().SetEditOP(m_sk_op);
+}
+
+void WxStagePage::SetEditOp(EditOpType type)
+{
+	switch (type)
+	{
+	case OP_ROTATE_JOINT:
+		GetImpl().SetEditOP(m_sk_op);
+		m_sk_op->ChangeToOpRotate();
+		break;
+	case OP_TRANSLATE_JOINT:
+		GetImpl().SetEditOP(m_sk_op);
+		m_sk_op->ChangeToOpTranslate();
+		break;
+	case OP_IK:
+		GetImpl().SetEditOP(m_ik_op);
+		break;
+	}
+}
+
 void WxStagePage::OnPageInit()
+{
+	InitPreviewPanel();
+	InitToolbarPanel();
+}
+
+#ifndef GAME_OBJ_ECS
+const n0::NodeComp& WxStagePage::GetEditedObjComp() const
+{
+	return m_obj->GetSharedComp<n3::CompModel>();
+}
+#endif // GAME_OBJ_ECS
+
+void WxStagePage::LoadFromFileImpl(const std::string& filepath)
+{
+	auto casset = ns::CompFactory::Instance()->CreateAsset(filepath);
+	assert(casset->AssetTypeID() == n0::GetAssetUniqueTypeID<n3::CompModel>());
+
+	auto cmodel = std::static_pointer_cast<n3::CompModel>(casset);
+	auto& cmode_inst = m_obj->GetUniqueComp<n3::CompModelInst>();
+	cmode_inst.SetModel(cmodel->GetModel(), 0);
+
+	auto model = cmode_inst.GetModel().get();
+	m_sk_op->SetModel(model);
+	m_ik_op->SetModel(model);
+}
+
+void WxStagePage::InitPreviewPanel()
 {
 	auto bb = Blackboard::Instance();
 
@@ -84,8 +147,7 @@ void WxStagePage::OnPageInit()
 	auto sizer = panel->GetSizer();
 	if (sizer) {
 		sizer->Clear(true);
-	}
-	else {
+	} else {
 		sizer = new wxBoxSizer(wxHORIZONTAL);
 	}
 
@@ -105,26 +167,20 @@ void WxStagePage::OnPageInit()
 	panel->SetSizer(sizer);
 }
 
+void WxStagePage::InitToolbarPanel()
+{
+	auto panel = Blackboard::Instance()->GetToolbarPanel();
+	auto sizer = panel->GetSizer();
+	if (sizer) {
+		sizer->Clear(true);
+	} else {
+		sizer = new wxBoxSizer(wxVERTICAL);
+	}
+	// todo
 #ifndef GAME_OBJ_ECS
-const n0::NodeComp& WxStagePage::GetEditedObjComp() const
-{
-	return m_obj->GetSharedComp<n3::CompModel>();
-}
+	sizer->Add(new WxToolbarPanel(panel, this));
+	panel->SetSizer(sizer);
 #endif // GAME_OBJ_ECS
-
-void WxStagePage::LoadFromFileImpl(const std::string& filepath)
-{
-	auto casset = ns::CompFactory::Instance()->CreateAsset(filepath);
-	assert(casset->AssetTypeID() == n0::GetAssetUniqueTypeID<n3::CompModel>());
-
-	auto cmodel = std::static_pointer_cast<n3::CompModel>(casset);
-	auto& cmode_inst = m_obj->GetUniqueComp<n3::CompModelInst>();
-	cmode_inst.SetModel(cmodel->GetModel(), 0);
-
-	auto op = std::dynamic_pointer_cast<ee3::EditSkeletonOP>(
-		GetImpl().GetEditOP()
-	);
-	op->SetModel(cmode_inst.GetModel().get());
 }
 
 }
