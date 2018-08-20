@@ -34,7 +34,7 @@ void main()
 
 	gl_Position = u_projection * u_modelview * obj_pos;
 
-	vec3 eye_normal = u_normal_matrix * normal;
+	vec3 eye_normal = normalize(u_normal_matrix * normal);
  	vec4 pos4 = u_modelview * position;
  	vec3 pos3 = pos4.xyz / pos4.w;
  	vec3 light_dir = normalize(u_light_position - pos3);
