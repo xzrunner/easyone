@@ -16,13 +16,15 @@
 #include <ee3/SkeletonJointOP.h>
 #include <ee3/SkeletonIKOP.h>
 #include <ee3/WorldTravelOP.h>
-#include <ee3/CameraDriveOP.h>
+#include <ee3/WxSkeletalTreeCtrl.h>
+#include <ee3/MessageID.h>
 
 #include <guard/check.h>
 #include <node0/SceneNode.h>
 #include <node3/CompModel.h>
 #include <node3/CompModelInst.h>
 #include <ns/CompFactory.h>
+#include <model/Model.h>
 
 namespace eone
 {
@@ -33,6 +35,7 @@ WxStagePage::WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, ECS_WOR
 	: eone::WxStagePage(parent, ECS_WORLD_VAR obj, SHOW_STAGE | SHOW_STAGE_EXT | SHOW_TOOLBAR)
 {
 	m_messages.push_back(ee0::MSG_SET_CANVAS_DIRTY);
+	m_messages.push_back(ee3::MSG_SKELETAL_TREE_ON_SELECT);
 
 	if (library) {
 		SetDropTarget(new ee3::WxStageDropTarget(ECS_WORLD_VAR library, this));
@@ -47,6 +50,12 @@ void WxStagePage::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
 	{
 	case ee0::MSG_SET_CANVAS_DIRTY:
 		m_preview_submgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
+		break;
+	case ee3::MSG_SKELETAL_TREE_ON_SELECT:
+		{
+			ee3::SkeletonSelectOp* op = static_cast<ee3::SkeletonSelectOp*>(GetImpl().GetEditOP().get());
+			op->SetSelected(variants.GetVariant("joint_id").m_val.l);
+		}
 		break;
 	}
 }
@@ -80,10 +89,10 @@ void WxStagePage::Traverse(std::function<bool(const ee0::GameObj&)> func,
 	}
 }
 
-void WxStagePage::InitEditOp(const std::shared_ptr<pt0::Camera>& camera, 
+void WxStagePage::InitEditOp(const std::shared_ptr<pt0::Camera>& camera,
 	                         const pt3::Viewport& vp)
 {
-	auto prev_op = std::make_shared<ee3::CameraDriveOP>(camera, vp, m_sub_mgr);
+	auto prev_op = std::make_shared<ee3::WorldTravelOP>(camera, vp, m_sub_mgr);
 
 	m_sk_op = std::make_shared<ee3::SkeletonJointOP>(camera, vp, m_sub_mgr);
 	m_sk_op->SetPrevEditOP(prev_op);
@@ -137,6 +146,12 @@ void WxStagePage::LoadFromFileImpl(const std::string& filepath)
 	auto model = cmode_inst.GetModel().get();
 	m_sk_op->SetModel(model);
 	m_ik_op->SetModel(model);
+
+	auto& ext = model->GetModel()->ext;
+	if (ext->Type() == ::model::EXT_SKELETAL) {
+		auto& skeletal = *static_cast<::model::SkeletalAnim*>(ext.get());
+		m_toolbar->GetTreePanel()->LoadFromSkeletal(skeletal);
+	}
 }
 
 void WxStagePage::InitPreviewPanel()
@@ -178,7 +193,7 @@ void WxStagePage::InitToolbarPanel()
 	}
 	// todo
 #ifndef GAME_OBJ_ECS
-	sizer->Add(new WxToolbarPanel(panel, this));
+	sizer->Add(m_toolbar = new WxToolbarPanel(panel, this));
 	panel->SetSizer(sizer);
 #endif // GAME_OBJ_ECS
 }

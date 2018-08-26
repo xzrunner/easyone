@@ -15,6 +15,8 @@ namespace eone
 namespace model
 {
 
+class WxToolbarPanel;
+
 class WxStagePage : public eone::WxStagePage
 {
 public:
@@ -56,6 +58,8 @@ private:
 
 	std::shared_ptr<ee3::SkeletonJointOP> m_sk_op = nullptr;
 	std::shared_ptr<ee3::SkeletonIKOP>    m_ik_op = nullptr;
+
+	WxToolbarPanel* m_toolbar = nullptr;
 
 }; // WxStagePage
 
