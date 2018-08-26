@@ -221,8 +221,8 @@ void WxStagePage::ReloadAnimation(::model::ModelInstance& model_inst,
 	assert(anim_idx >= 0 && anim_idx < all_anims.size());
 	auto& anim = all_anims[anim_idx];
 
-	float fps = anim->ticks_per_second != 0 ? anim->ticks_per_second : 25.0f;
-	float spd = 1.0f / model_inst.GetModel()->anim_speed * 2;
+	float fps = anim->ticks_per_second != 0 ? anim->ticks_per_second : 30;
+	float spd = 1.0f / model_inst.GetModel()->anim_speed;
 
 	m_layers.clear();
 	auto& layers = anim->channels;
