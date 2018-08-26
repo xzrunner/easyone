@@ -12,7 +12,7 @@
 
 #include <ee0/SubjectMgr.h>
 #include <ee3/WxStageDropTarget.h>
-#include <ee3/CameraDriveOP.h>
+#include <ee3/CameraFlyOP.h>
 
 #include <guard/check.h>
 #include <node0/SceneNode.h>
@@ -139,8 +139,8 @@ void WxStagePage::OnPageInit()
 		preview_panel, bb->GetRenderContext());
 	preview_panel->GetImpl().SetCanvas(preview_canvas);
 
-	auto preview_op = std::make_shared<ee3::CameraDriveOP>(
-		preview_canvas->GetCamera(), preview_canvas->GetViewport(), preview_panel->GetSubjectMgr());
+	auto preview_op = std::make_shared<ee3::CameraFlyOP>(
+		preview_canvas->GetCamera(), preview_panel->GetSubjectMgr());
 	preview_panel->GetImpl().SetEditOP(preview_op);
 
 	panel->SetSizer(sizer);
