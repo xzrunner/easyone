@@ -29,7 +29,7 @@ WxStageCanvas::WxStageCanvas(eone::WxStagePage* stage, ECS_WORLD_PARAM
 
 void WxStageCanvas::DrawBackground() const
 {
-	static const int LEN = 100;
+	static const int LEN = 1;
 	pt2::PrimitiveDraw::PointSize(5);
 	pt2::PrimitiveDraw::LineWidth(2);
 	pt3::PrimitiveDraw::SetColor(0xff0000ff);
