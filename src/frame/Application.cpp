@@ -109,7 +109,7 @@ void Application::LoadFromFile(const std::string& filepath)
 			new_type = PAGE_PARTICLE3D;
 		}
 	}
-	else if (ext == ".x")
+	else if (ext == ".x" || ext == ".dae")
 	{
 		if (old_type == PAGE_MODEL) {
 			new_type = PAGE_MODEL;
