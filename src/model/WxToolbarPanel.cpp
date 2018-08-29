@@ -2,13 +2,17 @@
 #include "model/WxStagePage.h"
 
 #include <ee0/SubjectMgr.h>
+#include <ee0/WxImageVList.h>
+#include <ee0/WxLibraryItem.h>
 #include <ee3/WxSkeletalTreeCtrl.h>
 
 #include <node0/SceneNode.h>
 #include <node3/CompModelInst.h>
 #include <model/Model.h>
+#include <model/ModelInstance.h>
 
 #include <wx/radiobox.h>
+#include <wx/notebook.h>
 
 namespace eone
 {
@@ -22,26 +26,60 @@ WxToolbarPanel::WxToolbarPanel(wxWindow* parent, WxStagePage* stage)
 	InitLayout();
 }
 
+void WxToolbarPanel::LoadModel(const ::model::Model& model)
+{
+	if (model.ext->Type() == ::model::EXT_SKELETAL) {
+		auto& skeletal = *static_cast<::model::SkeletalAnim*>(model.ext.get());
+		m_tree_page->m_tree->LoadFromSkeletal(skeletal);
+	}
+
+	m_texture_page->Clear();
+	for (auto& tex : model.textures) {
+		auto item = std::make_shared<ee0::WxLibraryItem>(tex.first);
+		m_texture_page->Insert(item);
+	}
+
+
+}
+
 void WxToolbarPanel::InitLayout()
 {
-	wxSizer* sizer = new wxBoxSizer(wxVERTICAL);
-	// top
+	wxSizer* top_sizer = new wxBoxSizer(wxVERTICAL);
+
+	m_notebook = new wxNotebook(this, wxID_ANY);
+
+	// edit
 	{
+		m_edit_page = new wxPanel(m_notebook);
+
 		wxArrayString choices;
 		choices.Add("Rotate Joint");
 		choices.Add("Translate Joint");
 		choices.Add("IK");
-		m_edit = new wxRadioBox(this, wxID_ANY, "edit_op", wxDefaultPosition, wxDefaultSize, choices, 1, wxRA_SPECIFY_COLS);
-		Connect(m_edit->GetId(), wxEVT_COMMAND_RADIOBOX_SELECTED,
+		auto radio = new wxRadioBox(m_edit_page, wxID_ANY, "", wxDefaultPosition,
+			wxDefaultSize, choices, 1, wxRA_SPECIFY_COLS);
+		Connect(radio->GetId(), wxEVT_COMMAND_RADIOBOX_SELECTED,
 			wxCommandEventHandler(WxToolbarPanel::OnChangeEditType));
-		sizer->Add(m_edit, 1, wxEXPAND);
+
+		auto sizer = new wxBoxSizer(wxVERTICAL);
+		sizer->Add(radio);
+		m_edit_page->SetSizer(sizer);
+
+		m_notebook->AddPage(m_edit_page, "Edit");
 	}
-	// bottom
+	// tree
 	{
-		m_tree = new WxTreeScrolled(this, m_stage->GetSubjectMgr());
-		sizer->Add(m_tree, 1, wxEXPAND);
+		m_tree_page = new WxTreeScrolled(m_notebook, m_stage->GetSubjectMgr());
+		m_notebook->AddPage(m_tree_page, "Tree");
 	}
-	SetSizer(sizer);
+	// texture
+	{
+		m_texture_page = new ee0::WxImageVList(m_notebook, "");
+		m_notebook->AddPage(m_texture_page, "Textures");
+	}
+
+	top_sizer->Add(m_notebook, 1, wxEXPAND);
+	SetSizer(top_sizer);
 }
 
 void WxToolbarPanel::OnChangeEditType(wxCommandEvent& event)

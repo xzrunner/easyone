@@ -7,7 +7,9 @@
 
 class wxNotebook;
 
+namespace ee0 { class WxImageVList; }
 namespace ee3 { class WxSkeletalTreeCtrl; }
+namespace model { struct Model; }
 
 namespace eone
 {
@@ -21,7 +23,7 @@ class WxToolbarPanel : public wxPanel
 public:
 	WxToolbarPanel(wxWindow* parent, WxStagePage* stage);
 
-	auto GetTreePanel() { return m_tree->m_tree; }
+	void LoadModel(const ::model::Model& model);
 
 private:
 	void InitLayout();
@@ -44,8 +46,9 @@ private:
 
 	wxNotebook* m_notebook;
 
-	WxTreeScrolled* m_tree;
-	wxRadioBox*     m_edit;
+	wxPanel*           m_edit_page;
+	WxTreeScrolled*    m_tree_page;
+	ee0::WxImageVList* m_texture_page;
 
 }; // WxToolbarPanel
 
