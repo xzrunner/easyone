@@ -142,6 +142,9 @@
     <Filter Include="30.model\view\toolbar">
       <UniqueIdentifier>{cd750af6-a7cf-44b7-a07e-a6a2bc527d35}</UniqueIdentifier>
     </Filter>
+    <Filter Include="32.material">
+      <UniqueIdentifier>{70521c8d-51e2-405c-a78a-764746df18c2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\frame\main.h">
@@ -321,9 +324,6 @@
     <ClInclude Include="..\..\..\src\quake\EditorMgr.h">
       <Filter>50.quake\view\stage</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\bprint\WxStagePage.h">
-      <Filter>41.bprint</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\frame\AppStyle.h">
       <Filter>00.frame\frame</Filter>
     </ClInclude>
@@ -356,6 +356,15 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\model\WxToolbarPanel.h">
       <Filter>30.model\view\toolbar</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\material\WxStagePage.h">
+      <Filter>32.material</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\bprint\WxStagePage.h">
+      <Filter>41.bprint</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\material\WxToolbarPanel.h">
+      <Filter>32.material</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -515,9 +524,6 @@
     <ClCompile Include="..\..\..\src\quake\EditorMgr.cpp">
       <Filter>50.quake\view\stage</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\bprint\WxStagePage.cpp">
-      <Filter>41.bprint</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\model\WxStageCanvas.cpp">
       <Filter>30.model\view\stage</Filter>
     </ClCompile>
@@ -547,6 +553,15 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\model\WxToolbarPanel.cpp">
       <Filter>30.model\view\toolbar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\material\WxStagePage.cpp">
+      <Filter>32.material</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\bprint\WxStagePage.cpp">
+      <Filter>41.bprint</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\material\WxToolbarPanel.cpp">
+      <Filter>32.material</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -16,7 +16,6 @@
 #include <ee3/SkeletonJointOP.h>
 #include <ee3/SkeletonIKOP.h>
 #include <ee3/WorldTravelOP.h>
-#include <ee3/WxSkeletalTreeCtrl.h>
 #include <ee3/MessageID.h>
 
 #include <guard/check.h>
@@ -147,11 +146,7 @@ void WxStagePage::LoadFromFileImpl(const std::string& filepath)
 	m_sk_op->SetModel(model);
 	m_ik_op->SetModel(model);
 
-	auto& ext = model->GetModel()->ext;
-	if (ext->Type() == ::model::EXT_SKELETAL) {
-		auto& skeletal = *static_cast<::model::SkeletalAnim*>(ext.get());
-		m_toolbar->GetTreePanel()->LoadFromSkeletal(skeletal);
-	}
+	m_toolbar->LoadModel(*model->GetModel());
 }
 
 void WxStagePage::InitPreviewPanel()

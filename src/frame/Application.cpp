@@ -263,8 +263,9 @@ wxWindow* Application::CreateStagePanel()
 	//StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_ANIM, m_stage);
 	//StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_PARTICLE3D, m_stage);
 
-	StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_MODEL, m_stage);
+	//StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_MODEL, m_stage);
 	//StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_ANIM3, m_stage);
+	StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_MATERIAL, m_stage);
 
 	//StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_QUAKE, m_stage);
 

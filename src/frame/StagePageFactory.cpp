@@ -25,6 +25,7 @@
 #include "model/WxStageCanvas.h"
 #include "anim3/WxStagePage.h"
 #include "anim3/WxStageCanvas.h"
+#include "material/WxStagePage.h"
 #include "bprint/WxStagePage.h"
 #include "quake/WxStagePage.h"
 #include "quake/WxStageCanvas.h"
@@ -178,7 +179,7 @@ WxStagePage* StagePageFactory::Create(ECS_WORLD_PARAM int page_type, WxStagePane
 			auto canvas = std::make_shared<model::WxStageCanvas>(mpage, rc);
 			mpage->GetImpl().SetCanvas(canvas);
 			mpage->InitEditOp(canvas->GetCamera(), canvas->GetViewport());
-			
+
 			stage_panel->AddNewPage(page, GetPageName(page->GetPageType()));
 		}
 		break;
@@ -196,6 +197,31 @@ WxStagePage* StagePageFactory::Create(ECS_WORLD_PARAM int page_type, WxStagePane
 				canvas->GetCamera(), canvas->GetViewport(), page->GetSubjectMgr());
 			op->SetPrevEditOP(prev_op);
 
+			page->GetImpl().SetEditOP(op);
+
+			stage_panel->AddNewPage(page, GetPageName(page->GetPageType()));
+		}
+		break;
+	case PAGE_MATERIAL:
+		{
+			auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX2D);
+			page = new material::WxStagePage(frame, ECS_WORLD_VAR obj);
+			auto canvas = std::make_shared<WxStageCanvas2D>(page, ECS_WORLD_VAR rc);
+			page->GetImpl().SetCanvas(canvas);
+
+			auto select_op = std::make_shared<NodeSelectOP>(
+				canvas->GetCamera(), ECS_WORLD_VAR *page, rc, wc);
+
+			ee2::ArrangeNodeCfg cfg;
+			cfg.is_auto_align_open = false;
+			cfg.is_deform_open = false;
+			cfg.is_offset_open = false;
+			cfg.is_rotate_open = false;
+			auto arrange_op = std::make_shared<ee2::ArrangeNodeOP>(
+				canvas->GetCamera(), *page, ECS_WORLD_VAR cfg, select_op);
+
+			auto op = std::make_shared<bp::ConnectPinsOP>(canvas->GetCamera(), *page);
+			op->SetPrevEditOP(arrange_op);
 			page->GetImpl().SetEditOP(op);
 
 			stage_panel->AddNewPage(page, GetPageName(page->GetPageType()));

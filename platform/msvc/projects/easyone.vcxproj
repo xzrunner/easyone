@@ -306,6 +306,8 @@
     <ClInclude Include="..\..\..\src\frame\WxWorldPanel.h" />
     <ClInclude Include="..\..\..\src\mask\WxEditDialog.h" />
     <ClInclude Include="..\..\..\src\mask\WxStagePage.h" />
+    <ClInclude Include="..\..\..\src\material\WxStagePage.h" />
+    <ClInclude Include="..\..\..\src\material\WxToolbarPanel.h" />
     <ClInclude Include="..\..\..\src\model\RenderSystem.h" />
     <ClInclude Include="..\..\..\src\model\WxPreviewCanvas.h" />
     <ClInclude Include="..\..\..\src\model\WxPreviewPanel.h" />
@@ -393,6 +395,14 @@
     <ClCompile Include="..\..\..\src\mask\WxStagePage.cpp">
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/mask/</ObjectFileName>
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/mask/</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\material\WxStagePage.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/material/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/material/</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\material\WxToolbarPanel.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/material/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/material/</ObjectFileName>
     </ClCompile>
     <ClCompile Include="..\..\..\src\model\RenderSystem.cpp">
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/model/</ObjectFileName>

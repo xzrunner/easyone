@@ -27,6 +27,8 @@ static const std::vector<std::pair<uint32_t, std::string>> PAGE_LIST =
 
 	std::make_pair(eone::PAGE_SCALE9,     "Scale9"),
 
+	std::make_pair(eone::PAGE_MATERIAL,   "Material"),
+
 	std::make_pair(eone::PAGE_SCRIPT,     "Script..."),
 	std::make_pair(eone::PAGE_BLUEPRINT,  "Blueprint"),
 
