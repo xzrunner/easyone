@@ -5,7 +5,7 @@
 #include <memory>
 
 namespace ur { class Shader; }
-namespace n3 { class RenderParams; }
+namespace pt3 { class RenderParams; }
 namespace model { class ModelInstance; }
 
 namespace eone
@@ -17,11 +17,11 @@ class RenderSystem
 {
 public:
 	void DrawModel(const ::model::ModelInstance& model_inst,
-		const n3::RenderParams& params, bool polygon_line = false) const;
+		const pt3::RenderParams& params, bool polygon_line = false) const;
 
 private:
 	void DrawSkeletalNode(const ::model::ModelInstance& model_inst,
-		int node_idx, const n3::RenderParams& params) const;
+		int node_idx, const pt3::RenderParams& params) const;
 
 private:
 	void InitShaders();

@@ -11,6 +11,7 @@
 #include <node0/SceneNode.h>
 #include <node3/CompModel.h>
 #include <node3/CompModelInst.h>
+#include <node3/RenderSystem.h>
 
 #include <painting2/PrimitiveDraw.h>
 #include <painting3/PrimitiveDraw.h>
@@ -49,9 +50,9 @@ void WxStageCanvas::DrawForeground() const
 		return;
 	}
 
-	n3::RenderParams params;
+	pt3::RenderParams params;
 	params.mt   = m_camera->GetModelViewMat();
-	params.type = n3::RenderParams::DRAW_MESH;
+	params.type = pt3::RenderParams::DRAW_MESH;
 
 	auto& cmodel = m_obj->GetUniqueComp<n3::CompModelInst>();
 	auto& model_inst = cmodel.GetModel();

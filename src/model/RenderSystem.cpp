@@ -7,7 +7,6 @@
 #include <node0/SceneNode.h>
 #include <node3/CompModel.h>
 #include <node3/CompModelInst.h>
-#include <node3/RenderSystem.h>
 #include <unirender/Blackboard.h>
 #include <unirender/RenderContext.h>
 #include <unirender/Shader.h>
@@ -19,6 +18,7 @@
 #include <painting3/EffectsManager.h>
 #include <painting3/Blackboard.h>
 #include <painting3/WindowContext.h>
+#include <painting3/RenderSystem.h>
 
 namespace eone
 {
@@ -33,7 +33,7 @@ RenderSystem::RenderSystem()
 }
 
 void RenderSystem::DrawModel(const ::model::ModelInstance& model_inst,
-                             const n3::RenderParams& params, bool polygon_line) const
+                             const pt3::RenderParams& params, bool polygon_line) const
 {
 	auto& rc = ur::Blackboard::Instance()->GetRenderContext();
 	auto mgr = pt3::EffectsManager::Instance();
@@ -49,7 +49,7 @@ void RenderSystem::DrawModel(const ::model::ModelInstance& model_inst,
 }
 
 void RenderSystem::DrawSkeletalNode(const ::model::ModelInstance& model_inst,
-	                                int node_idx, const n3::RenderParams& params) const
+	                                int node_idx, const pt3::RenderParams& params) const
 {
 	auto& model = *model_inst.GetModel();
 	auto& g_trans = model_inst.GetGlobalTrans();
