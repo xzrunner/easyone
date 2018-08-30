@@ -169,3 +169,6 @@
 [submodule "ext/eanim"]
 	path = ext/eanim
 	url = git@github.com:xzrunner/eanim.git
+[submodule "ext/ematerial"]
+	path = ext/ematerial
+	url = git@github.com:xzrunner/ematerial.git
