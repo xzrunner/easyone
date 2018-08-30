@@ -143,6 +143,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "8.editor_lib", "8.editor_li
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "4.eanim", "..\..\ext\eanim\platform\msvc\projects\eanim.vcxproj", "{14F15BE2-C5CB-4280-9243-3F69574A3D21}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "5.ematerial", "..\..\ext\ematerial\platform\msvc\projects\ematerial.vcxproj", "{EC5783F3-431B-4FF0-BC6D-00137CAC8810}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -377,6 +379,10 @@ Global
 		{14F15BE2-C5CB-4280-9243-3F69574A3D21}.Debug|Win32.Build.0 = Debug|Win32
 		{14F15BE2-C5CB-4280-9243-3F69574A3D21}.Release|Win32.ActiveCfg = Release|Win32
 		{14F15BE2-C5CB-4280-9243-3F69574A3D21}.Release|Win32.Build.0 = Release|Win32
+		{EC5783F3-431B-4FF0-BC6D-00137CAC8810}.Debug|Win32.ActiveCfg = Debug|Win32
+		{EC5783F3-431B-4FF0-BC6D-00137CAC8810}.Debug|Win32.Build.0 = Debug|Win32
+		{EC5783F3-431B-4FF0-BC6D-00137CAC8810}.Release|Win32.ActiveCfg = Release|Win32
+		{EC5783F3-431B-4FF0-BC6D-00137CAC8810}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -441,6 +447,7 @@ Global
 		{AC2CAD0C-553D-4FB9-A1A8-C206E59E021A} = {E81D1B45-CF14-47DF-A9FD-98205E914709}
 		{6F9A7D73-3025-43E1-8F6F-69558C7D3B9F} = {3F90F0BC-4357-48B0-A92E-DA2826502647}
 		{14F15BE2-C5CB-4280-9243-3F69574A3D21} = {3F90F0BC-4357-48B0-A92E-DA2826502647}
+		{EC5783F3-431B-4FF0-BC6D-00137CAC8810} = {3F90F0BC-4357-48B0-A92E-DA2826502647}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8D54C01A-3C82-4351-A325-2853C3E81322}

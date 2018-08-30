@@ -201,6 +201,11 @@ void WxStagePage::InitSubWindow()
 	}
 	if (m_app_style & SHOW_TOOLBAR) {
 		ui_mgr.GetPane(STR_TOOLBAR_PANEL).Show();
+		if (m_app_style & TOOLBAR_LFET) {
+			ui_mgr.GetPane(STR_TOOLBAR_PANEL).Left();
+		} else {
+			ui_mgr.GetPane(STR_TOOLBAR_PANEL).Right();
+		}
 	} else {
 		ui_mgr.GetPane(STR_TOOLBAR_PANEL).Hide();
 	}

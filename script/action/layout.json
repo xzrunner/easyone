@@ -65,6 +65,37 @@
 					]
 				}
 			]
+		},
+		{
+			"type": "menu",
+			"name": "Material",
+			"children":
+			[
+				{
+					"type": "action",
+					"name": "Constant1",
+					"file": "material/constant1.lua",
+					"desc": "constant1"
+				},
+				{
+					"type": "action",
+					"name": "Constant2",
+					"file": "material/constant2.lua",
+					"desc": "constant2"
+				},
+				{
+					"type": "action",
+					"name": "Constant3",
+					"file": "material/constant3.lua",
+					"desc": "constant3"
+				},
+				{
+					"type": "action",
+					"name": "Constant4",
+					"file": "material/constant4.lua",
+					"desc": "constant4"
+				}
+			]
 		}
 	]
 }

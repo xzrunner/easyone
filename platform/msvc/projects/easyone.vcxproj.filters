@@ -366,6 +366,12 @@
     <ClInclude Include="..\..\..\src\material\WxToolbarPanel.h">
       <Filter>32.material</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\material\MessageID.h">
+      <Filter>32.material</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\material\WxNodeProperty.h">
+      <Filter>32.material</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\frame\main.cpp">
@@ -561,6 +567,9 @@
       <Filter>41.bprint</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\material\WxToolbarPanel.cpp">
+      <Filter>32.material</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\material\WxNodeProperty.cpp">
       <Filter>32.material</Filter>
     </ClCompile>
   </ItemGroup>

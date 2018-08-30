@@ -47,6 +47,7 @@ namespace
 {
 
 extern "C" int luaopen_moon_bp(lua_State* L);
+extern "C" int luaopen_moon_mat(lua_State* L);
 
 }
 
@@ -153,6 +154,7 @@ void Application::InitSubmodule()
 {
 	facade::Facade::Instance()->AddInitCB([] {
 		moon_add_module("moon.bp", luaopen_moon_bp);
+		moon_add_module("moon.mat", luaopen_moon_mat);
 	});
 	facade::Facade::Instance()->Init();
 
@@ -181,10 +183,10 @@ void Application::InitLayout()
 	m_mgr.AddPane(record, wxAuiPaneInfo().Name(STR_RECORD_PANEL).
 		Caption(STR_RECORD_PANEL).Left());
 
-	m_mgr.AddPane(stage, wxAuiPaneInfo().Name(STR_STAGE_PANEL).
-		Caption(STR_STAGE_PANEL).CenterPane().Row(1).PaneBorder(false));
 	//m_mgr.AddPane(stage, wxAuiPaneInfo().Name(STR_STAGE_PANEL).
-	//	Caption(STR_STAGE_PANEL).CenterPane().PaneBorder(false));
+	//	Caption(STR_STAGE_PANEL).CenterPane().Row(1).PaneBorder(false));
+	m_mgr.AddPane(stage, wxAuiPaneInfo().Name(STR_STAGE_PANEL).
+		Caption(STR_STAGE_PANEL).CenterPane().PaneBorder(false));
 
 	m_mgr.AddPane(stage_ext, wxAuiPaneInfo().Name(STR_STAGE_EXT_PANEL).
 		Caption(STR_STAGE_EXT_PANEL).CenterPane().PaneBorder(false));
