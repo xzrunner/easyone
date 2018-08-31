@@ -14,7 +14,7 @@
 #include <ns/CompFactory.h>
 #include <emitter/P3dTemplate.h>
 #include <emitter/P3dInstance.h>
-#include <sx/StringHelper.h>
+#include <cpputil/StringHelper.h>
 
 #include <wx/sizer.h>
 #include <wx/button.h>
@@ -220,7 +220,7 @@ void WxEmitterPanel::WxDropTarget::
 OnDropText(wxCoord x, wxCoord y, const wxString& text)
 {
 	std::vector<std::string> keys;
-	sx::StringHelper::Split(text.ToStdString().c_str(), ",", keys);
+	cpputil::StringHelper::Split(text.ToStdString().c_str(), ",", keys);
 	if (keys.size() <= 1) {
 		return;
 	}
