@@ -9,13 +9,12 @@ class wxRadioBox;
 
 namespace pt3 { class Material; }
 namespace ee3 { class WxMaterialPreview; }
+namespace ematerial { class WxNodeProperty; }
 
 namespace eone
 {
 namespace material
 {
-
-class WxNodeProperty;
 
 class WxToolbarPanel : public wxPanel, public ee0::Observer
 {
@@ -44,7 +43,7 @@ private:
 
 	ee3::WxMaterialPreview* m_preview;
 
-	WxNodeProperty* m_prop;
+	ematerial::WxNodeProperty* m_prop;
 
 }; // WxToolbarPanel
 

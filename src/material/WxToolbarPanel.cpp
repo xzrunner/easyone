@@ -1,7 +1,6 @@
 #include "material/WxToolbarPanel.h"
 #include "material/WxStagePage.h"
 #include "material/MessageID.h"
-#include "material/WxNodeProperty.h"
 
 #include <ee3/WxMaterialPreview.h>
 
@@ -9,6 +8,7 @@
 #include <node0/SceneNode.h>
 #include <blueprint/CompNode.h>
 #include <blueprint/MessageID.h>
+#include <ematerial/WxNodeProperty.h>
 
 #include <wx/sizer.h>
 
@@ -62,7 +62,7 @@ void WxToolbarPanel::InitLayout()
 	sizer->Add(m_preview = new ee3::WxMaterialPreview(this, sm::ivec2(300, 300)));
 	sizer->AddSpacer(10);
 	// property
-	sizer->Add(m_prop = new WxNodeProperty(this, m_sub_mgr));
+	sizer->Add(m_prop = new ematerial::WxNodeProperty(this, m_sub_mgr));
 
 	SetSizer(sizer);
 }
