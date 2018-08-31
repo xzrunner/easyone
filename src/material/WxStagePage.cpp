@@ -11,9 +11,12 @@
 #include <ee3/WxMaterialPreview.h>
 #include <ematerial/NodeFactory.h>
 #include <ematerial/PhongModel.h>
-#include <ematerial/CalcNodeVal.h>
+#include <ematerial/Utility.h>
+#include <ematerial/TextureObject.h>
 #include <blueprint/CompNode.h>
 #include <blueprint/MessageID.h>
+#include <blueprint/Pins.h>
+#include <blueprint/Connecting.h>
 
 #include <painting3/Material.h>
 #include <node0/SceneNode.h>
@@ -21,6 +24,8 @@
 #include <node0/CompIdentity.h>
 #include <node2/CompTransform.h>
 #include <node2/CompBoundingBox.h>
+#include <model/TextureLoader.h>
+#include <facade/Image.h>
 
 namespace eone
 {
@@ -236,10 +241,22 @@ bool WxStagePage::CalcMaterial()
 	if (m_model_type == "mat_phong_model")
 	{
 		auto& pmodel = std::dynamic_pointer_cast<ematerial::PhongModel>(m_mat_node);
-		mat.ambient = ematerial::CalcNodeVal::ToVec3(*pmodel->GetAmbient());
-		mat.diffuse = ematerial::CalcNodeVal::ToVec3(*pmodel->GetDiffuse());
-		mat.specular = ematerial::CalcNodeVal::ToVec3(*pmodel->GetSpecular());
-		mat.shininess = ematerial::CalcNodeVal::ToFloat(*pmodel->GetShininess());
+		mat.ambient   = ematerial::Utility::CalcNodeInputVal(*pmodel->GetAmbient());
+		mat.diffuse   = ematerial::Utility::CalcNodeInputVal(*pmodel->GetDiffuse());
+		mat.specular  = ematerial::Utility::CalcNodeInputVal(*pmodel->GetSpecular());
+		mat.shininess = ematerial::Utility::CalcNodeInputVal(*pmodel->GetShininess()).x;
+
+		auto& tex_pin = pmodel->GetDiffuseTex();
+		auto& conn = tex_pin->GetConnecting();
+		if (conn.size() == 1) {
+			auto from = conn[0]->GetFrom();
+			if (from) {
+				auto& img = static_cast<const ematerial::TextureObject&>(from->GetParent()).GetTexture();
+				if (img) {
+					mat.diffuse_tex = model::TextureLoader::LoadFromFile(img->GetResPath().c_str());
+				}
+			}
+		}
 	}
 
 	return true;
