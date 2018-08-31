@@ -50,6 +50,8 @@
 #include <moon/Context.h>
 #include <painting3/PerspCam.h>
 #include <blueprint/ConnectPinsOP.h>
+#include <blueprint/NodeFactory.h>
+#include <ematerial/NodeFactory.h>
 
 #include <boost/filesystem.hpp>
 
@@ -220,7 +222,9 @@ WxStagePage* StagePageFactory::Create(ECS_WORLD_PARAM int page_type, WxStagePane
 			auto arrange_op = std::make_shared<ee2::ArrangeNodeOP>(
 				canvas->GetCamera(), *page, ECS_WORLD_VAR cfg, select_op);
 
-			auto op = std::make_shared<bp::ConnectPinsOP>(canvas->GetCamera(), *page);
+			auto op = std::make_shared<bp::ConnectPinsOP>(
+				canvas->GetCamera(), *page, ematerial::NodeFactory::Instance()->GetAllNodes()
+			);
 			op->SetPrevEditOP(arrange_op);
 			page->GetImpl().SetEditOP(op);
 
@@ -276,7 +280,9 @@ WxStagePage* StagePageFactory::Create(ECS_WORLD_PARAM int page_type, WxStagePane
 			auto arrange_op = std::make_shared<ee2::ArrangeNodeOP>(
 				canvas->GetCamera(), *page, ECS_WORLD_VAR cfg, select_op);
 
-			auto op = std::make_shared<bp::ConnectPinsOP>(canvas->GetCamera(), *page);
+			auto op = std::make_shared<bp::ConnectPinsOP>(
+				canvas->GetCamera(), *page, bp::node::NodeFactory::Instance()->GetAllNodes()
+			);
 			op->SetPrevEditOP(arrange_op);
 			page->GetImpl().SetEditOP(op);
 
