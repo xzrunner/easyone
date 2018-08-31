@@ -172,3 +172,6 @@
 [submodule "ext/ematerial"]
 	path = ext/ematerial
 	url = git@github.com:xzrunner/ematerial.git
+[submodule "ext/cpputil"]
+	path = ext/cpputil
+	url = git@github.com:xzrunner/cpputil.git
