@@ -9,6 +9,7 @@
 #include <blueprint/CompNode.h>
 #include <blueprint/MessageID.h>
 #include <ematerial/WxNodeProperty.h>
+#include <ematerial/PhongModel.h>
 
 #include <wx/sizer.h>
 
@@ -24,7 +25,7 @@ WxToolbarPanel::WxToolbarPanel(wxWindow* parent, const ee0::SubjectMgrPtr& sub_m
 {
 	InitLayout(rc);
 
-	SetModelType("mat_phong_model");
+	SetModelType(ematerial::PhongModel::TYPE_NAME);
 
 	sub_mgr->RegisterObserver(ee0::MSG_NODE_SELECTION_INSERT, this);
 }
@@ -73,7 +74,7 @@ void WxToolbarPanel::OnModelTypeChange(wxCommandEvent& event)
 	switch (event.GetSelection())
 	{
 	case 0:
-		SetModelType("mat_phong_model");
+		SetModelType(ematerial::PhongModel::TYPE_NAME);
 		break;
 	}
 }
