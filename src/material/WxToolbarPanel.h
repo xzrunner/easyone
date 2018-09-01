@@ -8,6 +8,7 @@
 class wxRadioBox;
 
 namespace pt3 { class Material; }
+namespace ee0 { class RenderContext; }
 namespace ee3 { class WxMaterialPreview; }
 namespace ematerial { class WxNodeProperty; }
 
@@ -19,7 +20,8 @@ namespace material
 class WxToolbarPanel : public wxPanel, public ee0::Observer
 {
 public:
-	WxToolbarPanel(wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr);
+	WxToolbarPanel(wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr,
+		const ee0::RenderContext* rc);
 
 	virtual void OnNotify(uint32_t msg, const ee0::VariantSet& variants) override;
 
@@ -28,7 +30,7 @@ public:
 	auto GetPreviewPanel() { return m_preview; }
 
 private:
-	void InitLayout();
+	void InitLayout(const ee0::RenderContext* rc);
 
 	void OnModelTypeChange(wxCommandEvent& event);
 

@@ -17,11 +17,12 @@ namespace eone
 namespace material
 {
 
-WxToolbarPanel::WxToolbarPanel(wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr)
+WxToolbarPanel::WxToolbarPanel(wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr,
+	                           const ee0::RenderContext* rc)
 	: wxPanel(parent)
 	, m_sub_mgr(sub_mgr)
 {
-	InitLayout();
+	InitLayout(rc);
 
 	SetModelType("mat_phong_model");
 
@@ -44,7 +45,7 @@ pt3::Material& WxToolbarPanel::GetPreviewMaterial()
 	return m_preview->GetMaterial();
 }
 
-void WxToolbarPanel::InitLayout()
+void WxToolbarPanel::InitLayout(const ee0::RenderContext* rc)
 {
 	auto sizer = new wxBoxSizer(wxVERTICAL);
 	// model
@@ -59,7 +60,7 @@ void WxToolbarPanel::InitLayout()
 	}
 	sizer->AddSpacer(10);
 	// preview
-	sizer->Add(m_preview = new ee3::WxMaterialPreview(this, sm::ivec2(300, 300)));
+	sizer->Add(m_preview = new ee3::WxMaterialPreview(this, sm::ivec2(300, 300), rc));
 	sizer->AddSpacer(10);
 	// property
 	sizer->Add(m_prop = new ematerial::WxNodeProperty(this, m_sub_mgr));

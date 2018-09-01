@@ -18,13 +18,13 @@
 #include <blueprint/Pins.h>
 #include <blueprint/Connecting.h>
 
+#include <painting2/Texture.h>
 #include <painting3/Material.h>
 #include <node0/SceneNode.h>
 #include <node0/CompComplex.h>
 #include <node0/CompIdentity.h>
 #include <node2/CompTransform.h>
 #include <node2/CompBoundingBox.h>
-#include <model/TextureLoader.h>
 #include <facade/Image.h>
 
 namespace eone
@@ -39,7 +39,7 @@ WxStagePage::WxStagePage(wxWindow* parent, ECS_WORLD_PARAM const ee0::GameObj& o
 	m_messages.push_back(ee0::MSG_DELETE_SCENE_NODE);
 	m_messages.push_back(ee0::MSG_CLEAR_SCENE_NODE);
 	m_messages.push_back(MSG_SET_MODEL_TYPE);
-	m_messages.push_back(bp::MSG_CONNECTION_CHANGED);
+	m_messages.push_back(bp::MSG_BLUE_PRINT_CHANGED);
 }
 
 void WxStagePage::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
@@ -63,7 +63,7 @@ void WxStagePage::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
 		dirty = SetModelType(variants.GetVariant("type").m_val.pc);
 		break;
 
-	case bp::MSG_CONNECTION_CHANGED:
+	case bp::MSG_BLUE_PRINT_CHANGED:
 		dirty = CalcMaterial();
 		if (dirty) {
 			m_toolbar->GetPreviewPanel()->RefreshCanvas();
@@ -128,7 +128,8 @@ void WxStagePage::OnPageInit()
 	}
 	// todo
 #ifndef GAME_OBJ_ECS
-	sizer->Add(m_toolbar = new WxToolbarPanel(panel, m_sub_mgr));
+	sizer->Add(m_toolbar = new WxToolbarPanel(panel, m_sub_mgr,
+		&GetImpl().GetCanvas()->GetRenderContext()));
 	panel->SetSizer(sizer);
 #endif // GAME_OBJ_ECS
 }
@@ -251,9 +252,9 @@ bool WxStagePage::CalcMaterial()
 		if (conn.size() == 1) {
 			auto from = conn[0]->GetFrom();
 			if (from) {
-				auto& img = static_cast<const ematerial::TextureObject&>(from->GetParent()).GetTexture();
-				if (img) {
-					mat.diffuse_tex = model::TextureLoader::LoadFromFile(img->GetResPath().c_str());
+				auto& to = static_cast<const ematerial::TextureObject&>(from->GetParent());
+				if (auto& img = to.GetImage()) {
+					mat.diffuse_tex = std::const_pointer_cast<pt2::Texture>(img->GetTexture());
 				}
 			}
 		}
