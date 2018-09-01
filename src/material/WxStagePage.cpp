@@ -9,23 +9,17 @@
 
 #include <ee0/SubjectMgr.h>
 #include <ee3/WxMaterialPreview.h>
+#include <blueprint/CompNode.h>
+#include <blueprint/MessageID.h>
+#include <blueprint/Pins.h>
 #include <ematerial/NodeFactory.h>
 #include <ematerial/PhongModel.h>
 #include <ematerial/Utility.h>
 #include <ematerial/TextureObject.h>
-#include <blueprint/CompNode.h>
-#include <blueprint/MessageID.h>
-#include <blueprint/Pins.h>
-#include <blueprint/Connecting.h>
+#include <ematerial/NodeBuilder.h>
 
-#include <painting2/Texture.h>
-#include <painting3/Material.h>
 #include <node0/SceneNode.h>
 #include <node0/CompComplex.h>
-#include <node0/CompIdentity.h>
-#include <node2/CompTransform.h>
-#include <node2/CompBoundingBox.h>
-#include <facade/Image.h>
 
 namespace eone
 {
@@ -204,29 +198,21 @@ bool WxStagePage::SetModelType(const std::string& model)
 		return false;
 	}
 
-	auto bp_node = ematerial::NodeFactory::Instance()->Create(model);
+	std::vector<n0::SceneNodePtr> nodes;
+	auto bp_node = ematerial::NodeBuilder::Create(model, nodes);
 	if (!bp_node) {
 		return false;
 	}
 
+	ClearSceneObj();
 	m_model_type = model;
 
-	ClearSceneObj();
-
-	auto node = std::make_shared<n0::SceneNode>();
-	auto& cnode = node->AddSharedComp<bp::CompNode>(bp_node);
-	cnode.GetNode()->SetParent(node);
-	node->AddUniqueComp<n2::CompTransform>();
-	node->AddUniqueComp<n0::CompIdentity>();
-	auto& style = cnode.GetNode()->GetStyle();
-	node->AddUniqueComp<n2::CompBoundingBox>(
-		sm::rect(style.width, style.height)
-	);
-
 	auto& ccomplex = m_obj->GetSharedComp<n0::CompComplex>();
-	ccomplex.AddChild(node);
+	for (auto& n : nodes) {
+		ccomplex.AddChild(n);
+	}
 
-	m_mat_node = cnode.GetNode();
+	m_mat_node = bp_node;
 
 	return true;
 }
@@ -237,27 +223,9 @@ bool WxStagePage::CalcMaterial()
 		return false;
 	}
 
-	auto& mat = m_toolbar->GetPreviewMaterial();
-
-	if (m_model_type == "mat_phong_model")
-	{
-		auto& pmodel = std::dynamic_pointer_cast<ematerial::PhongModel>(m_mat_node);
-		mat.ambient   = ematerial::Utility::CalcNodeInputVal(*pmodel->GetAmbient());
-		mat.diffuse   = ematerial::Utility::CalcNodeInputVal(*pmodel->GetDiffuse());
-		mat.specular  = ematerial::Utility::CalcNodeInputVal(*pmodel->GetSpecular());
-		mat.shininess = ematerial::Utility::CalcNodeInputVal(*pmodel->GetShininess()).x;
-
-		auto& tex_pin = pmodel->GetDiffuseTex();
-		auto& conn = tex_pin->GetConnecting();
-		if (conn.size() == 1) {
-			auto from = conn[0]->GetFrom();
-			if (from) {
-				auto& to = static_cast<const ematerial::TextureObject&>(from->GetParent());
-				if (auto& img = to.GetImage()) {
-					mat.diffuse_tex = std::const_pointer_cast<pt2::Texture>(img->GetTexture());
-				}
-			}
-		}
+	if (m_model_type == ematerial::PhongModel::TYPE_NAME) {
+		auto& phong = std::dynamic_pointer_cast<ematerial::PhongModel>(m_mat_node);
+		phong->CalcMaterial(m_toolbar->GetPreviewMaterial());
 	}
 
 	return true;
