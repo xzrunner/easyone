@@ -14,7 +14,7 @@ namespace shadergraph { class WxNodeProperty; }
 
 namespace eone
 {
-namespace material
+namespace sgraph
 {
 
 class WxToolbarPanel : public wxPanel, public ee0::Observer

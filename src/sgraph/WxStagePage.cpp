@@ -1,7 +1,7 @@
-#include "material/WxStagePage.h"
-#include "material/WxToolbarPanel.h"
-#include "material/MessageID.h"
-#include "material/WxToolbarPanel.h"
+#include "sgraph/WxStagePage.h"
+#include "sgraph/WxToolbarPanel.h"
+#include "sgraph/MessageID.h"
+#include "sgraph/WxToolbarPanel.h"
 
 #include "frame/AppStyle.h"
 #include "frame/Blackboard.h"
@@ -23,7 +23,7 @@
 
 namespace eone
 {
-namespace material
+namespace sgraph
 {
 
 WxStagePage::WxStagePage(wxWindow* parent, ECS_WORLD_PARAM const ee0::GameObj& obj)

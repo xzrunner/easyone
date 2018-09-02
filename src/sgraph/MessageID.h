@@ -2,7 +2,7 @@
 
 namespace eone
 {
-namespace material
+namespace sgraph
 {
 
 enum MessageID

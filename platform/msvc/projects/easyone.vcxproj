@@ -312,9 +312,6 @@
     <ClInclude Include="..\..\..\src\frame\WxWorldPanel.h" />
     <ClInclude Include="..\..\..\src\mask\WxEditDialog.h" />
     <ClInclude Include="..\..\..\src\mask\WxStagePage.h" />
-    <ClInclude Include="..\..\..\src\material\MessageID.h" />
-    <ClInclude Include="..\..\..\src\material\WxStagePage.h" />
-    <ClInclude Include="..\..\..\src\material\WxToolbarPanel.h" />
     <ClInclude Include="..\..\..\src\model\RenderSystem.h" />
     <ClInclude Include="..\..\..\src\model\WxPreviewCanvas.h" />
     <ClInclude Include="..\..\..\src\model\WxPreviewPanel.h" />
@@ -345,6 +342,9 @@
     <ClInclude Include="..\..\..\src\scene3d\WxStagePage.h" />
     <ClInclude Include="..\..\..\src\script\WxStageCanvas.h" />
     <ClInclude Include="..\..\..\src\script\WxStagePage.h" />
+    <ClInclude Include="..\..\..\src\sgraph\MessageID.h" />
+    <ClInclude Include="..\..\..\src\sgraph\WxStagePage.h" />
+    <ClInclude Include="..\..\..\src\sgraph\WxToolbarPanel.h" />
     <ClInclude Include="..\..\..\src\terrain\WxStagePage.h" />
   </ItemGroup>
   <ItemGroup>
@@ -402,14 +402,6 @@
     <ClCompile Include="..\..\..\src\mask\WxStagePage.cpp">
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/mask/</ObjectFileName>
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/mask/</ObjectFileName>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\material\WxStagePage.cpp">
-      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/material/</ObjectFileName>
-      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/material/</ObjectFileName>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\material\WxToolbarPanel.cpp">
-      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/material/</ObjectFileName>
-      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/material/</ObjectFileName>
     </ClCompile>
     <ClCompile Include="..\..\..\src\model\RenderSystem.cpp">
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/model/</ObjectFileName>
@@ -502,6 +494,8 @@
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/script/</ObjectFileName>
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/script/</ObjectFileName>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\sgraph\WxStagePage.cpp" />
+    <ClCompile Include="..\..\..\src\sgraph\WxToolbarPanel.cpp" />
     <ClCompile Include="..\..\..\src\terrain\WxStagePage.cpp">
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/terrain/</ObjectFileName>
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/terrain/</ObjectFileName>

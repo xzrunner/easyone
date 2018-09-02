@@ -7,7 +7,7 @@
 
 namespace eone
 {
-namespace material
+namespace sgraph
 {
 
 class WxToolbarPanel;
@@ -22,7 +22,7 @@ public:
 	virtual void Traverse(std::function<bool(const ee0::GameObj&)> func,
 		const ee0::VariantSet& variants = ee0::VariantSet(), bool inverse = false) const override;
 
-	virtual int GetPageType() const override { return PAGE_MATERIAL; }
+	virtual int GetPageType() const override { return PAGE_SHADER_GRAPH; }
 
 protected:
 	virtual void OnPageInit() override;

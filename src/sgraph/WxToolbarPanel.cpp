@@ -1,6 +1,6 @@
-#include "material/WxToolbarPanel.h"
-#include "material/WxStagePage.h"
-#include "material/MessageID.h"
+#include "sgraph/WxToolbarPanel.h"
+#include "sgraph/WxStagePage.h"
+#include "sgraph/MessageID.h"
 
 #include <ee3/WxMaterialPreview.h>
 
@@ -15,7 +15,7 @@
 
 namespace eone
 {
-namespace material
+namespace sgraph
 {
 
 WxToolbarPanel::WxToolbarPanel(wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr,
