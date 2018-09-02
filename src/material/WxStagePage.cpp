@@ -12,11 +12,11 @@
 #include <blueprint/CompNode.h>
 #include <blueprint/MessageID.h>
 #include <blueprint/Pins.h>
-#include <ematerial/NodeFactory.h>
-#include <ematerial/PhongModel.h>
-#include <ematerial/Utility.h>
-#include <ematerial/TextureObject.h>
-#include <ematerial/NodeBuilder.h>
+#include <shadergraph/NodeFactory.h>
+#include <shadergraph/PhongModel.h>
+#include <shadergraph/Utility.h>
+#include <shadergraph/TextureObject.h>
+#include <shadergraph/NodeBuilder.h>
 
 #include <node0/SceneNode.h>
 #include <node0/CompComplex.h>
@@ -199,7 +199,7 @@ bool WxStagePage::SetModelType(const std::string& model)
 	}
 
 	std::vector<n0::SceneNodePtr> nodes;
-	auto bp_node = ematerial::NodeBuilder::Create(model, nodes);
+	auto bp_node = shadergraph::NodeBuilder::Create(model, nodes);
 	if (!bp_node) {
 		return false;
 	}
@@ -223,8 +223,8 @@ bool WxStagePage::CalcMaterial()
 		return false;
 	}
 
-	if (m_model_type == ematerial::PhongModel::TYPE_NAME) {
-		auto& phong = std::dynamic_pointer_cast<ematerial::PhongModel>(m_mat_node);
+	if (m_model_type == shadergraph::PhongModel::TYPE_NAME) {
+		auto& phong = std::dynamic_pointer_cast<shadergraph::PhongModel>(m_mat_node);
 		phong->CalcMaterial(m_toolbar->GetPreviewMaterial());
 	}
 

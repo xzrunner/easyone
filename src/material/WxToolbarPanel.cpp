@@ -8,8 +8,8 @@
 #include <node0/SceneNode.h>
 #include <blueprint/CompNode.h>
 #include <blueprint/MessageID.h>
-#include <ematerial/WxNodeProperty.h>
-#include <ematerial/PhongModel.h>
+#include <shadergraph/WxNodeProperty.h>
+#include <shadergraph/PhongModel.h>
 
 #include <wx/sizer.h>
 
@@ -25,7 +25,7 @@ WxToolbarPanel::WxToolbarPanel(wxWindow* parent, const ee0::SubjectMgrPtr& sub_m
 {
 	InitLayout(rc);
 
-	SetModelType(ematerial::PhongModel::TYPE_NAME);
+	SetModelType(shadergraph::PhongModel::TYPE_NAME);
 
 	sub_mgr->RegisterObserver(ee0::MSG_NODE_SELECTION_INSERT, this);
 }
@@ -64,7 +64,7 @@ void WxToolbarPanel::InitLayout(const ee0::RenderContext* rc)
 	sizer->Add(m_preview = new ee3::WxMaterialPreview(this, sm::ivec2(300, 300), rc));
 	sizer->AddSpacer(10);
 	// property
-	sizer->Add(m_prop = new ematerial::WxNodeProperty(this, m_sub_mgr));
+	sizer->Add(m_prop = new shadergraph::WxNodeProperty(this, m_sub_mgr));
 
 	SetSizer(sizer);
 }
@@ -74,7 +74,7 @@ void WxToolbarPanel::OnModelTypeChange(wxCommandEvent& event)
 	switch (event.GetSelection())
 	{
 	case 0:
-		SetModelType(ematerial::PhongModel::TYPE_NAME);
+		SetModelType(shadergraph::PhongModel::TYPE_NAME);
 		break;
 	}
 }

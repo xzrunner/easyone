@@ -143,7 +143,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "8.editor_lib", "8.editor_li
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "4.eanim", "..\..\ext\eanim\platform\msvc\projects\eanim.vcxproj", "{14F15BE2-C5CB-4280-9243-3F69574A3D21}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "5.ematerial", "..\..\ext\ematerial\platform\msvc\projects\ematerial.vcxproj", "{EC5783F3-431B-4FF0-BC6D-00137CAC8810}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "5.shadergraph", "..\..\ext\shadergraph\platform\msvc\projects\shadergraph.vcxproj", "{EC5783F3-431B-4FF0-BC6D-00137CAC8810}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3.cpputil", "..\..\ext\cpputil\platform\msvc\projects\cpputil.vcxproj", "{BBF1C418-2EE6-4059-BAD6-BE93A7CE5B90}"
 EndProject
