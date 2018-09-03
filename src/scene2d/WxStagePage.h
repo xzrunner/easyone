@@ -25,11 +25,16 @@ public:
 
 	virtual int GetPageType() const override { return PAGE_SCENE2D; }
 
+	static const std::string PAGE_TYPE;
+
 protected:
 	// todo ecs
 #ifndef GAME_OBJ_ECS
 	virtual const n0::NodeComp& GetEditedObjComp() const override;
 #endif // GAME_OBJ_ECS
+
+	virtual void StoreToJsonExt(const std::string& dir, rapidjson::Value& val,
+		rapidjson::MemoryPoolAllocator<>& alloc) const override;
 
 private:
 	bool InsertSceneObj(const ee0::VariantSet& variants);

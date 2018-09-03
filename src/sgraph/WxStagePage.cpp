@@ -26,6 +26,8 @@ namespace eone
 namespace sgraph
 {
 
+const std::string WxStagePage::PAGE_TYPE = "shader_graph";
+
 WxStagePage::WxStagePage(wxWindow* parent, ECS_WORLD_PARAM const ee0::GameObj& obj)
 	: eone::WxStagePage(parent, ECS_WORLD_VAR obj, SHOW_STAGE | SHOW_TOOLBAR | TOOLBAR_LFET)
 {
@@ -134,6 +136,16 @@ const n0::NodeComp& WxStagePage::GetEditedObjComp() const
 	return m_obj->GetSharedComp<n0::CompComplex>();
 }
 #endif // GAME_OBJ_ECS
+
+void WxStagePage::StoreToJsonExt(const std::string& dir, rapidjson::Value& val,
+	                             rapidjson::MemoryPoolAllocator<>& alloc) const
+{
+	val.AddMember("page_type", rapidjson::Value(PAGE_TYPE.c_str(), alloc), alloc);
+}
+
+void WxStagePage::LoadFromFileImpl(const std::string& filepath)
+{
+}
 
 bool WxStagePage::InsertSceneObj(const ee0::VariantSet& variants)
 {

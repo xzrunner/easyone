@@ -22,6 +22,8 @@ namespace eone
 namespace scene2d
 {
 
+const std::string WxStagePage::PAGE_TYPE = "scene2d";
+
 WxStagePage::WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, ECS_WORLD_PARAM const ee0::GameObj& obj)
 	: eone::WxStagePage(parent, ECS_WORLD_VAR obj, SHOW_LIBRARY | SHOW_RECORD | SHOW_STAGE | SHOW_PREVIEW | SHOW_WORLD | SHOW_DETAIL | SHOW_SCRIPT)
 {
@@ -109,6 +111,12 @@ const n0::NodeComp& WxStagePage::GetEditedObjComp() const
 	return m_obj->GetSharedComp<n0::CompComplex>();
 }
 #endif // GAME_OBJ_ECS
+
+void WxStagePage::StoreToJsonExt(const std::string& dir, rapidjson::Value& val,
+	                             rapidjson::MemoryPoolAllocator<>& alloc) const
+{
+	val.AddMember("page_type", rapidjson::Value(PAGE_TYPE.c_str(), alloc), alloc);
+}
 
 bool WxStagePage::InsertSceneObj(const ee0::VariantSet& variants)
 {

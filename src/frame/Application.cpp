@@ -18,6 +18,11 @@
 #include "frame/typedef.h"
 #include "frame/WxScriptPanel.h"
 
+#include "scene2d/WxStagePage.h"
+#include "scene3d/WxStagePage.h"
+#include "quake/WxStagePage.h"
+#include "sgraph/WxStagePage.h"
+
 #include <ee0/MsgHelper.h>
 #include <ee0/SubjectMgr.h>
 #include <ee0/ConfigFile.h>
@@ -93,10 +98,16 @@ void Application::LoadFromFile(const std::string& filepath)
 
 		std::string new_type_str = doc[ns::CompSerializer::COMP_TYPE_NAME].GetString();
 		if (new_type_str == "n0_complex") {
-			if (doc.HasMember("is_scene3d") && doc["is_scene3d"].GetBool()) {
-				new_type = PAGE_SCENE3D;
-			} else {
+			assert(doc.HasMember("page_type"));
+			auto type = doc["page_type"].GetString();
+			if (type == scene2d::WxStagePage::PAGE_TYPE) {
 				new_type = PAGE_SCENE2D;
+			} else if (type == scene3d::WxStagePage::PAGE_TYPE) {
+				new_type = PAGE_SCENE3D;
+			} else if (type == quake::WxStagePage::PAGE_TYPE) {
+				new_type = PAGE_QUAKE;
+			} else if (type == sgraph::WxStagePage::PAGE_TYPE) {
+				new_type = PAGE_SHADER_GRAPH;
 			}
 		} else if (new_type_str == "n2_scale9") {
 			new_type = PAGE_SCALE9;

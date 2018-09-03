@@ -34,6 +34,8 @@ public:
 
 	void SwitchToNextViewport();
 
+	static const std::string PAGE_TYPE;
+
 protected:
 	virtual void OnPageInit() override;
 

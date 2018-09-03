@@ -24,6 +24,8 @@ public:
 
 	virtual int GetPageType() const override { return PAGE_SCENE3D; }
 
+	static const std::string PAGE_TYPE;
+
 protected:
 #ifndef GAME_OBJ_ECS
 	virtual const n0::NodeComp& GetEditedObjComp() const override;

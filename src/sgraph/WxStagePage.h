@@ -24,6 +24,8 @@ public:
 
 	virtual int GetPageType() const override { return PAGE_SHADER_GRAPH; }
 
+	static const std::string PAGE_TYPE;
+
 protected:
 	virtual void OnPageInit() override;
 
@@ -31,6 +33,10 @@ protected:
 #ifndef GAME_OBJ_ECS
 	virtual const n0::NodeComp& GetEditedObjComp() const override;
 #endif // GAME_OBJ_ECS
+
+	virtual void StoreToJsonExt(const std::string& dir, rapidjson::Value& val,
+		rapidjson::MemoryPoolAllocator<>& alloc) const override;
+	virtual void LoadFromFileImpl(const std::string& filepath) override;
 
 private:
 	bool InsertSceneObj(const ee0::VariantSet& variants);
