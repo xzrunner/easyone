@@ -9,10 +9,12 @@
 
 #include <ee0/SubjectMgr.h>
 #include <ee3/WxMaterialPreview.h>
+#include <blueprint/Blueprint.h>
 #include <blueprint/CompNode.h>
 #include <blueprint/MessageID.h>
 #include <blueprint/Pins.h>
-#include <shadergraph/NodeFactory.h>
+#include <shadergraph/ShaderGraph.h>
+
 #include <shadergraph/PhongModel.h>
 #include <shadergraph/Utility.h>
 #include <shadergraph/TextureObject.h>
@@ -31,6 +33,9 @@ const std::string WxStagePage::PAGE_TYPE = "shader_graph";
 WxStagePage::WxStagePage(wxWindow* parent, ECS_WORLD_PARAM const ee0::GameObj& obj)
 	: eone::WxStagePage(parent, ECS_WORLD_VAR obj, SHOW_STAGE | SHOW_TOOLBAR | TOOLBAR_LFET)
 {
+	bp::Blueprint::Init();
+	shadergraph::ShaderGraph::Init();
+
 	m_messages.push_back(ee0::MSG_INSERT_SCENE_NODE);
 	m_messages.push_back(ee0::MSG_DELETE_SCENE_NODE);
 	m_messages.push_back(ee0::MSG_CLEAR_SCENE_NODE);

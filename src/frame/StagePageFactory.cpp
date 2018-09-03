@@ -51,7 +51,6 @@
 #include <painting3/PerspCam.h>
 #include <blueprint/ConnectPinsOP.h>
 #include <blueprint/NodeFactory.h>
-#include <shadergraph/NodeFactory.h>
 
 #include <boost/filesystem.hpp>
 

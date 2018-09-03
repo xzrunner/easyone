@@ -44,7 +44,6 @@
 #include <facade/Facade.h>
 #include <facade/GTxt.h>
 #include <moon/moon.h>
-#include <blueprint/Blueprint.h>
 
 #include <boost/filesystem.hpp>
 
@@ -168,8 +167,6 @@ void Application::InitSubmodule()
 		moon_add_module("moon.mat", luaopen_moon_mat);
 	});
 	facade::Facade::Instance()->Init();
-
-	bp::Blueprint::Init();
 
 	auto cfg = ee0::ConfigFile::Instance();
 	facade::GTxt::Instance()->LoadFonts(cfg->GetFonts(), cfg->GetUserFonts());

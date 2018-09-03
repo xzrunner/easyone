@@ -8,6 +8,7 @@
 
 #include <ee0/SubjectMgr.h>
 #include <ee2/WxStageDropTarget.h>
+#include <blueprint/Blueprint.h>
 
 #include <guard/check.h>
 #ifndef GAME_OBJ_ECS
@@ -25,6 +26,8 @@ namespace bprint
 WxStagePage::WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, ECS_WORLD_PARAM const ee0::GameObj& obj)
 	: eone::WxStagePage(parent, ECS_WORLD_VAR obj, SHOW_STAGE)
 {
+	bp::Blueprint::Init();
+
 	m_messages.push_back(ee0::MSG_INSERT_SCENE_NODE);
 	m_messages.push_back(ee0::MSG_DELETE_SCENE_NODE);
 	m_messages.push_back(ee0::MSG_CLEAR_SCENE_NODE);
