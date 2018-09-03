@@ -222,7 +222,7 @@ WxStagePage* StagePageFactory::Create(ECS_WORLD_PARAM int page_type, WxStagePane
 				canvas->GetCamera(), *page, ECS_WORLD_VAR cfg, select_op);
 
 			auto op = std::make_shared<bp::ConnectPinsOP>(
-				canvas->GetCamera(), *page, shadergraph::NodeFactory::Instance()->GetAllNodes()
+				canvas->GetCamera(), *page, bp::NodeFactory::Instance()->GetAllNodes()
 			);
 			op->SetPrevEditOP(arrange_op);
 			page->GetImpl().SetEditOP(op);
@@ -280,7 +280,7 @@ WxStagePage* StagePageFactory::Create(ECS_WORLD_PARAM int page_type, WxStagePane
 				canvas->GetCamera(), *page, ECS_WORLD_VAR cfg, select_op);
 
 			auto op = std::make_shared<bp::ConnectPinsOP>(
-				canvas->GetCamera(), *page, bp::node::NodeFactory::Instance()->GetAllNodes()
+				canvas->GetCamera(), *page, bp::NodeFactory::Instance()->GetAllNodes()
 			);
 			op->SetPrevEditOP(arrange_op);
 			page->GetImpl().SetEditOP(op);
