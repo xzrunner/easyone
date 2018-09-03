@@ -52,7 +52,7 @@ private:
 
 	std::string m_model_type;
 
-	std::shared_ptr<bp::node::Node> m_mat_node = nullptr;
+	std::shared_ptr<bp::Node> m_mat_node = nullptr;
 
 }; // WxStagePage
 
