@@ -3,8 +3,6 @@
 #include "frame/WxStagePage.h"
 #include "frame/StagePageType.h"
 
-#include <blueprint/Node.h>
-
 namespace eone
 {
 namespace sgraph
@@ -51,8 +49,6 @@ private:
 	WxToolbarPanel* m_toolbar = nullptr;
 
 	std::string m_model_type;
-
-	std::shared_ptr<bp::Node> m_mat_node = nullptr;
 
 }; // WxStagePage
 

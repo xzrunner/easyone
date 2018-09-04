@@ -170,6 +170,8 @@ void WxStagePage::LoadFromFileExt(const std::string& filepath)
 	auto& ccomplex = m_obj->GetSharedComp<n0::CompComplex>();
 	auto& nodes = const_cast<std::vector<n0::SceneNodePtr>&>(ccomplex.GetAllChildren());
 	bp::NSCompNode::LoadConnection(nodes, doc["nodes"]);
+
+	m_sub_mgr->NotifyObservers(bp::MSG_BLUE_PRINT_CHANGED);
 }
 
 bool WxStagePage::InsertSceneObj(const ee0::VariantSet& variants)
@@ -249,19 +251,33 @@ bool WxStagePage::SetModelType(const std::string& model)
 		ccomplex.AddChild(n);
 	}
 
-	m_mat_node = bp_node;
-
 	return true;
 }
 
 bool WxStagePage::CalcMaterial()
 {
-	if (!m_mat_node) {
+	auto& ccomplex = m_obj->GetSharedComp<n0::CompComplex>();
+	auto& nodes = const_cast<std::vector<n0::SceneNodePtr>&>(ccomplex.GetAllChildren());
+	if (nodes.empty()) {
 		return false;
 	}
 
-	if (m_model_type == shadergraph::PhongModel::TYPE_NAME) {
-		auto& phong = std::dynamic_pointer_cast<shadergraph::PhongModel>(m_mat_node);
+	std::shared_ptr<bp::Node> bp_out_node = nullptr;
+	for (auto& node : nodes)
+	{
+		assert(node->HasUniqueComp<bp::CompNode>());
+		auto& bp_node = node->GetUniqueComp<bp::CompNode>().GetNode();
+		assert(bp_node);
+		if (bp_node->TypeName() == m_model_type) {
+			bp_out_node = bp_node;
+		}
+	}
+	assert(bp_out_node);
+
+	if (m_model_type == shadergraph::PhongModel::TYPE_NAME)
+	{
+		auto& phong = std::dynamic_pointer_cast<shadergraph::PhongModel>(bp_out_node);
+		assert(phong);
 		phong->CalcMaterial(m_toolbar->GetPreviewMaterial());
 	}
 
