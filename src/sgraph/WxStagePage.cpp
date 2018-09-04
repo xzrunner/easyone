@@ -13,15 +13,19 @@
 #include <blueprint/CompNode.h>
 #include <blueprint/MessageID.h>
 #include <blueprint/Pins.h>
+#include <blueprint/NSCompNode.h>
 #include <shadergraph/ShaderGraph.h>
-
 #include <shadergraph/PhongModel.h>
 #include <shadergraph/Utility.h>
 #include <shadergraph/TextureObject.h>
 #include <shadergraph/NodeBuilder.h>
 
+#include <js/RapidJsonHelper.h>
 #include <node0/SceneNode.h>
 #include <node0/CompComplex.h>
+#include <sx/ResFileHelper.h>
+
+#include <boost/filesystem.hpp>
 
 namespace eone
 {
@@ -145,11 +149,27 @@ const n0::NodeComp& WxStagePage::GetEditedObjComp() const
 void WxStagePage::StoreToJsonExt(const std::string& dir, rapidjson::Value& val,
 	                             rapidjson::MemoryPoolAllocator<>& alloc) const
 {
+	// connection
+	auto& ccomplex = m_obj->GetSharedComp<n0::CompComplex>();
+	bp::NSCompNode::StoreConnection(ccomplex.GetAllChildren(), val["nodes"], alloc);
+
 	val.AddMember("page_type", rapidjson::Value(PAGE_TYPE.c_str(), alloc), alloc);
 }
 
 void WxStagePage::LoadFromFileExt(const std::string& filepath)
 {
+	if (sx::ResFileHelper::Type(filepath) != sx::RES_FILE_JSON) {
+		return;
+	}
+
+	auto dir = boost::filesystem::path(filepath).parent_path().string();
+	rapidjson::Document doc;
+	js::RapidJsonHelper::ReadFromFile(filepath.c_str(), doc);
+
+	// connection
+	auto& ccomplex = m_obj->GetSharedComp<n0::CompComplex>();
+	auto& nodes = const_cast<std::vector<n0::SceneNodePtr>&>(ccomplex.GetAllChildren());
+	bp::NSCompNode::LoadConnection(nodes, doc["nodes"]);
 }
 
 bool WxStagePage::InsertSceneObj(const ee0::VariantSet& variants)
