@@ -29,7 +29,7 @@ protected:
 	virtual const n0::NodeComp& GetEditedObjComp() const override;
 #endif // GAME_OBJ_ECS
 
-	virtual void LoadFromFileImpl(const std::string& filepath) override;
+	virtual void LoadFromFileExt(const std::string& filepath) override;
 
 private:
 	void InsertSceneNode(const ee0::VariantSet& variants);

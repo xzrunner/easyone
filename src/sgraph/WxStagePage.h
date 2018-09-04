@@ -36,7 +36,7 @@ protected:
 
 	virtual void StoreToJsonExt(const std::string& dir, rapidjson::Value& val,
 		rapidjson::MemoryPoolAllocator<>& alloc) const override;
-	virtual void LoadFromFileImpl(const std::string& filepath) override;
+	virtual void LoadFromFileExt(const std::string& filepath) override;
 
 private:
 	bool InsertSceneObj(const ee0::VariantSet& variants);

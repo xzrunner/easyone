@@ -133,7 +133,7 @@ const n0::NodeComp& WxStagePage::GetEditedObjComp() const
 }
 #endif // GAME_OBJ_ECS
 
-void WxStagePage::LoadFromFileImpl(const std::string& filepath)
+void WxStagePage::LoadFromFileExt(const std::string& filepath)
 {
 	auto casset = ns::CompFactory::Instance()->CreateAsset(filepath);
 	assert(casset->AssetTypeID() == n0::GetAssetUniqueTypeID<n3::CompModel>());

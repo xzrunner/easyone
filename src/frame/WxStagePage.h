@@ -48,7 +48,7 @@ protected:
 
 	virtual void StoreToJsonExt(const std::string& dir, rapidjson::Value& val,
 		rapidjson::MemoryPoolAllocator<>& alloc) const {}
-	virtual void LoadFromFileImpl(const std::string& filepath) {}
+	virtual void LoadFromFileExt(const std::string& filepath) {}
 
 private:
 	std::string GetBackupPath() const;

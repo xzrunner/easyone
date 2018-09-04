@@ -161,7 +161,7 @@ void WxStagePage::StoreToJsonExt(const std::string& dir, rapidjson::Value& val,
 	val.AddMember("page_type", rapidjson::Value(PAGE_TYPE.c_str(), alloc), alloc);
 }
 
-void WxStagePage::LoadFromFileImpl(const std::string& filepath)
+void WxStagePage::LoadFromFileExt(const std::string& filepath)
 {
 	if (sx::ResFileHelper::Type(filepath) != sx::RES_FILE_MAP) {
 		return;

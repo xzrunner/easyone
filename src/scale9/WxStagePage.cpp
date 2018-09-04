@@ -102,7 +102,7 @@ const n0::NodeComp& WxStagePage::GetEditedObjComp() const
 }
 #endif // GAME_OBJ_ECS
 
-void WxStagePage::LoadFromFileImpl(const std::string& filepath)
+void WxStagePage::LoadFromFileExt(const std::string& filepath)
 {
 	if (sx::ResFileHelper::Type(filepath) != sx::RES_FILE_JSON) {
 		return;

@@ -146,7 +146,7 @@ const n0::NodeComp& WxStagePage::GetEditedObjComp() const
 }
 #endif // GAME_OBJ_ECS
 
-void WxStagePage::LoadFromFileImpl(const std::string& filepath)
+void WxStagePage::LoadFromFileExt(const std::string& filepath)
 {
 	m_sub_mgr->NotifyObservers(eanim::MSG_REFRESH_ANIM_COMP);
 }

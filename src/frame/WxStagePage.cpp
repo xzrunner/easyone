@@ -90,7 +90,7 @@ void WxStagePage::LoadFromFile(const std::string& filepath)
 	}
 	m_obj->AddSharedCompNoCreate<n0::CompAsset>(casset);
 
-	LoadFromFileImpl(filepath);
+	LoadFromFileExt(filepath);
 
 	ResetNextID();
 
@@ -102,8 +102,7 @@ void WxStagePage::LoadFromFile(const std::string& filepath)
 	if (m_obj->HasUniqueComp<n2::CompBoundingBox>())
 	{
 		auto& cbb = m_obj->GetUniqueComp<n2::CompBoundingBox>();
-		auto aabb = n2::AABBSystem::GetBounding(
-			m_obj->GetSharedComp<n0::CompAsset>());
+		auto aabb = n2::AABBSystem::Instance()->GetBounding(*m_obj);
 		cbb.SetSize(*m_obj, aabb);
 	}
 #else
