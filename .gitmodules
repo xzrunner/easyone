@@ -175,3 +175,6 @@
 [submodule "ext/cpputil"]
 	path = ext/cpputil
 	url = git@github.com:xzrunner/cpputil.git
+[submodule "ext/shaderweaver"]
+	path = ext/shaderweaver
+	url = git@github.com:xzrunner/shaderweaver.git
