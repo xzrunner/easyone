@@ -8,12 +8,14 @@
 #include "frame/AppStyle.h"
 
 #include <ee0/SubjectMgr.h>
+#include <ee0/MsgHelper.h>
 
 #include <guard/check.h>
 #ifndef GAME_OBJ_ECS
 #include <node0/CompAsset.h>
 #include <node0/CompIdentity.h>
 #include <node0/SceneNode.h>
+#include <node0/CompComplex.h>
 #include <node2/CompBoundingBox.h>
 #include <node2/AABBSystem.h>
 #include <node3/CompTransform.h>
@@ -89,6 +91,17 @@ void WxStagePage::LoadFromFile(const std::string& filepath)
 		m_obj->RemoveSharedComp<n0::CompAsset>();
 	}
 	m_obj->AddSharedCompNoCreate<n0::CompAsset>(casset);
+
+	// FIXME: reinsert, for send insert msg to other panel
+	if (m_obj->HasSharedComp<n0::CompComplex>())
+	{
+		auto& ccomplex = m_obj->GetSharedComp<n0::CompComplex>();
+		auto nodes = ccomplex.GetAllChildren();
+		ccomplex.RemoveAllChildren();
+		for (auto& node : nodes) {
+			ee0::MsgHelper::InsertNode(*m_sub_mgr, node, false);
+		}
+	}
 
 	LoadFromFileExt(filepath);
 

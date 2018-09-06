@@ -8,6 +8,7 @@
 #include "frame/WxToolbarPanel.h"
 
 #include <ee0/SubjectMgr.h>
+#include <ee0/MsgHelper.h>
 #include <ee3/WxMaterialPreview.h>
 #include <blueprint/Blueprint.h>
 #include <blueprint/CompNode.h>
@@ -246,9 +247,8 @@ bool WxStagePage::SetModelType(const std::string& model)
 	ClearSceneObj();
 	m_model_type = model;
 
-	auto& ccomplex = m_obj->GetSharedComp<n0::CompComplex>();
-	for (auto& n : nodes) {
-		ccomplex.AddChild(n);
+	for (auto& node : nodes) {
+		ee0::MsgHelper::InsertNode(*m_sub_mgr, node, false);
 	}
 
 	return true;
