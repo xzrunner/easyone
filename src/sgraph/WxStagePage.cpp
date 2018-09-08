@@ -16,10 +16,10 @@
 #include <blueprint/Pins.h>
 #include <blueprint/NSCompNode.h>
 #include <shadergraph/ShaderGraph.h>
-#include <shadergraph/PhongModel.h>
 #include <shadergraph/Utility.h>
-#include <shadergraph/TextureObject.h>
 #include <shadergraph/NodeBuilder.h>
+#include <shadergraph/node/Phong.h>
+#include <shadergraph/node/TextureObject.h>
 
 #include <js/RapidJsonHelper.h>
 #include <node0/SceneNode.h>
@@ -274,9 +274,9 @@ bool WxStagePage::CalcMaterial()
 	}
 	assert(bp_out_node);
 
-	if (m_model_type == shadergraph::PhongModel::TYPE_NAME)
+	if (m_model_type == shadergraph::node::Phong::TYPE_NAME)
 	{
-		auto& phong = std::dynamic_pointer_cast<shadergraph::PhongModel>(bp_out_node);
+		auto& phong = std::dynamic_pointer_cast<shadergraph::node::Phong>(bp_out_node);
 		assert(phong);
 		phong->CalcMaterial(m_toolbar->GetPreviewMaterial());
 	}

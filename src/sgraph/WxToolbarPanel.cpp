@@ -9,7 +9,8 @@
 #include <blueprint/CompNode.h>
 #include <blueprint/MessageID.h>
 #include <shadergraph/WxNodeProperty.h>
-#include <shadergraph/PhongModel.h>
+#include <shadergraph/node/Sprite.h>
+#include <shadergraph/node/Phong.h>
 
 #include <wx/sizer.h>
 
@@ -25,7 +26,7 @@ WxToolbarPanel::WxToolbarPanel(wxWindow* parent, const ee0::SubjectMgrPtr& sub_m
 {
 	InitLayout(rc);
 
-	SetModelType(shadergraph::PhongModel::TYPE_NAME);
+	SetModelType(shadergraph::node::Sprite::TYPE_NAME);
 
 	sub_mgr->RegisterObserver(ee0::MSG_NODE_SELECTION_INSERT, this);
 }
@@ -52,6 +53,7 @@ void WxToolbarPanel::InitLayout(const ee0::RenderContext* rc)
 	// model
 	{
 		wxArrayString choices;
+		choices.push_back("Sprite");
 		choices.push_back("Phong");
 		choices.push_back("PBR");
 		sizer->Add(m_model = new wxRadioBox(this, wxID_ANY, "model_type",
@@ -74,7 +76,10 @@ void WxToolbarPanel::OnModelTypeChange(wxCommandEvent& event)
 	switch (event.GetSelection())
 	{
 	case 0:
-		SetModelType(shadergraph::PhongModel::TYPE_NAME);
+		SetModelType(shadergraph::node::Sprite::TYPE_NAME);
+		break;
+	case 1:
+		SetModelType(shadergraph::node::Phong::TYPE_NAME);
 		break;
 	}
 }
