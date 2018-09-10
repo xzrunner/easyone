@@ -57,7 +57,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\..\src;..\..\..\ext\easyeditor0\include;..\..\..\ext\easyeditor2\include;..\..\..\ext\easyeditor3\include;..\..\..\ext\cu\src;..\..\..\ext\ds\src\ds;..\..\..\ext\sm\src\sm;..\..\..\ext\ps\src\ps;..\..\..\ext\rigging\src\rigging;..\..\..\ext\sprite2\include;..\..\..\ext\unirender\include;..\..\..\ext\shaderlab\include;..\..\..\ext\painting0\include;..\..\..\ext\painting2\include;..\..\..\ext\painting3\include;..\..\..\ext\model\include;..\..\..\ext\js\include;..\..\..\ext\bimp\include;..\..\..\ext\guard\include;..\..\..\ext\logger\src\logger;..\..\..\ext\polymesh\include;..\..\..\ext\facade\include;..\..\..\ext\node0\include;..\..\..\ext\node2\include;..\..\..\ext\node3\include;..\..\..\ext\entity0\include;..\..\..\ext\entity2\include;..\..\..\ext\entity3\include;..\..\..\ext\memmgr\include;..\..\..\ext\nserializer\include;..\..\..\ext\serializerx\include;..\..\..\ext\cpputil\include;..\..\..\ext\moon\include;..\..\..\ext\anim\include;..\..\..\ext\emitter\include;..\..\..\ext\lexer\include;..\..\..\ext\quake\include;..\..\..\ext\halfedge\include;..\..\..\ext\blueprint\include;..\..\..\ext\eanim\include;..\..\..\ext\shadergraph\include;..\..\..\ext\external-editor\wx\include;..\..\..\ext\external\json\include;..\..\..\ext\external\rapidjson\include;..\..\..\ext\external\freetype\include;..\..\..\ext\external\c99;..\..\..\ext\external\lua\include;..\..\..\ext\external\boost\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\src;..\..\..\ext\easyeditor0\include;..\..\..\ext\easyeditor2\include;..\..\..\ext\easyeditor3\include;..\..\..\ext\cu\src;..\..\..\ext\ds\src\ds;..\..\..\ext\sm\src\sm;..\..\..\ext\ps\src\ps;..\..\..\ext\rigging\src\rigging;..\..\..\ext\sprite2\include;..\..\..\ext\unirender\include;..\..\..\ext\shaderlab\include;..\..\..\ext\painting0\include;..\..\..\ext\painting2\include;..\..\..\ext\painting3\include;..\..\..\ext\model\include;..\..\..\ext\js\include;..\..\..\ext\bimp\include;..\..\..\ext\guard\include;..\..\..\ext\logger\src\logger;..\..\..\ext\polymesh\include;..\..\..\ext\facade\include;..\..\..\ext\node0\include;..\..\..\ext\node2\include;..\..\..\ext\node3\include;..\..\..\ext\entity0\include;..\..\..\ext\entity2\include;..\..\..\ext\entity3\include;..\..\..\ext\memmgr\include;..\..\..\ext\nserializer\include;..\..\..\ext\serializerx\include;..\..\..\ext\cpputil\include;..\..\..\ext\moon\include;..\..\..\ext\anim\include;..\..\..\ext\emitter\include;..\..\..\ext\lexer\include;..\..\..\ext\quake\include;..\..\..\ext\halfedge\include;..\..\..\ext\blueprint\include;..\..\..\ext\eanim\include;..\..\..\ext\shadergraph\include;..\..\..\ext\shaderweaver\include;..\..\..\ext\external-editor\wx\include;..\..\..\ext\external\json\include;..\..\..\ext\external\rapidjson\include;..\..\..\ext\external\freetype\include;..\..\..\ext\external\c99;..\..\..\ext\external\lua\include;..\..\..\ext\external\boost\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -83,7 +83,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>..\..\..\src;..\..\..\ext\easyeditor0\include;..\..\..\ext\easyeditor2\include;..\..\..\ext\easyeditor3\include;..\..\..\ext\cu\src;..\..\..\ext\ds\src\ds;..\..\..\ext\sm\src\sm;..\..\..\ext\ps\src\ps;..\..\..\ext\rigging\src\rigging;..\..\..\ext\sprite2\include;..\..\..\ext\unirender\include;..\..\..\ext\shaderlab\include;..\..\..\ext\painting0\include;..\..\..\ext\painting2\include;..\..\..\ext\painting3\include;..\..\..\ext\model\include;..\..\..\ext\js\include;..\..\..\ext\bimp\include;..\..\..\ext\guard\include;..\..\..\ext\logger\src\logger;..\..\..\ext\polymesh\include;..\..\..\ext\facade\include;..\..\..\ext\node0\include;..\..\..\ext\node2\include;..\..\..\ext\node3\include;..\..\..\ext\entity0\include;..\..\..\ext\entity2\include;..\..\..\ext\entity3\include;..\..\..\ext\memmgr\include;..\..\..\ext\nserializer\include;..\..\..\ext\serializerx\include;..\..\..\ext\cpputil\include;..\..\..\ext\moon\include;..\..\..\ext\anim\include;..\..\..\ext\emitter\include;..\..\..\ext\lexer\include;..\..\..\ext\quake\include;..\..\..\ext\halfedge\include;..\..\..\ext\blueprint\include;..\..\..\ext\eanim\include;..\..\..\ext\shadergraph\include;..\..\..\ext\external-editor\wx\include;..\..\..\ext\external\json\include;..\..\..\ext\external\rapidjson\include;..\..\..\ext\external\freetype\include;..\..\..\ext\external\c99;..\..\..\ext\external\lua\include;..\..\..\ext\external\boost\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\src;..\..\..\ext\easyeditor0\include;..\..\..\ext\easyeditor2\include;..\..\..\ext\easyeditor3\include;..\..\..\ext\cu\src;..\..\..\ext\ds\src\ds;..\..\..\ext\sm\src\sm;..\..\..\ext\ps\src\ps;..\..\..\ext\rigging\src\rigging;..\..\..\ext\sprite2\include;..\..\..\ext\unirender\include;..\..\..\ext\shaderlab\include;..\..\..\ext\painting0\include;..\..\..\ext\painting2\include;..\..\..\ext\painting3\include;..\..\..\ext\model\include;..\..\..\ext\js\include;..\..\..\ext\bimp\include;..\..\..\ext\guard\include;..\..\..\ext\logger\src\logger;..\..\..\ext\polymesh\include;..\..\..\ext\facade\include;..\..\..\ext\node0\include;..\..\..\ext\node2\include;..\..\..\ext\node3\include;..\..\..\ext\entity0\include;..\..\..\ext\entity2\include;..\..\..\ext\entity3\include;..\..\..\ext\memmgr\include;..\..\..\ext\nserializer\include;..\..\..\ext\serializerx\include;..\..\..\ext\cpputil\include;..\..\..\ext\moon\include;..\..\..\ext\anim\include;..\..\..\ext\emitter\include;..\..\..\ext\lexer\include;..\..\..\ext\quake\include;..\..\..\ext\halfedge\include;..\..\..\ext\blueprint\include;..\..\..\ext\eanim\include;..\..\..\ext\shadergraph\include;..\..\..\ext\shaderweaver\include;..\..\..\ext\external-editor\wx\include;..\..\..\ext\external\json\include;..\..\..\ext\external\rapidjson\include;..\..\..\ext\external\freetype\include;..\..\..\ext\external\c99;..\..\..\ext\external\lua\include;..\..\..\ext\external\boost\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -255,6 +255,9 @@
     <ProjectReference Include="..\..\..\ext\shaderlab\platform\msvc\projects\shaderlab.vcxproj">
       <Project>{5c357759-ca95-42e1-b907-dfb87a995f6c}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\shaderweaver\platform\msvc\projects\shaderweaver.vcxproj">
+      <Project>{cb558c48-c50c-433b-acf6-4ab1c306a11a}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\ext\sm\platform\msvc\projects\sm.vcxproj">
       <Project>{81630e0d-e1ef-4837-a0ee-30435ed4fe59}</Project>
     </ProjectReference>
@@ -343,6 +346,7 @@
     <ClInclude Include="..\..\..\src\script\WxStageCanvas.h" />
     <ClInclude Include="..\..\..\src\script\WxStagePage.h" />
     <ClInclude Include="..\..\..\src\sgraph\MessageID.h" />
+    <ClInclude Include="..\..\..\src\sgraph\ShaderWeaver.h" />
     <ClInclude Include="..\..\..\src\sgraph\WxStagePage.h" />
     <ClInclude Include="..\..\..\src\sgraph\WxToolbarPanel.h" />
     <ClInclude Include="..\..\..\src\terrain\WxStagePage.h" />
@@ -494,6 +498,7 @@
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/script/</ObjectFileName>
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/script/</ObjectFileName>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\sgraph\ShaderWeaver.cpp" />
     <ClCompile Include="..\..\..\src\sgraph\WxStagePage.cpp">
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/sgraph/</ObjectFileName>
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/sgraph/</ObjectFileName>

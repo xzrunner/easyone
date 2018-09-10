@@ -145,6 +145,9 @@
     <Filter Include="32.sgraph">
       <UniqueIdentifier>{70521c8d-51e2-405c-a78a-764746df18c2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="32.sgraph\view">
+      <UniqueIdentifier>{3cbcb8a6-40cd-42ae-a989-a2ada73d854e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\frame\main.h">
@@ -363,11 +366,14 @@
     <ClInclude Include="..\..\..\src\sgraph\MessageID.h">
       <Filter>32.sgraph</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\sgraph\WxStagePage.h">
+    <ClInclude Include="..\..\..\src\sgraph\ShaderWeaver.h">
       <Filter>32.sgraph</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\sgraph\WxStagePage.h">
+      <Filter>32.sgraph\view</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\src\sgraph\WxToolbarPanel.h">
-      <Filter>32.sgraph</Filter>
+      <Filter>32.sgraph\view</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -560,11 +566,14 @@
     <ClCompile Include="..\..\..\src\bprint\WxStagePage.cpp">
       <Filter>41.bprint</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\sgraph\WxStagePage.cpp">
+    <ClCompile Include="..\..\..\src\sgraph\ShaderWeaver.cpp">
       <Filter>32.sgraph</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\sgraph\WxStagePage.cpp">
+      <Filter>32.sgraph\view</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\src\sgraph\WxToolbarPanel.cpp">
-      <Filter>32.sgraph</Filter>
+      <Filter>32.sgraph\view</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

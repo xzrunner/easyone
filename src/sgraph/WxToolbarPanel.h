@@ -10,7 +10,7 @@ class wxRadioBox;
 namespace pt3 { class Material; }
 namespace ee0 { class RenderContext; }
 namespace ee3 { class WxMaterialPreview; }
-namespace shadergraph { class WxNodeProperty; }
+namespace sg { class WxNodeProperty; }
 
 namespace eone
 {
@@ -45,7 +45,7 @@ private:
 
 	ee3::WxMaterialPreview* m_preview;
 
-	shadergraph::WxNodeProperty* m_prop;
+	sg::WxNodeProperty* m_prop;
 
 }; // WxToolbarPanel
 

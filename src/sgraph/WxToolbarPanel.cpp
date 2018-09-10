@@ -11,6 +11,7 @@
 #include <shadergraph/WxNodeProperty.h>
 #include <shadergraph/node/Sprite.h>
 #include <shadergraph/node/Phong.h>
+#include <shadergraph/node/Phong2.h>
 
 #include <wx/sizer.h>
 
@@ -26,7 +27,7 @@ WxToolbarPanel::WxToolbarPanel(wxWindow* parent, const ee0::SubjectMgrPtr& sub_m
 {
 	InitLayout(rc);
 
-	SetModelType(shadergraph::node::Sprite::TYPE_NAME);
+	SetModelType(sg::node::Phong2::TYPE_NAME);
 
 	sub_mgr->RegisterObserver(ee0::MSG_NODE_SELECTION_INSERT, this);
 }
@@ -55,6 +56,7 @@ void WxToolbarPanel::InitLayout(const ee0::RenderContext* rc)
 		wxArrayString choices;
 		choices.push_back("Sprite");
 		choices.push_back("Phong");
+		choices.push_back("Phong2");
 		choices.push_back("PBR");
 		sizer->Add(m_model = new wxRadioBox(this, wxID_ANY, "model_type",
 			wxDefaultPosition, wxDefaultSize, choices, 0, wxRA_SPECIFY_COLS));
@@ -66,7 +68,7 @@ void WxToolbarPanel::InitLayout(const ee0::RenderContext* rc)
 	sizer->Add(m_preview = new ee3::WxMaterialPreview(this, sm::ivec2(300, 300), rc));
 	sizer->AddSpacer(10);
 	// property
-	sizer->Add(m_prop = new shadergraph::WxNodeProperty(this, m_sub_mgr));
+	sizer->Add(m_prop = new sg::WxNodeProperty(this, m_sub_mgr));
 
 	SetSizer(sizer);
 }
@@ -76,10 +78,13 @@ void WxToolbarPanel::OnModelTypeChange(wxCommandEvent& event)
 	switch (event.GetSelection())
 	{
 	case 0:
-		SetModelType(shadergraph::node::Sprite::TYPE_NAME);
+		SetModelType(sg::node::Sprite::TYPE_NAME);
 		break;
 	case 1:
-		SetModelType(shadergraph::node::Phong::TYPE_NAME);
+		SetModelType(sg::node::Phong::TYPE_NAME);
+		break;
+	case 2:
+		SetModelType(sg::node::Phong2::TYPE_NAME);
 		break;
 	}
 }

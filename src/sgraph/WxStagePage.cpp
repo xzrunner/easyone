@@ -2,6 +2,7 @@
 #include "sgraph/WxToolbarPanel.h"
 #include "sgraph/MessageID.h"
 #include "sgraph/WxToolbarPanel.h"
+#include "sgraph/ShaderWeaver.h"
 
 #include "frame/AppStyle.h"
 #include "frame/Blackboard.h"
@@ -22,6 +23,12 @@
 #include <shadergraph/node/TextureObject.h>
 
 #include <js/RapidJsonHelper.h>
+#include <unirender/VertexAttrib.h>
+#include <unirender/Blackboard.h>
+#include <unirender/Shader.h>
+#include <shaderlab/Blackboard.h>
+#include <shaderlab/RenderContext.h>
+#include <painting3/EffectsManager.h>
 #include <node0/SceneNode.h>
 #include <node0/CompComplex.h>
 #include <sx/ResFileHelper.h>
@@ -39,7 +46,7 @@ WxStagePage::WxStagePage(wxWindow* parent, ECS_WORLD_PARAM const ee0::GameObj& o
 	: eone::WxStagePage(parent, ECS_WORLD_VAR obj, SHOW_STAGE | SHOW_TOOLBAR | TOOLBAR_LFET)
 {
 	bp::Blueprint::Init();
-	shadergraph::ShaderGraph::Init();
+	sg::ShaderGraph::Init();
 
 	m_messages.push_back(ee0::MSG_INSERT_SCENE_NODE);
 	m_messages.push_back(ee0::MSG_DELETE_SCENE_NODE);
@@ -70,6 +77,7 @@ void WxStagePage::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
 		break;
 
 	case bp::MSG_BLUE_PRINT_CHANGED:
+		UpdateShader();
 		dirty = CalcMaterial();
 		if (dirty) {
 			m_toolbar->GetPreviewPanel()->RefreshCanvas();
@@ -239,7 +247,7 @@ bool WxStagePage::SetModelType(const std::string& model)
 	}
 
 	std::vector<n0::SceneNodePtr> nodes;
-	auto bp_node = shadergraph::NodeBuilder::Create(model, nodes);
+	auto bp_node = sg::NodeBuilder::Create(model, nodes);
 	if (!bp_node) {
 		return false;
 	}
@@ -250,6 +258,8 @@ bool WxStagePage::SetModelType(const std::string& model)
 	for (auto& node : nodes) {
 		ee0::MsgHelper::InsertNode(*m_sub_mgr, node, false);
 	}
+
+	UpdateShader();
 
 	return true;
 }
@@ -274,14 +284,30 @@ bool WxStagePage::CalcMaterial()
 	}
 	assert(bp_out_node);
 
-	if (m_model_type == shadergraph::node::Phong::TYPE_NAME)
+	if (m_model_type == sg::node::Phong::TYPE_NAME)
 	{
-		auto& phong = std::dynamic_pointer_cast<shadergraph::node::Phong>(bp_out_node);
+		auto& phong = std::dynamic_pointer_cast<sg::node::Phong>(bp_out_node);
 		assert(phong);
 		phong->CalcMaterial(m_toolbar->GetPreviewMaterial());
 	}
 
 	return true;
+}
+
+void WxStagePage::UpdateShader()
+{
+	GetImpl().GetCanvas()->AddUpdateTask([&]()
+	{
+		auto& ccomplex = m_obj->GetSharedComp<n0::CompComplex>();
+		auto& nodes = const_cast<std::vector<n0::SceneNodePtr>&>(ccomplex.GetAllChildren());
+		ShaderWeaver sw(nodes, m_model_type);
+		pt3::EffectsManager::Instance()->SetUserEffect(sw.CreateShader());
+
+		// flush shader status
+		auto& shader_mgr = sl::Blackboard::Instance()->GetRenderContext().GetShaderMgr();
+		shader_mgr.SetShader(sl::EXTERN_SHADER);
+		shader_mgr.BindRenderShader(nullptr, sl::EXTERN_SHADER);
+	});
 }
 
 }

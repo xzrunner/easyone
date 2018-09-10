@@ -44,6 +44,7 @@ private:
 	bool SetModelType(const std::string& model);
 
 	bool CalcMaterial();
+	void UpdateShader();
 
 private:
 	WxToolbarPanel* m_toolbar = nullptr;
