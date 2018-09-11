@@ -26,6 +26,7 @@
 #include "anim3/WxStagePage.h"
 #include "anim3/WxStageCanvas.h"
 #include "sgraph/WxStagePage.h"
+#include "sgraph/WxStageCanvas.h"
 #include "bprint/WxStagePage.h"
 #include "quake/WxStagePage.h"
 #include "quake/WxStageCanvas.h"
@@ -207,7 +208,7 @@ WxStagePage* StagePageFactory::Create(ECS_WORLD_PARAM int page_type, WxStagePane
 		{
 			auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX2D);
 			page = new sgraph::WxStagePage(frame, ECS_WORLD_VAR obj);
-			auto canvas = std::make_shared<WxStageCanvas2D>(page, ECS_WORLD_VAR rc);
+			auto canvas = std::make_shared<sgraph::WxStageCanvas>(page, rc);
 			page->GetImpl().SetCanvas(canvas);
 
 			auto select_op = std::make_shared<NodeSelectOP>(

@@ -375,6 +375,9 @@
     <ClInclude Include="..\..\..\src\sgraph\WxToolbarPanel.h">
       <Filter>32.sgraph\view</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\sgraph\WxStageCanvas.h">
+      <Filter>32.sgraph\view</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\frame\main.cpp">
@@ -573,6 +576,9 @@
       <Filter>32.sgraph\view</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\sgraph\WxToolbarPanel.cpp">
+      <Filter>32.sgraph\view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sgraph\WxStageCanvas.cpp">
       <Filter>32.sgraph\view</Filter>
     </ClCompile>
   </ItemGroup>
