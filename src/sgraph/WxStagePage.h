@@ -43,7 +43,6 @@ private:
 
 	bool SetModelType(const std::string& model);
 
-	bool CalcMaterial();
 	void UpdateShader();
 
 private:

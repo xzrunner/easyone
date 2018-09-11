@@ -17,7 +17,6 @@
 #include <blueprint/Pins.h>
 #include <blueprint/NSCompNode.h>
 #include <shadergraph/ShaderGraph.h>
-#include <shadergraph/Utility.h>
 #include <shadergraph/NodeBuilder.h>
 #include <shadergraph/node/Phong.h>
 #include <shadergraph/node/TextureObject.h>
@@ -78,10 +77,6 @@ void WxStagePage::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
 
 	case bp::MSG_BLUE_PRINT_CHANGED:
 		UpdateShader();
-		dirty = CalcMaterial();
-		if (dirty) {
-			m_toolbar->GetPreviewPanel()->RefreshCanvas();
-		}
 		break;
 	}
 
@@ -146,6 +141,8 @@ void WxStagePage::OnPageInit()
 		&GetImpl().GetCanvas()->GetRenderContext()));
 	panel->SetSizer(sizer);
 #endif // GAME_OBJ_ECS
+
+	UpdateShader();
 }
 
 #ifndef GAME_OBJ_ECS
@@ -247,7 +244,7 @@ bool WxStagePage::SetModelType(const std::string& model)
 	}
 
 	std::vector<n0::SceneNodePtr> nodes;
-	auto bp_node = sg::NodeBuilder::Create(model, nodes);
+	auto bp_node = sg::NodeBuilder::Create(nodes, model);
 	if (!bp_node) {
 		return false;
 	}
@@ -264,38 +261,14 @@ bool WxStagePage::SetModelType(const std::string& model)
 	return true;
 }
 
-bool WxStagePage::CalcMaterial()
-{
-	auto& ccomplex = m_obj->GetSharedComp<n0::CompComplex>();
-	auto& nodes = const_cast<std::vector<n0::SceneNodePtr>&>(ccomplex.GetAllChildren());
-	if (nodes.empty()) {
-		return false;
-	}
-
-	std::shared_ptr<bp::Node> bp_out_node = nullptr;
-	for (auto& node : nodes)
-	{
-		assert(node->HasUniqueComp<bp::CompNode>());
-		auto& bp_node = node->GetUniqueComp<bp::CompNode>().GetNode();
-		assert(bp_node);
-		if (bp_node->TypeName() == m_model_type) {
-			bp_out_node = bp_node;
-		}
-	}
-	assert(bp_out_node);
-
-	if (m_model_type == sg::node::Phong::TYPE_NAME)
-	{
-		auto& phong = std::dynamic_pointer_cast<sg::node::Phong>(bp_out_node);
-		assert(phong);
-		phong->CalcMaterial(m_toolbar->GetPreviewMaterial());
-	}
-
-	return true;
-}
-
 void WxStagePage::UpdateShader()
 {
+	if (!m_toolbar) {
+		return;
+	}
+
+	// use the same render context
+//	m_toolbar->GetPreviewPanel()->GetCanvas()->AddUpdateTask([&]()
 	GetImpl().GetCanvas()->AddUpdateTask([&]()
 	{
 		auto& ccomplex = m_obj->GetSharedComp<n0::CompComplex>();
@@ -307,6 +280,8 @@ void WxStagePage::UpdateShader()
 		auto& shader_mgr = sl::Blackboard::Instance()->GetRenderContext().GetShaderMgr();
 		shader_mgr.SetShader(sl::EXTERN_SHADER);
 		shader_mgr.BindRenderShader(nullptr, sl::EXTERN_SHADER);
+
+		m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
 	});
 }
 
