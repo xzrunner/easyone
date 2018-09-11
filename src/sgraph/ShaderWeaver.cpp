@@ -8,6 +8,10 @@
 #include <shadergraph/node/Constant2.h>
 #include <shadergraph/node/Constant3.h>
 #include <shadergraph/node/Constant4.h>
+#include <shadergraph/node/Add.h>
+#include <shadergraph/node/Subtract.h>
+#include <shadergraph/node/Multiply.h>
+#include <shadergraph/node/Divide.h>
 #include <shadergraph/node/Phong2.h>
 
 #include <sw/Evaluator.h>
@@ -15,6 +19,10 @@
 #include <sw/node/Vector2.h>
 #include <sw/node/Vector3.h>
 #include <sw/node/Vector4.h>
+#include <sw/node/Add.h>
+#include <sw/node/Subtract.h>
+#include <sw/node/Multiply.h>
+#include <sw/node/Divide.h>
 #include <sw/node/Phong.h>
 #include <sw/node/Input.h>
 #include <sw/node/Output.h>
@@ -33,7 +41,7 @@
 namespace
 {
 
-const bp::Node& get_input_node(const sg::Node& src, int idx)
+const bp::Node& get_input_node(const bp::Node& src, int idx)
 {
 	auto& to_port = src.GetAllInput()[idx];
 	auto& conns = to_port->GetConnecting();
@@ -73,7 +81,7 @@ namespace sgraph
 ShaderWeaver::ShaderWeaver(const std::vector<n0::SceneNodePtr>& nodes,
 	                       const std::string& type)
 {
-	std::shared_ptr<bp::Node> final_node = nullptr;
+	bp::NodePtr final_node = nullptr;
 	for (auto& node : nodes)
 	{
 		assert(node->HasUniqueComp<bp::CompNode>());
@@ -290,6 +298,34 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 	{
 		auto& src = static_cast<const sg::node::Constant4&>(node);
 		dst = std::make_shared<sw::node::Vector4>("", src.GetValue());
+	}
+	else if (id == bp::GetNodeTypeID<sg::node::Add>())
+	{
+		auto& src = static_cast<const sg::node::Add&>(node);
+		dst = std::make_shared<sw::node::Add>();
+		sw::make_connecting({ CreateInputChild(src, 0), 0 }, { dst, sw::node::Add::IN_A });
+		sw::make_connecting({ CreateInputChild(src, 1), 0 }, { dst, sw::node::Add::IN_B });
+	}
+	else if (id == bp::GetNodeTypeID<sg::node::Subtract>())
+	{
+		auto& src = static_cast<const sg::node::Subtract&>(node);
+		dst = std::make_shared<sw::node::Subtract>();
+		sw::make_connecting({ CreateInputChild(src, 0), 0 }, { dst, sw::node::Subtract::IN_A });
+		sw::make_connecting({ CreateInputChild(src, 1), 0 }, { dst, sw::node::Subtract::IN_B });
+	}
+	else if (id == bp::GetNodeTypeID<sg::node::Multiply>())
+	{
+		auto& src = static_cast<const sg::node::Multiply&>(node);
+		dst = std::make_shared<sw::node::Multiply>();
+		sw::make_connecting({ CreateInputChild(src, 0), 0 }, { dst, sw::node::Multiply::IN_A });
+		sw::make_connecting({ CreateInputChild(src, 1), 0 }, { dst, sw::node::Multiply::IN_B });
+	}
+	else if (id == bp::GetNodeTypeID<sg::node::Divide>())
+	{
+		auto& src = static_cast<const sg::node::Divide&>(node);
+		dst = std::make_shared<sw::node::Divide>();
+		sw::make_connecting({ CreateInputChild(src, 0), 0 }, { dst, sw::node::Divide::IN_A });
+		sw::make_connecting({ CreateInputChild(src, 1), 0 }, { dst, sw::node::Divide::IN_B });
 	}
 	else
 	{
