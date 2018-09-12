@@ -94,6 +94,44 @@
 					"name": "Constant4",
 					"file": "shadergraph/constant4.lua",
 					"desc": "constant4"
+				},
+
+				{
+					"type": "action",
+					"name": "Add",
+					"file": "shadergraph/add.lua",
+					"desc": "add"
+				},
+				{
+					"type": "action",
+					"name": "Subtract",
+					"file": "shadergraph/sub.lua",
+					"desc": "sub"
+				},
+				{
+					"type": "action",
+					"name": "Multiply",
+					"file": "shadergraph/mul.lua",
+					"desc": "mul"
+				},
+				{
+					"type": "action",
+					"name": "Divide",
+					"file": "shadergraph/div.lua",
+					"desc": "div"
+				},
+				
+				{
+					"type": "action",
+					"name": "TextureObject",
+					"file": "shadergraph/tex_obj.lua",
+					"desc": "tex_obj"
+				},
+				{
+					"type": "action",
+					"name": "TextureSample",
+					"file": "shadergraph/tex_sample.lua",
+					"desc": "tex_sample"
 				}
 			]
 		}
