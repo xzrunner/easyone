@@ -303,7 +303,10 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 	{
 		auto& src = static_cast<const sg::node::TextureObject&>(node);
 		m_texture_names.push_back(src.GetName());
-		m_texture_ids.push_back(src.GetImage()->GetTexID());
+		auto& img = src.GetImage();
+		if (img) {
+			m_texture_ids.push_back(img->GetTexID());
+		}
 		dst = std::make_shared<sw::node::Uniform>(src.GetName(), sw::t_tex2d);
 	}
 	else
