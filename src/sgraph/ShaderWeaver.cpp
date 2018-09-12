@@ -40,6 +40,7 @@
 #include <unirender/RenderContext.h>
 #include <unirender/Shader.h>
 #include <node0/SceneNode.h>
+#include <facade/Image.h>
 
 #include <assert.h>
 
@@ -164,7 +165,9 @@ std::shared_ptr<ur::Shader> ShaderWeaver::CreateShader() const
 
 	auto& rc = ur::Blackboard::Instance()->GetRenderContext();
 	auto shader = std::make_shared<ur::Shader>(&rc, vert.GetShaderStr().c_str(),
-		frag.GetShaderStr().c_str(), m_textures, m_layout);
+		frag.GetShaderStr().c_str(), m_texture_names, m_layout);
+
+	shader->SetUsedTextures(m_texture_ids);
 
 	assert(shader);
 	return shader;
@@ -299,7 +302,9 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 	else if (id == bp::GetNodeTypeID<sg::node::TextureObject>())
 	{
 		auto& src = static_cast<const sg::node::TextureObject&>(node);
-		dst = std::make_shared<sw::node::Uniform>("tex", sw::t_tex2d);
+		m_texture_names.push_back(src.GetName());
+		m_texture_ids.push_back(src.GetImage()->GetTexID());
+		dst = std::make_shared<sw::node::Uniform>(src.GetName(), sw::t_tex2d);
 	}
 	else
 	{

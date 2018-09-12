@@ -35,7 +35,10 @@ private:
 	sw::NodePtr m_frag_node = nullptr;
 
 	std::vector<ur::VertexAttrib> m_layout;
-	std::vector<std::string>      m_textures;
+
+	// textures
+	std::vector<std::string> m_texture_names;
+	std::vector<uint32_t>    m_texture_ids;
 
 }; // ShaderWeaver
 
