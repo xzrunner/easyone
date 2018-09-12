@@ -18,7 +18,6 @@
 #include <blueprint/NSCompNode.h>
 #include <shadergraph/ShaderGraph.h>
 #include <shadergraph/NodeBuilder.h>
-#include <shadergraph/node/Phong.h>
 #include <shadergraph/node/TextureObject.h>
 
 #include <js/RapidJsonHelper.h>

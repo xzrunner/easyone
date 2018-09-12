@@ -11,7 +11,6 @@
 #include <shadergraph/WxNodeProperty.h>
 #include <shadergraph/node/Sprite.h>
 #include <shadergraph/node/Phong.h>
-#include <shadergraph/node/Phong2.h>
 
 #include <wx/sizer.h>
 
@@ -27,7 +26,7 @@ WxToolbarPanel::WxToolbarPanel(wxWindow* parent, const ee0::SubjectMgrPtr& sub_m
 {
 	InitLayout(rc);
 
-	SetModelType(sg::node::Phong2::TYPE_NAME);
+	SetModelType(sg::node::Phong::TYPE_NAME);
 
 	sub_mgr->RegisterObserver(ee0::MSG_NODE_SELECTION_INSERT, this);
 }
@@ -56,7 +55,6 @@ void WxToolbarPanel::InitLayout(const ee0::RenderContext* rc)
 		wxArrayString choices;
 		choices.push_back("Sprite");
 		choices.push_back("Phong");
-		choices.push_back("Phong2");
 		choices.push_back("PBR");
 		sizer->Add(m_model = new wxRadioBox(this, wxID_ANY, "model_type",
 			wxDefaultPosition, wxDefaultSize, choices, 0, wxRA_SPECIFY_COLS));
@@ -82,9 +80,6 @@ void WxToolbarPanel::OnModelTypeChange(wxCommandEvent& event)
 		break;
 	case 1:
 		SetModelType(sg::node::Phong::TYPE_NAME);
-		break;
-	case 2:
-		SetModelType(sg::node::Phong2::TYPE_NAME);
 		break;
 	}
 }
