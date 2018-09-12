@@ -4,15 +4,19 @@
 #include <blueprint/Pins.h>
 #include <blueprint/Connecting.h>
 #include <blueprint/CompNode.h>
+#include <shadergraph/Pins.h>
 #include <shadergraph/node/Constant1.h>
 #include <shadergraph/node/Constant2.h>
 #include <shadergraph/node/Constant3.h>
 #include <shadergraph/node/Constant4.h>
+#include <shadergraph/node/Input.h>
 #include <shadergraph/node/Add.h>
 #include <shadergraph/node/Subtract.h>
 #include <shadergraph/node/Multiply.h>
 #include <shadergraph/node/Divide.h>
 #include <shadergraph/node/Phong2.h>
+#include <shadergraph/node/TextureSample.h>
+#include <shadergraph/node/TextureObject.h>
 
 #include <sw/Evaluator.h>
 #include <sw/node/Vector1.h>
@@ -30,6 +34,7 @@
 #include <sw/node/PositionTrans2.h>
 #include <sw/node/FragPosTrans.h>
 #include <sw/node/NormalTrans.h>
+#include <sw/node/Tex2DSample.h>
 
 #include <unirender/Blackboard.h>
 #include <unirender/RenderContext.h>
@@ -282,22 +287,40 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 	else if (id == bp::GetNodeTypeID<sg::node::Constant1>())
 	{
 		auto& src = static_cast<const sg::node::Constant1&>(node);
-		dst = std::make_shared<sw::node::Vector1>("", src.GetValue());
+		dst = std::make_shared<sw::node::Vector1>(src.GetName(), src.GetValue());
 	}
 	else if (id == bp::GetNodeTypeID<sg::node::Constant2>())
 	{
 		auto& src = static_cast<const sg::node::Constant2&>(node);
-		dst = std::make_shared<sw::node::Vector2>("", src.GetValue());
+		dst = std::make_shared<sw::node::Vector2>(src.GetName(), src.GetValue());
 	}
 	else if (id == bp::GetNodeTypeID<sg::node::Constant3>())
 	{
 		auto& src = static_cast<const sg::node::Constant3&>(node);
-		dst = std::make_shared<sw::node::Vector3>("", src.GetValue());
+		dst = std::make_shared<sw::node::Vector3>(src.GetName(), src.GetValue());
 	}
 	else if (id == bp::GetNodeTypeID<sg::node::Constant4>())
 	{
 		auto& src = static_cast<const sg::node::Constant4&>(node);
-		dst = std::make_shared<sw::node::Vector4>("", src.GetValue());
+		dst = std::make_shared<sw::node::Vector4>(src.GetName(), src.GetValue());
+	}
+	else if (id == bp::GetNodeTypeID<sg::node::Input>())
+	{
+		auto& src = static_cast<const sg::node::Input&>(node);
+		uint32_t type = 0;
+		switch (src.GetType())
+		{
+		case sg::PINS_TEXTURE2D:
+			type = sw::t_tex2d;
+			break;
+		case sg::PINS_VECTOR2:
+			type = sw::t_flt2;
+			break;
+		default:
+			// todo
+			assert(0);
+		}
+		dst = std::make_shared<sw::node::Input>(src.GetName(), type);
 	}
 	else if (id == bp::GetNodeTypeID<sg::node::Add>())
 	{
@@ -326,6 +349,24 @@ sw::NodePtr ShaderWeaver::CreateWeaverNode(const bp::Node& node)
 		dst = std::make_shared<sw::node::Divide>();
 		sw::make_connecting({ CreateInputChild(src, 0), 0 }, { dst, sw::node::Divide::IN_A });
 		sw::make_connecting({ CreateInputChild(src, 1), 0 }, { dst, sw::node::Divide::IN_B });
+	}
+	else if (id == bp::GetNodeTypeID<sg::node::TextureSample>())
+	{
+		auto& src = static_cast<const sg::node::TextureSample&>(node);
+		dst = std::make_shared<sw::node::Tex2DSample>();
+		sw::make_connecting(
+			{ CreateInputChild(src, sg::node::TextureSample::ID_TEX), 0 },
+			{ dst, sw::node::Tex2DSample::IN_TEX }
+		);
+		sw::make_connecting(
+			{ CreateInputChild(src, sg::node::TextureSample::ID_UV), 0 },
+			{ dst, sw::node::Tex2DSample::IN_UV }
+		);
+	}
+	else if (id == bp::GetNodeTypeID<sg::node::TextureObject>())
+	{
+		auto& src = static_cast<const sg::node::TextureObject&>(node);
+		dst = std::make_shared<sw::node::Uniform>("tex", sw::t_tex2d);
 	}
 	else
 	{
