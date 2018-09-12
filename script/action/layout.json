@@ -120,7 +120,7 @@
 					"file": "shadergraph/div.lua",
 					"desc": "div"
 				},
-				
+
 				{
 					"type": "action",
 					"name": "TextureObject",
@@ -132,6 +132,13 @@
 					"name": "TextureSample",
 					"file": "shadergraph/tex_sample.lua",
 					"desc": "tex_sample"
+				},
+
+				{
+					"type": "action",
+					"name": "Input",
+					"file": "shadergraph/input.lua",
+					"desc": "input"
 				}
 			]
 		}
