@@ -346,7 +346,6 @@
     <ClInclude Include="..\..\..\src\script\WxStageCanvas.h" />
     <ClInclude Include="..\..\..\src\script\WxStagePage.h" />
     <ClInclude Include="..\..\..\src\sgraph\MessageID.h" />
-    <ClInclude Include="..\..\..\src\sgraph\ShaderWeaver.h" />
     <ClInclude Include="..\..\..\src\sgraph\WxStageCanvas.h" />
     <ClInclude Include="..\..\..\src\sgraph\WxStagePage.h" />
     <ClInclude Include="..\..\..\src\sgraph\WxToolbarPanel.h" />
@@ -499,7 +498,6 @@
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/script/</ObjectFileName>
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/script/</ObjectFileName>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\sgraph\ShaderWeaver.cpp" />
     <ClCompile Include="..\..\..\src\sgraph\WxStageCanvas.cpp" />
     <ClCompile Include="..\..\..\src\sgraph\WxStagePage.cpp">
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/sgraph/</ObjectFileName>

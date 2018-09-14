@@ -366,9 +366,6 @@
     <ClInclude Include="..\..\..\src\sgraph\MessageID.h">
       <Filter>32.sgraph</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\sgraph\ShaderWeaver.h">
-      <Filter>32.sgraph</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\sgraph\WxStagePage.h">
       <Filter>32.sgraph\view</Filter>
     </ClInclude>
@@ -568,9 +565,6 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\bprint\WxStagePage.cpp">
       <Filter>41.bprint</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\sgraph\ShaderWeaver.cpp">
-      <Filter>32.sgraph</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\sgraph\WxStagePage.cpp">
       <Filter>32.sgraph\view</Filter>
