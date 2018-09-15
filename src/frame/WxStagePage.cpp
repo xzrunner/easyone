@@ -6,9 +6,11 @@
 #include "frame/Application.h"
 #include "frame/typedef.h"
 #include "frame/AppStyle.h"
+#include "frame/WxPreviewPanel.h"
 
 #include <ee0/SubjectMgr.h>
 #include <ee0/MsgHelper.h>
+#include <ee0/WxStageCanvas.h>
 
 #include <guard/check.h>
 #ifndef GAME_OBJ_ECS
@@ -200,6 +202,8 @@ void WxStagePage::InitSubWindow()
 		ui_mgr.GetPane(STR_PREVIEW_PANEL).Show();
 	} else {
 		ui_mgr.GetPane(STR_PREVIEW_PANEL).Hide();
+		auto preview_panel = Blackboard::Instance()->GetPreviewPanel();
+		preview_panel->GetImpl().GetCanvas()->EnableInitiativeUpdate(false);
 	}
 	if (m_app_style & SHOW_WORLD) {
 		ui_mgr.GetPane(STR_WORLD_PANEL).Show();
