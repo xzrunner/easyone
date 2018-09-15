@@ -46,7 +46,7 @@ void EditorMgr::Init(const ee3::CameraMgr& cam_mgr,
 
 	auto& cam3d = cam_mgr.GetCamera(ee3::CameraMgr::CAM_3D);
 	m_cam_drive_op = std::make_shared<ee3::CameraDriveOP>(cam3d, vp, sub_mgr);
-	m_cam_fly_op   = std::make_shared<ee3::CameraFlyOP>(cam3d, sub_mgr);
+	m_cam_fly_op   = std::make_shared<ee3::CameraFlyOP>(&m_stage, cam3d, sub_mgr);
 	m_camera_op = m_cam_drive_op;
 
 	auto select_op = std::make_shared<ee3::mesh::PolySelectOP>(cam, m_stage, vp);

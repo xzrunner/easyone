@@ -142,7 +142,7 @@ void WxStagePage::OnPageInit()
 	preview_panel->GetImpl().SetCanvas(preview_canvas);
 
 	auto preview_op = std::make_shared<ee3::CameraFlyOP>(
-		preview_canvas->GetCamera(), preview_panel->GetSubjectMgr());
+		preview_panel, preview_canvas->GetCamera(), preview_panel->GetSubjectMgr());
 	preview_panel->GetImpl().SetEditOP(preview_op);
 
 	panel->SetSizer(sizer);
