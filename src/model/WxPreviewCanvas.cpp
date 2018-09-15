@@ -42,7 +42,7 @@ void WxPreviewCanvas::DrawForeground() const
 	}
 
 	pt3::RenderParams params;
-	params.mt = m_camera->GetModelViewMat();
+	params.mt = m_camera->GetViewMat();
 	params.type = pt3::RenderParams::DRAW_MESH;
 
 	auto& cmodel     = m_obj->GetUniqueComp<n3::CompModelInst>();
