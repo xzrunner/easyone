@@ -2,7 +2,6 @@
 #include "sgraph/WxToolbarPanel.h"
 #include "sgraph/MessageID.h"
 #include "sgraph/WxToolbarPanel.h"
-#include "sgraph/ShaderWeaver.h"
 
 #include "frame/AppStyle.h"
 #include "frame/Blackboard.h"
@@ -10,6 +9,7 @@
 
 #include <ee0/SubjectMgr.h>
 #include <ee0/MsgHelper.h>
+#include <ee0/WindowContext.h>
 #include <ee3/WxMaterialPreview.h>
 #include <blueprint/Blueprint.h>
 #include <blueprint/CompNode.h>
@@ -18,6 +18,7 @@
 #include <blueprint/NSCompNode.h>
 #include <shadergraph/ShaderGraph.h>
 #include <shadergraph/NodeBuilder.h>
+#include <shadergraph/ShaderWeaver.h>
 #include <shadergraph/node/TextureObject.h>
 
 #include <js/RapidJsonHelper.h>
@@ -27,6 +28,7 @@
 #include <shaderlab/Blackboard.h>
 #include <shaderlab/RenderContext.h>
 #include <painting3/EffectsManager.h>
+#include <painting3/Shader.h>
 #include <node0/SceneNode.h>
 #include <node0/CompComplex.h>
 #include <sx/ResFileHelper.h>
@@ -266,22 +268,57 @@ void WxStagePage::UpdateShader()
 		return;
 	}
 
+	bool dirty = false;
+
 	// use the same render context
-//	m_toolbar->GetPreviewPanel()->GetCanvas()->AddUpdateTask([&]()
-	GetImpl().GetCanvas()->AddUpdateTask([&]()
+	auto& canvas = m_toolbar->GetPreviewPanel()->GetCanvas();
+	canvas->AddUpdateTask([&]()
 	{
 		auto& ccomplex = m_obj->GetSharedComp<n0::CompComplex>();
 		auto& nodes = const_cast<std::vector<n0::SceneNodePtr>&>(ccomplex.GetAllChildren());
-		ShaderWeaver sw(nodes, m_model_type);
-		pt3::EffectsManager::Instance()->SetUserEffect(sw.CreateShader());
+		bp::NodePtr final_node = nullptr;
+		for (auto& node : nodes)
+		{
+			assert(node->HasUniqueComp<bp::CompNode>());
+			auto& bp_node = node->GetUniqueComp<bp::CompNode>().GetNode();
+			assert(bp_node);
+			if (bp_node->TypeName() == m_model_type) {
+				final_node = bp_node;
+			}
+		}
+		assert(final_node);
 
 		// flush shader status
 		auto& shader_mgr = sl::Blackboard::Instance()->GetRenderContext().GetShaderMgr();
 		shader_mgr.SetShader(sl::EXTERN_SHADER);
 		shader_mgr.BindRenderShader(nullptr, sl::EXTERN_SHADER);
 
-		m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
+		sg::ShaderWeaver sw(*final_node);
+		auto& wc = canvas->GetWidnowContext().wc3;
+		std::shared_ptr<ur::Shader> shader = sw.CreateShader(*wc);
+		pt3::EffectsManager::Instance()->SetUserEffect(shader);
+		shader->Use();
+
+		dirty = true;
 	});
+
+	auto& wc = GetImpl().GetCanvas()->GetWidnowContext();
+	bp::UpdateParams params(wc.wc2, wc.wc3);
+	Traverse([&](const ee0::GameObj& obj)->bool
+	{
+		if (obj->HasUniqueComp<bp::CompNode>())
+		{
+			auto& bp_node = obj->GetUniqueComp<bp::CompNode>().GetNode();
+			if (bp_node->Update(params)) {
+				dirty = true;
+			}
+		}
+		return true;
+	});
+
+	if (dirty) {
+		m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
+	}
 }
 
 }
