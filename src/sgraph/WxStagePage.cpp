@@ -20,6 +20,8 @@
 #include <shadergraph/NodeBuilder.h>
 #include <shadergraph/ShaderWeaver.h>
 #include <shadergraph/node/TextureObject.h>
+#include <shadergraph/node/Sprite.h>
+#include <shadergraph/node/Phong.h>
 
 #include <js/RapidJsonHelper.h>
 #include <unirender/VertexAttrib.h>
@@ -293,7 +295,16 @@ void WxStagePage::UpdateShader()
 		shader_mgr.SetShader(sl::EXTERN_SHADER);
 		shader_mgr.BindRenderShader(nullptr, sl::EXTERN_SHADER);
 
-		sg::ShaderWeaver sw(*final_node);
+		sg::ShaderWeaver::VertType vert_type;
+		if (m_model_type == sg::node::Sprite::TYPE_NAME) {
+			vert_type = sg::ShaderWeaver::VERT_SPRITE;
+		} else if (m_model_type == sg::node::Phong::TYPE_NAME) {
+			vert_type = sg::ShaderWeaver::VERT_PHONG;
+		} else {
+			assert(0);
+		}
+
+		sg::ShaderWeaver sw(vert_type, *final_node, true);
 		auto& wc = canvas->GetWidnowContext().wc3;
 		std::shared_ptr<ur::Shader> shader = sw.CreateShader(*wc);
 		pt3::EffectsManager::Instance()->SetUserEffect(shader);
