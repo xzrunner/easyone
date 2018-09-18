@@ -1,8 +1,8 @@
--- create node constant4
+-- create node UV
 
 require "moon.sg"
 
-local node = moon.sg.new_node("sg_constant4")
+local node = moon.sg.new_node("sg_uv")
 if node then
 	node:set_pos(moon.mouse.get_position())
 end

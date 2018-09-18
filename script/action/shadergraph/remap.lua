@@ -1,8 +1,8 @@
--- create node constant3
+-- create node Remap
 
 require "moon.sg"
 
-local node = moon.sg.new_node("sg_constant3")
+local node = moon.sg.new_node("sg_remap")
 if node then
 	node:set_pos(moon.mouse.get_position())
 end

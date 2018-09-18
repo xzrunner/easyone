@@ -72,74 +72,123 @@
 			"children":
 			[
 				{
-					"type": "action",
-					"name": "Constant1",
-					"file": "shadergraph/constant1.lua",
-					"desc": "constant1"
-				},
-				{
-					"type": "action",
-					"name": "Constant2",
-					"file": "shadergraph/constant2.lua",
-					"desc": "constant2"
-				},
-				{
-					"type": "action",
-					"name": "Constant3",
-					"file": "shadergraph/constant3.lua",
-					"desc": "constant3"
-				},
-				{
-					"type": "action",
-					"name": "Constant4",
-					"file": "shadergraph/constant4.lua",
-					"desc": "constant4"
-				},
-
-				{
-					"type": "action",
-					"name": "Add",
-					"file": "shadergraph/add.lua",
-					"desc": "add"
-				},
-				{
-					"type": "action",
-					"name": "Subtract",
-					"file": "shadergraph/sub.lua",
-					"desc": "sub"
-				},
-				{
-					"type": "action",
-					"name": "Multiply",
-					"file": "shadergraph/mul.lua",
-					"desc": "mul"
-				},
-				{
-					"type": "action",
-					"name": "Divide",
-					"file": "shadergraph/div.lua",
-					"desc": "div"
-				},
-
-				{
-					"type": "action",
-					"name": "TextureObject",
-					"file": "shadergraph/tex_obj.lua",
-					"desc": "tex_obj"
-				},
-				{
-					"type": "action",
-					"name": "TextureSample",
-					"file": "shadergraph/tex_sample.lua",
-					"desc": "tex_sample"
-				},
-
-				{
-					"type": "action",
+					"type": "menu",
 					"name": "Input",
-					"file": "shadergraph/input.lua",
-					"desc": "input"
+					"children":
+					[
+						{
+							"type": "action",
+							"name": "Vector1",
+							"file": "shadergraph/vec1.lua",
+							"desc": "vector1"
+						},
+						{
+							"type": "action",
+							"name": "Vector2",
+							"file": "shadergraph/vec2.lua",
+							"desc": "vector2"
+						},
+						{
+							"type": "action",
+							"name": "Vector3",
+							"file": "shadergraph/vec3.lua",
+							"desc": "vector3"
+						},
+						{
+							"type": "action",
+							"name": "Vector4",
+							"file": "shadergraph/vec4.lua",
+							"desc": "vector4"
+						},
+						{
+							"type": "action",
+							"name": "Time",
+							"file": "shadergraph/time.lua",
+							"desc": "time"
+						},
+						{
+							"type": "action",
+							"name": "UV",
+							"file": "shadergraph/uv.lua",
+							"desc": "uv"
+						},
+						{
+							"type": "action",
+							"name": "Tex2DAsset",
+							"file": "shadergraph/tex2d_asset.lua",
+							"desc": "tex2d_asset"
+						},
+						{
+							"type": "action",
+							"name": "SampleTex2D",
+							"file": "shadergraph/sample_tex2d.lua",
+							"desc": "sample_tex2d"
+						}
+					]
+				},
+				{
+					"type": "menu",
+					"name": "Math",
+					"children":
+					[
+						{
+							"type": "action",
+							"name": "Add",
+							"file": "shadergraph/add.lua",
+							"desc": "add"
+						},
+						{
+							"type": "action",
+							"name": "Subtract",
+							"file": "shadergraph/sub.lua",
+							"desc": "sub"
+						},
+						{
+							"type": "action",
+							"name": "Multiply",
+							"file": "shadergraph/mul.lua",
+							"desc": "mul"
+						},
+						{
+							"type": "action",
+							"name": "Divide",
+							"file": "shadergraph/div.lua",
+							"desc": "div"
+						},
+						{
+							"type": "action",
+							"name": "Lerp",
+							"file": "shadergraph/lerp.lua",
+							"desc": "lerp"
+						},
+						{
+							"type": "action",
+							"name": "InverseLerp",
+							"file": "shadergraph/inv_lerp.lua",
+							"desc": "inverse_lerp"
+						},
+						{
+							"type": "action",
+							"name": "Remap",
+							"file": "shadergraph/remap.lua",
+							"desc": "remap"
+						}
+					]
+				},
+				{
+					"type": "menu",
+					"name": "Utility",
+					"children":
+					[
+						{
+							"type": "action",
+							"name": "Input",
+							"file": "shadergraph/input.lua",
+							"desc": "input"
+						}
+					]
 				}
+
 			]
 		}
 	]
