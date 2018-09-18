@@ -147,6 +147,9 @@
     <ProjectReference Include="..\..\..\ext\easyeditor3\platform\msvc\projects\easyeditor3.vcxproj">
       <Project>{ceebd91e-9297-47ea-aded-68d791ba6fd4}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\painting0\platform\msvc\projects\painting0.vcxproj">
+      <Project>{ac2cad0c-553d-4fb9-a1a8-c206e59e021a}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\ext\shadergraph\platform\msvc\projects\shadergraph.vcxproj">
       <Project>{ec5783f3-431b-4ff0-bc6d-00137cac8810}</Project>
     </ProjectReference>
