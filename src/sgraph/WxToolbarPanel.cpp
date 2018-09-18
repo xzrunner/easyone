@@ -26,7 +26,7 @@ WxToolbarPanel::WxToolbarPanel(wxWindow* parent, const ee0::SubjectMgrPtr& sub_m
 {
 	InitLayout(rc);
 
-	SetModelType(sg::node::Phong::TYPE_NAME);
+	SetModelType(sg::node::Phong::GetClassName());
 
 	sub_mgr->RegisterObserver(ee0::MSG_NODE_SELECTION_INSERT, this);
 }
@@ -76,10 +76,10 @@ void WxToolbarPanel::OnModelTypeChange(wxCommandEvent& event)
 	switch (event.GetSelection())
 	{
 	case 0:
-		SetModelType(sg::node::Sprite::TYPE_NAME);
+		SetModelType(sg::node::Sprite::GetClassName());
 		break;
 	case 1:
-		SetModelType(sg::node::Phong::TYPE_NAME);
+		SetModelType(sg::node::Phong::GetClassName());
 		break;
 	}
 }

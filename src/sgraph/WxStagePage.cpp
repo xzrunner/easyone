@@ -284,7 +284,7 @@ void WxStagePage::UpdateShader()
 			assert(node->HasUniqueComp<bp::CompNode>());
 			auto& bp_node = node->GetUniqueComp<bp::CompNode>().GetNode();
 			assert(bp_node);
-			if (bp_node->TypeName() == m_model_type) {
+			if (bp_node->GetClassInfo().GetClassName() == m_model_type) {
 				final_node = bp_node;
 			}
 		}
@@ -296,15 +296,15 @@ void WxStagePage::UpdateShader()
 		shader_mgr.BindRenderShader(nullptr, sl::EXTERN_SHADER);
 
 		sg::ShaderWeaver::VertType vert_type;
-		if (m_model_type == sg::node::Sprite::TYPE_NAME) {
+		if (m_model_type == sg::node::Sprite::GetClassName()) {
 			vert_type = sg::ShaderWeaver::VERT_SPRITE;
-		} else if (m_model_type == sg::node::Phong::TYPE_NAME) {
+		} else if (m_model_type == sg::node::Phong::GetClassName()) {
 			vert_type = sg::ShaderWeaver::VERT_PHONG;
 		} else {
 			assert(0);
 		}
 
-		sg::ShaderWeaver sw(vert_type, *final_node, true);
+		sg::ShaderWeaver sw(vert_type, *final_node);
 		auto& wc = canvas->GetWidnowContext().wc3;
 		std::shared_ptr<ur::Shader> shader = sw.CreateShader(*wc);
 		pt3::EffectsManager::Instance()->SetUserEffect(shader);
