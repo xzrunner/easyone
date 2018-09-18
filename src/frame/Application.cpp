@@ -135,7 +135,7 @@ void Application::LoadFromFile(const std::string& filepath)
 		new_type = PAGE_QUAKE;
 	}
 
-	if (old_type != new_type || !page->GetFilepath().empty()) {
+	if (old_type != new_type) {
 		page = StagePageFactory::Create(ECS_WORLD_SELF_VAR new_type, m_stage);
 		page->GetSubjectMgr()->NotifyObservers(ee0::MSG_STAGE_PAGE_ON_SHOW);
 	}
