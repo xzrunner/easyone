@@ -5,6 +5,9 @@
 #include <ee0/SubjectMgr.h>
 #include <blueprint/CompNode.h>
 #include <blueprint/Node.h>
+#include <blueprint/MessageID.h>
+#include <blueprint/NodeHelper.h>
+#include <shadergraph/node/Time.h>
 
 #include <node0/SceneNode.h>
 #include <node2/CompBoundingBox.h>
@@ -23,31 +26,41 @@ bool WxStageCanvas::OnUpdate()
 {
 	WxStageCanvas2D::OnUpdate();
 
-	bool dirty = false;
+	bool bp_dirty = false;
+	bool canvas_dirty = false;
 	m_stage->Traverse([&](const ee0::GameObj& obj)->bool
 	{
 		if (obj->HasUniqueComp<bp::CompNode>())
 		{
 			auto& bp_node = obj->GetUniqueComp<bp::CompNode>().GetNode();
-			if (bp_node->IsLifeDeleteLater()) {
+			if (bp_node->IsLifeDeleteLater())
+			{
 				ee0::MsgHelper::DeleteNode(*m_stage->GetSubjectMgr(), obj);
-				dirty = true;
+				bp_dirty = true;
+				canvas_dirty = true;
 				return false;
 			}
-			if (bp_node->IsSizeChanging()) {
+			if (bp_node->IsSizeChanging())
+			{
 				bp_node->SetSizeChanging(false);
 				auto& st = bp_node->GetStyle();
 				sm::rect sz(st.width, st.height);
 				obj->GetUniqueComp<n2::CompBoundingBox>().SetSize(*obj, sz);
 			}
+			if (!canvas_dirty) {
+				canvas_dirty = bp::NodeHelper::HasInputNode<sg::node::Time>(*bp_node);
+			}
 		}
 		return true;
 	});
 
-	if (dirty) {
-		m_stage->GetSubjectMgr()->NotifyObservers(ee0::MSG_UPDATE_NODES);
+	if (bp_dirty) {
+		m_stage->GetSubjectMgr()->NotifyObservers(bp::MSG_BLUE_PRINT_CHANGED);
 	}
-	return dirty;
+	if (canvas_dirty) {
+		m_stage->GetSubjectMgr()->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
+	}
+	return canvas_dirty;
 }
 
 }
