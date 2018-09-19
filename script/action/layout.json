@@ -73,6 +73,19 @@
 			[
 				{
 					"type": "menu",
+					"name": "Artistic",
+					"children":
+					[
+						{
+							"type": "action",
+							"name": "Gray",
+							"file": "shadergraph/gray.lua",
+							"desc": "gray"
+						}
+					]
+				},
+				{
+					"type": "menu",
 					"name": "Input",
 					"children":
 					[
@@ -177,6 +190,25 @@
 				},
 				{
 					"type": "menu",
+					"name": "Procedural",
+					"children":
+					[
+						{
+							"type": "action",
+							"name": "SimpleNoise",
+							"file": "shadergraph/polygon.lua",
+							"desc": "simple_noise"
+						},
+						{
+							"type": "action",
+							"name": "Polygon",
+							"file": "shadergraph/polygon.lua",
+							"desc": "polygon"
+						}
+					]
+				},
+				{
+					"type": "menu",
 					"name": "Utility",
 					"children":
 					[
@@ -187,8 +219,26 @@
 							"desc": "input"
 						}
 					]
+				},
+				{
+					"type": "menu",
+					"name": "UV",
+					"children":
+					[
+						{
+							"type": "action",
+							"name": "Rotate",
+							"file": "shadergraph/rotate.lua",
+							"desc": "rotate"
+						},
+						{
+							"type": "action",
+							"name": "Twirl",
+							"file": "shadergraph/twirl.lua",
+							"desc": "twirl"
+						}
+					]
 				}
-
 			]
 		}
 	]
