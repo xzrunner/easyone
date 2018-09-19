@@ -196,8 +196,14 @@
 						{
 							"type": "action",
 							"name": "SimpleNoise",
-							"file": "shadergraph/polygon.lua",
+							"file": "shadergraph/simple_noise.lua",
 							"desc": "simple_noise"
+						},
+						{
+							"type": "action",
+							"name": "Voronoi",
+							"file": "shadergraph/voronoi.lua",
+							"desc": "simple_voronoi"
 						},
 						{
 							"type": "action",
