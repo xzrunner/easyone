@@ -195,6 +195,18 @@
 					[
 						{
 							"type": "action",
+							"name": "Checkerboard",
+							"file": "shadergraph/checkerboard.lua",
+							"desc": "checkerboard"
+						},
+						{
+							"type": "action",
+							"name": "GradientNoise",
+							"file": "shadergraph/gradient_noise.lua",
+							"desc": "gradient_noise"
+						},
+						{
+							"type": "action",
 							"name": "SimpleNoise",
 							"file": "shadergraph/simple_noise.lua",
 							"desc": "simple_noise"
@@ -207,9 +219,27 @@
 						},
 						{
 							"type": "action",
+							"name": "Ellipse",
+							"file": "shadergraph/ellipse.lua",
+							"desc": "ellipse"
+						},
+						{
+							"type": "action",
 							"name": "Polygon",
 							"file": "shadergraph/polygon.lua",
 							"desc": "polygon"
+						},
+						{
+							"type": "action",
+							"name": "Rectangle",
+							"file": "shadergraph/rectangle.lua",
+							"desc": "rectangle"
+						},
+						{
+							"type": "action",
+							"name": "RoundedRectangle",
+							"file": "shadergraph/rounded_rect.lua",
+							"desc": "rounded_rect"
 						}
 					]
 				},
