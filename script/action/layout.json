@@ -78,9 +78,39 @@
 					[
 						{
 							"type": "action",
+							"name": "ColorAddMul",
+							"file": "shadergraph/col_addmul.lua",
+							"desc": "col_addmul"
+						},
+						{
+							"type": "action",
+							"name": "ColorMap",
+							"file": "shadergraph/col_map.lua",
+							"desc": "col_map"
+						},
+						{
+							"type": "action",
+							"name": "ReplaceColor",
+							"file": "shadergraph/replace_col.lua",
+							"desc": "replace_col"
+						},
+						{
+							"type": "action",
 							"name": "Gray",
 							"file": "shadergraph/gray.lua",
 							"desc": "gray"
+						},
+						{
+							"type": "action",
+							"name": "ChannelMask",
+							"file": "shadergraph/channel_mask.lua",
+							"desc": "channel_mask"
+						},
+						{
+							"type": "action",
+							"name": "ColorMask",
+							"file": "shadergraph/col_mask.lua",
+							"desc": "col_mask"
 						}
 					]
 				},
@@ -167,6 +197,42 @@
 							"name": "Divide",
 							"file": "shadergraph/div.lua",
 							"desc": "div"
+						},
+						{
+							"type": "action",
+							"name": "Power",
+							"file": "shadergraph/power.lua",
+							"desc": "dipower"
+						},
+						{
+							"type": "action",
+							"name": "SquareRoot",
+							"file": "shadergraph/square_root.lua",
+							"desc": "square_root"
+						},
+						{
+							"type": "action",
+							"name": "Absolute",
+							"file": "shadergraph/abs.lua",
+							"desc": "abs"
+						},
+						{
+							"type": "action",
+							"name": "Exponential",
+							"file": "shadergraph/exp.lua",
+							"desc": "exp"
+						},
+						{
+							"type": "action",
+							"name": "Length",
+							"file": "shadergraph/length.lua",
+							"desc": "length"
+						},
+						{
+							"type": "action",
+							"name": "Log",
+							"file": "shadergraph/log.lua",
+							"desc": "log"
 						},
 						{
 							"type": "action",
