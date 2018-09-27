@@ -116,6 +116,37 @@
 				},
 				{
 					"type": "menu",
+					"name": "Channel",
+					"children":
+					[
+						{
+							"type": "action",
+							"name": "Combine",
+							"file": "shadergraph/combine.lua",
+							"desc": "combine"
+						},
+						{
+							"type": "action",
+							"name": "Flip",
+							"file": "shadergraph/flip.lua",
+							"desc": "flip"
+						},
+						{
+							"type": "action",
+							"name": "Split",
+							"file": "shadergraph/split.lua",
+							"desc": "split"
+						},
+						{
+							"type": "action",
+							"name": "Swizzle",
+							"file": "shadergraph/swizzle.lua",
+							"desc": "swizzle"
+						}
+					]
+				},
+				{
+					"type": "menu",
 					"name": "Input",
 					"children":
 					[
@@ -233,6 +264,42 @@
 							"name": "Log",
 							"file": "shadergraph/log.lua",
 							"desc": "log"
+						},
+						{
+							"type": "action",
+							"name": "Modulo",
+							"file": "shadergraph/mod.lua",
+							"desc": "mod"
+						},
+						{
+							"type": "action",
+							"name": "Negate",
+							"file": "shadergraph/neg.lua",
+							"desc": "neg"
+						},
+						{
+							"type": "action",
+							"name": "Normalize",
+							"file": "shadergraph/norm.lua",
+							"desc": "norm"
+						},
+						{
+							"type": "action",
+							"name": "Posterize",
+							"file": "shadergraph/posterize.lua",
+							"desc": "posterize"
+						},
+						{
+							"type": "action",
+							"name": "Reciprocal",
+							"file": "shadergraph/reciprocal.lua",
+							"desc": "reciprocal"
+						},
+						{
+							"type": "action",
+							"name": "ReciprocalSquareRoot",
+							"file": "shadergraph/reciprocal_square_root.lua",
+							"desc": "reciprocal_square_root"
 						},
 						{
 							"type": "action",
