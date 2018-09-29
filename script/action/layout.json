@@ -90,9 +90,45 @@
 						},
 						{
 							"type": "action",
+							"name": "Contrast",
+							"file": "shadergraph/contrast.lua",
+							"desc": "contrast"
+						},
+						{
+							"type": "action",
+							"name": "Hue",
+							"file": "shadergraph/hue.lua",
+							"desc": "hue"
+						},
+						{
+							"type": "action",
+							"name": "InvertColors",
+							"file": "shadergraph/invert_colors.lua",
+							"desc": "invert_colors"
+						},
+						{
+							"type": "action",
 							"name": "ReplaceColor",
 							"file": "shadergraph/replace_col.lua",
 							"desc": "replace_col"
+						},
+						{
+							"type": "action",
+							"name": "Saturation",
+							"file": "shadergraph/saturation.lua",
+							"desc": "saturation"
+						},
+						{
+							"type": "action",
+							"name": "WhiteBalance",
+							"file": "shadergraph/white_balance.lua",
+							"desc": "white_balance"
+						},
+						{
+							"type": "action",
+							"name": "Blend",
+							"file": "shadergraph/blend.lua",
+							"desc": "blend"
 						},
 						{
 							"type": "action",
@@ -111,6 +147,36 @@
 							"name": "ColorMask",
 							"file": "shadergraph/col_mask.lua",
 							"desc": "col_mask"
+						},
+						{
+							"type": "action",
+							"name": "NormalBlend",
+							"file": "shadergraph/normal_blend.lua",
+							"desc": "normal_blend"
+						},
+						{
+							"type": "action",
+							"name": "NormalCreate",
+							"file": "shadergraph/normal_create.lua",
+							"desc": "normal_create"
+						},
+						{
+							"type": "action",
+							"name": "NormalStrength",
+							"file": "shadergraph/normal_strength.lua",
+							"desc": "normal_strength"
+						},
+						{
+							"type": "action",
+							"name": "NormalUnpack",
+							"file": "shadergraph/normal_unpack.lua",
+							"desc": "normal_unpack"
+						},
+						{
+							"type": "action",
+							"name": "ColorspaceConversion",
+							"file": "shadergraph/col_conv.lua",
+							"desc": "col_conv"
 						}
 					]
 				},
@@ -152,6 +218,12 @@
 					[
 						{
 							"type": "action",
+							"name": "Boolean",
+							"file": "shadergraph/boolean.lua",
+							"desc": "boolean"
+						},
+						{
+							"type": "action",
 							"name": "Vector1",
 							"file": "shadergraph/vec1.lua",
 							"desc": "vector1"
@@ -188,6 +260,24 @@
 						},
 						{
 							"type": "action",
+							"name": "Matrix2",
+							"file": "shadergraph/mat2.lua",
+							"desc": "mat2"
+						},
+						{
+							"type": "action",
+							"name": "Matrix3",
+							"file": "shadergraph/mat3.lua",
+							"desc": "mat3"
+						},
+						{
+							"type": "action",
+							"name": "Matrix4",
+							"file": "shadergraph/mat4.lua",
+							"desc": "mat4"
+						},																		
+						{
+							"type": "action",
 							"name": "Tex2DAsset",
 							"file": "shadergraph/tex2d_asset.lua",
 							"desc": "tex2d_asset"
@@ -206,118 +296,409 @@
 					"children":
 					[
 						{
-							"type": "action",
-							"name": "Add",
-							"file": "shadergraph/add.lua",
-							"desc": "add"
+							"type": "menu",
+							"name": "Basic",
+							"children":
+							[
+								{
+									"type": "action",
+									"name": "Add",
+									"file": "shadergraph/add.lua",
+									"desc": "add"
+								},
+								{
+									"type": "action",
+									"name": "Subtract",
+									"file": "shadergraph/sub.lua",
+									"desc": "sub"
+								},
+								{
+									"type": "action",
+									"name": "Multiply",
+									"file": "shadergraph/mul.lua",
+									"desc": "mul"
+								},
+								{
+									"type": "action",
+									"name": "Divide",
+									"file": "shadergraph/div.lua",
+									"desc": "div"
+								},
+								{
+									"type": "action",
+									"name": "Power",
+									"file": "shadergraph/power.lua",
+									"desc": "dipower"
+								},
+								{
+									"type": "action",
+									"name": "SquareRoot",
+									"file": "shadergraph/square_root.lua",
+									"desc": "square_root"
+								}
+							]
+						},						
+						{
+							"type": "menu",
+							"name": "Advanced",
+							"children":
+							[
+								{
+									"type": "action",
+									"name": "Absolute",
+									"file": "shadergraph/abs.lua",
+									"desc": "abs"
+								},
+								{
+									"type": "action",
+									"name": "Exponential",
+									"file": "shadergraph/exp.lua",
+									"desc": "exp"
+								},
+								{
+									"type": "action",
+									"name": "Length",
+									"file": "shadergraph/length.lua",
+									"desc": "length"
+								},
+								{
+									"type": "action",
+									"name": "Log",
+									"file": "shadergraph/log.lua",
+									"desc": "log"
+								},
+								{
+									"type": "action",
+									"name": "Modulo",
+									"file": "shadergraph/mod.lua",
+									"desc": "mod"
+								},
+								{
+									"type": "action",
+									"name": "Negate",
+									"file": "shadergraph/neg.lua",
+									"desc": "neg"
+								},
+								{
+									"type": "action",
+									"name": "Normalize",
+									"file": "shadergraph/norm.lua",
+									"desc": "norm"
+								},
+								{
+									"type": "action",
+									"name": "Posterize",
+									"file": "shadergraph/posterize.lua",
+									"desc": "posterize"
+								},
+								{
+									"type": "action",
+									"name": "Reciprocal",
+									"file": "shadergraph/reciprocal.lua",
+									"desc": "reciprocal"
+								},
+								{
+									"type": "action",
+									"name": "ReciprocalSquareRoot",
+									"file": "shadergraph/reciprocal_square_root.lua",
+									"desc": "reciprocal_square_root"
+								}
+							]
 						},
 						{
-							"type": "action",
-							"name": "Subtract",
-							"file": "shadergraph/sub.lua",
-							"desc": "sub"
+							"type": "menu",
+							"name": "Derivative",
+							"children":
+							[
+								{
+									"type": "action",
+									"name": "DDX",
+									"file": "shadergraph/ddx.lua",
+									"desc": "ddx"
+								},
+								{
+									"type": "action",
+									"name": "DDY",
+									"file": "shadergraph/ddy.lua",
+									"desc": "ddy"
+								},
+								{
+									"type": "action",
+									"name": "DDXY",
+									"file": "shadergraph/ddxy.lua",
+									"desc": "ddxy"
+								}
+							]
 						},
 						{
-							"type": "action",
-							"name": "Multiply",
-							"file": "shadergraph/mul.lua",
-							"desc": "mul"
+							"type": "menu",
+							"name": "Interplation",
+							"children":
+							[
+								{
+									"type": "action",
+									"name": "Lerp",
+									"file": "shadergraph/lerp.lua",
+									"desc": "lerp"
+								},
+								{
+									"type": "action",
+									"name": "InverseLerp",
+									"file": "shadergraph/inv_lerp.lua",
+									"desc": "inverse_lerp"
+								},
+								{
+									"type": "action",
+									"name": "Smoothstep",
+									"file": "shadergraph/smoothstep.lua",
+									"desc": "smoothstep"
+								}
+							]
 						},
 						{
-							"type": "action",
-							"name": "Divide",
-							"file": "shadergraph/div.lua",
-							"desc": "div"
+							"type": "menu",
+							"name": "Matrix",
+							"children":
+							[
+								{
+									"type": "action",
+									"name": "MatrixConstruction",
+									"file": "shadergraph/mat_construction.lua",
+									"desc": "mat_construction"
+								},
+								{
+									"type": "action",
+									"name": "MatrixDeterminant",
+									"file": "shadergraph/mat_determinant.lua",
+									"desc": "mat_determinant"
+								},
+								{
+									"type": "action",
+									"name": "MatrixSplit",
+									"file": "shadergraph/mat_split.lua",
+									"desc": "mat_split"
+								},
+								{
+									"type": "action",
+									"name": "MatrixTranspose",
+									"file": "shadergraph/mat_transpose.lua",
+									"desc": "mat_transpose"
+								}
+							]
 						},
 						{
-							"type": "action",
-							"name": "Power",
-							"file": "shadergraph/power.lua",
-							"desc": "dipower"
+							"type": "menu",
+							"name": "Range",
+							"children":
+							[
+								{
+									"type": "action",
+									"name": "Clamp",
+									"file": "shadergraph/clamp.lua",
+									"desc": "clamp"
+								},
+								{
+									"type": "action",
+									"name": "Fraction",
+									"file": "shadergraph/fraction.lua",
+									"desc": "fraction"
+								},
+								{
+									"type": "action",
+									"name": "Maximum",
+									"file": "shadergraph/max.lua",
+									"desc": "max"
+								},
+								{
+									"type": "action",
+									"name": "Minimum",
+									"file": "shadergraph/min.lua",
+									"desc": "min"
+								},
+								{
+									"type": "action",
+									"name": "OneMinus",
+									"file": "shadergraph/one_minus.lua",
+									"desc": "one_minus"
+								},
+								{
+									"type": "action",
+									"name": "RandomRange",
+									"file": "shadergraph/random_range.lua",
+									"desc": "random_range"
+								},
+								{
+									"type": "action",
+									"name": "Remap",
+									"file": "shadergraph/remap.lua",
+									"desc": "remap"
+								},
+								{
+									"type": "action",
+									"name": "Saturate",
+									"file": "shadergraph/saturate.lua",
+									"desc": "saturate"
+								}
+							]
 						},
 						{
-							"type": "action",
-							"name": "SquareRoot",
-							"file": "shadergraph/square_root.lua",
-							"desc": "square_root"
+							"type": "menu",
+							"name": "Round",
+							"children":
+							[
+								{
+									"type": "action",
+									"name": "Ceiling",
+									"file": "shadergraph/ceiling.lua",
+									"desc": "ceiling"
+								},
+								{
+									"type": "action",
+									"name": "Floor",
+									"file": "shadergraph/floor.lua",
+									"desc": "floor"
+								},
+								{
+									"type": "action",
+									"name": "Round",
+									"file": "shadergraph/round.lua",
+									"desc": "round"
+								},
+								{
+									"type": "action",
+									"name": "Sign",
+									"file": "shadergraph/sign.lua",
+									"desc": "sign"
+								},
+								{
+									"type": "action",
+									"name": "Step",
+									"file": "shadergraph/step.lua",
+									"desc": "step"
+								},
+								{
+									"type": "action",
+									"name": "Truncate",
+									"file": "shadergraph/truncate.lua",
+									"desc": "truncate"
+								}
+							]
 						},
 						{
-							"type": "action",
-							"name": "Absolute",
-							"file": "shadergraph/abs.lua",
-							"desc": "abs"
+							"type": "menu",
+							"name": "Trigonometry",
+							"children":
+							[
+								{
+									"type": "action",
+									"name": "Arccosine",
+									"file": "shadergraph/arccosine.lua",
+									"desc": "arccosine"
+								},
+								{
+									"type": "action",
+									"name": "Arcsine",
+									"file": "shadergraph/arcsine.lua",
+									"desc": "arcsine"
+								},
+								{
+									"type": "action",
+									"name": "Arctangent",
+									"file": "shadergraph/arctangent.lua",
+									"desc": "arctangent"
+								},
+								{
+									"type": "action",
+									"name": "Arctangent2",
+									"file": "shadergraph/arctangent2.lua",
+									"desc": "arctangent2"
+								},
+								{
+									"type": "action",
+									"name": "Cosine",
+									"file": "shadergraph/cosine.lua",
+									"desc": "cosine"
+								},
+								{
+									"type": "action",
+									"name": "DegreesToRadians",
+									"file": "shadergraph/degrees_to_radians.lua",
+									"desc": "degrees_to_radians"
+								},
+								{
+									"type": "action",
+									"name": "HyperbolicCosine",
+									"file": "shadergraph/hyperbolic_cosine.lua",
+									"desc": "hyperbolic_cosine"
+								},
+								{
+									"type": "action",
+									"name": "HyperbolicSine",
+									"file": "shadergraph/hyperbolic_sine.lua",
+									"desc": "hyperbolic_sine"
+								},
+								{
+									"type": "action",
+									"name": "HyperbolicTangent",
+									"file": "shadergraph/hyperbolic_tangent.lua",
+									"desc": "hyperbolic_tangent"
+								},
+								{
+									"type": "action",
+									"name": "RadiansToDegrees",
+									"file": "shadergraph/radians_to_degrees.lua",
+									"desc": "radians_to_degrees"
+								},
+								{
+									"type": "action",
+									"name": "Sine",
+									"file": "shadergraph/sine.lua",
+									"desc": "sine"
+								},
+								{
+									"type": "action",
+									"name": "Tangent",
+									"file": "shadergraph/tangent.lua",
+									"desc": "tangent"
+								}
+							]
 						},
 						{
-							"type": "action",
-							"name": "Exponential",
-							"file": "shadergraph/exp.lua",
-							"desc": "exp"
-						},
-						{
-							"type": "action",
-							"name": "Length",
-							"file": "shadergraph/length.lua",
-							"desc": "length"
-						},
-						{
-							"type": "action",
-							"name": "Log",
-							"file": "shadergraph/log.lua",
-							"desc": "log"
-						},
-						{
-							"type": "action",
-							"name": "Modulo",
-							"file": "shadergraph/mod.lua",
-							"desc": "mod"
-						},
-						{
-							"type": "action",
-							"name": "Negate",
-							"file": "shadergraph/neg.lua",
-							"desc": "neg"
-						},
-						{
-							"type": "action",
-							"name": "Normalize",
-							"file": "shadergraph/norm.lua",
-							"desc": "norm"
-						},
-						{
-							"type": "action",
-							"name": "Posterize",
-							"file": "shadergraph/posterize.lua",
-							"desc": "posterize"
-						},
-						{
-							"type": "action",
-							"name": "Reciprocal",
-							"file": "shadergraph/reciprocal.lua",
-							"desc": "reciprocal"
-						},
-						{
-							"type": "action",
-							"name": "ReciprocalSquareRoot",
-							"file": "shadergraph/reciprocal_square_root.lua",
-							"desc": "reciprocal_square_root"
-						},
-						{
-							"type": "action",
-							"name": "Lerp",
-							"file": "shadergraph/lerp.lua",
-							"desc": "lerp"
-						},
-						{
-							"type": "action",
-							"name": "InverseLerp",
-							"file": "shadergraph/inv_lerp.lua",
-							"desc": "inverse_lerp"
-						},
-						{
-							"type": "action",
-							"name": "Remap",
-							"file": "shadergraph/remap.lua",
-							"desc": "remap"
+							"type": "menu",
+							"name": "Vector",
+							"children":
+							[
+								{
+									"type": "action",
+									"name": "CrossProduct",
+									"file": "shadergraph/cross_product.lua",
+									"desc": "cross_product"
+								},
+								{
+									"type": "action",
+									"name": "Distance",
+									"file": "shadergraph/distance.lua",
+									"desc": "distance"
+								},
+								{
+									"type": "action",
+									"name": "DotProduct",
+									"file": "shadergraph/dot_product.lua",
+									"desc": "dot_product"
+								},
+								{
+									"type": "action",
+									"name": "Projection",
+									"file": "shadergraph/projection.lua",
+									"desc": "projection"
+								},
+								{
+									"type": "action",
+									"name": "Rejection",
+									"file": "shadergraph/rejection.lua",
+									"desc": "rejection"
+								}
+							]
 						}
 					]
 				},
@@ -386,6 +767,36 @@
 							"name": "Input",
 							"file": "shadergraph/input.lua",
 							"desc": "input"
+						},
+						{
+							"type": "action",
+							"name": "And",
+							"file": "shadergraph/and.lua",
+							"desc": "and"
+						},
+						{
+							"type": "action",
+							"name": "Or",
+							"file": "shadergraph/or.lua",
+							"desc": "or"
+						},
+						{
+							"type": "action",
+							"name": "Not",
+							"file": "shadergraph/not.lua",
+							"desc": "not"
+						},
+						{
+							"type": "action",
+							"name": "Branch",
+							"file": "shadergraph/branch.lua",
+							"desc": "branch"
+						},
+						{
+							"type": "action",
+							"name": "Comparison",
+							"file": "shadergraph/comparison.lua",
+							"desc": "comparison"
 						}
 					]
 				},
@@ -396,9 +807,39 @@
 					[
 						{
 							"type": "action",
+							"name": "Flipbook",
+							"file": "shadergraph/flipbook.lua",
+							"desc": "flipbook"
+						},
+						{
+							"type": "action",
+							"name": "PolarCoordinates",
+							"file": "shadergraph/polar_coord.lua",
+							"desc": "polar_coord"
+						},
+						{
+							"type": "action",
+							"name": "RadialShear",
+							"file": "shadergraph/radial_shear.lua",
+							"desc": "radial_shear"
+						},
+						{
+							"type": "action",
 							"name": "Rotate",
 							"file": "shadergraph/rotate.lua",
 							"desc": "rotate"
+						},
+						{
+							"type": "action",
+							"name": "Spherize",
+							"file": "shadergraph/spherize.lua",
+							"desc": "spherize"
+						},
+						{
+							"type": "action",
+							"name": "TilingAndOffset",
+							"file": "shadergraph/tiling_and_offset.lua",
+							"desc": "tiling_and_offset"
 						},
 						{
 							"type": "action",
