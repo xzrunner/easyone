@@ -178,3 +178,6 @@
 [submodule "ext/shaderweaver"]
 	path = ext/shaderweaver
 	url = git@github.com:xzrunner/shaderweaver.git
+[submodule "ext/prototyping"]
+	path = ext/prototyping
+	url = git@github.com:xzrunner/prototyping.git
