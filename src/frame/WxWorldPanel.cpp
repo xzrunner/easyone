@@ -28,22 +28,6 @@
 #include <wx/srchctrl.h>
 #include <wx/filedlg.h>
 
-namespace
-{
-
-static const std::vector<std::pair<uint32_t, std::string>> GAME_OBJ_LIST =
-{
-	std::make_pair(eone::GAME_OBJ_IMAGE,      "Image"),
-	std::make_pair(eone::GAME_OBJ_TEXT,       "Text"),
-	std::make_pair(eone::GAME_OBJ_MASK,       "Mask"),
-	std::make_pair(eone::GAME_OBJ_MESH,       "Mesh"),
-	std::make_pair(eone::GAME_OBJ_SCALE9,     "Scale9"),
-	std::make_pair(eone::GAME_OBJ_ANIM,       "Anim"),
-	std::make_pair(eone::GAME_OBJ_PARTICLE3D, "Particle3d"),
-};
-
-}
-
 namespace eone
 {
 
@@ -55,7 +39,7 @@ WxWorldPanel::WxWorldPanel(wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr,
 	InitLayout(sub_mgr, ECS_WORLD_VAR root_obj);
 }
 
-void WxWorldPanel::InitLayout(const ee0::SubjectMgrPtr& sub_mgr, 
+void WxWorldPanel::InitLayout(const ee0::SubjectMgrPtr& sub_mgr,
 	                          ECS_WORLD_PARAM const ee0::GameObj& root_obj)
 {
 	wxSizer* top_sizer = new wxBoxSizer(wxVERTICAL);
@@ -65,11 +49,11 @@ void WxWorldPanel::InitLayout(const ee0::SubjectMgrPtr& sub_mgr,
 		wxSizer* sizer = new wxBoxSizer(wxHORIZONTAL);
 
 		m_create_btn = new wxButton(this, wxID_ANY, "+", wxDefaultPosition, wxSize(20, 20));
-		Connect(m_create_btn->GetId(), wxEVT_COMMAND_BUTTON_CLICKED, 
+		Connect(m_create_btn->GetId(), wxEVT_COMMAND_BUTTON_CLICKED,
 			wxCommandEventHandler(WxWorldPanel::OnAddPress));
 		sizer->Add(m_create_btn, 0, wxLEFT | wxRIGHT, 5);
 
-		m_search_ctrl = new wxSearchCtrl(this, wxID_ANY, "", 
+		m_search_ctrl = new wxSearchCtrl(this, wxID_ANY, "",
 			wxDefaultPosition, wxDefaultSize, wxTE_PROCESS_ENTER);
 		Connect(m_search_ctrl->GetId(), wxEVT_SEARCHCTRL_SEARCH_BTN,
 			wxCommandEventHandler(WxWorldPanel::OnSearch));
@@ -79,7 +63,7 @@ void WxWorldPanel::InitLayout(const ee0::SubjectMgrPtr& sub_mgr,
 
 		top_sizer->Add(sizer);
 	}
-	
+
 	m_notebook = new wxNotebook(this, wxID_ANY, wxDefaultPosition, wxDefaultSize, wxNB_BOTTOM);
 	//Connect(m_notebook->GetId(), wxEVT_COMMAND_NOTEBOOK_PAGE_CHANGED,
 	//	wxBookCtrlEventHandler(WxWorldPanel::OnPageChanged));
@@ -98,7 +82,27 @@ void WxWorldPanel::InitLayout(const ee0::SubjectMgrPtr& sub_mgr,
 
 void WxWorldPanel::OnAddPress(wxCommandEvent& event)
 {
-	ee0::WxListSelectDlg dlg(this, "Create obj", 
+	struct ObjItemData : public wxTreeItemData
+	{
+		ObjItemData(int type)
+			: type(type) {}
+
+		int type;
+
+	}; // ObjItemData
+
+	const std::vector<std::pair<std::string, wxTreeItemData*>> GAME_OBJ_LIST =
+	{
+		{ "Image",      new ObjItemData(eone::GAME_OBJ_IMAGE) },
+		{ "Text",       new ObjItemData(eone::GAME_OBJ_TEXT) },
+		{ "Mask",       new ObjItemData(eone::GAME_OBJ_MASK) },
+		{ "Mesh",       new ObjItemData(eone::GAME_OBJ_MESH) },
+		{ "Scale9",     new ObjItemData(eone::GAME_OBJ_SCALE9) },
+		{ "Anim",       new ObjItemData(eone::GAME_OBJ_ANIM) },
+		{ "Particle3d", new ObjItemData(eone::GAME_OBJ_PARTICLE3D) },
+	};
+
+	ee0::WxListSelectDlg dlg(this, "Create obj",
 		GAME_OBJ_LIST, m_create_btn->GetScreenPosition());
 	if (dlg.ShowModal() != wxID_OK) {
 		return;
@@ -110,8 +114,8 @@ void WxWorldPanel::OnAddPress(wxCommandEvent& event)
 	ee0::GameObj obj;
 #endif // GAME_OBJ_ECS
 
-	auto id = dlg.GetSelectedID();
-	switch (id)
+	auto type = static_cast<ObjItemData*>(dlg.GetSelected())->type;
+	switch (type)
 	{
 	case GameObjType::GAME_OBJ_IMAGE:
 		{

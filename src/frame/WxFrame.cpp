@@ -1,7 +1,7 @@
 #include "frame/WxFrame.h"
 #include "frame/Application.h"
 #include "frame/StagePageType.h"
-#include "frame/StagePageFactory.h"
+#include "frame/PanelFactory.h"
 #include "frame/WxSettingsDialog.h"
 #include "frame/WxStagePanel.h"
 #include "frame/WxStagePage.h"
@@ -10,32 +10,6 @@
 #include <ee0/SubjectMgr.h>
 
 #include <moon/Blackboard.h>
-
-namespace
-{
-
-static const std::vector<std::pair<uint32_t, std::string>> PAGE_LIST =
-{
-	std::make_pair(eone::PAGE_SCENE2D,      "Scene2D"),
-	std::make_pair(eone::PAGE_SCENE3D,      "Scene3D"),
-
-	std::make_pair(eone::PAGE_SCALE9,       "Scale9"),
-	std::make_pair(eone::PAGE_MASK,         "Mask"),
-	std::make_pair(eone::PAGE_MESH,         "Mesh"),
-	std::make_pair(eone::PAGE_ANIM,         "Anim"),
-	std::make_pair(eone::PAGE_PARTICLE3D,   "Particle3d"),
-
-	std::make_pair(eone::PAGE_SCALE9,       "Scale9"),
-
-	std::make_pair(eone::PAGE_SHADER_GRAPH, "ShaderGraph"),
-
-	std::make_pair(eone::PAGE_SCRIPT,       "Script..."),
-	std::make_pair(eone::PAGE_BLUEPRINT,    "Blueprint"),
-
-	std::make_pair(eone::PAGE_QUAKE,        "Quake"),
-};
-
-}
 
 namespace eone
 {
@@ -48,17 +22,48 @@ WxFrame::WxFrame()
 
 void WxFrame::OnNew(wxCommandEvent& event)
 {
+	struct PageItemData : public wxTreeItemData
+	{
+		PageItemData(int type)
+			: type(type) {}
+
+		int type;
+
+	}; // PageItemData
+
+	const std::vector<std::pair<std::string, wxTreeItemData*>> PAGE_LIST =
+	{
+		{ "Scene2D",     new PageItemData(eone::PAGE_SCENE2D) },
+		{ "Scene3D",     new PageItemData(eone::PAGE_SCENE3D) },
+
+		{ "Scale9",      new PageItemData(eone::PAGE_SCALE9) },
+		{ "Mask",        new PageItemData(eone::PAGE_MASK) },
+		{ "Mesh",        new PageItemData(eone::PAGE_MESH) },
+		{ "Anim",        new PageItemData(eone::PAGE_ANIM) },
+		{ "Particle3d",  new PageItemData(eone::PAGE_PARTICLE3D) },
+
+		{ "Scale9",      new PageItemData(eone::PAGE_SCALE9) },
+
+		{ "ShaderGraph", new PageItemData(eone::PAGE_SHADER_GRAPH) },
+		{ "Prototyping", new PageItemData(eone::PAGE_PROTOTYPING) },
+
+		{ "Script...",   new PageItemData(eone::PAGE_SCRIPT) },
+		{ "Blueprint",   new PageItemData(eone::PAGE_BLUEPRINT) },
+
+		{ "Quake",       new PageItemData(eone::PAGE_QUAKE) },
+	};
+
 	ee0::WxListSelectDlg dlg(this, "New page", PAGE_LIST, wxGetMousePosition());
 	if (dlg.ShowModal() != wxID_OK) {
 		return;
 	}
 
 	auto app = std::static_pointer_cast<Application>(m_app);
-	auto type = dlg.GetSelectedID();
+	auto type = static_cast<PageItemData*>(dlg.GetSelected())->type;
 #ifndef GAME_OBJ_ECS
-	StagePageFactory::Create(type, app->GetStagePanel());
+	PanelFactory::CreateStagePage(type, app->GetStagePanel());
 #else
-	StagePageFactory::Create(app->GetWorld(), type, app->GetStagePanel());
+	PanelFactory::Create(app->GetWorld(), type, app->GetStagePanel());
 #endif // GAME_OBJ_ECS
 
 	WxStagePage* curr_page = static_cast<WxStagePage*>(app->GetStagePanel()->GetPage(app->GetStagePanel()->GetSelection()));

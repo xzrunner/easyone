@@ -55,31 +55,6 @@
 #include <wx/treectrl.h>
 #include <wx/dialog.h>
 
-namespace
-{
-
-enum CompType
-{
-	COMP_UNKNOWN = 0,
-
-	COMP_COLOR_COMMON = 1,
-	COMP_COLOR_MAP,
-	COMP_SCISSOR,
-	COMP_SCRIPT,
-	COMP_CUSTOM_PROPERTIES,
-};
-
-static const std::vector<std::pair<uint32_t, std::string>> COMP_LIST =
-{
-	std::make_pair(COMP_COLOR_COMMON,      "ColorCommon"),
-	std::make_pair(COMP_COLOR_MAP,         "ColorMap"),
-	std::make_pair(COMP_SCISSOR,           "Scissor"),
-	std::make_pair(COMP_SCRIPT,            "Script"),
-	std::make_pair(COMP_CUSTOM_PROPERTIES, "CustomProperties"),
-};
-
-}
-
 namespace eone
 {
 
@@ -483,14 +458,43 @@ void WxDetailPanel::StagePageChanged(const ee0::VariantSet& variants)
 
 void WxDetailPanel::OnAddPress(wxCommandEvent& event)
 {
+	enum CompType
+	{
+		COMP_UNKNOWN = 0,
+
+		COMP_COLOR_COMMON = 1,
+		COMP_COLOR_MAP,
+		COMP_SCISSOR,
+		COMP_SCRIPT,
+		COMP_CUSTOM_PROPERTIES,
+	};
+
+	struct CompItemData : public wxTreeItemData
+	{
+		CompItemData(int type)
+			: type(type) {}
+
+		int type;
+
+	}; // CompItemData
+
+	const std::vector<std::pair<std::string, wxTreeItemData*>> COMP_LIST =
+	{
+		{ "ColorCommon",      new CompItemData(COMP_COLOR_COMMON) },
+		{ "ColorMap",         new CompItemData(COMP_COLOR_MAP) },
+		{ "Scissor",          new CompItemData(COMP_SCISSOR) },
+		{ "Script",           new CompItemData(COMP_SCRIPT) },
+		{ "CustomProperties", new CompItemData(COMP_CUSTOM_PROPERTIES) },
+	};
+
 	ee0::WxListSelectDlg dlg(this, "Create component",
 		COMP_LIST, m_add_btn->GetScreenPosition());
 	if (dlg.ShowModal() != wxID_OK) {
 		return;
 	}
 
-	auto id = dlg.GetSelectedID();
-	switch (id)
+	auto type = static_cast<CompItemData*>(dlg.GetSelected())->type;
+	switch (type)
 	{
 	case CompType::COMP_COLOR_COMMON:
 		{
