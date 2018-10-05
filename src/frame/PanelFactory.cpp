@@ -1,4 +1,4 @@
-#include "frame/StagePageFactory.h"
+#include "frame/PanelFactory.h"
 #include "frame/GameObjFactory.h"
 #include "frame/StagePageType.h"
 #include "frame/WxStagePanel.h"
@@ -9,6 +9,7 @@
 #include "frame/Application.h"
 #include "frame/WxPreviewPanel.h"
 #include "frame/WxPreviewCanvas.h"
+#include "frame/WxLibraryPanel.h"
 
 #include "scene2d/WxStagePage.h"
 #include "scene3d/WxStagePage.h"
@@ -27,6 +28,7 @@
 #include "anim3/WxStageCanvas.h"
 #include "sgraph/WxStagePage.h"
 #include "sgraph/WxStageCanvas.h"
+#include "prototype/WxStagePage.h"
 #include "bprint/WxStagePage.h"
 #include "quake/WxStagePage.h"
 #include "quake/WxStageCanvas.h"
@@ -52,13 +54,14 @@
 #include <painting3/PerspCam.h>
 #include <blueprint/ConnectPinsOP.h>
 #include <blueprint/NodeFactory.h>
+#include <prototyping/ArrangeNodeOP.h>
 
 #include <boost/filesystem.hpp>
 
 namespace eone
 {
 
-WxStagePage* StagePageFactory::Create(ECS_WORLD_PARAM int page_type, WxStagePanel* stage_panel)
+WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStagePanel* stage_panel)
 {
 	WxStagePage* page = nullptr;
 
@@ -231,6 +234,20 @@ WxStagePage* StagePageFactory::Create(ECS_WORLD_PARAM int page_type, WxStagePane
 			stage_panel->AddNewPage(page, GetPageName(page->GetPageType()));
 		}
 		break;
+	case PAGE_PROTOTYPING:
+		{
+			auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX2D);
+			page = new prototype::WxStagePage(frame, library, ECS_WORLD_VAR obj);
+			auto canvas = std::make_shared<WxStageCanvas2D>(page, rc);
+			page->GetImpl().SetCanvas(canvas);
+
+			auto op = std::make_shared<pt::ArrangeNodeOP>(
+				canvas->GetCamera(), *page);
+			page->GetImpl().SetEditOP(op);
+
+			stage_panel->AddNewPage(page, GetPageName(page->GetPageType()));
+		}
+		break;
 
 	case PAGE_SCRIPT:
 		{
@@ -309,7 +326,7 @@ WxStagePage* StagePageFactory::Create(ECS_WORLD_PARAM int page_type, WxStagePane
 	return page;
 }
 
-void StagePageFactory::CreatePreviewOP(
+void PanelFactory::CreatePreviewOP(
 #ifdef GAME_OBJ_ECS
 	e0::World& world
 #endif // GAME_OBJ_ECS

@@ -4,16 +4,18 @@
 
 ECS_WORLD_DECL
 
+class wxWindow;
+
 namespace eone
 {
 
 class WxStagePanel;
 class WxStagePage;
 
-class StagePageFactory
+class PanelFactory
 {
 public:
-	static WxStagePage* Create(ECS_WORLD_PARAM int page_type, WxStagePanel* stage_panel);
+	static WxStagePage* CreateStagePage(ECS_WORLD_PARAM int page_type, WxStagePanel* stage_panel);
 
 	static void CreatePreviewOP(
 #ifdef GAME_OBJ_ECS
@@ -21,6 +23,6 @@ public:
 #endif // GAME_OBJ_ECS
 	);
 
-}; // StagePageFactory
+}; // PanelFactory
 
 }
