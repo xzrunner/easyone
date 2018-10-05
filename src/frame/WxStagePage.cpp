@@ -237,6 +237,7 @@ void WxStagePage::SetMoonContext()
 {
 	auto bb = moon::Blackboard::Instance();
 	bb->SetContext(GetMoonCtx());
+	bb->SetStage(this);
 	bb->SetSubMgr(m_sub_mgr);
 }
 

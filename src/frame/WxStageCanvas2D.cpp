@@ -60,14 +60,16 @@ bool WxStageCanvas2D::OnUpdate()
 
 void WxStageCanvas2D::OnMouseImpl(wxMouseEvent& event)
 {
+	const wxPoint pt = wxGetMousePosition();
+	int mouse_x = pt.x - m_stage->GetScreenPosition().x;
+	int mouse_y = pt.y - m_stage->GetScreenPosition().y;
+
 	sm::vec2 pos = ee0::CameraHelper::TransPosScreenToProject(
-		*GetCamera(), event.GetX(), event.GetY());
+		*GetCamera(), mouse_x, mouse_y);
 
 	wxString msg;
 	msg.Printf("Mouse: %.1f, %.1f", pos.x, pos.y);
 	Blackboard::Instance()->GetFrame()->SetStatusText(msg);
-
-	moon::Blackboard::Instance()->SetMousePos(pos);
 }
 
 }

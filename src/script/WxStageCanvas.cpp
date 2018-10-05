@@ -88,7 +88,6 @@ void WxStageCanvas::OnMouseImpl(wxMouseEvent& event)
 	int x = event.GetX();
 	int y = event.GetY();
 	sm::vec2 pos = ee0::CameraHelper::TransPosScreenToProject(*GetCamera(), x, y);
-	moon::Blackboard::Instance()->SetMousePos(pos);
 
 	wxString msg;
 	msg.Printf("Mouse: %.1f, %.1f", pos.x, pos.y);
