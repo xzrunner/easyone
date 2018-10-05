@@ -148,6 +148,9 @@
     <Filter Include="32.sgraph\view">
       <UniqueIdentifier>{3cbcb8a6-40cd-42ae-a989-a2ada73d854e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="33.prototype">
+      <UniqueIdentifier>{061b6e62-1453-44e1-9ffc-eb85d6452762}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\frame\main.h">
@@ -209,9 +212,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\scene3d\WxStagePage.h">
       <Filter>02.scene3d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\frame\StagePageFactory.h">
-      <Filter>00.frame\2.center\stage</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\frame\StagePageType.h">
       <Filter>00.frame\2.center\stage</Filter>
@@ -375,6 +375,12 @@
     <ClInclude Include="..\..\..\src\sgraph\WxStageCanvas.h">
       <Filter>32.sgraph\view</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\prototype\WxStagePage.h">
+      <Filter>33.prototype</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\frame\PanelFactory.h">
+      <Filter>00.frame\tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\frame\main.cpp">
@@ -436,9 +442,6 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\scene3d\WxStagePage.cpp">
       <Filter>02.scene3d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\frame\StagePageFactory.cpp">
-      <Filter>00.frame\2.center\stage</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\scale9\ResizeScale9OP.cpp">
       <Filter>10.scale9</Filter>
@@ -574,6 +577,12 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\sgraph\WxStageCanvas.cpp">
       <Filter>32.sgraph\view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\prototype\WxStagePage.cpp">
+      <Filter>33.prototype</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\frame\PanelFactory.cpp">
+      <Filter>00.frame\tools</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

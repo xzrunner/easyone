@@ -21,6 +21,7 @@ enum StagePageType
 	PAGE_MODEL,
 	PAGE_ANIM3,
 	PAGE_SHADER_GRAPH,
+	PAGE_PROTOTYPING,
 
 	PAGE_SCRIPT,
 	PAGE_BLUEPRINT,
@@ -55,6 +56,8 @@ std::string GetPageName(int type)
 		return "Anim3";
 	case PAGE_SHADER_GRAPH:
 		return "ShaderGraph";
+	case PAGE_PROTOTYPING:
+		return "Prototyping";
 
 	case PAGE_SCRIPT:
 		return "Script";

@@ -13,7 +13,7 @@
 #include "frame/Blackboard.h"
 #include "frame/GameObjFactory.h"
 #include "frame/StagePageType.h"
-#include "frame/StagePageFactory.h"
+#include "frame/PanelFactory.h"
 #include "frame/Blackboard.h"
 #include "frame/typedef.h"
 #include "frame/WxScriptPanel.h"
@@ -22,6 +22,7 @@
 #include "scene3d/WxStagePage.h"
 #include "quake/WxStagePage.h"
 #include "sgraph/WxStagePage.h"
+#include "prototype/WxStagePage.h"
 
 #include <ee0/MsgHelper.h>
 #include <ee0/SubjectMgr.h>
@@ -107,6 +108,8 @@ void Application::LoadFromFile(const std::string& filepath)
 				new_type = PAGE_QUAKE;
 			} else if (type == sgraph::WxStagePage::PAGE_TYPE) {
 				new_type = PAGE_SHADER_GRAPH;
+			} else if (type == prototype::WxStagePage::PAGE_TYPE) {
+				new_type = PAGE_PROTOTYPING;
 			}
 		} else if (new_type_str == "n2_scale9") {
 			new_type = PAGE_SCALE9;
@@ -136,7 +139,7 @@ void Application::LoadFromFile(const std::string& filepath)
 	}
 
 	if (old_type != new_type) {
-		page = StagePageFactory::Create(ECS_WORLD_SELF_VAR new_type, m_stage);
+		page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR new_type, m_stage);
 		page->GetSubjectMgr()->NotifyObservers(ee0::MSG_STAGE_PAGE_ON_SHOW);
 	}
 
@@ -265,21 +268,22 @@ wxWindow* Application::CreateStagePanel()
 	m_stage->Freeze();
 	Blackboard::Instance()->SetStagePanel(m_stage);
 
-	//StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_SCENE2D, m_stage);
-	//StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_SCENE3D, m_stage);
+	//PanelFactory::Create(ECS_WORLD_SELF_VAR PAGE_SCENE2D, m_stage);
+	//PanelFactory::Create(ECS_WORLD_SELF_VAR PAGE_SCENE3D, m_stage);
 
-	//StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_SCALE9, m_stage);
-	//StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_SCRIPT, m_stage);
-	//StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_ANIM, m_stage);
-	//StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_PARTICLE3D, m_stage);
+	//PanelFactory::Create(ECS_WORLD_SELF_VAR PAGE_SCALE9, m_stage);
+	//PanelFactory::Create(ECS_WORLD_SELF_VAR PAGE_SCRIPT, m_stage);
+	//PanelFactory::Create(ECS_WORLD_SELF_VAR PAGE_ANIM, m_stage);
+	//PanelFactory::Create(ECS_WORLD_SELF_VAR PAGE_PARTICLE3D, m_stage);
 
-	//StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_MODEL, m_stage);
-	//StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_ANIM3, m_stage);
-	StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_SHADER_GRAPH, m_stage);
+	//PanelFactory::Create(ECS_WORLD_SELF_VAR PAGE_MODEL, m_stage);
+	//PanelFactory::Create(ECS_WORLD_SELF_VAR PAGE_ANIM3, m_stage);
+	//PanelFactory::Create(ECS_WORLD_SELF_VAR PAGE_SHADER_GRAPH, m_stage);
+	PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_PROTOTYPING, m_stage);
 
-	//StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_QUAKE, m_stage);
+	//PanelFactory::Create(ECS_WORLD_SELF_VAR PAGE_QUAKE, m_stage);
 
-	//StagePageFactory::Create(ECS_WORLD_SELF_VAR PAGE_BLUEPRINT, m_stage);
+	//PanelFactory::Create(ECS_WORLD_SELF_VAR PAGE_BLUEPRINT, m_stage);
 
 	m_stage->Thaw();
 
@@ -302,7 +306,7 @@ wxWindow* Application::CreatePreviewPanel()
 	auto canvas = std::make_shared<WxPreviewCanvas>(
 		preview, ECS_WORLD_SELF_VAR Blackboard::Instance()->GetRenderContext());
 	preview->GetImpl().SetCanvas(canvas);
-	StagePageFactory::CreatePreviewOP(
+	PanelFactory::CreatePreviewOP(
 #ifdef GAME_OBJ_ECS
 		m_world
 #endif // GAME_OBJ_ECS

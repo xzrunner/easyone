@@ -1,0 +1,49 @@
+{
+    "pages":
+    [
+        {
+            "name": "Common",
+            "items":
+            [
+                {
+                    "name": "Box1",
+                    "src": "common/box1.lua"
+                },
+                {
+                    "name": "Box2",
+                    "src": "common/box2.lua"
+                },
+                {
+                    "name": "Box3",
+                    "src": "common/box3.lua"
+                },
+                {
+                    "name": "Ellipse",
+                    "src": "common/ellipse.lua"
+                },
+                {
+                    "name": "Image",
+                    "src": "common/image.lua"
+                },
+                {
+                    "name": "Button",
+                    "src": "common/button.lua"
+                }
+            ]
+        },
+        {
+            "name": "Forms",
+            "items":
+            [
+                {
+                    "name": "Checkbox",
+                    "src": "forms/checkbox.lua"
+                },
+                {
+                    "name": "RadioButton",
+                    "src": "forms/radio_button.lua"
+                }
+            ]
+        }
+    ]
+}
