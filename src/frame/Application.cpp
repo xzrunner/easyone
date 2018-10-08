@@ -268,22 +268,22 @@ wxWindow* Application::CreateStagePanel()
 	m_stage->Freeze();
 	Blackboard::Instance()->SetStagePanel(m_stage);
 
-	//PanelFactory::Create(ECS_WORLD_SELF_VAR PAGE_SCENE2D, m_stage);
-	//PanelFactory::Create(ECS_WORLD_SELF_VAR PAGE_SCENE3D, m_stage);
+	//PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_SCENE2D, m_stage);
+	//PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_SCENE3D, m_stage);
 
-	//PanelFactory::Create(ECS_WORLD_SELF_VAR PAGE_SCALE9, m_stage);
-	//PanelFactory::Create(ECS_WORLD_SELF_VAR PAGE_SCRIPT, m_stage);
-	//PanelFactory::Create(ECS_WORLD_SELF_VAR PAGE_ANIM, m_stage);
-	//PanelFactory::Create(ECS_WORLD_SELF_VAR PAGE_PARTICLE3D, m_stage);
+	//PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_SCALE9, m_stage);
+	//PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_SCRIPT, m_stage);
+	//PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_ANIM, m_stage);
+	//PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_PARTICLE3D, m_stage);
 
-	//PanelFactory::Create(ECS_WORLD_SELF_VAR PAGE_MODEL, m_stage);
-	//PanelFactory::Create(ECS_WORLD_SELF_VAR PAGE_ANIM3, m_stage);
-	//PanelFactory::Create(ECS_WORLD_SELF_VAR PAGE_SHADER_GRAPH, m_stage);
-	PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_PROTOTYPING, m_stage);
+	//PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_MODEL, m_stage);
+	//PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_ANIM3, m_stage);
+	PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_SHADER_GRAPH, m_stage);
+	//PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_PROTOTYPING, m_stage);
 
-	//PanelFactory::Create(ECS_WORLD_SELF_VAR PAGE_QUAKE, m_stage);
+	//PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_QUAKE, m_stage);
 
-	//PanelFactory::Create(ECS_WORLD_SELF_VAR PAGE_BLUEPRINT, m_stage);
+	//PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_BLUEPRINT, m_stage);
 
 	m_stage->Thaw();
 
