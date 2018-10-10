@@ -157,6 +157,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "0.shaderweaver", "..\..\ext
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3.prototyping", "..\..\ext\prototyping\platform\msvc\projects\prototyping.vcxproj", "{E9304BBA-36CF-4109-A308-906DC0767CCC}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "2.primdraw", "..\..\ext\primdraw\platform\msvc\projects\primdraw.vcxproj", "{6CF78BA8-18DA-48A8-A7DE-C766F32B7A2D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -411,6 +413,10 @@ Global
 		{E9304BBA-36CF-4109-A308-906DC0767CCC}.Debug|Win32.Build.0 = Debug|Win32
 		{E9304BBA-36CF-4109-A308-906DC0767CCC}.Release|Win32.ActiveCfg = Release|Win32
 		{E9304BBA-36CF-4109-A308-906DC0767CCC}.Release|Win32.Build.0 = Release|Win32
+		{6CF78BA8-18DA-48A8-A7DE-C766F32B7A2D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{6CF78BA8-18DA-48A8-A7DE-C766F32B7A2D}.Debug|Win32.Build.0 = Debug|Win32
+		{6CF78BA8-18DA-48A8-A7DE-C766F32B7A2D}.Release|Win32.ActiveCfg = Release|Win32
+		{6CF78BA8-18DA-48A8-A7DE-C766F32B7A2D}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -482,6 +488,7 @@ Global
 		{330F0C4E-0E29-4000-992E-FCB5CD8AEEF0} = {AF58CA2D-C53F-4E40-8A5C-EB3787FCB3D7}
 		{CB558C48-C50C-433B-ACF6-4AB1C306A11A} = {21641371-9FF1-473B-8607-85E88E161C0A}
 		{E9304BBA-36CF-4109-A308-906DC0767CCC} = {3F90F0BC-4357-48B0-A92E-DA2826502647}
+		{6CF78BA8-18DA-48A8-A7DE-C766F32B7A2D} = {E81D1B45-CF14-47DF-A9FD-98205E914709}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8D54C01A-3C82-4351-A325-2853C3E81322}

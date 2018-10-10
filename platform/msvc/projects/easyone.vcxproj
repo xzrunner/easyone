@@ -150,6 +150,9 @@
     <ProjectReference Include="..\..\..\ext\painting0\platform\msvc\projects\painting0.vcxproj">
       <Project>{ac2cad0c-553d-4fb9-a1a8-c206e59e021a}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\primdraw\platform\msvc\projects\primdraw.vcxproj">
+      <Project>{6cf78ba8-18da-48a8-a7de-c766f32b7a2d}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\ext\prototyping\platform\msvc\projects\prototyping.vcxproj">
       <Project>{e9304bba-36cf-4109-a308-906dc0767ccc}</Project>
     </ProjectReference>
