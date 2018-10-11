@@ -181,3 +181,6 @@
 [submodule "ext/prototyping"]
 	path = ext/prototyping
 	url = git@github.com:xzrunner/prototyping.git
+[submodule "ext/primitive"]
+	path = ext/primitive
+	url = git@github.com:xzrunner/primitive.git
