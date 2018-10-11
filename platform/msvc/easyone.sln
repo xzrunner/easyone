@@ -157,7 +157,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "0.shaderweaver", "..\..\ext
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3.prototyping", "..\..\ext\prototyping\platform\msvc\projects\prototyping.vcxproj", "{E9304BBA-36CF-4109-A308-906DC0767CCC}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "2.primdraw", "..\..\ext\primdraw\platform\msvc\projects\primdraw.vcxproj", "{6CF78BA8-18DA-48A8-A7DE-C766F32B7A2D}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "2.primitive", "..\..\ext\primitive\platform\msvc\projects\primitive.vcxproj", "{6CF78BA8-18DA-48A8-A7DE-C766F32B7A2D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
