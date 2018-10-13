@@ -20,6 +20,7 @@
 #include <ee2/WxCompScale9Panel.h>
 #include <ee2/WxCompScissorPanel.h>
 #include <ee2/WxCompScriptPanel.h>
+#include <ee2/WxCompShapePanel.h>
 #include <ee3/WxCompTransformPanel.h>
 
 #include <guard/check.h>
@@ -36,6 +37,7 @@
 #include <node2/CompScissor.h>
 #include <node2/CompScript.h>
 #include <node2/CompTransform.h>
+#include <node2/CompShape.h>
 #include <node3/CompTransform.h>
 #else
 #include <entity0/World.h>
@@ -49,6 +51,9 @@
 #include <entity2/CompScript.h>
 #include <entity3/CompTransform.h>
 #endif // GAME_OBJ_ECS
+#include <geoshape/Factory.h>
+#include <geoshape/Circle.h>
+#include <geoshape/Rect.h>
 
 #include <wx/sizer.h>
 #include <wx/button.h>
@@ -382,6 +387,14 @@ void WxDetailPanel::InitComponents(const ee0::GameObj& obj)
 		m_components.push_back(panel);
 	}
 
+	if (m_owp.GetNode()->HasUniqueComp<n2::CompShape>())
+	{
+		auto& comp = m_owp.GetNode()->GetUniqueComp<n2::CompShape>();
+		auto panel = new ee2::WxCompShapePanel(this, comp);
+		m_comp_sizer->Insert(m_components.size(), panel);
+		m_components.push_back(panel);
+	}
+
 #ifndef GAME_OBJ_ECS
 	if (m_owp.GetNode()->HasUniqueComp<ee0::CompCustomProp>())
 #else
@@ -466,6 +479,8 @@ void WxDetailPanel::OnAddPress(wxCommandEvent& event)
 		COMP_COLOR_MAP,
 		COMP_SCISSOR,
 		COMP_SCRIPT,
+		COMP_CIRCLE,
+		COMP_RECT,
 		COMP_CUSTOM_PROPERTIES,
 	};
 
@@ -484,6 +499,8 @@ void WxDetailPanel::OnAddPress(wxCommandEvent& event)
 		{ "ColorMap",         new CompItemData(COMP_COLOR_MAP) },
 		{ "Scissor",          new CompItemData(COMP_SCISSOR) },
 		{ "Script",           new CompItemData(COMP_SCRIPT) },
+		{ "Shape Circle",     new CompItemData(COMP_CIRCLE) },
+		{ "Shape Rect",       new CompItemData(COMP_RECT) },
 		{ "CustomProperties", new CompItemData(COMP_CUSTOM_PROPERTIES) },
 	};
 
@@ -496,7 +513,7 @@ void WxDetailPanel::OnAddPress(wxCommandEvent& event)
 	auto type = static_cast<CompItemData*>(dlg.GetSelected())->type;
 	switch (type)
 	{
-	case CompType::COMP_COLOR_COMMON:
+	case COMP_COLOR_COMMON:
 		{
 #ifndef GAME_OBJ_ECS
 			auto& comp = m_owp.GetNode()->AddUniqueComp<n2::CompColorCommon>();
@@ -508,7 +525,7 @@ void WxDetailPanel::OnAddPress(wxCommandEvent& event)
 			m_components.push_back(panel);
 		}
 		break;
-	case CompType::COMP_COLOR_MAP:
+	case COMP_COLOR_MAP:
 		{
 #ifndef GAME_OBJ_ECS
 			auto& comp = m_owp.GetNode()->AddUniqueComp<n2::CompColorMap>();
@@ -520,7 +537,7 @@ void WxDetailPanel::OnAddPress(wxCommandEvent& event)
 			m_components.push_back(panel);
 		}
 		break;
-	case CompType::COMP_SCISSOR:
+	case COMP_SCISSOR:
 		{
 #ifndef GAME_OBJ_ECS
 			auto& comp = m_owp.GetNode()->AddUniqueComp<n2::CompScissor>();
@@ -536,7 +553,7 @@ void WxDetailPanel::OnAddPress(wxCommandEvent& event)
 			m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
 		}
 		break;
-	case CompType::COMP_SCRIPT:
+	case COMP_SCRIPT:
 		{
 			auto panel = new ee2::WxCompScriptPanel(
 #ifndef GAME_OBJ_ECS
@@ -549,7 +566,27 @@ void WxDetailPanel::OnAddPress(wxCommandEvent& event)
 			m_components.push_back(panel);
 		}
 		break;
-	case CompType::COMP_CUSTOM_PROPERTIES:
+	case COMP_CIRCLE:
+	{
+		auto& shape = std::make_shared<gs::Circle>();
+		shape->SetRadius(50);
+		auto& comp = m_owp.GetNode()->AddUniqueComp<n2::CompShape>(shape);
+		auto panel = new ee2::WxCompShapePanel(this, comp);
+		m_comp_sizer->Insert(m_components.size(), panel);
+		m_components.push_back(panel);
+	}
+		break;
+	case COMP_RECT:
+	{
+		auto& shape = std::make_shared<gs::Rect>();
+		shape->SetRect(sm::rect(100, 100));
+		auto& comp = m_owp.GetNode()->AddUniqueComp<n2::CompShape>(shape);
+		auto panel = new ee2::WxCompShapePanel(this, comp);
+		m_comp_sizer->Insert(m_components.size(), panel);
+		m_components.push_back(panel);
+	}
+		break;
+	case COMP_CUSTOM_PROPERTIES:
 		{
 			auto node = m_owp.GetNode();
 			if (!node->HasUniqueComp<ee0::CompCustomProp>()) {
