@@ -184,3 +184,9 @@
 [submodule "ext/primitive"]
 	path = ext/primitive
 	url = git@github.com:xzrunner/primitive.git
+[submodule "ext/tessellation"]
+	path = ext/tessellation
+	url = git@github.com:xzrunner/tessellation.git
+[submodule "ext/geoshape"]
+	path = ext/geoshape
+	url = git@github.com:xzrunner/geoshape.git
