@@ -50,8 +50,8 @@ WxStagePage::WxStagePage(wxWindow* parent, ECS_WORLD_PARAM const ee0::GameObj& o
 	if (!inited) {
 		inited = true;
 		bp::Blueprint::Init();
-		sg::ShaderGraph::Init();
 	}
+	sg::ShaderGraph::Instance();
 
 	m_messages.push_back(ee0::MSG_INSERT_SCENE_NODE);
 	m_messages.push_back(ee0::MSG_DELETE_SCENE_NODE);
@@ -287,7 +287,7 @@ void WxStagePage::UpdateShader()
 			assert(node->HasUniqueComp<bp::CompNode>());
 			auto& bp_node = node->GetUniqueComp<bp::CompNode>().GetNode();
 			assert(bp_node);
-			if (bp_node->GetClassInfo().GetClassName() == m_model_type) {
+			if (bp_node->get_type().get_name().to_string() == m_model_type) {
 				final_node = bp_node;
 			}
 		}
@@ -299,9 +299,9 @@ void WxStagePage::UpdateShader()
 		shader_mgr.BindRenderShader(nullptr, sl::EXTERN_SHADER);
 
 		sg::ShaderWeaver::VertType vert_type;
-		if (m_model_type == sg::node::Sprite::GetClassName()) {
+		if (m_model_type == rttr::type::get<sg::node::Sprite>().get_name().to_string()) {
 			vert_type = sg::ShaderWeaver::VERT_SPRITE;
-		} else if (m_model_type == sg::node::Phong::GetClassName()) {
+		} else if (m_model_type == rttr::type::get<sg::node::Phong>().get_name().to_string()) {
 			vert_type = sg::ShaderWeaver::VERT_PHONG;
 		} else {
 			assert(0);

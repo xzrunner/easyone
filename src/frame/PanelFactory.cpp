@@ -53,7 +53,7 @@
 #include <moon/Context.h>
 #include <painting3/PerspCam.h>
 #include <blueprint/ConnectPinsOP.h>
-#include <blueprint/NodeFactory.h>
+#include <shadergraph/ShaderGraph.h>
 #include <prototyping/ArrangeNodeOP.h>
 
 #include <boost/filesystem.hpp>
@@ -226,7 +226,7 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
 				canvas->GetCamera(), *page, ECS_WORLD_VAR cfg, select_op);
 
 			auto op = std::make_shared<bp::ConnectPinsOP>(
-				canvas->GetCamera(), *page, bp::NodeFactory::Instance()->GetAllNodes()
+				canvas->GetCamera(), *page, sg::ShaderGraph::Instance()->GetAllNodes()
 			);
 			op->SetPrevEditOP(arrange_op);
 			page->GetImpl().SetEditOP(op);
@@ -298,7 +298,7 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
 				canvas->GetCamera(), *page, ECS_WORLD_VAR cfg, select_op);
 
 			auto op = std::make_shared<bp::ConnectPinsOP>(
-				canvas->GetCamera(), *page, bp::NodeFactory::Instance()->GetAllNodes()
+				canvas->GetCamera(), *page, sg::ShaderGraph::Instance()->GetAllNodes()
 			);
 			op->SetPrevEditOP(arrange_op);
 			page->GetImpl().SetEditOP(op);
