@@ -13,12 +13,12 @@ namespace eone
 {
 
 WxStagePanel::WxStagePanel(wxWindow* parent)
-	: wxAuiNotebook(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize, 
+	: wxAuiNotebook(parent, wxID_ANY, wxDefaultPosition, wxDefaultSize,
 		wxAUI_NB_DEFAULT_STYLE | wxAUI_NB_TAB_EXTERNAL_MOVE | wxNO_BORDER)
 {
 	Connect(GetId(), wxEVT_AUINOTEBOOK_PAGE_CLOSE,
 		wxAuiNotebookEventHandler(WxStagePanel::OnPageClose));
-	Connect(GetId(), wxEVT_AUINOTEBOOK_PAGE_CHANGING, 
+	Connect(GetId(), wxEVT_AUINOTEBOOK_PAGE_CHANGING,
 		wxAuiNotebookEventHandler(WxStagePanel::OnPageChanging));
 	Connect(GetId(), wxEVT_AUINOTEBOOK_PAGE_CHANGED,
 		wxAuiNotebookEventHandler(WxStagePanel::OnPageChanged));
@@ -121,7 +121,7 @@ void WxStagePanel::OnPageClose(wxAuiNotebookEvent& event)
 void WxStagePanel::OnPageChanging(wxAuiNotebookEvent& event)
 {
 	auto page = GetCurrentStagePage();
-	if (page) 
+	if (page)
 	{
 		m_old_sub_mgr = page->GetSubjectMgr();
 		m_old_sub_mgr->NotifyObservers(ee0::MSG_STAGE_PAGE_CHANGING);

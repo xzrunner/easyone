@@ -73,7 +73,7 @@ void WxPreviewCanvas::OnDrawSprites() const
 #else
 	e2::RenderParams rp;
 #endif // GAME_OBJ_ECS
-	m_stage->GetStagePage().Traverse([&](const ee0::GameObj& obj)->bool 
+	m_stage->GetStagePage().Traverse([&](const ee0::GameObj& obj)->bool
 	{
 #ifndef GAME_OBJ_ECS
 		if (obj->HasUniqueComp<n2::CompUniquePatch>())

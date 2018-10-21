@@ -11,7 +11,7 @@ class WxStagePage;
 class WxPreviewPanel : public ee0::WxEditPanel, public ee0::Observer
 {
 public:
-	WxPreviewPanel(wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr, 
+	WxPreviewPanel(wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr,
 		WxStagePage* stage);
 
 	virtual void OnNotify(uint32_t msg, const ee0::VariantSet& variants) override;

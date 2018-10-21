@@ -24,7 +24,7 @@ namespace
 {
 
 void OpenEditDialog(ee0::WxStagePage& stage, ECS_WORLD_PARAM
-                    const ee0::GameObj& obj, const ee0::RenderContext& rc, 
+                    const ee0::GameObj& obj, const ee0::RenderContext& rc,
 	                const ee0::WindowContext& wc)
 {
 	auto stage_panel = eone::Blackboard::Instance()->GetApp()->GetStagePanel();
@@ -76,7 +76,7 @@ bool NodeSelectOP::OnMouseLeftDClick(int x, int y)
 		return false;
 	}
 
-	selection.Traverse([&](const ee0::GameObjWithPos& owp)->bool 
+	selection.Traverse([&](const ee0::GameObjWithPos& owp)->bool
 	{
 #ifndef GAME_OBJ_ECS
 		OpenEditDialog(m_stage, owp.GetNode(), m_rc, m_wc);

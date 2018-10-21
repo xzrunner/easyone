@@ -20,7 +20,7 @@ namespace mask
 class WxEditDialog : public wxDialog
 {
 public:
-	WxEditDialog(wxWindow* parent, const ee0::RenderContext& rc, 
+	WxEditDialog(wxWindow* parent, const ee0::RenderContext& rc,
 		const ee0::WindowContext& wc, ECS_WORLD_PARAM const ee0::GameObj& obj);
 	virtual ~WxEditDialog();
 

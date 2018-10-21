@@ -20,7 +20,7 @@ namespace scale9
 {
 
 WxEditDialog::WxEditDialog(wxWindow* parent, const ee0::RenderContext& rc,
-	                       const ee0::WindowContext& wc, ECS_WORLD_PARAM 
+	                       const ee0::WindowContext& wc, ECS_WORLD_PARAM
 	                       const ee0::GameObj& obj)
 	: wxDialog(parent, wxID_ANY, "Edit Scale9", wxDefaultPosition, wxSize(800, 600), wxCLOSE_BOX | wxCAPTION | wxMAXIMIZE_BOX)
 	, m_rc(rc)

@@ -24,7 +24,7 @@ namespace eone
 {
 namespace script
 {
-	
+
 WxStageCanvas::WxStageCanvas(eone::WxStagePage* stage,
 	                         ECS_WORLD_PARAM
 	                         const ee0::RenderContext& rc,
@@ -110,7 +110,7 @@ void WxStageCanvas::OnKeyDownImpl(wxKeyEvent& event)
 	ee2::WxStageCanvas::OnKeyDownImpl(event);
 
 	int key_code = event.GetKeyCode();
-	if (key_code >= 'A' && key_code <= 'Z') 
+	if (key_code >= 'A' && key_code <= 'Z')
 	{
 		std::string str;
 		str.push_back(static_cast<char>('a' + key_code - 'A'));

@@ -37,7 +37,7 @@ namespace eone
 namespace particle3d
 {
 
-WxComponentPanel::WxComponentPanel(wxWindow* parent, p3d_symbol* sym, 
+WxComponentPanel::WxComponentPanel(wxWindow* parent, p3d_symbol* sym,
 	                               const std::string& filepath,
 	                               WxEmitterPanel::WxChildrenPanel* children_panel)
 	: wxPanel(parent)
@@ -155,7 +155,7 @@ void WxComponentPanel::InitLayout()
 	wxSizer* top_sizer = new wxBoxSizer(wxVERTICAL);
 
 	auto name = boost::filesystem::path(m_filepath).stem().string();
-	wxStaticBox* bounding = new wxStaticBox(this, wxID_ANY, name); 
+	wxStaticBox* bounding = new wxStaticBox(this, wxID_ANY, name);
 	wxSizer* sizer = new wxStaticBoxSizer(bounding, wxVERTICAL);
 	InitLayout(sizer);
 	top_sizer->Add(sizer);
@@ -214,24 +214,24 @@ void WxComponentPanel::InitLayout(wxSizer* top_sizer)
 			case sx::RES_FILE_JSON:
 				break;
 			}
-		}	
+		}
 		top_sizer->Add(hori_sizer);
 	}
 	// Scale
-	ee0::WxSliderTwoCtrl* s_scale = new ee0::WxSliderTwoCtrl(this, LANG[LK_SCALE], "scale", *this, PS_SCALE, 
+	ee0::WxSliderTwoCtrl* s_scale = new ee0::WxSliderTwoCtrl(this, LANG[LK_SCALE], "scale", *this, PS_SCALE,
 		ee0::SliderItem(LANG[LK_START], "start", SCALE_START, 0, 2000), ee0::SliderItem(LANG[LK_END], "end", SCALE_END, 0, 2000));
 	top_sizer->Add(s_scale);
 	top_sizer->AddSpacer(10);
 	m_sliders.push_back(s_scale);
 	// Rotate
-	ee0::WxSliderTwoCtrl* s_rotate = new ee0::WxSliderTwoCtrl(this, LANG[LK_ROTATE], "rotate", *this, PS_ROTATE, 
+	ee0::WxSliderTwoCtrl* s_rotate = new ee0::WxSliderTwoCtrl(this, LANG[LK_ROTATE], "rotate", *this, PS_ROTATE,
 		ee0::SliderItem(LANG[LK_MIN], "min", ROTATE_MIN, -180, 180), ee0::SliderItem(LANG[LK_MAX], "max", ROTATE_MAX, -180, 180));
 	top_sizer->Add(s_rotate);
 	top_sizer->AddSpacer(10);
 	m_sliders.push_back(s_rotate);
 	// Mul Color
 	{
-		wxStaticBox* bounding = new wxStaticBox(this, wxID_ANY, "乘色"); 
+		wxStaticBox* bounding = new wxStaticBox(this, wxID_ANY, "乘色");
 		wxSizer* hori_sizer = new wxStaticBoxSizer(bounding, wxHORIZONTAL);
 
 		hori_sizer->Add(new wxStaticText(this, wxID_ANY, "起始"));
@@ -252,7 +252,7 @@ void WxComponentPanel::InitLayout(wxSizer* top_sizer)
 	}
 	// Add Color
 	{
-		wxStaticBox* bounding = new wxStaticBox(this, wxID_ANY, "加色"); 
+		wxStaticBox* bounding = new wxStaticBox(this, wxID_ANY, "加色");
 		wxSizer* hori_sizer = new wxStaticBoxSizer(bounding, wxHORIZONTAL);
 
 		hori_sizer->Add(new wxStaticText(this, wxID_ANY, "起始"));
@@ -272,7 +272,7 @@ void WxComponentPanel::InitLayout(wxSizer* top_sizer)
 		top_sizer->Add(hori_sizer);
 	}
 	// Alpha
-	ee0::WxSliderTwoCtrl* s_alpha = new ee0::WxSliderTwoCtrl(this, LANG[LK_ALPHA], "alpha2", *this, PS_ALPHA, 
+	ee0::WxSliderTwoCtrl* s_alpha = new ee0::WxSliderTwoCtrl(this, LANG[LK_ALPHA], "alpha2", *this, PS_ALPHA,
 	ee0::SliderItem(LANG[LK_START], "start", 255, 0, 255), ee0::SliderItem(LANG[LK_END], "end", 255, 0, 255));
 	top_sizer->Add(s_alpha);
 	top_sizer->AddSpacer(10);

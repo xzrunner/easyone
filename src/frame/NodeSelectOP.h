@@ -12,10 +12,10 @@ class WxStagePage;
 class NodeSelectOP : public ee2::NodeSelectOP
 {
 public:
-	NodeSelectOP(const std::shared_ptr<pt0::Camera>& camera, 
-		ECS_WORLD_PARAM WxStagePage& stage, const ee0::RenderContext& rc, 
+	NodeSelectOP(const std::shared_ptr<pt0::Camera>& camera,
+		ECS_WORLD_PARAM WxStagePage& stage, const ee0::RenderContext& rc,
 		const ee0::WindowContext& wc);
-	
+
 	virtual bool OnMouseLeftDClick(int x, int y);
 
 private:

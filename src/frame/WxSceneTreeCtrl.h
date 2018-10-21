@@ -63,7 +63,7 @@ private:
 	void RebuildTree(const ee0::VariantSet& variants);
 
 	void ChangeName(const ee0::VariantSet& variants);
-	
+
 	void SelectUp();
 	void SelectDown();
 	void SelectLeft();
@@ -72,7 +72,7 @@ private:
 	void DeleteSelectedObj();
 	void DeleteObjOutside(wxTreeItemId item);
 	void CleanRootEmptyChild();
-		
+
 	wxTreeItemId GetSingleSelected() const;
 
 private:
@@ -118,7 +118,7 @@ private:
 		ee0::GameObj m_root;
 		int m_obj_id;
 
-	}; // Item	
+	}; // Item
 
 private:
 	ee0::SubjectMgrPtr m_sub_mgr;
@@ -130,7 +130,7 @@ private:
 	wxTreeItemId m_dragged_item;
 
 	bool m_disable_select;
-	
+
 	DECLARE_EVENT_TABLE()
 
 }; // WxSceneTreeCtrl

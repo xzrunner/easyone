@@ -21,7 +21,7 @@ public:
 	bool SwitchToPage(const std::string& filepath);
 
 	std::string StoreCurrPage(const std::string& filepath);
-	
+
 private:
 	void OnPageClose(wxAuiNotebookEvent& event);
 	void OnPageChanging(wxAuiNotebookEvent& event);

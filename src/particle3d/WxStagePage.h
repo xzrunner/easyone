@@ -14,7 +14,7 @@ namespace particle3d
 class WxStagePage : public eone::WxStagePage
 {
 public:
-	WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, 
+	WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library,
 		ECS_WORLD_PARAM const ee0::GameObj& obj);
 
 	virtual void OnNotify(uint32_t msg, const ee0::VariantSet& variants) override;

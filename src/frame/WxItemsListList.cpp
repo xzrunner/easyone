@@ -8,7 +8,7 @@
 namespace eone
 {
 
-WxItemsListList::WxItemsListList(wxWindow* parent, 
+WxItemsListList::WxItemsListList(wxWindow* parent,
 	                             const ee0::SubjectMgrPtr& sub_mgr)
 	: ee0::WxImageVList(parent, "", true, false, true)
 	, m_sub_mgr(sub_mgr)
@@ -21,7 +21,7 @@ void WxItemsListList::OnListSelected(wxCommandEvent& event)
 		m_sub_mgr->NotifyObservers(ee0::MSG_NODE_SELECTION_CLEAR);
 	}
 	int idx = event.GetInt();
-	
+
 	std::vector<ee0::GameObjWithPos> objs;
 	auto item = GetItemByIndex(idx);
 	if (!item) {

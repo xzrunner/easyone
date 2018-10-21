@@ -5,7 +5,7 @@ namespace eone
 namespace particle3d
 {
 
-enum 
+enum
 {
 	LK_CENTER = 0,
 	LK_OFFSET,
@@ -61,7 +61,7 @@ enum
 	LK_ALPHA,
 };
 
-static const char* EN[] = 
+static const char* EN[] =
 {
 	"center",
 	"offset",
@@ -117,7 +117,7 @@ static const char* EN[] =
 	"Alpha",
 };
 
-static const char* CN[] = 
+static const char* CN[] =
 {
 	"ÖÐÐÄ",
 	"Æ«ÒÆ",

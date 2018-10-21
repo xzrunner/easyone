@@ -15,9 +15,9 @@ static const float Y = EDGE * -1.5f;
 
 void ComposeGrids::Draw()
 {
-	for (size_t i = 0; i < 3; ++i) 
+	for (size_t i = 0; i < 3; ++i)
 	{
-		for (size_t j = 0; j < 3; ++j) 
+		for (size_t j = 0; j < 3; ++j)
 		{
 			sm::vec2 p0;
 			p0.x = X + EDGE*i;

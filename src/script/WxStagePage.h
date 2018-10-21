@@ -15,7 +15,7 @@ namespace script
 class WxStagePage : public eone::WxStagePage
 {
 public:
-	WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, 
+	WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library,
 		ECS_WORLD_PARAM const ee0::GameObj& obj);
 
 	virtual void Traverse(std::function<bool(const ee0::GameObj&)> func,

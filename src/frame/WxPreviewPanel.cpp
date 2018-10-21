@@ -10,8 +10,8 @@
 namespace eone
 {
 
-WxPreviewPanel::WxPreviewPanel(wxWindow* parent, 
-	                           const ee0::SubjectMgrPtr& sub_mgr, 
+WxPreviewPanel::WxPreviewPanel(wxWindow* parent,
+	                           const ee0::SubjectMgrPtr& sub_mgr,
 	                           WxStagePage* stage)
 	: ee0::WxEditPanel(parent, sub_mgr)
 	, m_sub_mgr(sub_mgr)

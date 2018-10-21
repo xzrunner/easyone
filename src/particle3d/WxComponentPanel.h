@@ -19,7 +19,7 @@ namespace particle3d
 class WxComponentPanel : public wxPanel, public ee0::GuiCallback
 {
 public:
-	WxComponentPanel(wxWindow* parent, p3d_symbol* sym, const std::string& filepath, 
+	WxComponentPanel(wxWindow* parent, p3d_symbol* sym, const std::string& filepath,
 		WxEmitterPanel::WxChildrenPanel* children_panel);
 
 	virtual void SetValue(int key, const ee0::VariantSet& variants) override;

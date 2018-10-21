@@ -44,6 +44,6 @@ private:
 	ee0::GameObj m_root;
 	int m_obj_id;
 
-}; // WxItemsListUserData	
+}; // WxItemsListUserData
 
 }

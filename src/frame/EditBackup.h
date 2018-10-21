@@ -21,7 +21,7 @@ public:
 
 private:
 	void RegisterMsg();
-	
+
 	void OnAddAOP(const ee0::VariantSet& variants);
 	void OnEditOpUndo();
 	void OnEditOpRedo();

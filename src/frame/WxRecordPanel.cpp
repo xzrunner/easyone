@@ -54,8 +54,8 @@ void WxRecordPanel::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
 void WxRecordPanel::InitLayout()
 {
 	wxSizer* sizer = new wxBoxSizer(wxVERTICAL);
-	
-	m_list = new wxListBox(this, wxID_ANY, wxDefaultPosition, 
+
+	m_list = new wxListBox(this, wxID_ANY, wxDefaultPosition,
 		wxDefaultSize, 0, 0, wxLB_SINGLE);
 	sizer->Add(m_list, 1, wxEXPAND);
 	m_list->SetBackgroundColour(PANEL_COLOR);

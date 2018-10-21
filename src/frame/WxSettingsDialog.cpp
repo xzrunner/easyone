@@ -25,7 +25,7 @@ void WxSettingsDialog::InitLayout()
 	choices.Add("shared_patch");
 	choices.Add("unique");
 	auto radio = new wxRadioBox(this, wxID_ANY, "edit_type", wxDefaultPosition, wxDefaultSize, choices, 1, wxRA_SPECIFY_COLS);
-	Connect(radio->GetId(), wxEVT_COMMAND_RADIOBOX_SELECTED, 
+	Connect(radio->GetId(), wxEVT_COMMAND_RADIOBOX_SELECTED,
 		wxCommandEventHandler(WxSettingsDialog::OnChangeEditType));
 	switch (ee0::SettingCfg::Instance()->GetEditOpType())
 	{

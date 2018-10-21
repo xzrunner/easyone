@@ -21,7 +21,7 @@ namespace eone
 class WxItemsListCtrl : public wxWindow, public ee0::Observer
 {
 public:
-	WxItemsListCtrl(wxWindow* parent, ECS_WORLD_PARAM 
+	WxItemsListCtrl(wxWindow* parent, ECS_WORLD_PARAM
 		const ee0::SubjectMgrPtr& sub_mgr);
 
 	virtual void OnNotify(uint32_t msg, const ee0::VariantSet& variants) override;
