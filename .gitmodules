@@ -190,3 +190,6 @@
 [submodule "ext/geoshape"]
 	path = ext/geoshape
 	url = git@github.com:xzrunner/geoshape.git
+[submodule "ext/rendergraph"]
+	path = ext/rendergraph
+	url = git@github.com:xzrunner/rendergraph.git
