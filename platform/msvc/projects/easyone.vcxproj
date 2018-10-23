@@ -159,6 +159,9 @@
     <ProjectReference Include="..\..\..\ext\prototyping\platform\msvc\projects\prototyping.vcxproj">
       <Project>{e9304bba-36cf-4109-a308-906dc0767ccc}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\rendergraph\platform\msvc\projects\rendergraph.vcxproj">
+      <Project>{52480c29-042f-4f4c-9690-88ef0eef494e}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\ext\shadergraph\platform\msvc\projects\shadergraph.vcxproj">
       <Project>{ec5783f3-431b-4ff0-bc6d-00137cac8810}</Project>
     </ProjectReference>

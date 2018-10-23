@@ -173,6 +173,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "geoshape", "geoshape", "{64
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "1.gs_test", "..\..\ext\geoshape\platform\msvc\projects\gs_test.vcxproj", "{01475B8C-5CC2-4CB6-A048-5CAAB7135FC9}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "1.rendergraph", "..\..\ext\rendergraph\platform\msvc\projects\rendergraph.vcxproj", "{52480C29-042F-4F4C-9690-88EF0EEF494E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -451,6 +453,10 @@ Global
 		{01475B8C-5CC2-4CB6-A048-5CAAB7135FC9}.Debug|Win32.Build.0 = Debug|Win32
 		{01475B8C-5CC2-4CB6-A048-5CAAB7135FC9}.Release|Win32.ActiveCfg = Release|Win32
 		{01475B8C-5CC2-4CB6-A048-5CAAB7135FC9}.Release|Win32.Build.0 = Release|Win32
+		{52480C29-042F-4F4C-9690-88EF0EEF494E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{52480C29-042F-4F4C-9690-88EF0EEF494E}.Debug|Win32.Build.0 = Debug|Win32
+		{52480C29-042F-4F4C-9690-88EF0EEF494E}.Release|Win32.ActiveCfg = Release|Win32
+		{52480C29-042F-4F4C-9690-88EF0EEF494E}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -530,6 +536,7 @@ Global
 		{9A710155-9500-4166-A566-9D6E59F68D0A} = {64399D4C-5066-4010-8DD6-71A413C73DF8}
 		{64399D4C-5066-4010-8DD6-71A413C73DF8} = {55D85D01-599C-4F78-A116-BDBAEAF0D939}
 		{01475B8C-5CC2-4CB6-A048-5CAAB7135FC9} = {64399D4C-5066-4010-8DD6-71A413C73DF8}
+		{52480C29-042F-4F4C-9690-88EF0EEF494E} = {E81D1B45-CF14-47DF-A9FD-98205E914709}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8D54C01A-3C82-4351-A325-2853C3E81322}
