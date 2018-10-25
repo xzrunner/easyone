@@ -10,9 +10,6 @@
 #include <unirender/Blackboard.h>
 #include <unirender/RenderContext.h>
 #include <unirender/Shader.h>
-#include <shaderlab/Blackboard.h>
-#include <shaderlab/ShaderType.h>
-#include <shaderlab/RenderContext.h>
 #include <painting2/PrimitiveDraw.h>
 #include <painting3/PrimitiveDraw.h>
 #include <painting3/EffectsManager.h>
@@ -120,11 +117,6 @@ void RenderSystem::DrawSkeletalNode(const ::model::ModelInstance& model_inst,
 
 void RenderSystem::InitShaders()
 {
-	// flush shader status
-	auto& shader_mgr = sl::Blackboard::Instance()->GetRenderContext().GetShaderMgr();
-	shader_mgr.SetShader(sl::EXTERN_SHADER);
-	//shader_mgr.BindRenderShader(nullptr, sl::EXTERN_SHADER);
-
 	std::vector<std::string> default_textures;
 
 	CU_VEC<ur::VertexAttrib> default_layout;

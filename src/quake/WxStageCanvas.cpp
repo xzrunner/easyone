@@ -6,9 +6,6 @@
 
 #include <unirender/VertexAttrib.h>
 #include <unirender/Blackboard.h>
-#include <shaderlab/Blackboard.h>
-#include <shaderlab/ShaderType.h>
-#include <shaderlab/RenderContext.h>
 #include <painting2/PrimitiveDraw.h>
 #include <painting3/EffectsManager.h>
 #include <painting3/PrimitiveDraw.h>
@@ -80,11 +77,6 @@ void WxStageCanvas::DrawForeground() const
 
 void WxStageCanvas::InitShaders() const
 {
-	// flush shader status
-	auto& shader_mgr = sl::Blackboard::Instance()->GetRenderContext().GetShaderMgr();
-	shader_mgr.SetShader(sl::EXTERN_SHADER);
-	//shader_mgr.BindRenderShader(nullptr, sl::EXTERN_SHADER);
-
 	CU_VEC<ur::VertexAttrib> layout;
 	layout.push_back(ur::VertexAttrib("position", 3, 4, 32, 0));
 	layout.push_back(ur::VertexAttrib("texcoord", 2, 4, 32, 24));

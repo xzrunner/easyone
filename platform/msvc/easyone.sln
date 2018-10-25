@@ -3,10 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2020
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "1.rapidvg", "..\..\ext\rapidvg\platform\msvc\projects\rapidvg.vcxproj", "{66207E9A-031C-402B-9E3E-FA5599A1C89B}"
-EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "1.shaderlab", "..\..\ext\shaderlab\platform\msvc\projects\shaderlab.vcxproj", "{5C357759-CA95-42E1-B907-DFB87A995F6C}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "0.sm", "..\..\ext\sm\platform\msvc\projects\sm.vcxproj", "{81630E0D-E1EF-4837-A0EE-30435ED4FE59}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "0.logger", "..\..\ext\logger\platform\msvc\projects\logger.vcxproj", "{4031B66E-39A3-401E-918A-E1424A4AF944}"
@@ -173,7 +169,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "geoshape", "geoshape", "{64
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "1.gs_test", "..\..\ext\geoshape\platform\msvc\projects\gs_test.vcxproj", "{01475B8C-5CC2-4CB6-A048-5CAAB7135FC9}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "1.rendergraph", "..\..\ext\rendergraph\platform\msvc\projects\rendergraph.vcxproj", "{52480C29-042F-4F4C-9690-88EF0EEF494E}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3.rendergraph", "..\..\ext\rendergraph\platform\msvc\projects\rendergraph.vcxproj", "{52480C29-042F-4F4C-9690-88EF0EEF494E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -181,14 +177,6 @@ Global
 		Release|Win32 = Release|Win32
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{66207E9A-031C-402B-9E3E-FA5599A1C89B}.Debug|Win32.ActiveCfg = Debug|Win32
-		{66207E9A-031C-402B-9E3E-FA5599A1C89B}.Debug|Win32.Build.0 = Debug|Win32
-		{66207E9A-031C-402B-9E3E-FA5599A1C89B}.Release|Win32.ActiveCfg = Release|Win32
-		{66207E9A-031C-402B-9E3E-FA5599A1C89B}.Release|Win32.Build.0 = Release|Win32
-		{5C357759-CA95-42E1-B907-DFB87A995F6C}.Debug|Win32.ActiveCfg = Debug|Win32
-		{5C357759-CA95-42E1-B907-DFB87A995F6C}.Debug|Win32.Build.0 = Debug|Win32
-		{5C357759-CA95-42E1-B907-DFB87A995F6C}.Release|Win32.ActiveCfg = Release|Win32
-		{5C357759-CA95-42E1-B907-DFB87A995F6C}.Release|Win32.Build.0 = Release|Win32
 		{81630E0D-E1EF-4837-A0EE-30435ED4FE59}.Debug|Win32.ActiveCfg = Debug|Win32
 		{81630E0D-E1EF-4837-A0EE-30435ED4FE59}.Debug|Win32.Build.0 = Debug|Win32
 		{81630E0D-E1EF-4837-A0EE-30435ED4FE59}.Release|Win32.ActiveCfg = Release|Win32
@@ -462,8 +450,6 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
-		{66207E9A-031C-402B-9E3E-FA5599A1C89B} = {E81D1B45-CF14-47DF-A9FD-98205E914709}
-		{5C357759-CA95-42E1-B907-DFB87A995F6C} = {E81D1B45-CF14-47DF-A9FD-98205E914709}
 		{81630E0D-E1EF-4837-A0EE-30435ED4FE59} = {3E445281-8F17-4763-9112-39A38C12FE16}
 		{4031B66E-39A3-401E-918A-E1424A4AF944} = {2663E49F-E633-423F-B021-31013DE65AD7}
 		{09C39B9E-27F5-4B39-9829-2815FD1C5469} = {2663E49F-E633-423F-B021-31013DE65AD7}

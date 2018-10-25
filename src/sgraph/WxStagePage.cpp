@@ -26,8 +26,6 @@
 #include <unirender/VertexAttrib.h>
 #include <unirender/Blackboard.h>
 #include <unirender/Shader.h>
-#include <shaderlab/Blackboard.h>
-#include <shaderlab/RenderContext.h>
 #include <painting3/EffectsManager.h>
 #include <painting3/Shader.h>
 #include <node0/SceneNode.h>
@@ -292,11 +290,6 @@ void WxStagePage::UpdateShader()
 			}
 		}
 		assert(final_node);
-
-		// flush shader status
-		auto& shader_mgr = sl::Blackboard::Instance()->GetRenderContext().GetShaderMgr();
-		shader_mgr.SetShader(sl::EXTERN_SHADER);
-		shader_mgr.BindRenderShader(nullptr, sl::EXTERN_SHADER);
 
 		sg::ShaderWeaver::VertType vert_type;
 		if (m_model_type == rttr::type::get<sg::node::Sprite>().get_name().to_string()) {
