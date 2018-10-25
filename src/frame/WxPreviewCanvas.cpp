@@ -6,6 +6,7 @@
 #include <ee0/EditOP.h>
 #include <ee0/color_config.h>
 
+#include <unirender/RenderContext.h>
 #include <painting2/OrthoCamera.h>
 #include <painting2/PrimitiveDraw.h>
 #include <painting2/Blackboard.h>
@@ -17,6 +18,7 @@
 #else
 #include <entity2/SysRender.h>
 #endif // GAME_OBJ_ECS
+#include <facade/RenderContext.h>
 
 namespace eone
 {
@@ -58,6 +60,13 @@ void WxPreviewCanvas::OnSize(int w, int h)
 
 void WxPreviewCanvas::OnDrawSprites() const
 {
+	auto& ur_rc = GetRenderContext().facade_rc->GetUrRc();
+	ur_rc.SetClearFlag(ur::MASKC);
+	ur_rc.Clear(0x88888888);
+	ur_rc.SetDepthTest(ur::DEPTH_DISABLE);
+	ur_rc.EnableDepthMask(false);
+	ur_rc.SetCull(ur::CULL_DISABLE);
+
 	pt2::PrimitiveDraw::SetColor(ee0::WHITE);
 	pt2::PrimitiveDraw::Rect(nullptr, sm::vec2(0, 0), 1024, 768, false);
 
