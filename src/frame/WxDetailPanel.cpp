@@ -51,7 +51,6 @@
 #include <entity2/CompScript.h>
 #include <entity3/CompTransform.h>
 #endif // GAME_OBJ_ECS
-#include <geoshape/Factory.h>
 #include <geoshape/Circle.h>
 #include <geoshape/Rect.h>
 
