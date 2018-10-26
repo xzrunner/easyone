@@ -31,7 +31,7 @@ namespace model
 {
 
 WxStagePage::WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, ECS_WORLD_PARAM const ee0::GameObj& obj)
-	: eone::WxStagePage(parent, ECS_WORLD_VAR obj, SHOW_STAGE | SHOW_STAGE_EXT | SHOW_TOOLBAR)
+	: eone::WxStagePage(parent, ECS_WORLD_VAR obj, SHOW_STAGE | SHOW_STAGE_EXT | STAGE_EXT_LFET | SHOW_TOOLBAR)
 {
 	m_messages.push_back(ee0::MSG_SET_CANVAS_DIRTY);
 	m_messages.push_back(ee3::MSG_SKELETAL_TREE_ON_SELECT);

@@ -195,6 +195,9 @@ void WxStagePage::InitSubWindow()
 	}
 	if (m_app_style & SHOW_STAGE_EXT) {
 		ui_mgr.GetPane(STR_STAGE_EXT_PANEL).Show();
+		if (m_app_style & STAGE_EXT_LFET) {
+			ui_mgr.GetPane(STR_STAGE_EXT_PANEL).Left().MinSize(500, -1);
+		}
 	} else {
 		ui_mgr.GetPane(STR_STAGE_EXT_PANEL).Hide();
 	}
