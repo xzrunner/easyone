@@ -19,7 +19,8 @@
 #include <entity2/CompBoundingBox.h>
 #include <entity2/CompScale9.h>
 #endif // GAME_OBJ_ECS
-#include <painting2/PrimitiveDraw.h>
+#include <tessellation/Painter.h>
+#include <painting2/RenderSystem.h>
 
 namespace
 {
@@ -158,10 +159,12 @@ bool ResizeScale9OP::OnDraw() const
 		        hh = sz.Height() * 0.5f;
 	const float r = REGION;
 
-	pt2::PrimitiveDraw::Rect(nullptr, sm::vec2(-hw, -hh), r, r, false);
-	pt2::PrimitiveDraw::Rect(nullptr, sm::vec2( hw, -hh), r, r, false);
-	pt2::PrimitiveDraw::Rect(nullptr, sm::vec2( hw,  hh), r, r, false);
-	pt2::PrimitiveDraw::Rect(nullptr, sm::vec2(-hw,  hh), r, r, false);
+	tess::Painter pt;
+	pt.AddRect(sm::vec2(-hw, -hh), sm::vec2(-hw + r, -hh + r), 0xffffffff);
+	pt.AddRect(sm::vec2( hw, -hh), sm::vec2( hw + r, -hh + r), 0xffffffff);
+	pt.AddRect(sm::vec2( hw,  hh), sm::vec2( hw + r,  hh + r), 0xffffffff);
+	pt.AddRect(sm::vec2(-hw,  hh), sm::vec2(-hw + r,  hh + r), 0xffffffff);
+	pt2::RenderSystem::DrawPainter(pt);
 
 	return false;
 }

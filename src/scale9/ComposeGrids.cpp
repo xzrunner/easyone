@@ -2,7 +2,8 @@
 
 #include <ee0/color_config.h>
 
-#include <painting2/PrimitiveDraw.h>
+#include <tessellation/Painter.h>
+#include <painting2/RenderSystem.h>
 
 namespace eone
 {
@@ -15,6 +16,7 @@ static const float Y = EDGE * -1.5f;
 
 void ComposeGrids::Draw()
 {
+	tess::Painter pt;
 	for (size_t i = 0; i < 3; ++i)
 	{
 		for (size_t j = 0; j < 3; ++j)
@@ -23,10 +25,10 @@ void ComposeGrids::Draw()
 			p0.x = X + EDGE*i;
 			p0.y = Y + EDGE*j;
 			sm::vec2 p1(p0.x + EDGE, p0.y + EDGE);
-			pt2::PrimitiveDraw::SetColor(ee0::LIGHT_GREY);
-			pt2::PrimitiveDraw::Rect(nullptr, p0, p1, false);
+			pt.AddRect(p0, p1, ee0::LIGHT_GREY.ToABGR());
 		}
 	}
+	pt2::RenderSystem::DrawPainter(pt);
 }
 
 void ComposeGrids::Query(const sm::vec2& pos, int* col, int* row)

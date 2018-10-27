@@ -12,9 +12,8 @@
 #include <node3/CompModel.h>
 #include <node3/CompModelInst.h>
 #include <node3/RenderSystem.h>
-
-#include <painting2/PrimitiveDraw.h>
-#include <painting3/PrimitiveDraw.h>
+#include <tessellation/Painter.h>
+#include <painting2/RenderSystem.h>
 
 namespace eone
 {
@@ -30,18 +29,26 @@ WxStageCanvas::WxStageCanvas(eone::WxStagePage* stage, ECS_WORLD_PARAM
 
 void WxStageCanvas::DrawBackground() const
 {
-	static const int LEN = 1;
-	pt2::PrimitiveDraw::PointSize(5);
-	pt2::PrimitiveDraw::LineWidth(2);
-	pt3::PrimitiveDraw::SetColor(0xff0000ff);
-	pt3::PrimitiveDraw::Line(sm::vec3(-LEN, 0, 0), sm::vec3(LEN, 0, 0));
-	pt3::PrimitiveDraw::Point(sm::vec3(LEN, 0, 0));
-	pt3::PrimitiveDraw::SetColor(0xff00ff00);
-	pt3::PrimitiveDraw::Line(sm::vec3(0, -LEN, 0), sm::vec3(0, LEN, 0));
-	pt3::PrimitiveDraw::Point(sm::vec3(0, LEN, 0));
-	pt3::PrimitiveDraw::SetColor(0xffff0000);
-	pt3::PrimitiveDraw::Line(sm::vec3(0, 0, -LEN), sm::vec3(0, 0, LEN));
-	pt3::PrimitiveDraw::Point(sm::vec3(0, 0, LEN));
+	// draw cross
+
+	tess::Painter pt;
+
+	auto cam_mat = m_camera->GetViewMat() * m_camera->GetProjectionMat();
+	auto trans3d = [&](const sm::vec3& pos3)->sm::vec2 {
+		return GetViewport().TransPosProj3ToProj2(pos3, cam_mat);
+	};
+
+	const float len = 1;
+	pt.AddLine3D({ -len, 0, 0 }, { len, 0, 0 }, trans3d, 0xff0000ff, 2);
+	pt.AddLine3D({ 0, -len, 0 }, { 0, len, 0 }, trans3d, 0xff00ff00, 2);
+	pt.AddLine3D({ 0, 0, -len }, { 0, 0, len }, trans3d, 0xffff0000, 2);
+
+	const float radius = 0.1f;
+	pt.AddCircleFilled(trans3d(sm::vec3(len, 0, 0)), radius, 0xff0000ff);
+	pt.AddCircleFilled(trans3d(sm::vec3(0, len, 0)), radius, 0xff00ff00);
+	pt.AddCircleFilled(trans3d(sm::vec3(0, 0, len)), radius, 0xffff0000);
+
+	pt2::RenderSystem::DrawPainter(pt);
 }
 
 void WxStageCanvas::DrawForeground() const

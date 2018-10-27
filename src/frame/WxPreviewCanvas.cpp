@@ -8,9 +8,9 @@
 
 #include <unirender/RenderContext.h>
 #include <painting2/OrthoCamera.h>
-#include <painting2/PrimitiveDraw.h>
 #include <painting2/Blackboard.h>
 #include <painting2/WindowContext.h>
+#include <painting2/RenderSystem.h>
 #ifndef GAME_OBJ_ECS
 #include <node0/SceneNode.h>
 #include <node2/RenderSystem.h>
@@ -19,6 +19,8 @@
 #include <entity2/SysRender.h>
 #endif // GAME_OBJ_ECS
 #include <facade/RenderContext.h>
+#include <facade/RenderContext.h>
+#include <tessellation/Painter.h>
 
 namespace eone
 {
@@ -67,8 +69,15 @@ void WxPreviewCanvas::OnDrawSprites() const
 	ur_rc.EnableDepthMask(false);
 	ur_rc.SetCull(ur::CULL_DISABLE);
 
-	pt2::PrimitiveDraw::SetColor(ee0::WHITE);
-	pt2::PrimitiveDraw::Rect(nullptr, sm::vec2(0, 0), 1024, 768, false);
+	const float hw = 1024 * 0.5f;
+	const float hh = 768 * 0.5f;
+	float line_width = 2.0f;
+	if (m_camera->TypeID() == pt0::GetCamTypeID<pt2::OrthoCamera>()) {
+		line_width *= std::dynamic_pointer_cast<pt2::OrthoCamera>(m_camera)->GetScale();
+	}
+	tess::Painter pt;
+	pt.AddRect({ -hw, -hh }, { hw, hh }, 0xffffffff, line_width);
+	pt2::RenderSystem::DrawPainter(pt);
 
 	ee0::VariantSet vars;
 	ee0::Variant var;

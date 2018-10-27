@@ -6,7 +6,6 @@
 #include <ee0/SubjectMgr.h>
 #include <ee0/CameraHelper.h>
 
-#include <painting2/PrimitiveDraw.h>
 #include <moon/Context.h>
 #include <moon/Blackboard.h>
 

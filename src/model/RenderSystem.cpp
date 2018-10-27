@@ -10,8 +10,6 @@
 #include <unirender/Blackboard.h>
 #include <unirender/RenderContext.h>
 #include <unirender/Shader.h>
-#include <painting2/PrimitiveDraw.h>
-#include <painting3/PrimitiveDraw.h>
 #include <painting3/EffectsManager.h>
 #include <painting3/Blackboard.h>
 #include <painting3/WindowContext.h>
@@ -37,12 +35,13 @@ void RenderSystem::DrawModel(const ::model::ModelInstance& model_inst,
 
 	if (polygon_line) {
 		rc.SetPolygonMode(ur::POLYGON_LINE);
-		pt2::PrimitiveDraw::LineWidth(1);
 	} else {
 		rc.SetPolygonMode(ur::POLYGON_FILL);
 	}
 	mgr->SetUserEffect(std::static_pointer_cast<ur::Shader>(m_default_shader));
 	DrawSkeletalNode(model_inst, 0, params);
+
+	rc.SetPolygonMode(ur::POLYGON_FILL);
 }
 
 void RenderSystem::DrawSkeletalNode(const ::model::ModelInstance& model_inst,

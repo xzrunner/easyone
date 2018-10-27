@@ -13,6 +13,7 @@
 #else
 #endif // GAME_OBJ_ECS
 #include <moon/Blackboard.h>
+#include <painting2/OrthoCamera.h>
 
 #include <wx/frame.h>
 
@@ -33,8 +34,12 @@ void WxStageCanvas2D::DrawForeground() const
 	auto obj = static_cast<WxStagePage*>(m_stage)->GetEditedObj();
 	if (obj->HasUniqueComp<n2::CompScissor>())
 	{
+		float line_width = 2.0f;
+		if (m_camera->TypeID() == pt0::GetCamTypeID<pt2::OrthoCamera>()) {
+			line_width *= std::dynamic_pointer_cast<pt2::OrthoCamera>(m_camera)->GetScale();
+		}
 		auto& cscissor = obj->GetUniqueComp<n2::CompScissor>();
-		n2::RenderSystem::Instance()->DrawScissorRect(cscissor.GetRect(), sm::Matrix2D());
+		n2::RenderSystem::Instance()->DrawScissorRect(cscissor.GetRect(), line_width, sm::Matrix2D());
 	}
 #else
 	// todo ecs

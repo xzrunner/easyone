@@ -3,7 +3,6 @@
 
 #include <ee0/SubjectMgr.h>
 
-#include <painting3/PrimitiveDraw.h>
 #include <ns/NodeFactory.h>
 #include <node0/SceneNode.h>
 #include <node3/RenderSystem.h>
