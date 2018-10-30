@@ -49,7 +49,7 @@ void RenderSystem::DrawSkeletalNode(const ::model::ModelInstance& model_inst,
 {
 	auto& model = *model_inst.GetModel();
 	auto& g_trans = model_inst.GetGlobalTrans();
-	auto& nodes = static_cast<::model::SkeletalAnim*>(model.ext.get())->GetAllNodes();
+	auto& nodes = static_cast<::model::SkeletalAnim*>(model.ext.get())->GetNodes();
 	auto& node = *nodes[node_idx];
 	if (!node.children.empty())
 	{

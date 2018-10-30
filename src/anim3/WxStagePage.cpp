@@ -217,7 +217,7 @@ bool WxStagePage::OnRefreshAnimComp()
 void WxStagePage::ReloadAnimation(::model::ModelInstance& model_inst,
 	                              ::model::SkeletalAnim& sk_anim, int anim_idx)
 {
-	auto& all_anims = sk_anim.GetAllAnims();
+	auto& all_anims = sk_anim.GetAnims();
 	assert(anim_idx >= 0 && anim_idx < all_anims.size());
 	auto& anim = all_anims[anim_idx];
 
