@@ -193,3 +193,6 @@
 [submodule "ext/rendergraph"]
 	path = ext/rendergraph
 	url = git@github.com:xzrunner/rendergraph.git
+[submodule "ext/easygui"]
+	path = ext/easygui
+	url = git@github.com:xzrunner/easygui.git
