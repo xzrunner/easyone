@@ -61,6 +61,8 @@ private:
 
 	WxToolbarPanel* m_toolbar = nullptr;
 
+	n0::SceneNodePtr m_preview_obj = nullptr;
+
 }; // WxStagePage
 
 }

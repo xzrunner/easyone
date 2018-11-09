@@ -21,6 +21,8 @@
 #include <node2/CompBoundingBox.h>
 #include <node2/AABBSystem.h>
 #include <node3/CompTransform.h>
+#include <node3/CompAABB.h>
+#include <node3/AABBSystem.h>
 #include <ns/CompSerializer.h>
 #include <ns/CompFactory.h>
 #else
@@ -119,6 +121,21 @@ void WxStagePage::LoadFromFile(const std::string& filepath)
 		auto& cbb = m_obj->GetUniqueComp<n2::CompBoundingBox>();
 		auto aabb = n2::AABBSystem::Instance()->GetBounding(*m_obj);
 		cbb.SetSize(*m_obj, aabb);
+	}
+	else if (m_obj->HasUniqueComp<n3::CompAABB>())
+	{
+		auto& cbb = m_obj->GetUniqueComp<n3::CompAABB>();
+		auto aabb = n3::AABBSystem::GetBounding(*casset);
+		// shrink
+		if (aabb.Width() > 10 || aabb.Height() > 10 || aabb.Depth() > 10) 
+		{
+			const sm::vec3 scale(0.01f, 0.01f, 0.01f);
+			aabb.Scale(scale);
+
+			auto& ctrans = m_obj->GetUniqueComp<n3::CompTransform>();
+			ctrans.SetScale(scale);
+		}
+		cbb.SetAABB(aabb);
 	}
 #else
 	// todo ecs

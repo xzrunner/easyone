@@ -24,11 +24,18 @@ protected:
 	virtual void DrawBackground() const override;
 	virtual void DrawForeground() const override;
 
+	virtual bool OnUpdate() override;
+
 private:
 	void RegisterMsg(ee0::SubjectMgr& sub_mgr);
 
+	void DrawModel() const;
+	void DrawGUI() const;
+
 private:
 	ee0::GameObj m_obj;
+
+	mutable float m_anim_speed = 1.0f;
 
 }; // WxPreviewCanvas
 

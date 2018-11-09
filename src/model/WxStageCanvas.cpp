@@ -69,7 +69,7 @@ void WxStageCanvas::DrawForeground() const
 
 	auto& model = model_inst->GetModel();
 	auto& ext = model->ext;
-	if (ext->Type() == ::model::EXT_SKELETAL) {
+	if (ext && ext->Type() == ::model::EXT_SKELETAL) {
 		RenderSystem::Instance()->DrawModel(*model_inst, params, true);
 	} else {
 		n3::RenderSystem::Draw(m_obj, params);

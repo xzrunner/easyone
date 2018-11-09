@@ -28,6 +28,10 @@ WxToolbarPanel::WxToolbarPanel(wxWindow* parent, WxStagePage* stage)
 
 void WxToolbarPanel::LoadModel(const ::model::Model& model)
 {
+	if (!model.ext) {
+		return;
+	}
+
 	if (model.ext->Type() == ::model::EXT_SKELETAL) {
 		auto& skeletal = *static_cast<::model::SkeletalAnim*>(model.ext.get());
 		m_tree_page->m_tree->LoadFromSkeletal(skeletal);

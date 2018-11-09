@@ -142,6 +142,8 @@ void WxStagePage::LoadFromFileExt(const std::string& filepath)
 	auto& cmode_inst = m_obj->GetUniqueComp<n3::CompModelInst>();
 	cmode_inst.SetModel(cmodel->GetModel(), 0);
 
+	m_preview_obj->GetUniqueComp<n3::CompModelInst>().SetModel(cmodel->GetModel(), 0);
+
 	auto model = cmode_inst.GetModel().get();
 	m_sk_op->SetModel(model);
 	m_ik_op->SetModel(model);
@@ -164,8 +166,9 @@ void WxStagePage::InitPreviewPanel()
 	auto preview_panel = new WxPreviewPanel(panel);
 	sizer->Add(preview_panel, 1, wxEXPAND);
 
+	m_preview_obj = m_obj->Clone();
 	auto preview_canvas = std::make_shared<WxPreviewCanvas>(
-		preview_panel, bb->GetRenderContext(), m_obj);
+		preview_panel, bb->GetRenderContext(), m_preview_obj);
 	preview_panel->GetImpl().SetCanvas(preview_canvas);
 
 	auto preview_op = std::make_shared<ee3::WorldTravelOP>(

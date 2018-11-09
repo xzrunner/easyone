@@ -45,6 +45,7 @@
 #include <facade/Facade.h>
 #include <facade/GTxt.h>
 #include <moon/moon.h>
+#include <sx/ResFileHelper.h>
 
 #include <boost/filesystem.hpp>
 
@@ -89,9 +90,10 @@ void Application::LoadFromFile(const std::string& filepath)
 
 	int new_type = PAGE_INVALID;
 
-	auto ext = boost::filesystem::extension(filepath);
-	std::transform(ext.begin(), ext.end(), ext.begin(), tolower);
-	if (ext == ".json")
+	auto type = sx::ResFileHelper::Type(filepath);
+	switch (type)
+	{
+	case sx::RES_FILE_JSON:
 	{
 		rapidjson::Document doc;
 		js::RapidJsonHelper::ReadFromFile(filepath.c_str(), doc);
@@ -123,8 +125,8 @@ void Application::LoadFromFile(const std::string& filepath)
 			new_type = PAGE_PARTICLE3D;
 		}
 	}
-	else if (ext == ".x" || ext == ".dae" || ext == ".fbx")
-	{
+		break;
+	case sx::RES_FILE_MODEL:
 		if (old_type == PAGE_MODEL) {
 			new_type = PAGE_MODEL;
 		} else if (old_type == PAGE_ANIM3) {
@@ -132,10 +134,10 @@ void Application::LoadFromFile(const std::string& filepath)
 		} else {
 			new_type = PAGE_MODEL;
 		}
-	}
-	else if (ext == ".map")
-	{
+		break;
+	case sx::RES_FILE_MAP:
 		new_type = PAGE_QUAKE;
+		break;
 	}
 
 	if (old_type != new_type) {
@@ -268,7 +270,7 @@ wxWindow* Application::CreateStagePanel()
 	m_stage->Freeze();
 	Blackboard::Instance()->SetStagePanel(m_stage);
 
-	PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_SCENE2D, m_stage);
+	//PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_SCENE2D, m_stage);
 	//PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_SCENE3D, m_stage);
 
 	//PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_SCALE9, m_stage);
@@ -276,7 +278,7 @@ wxWindow* Application::CreateStagePanel()
 	//PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_ANIM, m_stage);
 	//PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_PARTICLE3D, m_stage);
 
-	//PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_MODEL, m_stage);
+	PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_MODEL, m_stage);
 	//PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_ANIM3, m_stage);
 	//PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_SHADER_GRAPH, m_stage);
 	//PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_PROTOTYPING, m_stage);

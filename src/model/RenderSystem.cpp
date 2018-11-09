@@ -48,6 +48,10 @@ void RenderSystem::DrawSkeletalNode(const ::model::ModelInstance& model_inst,
 	                                int node_idx, const pt3::RenderParams& params) const
 {
 	auto& model = *model_inst.GetModel();
+	if (!model.ext) {
+		return;
+	}
+
 	auto& g_trans = model_inst.GetGlobalTrans();
 	auto& nodes = static_cast<::model::SkeletalAnim*>(model.ext.get())->GetNodes();
 	auto& node = *nodes[node_idx];

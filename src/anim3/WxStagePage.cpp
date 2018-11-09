@@ -202,7 +202,7 @@ bool WxStagePage::OnSetCurrFrame(const ee0::VariantSet& variants)
 	if (!model_inst) {
 		return false;
 	}
-	model_inst->SetFrame(frame * model_inst->GetModel()->anim_speed / 2);
+	model_inst->SetFrame(frame * model_inst->GetModel()->anim_speed);
 
 	m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
 
