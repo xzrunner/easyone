@@ -37,6 +37,8 @@ private:
 
 	mutable float m_anim_speed = 1.0f;
 
+	mutable sm::ivec2 m_last_screen_sz;
+
 }; // WxPreviewCanvas
 
 }
