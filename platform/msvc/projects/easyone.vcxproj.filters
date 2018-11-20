@@ -82,9 +82,6 @@
     <Filter Include="40.script">
       <UniqueIdentifier>{e5403ed2-e587-4720-82ab-24d87ef5a467}</UniqueIdentifier>
     </Filter>
-    <Filter Include="30.model">
-      <UniqueIdentifier>{3dcda7bc-0138-4aba-88f0-7b5f9c3fed8b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="00.frame\2.center\stage\canvas">
       <UniqueIdentifier>{f1c58060-7ecb-4d97-a8e3-e3075cdb4e94}</UniqueIdentifier>
     </Filter>
@@ -112,18 +109,6 @@
     <Filter Include="31.anim3">
       <UniqueIdentifier>{303c6513-429e-45d1-8e02-9625e7967cce}</UniqueIdentifier>
     </Filter>
-    <Filter Include="30.model\shader">
-      <UniqueIdentifier>{76198664-43ae-4e3b-a438-9b93b0f158bf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="30.model\view">
-      <UniqueIdentifier>{b64f9923-3d77-4435-909e-2bf91d6cf011}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="30.model\view\stage">
-      <UniqueIdentifier>{ea565ae8-a723-4e0f-badb-f136732eda78}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="30.model\view\preview">
-      <UniqueIdentifier>{da8dc5bc-7e31-4c1a-97cf-542e2a3109ff}</UniqueIdentifier>
-    </Filter>
     <Filter Include="31.anim3\view">
       <UniqueIdentifier>{647f55e2-f2b1-40e5-aeb4-f7e4f0d0cbad}</UniqueIdentifier>
     </Filter>
@@ -139,9 +124,6 @@
     <Filter Include="31.anim3\view\toolbar">
       <UniqueIdentifier>{d125071b-873b-42e0-b907-8da574b2882f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="30.model\view\toolbar">
-      <UniqueIdentifier>{cd750af6-a7cf-44b7-a07e-a6a2bc527d35}</UniqueIdentifier>
-    </Filter>
     <Filter Include="32.sgraph">
       <UniqueIdentifier>{70521c8d-51e2-405c-a78a-764746df18c2}</UniqueIdentifier>
     </Filter>
@@ -150,6 +132,33 @@
     </Filter>
     <Filter Include="33.prototype">
       <UniqueIdentifier>{061b6e62-1453-44e1-9ffc-eb85d6452762}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="15.shape2d">
+      <UniqueIdentifier>{23e96ae8-8ab3-4cf5-860f-c6987ff09613}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="15.shape2d\view">
+      <UniqueIdentifier>{6595e695-6d12-4471-bbe6-cd6bef64aa58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="30.model">
+      <UniqueIdentifier>{3dcda7bc-0138-4aba-88f0-7b5f9c3fed8b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="30.model\shader">
+      <UniqueIdentifier>{76198664-43ae-4e3b-a438-9b93b0f158bf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="30.model\view">
+      <UniqueIdentifier>{b64f9923-3d77-4435-909e-2bf91d6cf011}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="30.model\view\stage">
+      <UniqueIdentifier>{ea565ae8-a723-4e0f-badb-f136732eda78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="30.model\view\preview">
+      <UniqueIdentifier>{da8dc5bc-7e31-4c1a-97cf-542e2a3109ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="30.model\view\toolbar">
+      <UniqueIdentifier>{cd750af6-a7cf-44b7-a07e-a6a2bc527d35}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="16.mesh">
+      <UniqueIdentifier>{24edf818-6761-4d2f-bdfd-58f5acf6ab5d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -381,6 +390,12 @@
     <ClInclude Include="..\..\..\src\frame\PanelFactory.h">
       <Filter>00.frame\tools</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\shape2d\WxStageCanvas.h">
+      <Filter>15.shape2d\view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\shape2d\WxStagePage.h">
+      <Filter>15.shape2d\view</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\frame\main.cpp">
@@ -583,6 +598,12 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\frame\PanelFactory.cpp">
       <Filter>00.frame\tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\shape2d\WxStageCanvas.cpp">
+      <Filter>15.shape2d\view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\shape2d\WxStagePage.cpp">
+      <Filter>15.shape2d\view</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -22,6 +22,8 @@
 #include "anim/WxStagePage.h"
 #include "particle3d/WxStagePage.h"
 #include "particle3d/PlayParticlesOP.h"
+#include "shape2d/WxStagePage.h"
+#include "shape2d/WxStageCanvas.h"
 #include "model/WxStagePage.h"
 #include "model/WxStageCanvas.h"
 #include "anim3/WxStagePage.h"
@@ -174,6 +176,18 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
 
 			stage_panel->AddNewPage(page, GetPageName(page->GetPageType()));
 		}
+		break;
+	case PAGE_SHAPE2D:
+	{
+		auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX2D);
+
+		page = new shape2d::WxStagePage(frame, library, ECS_WORLD_VAR obj);
+
+		auto canvas = std::make_shared<shape2d::WxStageCanvas>(page, rc);
+		page->GetImpl().SetCanvas(canvas);
+
+		stage_panel->AddNewPage(page, GetPageName(page->GetPageType()));
+	}
 		break;
 
 	case PAGE_MODEL:

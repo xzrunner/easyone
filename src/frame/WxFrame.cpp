@@ -41,6 +41,7 @@ void WxFrame::OnNew(wxCommandEvent& event)
 		{ "Mesh",        new PageItemData(eone::PAGE_MESH) },
 		{ "Anim",        new PageItemData(eone::PAGE_ANIM) },
 		{ "Particle3d",  new PageItemData(eone::PAGE_PARTICLE3D) },
+		{ "Shape2d",     new PageItemData(eone::PAGE_SHAPE2D) },
 
 		{ "Scale9",      new PageItemData(eone::PAGE_SCALE9) },
 

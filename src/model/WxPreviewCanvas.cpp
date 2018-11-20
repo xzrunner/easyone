@@ -9,18 +9,11 @@
 #include <node3/CompModelInst.h>
 #include <model/Model.h>
 #include <easygui/ImGui.h>
-#include <facade/DTex.h>
-#include <facade/EasyGUI.h>
-#include <facade/Facade.h>
 #include <tessellation/Palette.h>
-#include <unirender/Blackboard.h>
-#include <unirender/RenderContext.h>
-#include <painting0/Shader.h>
-#include <painting2/Shader.h>
 #include <painting3/Blackboard.h>
 #include <painting3/WindowContext.h>
-#include <rendergraph/RenderMgr.h>
-#include <rendergraph/SpriteRenderer.h>
+#include <facade/EasyGUI.h>
+#include <facade/Facade.h>
 
 namespace eone
 {
@@ -34,11 +27,7 @@ WxPreviewCanvas::WxPreviewCanvas(WxPreviewPanel* stage, ECS_WORLD_PARAM
 {
 	RegisterMsg(*stage->GetSubjectMgr());
 
-	// init egui
-	facade::EasyGUI::Instance();
-	auto& wc = const_cast<ee0::WindowContext&>(GetWidnowContext());
-	wc.egui = std::make_shared<egui::Context>();
-	egui::style_colors_dark(wc.egui->style);
+	InitGui();
 }
 
 void WxPreviewCanvas::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
@@ -100,29 +89,9 @@ void WxPreviewCanvas::DrawModel() const
 
 void WxPreviewCanvas::DrawGUI() const
 {
-	ee0::RenderContext::Reset2D();
-
-	auto sr = std::static_pointer_cast<rg::SpriteRenderer>(
-		rg::RenderMgr::Instance()->SetRenderer(rg::RenderType::SPRITE)
-	);
-	auto& palette = sr->GetPalette();
-
-	auto shader = sr->GetShader();
-	shader->Use();
-
-	auto pt2_shader = std::dynamic_pointer_cast<pt2::Shader>(shader);
-	assert(pt2_shader);
-	pt2_shader->UpdateViewMat(sm::vec2(0, 0), 1.0f);
-
 	auto& wc = pt3::Blackboard::Instance()->GetWindowContext();
 	auto sz = wc->GetScreenSize();
-	pt2_shader->UpdateProjMat(sz.x, sz.y);
-
-	shader->UpdateModelMat(sm::mat4());
-
-	ur::Blackboard::Instance()->GetRenderContext().BindTexture(facade::DTex::Instance()->GetSymCacheTexID(), 0);
-
-	///
+	PrepareDrawGui(sz.x, sz.y);
 
 	auto& ctx = GetWidnowContext().egui;
 
