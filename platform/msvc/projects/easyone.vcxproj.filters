@@ -136,9 +136,6 @@
     <Filter Include="15.shape2d">
       <UniqueIdentifier>{23e96ae8-8ab3-4cf5-860f-c6987ff09613}</UniqueIdentifier>
     </Filter>
-    <Filter Include="15.shape2d\view">
-      <UniqueIdentifier>{6595e695-6d12-4471-bbe6-cd6bef64aa58}</UniqueIdentifier>
-    </Filter>
     <Filter Include="30.model">
       <UniqueIdentifier>{3dcda7bc-0138-4aba-88f0-7b5f9c3fed8b}</UniqueIdentifier>
     </Filter>
@@ -159,6 +156,9 @@
     </Filter>
     <Filter Include="16.mesh">
       <UniqueIdentifier>{24edf818-6761-4d2f-bdfd-58f5acf6ab5d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="16.mesh\edit">
+      <UniqueIdentifier>{bef160ab-6b83-4701-a25a-8a73f59f800b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -391,10 +391,19 @@
       <Filter>00.frame\tools</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\shape2d\WxStageCanvas.h">
-      <Filter>15.shape2d\view</Filter>
+      <Filter>15.shape2d</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\shape2d\WxStagePage.h">
-      <Filter>15.shape2d\view</Filter>
+      <Filter>15.shape2d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\mesh\WxStagePage.h">
+      <Filter>16.mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\mesh\WxStageCanvas.h">
+      <Filter>16.mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\mesh\EditPointsMeshView.h">
+      <Filter>16.mesh\edit</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -600,10 +609,19 @@
       <Filter>00.frame\tools</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\shape2d\WxStageCanvas.cpp">
-      <Filter>15.shape2d\view</Filter>
+      <Filter>15.shape2d</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\shape2d\WxStagePage.cpp">
-      <Filter>15.shape2d\view</Filter>
+      <Filter>15.shape2d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\WxStagePage.cpp">
+      <Filter>16.mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\WxStageCanvas.cpp">
+      <Filter>16.mesh</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\EditPointsMeshView.cpp">
+      <Filter>16.mesh\edit</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

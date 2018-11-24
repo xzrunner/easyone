@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -336,6 +336,9 @@
     <ClInclude Include="..\..\..\src\frame\WxWorldPanel.h" />
     <ClInclude Include="..\..\..\src\mask\WxEditDialog.h" />
     <ClInclude Include="..\..\..\src\mask\WxStagePage.h" />
+    <ClInclude Include="..\..\..\src\mesh\EditPointsMeshView.h" />
+    <ClInclude Include="..\..\..\src\mesh\WxStageCanvas.h" />
+    <ClInclude Include="..\..\..\src\mesh\WxStagePage.h" />
     <ClInclude Include="..\..\..\src\model\RenderSystem.h" />
     <ClInclude Include="..\..\..\src\model\WxPreviewCanvas.h" />
     <ClInclude Include="..\..\..\src\model\WxPreviewPanel.h" />
@@ -430,6 +433,15 @@
     <ClCompile Include="..\..\..\src\mask\WxStagePage.cpp">
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/mask/</ObjectFileName>
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/mask/</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\EditPointsMeshView.cpp" />
+    <ClCompile Include="..\..\..\src\mesh\WxStageCanvas.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/mesh/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/mesh/</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\mesh\WxStagePage.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/mesh/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/mesh/</ObjectFileName>
     </ClCompile>
     <ClCompile Include="..\..\..\src\model\RenderSystem.cpp">
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/model/</ObjectFileName>

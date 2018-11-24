@@ -17,6 +17,8 @@
 #include "scale9/WxStageCanvas.h"
 #include "scale9/ResizeScale9OP.h"
 #include "mask/WxStagePage.h"
+#include "mesh/WxStagePage.h"
+#include "mesh/WxStageCanvas.h"
 #include "script/WxStagePage.h"
 #include "script/WxStageCanvas.h"
 #include "anim/WxStagePage.h"
@@ -138,6 +140,16 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
 
 			stage_panel->AddNewPage(page, GetPageName(page->GetPageType()));
 		}
+		break;
+	case PAGE_MESH:
+	{
+		auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_MESH);
+		page = new mesh::WxStagePage(frame, library, ECS_WORLD_VAR obj);
+		auto canvas = std::make_shared<mesh::WxStageCanvas>(page, rc);
+		page->GetImpl().SetCanvas(canvas);
+
+		stage_panel->AddNewPage(page, GetPageName(page->GetPageType()));
+	}
 		break;
 	case PAGE_ANIM:
 		{
@@ -356,32 +368,39 @@ void PanelFactory::CreatePreviewOP(
 	switch (curr_page->GetPageType())
 	{
 	case PAGE_SCENE2D:
-		{
-			auto preview_op = std::make_shared<ee2::CamControlOP>(
-				canvas->GetCamera(), sub_mgr);
-			preview->GetImpl().SetEditOP(preview_op);
-		}
+	{
+		auto preview_op = std::make_shared<ee2::CamControlOP>(
+			canvas->GetCamera(), sub_mgr);
+		preview->GetImpl().SetEditOP(preview_op);
+	}
 		break;
 	case PAGE_SCENE3D:
-		{
-			//auto preview_op = std::make_shared<ee3::WorldTravelOP>(
-			//	canvas->GetCamera(), canvas->GetViewport(), page->GetSubjectMgr());
-			//preview->GetImpl().SetEditOP(preview_op);
-		}
+	{
+		//auto preview_op = std::make_shared<ee3::WorldTravelOP>(
+		//	canvas->GetCamera(), canvas->GetViewport(), page->GetSubjectMgr());
+		//preview->GetImpl().SetEditOP(preview_op);
+	}
 		break;
 	case PAGE_SCALE9:
-		{
-			auto preview_op = std::make_shared<scale9::ResizeScale9OP>(
-				canvas->GetCamera(), preview, ECS_WORLD_VAR curr_page->GetEditedObj());
-			preview->GetImpl().SetEditOP(preview_op);
-		}
+	{
+		auto preview_op = std::make_shared<scale9::ResizeScale9OP>(
+			canvas->GetCamera(), preview, ECS_WORLD_VAR curr_page->GetEditedObj());
+		preview->GetImpl().SetEditOP(preview_op);
+	}
 		break;
 	case PAGE_MASK:
-		{
-			auto preview_op = std::make_shared<ee2::CamControlOP>(
-				canvas->GetCamera(), sub_mgr);
-			preview->GetImpl().SetEditOP(preview_op);
-		}
+	{
+		auto preview_op = std::make_shared<ee2::CamControlOP>(
+			canvas->GetCamera(), sub_mgr);
+		preview->GetImpl().SetEditOP(preview_op);
+	}
+		break;
+	case PAGE_MESH:
+	{
+		auto preview_op = std::make_shared<ee2::CamControlOP>(
+			canvas->GetCamera(), sub_mgr);
+		preview->GetImpl().SetEditOP(preview_op);
+	}
 		break;
 	}
 }
