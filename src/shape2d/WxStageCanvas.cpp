@@ -28,12 +28,13 @@ WxStageCanvas::WxStageCanvas(eone::WxStagePage* stage,
 	                         ECS_WORLD_PARAM
 	                         const ee0::RenderContext& rc)
 	: ee2::WxStageCanvas(stage, ECS_WORLD_VAR &rc)
+	, m_edit_view(*stage, stage->GetSubjectMgr())
 {
 	InitGui();
 
 	auto cam_op = std::make_shared<ee2::CamControlOP>(GetCamera(), stage->GetSubjectMgr());
 	m_edit_shape_op = std::make_shared<dw2::EditShapeOP>(
-		GetCamera(), stage->GetSubjectMgr(), *stage, dw2::NODE_RADIUS, rttr::type::get<gs::Point2D>().get_id()
+		GetCamera(), m_edit_view, dw2::NODE_RADIUS, rttr::type::get<gs::Point2D>().get_id()
 	);
 	m_edit_shape_op->SetPrevEditOP(cam_op);
 	m_stage->GetImpl().SetEditOP(m_edit_shape_op);

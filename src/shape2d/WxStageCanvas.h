@@ -2,6 +2,8 @@
 
 #include <ee2/WxStageCanvas.h>
 
+#include <drawing2/CommonEditView.h>
+
 #include <array>
 
 namespace dw2 { class EditShapeOP; }
@@ -27,6 +29,8 @@ protected:
 	virtual void DrawBackground() const override;
 
 private:
+	dw2::CommonEditView m_edit_view;
+
 	mutable sm::ivec2 m_last_screen_sz;
 
 	std::shared_ptr<dw2::EditShapeOP> m_edit_shape_op = nullptr;
