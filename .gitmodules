@@ -196,3 +196,6 @@
 [submodule "ext/easygui"]
 	path = ext/easygui
 	url = git@github.com:xzrunner/easygui.git
+[submodule "ext/drawing2"]
+	path = ext/drawing2
+	url = git@github.com:xzrunner/drawing2.git
