@@ -88,7 +88,7 @@ void WxDetailPanel::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
 		break;
 	case ee0::MSG_DELETE_SCENE_NODE:
 	case ee0::MSG_CLEAR_SCENE_NODE:
-	case ee0::MSG_NODE_SELECTION_CLEAR:
+//	case ee0::MSG_NODE_SELECTION_CLEAR:
 		ClearComponents();
 		InitComponents();
 		break;
