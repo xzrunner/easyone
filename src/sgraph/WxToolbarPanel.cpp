@@ -63,7 +63,7 @@ void WxToolbarPanel::InitLayout(const ee0::RenderContext* rc)
 	}
 	sizer->AddSpacer(10);
 	// preview
-	sizer->Add(m_preview = new ee3::WxMaterialPreview(this, sm::ivec2(300, 300), m_sub_mgr, rc));
+	sizer->Add(m_preview = new ee3::WxMaterialPreview(this, sm::ivec2(300, 300), m_sub_mgr, rc, true));
 	sizer->AddSpacer(10);
 	// property
 	sizer->Add(m_prop = new sg::WxNodeProperty(this, m_sub_mgr));
