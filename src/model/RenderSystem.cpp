@@ -77,9 +77,9 @@ void RenderSystem::DrawSkeletalNode(const ::model::ModelInstance& model_inst,
 				ur::Blackboard::Instance()->GetRenderContext().BindTexture(tex_id, 0);
 			}
 
-			auto effect_type = pt3::EffectsManager::EffectType(mesh->effect);
-			if (effect_type == pt3::EffectsManager::EFFECT_SKINNED) {
-				effect_type = pt3::EffectsManager::EFFECT_USER;
+			auto effect_type = ::model::EffectType(mesh->effect);
+			if (effect_type == ::model::EFFECT_SKINNED) {
+				effect_type = ::model::EFFECT_USER;
 			}
 			auto effect = mgr->Use(effect_type);
 			auto mode = effect->GetDrawMode();
