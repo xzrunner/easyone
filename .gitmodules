@@ -199,3 +199,6 @@
 [submodule "ext/drawing2"]
 	path = ext/drawing2
 	url = git@github.com:xzrunner/drawing2.git
+[submodule "ext/meshlab"]
+	path = ext/meshlab
+	url = git@github.com:xzrunner/meshlab.git
