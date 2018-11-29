@@ -8,7 +8,7 @@
 namespace pt0 { class Camera; }
 namespace pt3 { class Viewport; }
 namespace ee0 { class WxLibraryPanel; }
-namespace ee3 { class SkeletonJointOP; class SkeletonIKOP; }
+namespace ee3 { class SkeletonJointOP; class SkeletonIKOP; class MeshIKOP; }
 
 namespace eone
 {
@@ -24,7 +24,8 @@ public:
 	{
 		OP_ROTATE_JOINT = 0,
 		OP_TRANSLATE_JOINT,
-		OP_IK,
+		OP_SKELETAL_IK,
+		OP_MESH_IK,
 	};
 
 public:
@@ -56,8 +57,9 @@ private:
 private:
 	ee0::SubjectMgrPtr m_preview_submgr = nullptr;
 
-	std::shared_ptr<ee3::SkeletonJointOP> m_sk_op = nullptr;
-	std::shared_ptr<ee3::SkeletonIKOP>    m_ik_op = nullptr;
+	std::shared_ptr<ee3::SkeletonJointOP> m_sk_op      = nullptr;
+	std::shared_ptr<ee3::SkeletonIKOP>    m_sk_ik_op   = nullptr;
+	std::shared_ptr<ee3::MeshIKOP>        m_mesh_ik_op = nullptr;
 
 	WxToolbarPanel* m_toolbar = nullptr;
 

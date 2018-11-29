@@ -59,7 +59,8 @@ void WxToolbarPanel::InitLayout()
 		wxArrayString choices;
 		choices.Add("Rotate Joint");
 		choices.Add("Translate Joint");
-		choices.Add("IK");
+		choices.Add("Skeletal IK");
+		choices.Add("Mesh IK");
 		auto radio = new wxRadioBox(m_edit_page, wxID_ANY, "", wxDefaultPosition,
 			wxDefaultSize, choices, 1, wxRA_SPECIFY_COLS);
 		Connect(radio->GetId(), wxEVT_COMMAND_RADIOBOX_SELECTED,
@@ -98,7 +99,10 @@ void WxToolbarPanel::OnChangeEditType(wxCommandEvent& event)
 		m_stage->SetEditOp(WxStagePage::OP_TRANSLATE_JOINT);
 		break;
 	case 2:
-		m_stage->SetEditOp(WxStagePage::OP_IK);
+		m_stage->SetEditOp(WxStagePage::OP_SKELETAL_IK);
+		break;
+	case 3:
+		m_stage->SetEditOp(WxStagePage::OP_MESH_IK);
 		break;
 	}
 	m_stage->GetSubjectMgr()->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);

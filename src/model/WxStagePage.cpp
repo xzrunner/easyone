@@ -15,6 +15,7 @@
 #include <ee3/WxStageDropTarget.h>
 #include <ee3/SkeletonJointOP.h>
 #include <ee3/SkeletonIKOP.h>
+#include <ee3/MeshIKOP.h>
 #include <ee3/WorldTravelOP.h>
 #include <ee3/MessageID.h>
 
@@ -96,8 +97,11 @@ void WxStagePage::InitEditOp(const std::shared_ptr<pt0::Camera>& camera,
 	m_sk_op = std::make_shared<ee3::SkeletonJointOP>(camera, vp, m_sub_mgr);
 	m_sk_op->SetPrevEditOP(prev_op);
 
-	m_ik_op = std::make_shared<ee3::SkeletonIKOP>(camera, vp, m_sub_mgr);
-	m_ik_op->SetPrevEditOP(prev_op);
+	m_sk_ik_op = std::make_shared<ee3::SkeletonIKOP>(camera, vp, m_sub_mgr);
+	m_sk_ik_op->SetPrevEditOP(prev_op);
+
+	m_mesh_ik_op = std::make_shared<ee3::MeshIKOP>(camera, GetImpl().GetCanvas(), vp);
+	m_mesh_ik_op->SetPrevEditOP(prev_op);
 
 	GetImpl().SetEditOP(m_sk_op);
 }
@@ -114,8 +118,11 @@ void WxStagePage::SetEditOp(EditOpType type)
 		GetImpl().SetEditOP(m_sk_op);
 		m_sk_op->ChangeToOpTranslate();
 		break;
-	case OP_IK:
-		GetImpl().SetEditOP(m_ik_op);
+	case OP_SKELETAL_IK:
+		GetImpl().SetEditOP(m_sk_ik_op);
+		break;
+	case OP_MESH_IK:
+		GetImpl().SetEditOP(m_mesh_ik_op);
 		break;
 	}
 }
@@ -146,7 +153,8 @@ void WxStagePage::LoadFromFileExt(const std::string& filepath)
 
 	auto model = cmode_inst.GetModel().get();
 	m_sk_op->SetModel(model);
-	m_ik_op->SetModel(model);
+	m_sk_ik_op->SetModel(model);
+	m_mesh_ik_op->SetModel(model->GetModel());
 
 	m_toolbar->LoadModel(*model->GetModel());
 }

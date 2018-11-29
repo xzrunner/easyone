@@ -25,6 +25,7 @@ WxStageCanvas::WxStageCanvas(eone::WxStagePage* stage, ECS_WORLD_PARAM
 	: WxStageCanvas3D(stage, rc, true)
 	, m_obj(stage->GetEditedObj())
 {
+	InitGui();
 }
 
 void WxStageCanvas::DrawBackground() const
