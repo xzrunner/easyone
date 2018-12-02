@@ -20,6 +20,8 @@
 
 #include "scene2d/WxStagePage.h"
 #include "scene3d/WxStagePage.h"
+#include "shape2d/WxStagePage.h"
+#include "shape3d/WxStagePage.h"
 #include "quake/WxStagePage.h"
 #include "sgraph/WxStagePage.h"
 #include "prototype/WxStagePage.h"
@@ -106,6 +108,10 @@ void Application::LoadFromFile(const std::string& filepath)
 				new_type = PAGE_SCENE2D;
 			} else if (type == scene3d::WxStagePage::PAGE_TYPE) {
 				new_type = PAGE_SCENE3D;
+			} else if (type == shape2d::WxStagePage::PAGE_TYPE) {
+				new_type = PAGE_SHAPE2D;
+			} else if (type == shape3d::WxStagePage::PAGE_TYPE) {
+				new_type = PAGE_SHAPE3D;
 			} else if (type == quake::WxStagePage::PAGE_TYPE) {
 				new_type = PAGE_QUAKE;
 			} else if (type == sgraph::WxStagePage::PAGE_TYPE) {
@@ -278,9 +284,10 @@ wxWindow* Application::CreateStagePanel()
 	//PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_ANIM, m_stage);
 	//PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_PARTICLE3D, m_stage);
 	//PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_SHAPE2D, m_stage);
+	PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_SHAPE3D, m_stage);
 	//PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_MESH, m_stage);
 
-	PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_MODEL, m_stage);
+	//PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_MODEL, m_stage);
 	//PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_ANIM3, m_stage);
 	//PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_SHADER_GRAPH, m_stage);
 	//PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_PROTOTYPING, m_stage);

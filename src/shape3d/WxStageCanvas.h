@@ -9,7 +9,7 @@ namespace eone
 
 class WxStagePage;
 
-namespace quake
+namespace shape3d
 {
 
 class WxStageCanvas : public WxStageCanvas3D

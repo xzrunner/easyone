@@ -13,7 +13,7 @@ namespace pt3 { class Viewport; }
 
 namespace eone
 {
-namespace quake
+namespace shape3d
 {
 
 class WxStagePage : public eone::WxStagePage
@@ -26,7 +26,7 @@ public:
 	virtual void Traverse(std::function<bool(const ee0::GameObj&)> func,
 		const ee0::VariantSet& variants = ee0::VariantSet(), bool inverse = false) const override;
 
-	virtual int GetPageType() const override { return PAGE_QUAKE; }
+	virtual int GetPageType() const override { return PAGE_SHAPE3D; }
 
 	void InitEditOP(const std::shared_ptr<pt0::Camera>& cam, const pt3::Viewport& vp);
 
@@ -42,10 +42,6 @@ protected:
 #ifndef GAME_OBJ_ECS
 	virtual const n0::NodeComp& GetEditedObjComp() const override;
 #endif // GAME_OBJ_ECS
-
-	virtual void StoreToJsonExt(const std::string& dir, rapidjson::Value& val,
-		rapidjson::MemoryPoolAllocator<>& alloc) const override;
-	virtual void LoadFromFileExt(const std::string& filepath) override;
 
 private:
 	void SwitchToNextViewport();

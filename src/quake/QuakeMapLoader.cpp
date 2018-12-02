@@ -3,7 +3,7 @@
 #include <ee0/MsgHelper.h>
 
 #include <model/Model.h>
-#include <model/MapLoader.h>
+#include <model/MapBuilder.h>
 #include <node0/SceneNode.h>
 #include <node0/CompIdentity.h>
 #include <node3/CompModel.h>
@@ -20,7 +20,7 @@ void QuakeMapLoader::LoadFromFile(ee0::SubjectMgr& sub_mgr,
 	                              const std::string& filepath)
 {
 	std::vector<std::shared_ptr<model::Model>> models;
-	model::MapLoader::Load(models, filepath);
+	model::MapBuilder::Load(models, filepath);
 
 	// insert models
 	for (auto& model : models)

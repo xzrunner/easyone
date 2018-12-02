@@ -1,4 +1,4 @@
-#include "quake/WxStageCanvas.h"
+#include "shape3d/WxStageCanvas.h"
 
 #include <unirender/VertexAttrib.h>
 #include <unirender/Blackboard.h>
@@ -29,7 +29,7 @@ std::shared_ptr<ur::Shader> EDGE_SHADER = nullptr;
 
 namespace eone
 {
-namespace quake
+namespace shape3d
 {
 
 WxStageCanvas::WxStageCanvas(eone::WxStagePage* stage, ECS_WORLD_PARAM

@@ -23,6 +23,8 @@ namespace eone
 namespace shape2d
 {
 
+const std::string WxStagePage::PAGE_TYPE = "shape2d";
+
 WxStagePage::WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, ECS_WORLD_PARAM const ee0::GameObj& obj)
 	: eone::WxStagePage(parent, ECS_WORLD_VAR obj, SHOW_STAGE)
 {

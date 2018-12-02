@@ -91,9 +91,6 @@
     <Filter Include="50.quake">
       <UniqueIdentifier>{f6b3457a-0b5f-4899-a4a3-9993706ed2f0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="50.quake\shader">
-      <UniqueIdentifier>{85bb3817-caed-471a-8086-74d08e3bdce2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="50.quake\view">
       <UniqueIdentifier>{2e1f98fa-7522-4702-87f5-5b04dcd9a120}</UniqueIdentifier>
     </Filter>
@@ -154,11 +151,14 @@
     <Filter Include="30.model\view\toolbar">
       <UniqueIdentifier>{cd750af6-a7cf-44b7-a07e-a6a2bc527d35}</UniqueIdentifier>
     </Filter>
-    <Filter Include="16.mesh">
+    <Filter Include="17.mesh">
       <UniqueIdentifier>{24edf818-6761-4d2f-bdfd-58f5acf6ab5d}</UniqueIdentifier>
     </Filter>
-    <Filter Include="16.mesh\edit">
+    <Filter Include="17.mesh\edit">
       <UniqueIdentifier>{bef160ab-6b83-4701-a25a-8a73f59f800b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="16.shape3d">
+      <UniqueIdentifier>{3fff0a03-7ef9-4c86-982e-abc8de157516}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -312,12 +312,6 @@
     <ClInclude Include="..\..\..\src\terrain\WxStagePage.h">
       <Filter>14.terrain</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\quake\DrawEdgeShader.h">
-      <Filter>50.quake\shader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\quake\DrawFaceShader.h">
-      <Filter>50.quake\shader</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\quake\QuakeMapLoader.h">
       <Filter>50.quake</Filter>
     </ClInclude>
@@ -332,9 +326,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\quake\WxPreviewCanvas.h">
       <Filter>50.quake\view\preview</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\quake\EditorMgr.h">
-      <Filter>50.quake\view\stage</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\frame\AppStyle.h">
       <Filter>00.frame\frame</Filter>
@@ -397,13 +388,19 @@
       <Filter>15.shape2d</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\mesh\WxStagePage.h">
-      <Filter>16.mesh</Filter>
+      <Filter>17.mesh</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\mesh\WxStageCanvas.h">
-      <Filter>16.mesh</Filter>
+      <Filter>17.mesh</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\mesh\EditPointsMeshView.h">
-      <Filter>16.mesh\edit</Filter>
+      <Filter>17.mesh\edit</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\shape3d\WxStageCanvas.h">
+      <Filter>16.shape3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\shape3d\WxStagePage.h">
+      <Filter>16.shape3d</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -536,12 +533,6 @@
     <ClCompile Include="..\..\..\src\terrain\WxStagePage.cpp">
       <Filter>14.terrain</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\quake\DrawEdgeShader.cpp">
-      <Filter>50.quake\shader</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\quake\DrawFaceShader.cpp">
-      <Filter>50.quake\shader</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\quake\QuakeMapLoader.cpp">
       <Filter>50.quake</Filter>
     </ClCompile>
@@ -556,9 +547,6 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\quake\WxPreviewCanvas.cpp">
       <Filter>50.quake\view\preview</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\quake\EditorMgr.cpp">
-      <Filter>50.quake\view\stage</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\model\WxStageCanvas.cpp">
       <Filter>30.model\view\stage</Filter>
@@ -615,22 +603,22 @@
       <Filter>15.shape2d</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\mesh\WxStagePage.cpp">
-      <Filter>16.mesh</Filter>
+      <Filter>17.mesh</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\mesh\WxStageCanvas.cpp">
-      <Filter>16.mesh</Filter>
+      <Filter>17.mesh</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\mesh\EditPointsMeshView.cpp">
-      <Filter>16.mesh\edit</Filter>
+      <Filter>17.mesh\edit</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\shape3d\WxStageCanvas.cpp">
+      <Filter>16.shape3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\shape3d\WxStagePage.cpp">
+      <Filter>16.shape3d</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\..\src\quake\edge.glsl">
-      <Filter>50.quake\shader</Filter>
-    </None>
-    <None Include="..\..\..\src\quake\face.glsl">
-      <Filter>50.quake\shader</Filter>
-    </None>
     <None Include="..\..\..\src\model\skinned.glsl">
       <Filter>30.model\shader</Filter>
     </None>

@@ -25,6 +25,8 @@ public:
 
 	virtual int GetPageType() const override { return PAGE_SHAPE2D; }
 
+	static const std::string PAGE_TYPE;
+
 protected:
 	// todo ecs
 #ifndef GAME_OBJ_ECS

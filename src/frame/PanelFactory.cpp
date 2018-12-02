@@ -26,6 +26,8 @@
 #include "particle3d/PlayParticlesOP.h"
 #include "shape2d/WxStagePage.h"
 #include "shape2d/WxStageCanvas.h"
+#include "shape3d/WxStagePage.h"
+#include "shape3d/WxStageCanvas.h"
 #include "model/WxStagePage.h"
 #include "model/WxStageCanvas.h"
 #include "anim3/WxStagePage.h"
@@ -201,6 +203,21 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
 		stage_panel->AddNewPage(page, GetPageName(page->GetPageType()));
 	}
 		break;
+	case PAGE_SHAPE3D:
+	{
+		auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX3D);
+
+		auto shape_page = new shape3d::WxStagePage(frame, library, ECS_WORLD_VAR obj);
+		page = shape_page;
+		auto canvas = std::make_shared<shape3d::WxStageCanvas>(page, rc, shape_page->GetEditOpMgr());
+		page->GetImpl().SetCanvas(canvas);
+		shape_page->InitViewports();
+
+		shape_page->InitEditOP(canvas->GetCamera(), canvas->GetViewport());
+
+		stage_panel->AddNewPage(page, GetPageName(page->GetPageType()));
+	}
+		break;
 
 	case PAGE_MODEL:
 		{
@@ -338,7 +355,7 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
 			auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX3D);
 			auto quake_page = new quake::WxStagePage(frame, library, ECS_WORLD_VAR obj);
 			page = quake_page;
-			auto canvas = std::make_shared<quake::WxStageCanvas>(page, rc);
+			auto canvas = std::make_shared<quake::WxStageCanvas>(page, rc, quake_page->GetEditOpMgr());
 			page->GetImpl().SetCanvas(canvas);
 			quake_page->InitViewports();
 

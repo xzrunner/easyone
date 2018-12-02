@@ -1,7 +1,4 @@
-#include "quake/WxStagePage.h"
-#include "quake/QuakeMapLoader.h"
-#include "quake/WxPreviewPanel.h"
-#include "quake/WxPreviewCanvas.h"
+#include "shape3d/WxStagePage.h"
 
 #include "frame/WxStagePage.h"
 #include "frame/Blackboard.h"
@@ -11,6 +8,7 @@
 #include "frame/AppStyle.h"
 
 #include <ee0/SubjectMgr.h>
+#include <ee3/WxStageCanvas.h>
 #include <ee3/WxStageDropTarget.h>
 #include <ee3/CameraFlyOP.h>
 #include <ee3/MessageID.h>
@@ -26,10 +24,10 @@
 
 namespace eone
 {
-namespace quake
+namespace shape3d
 {
 
-const std::string WxStagePage::PAGE_TYPE = "quake";
+const std::string WxStagePage::PAGE_TYPE = "shape3d";
 
 WxStagePage::WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, ECS_WORLD_PARAM const ee0::GameObj& obj)
 	: eone::WxStagePage(parent, ECS_WORLD_VAR obj, SHOW_LIBRARY | SHOW_RECORD | SHOW_STAGE | SHOW_STAGE_EXT | SHOW_WORLD | SHOW_DETAIL | SHOW_SCRIPT)
@@ -99,6 +97,7 @@ void WxStagePage::Traverse(std::function<bool(const ee0::GameObj&)> func,
 void WxStagePage::InitEditOP(const std::shared_ptr<pt0::Camera>& cam, const pt3::Viewport& vp)
 {
 	m_editor_mgr.Init(m_cam_mgr, cam, vp);
+	m_editor_mgr.SetCurrOp(dw3::EditOpMgr::Operator::DRAW);
 }
 
 void WxStagePage::InitViewports()
@@ -122,17 +121,6 @@ void WxStagePage::OnPageInit()
 		sizer = new wxBoxSizer(wxHORIZONTAL);
 	}
 
-	auto preview_panel = new WxPreviewPanel(panel);
-	sizer->Add(preview_panel, 1, wxEXPAND);
-
-	auto preview_canvas = std::make_shared<WxPreviewCanvas>(
-		preview_panel, bb->GetRenderContext());
-	preview_panel->GetImpl().SetCanvas(preview_canvas);
-
-	auto preview_op = std::make_shared<ee3::CameraFlyOP>(
-		preview_panel, preview_canvas->GetCamera(), preview_panel->GetSubjectMgr());
-	preview_panel->GetImpl().SetEditOP(preview_op);
-
 	panel->SetSizer(sizer);
 }
 
@@ -142,21 +130,6 @@ const n0::NodeComp& WxStagePage::GetEditedObjComp() const
 	return m_obj->GetSharedComp<n0::CompComplex>();
 }
 #endif // GAME_OBJ_ECS
-
-void WxStagePage::StoreToJsonExt(const std::string& dir, rapidjson::Value& val,
-	                             rapidjson::MemoryPoolAllocator<>& alloc) const
-{
-	val.AddMember("page_type", rapidjson::Value(PAGE_TYPE.c_str(), alloc), alloc);
-}
-
-void WxStagePage::LoadFromFileExt(const std::string& filepath)
-{
-	if (sx::ResFileHelper::Type(filepath) != sx::RES_FILE_MAP) {
-		return;
-	}
-
-	QuakeMapLoader::LoadFromFile(*m_sub_mgr, filepath);
-}
 
 void WxStagePage::SwitchToNextViewport()
 {
