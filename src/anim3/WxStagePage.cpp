@@ -158,8 +158,8 @@ void WxStagePage::InitTimeLinePanel()
 		m_layers.push_back(std::move(layer));
 	};
 	funs.swap_layer = [&](int from, int to) {
-		assert(from >= 0 && from < m_layers.size()
-			&& to >= 0 && to < m_layers.size());
+		assert(from >= 0 && from < static_cast<int>(m_layers.size())
+			&& to >= 0 && to < static_cast<int>(m_layers.size()));
 		std::swap(m_layers[from], m_layers[to]);
 	};
 	funs.remove_all_layers = [&]()->bool {
@@ -218,7 +218,7 @@ void WxStagePage::ReloadAnimation(::model::ModelInstance& model_inst,
 	                              ::model::SkeletalAnim& sk_anim, int anim_idx)
 {
 	auto& all_anims = sk_anim.GetAnims();
-	assert(anim_idx >= 0 && anim_idx < all_anims.size());
+	assert(anim_idx >= 0 && anim_idx < static_cast<int>(all_anims.size()));
 	auto& anim = all_anims[anim_idx];
 
 	float fps = anim->ticks_per_second != 0 ? anim->ticks_per_second : 30;
