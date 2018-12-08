@@ -12,6 +12,7 @@
 #include <node2/CompAnim.h>
 #include <node2/CompParticle3d.h>
 #include <node3/CompModel.h>
+#include <node3/CompImage3D.h>
 #endif // GAME_OBJ_ECS
 
 namespace eone
@@ -22,6 +23,8 @@ GameObjType GetObjType(const ee0::GameObj& obj)
 	auto asset_type = obj->GetSharedComp<n0::CompAsset>().AssetTypeID();
 	if (asset_type == n0::GetAssetUniqueTypeID<n2::CompImage>()) {
 		return GAME_OBJ_IMAGE;
+	} else if (asset_type == n0::GetAssetUniqueTypeID<n3::CompImage3D>()) {
+		return GAME_OBJ_IMAGE3D;
 	} else if (asset_type == n0::GetAssetUniqueTypeID<n2::CompText>()) {
 		return GAME_OBJ_TEXT;
 	} else if (asset_type == n0::GetAssetUniqueTypeID<n2::CompMask>()) {

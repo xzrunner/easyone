@@ -21,6 +21,7 @@
 #include <node3/CompModelInst.h>
 #include <node3/CompTransform.h>
 #include <node3/CompAABB.h>
+#include <node3/CompImage3D.h>
 #else
 #include <entity0/World.h>
 #include <entity2/CompImage.h>
@@ -55,7 +56,6 @@ ee0::GameObj GameObjFactory::Create(ECS_WORLD_PARAM GameObjType type)
 	bool is_2d = true;
 
 	sm::rect sz;
-	pt3::AABB sz3;
 	switch (type)
 	{
 	case GAME_OBJ_IMAGE:
@@ -67,6 +67,9 @@ ee0::GameObj GameObjFactory::Create(ECS_WORLD_PARAM GameObjType type)
 #endif // GAME_OBJ_ECS
 			sz.Build(100, 100);
 		}
+		break;
+	case GAME_OBJ_IMAGE3D:
+		obj->AddSharedComp<n3::CompImage3D>();
 		break;
 	case GAME_OBJ_TEXT:
 		{
