@@ -181,6 +181,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "2.meshlab", "..\..\ext\mesh
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3.drawing3", "..\..\ext\drawing3\platform\msvc\projects\drawing3.vcxproj", "{3032565A-882F-438D-B5A3-DA583B9E0682}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "1.volume", "..\..\ext\volume\platform\msvc\projects\volume.vcxproj", "{E9E3C6D8-5B33-4AFC-B1A1-0C1541BF8DDF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -471,6 +473,10 @@ Global
 		{3032565A-882F-438D-B5A3-DA583B9E0682}.Debug|Win32.Build.0 = Debug|Win32
 		{3032565A-882F-438D-B5A3-DA583B9E0682}.Release|Win32.ActiveCfg = Release|Win32
 		{3032565A-882F-438D-B5A3-DA583B9E0682}.Release|Win32.Build.0 = Release|Win32
+		{E9E3C6D8-5B33-4AFC-B1A1-0C1541BF8DDF}.Debug|Win32.ActiveCfg = Debug|Win32
+		{E9E3C6D8-5B33-4AFC-B1A1-0C1541BF8DDF}.Debug|Win32.Build.0 = Debug|Win32
+		{E9E3C6D8-5B33-4AFC-B1A1-0C1541BF8DDF}.Release|Win32.ActiveCfg = Release|Win32
+		{E9E3C6D8-5B33-4AFC-B1A1-0C1541BF8DDF}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -553,6 +559,7 @@ Global
 		{DA1AABE8-0C92-48F1-9DFA-45C2F6A03D60} = {CD6F97A5-F7CE-48C6-B7A5-5214F7B35B33}
 		{C9054AF1-3165-4FF6-BE75-06215B3F6CA9} = {71D877EC-55A6-43CA-AD4F-47F0246AF149}
 		{3032565A-882F-438D-B5A3-DA583B9E0682} = {3F90F0BC-4357-48B0-A92E-DA2826502647}
+		{E9E3C6D8-5B33-4AFC-B1A1-0C1541BF8DDF} = {55D85D01-599C-4F78-A116-BDBAEAF0D939}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8D54C01A-3C82-4351-A325-2853C3E81322}
