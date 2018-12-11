@@ -102,7 +102,7 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
 		{
 			auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX3D);
 			page = new scene3d::WxStagePage(frame, library, ECS_WORLD_VAR obj);
-			auto canvas = std::make_shared<WxStageCanvas3D>(page, rc);
+			auto canvas = std::make_shared<WxStageCanvas3D>(page, rc, true);
 			page->GetImpl().SetCanvas(canvas);
 
 			auto op = std::make_shared<ee3::NodeArrangeOP>(
