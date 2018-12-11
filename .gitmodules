@@ -205,3 +205,6 @@
 [submodule "ext/drawing3"]
 	path = ext/drawing3
 	url = git@github.com:xzrunner/drawing3.git
+[submodule "ext/volume"]
+	path = ext/volume
+	url = git@github.com:xzrunner/volume.git
