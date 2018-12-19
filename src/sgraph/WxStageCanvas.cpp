@@ -26,7 +26,7 @@ bool WxStageCanvas::OnUpdate()
 {
 	WxStageCanvas2D::OnUpdate();
 
-	bool bp_dirty = false;
+//	bool bp_dirty = false;
 	bool canvas_dirty = false;
 	m_stage->Traverse([&](const ee0::GameObj& obj)->bool
 	{
@@ -36,7 +36,7 @@ bool WxStageCanvas::OnUpdate()
 			if (bp_node->IsLifeDeleteLater())
 			{
 				ee0::MsgHelper::DeleteNode(*m_stage->GetSubjectMgr(), obj);
-				bp_dirty = true;
+//				bp_dirty = true;
 				canvas_dirty = true;
 				return false;
 			}
@@ -54,9 +54,9 @@ bool WxStageCanvas::OnUpdate()
 		return true;
 	});
 
-	if (bp_dirty) {
-		m_stage->GetSubjectMgr()->NotifyObservers(bp::MSG_BLUE_PRINT_CHANGED);
-	}
+	//if (bp_dirty) {
+	//	m_stage->GetSubjectMgr()->NotifyObservers(bp::MSG_BLUE_PRINT_CHANGED);
+	//}
 	if (canvas_dirty) {
 		m_stage->GetSubjectMgr()->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
 	}
