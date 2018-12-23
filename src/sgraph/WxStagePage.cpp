@@ -19,8 +19,7 @@
 #include <shadergraph/ShaderGraph.h>
 #include <shadergraph/NodeBuilder.h>
 #include <shadergraph/ShaderWeaver.h>
-#include <shadergraph/node/Sprite.h>
-#include <shadergraph/node/Phong.h>
+#include <shadergraph/RegistNodes.h>
 
 #include <js/RapidJsonHelper.h>
 #include <unirender/VertexAttrib.h>

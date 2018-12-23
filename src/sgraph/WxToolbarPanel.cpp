@@ -9,8 +9,7 @@
 #include <blueprint/CompNode.h>
 #include <blueprint/MessageID.h>
 #include <shadergraph/WxNodeProperty.h>
-#include <shadergraph/node/Sprite.h>
-#include <shadergraph/node/Phong.h>
+#include <shadergraph/RegistNodes.h>
 
 #include <wx/sizer.h>
 

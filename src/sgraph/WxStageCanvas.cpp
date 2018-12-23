@@ -7,7 +7,7 @@
 #include <blueprint/Node.h>
 #include <blueprint/MessageID.h>
 #include <blueprint/NodeHelper.h>
-#include <shadergraph/node/Time.h>
+#include <shadergraph/RegistNodes.h>
 
 #include <node0/SceneNode.h>
 #include <node2/CompBoundingBox.h>
