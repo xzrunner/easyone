@@ -72,9 +72,13 @@ void RenderSystem::DrawSkeletalNode(const ::model::ModelInstance& model_inst,
 			auto& mesh = model.meshes[mesh_idx];
 
 			auto& material = model.materials[mesh->material];
-			if (material->diffuse_tex != -1) {
-				int tex_id = model.textures[material->diffuse_tex].second->TexID();
-				ur::Blackboard::Instance()->GetRenderContext().BindTexture(tex_id, 0);
+			if (material->diffuse_tex != -1)
+            {
+                auto tex = model.textures[material->diffuse_tex].second;
+                if (!tex) {
+                    continue;
+                }
+				ur::Blackboard::Instance()->GetRenderContext().BindTexture(tex->TexID(), 0);
 			}
 
 			auto effect_type = ::model::EffectType(mesh->effect);
