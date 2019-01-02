@@ -290,16 +290,18 @@ void WxStagePage::UpdateShader()
 		}
 		assert(final_node);
 
-		sg::ShaderWeaver::VertType vert_type;
+		sg::ShaderWeaver::ShaderType shader_type;
 		if (m_model_type == rttr::type::get<sg::node::Sprite>().get_name().to_string()) {
-			vert_type = sg::ShaderWeaver::VERT_SPRITE;
+			shader_type = sg::ShaderWeaver::SHADER_SPRITE;
 		} else if (m_model_type == rttr::type::get<sg::node::Phong>().get_name().to_string()) {
-			vert_type = sg::ShaderWeaver::VERT_PHONG;
+			shader_type = sg::ShaderWeaver::SHADER_PHONG;
+        } else if (m_model_type == rttr::type::get<sg::node::Raymarching>().get_name().to_string()) {
+            shader_type = sg::ShaderWeaver::SHADER_RAYMARCHING;
 		} else {
 			assert(0);
 		}
 
-		sg::ShaderWeaver sw(vert_type, *final_node);
+		sg::ShaderWeaver sw(shader_type, *final_node, true);
 		auto& wc = canvas->GetWidnowContext().wc3;
 		std::shared_ptr<ur::Shader> shader = sw.CreateShader(*wc);
 		pt3::EffectsManager::Instance()->SetUserEffect(shader);

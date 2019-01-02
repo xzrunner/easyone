@@ -34,7 +34,7 @@ private:
 
 	void OnModelTypeChange(wxCommandEvent& event);
 
-	void SetModelType(const std::string& model);
+    void SetModelType(int type);
 
 	void OnSelected(const ee0::VariantSet& variants);
 

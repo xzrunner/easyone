@@ -13,6 +13,19 @@
 
 #include <wx/sizer.h>
 
+namespace
+{
+
+enum ModelType
+{
+    MODEL_SPRITE = 0,
+    MODEL_PHONG,
+    MODEL_PBR,
+    MODEL_RAYMARCHING,
+};
+
+}
+
 namespace eone
 {
 namespace sgraph
@@ -25,7 +38,7 @@ WxToolbarPanel::WxToolbarPanel(wxWindow* parent, const ee0::SubjectMgrPtr& sub_m
 {
 	InitLayout(rc);
 
-	SetModelType(rttr::type::get<sg::node::Phong>().get_name().to_string());
+    SetModelType(MODEL_RAYMARCHING);
 
 	sub_mgr->RegisterObserver(ee0::MSG_NODE_SELECTION_INSERT, this);
 }
@@ -55,6 +68,7 @@ void WxToolbarPanel::InitLayout(const ee0::RenderContext* rc)
 		choices.push_back("Sprite");
 		choices.push_back("Phong");
 		choices.push_back("PBR");
+        choices.push_back("Raymarching");
 		sizer->Add(m_model = new wxRadioBox(this, wxID_ANY, "model_type",
 			wxDefaultPosition, wxDefaultSize, choices, 0, wxRA_SPECIFY_COLS));
 		Connect(m_model->GetId(), wxEVT_COMMAND_CHOICE_SELECTED,
@@ -72,27 +86,37 @@ void WxToolbarPanel::InitLayout(const ee0::RenderContext* rc)
 
 void WxToolbarPanel::OnModelTypeChange(wxCommandEvent& event)
 {
-	switch (event.GetSelection())
-	{
-	case 0:
-		SetModelType(rttr::type::get<sg::node::Sprite>().get_name().to_string());
-		break;
-	case 1:
-		SetModelType(rttr::type::get<sg::node::Phong>().get_name().to_string());
-		break;
-	}
+    SetModelType(event.GetSelection());
 }
 
-void WxToolbarPanel::SetModelType(const std::string& model)
+void WxToolbarPanel::SetModelType(int type)
 {
-	ee0::VariantSet vars;
+    std::string str;
+    switch (type)
+	{
+	case MODEL_SPRITE:
+        str = rttr::type::get<sg::node::Sprite>().get_name().to_string();
+		break;
+	case MODEL_PHONG:
+        str = rttr::type::get<sg::node::Phong>().get_name().to_string();
+		break;
+    case MODEL_PBR:
+        break;
+    case MODEL_RAYMARCHING:
+        str = rttr::type::get<sg::node::Raymarching>().get_name().to_string();
+        break;
+    default:
+        return;
+	}
 
-	ee0::Variant var;
-	var.m_type = ee0::VT_PCHAR;
-	var.m_val.pc = const_cast<char*>(model.c_str());
-	vars.SetVariant("type", var);
+    ee0::VariantSet vars;
 
-	m_sub_mgr->NotifyObservers(MSG_SET_MODEL_TYPE, vars);
+    ee0::Variant var;
+    var.m_type = ee0::VT_PCHAR;
+    var.m_val.pc = const_cast<char*>(str.c_str());
+    vars.SetVariant("type", var);
+
+    m_sub_mgr->NotifyObservers(MSG_SET_MODEL_TYPE, vars);
 }
 
 void WxToolbarPanel::OnSelected(const ee0::VariantSet& variants)
