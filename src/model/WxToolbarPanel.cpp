@@ -38,7 +38,11 @@ void WxToolbarPanel::LoadModel(const ::model::Model& model)
 	}
 
 	m_texture_page->Clear();
-	for (auto& tex : model.textures) {
+	for (auto& tex : model.textures) 
+    {
+        if (!tex.second) {
+            continue;
+        }
 		auto item = std::make_shared<ee0::WxLibraryItem>(tex.first);
 		m_texture_page->Insert(item);
 	}
