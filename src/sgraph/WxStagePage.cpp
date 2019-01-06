@@ -301,7 +301,7 @@ void WxStagePage::UpdateShader()
 			assert(0);
 		}
 
-		sg::ShaderWeaver sw(shader_type, *final_node, true);
+		sg::ShaderWeaver sw(shader_type, *final_node);
 		auto& wc = canvas->GetWidnowContext().wc3;
 		std::shared_ptr<ur::Shader> shader = sw.CreateShader(*wc);
 		pt3::EffectsManager::Instance()->SetUserEffect(shader);
