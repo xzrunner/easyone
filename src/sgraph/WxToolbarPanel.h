@@ -30,18 +30,28 @@ public:
 	auto GetPreviewPanel() { return m_preview; }
 
 private:
+    enum class ModelType
+    {
+        SPRITE,
+        PHONG,
+        PBR,
+        RAYMARCHING,
+    };
+
+private:
 	void InitLayout(const ee0::RenderContext* rc);
 
 	void OnModelTypeChange(wxCommandEvent& event);
 
-    void SetModelType(int type);
+    void SetModelType(ModelType type);
 
 	void OnSelected(const ee0::VariantSet& variants);
 
 private:
 	ee0::SubjectMgrPtr m_sub_mgr;
 
-	wxRadioBox* m_model;
+    ModelType   m_model_type;
+	wxRadioBox* m_model_ctrl;
 
 	ee3::WxMaterialPreview* m_preview;
 

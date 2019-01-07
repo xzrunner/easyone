@@ -13,19 +13,6 @@
 
 #include <wx/sizer.h>
 
-namespace
-{
-
-enum ModelType
-{
-    MODEL_SPRITE = 0,
-    MODEL_PHONG,
-    MODEL_PBR,
-    MODEL_RAYMARCHING,
-};
-
-}
-
 namespace eone
 {
 namespace sgraph
@@ -35,10 +22,11 @@ WxToolbarPanel::WxToolbarPanel(wxWindow* parent, const ee0::SubjectMgrPtr& sub_m
 	                           const ee0::RenderContext* rc)
 	: wxPanel(parent)
 	, m_sub_mgr(sub_mgr)
+    , m_model_type(ModelType::RAYMARCHING)
 {
 	InitLayout(rc);
 
-    SetModelType(MODEL_RAYMARCHING);
+    SetModelType(m_model_type);
 
 	sub_mgr->RegisterObserver(ee0::MSG_NODE_SELECTION_INSERT, this);
 }
@@ -69,9 +57,10 @@ void WxToolbarPanel::InitLayout(const ee0::RenderContext* rc)
 		choices.push_back("Phong");
 		choices.push_back("PBR");
         choices.push_back("Raymarching");
-		sizer->Add(m_model = new wxRadioBox(this, wxID_ANY, "model_type",
+		sizer->Add(m_model_ctrl = new wxRadioBox(this, wxID_ANY, "model_type",
 			wxDefaultPosition, wxDefaultSize, choices, 0, wxRA_SPECIFY_COLS));
-		Connect(m_model->GetId(), wxEVT_COMMAND_CHOICE_SELECTED,
+        m_model_ctrl->SetSelection(static_cast<int>(m_model_type));
+		Connect(m_model_ctrl->GetId(), wxEVT_COMMAND_CHOICE_SELECTED,
 			wxCommandEventHandler(WxToolbarPanel::OnModelTypeChange));
 	}
 	sizer->AddSpacer(10);
@@ -86,23 +75,23 @@ void WxToolbarPanel::InitLayout(const ee0::RenderContext* rc)
 
 void WxToolbarPanel::OnModelTypeChange(wxCommandEvent& event)
 {
-    SetModelType(event.GetSelection());
+    SetModelType(static_cast<ModelType>(event.GetSelection()));
 }
 
-void WxToolbarPanel::SetModelType(int type)
+void WxToolbarPanel::SetModelType(ModelType type)
 {
     std::string str;
     switch (type)
 	{
-	case MODEL_SPRITE:
+    case ModelType::SPRITE:
         str = rttr::type::get<sg::node::Sprite>().get_name().to_string();
 		break;
-	case MODEL_PHONG:
+	case ModelType::PHONG:
         str = rttr::type::get<sg::node::Phong>().get_name().to_string();
 		break;
-    case MODEL_PBR:
+    case ModelType::PBR:
         break;
-    case MODEL_RAYMARCHING:
+    case ModelType::RAYMARCHING:
         str = rttr::type::get<sg::node::Raymarching>().get_name().to_string();
         break;
     default:
