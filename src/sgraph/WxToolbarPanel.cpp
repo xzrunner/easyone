@@ -127,7 +127,7 @@ void WxToolbarPanel::OnSelected(const ee0::VariantSet& variants)
 	GD_ASSERT(GAME_OBJ_VALID(obj), "err scene obj");
 
 	auto& cnode = obj->GetUniqueComp<bp::CompNode>();
-	m_prop->LoadFromNode(cnode.GetNode());
+	m_prop->LoadFromNode(obj, cnode.GetNode());
 }
 
 }
