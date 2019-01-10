@@ -90,6 +90,7 @@ void WxToolbarPanel::SetModelType(ModelType type)
         str = rttr::type::get<sg::node::Phong>().get_name().to_string();
 		break;
     case ModelType::PBR:
+        str = rttr::type::get<sg::node::PBR>().get_name().to_string();
         break;
     case ModelType::RAYMARCHING:
         str = rttr::type::get<sg::node::Raymarching>().get_name().to_string();

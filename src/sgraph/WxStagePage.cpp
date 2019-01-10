@@ -291,13 +291,15 @@ void WxStagePage::UpdateShader()
 		assert(final_node);
 
 		sg::ShaderWeaver::ShaderType shader_type;
-		if (m_model_type == rttr::type::get<sg::node::Sprite>().get_name().to_string()) {
-			shader_type = sg::ShaderWeaver::SHADER_SPRITE;
-		} else if (m_model_type == rttr::type::get<sg::node::Phong>().get_name().to_string()) {
-			shader_type = sg::ShaderWeaver::SHADER_PHONG;
+        if (m_model_type == rttr::type::get<sg::node::PBR>().get_name().to_string()) {
+            shader_type = sg::ShaderWeaver::SHADER_PBR;
+        } else if (m_model_type == rttr::type::get<sg::node::Phong>().get_name().to_string()) {
+            shader_type = sg::ShaderWeaver::SHADER_PHONG;
         } else if (m_model_type == rttr::type::get<sg::node::Raymarching>().get_name().to_string()) {
             shader_type = sg::ShaderWeaver::SHADER_RAYMARCHING;
-		} else {
+        } else if (m_model_type == rttr::type::get<sg::node::Sprite>().get_name().to_string()) {
+            shader_type = sg::ShaderWeaver::SHADER_SPRITE;
+        } else {
 			assert(0);
 		}
 
