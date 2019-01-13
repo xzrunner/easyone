@@ -33,6 +33,13 @@
 
 #include <boost/filesystem.hpp>
 
+namespace
+{
+
+const bool DEBUG_PRINT_SHADER = false;
+
+}
+
 namespace eone
 {
 namespace sgraph
@@ -303,7 +310,7 @@ void WxStagePage::UpdateShader()
 			assert(0);
 		}
 
-		sg::ShaderWeaver sw(shader_type, *final_node);
+		sg::ShaderWeaver sw(shader_type, *final_node, DEBUG_PRINT_SHADER);
 		auto& wc = canvas->GetWidnowContext().wc3;
 		std::shared_ptr<ur::Shader> shader = sw.CreateShader(*wc);
 		pt3::EffectsManager::Instance()->SetUserEffect(shader);
