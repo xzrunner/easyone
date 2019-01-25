@@ -9,6 +9,7 @@ class WxFrame : public ee0::WxFrame
 {
 public:
 	WxFrame();
+    virtual ~WxFrame();
 
 protected:
 	virtual void OnNew(wxCommandEvent& event) override;

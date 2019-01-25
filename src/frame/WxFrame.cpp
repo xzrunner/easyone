@@ -5,6 +5,7 @@
 #include "frame/WxSettingsDialog.h"
 #include "frame/WxStagePanel.h"
 #include "frame/WxStagePage.h"
+#include "frame/Blackboard.h"
 
 #include <ee0/WxListSelectDlg.h>
 #include <ee0/SubjectMgr.h>
@@ -15,9 +16,15 @@ namespace eone
 {
 
 WxFrame::WxFrame()
-	: ee0::WxFrame("EasyOne", true)
+	: ee0::WxFrame("EasyOne", wxDefaultSize, wxDEFAULT_FRAME_STYLE | wxMAXIMIZE)
 {
 	moon::Blackboard::Instance()->SetWindow(this);
+}
+
+WxFrame::~WxFrame()
+{
+    auto& ui_mgr = Blackboard::Instance()->GetApp()->GetUIManager();
+    ui_mgr.UnInit();
 }
 
 void WxFrame::OnNew(wxCommandEvent& event)

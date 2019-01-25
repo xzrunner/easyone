@@ -24,7 +24,6 @@ class Application : public ee0::Application
 {
 public:
 	Application(wxFrame* frame);
-	virtual ~Application();
 
 	virtual void LoadFromFile(const std::string& filepath) override;
 	virtual void StoreToFile(const std::string& filepath) const override;

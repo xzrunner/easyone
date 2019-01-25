@@ -76,11 +76,6 @@ Application::Application(wxFrame* frame)
 	InitCallback();
 }
 
-Application::~Application()
-{
-	m_mgr.UnInit();
-}
-
 void Application::LoadFromFile(const std::string& filepath)
 {
 	if (m_stage->SwitchToPage(filepath)) {
