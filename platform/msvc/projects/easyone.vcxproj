@@ -345,7 +345,6 @@
     <ClInclude Include="..\..\..\src\mesh\EditPointsMeshView.h" />
     <ClInclude Include="..\..\..\src\mesh\WxStageCanvas.h" />
     <ClInclude Include="..\..\..\src\mesh\WxStagePage.h" />
-    <ClInclude Include="..\..\..\src\model\RenderSystem.h" />
     <ClInclude Include="..\..\..\src\model\WxPreviewCanvas.h" />
     <ClInclude Include="..\..\..\src\model\WxPreviewPanel.h" />
     <ClInclude Include="..\..\..\src\model\WxStageCanvas.h" />
@@ -447,10 +446,6 @@
     <ClCompile Include="..\..\..\src\mesh\WxStagePage.cpp">
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/mesh/</ObjectFileName>
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/mesh/</ObjectFileName>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\model\RenderSystem.cpp">
-      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/model/</ObjectFileName>
-      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/model/</ObjectFileName>
     </ClCompile>
     <ClCompile Include="..\..\..\src\model\WxPreviewCanvas.cpp">
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/model/</ObjectFileName>

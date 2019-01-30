@@ -1,6 +1,5 @@
 #include "model/WxPreviewCanvas.h"
 #include "model/WxPreviewPanel.h"
-#include "model/RenderSystem.h"
 
 #include <ee0/SubjectMgr.h>
 
@@ -78,13 +77,15 @@ void WxPreviewCanvas::DrawModel() const
 	params.mt   = m_camera->GetViewMat();
 	params.type = pt3::RenderParams::DRAW_MESH;
 
-	auto& cmodel     = m_obj->GetUniqueComp<n3::CompModelInst>();
-	auto& model_inst = cmodel.GetModel();
+	auto& cmodel_inst = m_obj->GetUniqueComp<n3::CompModelInst>();
+	auto& model_inst  = cmodel_inst.GetModel();
 	if (!model_inst) {
 		return;
 	}
 
-	RenderSystem::Instance()->DrawModel(*model_inst, params);
+    auto& cmodel = m_obj->GetSharedComp<n3::CompModel>();
+    auto& mats = cmodel.GetAllMaterials();
+    pt3::RenderSystem::Instance()->DrawModel(*model_inst, mats, params);
 }
 
 void WxPreviewCanvas::DrawGUI() const

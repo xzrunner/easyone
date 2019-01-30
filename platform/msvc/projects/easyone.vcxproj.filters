@@ -342,9 +342,6 @@
     <ClInclude Include="..\..\..\src\model\WxPreviewCanvas.h">
       <Filter>30.model\view\preview</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\model\RenderSystem.h">
-      <Filter>30.model\view</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\anim3\CompBone.h">
       <Filter>31.anim3\dataset</Filter>
     </ClInclude>
@@ -559,9 +556,6 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\model\WxPreviewCanvas.cpp">
       <Filter>30.model\view\preview</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\model\RenderSystem.cpp">
-      <Filter>30.model\view</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\anim3\CompBone.cpp">
       <Filter>31.anim3\dataset</Filter>

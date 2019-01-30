@@ -22,6 +22,7 @@
 #include <ee2/WxCompScriptPanel.h>
 #include <ee2/WxCompShapePanel.h>
 #include <ee3/WxCompTransformPanel.h>
+#include <ee3/WxCompModelPanel.h>
 
 #include <guard/check.h>
 #include <moon/Context.h>
@@ -39,6 +40,7 @@
 #include <node2/CompTransform.h>
 #include <node2/CompShape.h>
 #include <node3/CompTransform.h>
+#include <node3/CompModel.h>
 #else
 #include <entity0/World.h>
 #include <entity2/CompTransform.h>
@@ -220,6 +222,14 @@ void WxDetailPanel::InitComponents(const ee0::GameObj& obj)
 		m_comp_sizer->Insert(m_components.size(), panel);
 		m_components.push_back(panel);
 	}
+    if (m_owp.GetNode()->HasSharedComp<n3::CompModel>())
+    {
+		auto panel = new ee3::WxCompModelPanel(
+			this, m_sub_mgr, m_owp.GetNode()
+		);
+		m_comp_sizer->Insert(m_components.size(), panel);
+		m_components.push_back(panel);
+    }
 
 #ifndef GAME_OBJ_ECS
 	if (m_owp.GetNode()->HasUniqueComp<n2::CompTransform>())
