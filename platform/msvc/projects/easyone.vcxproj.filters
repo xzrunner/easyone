@@ -136,9 +136,6 @@
     <Filter Include="30.model">
       <UniqueIdentifier>{3dcda7bc-0138-4aba-88f0-7b5f9c3fed8b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="30.model\shader">
-      <UniqueIdentifier>{76198664-43ae-4e3b-a438-9b93b0f158bf}</UniqueIdentifier>
-    </Filter>
     <Filter Include="30.model\view">
       <UniqueIdentifier>{b64f9923-3d77-4435-909e-2bf91d6cf011}</UniqueIdentifier>
     </Filter>
@@ -611,13 +608,5 @@
     <ClCompile Include="..\..\..\src\shape3d\WxStagePage.cpp">
       <Filter>16.shape3d</Filter>
     </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\..\src\model\skinned.glsl">
-      <Filter>30.model\shader</Filter>
-    </None>
-    <None Include="..\..\..\src\model\shape.glsl">
-      <Filter>30.model\shader</Filter>
-    </None>
   </ItemGroup>
 </Project>
