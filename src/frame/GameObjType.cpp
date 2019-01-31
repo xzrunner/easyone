@@ -13,6 +13,7 @@
 #include <node2/CompParticle3d.h>
 #include <node3/CompModel.h>
 #include <node3/CompImage3D.h>
+#include <node3/CompLight.h>
 #endif // GAME_OBJ_ECS
 
 namespace eone
@@ -39,6 +40,8 @@ GameObjType GetObjType(const ee0::GameObj& obj)
 		return GAME_OBJ_PARTICLE3D;
 	} else if (asset_type == n0::GetAssetUniqueTypeID<n3::CompModel>()) {
 		return GAME_OBJ_MODEL;
+    } else if (asset_type == n0::GetAssetUniqueTypeID<n3::CompLight>()) {
+        return GAME_OBJ_LIGHT;
 	} else if (asset_type == n0::GetAssetUniqueTypeID<n0::CompComplex>()) {
 		return GAME_OBJ_COMPLEX;
 	} else {

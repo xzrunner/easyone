@@ -35,6 +35,8 @@ protected:
 		rapidjson::MemoryPoolAllocator<>& alloc) const override;
 
 private:
+    void InitLightNode();
+
 	void InsertSceneNode(const ee0::VariantSet& variants);
 	void DeleteSceneNode(const ee0::VariantSet& variants);
 	void ClearSceneNode();

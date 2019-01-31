@@ -22,6 +22,7 @@
 #include <node3/CompTransform.h>
 #include <node3/CompAABB.h>
 #include <node3/CompImage3D.h>
+#include <node3/CompLight.h>
 #else
 #include <entity0/World.h>
 #include <entity2/CompImage.h>
@@ -37,6 +38,7 @@
 #include <anim/KeyFrame.h>
 #include <anim/Layer.h>
 #include <emitter/P3dTemplate.h>
+#include <painting3/PointLight.h>
 
 namespace eone
 {
@@ -152,6 +154,19 @@ ee0::GameObj GameObjFactory::Create(ECS_WORLD_PARAM GameObjType type)
 		}
 		break;
 
+    case GAME_OBJ_LIGHT:
+    {
+        is_2d = false;
+
+        auto& clight = obj->AddSharedComp<n3::CompLight>();
+        auto light = std::make_shared<pt3::PointLight>(sm::vec3(0, 2, -4));
+        clight.SetLight(light);
+
+        auto& cid = obj->AddUniqueComp<n0::CompIdentity>();
+        cid.SetName("light");
+    }
+        break;
+
 	case GAME_OBJ_COMPLEX:
 		GD_REPORT_ASSERT("err type.");
 		break;
@@ -212,7 +227,9 @@ ee0::GameObj GameObjFactory::Create(ECS_WORLD_PARAM GameObjType type)
 
 	// id
 #ifndef GAME_OBJ_ECS
-	obj->AddUniqueComp<n0::CompIdentity>();
+    if (!obj->HasUniqueComp<n0::CompIdentity>()) {
+        obj->AddUniqueComp<n0::CompIdentity>();
+    }
 #else
 #endif // GAME_OBJ_ECS
 

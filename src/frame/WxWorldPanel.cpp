@@ -100,6 +100,7 @@ void WxWorldPanel::OnAddPress(wxCommandEvent& event)
 		{ "Scale9",     new ObjItemData(eone::GAME_OBJ_SCALE9) },
 		{ "Anim",       new ObjItemData(eone::GAME_OBJ_ANIM) },
 		{ "Particle3d", new ObjItemData(eone::GAME_OBJ_PARTICLE3D) },
+        { "Light",      new ObjItemData(eone::GAME_OBJ_LIGHT) },
 	};
 
 	ee0::WxListSelectDlg dlg(this, "Create obj",
@@ -162,6 +163,9 @@ void WxWorldPanel::OnAddPress(wxCommandEvent& event)
 	case GameObjType::GAME_OBJ_PARTICLE3D:
 		obj = GameObjFactory::Create(ECS_WORLD_SELF_VAR GAME_OBJ_PARTICLE3D);
 		break;
+    case GameObjType::GAME_OBJ_LIGHT:
+        obj = GameObjFactory::Create(ECS_WORLD_SELF_VAR GAME_OBJ_LIGHT);
+        break;
 	default:
 		return;
 	}

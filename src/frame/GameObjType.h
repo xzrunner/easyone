@@ -23,6 +23,7 @@ enum GameObjType
 	GAME_OBJ_COMPLEX3D,
 
 	GAME_OBJ_MODEL,
+    GAME_OBJ_LIGHT,
 };
 
 GameObjType GetObjType(const ee0::GameObj& obj);
