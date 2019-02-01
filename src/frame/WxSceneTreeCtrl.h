@@ -130,6 +130,7 @@ private:
 	wxTreeItemId m_dragged_item;
 
 	bool m_disable_select;
+    bool m_disable_on_sel_changed = false;
 
 	DECLARE_EVENT_TABLE()
 

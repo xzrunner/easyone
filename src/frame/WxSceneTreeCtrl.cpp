@@ -73,7 +73,9 @@ void WxSceneTreeCtrl::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
 
 	case ee0::MSG_NODE_SELECTION_INSERT:
 		if (!m_disable_select) {
+            m_disable_on_sel_changed = true;
 			SelectSceneObj(variants);
+            m_disable_on_sel_changed = false;
 		}
 		break;
 	case ee0::MSG_NODE_SELECTION_DELETE:
@@ -173,6 +175,10 @@ void WxSceneTreeCtrl::RegisterMsg(ee0::SubjectMgr& sub_mgr)
 
 void WxSceneTreeCtrl::OnSelChanged(wxTreeEvent& event)
 {
+    if (m_disable_on_sel_changed) {
+        return;
+    }
+
 	auto id = event.GetItem();
 	if (!id.IsOk() || id == m_root) {
 		return;
