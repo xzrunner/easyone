@@ -48,7 +48,7 @@ void WxPreviewCanvas::DrawForeground() const
 
 	pt3::RenderParams params;
 	params.mt = GetCamera()->GetViewMat();
-	n3::RenderSystem::Draw(m_node, params);
+	n3::RenderSystem::Draw(*m_node, params);
 }
 
 void WxPreviewCanvas::RegisterMsg(ee0::SubjectMgr& sub_mgr)

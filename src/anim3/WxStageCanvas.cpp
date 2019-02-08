@@ -60,7 +60,7 @@ void WxStageCanvas::DrawForeground() const
 	}
     else
     {
-		n3::RenderSystem::Draw(m_obj, params);
+		n3::RenderSystem::Draw(*m_obj, params);
 	}
 }
 
