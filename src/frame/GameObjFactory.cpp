@@ -6,6 +6,7 @@
 #include <node0/SceneNode.h>
 #include <node0/CompComplex.h>
 #include <node0/CompIdentity.h>
+#include <node0/CompMaterial.h>
 #include <node2/CompImage.h>
 #include <node2/CompText.h>
 #include <node2/CompMask.h>
@@ -23,6 +24,7 @@
 #include <node3/CompAABB.h>
 #include <node3/CompImage3D.h>
 #include <node3/CompLight.h>
+#include <node3/CompMeshFilter.h>
 #else
 #include <entity0/World.h>
 #include <entity2/CompImage.h>
@@ -39,6 +41,8 @@
 #include <anim/Layer.h>
 #include <emitter/P3dTemplate.h>
 #include <painting3/PointLight.h>
+#include <painting3/MaterialMgr.h>
+#include <model/ParametricEquations.h>
 
 namespace eone
 {
@@ -158,12 +162,31 @@ ee0::GameObj GameObjFactory::Create(ECS_WORLD_PARAM GameObjType type)
     {
         is_2d = false;
 
-        auto& clight = obj->AddSharedComp<n3::CompLight>();
+        auto& clight = obj->AddUniqueComp<n3::CompLight>();
         auto light = std::make_shared<pt3::PointLight>(sm::vec3(0, 2, -4));
         clight.SetLight(light);
 
         auto& cid = obj->AddUniqueComp<n0::CompIdentity>();
         cid.SetName("light");
+
+        auto& cmesh = obj->AddUniqueComp<n3::CompMeshFilter>();
+        cmesh.SetMesh(model::Sphere::TYPE_NAME);
+
+        auto& caabb = obj->AddUniqueComp<n3::CompAABB>();
+        caabb.SetAABB(cmesh.GetAABB());
+
+        auto& cmaterial = obj->AddUniqueComp<n0::CompMaterial>();
+        auto mat = std::make_unique<pt0::Material>();
+        typedef pt3::MaterialMgr::PhongUniforms UNIFORMS;
+        mat->AddVar(UNIFORMS::ambient.name,     pt0::RenderVariant(sm::vec3(0.04f, 0.04f, 0.04f)));
+        mat->AddVar(UNIFORMS::diffuse.name,     pt0::RenderVariant(sm::vec3(1, 1, 1)));
+        mat->AddVar(UNIFORMS::specular.name,    pt0::RenderVariant(sm::vec3(1, 1, 1)));
+        mat->AddVar(UNIFORMS::shininess.name,   pt0::RenderVariant(50.0f));
+        cmaterial.SetMaterial(mat);
+
+        const float scale = 0.1f;
+        auto& ctrans = obj->AddUniqueComp<n3::CompTransform>();
+        ctrans.SetScale(sm::vec3(scale, scale, scale));
     }
         break;
 
@@ -193,7 +216,9 @@ ee0::GameObj GameObjFactory::Create(ECS_WORLD_PARAM GameObjType type)
 	if (is_2d)
 	{
 #ifndef GAME_OBJ_ECS
-		obj->AddUniqueComp<n2::CompTransform>();
+        if (!obj->HasUniqueComp<n2::CompTransform>()) {
+            obj->AddUniqueComp<n2::CompTransform>();
+        }
 #else
 		world.AddComponent<e2::CompLocalMat>(obj);
 #endif // GAME_OBJ_ECS
@@ -201,7 +226,9 @@ ee0::GameObj GameObjFactory::Create(ECS_WORLD_PARAM GameObjType type)
 	else
 	{
 #ifndef GAME_OBJ_ECS
-		obj->AddUniqueComp<n3::CompTransform>();
+        if (!obj->HasUniqueComp<n3::CompTransform>()) {
+            obj->AddUniqueComp<n3::CompTransform>();
+        }
 #else
 		world.AddComponent<e3::CompLocalMat>(obj);
 #endif // GAME_OBJ_ECS
@@ -211,7 +238,9 @@ ee0::GameObj GameObjFactory::Create(ECS_WORLD_PARAM GameObjType type)
 	if (is_2d)
 	{
 #ifndef GAME_OBJ_ECS
-		obj->AddUniqueComp<n2::CompBoundingBox>(sz);
+        if (obj->HasUniqueComp<n2::CompBoundingBox>()) {
+            obj->AddUniqueComp<n2::CompBoundingBox>(sz);
+        }
 #else
 		world.AddComponent<e2::CompBoundingBox>(obj, sz);
 #endif // GAME_OBJ_ECS
@@ -219,7 +248,9 @@ ee0::GameObj GameObjFactory::Create(ECS_WORLD_PARAM GameObjType type)
 	else
 	{
 #ifndef GAME_OBJ_ECS
-		obj->AddUniqueComp<n3::CompAABB>(sm::cube(1, 1, 1));
+        if (!obj->HasUniqueComp<n3::CompAABB>()) {
+            obj->AddUniqueComp<n3::CompAABB>(sm::cube(1, 1, 1));
+        }
 #else
 		world.AddComponent<e3::CompBoundingBox>(obj, sz);
 #endif // GAME_OBJ_ECS
