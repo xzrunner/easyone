@@ -27,6 +27,8 @@ public:
 	static const std::string PAGE_TYPE;
 
 protected:
+    virtual void OnPageInit() override;
+
 #ifndef GAME_OBJ_ECS
 	virtual const n0::NodeComp& GetEditedObjComp() const override;
 #endif // GAME_OBJ_ECS
@@ -35,8 +37,6 @@ protected:
 		rapidjson::MemoryPoolAllocator<>& alloc) const override;
 
 private:
-    void InitLightNode();
-
 	void InsertSceneNode(const ee0::VariantSet& variants);
 	void DeleteSceneNode(const ee0::VariantSet& variants);
 	void ClearSceneNode();

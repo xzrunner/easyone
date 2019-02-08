@@ -8,6 +8,7 @@
 #include "frame/GameObjFactory.h"
 
 #include <ee0/SubjectMgr.h>
+#include <ee0/MsgHelper.h>
 #include <ee3/WxStageDropTarget.h>
 
 #include <guard/check.h>
@@ -86,6 +87,15 @@ void WxStagePage::Traverse(std::function<bool(const ee0::GameObj&)> func,
 	}
 }
 
+void WxStagePage::OnPageInit()
+{
+    auto& ccomplex = m_obj->GetSharedComp<n0::CompComplex>();
+    if (ccomplex.GetAllChildren().empty()) {
+        auto light = GameObjFactory::Create(GAME_OBJ_LIGHT);
+        ee0::MsgHelper::InsertNode(*m_sub_mgr, light);
+    }
+}
+
 #ifndef GAME_OBJ_ECS
 const n0::NodeComp& WxStagePage::GetEditedObjComp() const
 {
@@ -97,17 +107,6 @@ void WxStagePage::StoreToJsonExt(const std::string& dir, rapidjson::Value& val,
 	                             rapidjson::MemoryPoolAllocator<>& alloc) const
 {
 	val.AddMember("page_type", rapidjson::Value(PAGE_TYPE.c_str(), alloc), alloc);
-}
-
-void WxStagePage::InitLightNode()
-{
-    auto light = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_LIGHT);
-    auto& ccomplex = m_obj->GetSharedComp<n0::CompComplex>();
-    if (m_selection.IsEmpty()) {
-        ccomplex.AddChild(light);
-    }
-
-    m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
 }
 
 void WxStagePage::InsertSceneNode(const ee0::VariantSet& variants)
