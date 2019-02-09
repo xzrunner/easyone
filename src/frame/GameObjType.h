@@ -24,6 +24,7 @@ enum GameObjType
 
 	GAME_OBJ_MODEL,
     GAME_OBJ_LIGHT,
+    GAME_OBJ_SPHERE,
 };
 
 GameObjType GetObjType(const ee0::GameObj& obj);

@@ -101,6 +101,7 @@ void WxWorldPanel::OnAddPress(wxCommandEvent& event)
 		{ "Anim",       new ObjItemData(eone::GAME_OBJ_ANIM) },
 		{ "Particle3d", new ObjItemData(eone::GAME_OBJ_PARTICLE3D) },
         { "Light",      new ObjItemData(eone::GAME_OBJ_LIGHT) },
+        { "Sphere",     new ObjItemData(eone::GAME_OBJ_SPHERE) },
 	};
 
 	ee0::WxListSelectDlg dlg(this, "Create obj",
@@ -145,29 +146,8 @@ void WxWorldPanel::OnAddPress(wxCommandEvent& event)
 			}
 		}
 		break;
-	case GameObjType::GAME_OBJ_TEXT:
-		obj = GameObjFactory::Create(ECS_WORLD_SELF_VAR GAME_OBJ_TEXT);
-		break;
-	case GameObjType::GAME_OBJ_MASK:
-		obj = GameObjFactory::Create(ECS_WORLD_SELF_VAR GAME_OBJ_MASK);
-		break;
-	case GameObjType::GAME_OBJ_MESH:
-		obj = GameObjFactory::Create(ECS_WORLD_SELF_VAR GAME_OBJ_MESH);
-		break;
-	case GameObjType::GAME_OBJ_SCALE9:
-		obj = GameObjFactory::Create(ECS_WORLD_SELF_VAR GAME_OBJ_SCALE9);
-		break;
-	case GameObjType::GAME_OBJ_ANIM:
-		obj = GameObjFactory::Create(ECS_WORLD_SELF_VAR GAME_OBJ_ANIM);
-		break;
-	case GameObjType::GAME_OBJ_PARTICLE3D:
-		obj = GameObjFactory::Create(ECS_WORLD_SELF_VAR GAME_OBJ_PARTICLE3D);
-		break;
-    case GameObjType::GAME_OBJ_LIGHT:
-        obj = GameObjFactory::Create(ECS_WORLD_SELF_VAR GAME_OBJ_LIGHT);
-        break;
 	default:
-		return;
+        obj = GameObjFactory::Create(ECS_WORLD_SELF_VAR static_cast<GameObjType>(type));
 	}
 
 	if (!GAME_OBJ_VALID(obj)) {

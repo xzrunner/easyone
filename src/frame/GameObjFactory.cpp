@@ -190,6 +190,31 @@ ee0::GameObj GameObjFactory::Create(ECS_WORLD_PARAM GameObjType type)
     }
         break;
 
+    case GAME_OBJ_SPHERE:
+    {
+        is_2d = false;
+
+        auto& cid = obj->AddUniqueComp<n0::CompIdentity>();
+        cid.SetFilepath(model::Sphere::TYPE_NAME);
+        cid.SetName(model::Sphere::TYPE_NAME);
+
+        auto& cmesh = obj->AddUniqueComp<n3::CompMeshFilter>();
+        cmesh.SetMesh(model::Sphere::TYPE_NAME);
+
+        auto& caabb = obj->AddUniqueComp<n3::CompAABB>();
+        caabb.SetAABB(cmesh.GetAABB());
+
+        auto& cmaterial = obj->AddUniqueComp<n0::CompMaterial>();
+        auto mat = std::make_unique<pt0::Material>();
+        typedef pt3::MaterialMgr::PhongUniforms UNIFORMS;
+        mat->AddVar(UNIFORMS::ambient.name,     pt0::RenderVariant(sm::vec3(0.04f, 0.04f, 0.04f)));
+        mat->AddVar(UNIFORMS::diffuse.name,     pt0::RenderVariant(sm::vec3(1, 1, 1)));
+        mat->AddVar(UNIFORMS::specular.name,    pt0::RenderVariant(sm::vec3(1, 1, 1)));
+        mat->AddVar(UNIFORMS::shininess.name,   pt0::RenderVariant(50.0f));
+        cmaterial.SetMaterial(mat);
+    }
+        break;
+
 	case GAME_OBJ_COMPLEX:
 		GD_REPORT_ASSERT("err type.");
 		break;
