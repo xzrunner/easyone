@@ -7,6 +7,7 @@
 #include <node0/SceneNode.h>
 #include <node3/RenderSystem.h>
 #include <node3/CompTransform.h>
+#include <painting3/MaterialMgr.h>
 
 namespace eone
 {
@@ -48,7 +49,14 @@ void WxPreviewCanvas::DrawForeground() const
 
 	pt3::RenderParams params;
 	params.mt = GetCamera()->GetViewMat();
-	n3::RenderSystem::Draw(*m_node, params);
+
+    pt3::RenderContext ctx;
+    ctx.uniforms.AddVar(
+        pt3::MaterialMgr::PositionUniforms::light_pos.name,
+        pt0::RenderVariant(sm::vec3(0, 2, -4))
+    );
+
+	n3::RenderSystem::Draw(*m_node, params, ctx);
 }
 
 void WxPreviewCanvas::RegisterMsg(ee0::SubjectMgr& sub_mgr)

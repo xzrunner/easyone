@@ -11,6 +11,7 @@
 #include <tessellation/Palette.h>
 #include <painting3/Blackboard.h>
 #include <painting3/WindowContext.h>
+#include <painting3/MaterialMgr.h>
 #include <facade/EasyGUI.h>
 #include <facade/Facade.h>
 
@@ -83,9 +84,15 @@ void WxPreviewCanvas::DrawModel() const
 		return;
 	}
 
+    pt3::RenderContext ctx;
+    ctx.uniforms.AddVar(
+        pt3::MaterialMgr::PositionUniforms::light_pos.name,
+        pt0::RenderVariant(sm::vec3(0, 2, -4))
+    );
+
     auto& cmodel = m_obj->GetSharedComp<n3::CompModel>();
     auto& mats = cmodel.GetAllMaterials();
-    pt3::RenderSystem::Instance()->DrawModel(*model_inst, mats, params);
+    pt3::RenderSystem::Instance()->DrawModel(*model_inst, mats, params, ctx);
 }
 
 void WxPreviewCanvas::DrawGUI() const

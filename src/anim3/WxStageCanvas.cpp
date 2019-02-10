@@ -13,6 +13,7 @@
 #include <node3/CompModel.h>
 #include <node3/CompModelInst.h>
 #include <node3/RenderSystem.h>
+#include <painting3/MaterialMgr.h>
 
 namespace eone
 {
@@ -40,6 +41,12 @@ void WxStageCanvas::DrawForeground() const
 	params.mt   = m_camera->GetViewMat();
 	params.type = pt3::RenderParams::DRAW_MESH;
 
+    pt3::RenderContext ctx;
+    ctx.uniforms.AddVar(
+        pt3::MaterialMgr::PositionUniforms::light_pos.name,
+        pt0::RenderVariant(sm::vec3(0, 2, -4))
+    );
+
 	auto& cmodel_inst = m_obj->GetUniqueComp<n3::CompModelInst>();
 	auto& model_inst = cmodel_inst.GetModel();
 	if (!model_inst) {
@@ -55,12 +62,12 @@ void WxStageCanvas::DrawForeground() const
 
         auto& rc = ur::Blackboard::Instance()->GetRenderContext();
         rc.SetPolygonMode(ur::POLYGON_LINE);
-        pt3::RenderSystem::Instance()->DrawModel(*model_inst, mats, params);
+        pt3::RenderSystem::Instance()->DrawModel(*model_inst, mats, params, ctx);
         rc.SetPolygonMode(ur::POLYGON_FILL);
 	}
     else
     {
-		n3::RenderSystem::Draw(*m_obj, params);
+		n3::RenderSystem::Draw(*m_obj, params, ctx);
 	}
 }
 
