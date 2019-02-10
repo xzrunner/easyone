@@ -75,7 +75,6 @@ void WxPreviewCanvas::RegisterMsg(ee0::SubjectMgr& sub_mgr)
 void WxPreviewCanvas::DrawModel() const
 {
 	pt3::RenderParams params;
-	params.mt   = m_camera->GetViewMat();
 	params.type = pt3::RenderParams::DRAW_MESH;
 
 	auto& cmodel_inst = m_obj->GetUniqueComp<n3::CompModelInst>();

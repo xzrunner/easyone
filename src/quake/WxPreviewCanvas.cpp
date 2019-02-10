@@ -48,7 +48,6 @@ void WxPreviewCanvas::DrawForeground() const
 	}
 
 	pt3::RenderParams params;
-	params.mt = GetCamera()->GetViewMat();
 
     pt3::RenderContext ctx;
     ctx.uniforms.AddVar(

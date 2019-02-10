@@ -38,7 +38,6 @@ void WxStageCanvas::DrawForeground() const
 	}
 
 	pt3::RenderParams params;
-	params.mt   = m_camera->GetViewMat();
 	params.type = pt3::RenderParams::DRAW_MESH;
 
     pt3::RenderContext ctx;
