@@ -14,6 +14,8 @@
 #include <node3/CompModelInst.h>
 #include <node3/RenderSystem.h>
 #include <painting3/MaterialMgr.h>
+#include <painting3/Blackboard.h>
+#include <painting3/WindowContext.h>
 
 namespace eone
 {
@@ -44,6 +46,16 @@ void WxStageCanvas::DrawForeground() const
     ctx.uniforms.AddVar(
         pt3::MaterialMgr::PositionUniforms::light_pos.name,
         pt0::RenderVariant(sm::vec3(0, 2, -4))
+    );
+    auto& wc = pt3::Blackboard::Instance()->GetWindowContext();
+    assert(wc);
+    ctx.uniforms.AddVar(
+        pt3::MaterialMgr::PosTransUniforms::view.name,
+        pt0::RenderVariant(wc->GetViewMat())
+    );
+    ctx.uniforms.AddVar(
+        pt3::MaterialMgr::PosTransUniforms::projection.name,
+        pt0::RenderVariant(wc->GetProjMat())
     );
 
 	auto& cmodel_inst = m_obj->GetUniqueComp<n3::CompModelInst>();
