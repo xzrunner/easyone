@@ -83,18 +83,18 @@ void WxPreviewCanvas::DrawModel() const
 		return;
 	}
 
-    pt3::RenderContext ctx;
-    ctx.uniforms.AddVar(
+    pt0::RenderContext ctx;
+    ctx.AddVar(
         pt3::MaterialMgr::PositionUniforms::light_pos.name,
         pt0::RenderVariant(sm::vec3(0, 2, -4))
     );
     auto& wc = pt3::Blackboard::Instance()->GetWindowContext();
     assert(wc);
-    ctx.uniforms.AddVar(
+    ctx.AddVar(
         pt3::MaterialMgr::PosTransUniforms::view.name,
         pt0::RenderVariant(wc->GetViewMat())
     );
-    ctx.uniforms.AddVar(
+    ctx.AddVar(
         pt3::MaterialMgr::PosTransUniforms::projection.name,
         pt0::RenderVariant(wc->GetProjMat())
     );
