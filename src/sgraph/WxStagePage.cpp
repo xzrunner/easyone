@@ -25,7 +25,6 @@
 #include <unirender/VertexAttrib.h>
 #include <unirender/Blackboard.h>
 #include <unirender/Shader.h>
-#include <painting3/EffectsManager.h>
 #include <painting3/Shader.h>
 #include <node0/SceneNode.h>
 #include <node0/CompComplex.h>
@@ -312,8 +311,8 @@ void WxStagePage::UpdateShader()
 
 		sg::ShaderWeaver sw(shader_type, *final_node, DEBUG_PRINT_SHADER);
 		auto& wc = canvas->GetWidnowContext().wc3;
-		std::shared_ptr<ur::Shader> shader = sw.CreateShader(*wc);
-		pt3::EffectsManager::Instance()->SetUserEffect(shader);
+		auto shader = sw.CreateShader3();
+        shader->AddNotify(std::const_pointer_cast<pt3::WindowContext>(wc));
 		shader->Use();
 
 		dirty = true;

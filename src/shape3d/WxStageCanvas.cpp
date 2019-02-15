@@ -4,7 +4,6 @@
 #include <unirender/Blackboard.h>
 #include <tessellation/Painter.h>
 #include <painting2/RenderSystem.h>
-#include <painting3/EffectsManager.h>
 #include <painting3/PerspCam.h>
 #include <painting3/Blackboard.h>
 #include <painting3/WindowContext.h>
@@ -98,16 +97,12 @@ void WxStageCanvas::DrawSceneNodes() const
 	auto& cam = GetCamera();
 	if (cam->TypeID() == pt0::GetCamTypeID<pt3::PerspCam>())
 	{
-		pt3::EffectsManager::Instance()->SetUserEffect(
-			std::static_pointer_cast<ur::Shader>(FACE_SHADER));
-		pt3::EffectsManager::Instance()->Use(::model::EFFECT_USER);
+        FACE_SHADER->Use();
 		DrawNodes(pt3::RenderParams::DRAW_MESH);
 	}
 
 	// pass 2 draw edge
-	pt3::EffectsManager::Instance()->SetUserEffect(
-		std::static_pointer_cast<ur::Shader>(EDGE_SHADER));
-	pt3::EffectsManager::Instance()->Use(::model::EFFECT_USER);
+    EDGE_SHADER->Use();
 	DrawNodes(pt3::RenderParams::DRAW_BORDER_MESH);
 }
 

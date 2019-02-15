@@ -18,7 +18,6 @@
 #include <unirender/VertexAttrib.h>
 #include <unirender/Shader.h>
 #include <unirender/Blackboard.h>
-#include <painting3/EffectsManager.h>
 
 #include <unirender/RenderContext.h>
 
