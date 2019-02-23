@@ -19,8 +19,9 @@ public:
 		const ee0::RenderContext& rc, dw3::EditOpMgr& op_mgr);
 
 protected:
-	virtual void DrawBackground() const override;
-	virtual void DrawForeground() const override;
+    virtual void DrawBackground2D() const override;
+    virtual void DrawForeground2D() const override;
+    virtual void DrawForeground3D() const override;
 
 private:
 	void InitShaders() const;

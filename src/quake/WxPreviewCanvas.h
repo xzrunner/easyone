@@ -21,8 +21,7 @@ public:
 	virtual void OnNotify(uint32_t msg, const ee0::VariantSet& variants) override;
 
 protected:
-	virtual void DrawBackground() const override;
-	virtual void DrawForeground() const override;
+    virtual void DrawForeground3D() const override;
 
 private:
 	void RegisterMsg(ee0::SubjectMgr& sub_mgr);

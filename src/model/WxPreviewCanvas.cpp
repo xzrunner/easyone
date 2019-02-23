@@ -40,16 +40,16 @@ void WxPreviewCanvas::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
 	}
 }
 
-void WxPreviewCanvas::DrawBackground() const
+void WxPreviewCanvas::DrawForeground2D() const
 {
+    DrawGUI();
 }
 
-void WxPreviewCanvas::DrawForeground() const
+void WxPreviewCanvas::DrawForeground3D() const
 {
-	if (m_obj->HasSharedComp<n3::CompModel>()) {
-		DrawModel();
-	}
-	DrawGUI();
+    if (m_obj->HasSharedComp<n3::CompModel>()) {
+        DrawModel();
+    }
 }
 
 bool WxPreviewCanvas::OnUpdate()

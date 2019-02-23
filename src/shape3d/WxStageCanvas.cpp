@@ -39,12 +39,8 @@ WxStageCanvas::WxStageCanvas(eone::WxStagePage* stage, ECS_WORLD_PARAM
 	InitGui();
 }
 
-void WxStageCanvas::DrawBackground() const
+void WxStageCanvas::DrawBackground2D() const
 {
-	if (!FACE_SHADER || !EDGE_SHADER) {
-		InitShaders();
-	}
-
 	// draw cross
 
 	tess::Painter pt;
@@ -67,10 +63,18 @@ void WxStageCanvas::DrawBackground() const
 	pt2::RenderSystem::DrawPainter(pt);
 }
 
-void WxStageCanvas::DrawForeground() const
+void WxStageCanvas::DrawForeground2D() const
 {
-	DrawSceneNodes();
-	DrawGUI();
+    DrawGUI();
+}
+
+void WxStageCanvas::DrawForeground3D() const
+{
+    if (!FACE_SHADER || !EDGE_SHADER) {
+        InitShaders();
+    }
+
+    DrawSceneNodes();
 }
 
 void WxStageCanvas::InitShaders() const

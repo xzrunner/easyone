@@ -33,11 +33,7 @@ void WxPreviewCanvas::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
 	}
 }
 
-void WxPreviewCanvas::DrawBackground() const
-{
-}
-
-void WxPreviewCanvas::DrawForeground() const
+void WxPreviewCanvas::DrawForeground3D() const
 {
 	// todo
 	if (!m_node)
