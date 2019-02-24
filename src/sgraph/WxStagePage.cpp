@@ -313,7 +313,8 @@ void WxStagePage::UpdateShader()
 		auto& wc = canvas->GetWidnowContext().wc3;
 		auto shader = sw.CreateShader3();
         shader->AddNotify(std::const_pointer_cast<pt3::WindowContext>(wc));
-		shader->Use();
+
+        m_toolbar->GetPreviewPanel()->SetShader(shader);
 
 		dirty = true;
 	});
