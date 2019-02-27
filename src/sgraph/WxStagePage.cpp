@@ -52,7 +52,7 @@ WxStagePage::WxStagePage(wxWindow* parent, ECS_WORLD_PARAM const ee0::GameObj& o
 	static bool inited = false;
 	if (!inited) {
 		inited = true;
-		bp::Blueprint::Init();
+		bp::Blueprint::Instance();
 	}
 	sg::ShaderGraph::Instance();
 

@@ -42,7 +42,6 @@
 #include <ee0/WxListSelectDlg.h>
 #include <ee0/MsgHelper.h>
 #include <ee2/WxStageCanvas.h>
-#include <ee2/ArrangeNodeOP.h>
 #include <ee3/WxStageCanvas.h>
 #include <ee3/NodeArrangeOP.h>
 #include <ee3/WorldTravelOP.h>
@@ -59,6 +58,8 @@
 #include <moon/Context.h>
 #include <painting3/PerspCam.h>
 #include <blueprint/ConnectPinsOP.h>
+#include <blueprint/Blueprint.h>
+#include <blueprint/ArrangeNodeOP.h>
 #include <shadergraph/ShaderGraph.h>
 #include <prototyping/ArrangeNodeOP.h>
 
@@ -268,9 +269,10 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
 			auto arrange_op = std::make_shared<ee2::ArrangeNodeOP>(
 				canvas->GetCamera(), *page, ECS_WORLD_VAR cfg, select_op);
 
-			auto op = std::make_shared<bp::ConnectPinsOP>(
-				canvas->GetCamera(), *page, sg::ShaderGraph::Instance()->GetAllNodes()
-			);
+            auto nodes = bp::Blueprint::Instance()->GetAllNodes();
+            auto sg_nodes = sg::ShaderGraph::Instance()->GetAllNodes();
+            std::copy(sg_nodes.begin(), sg_nodes.end(), std::back_inserter(nodes));
+			auto op = std::make_shared<bp::ConnectPinsOP>(canvas->GetCamera(), *page, nodes);
 			op->SetPrevEditOP(arrange_op);
 			page->GetImpl().SetEditOP(op);
 
@@ -337,7 +339,7 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
 			cfg.is_deform_open     = false;
 			cfg.is_offset_open     = false;
 			cfg.is_rotate_open     = false;
-			auto arrange_op = std::make_shared<ee2::ArrangeNodeOP>(
+			auto arrange_op = std::make_shared<bp::ArrangeNodeOP>(
 				canvas->GetCamera(), *page, ECS_WORLD_VAR cfg, select_op);
 
 			auto op = std::make_shared<bp::ConnectPinsOP>(
