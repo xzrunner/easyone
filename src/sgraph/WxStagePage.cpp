@@ -282,6 +282,10 @@ void WxStagePage::UpdateShader()
 	auto& canvas = m_toolbar->GetPreviewPanel()->GetCanvas();
 	canvas->AddUpdateTask([&]()
 	{
+        if (m_model_type.empty()) {
+            return;
+        }
+
 		auto& ccomplex = m_obj->GetSharedComp<n0::CompComplex>();
 		auto& nodes = const_cast<std::vector<n0::SceneNodePtr>&>(ccomplex.GetAllChildren());
 		bp::NodePtr final_node = nullptr;
