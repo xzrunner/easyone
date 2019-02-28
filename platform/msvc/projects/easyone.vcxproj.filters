@@ -177,9 +177,6 @@
     <ClInclude Include="..\..\..\src\frame\WxDetailPanel.h">
       <Filter>00.frame\3.right\detail</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\frame\NodeSelectOP.h">
-      <Filter>00.frame\2.center\stage</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\frame\Blackboard.h">
       <Filter>00.frame\frame</Filter>
     </ClInclude>
@@ -396,6 +393,9 @@
     <ClInclude Include="..\..\..\src\shape3d\WxStagePage.h">
       <Filter>16.shape3d</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\frame\LeftDClickOP.h">
+      <Filter>00.frame\2.center\stage</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\frame\main.cpp">
@@ -415,9 +415,6 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\frame\WxDetailPanel.cpp">
       <Filter>00.frame\3.right\detail</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\frame\NodeSelectOP.cpp">
-      <Filter>00.frame\2.center\stage</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\frame\Blackboard.cpp">
       <Filter>00.frame\frame</Filter>
@@ -607,6 +604,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\shape3d\WxStagePage.cpp">
       <Filter>16.shape3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\frame\LeftDClickOP.cpp">
+      <Filter>00.frame\2.center\stage</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

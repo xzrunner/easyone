@@ -1,4 +1,4 @@
-#include "frame/NodeSelectOP.h"
+#include "frame/LeftDClickOP.h"
 #include "frame/Blackboard.h"
 #include "frame/WxStagePage.h"
 #include "frame/Application.h"
@@ -55,28 +55,27 @@ void OpenEditDialog(ee0::WxStagePage& stage, ECS_WORLD_PARAM
 namespace eone
 {
 
-NodeSelectOP::NodeSelectOP(const std::shared_ptr<pt0::Camera>& camera,
-	                       ECS_WORLD_PARAM WxStagePage& stage,
+LeftDClickOP::LeftDClickOP(const std::shared_ptr<pt0::Camera>& camera, ee0::WxStagePage& stage,
 	                       const ee0::RenderContext& rc, const ee0::WindowContext& wc)
-	: ee2::NodeSelectOP(camera, ECS_WORLD_VAR stage)
-	ECS_WORLD_SELF_ASSIGN
-	, m_rc(rc)
+	: ee0::EditOP(camera)
+    , m_stage(stage)
+    , m_rc(rc)
 	, m_wc(wc)
 {
 }
 
-bool NodeSelectOP::OnMouseLeftDClick(int x, int y)
+bool LeftDClickOP::OnMouseLeftDClick(int x, int y)
 {
-	if (ee2::NodeSelectOP::OnMouseLeftDClick(x, y)) {
+	if (ee0::EditOP::OnMouseLeftDClick(x, y)) {
 		return true;
 	}
 
-	auto& selection = m_stage.GetSelection();
+    auto& selection = m_stage.GetSelection();
 	if (selection.Size() != 1) {
 		return false;
 	}
 
-	selection.Traverse([&](const ee0::GameObjWithPos& owp)->bool
+    selection.Traverse([&](const ee0::GameObjWithPos& owp)->bool
 	{
 #ifndef GAME_OBJ_ECS
 		OpenEditDialog(m_stage, owp.GetNode(), m_rc, m_wc);

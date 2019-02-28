@@ -314,7 +314,7 @@
     <ClInclude Include="..\..\..\src\frame\EditBackup.h" />
     <ClInclude Include="..\..\..\src\frame\MessageID.h" />
     <ClInclude Include="..\..\..\src\frame\GameObjFactory.h" />
-    <ClInclude Include="..\..\..\src\frame\NodeSelectOP.h" />
+    <ClInclude Include="..\..\..\src\frame\LeftDClickOP.h" />
     <ClInclude Include="..\..\..\src\frame\GameObjType.h" />
     <ClInclude Include="..\..\..\src\frame\PanelFactory.h" />
     <ClInclude Include="..\..\..\src\frame\StagePageType.h" />
@@ -408,7 +408,7 @@
     <ClCompile Include="..\..\..\src\frame\EditBackup.cpp" />
     <ClCompile Include="..\..\..\src\frame\GameObjFactory.cpp" />
     <ClCompile Include="..\..\..\src\frame\GameObjType.cpp" />
-    <ClCompile Include="..\..\..\src\frame\NodeSelectOP.cpp" />
+    <ClCompile Include="..\..\..\src\frame\LeftDClickOP.cpp" />
     <ClCompile Include="..\..\..\src\frame\PanelFactory.cpp" />
     <ClCompile Include="..\..\..\src\frame\WxDetailPanel.cpp" />
     <ClCompile Include="..\..\..\src\frame\main.cpp" />

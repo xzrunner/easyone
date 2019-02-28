@@ -4,13 +4,14 @@
 
 #include "frame/WxWorldPanel.h"
 #include "frame/WxDetailPanel.h"
-#include "frame/NodeSelectOP.h"
 #include "frame/WxPreviewPanel.h"
 #include "frame/WxPreviewCanvas.h"
+#include "frame/PanelFactory.h"
 
 #include <ee0/MsgHelper.h>
 #include <ee2/WxStageCanvas.h>
 #include <ee2/CamControlOP.h>
+#include <ee2/NodeSelectOP.h>
 
 #include <node2/CompMask.h>
 
@@ -60,10 +61,13 @@ void WxEditDialog::InitLayout(const ee0::GameObj& obj)
 wxWindow* WxEditDialog::CreateStagePanel(const ee0::GameObj& obj)
 {
 	m_stage = new scale9::WxStagePage(this, nullptr, ECS_WORLD_SELF_VAR obj);
+
 	auto canvas = std::make_shared<ee2::WxStageCanvas>(m_stage, ECS_WORLD_SELF_VAR &m_rc, &m_wc);
 	m_stage->GetImpl().SetCanvas(canvas);
-	m_stage->GetImpl().SetEditOP(std::make_shared<NodeSelectOP>(
-		canvas->GetCamera(), ECS_WORLD_SELF_VAR *m_stage, m_rc, m_wc));
+
+    auto op = PanelFactory::CreateNode2DSelectOP(canvas->GetCamera(), *m_stage, m_rc, m_wc);
+    m_stage->GetImpl().SetEditOP(op);
+
 	return m_stage;
 }
 

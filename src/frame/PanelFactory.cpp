@@ -4,7 +4,7 @@
 #include "frame/WxStagePanel.h"
 #include "frame/WxStageCanvas2D.h"
 #include "frame/WxStageCanvas3D.h"
-#include "frame/NodeSelectOP.h"
+#include "frame/LeftDClickOP.h"
 #include "frame/Blackboard.h"
 #include "frame/Application.h"
 #include "frame/WxPreviewPanel.h"
@@ -42,6 +42,7 @@
 #include <ee0/WxListSelectDlg.h>
 #include <ee0/MsgHelper.h>
 #include <ee2/WxStageCanvas.h>
+#include <ee2/NodeSelectOP.h>
 #include <ee3/WxStageCanvas.h>
 #include <ee3/NodeArrangeOP.h>
 #include <ee3/WorldTravelOP.h>
@@ -60,6 +61,7 @@
 #include <blueprint/ConnectPinsOP.h>
 #include <blueprint/Blueprint.h>
 #include <blueprint/ArrangeNodeOP.h>
+#include <blueprint/NodeSelectOP.h>
 #include <shadergraph/ShaderGraph.h>
 #include <prototyping/ArrangeNodeOP.h>
 
@@ -88,8 +90,7 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
 
 			page->GetImpl().SetCanvas(canvas);
 
-			auto prev_op = std::make_shared<NodeSelectOP>(
-				canvas->GetCamera(), ECS_WORLD_VAR *page, rc, wc);
+			auto prev_op = CreateNode2DSelectOP(canvas->GetCamera(), *page, rc, wc);
 
 			auto op = std::make_shared<ee2::ArrangeNodeOP>(
 				canvas->GetCamera(), *page, ECS_WORLD_VAR ee2::ArrangeNodeCfg(), prev_op);
@@ -120,8 +121,7 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
 			auto canvas = std::make_shared<scale9::WxStageCanvas>(page, ECS_WORLD_VAR rc);
 			page->GetImpl().SetCanvas(canvas);
 
-			page->GetImpl().SetEditOP(std::make_shared<NodeSelectOP>(
-				canvas->GetCamera(), ECS_WORLD_VAR *page, rc, wc));
+			page->GetImpl().SetEditOP(CreateNode2DSelectOP(canvas->GetCamera(), *page, rc, wc));
 
 			stage_panel->AddNewPage(page, GetPageName(page->GetPageType()));
 		}
@@ -133,8 +133,7 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
 			auto canvas = std::make_shared<WxStageCanvas2D>(page, ECS_WORLD_VAR rc);
 			page->GetImpl().SetCanvas(canvas);
 
-			auto prev_op = std::make_shared<NodeSelectOP>(
-				canvas->GetCamera(), ECS_WORLD_VAR *page, rc, wc);
+			auto prev_op = CreateNode2DSelectOP(canvas->GetCamera(), *page, rc, wc);
 
 			auto op = std::make_shared<ee2::ArrangeNodeOP>(
 				canvas->GetCamera(), *page, ECS_WORLD_VAR ee2::ArrangeNodeCfg(), prev_op);
@@ -161,8 +160,7 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
 			auto canvas = std::make_shared<WxStageCanvas2D>(page, ECS_WORLD_VAR rc);
 			page->GetImpl().SetCanvas(canvas);
 
-			auto prev_op = std::make_shared<NodeSelectOP>(
-				canvas->GetCamera(), ECS_WORLD_VAR *page, rc, wc);
+			auto prev_op = CreateNode2DSelectOP(canvas->GetCamera(), *page, rc, wc);
 
 			auto op = std::make_shared<ee2::ArrangeNodeOP>(
 				canvas->GetCamera(), *page, ECS_WORLD_VAR ee2::ArrangeNodeCfg(), prev_op);
@@ -258,15 +256,17 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
 			auto canvas = std::make_shared<sgraph::WxStageCanvas>(page, rc);
 			page->GetImpl().SetCanvas(canvas);
 
-			auto select_op = std::make_shared<NodeSelectOP>(
-				canvas->GetCamera(), ECS_WORLD_VAR *page, rc, wc);
+            auto prev_op = std::make_shared<LeftDClickOP>(canvas->GetCamera(), *page, rc, wc);
+
+            auto select_op = std::make_shared<bp::NodeSelectOP>(canvas->GetCamera(), *page);
+            select_op->AddPrevEditOP(prev_op);
 
 			ee2::ArrangeNodeCfg cfg;
 			cfg.is_auto_align_open = false;
 			cfg.is_deform_open = false;
 			cfg.is_offset_open = false;
 			cfg.is_rotate_open = false;
-			auto arrange_op = std::make_shared<ee2::ArrangeNodeOP>(
+			auto arrange_op = std::make_shared<bp::ArrangeNodeOP>(
 				canvas->GetCamera(), *page, ECS_WORLD_VAR cfg, select_op);
 
             auto nodes = bp::Blueprint::Instance()->GetAllNodes();
@@ -312,8 +312,7 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
 
 			canvas->ScriptLoad();
 
-			auto prev_op = std::make_shared<NodeSelectOP>(
-				canvas->GetCamera(), ECS_WORLD_VAR *page, rc, wc);
+			auto prev_op = CreateNode2DSelectOP(canvas->GetCamera(), *page, rc, wc);
 
 			auto op = std::make_shared<ee2::ArrangeNodeOP>(
 				canvas->GetCamera(), *page, ECS_WORLD_VAR ee2::ArrangeNodeCfg(), prev_op);
@@ -331,8 +330,7 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
 			auto canvas = std::make_shared<WxStageCanvas2D>(page, ECS_WORLD_VAR rc);
 			page->GetImpl().SetCanvas(canvas);
 
-			auto select_op = std::make_shared<NodeSelectOP>(
-				canvas->GetCamera(), ECS_WORLD_VAR *page, rc, wc);
+			auto select_op = CreateNode2DSelectOP(canvas->GetCamera(), *page, rc, wc);
 
 			ee2::ArrangeNodeCfg cfg;
 			cfg.is_auto_align_open = false;
@@ -422,6 +420,17 @@ void PanelFactory::CreatePreviewOP(
 	}
 		break;
 	}
+}
+
+ee0::EditOPPtr PanelFactory::CreateNode2DSelectOP(const std::shared_ptr<pt0::Camera>& camera, ee0::WxStagePage& stage,
+                                                  const ee0::RenderContext& rc, const ee0::WindowContext& wc)
+{
+    auto prev_op = std::make_shared<LeftDClickOP>(camera, stage, rc, wc);
+
+    auto op = std::make_shared<ee2::NodeSelectOP>(camera, stage);
+    op->SetPrevEditOP(prev_op);
+
+    return op;
 }
 
 }
