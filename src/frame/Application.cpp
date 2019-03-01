@@ -9,7 +9,6 @@
 #include "frame/WxWorldPanel.h"
 #include "frame/WxDetailPanel.h"
 #include "frame/WxToolbarPanel.h"
-#include "frame/NodeSelectOP.h"
 #include "frame/Blackboard.h"
 #include "frame/GameObjFactory.h"
 #include "frame/StagePageType.h"
