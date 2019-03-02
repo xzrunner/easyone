@@ -39,9 +39,9 @@ namespace scale9
 WxStagePage::WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, ECS_WORLD_PARAM const ee0::GameObj& obj)
 	: eone::WxStagePage(parent, ECS_WORLD_VAR obj, SHOW_LIBRARY | SHOW_RECORD | SHOW_STAGE | SHOW_PREVIEW | SHOW_WORLD | SHOW_DETAIL | SHOW_SCRIPT)
 {
-	m_messages.push_back(ee0::MSG_INSERT_SCENE_NODE);
-	m_messages.push_back(ee0::MSG_DELETE_SCENE_NODE);
-	m_messages.push_back(ee0::MSG_CLEAR_SCENE_NODE);
+	m_messages.push_back(ee0::MSG_SCENE_NODE_INSERT);
+	m_messages.push_back(ee0::MSG_SCENE_NODE_DELETE);
+	m_messages.push_back(ee0::MSG_SCENE_NODE_CLEAR);
 
 	if (library) {
 		SetDropTarget(new ee2::WxStageDropTarget(ECS_WORLD_VAR library, this));
@@ -54,13 +54,13 @@ void WxStagePage::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
 
 	switch (msg)
 	{
-	case ee0::MSG_INSERT_SCENE_NODE:
+	case ee0::MSG_SCENE_NODE_INSERT:
 		InsertSceneNode(variants);
 		break;
-	case ee0::MSG_DELETE_SCENE_NODE:
+	case ee0::MSG_SCENE_NODE_DELETE:
 		DeleteSceneNode(variants);
 		break;
-	case ee0::MSG_CLEAR_SCENE_NODE:
+	case ee0::MSG_SCENE_NODE_CLEAR:
 		ClearSceneNode();
 		break;
 	}

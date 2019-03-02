@@ -92,8 +92,8 @@ void WxDetailPanel::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
 		ClearComponents();
 		InitComponents(variants);
 		break;
-	case ee0::MSG_DELETE_SCENE_NODE:
-	case ee0::MSG_CLEAR_SCENE_NODE:
+	case ee0::MSG_SCENE_NODE_DELETE:
+	case ee0::MSG_SCENE_NODE_CLEAR:
 //	case ee0::MSG_NODE_SELECTION_CLEAR:
 		ClearComponents();
 		InitComponents();
@@ -123,8 +123,8 @@ void WxDetailPanel::InitLayout()
 
 void WxDetailPanel::RegisterMsg(ee0::SubjectMgr& sub_mgr)
 {
-	sub_mgr.RegisterObserver(ee0::MSG_DELETE_SCENE_NODE, this);
-	sub_mgr.RegisterObserver(ee0::MSG_CLEAR_SCENE_NODE, this);
+	sub_mgr.RegisterObserver(ee0::MSG_SCENE_NODE_DELETE, this);
+	sub_mgr.RegisterObserver(ee0::MSG_SCENE_NODE_CLEAR, this);
 
 	sub_mgr.RegisterObserver(ee0::MSG_NODE_SELECTION_INSERT, this);
 	sub_mgr.RegisterObserver(ee0::MSG_NODE_SELECTION_CLEAR, this);

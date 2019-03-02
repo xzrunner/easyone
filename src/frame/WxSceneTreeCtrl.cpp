@@ -58,16 +58,16 @@ void WxSceneTreeCtrl::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
 {
 	switch (msg)
 	{
-	case ee0::MSG_INSERT_SCENE_NODE:
+	case ee0::MSG_SCENE_NODE_INSERT:
 		InsertSceneObj(variants);
 		break;
-	case ee0::MSG_DELETE_SCENE_NODE:
+	case ee0::MSG_SCENE_NODE_DELETE:
 		DeleteSceneObj(variants);
 		break;
-	case ee0::MSG_CLEAR_SCENE_NODE:
+	case ee0::MSG_SCENE_NODE_CLEAR:
 		ClearSceneObj();
 		break;
-	case ee0::MSG_REORDER_SCENE_NODE:
+	case ee0::MSG_SCENE_NODE_UP_DOWN:
 		ReorderSceneObj(variants);
 		break;
 
@@ -158,10 +158,10 @@ void WxSceneTreeCtrl::InitRoot()
 
 void WxSceneTreeCtrl::RegisterMsg(ee0::SubjectMgr& sub_mgr)
 {
-	sub_mgr.RegisterObserver(ee0::MSG_INSERT_SCENE_NODE, this);
-	sub_mgr.RegisterObserver(ee0::MSG_DELETE_SCENE_NODE, this);
-	sub_mgr.RegisterObserver(ee0::MSG_CLEAR_SCENE_NODE, this);
-	sub_mgr.RegisterObserver(ee0::MSG_REORDER_SCENE_NODE, this);
+	sub_mgr.RegisterObserver(ee0::MSG_SCENE_NODE_INSERT, this);
+	sub_mgr.RegisterObserver(ee0::MSG_SCENE_NODE_DELETE, this);
+	sub_mgr.RegisterObserver(ee0::MSG_SCENE_NODE_CLEAR, this);
+	sub_mgr.RegisterObserver(ee0::MSG_SCENE_NODE_UP_DOWN, this);
 
 	sub_mgr.RegisterObserver(ee0::MSG_NODE_SELECTION_INSERT, this);
 	sub_mgr.RegisterObserver(ee0::MSG_NODE_SELECTION_DELETE, this);
@@ -729,7 +729,7 @@ void WxSceneTreeCtrl::MoveSceneObj(wxTreeItemId src, wxTreeItemId dst_parent)
 #endif // GAME_OBJ_ECS
 		vars.SetVariant("obj", var_obj);
 
-		m_sub_mgr->NotifyObservers(ee0::MSG_INSERT_SCENE_NODE, vars);
+		m_sub_mgr->NotifyObservers(ee0::MSG_SCENE_NODE_INSERT, vars);
 	}
 }
 
@@ -942,7 +942,7 @@ void WxSceneTreeCtrl::DeleteObjOutside(wxTreeItemId item)
 #endif // GAME_OBJ_ECS
 		vars.SetVariant("obj", var_obj);
 
-		m_sub_mgr->NotifyObservers(ee0::MSG_DELETE_SCENE_NODE, vars);
+		m_sub_mgr->NotifyObservers(ee0::MSG_SCENE_NODE_DELETE, vars);
 	}
 }
 

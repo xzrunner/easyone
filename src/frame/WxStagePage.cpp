@@ -88,7 +88,7 @@ void WxStagePage::StoreToJson(const std::string& dir, rapidjson::Value& val,
 void WxStagePage::LoadFromFile(const std::string& filepath)
 {
 	m_sub_mgr->NotifyObservers(ee0::MSG_NODE_SELECTION_CLEAR);
-	m_sub_mgr->NotifyObservers(ee0::MSG_CLEAR_SCENE_NODE);
+	m_sub_mgr->NotifyObservers(ee0::MSG_SCENE_NODE_CLEAR);
 
 	auto casset = ns::CompFactory::Instance()->CreateAsset(filepath);
 	if (m_obj->HasSharedComp<n0::CompAsset>()) {

@@ -162,7 +162,7 @@ void Application::Clear()
 {
 	auto& sub_mgr = m_stage->GetCurrentStagePage()->GetSubjectMgr();
 	sub_mgr->NotifyObservers(ee0::MSG_NODE_SELECTION_CLEAR);
-	sub_mgr->NotifyObservers(ee0::MSG_CLEAR_SCENE_NODE);
+	sub_mgr->NotifyObservers(ee0::MSG_SCENE_NODE_CLEAR);
 }
 
 void Application::InitSubmodule()

@@ -30,9 +30,9 @@ WxStagePage::WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, ECS_WOR
 {
 	bp::Blueprint::Instance();
 
-	m_messages.push_back(ee0::MSG_INSERT_SCENE_NODE);
-	m_messages.push_back(ee0::MSG_DELETE_SCENE_NODE);
-	m_messages.push_back(ee0::MSG_CLEAR_SCENE_NODE);
+	m_messages.push_back(ee0::MSG_SCENE_NODE_INSERT);
+	m_messages.push_back(ee0::MSG_SCENE_NODE_DELETE);
+	m_messages.push_back(ee0::MSG_SCENE_NODE_CLEAR);
 
 	if (library) {
 		SetDropTarget(new ee2::WxStageDropTarget(ECS_WORLD_VAR library, this));
@@ -46,13 +46,13 @@ void WxStagePage::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
 	bool dirty = false;
 	switch (msg)
 	{
-	case ee0::MSG_INSERT_SCENE_NODE:
+	case ee0::MSG_SCENE_NODE_INSERT:
 		dirty = InsertSceneObj(variants);
 		break;
-	case ee0::MSG_DELETE_SCENE_NODE:
+	case ee0::MSG_SCENE_NODE_DELETE:
 		dirty = DeleteSceneObj(variants);
 		break;
-	case ee0::MSG_CLEAR_SCENE_NODE:
+	case ee0::MSG_SCENE_NODE_CLEAR:
 		dirty = ClearSceneObj();
 		break;
 	}
