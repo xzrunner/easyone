@@ -146,17 +146,20 @@ void WxStagePage::LoadFromFileExt(const std::string& filepath)
 	assert(casset->AssetTypeID() == n0::GetAssetUniqueTypeID<n3::CompModel>());
 
 	auto cmodel = std::static_pointer_cast<n3::CompModel>(casset);
+    auto& model = cmodel->GetModel();
+
 	auto& cmode_inst = m_obj->GetUniqueComp<n3::CompModelInst>();
-	cmode_inst.SetModel(cmodel->GetModel(), 0);
+	cmode_inst.SetModel(model, 0);
 
-	m_preview_obj->GetUniqueComp<n3::CompModelInst>().SetModel(cmodel->GetModel(), 0);
+    m_preview_obj->GetSharedComp<n3::CompModel>().SetModel(model);
+    m_preview_obj->GetUniqueComp<n3::CompModelInst>().SetModel(model, 0);
 
-	auto model = cmode_inst.GetModel().get();
-	m_sk_op->SetModel(model);
-	m_sk_ik_op->SetModel(model);
-	m_mesh_ik_op->SetModel(model->GetModel());
+	auto model_inst = cmode_inst.GetModel().get();
+	m_sk_op->SetModel(model_inst);
+	m_sk_ik_op->SetModel(model_inst);
+	m_mesh_ik_op->SetModel(model);
 
-	m_toolbar->LoadModel(*model->GetModel());
+	m_toolbar->LoadModel(*model);
 }
 
 void WxStagePage::InitPreviewPanel()
