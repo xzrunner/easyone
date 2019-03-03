@@ -25,6 +25,7 @@
 #include <unirender/VertexAttrib.h>
 #include <unirender/Blackboard.h>
 #include <unirender/Shader.h>
+#include <unirender/RenderContext.h>
 #include <painting3/Shader.h>
 #include <node0/SceneNode.h>
 #include <node0/CompComplex.h>
@@ -289,6 +290,8 @@ void WxStagePage::UpdateShader()
 		auto& ccomplex = m_obj->GetSharedComp<n0::CompComplex>();
 		auto& nodes = const_cast<std::vector<n0::SceneNodePtr>&>(ccomplex.GetAllChildren());
 		bp::NodePtr final_node = nullptr;
+        std::vector<bp::NodePtr> all_bp_nodes;
+        all_bp_nodes.reserve(nodes.size());
 		for (auto& node : nodes)
 		{
 			assert(node->HasUniqueComp<bp::CompNode>());
@@ -297,6 +300,7 @@ void WxStagePage::UpdateShader()
 			if (bp_node->get_type().get_name().to_string() == m_model_type) {
 				final_node = bp_node;
 			}
+            all_bp_nodes.push_back(bp_node);
 		}
 		assert(final_node);
 
@@ -313,14 +317,20 @@ void WxStagePage::UpdateShader()
 			assert(0);
 		}
 
-		sg::ShaderWeaver sw(shader_type, *final_node, DEBUG_PRINT_SHADER);
+        auto& rc = ur::Blackboard::Instance()->GetRenderContext();
+        int old_vl_id = rc.GetBindedVertexLayoutID();
+
+		sg::ShaderWeaver sw(shader_type, *final_node, DEBUG_PRINT_SHADER, all_bp_nodes);
 		auto& wc = canvas->GetWidnowContext().wc3;
 		auto shader = sw.CreateShader3();
-        shader->AddNotify(std::const_pointer_cast<pt3::WindowContext>(wc));
-
-        m_toolbar->GetPreviewPanel()->SetShader(shader);
-
-		dirty = true;
+        if (shader->IsValid()) {
+            shader->AddNotify(std::const_pointer_cast<pt3::WindowContext>(wc));
+            m_toolbar->GetPreviewPanel()->SetShader(shader);
+            dirty = true;
+        } else {
+            rc.BindVertexLayout(old_vl_id);
+            dirty = false;
+        }
 	});
 
 	auto& wc = GetImpl().GetCanvas()->GetWidnowContext();
