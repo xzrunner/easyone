@@ -33,7 +33,7 @@ WxStageCanvas::WxStageCanvas(eone::WxStagePage* stage, ECS_WORLD_PARAM
 	InitGui();
 }
 
-void WxStageCanvas::DrawBackground() const
+void WxStageCanvas::DrawBackground2D() const
 {
 	// draw cross
 
@@ -57,7 +57,7 @@ void WxStageCanvas::DrawBackground() const
 	pt2::RenderSystem::DrawPainter(pt);
 }
 
-void WxStageCanvas::DrawForeground() const
+void WxStageCanvas::DrawForeground3D() const
 {
 	if (!m_obj->HasSharedComp<n3::CompModel>()) {
 		return;

@@ -14,8 +14,8 @@ public:
 		const ee0::RenderContext& rc);
 
 protected:
-	virtual void DrawBackground() const;
-	virtual void DrawForeground() const;
+	virtual void DrawBackground2D() const override;
+	virtual void DrawForeground3D() const override;
 
 private:
 	ee0::GameObj m_obj;

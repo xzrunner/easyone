@@ -29,11 +29,7 @@ WxStageCanvas::WxStageCanvas(eone::WxStagePage* stage, ECS_WORLD_PARAM
 {
 }
 
-void WxStageCanvas::DrawBackground() const
-{
-}
-
-void WxStageCanvas::DrawForeground() const
+void WxStageCanvas::DrawForeground3D() const
 {
 	if (!m_obj->HasSharedComp<n3::CompModel>()) {
 		return;
