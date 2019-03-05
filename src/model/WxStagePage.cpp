@@ -8,8 +8,7 @@
 #include "frame/Application.h"
 #include "frame/typedef.h"
 #include "frame/AppStyle.h"
-#include "frame/WxStageExtPanel.h"
-#include "frame/WxToolbarPanel.h"
+#include "frame/WxStageSubPanel.h"
 
 #include <ee0/SubjectMgr.h>
 #include <ee3/WxStageDropTarget.h>
@@ -164,22 +163,14 @@ void WxStagePage::LoadFromFileExt(const std::string& filepath)
 
 void WxStagePage::InitPreviewPanel()
 {
-	auto bb = Blackboard::Instance();
-
-	auto panel = bb->GetStageExtPanel();
-	auto sizer = panel->GetSizer();
-	if (sizer) {
-		sizer->Clear(true);
-	} else {
-		sizer = new wxBoxSizer(wxHORIZONTAL);
-	}
-
-	auto preview_panel = new WxPreviewPanel(panel);
-	sizer->Add(preview_panel, 1, wxEXPAND);
+    auto stage_ext_panel = Blackboard::Instance()->GetStageExtPanel();
+    auto preview_panel = static_cast<WxPreviewPanel*>(stage_ext_panel->SetPagePanel(PAGE_MODEL, [](wxPanel* parent)->wxPanel* {
+        return new WxPreviewPanel(parent);
+    }, wxHORIZONTAL));
 
 	m_preview_obj = m_obj->Clone();
 	auto preview_canvas = std::make_shared<WxPreviewCanvas>(
-		preview_panel, bb->GetRenderContext(), m_preview_obj);
+		preview_panel, Blackboard::Instance()->GetRenderContext(), m_preview_obj);
 	preview_panel->GetImpl().SetCanvas(preview_canvas);
 
 	auto preview_op = std::make_shared<ee3::WorldTravelOP>(
@@ -187,24 +178,14 @@ void WxStagePage::InitPreviewPanel()
 	preview_panel->GetImpl().SetEditOP(preview_op);
 
 	m_preview_submgr = preview_panel->GetSubjectMgr();
-
-	panel->SetSizer(sizer);
 }
 
 void WxStagePage::InitToolbarPanel()
 {
-	auto panel = Blackboard::Instance()->GetToolbarPanel();
-	auto sizer = panel->GetSizer();
-	if (sizer) {
-		sizer->Clear(true);
-	} else {
-		sizer = new wxBoxSizer(wxVERTICAL);
-	}
-	// todo
-#ifndef GAME_OBJ_ECS
-	sizer->Add(m_toolbar = new WxToolbarPanel(panel, this));
-	panel->SetSizer(sizer);
-#endif // GAME_OBJ_ECS
+    auto toolbar_panel = Blackboard::Instance()->GetToolbarPanel();
+    m_toolbar = static_cast<WxToolbarPanel*>(toolbar_panel->SetPagePanel(PAGE_MODEL, [&](wxPanel* parent)->wxPanel* {
+        return new WxToolbarPanel(parent, this);
+    }, wxVERTICAL));
 }
 
 }

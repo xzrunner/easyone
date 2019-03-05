@@ -38,7 +38,7 @@ void WxToolbarPanel::LoadModel(const ::model::Model& model)
 	}
 
 	m_texture_page->Clear();
-	for (auto& tex : model.textures) 
+	for (auto& tex : model.textures)
     {
         if (!tex.second) {
             continue;

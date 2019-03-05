@@ -2,7 +2,7 @@
 #include "particle3d/WxEmitterPanel.h"
 
 #include "frame/Blackboard.h"
-#include "frame/WxToolbarPanel.h"
+#include "frame/WxStageSubPanel.h"
 #include "frame/AppStyle.h"
 
 #include <ee2/WxStageDropTarget.h>
@@ -62,20 +62,12 @@ void WxStagePage::Traverse(std::function<bool(const ee0::GameObj&)> func,
 
 void WxStagePage::OnPageInit()
 {
-	auto panel = Blackboard::Instance()->GetToolbarPanel();
-	auto sizer = panel->GetSizer();
-	if (sizer) {
-		sizer->Clear(true);
-	} else {
-		sizer = new wxBoxSizer(wxVERTICAL);
-	}
-	// todo
-#ifndef GAME_OBJ_ECS
-	auto& cp3d = m_obj->GetSharedComp<n2::CompParticle3d>();
-	auto& cp3d_inst = m_obj->GetUniqueComp<n2::CompParticle3dInst>();
-	sizer->Add(new WxEmitterPanel(panel, m_library, cp3d, cp3d_inst), 0, wxEXPAND);
-	panel->SetSizer(sizer);
-#endif // GAME_OBJ_ECS
+    auto toolbar_panel = Blackboard::Instance()->GetToolbarPanel();
+    toolbar_panel->SetPagePanel(PAGE_PARTICLE3D, [&](wxPanel* parent)->wxPanel* {
+        auto& cp3d = m_obj->GetSharedComp<n2::CompParticle3d>();
+        auto& cp3d_inst = m_obj->GetUniqueComp<n2::CompParticle3dInst>();
+        return new WxEmitterPanel(parent, m_library, cp3d, cp3d_inst);
+    }, wxVERTICAL);
 }
 
 #ifndef GAME_OBJ_ECS

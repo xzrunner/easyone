@@ -4,7 +4,7 @@
 #include "frame/Blackboard.h"
 #include "frame/Application.h"
 #include "frame/typedef.h"
-#include "frame/WxStageExtPanel.h"
+#include "frame/WxStageSubPanel.h"
 #include "frame/AppStyle.h"
 
 #include <ee0/SubjectMgr.h>
@@ -111,17 +111,10 @@ void WxStagePage::InitViewports()
 
 void WxStagePage::OnPageInit()
 {
-	auto bb = Blackboard::Instance();
-
-	auto panel = bb->GetStageExtPanel();
-	auto sizer = panel->GetSizer();
-	if (sizer) {
-		sizer->Clear(true);
-	} else {
-		sizer = new wxBoxSizer(wxHORIZONTAL);
-	}
-
-	panel->SetSizer(sizer);
+    auto stage_ext_panel = Blackboard::Instance()->GetStageExtPanel();
+    stage_ext_panel->SetPagePanel(PAGE_SHAPE3D, [&](wxPanel* parent)->wxPanel* {
+        return nullptr;
+    }, wxHORIZONTAL);
 }
 
 #ifndef GAME_OBJ_ECS

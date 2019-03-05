@@ -1,11 +1,10 @@
 #include "sgraph/WxStagePage.h"
 #include "sgraph/WxToolbarPanel.h"
 #include "sgraph/MessageID.h"
-#include "sgraph/WxToolbarPanel.h"
 
 #include "frame/AppStyle.h"
 #include "frame/Blackboard.h"
-#include "frame/WxToolbarPanel.h"
+#include "frame/WxStageSubPanel.h"
 
 #include <ee0/SubjectMgr.h>
 #include <ee0/MsgHelper.h>
@@ -138,19 +137,10 @@ void WxStagePage::Traverse(std::function<bool(const ee0::GameObj&)> func,
 
 void WxStagePage::OnPageInit()
 {
-	auto panel = Blackboard::Instance()->GetToolbarPanel();
-	auto sizer = panel->GetSizer();
-	if (sizer) {
-		sizer->Clear(true);
-	} else {
-		sizer = new wxBoxSizer(wxVERTICAL);
-	}
-	// todo
-#ifndef GAME_OBJ_ECS
-	sizer->Add(m_toolbar = new WxToolbarPanel(panel, m_sub_mgr,
-		&GetImpl().GetCanvas()->GetRenderContext()));
-	panel->SetSizer(sizer);
-#endif // GAME_OBJ_ECS
+    auto toolbar_panel = Blackboard::Instance()->GetToolbarPanel();
+    m_toolbar = static_cast<WxToolbarPanel*>(toolbar_panel->SetPagePanel(PAGE_SHADER_GRAPH, [&](wxPanel* parent)->wxPanel* {
+        return new WxToolbarPanel(toolbar_panel, m_sub_mgr, &GetImpl().GetCanvas()->GetRenderContext());
+    }, wxVERTICAL));
 
 	UpdateShader();
 }

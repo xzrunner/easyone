@@ -37,53 +37,8 @@
     <Filter Include="00.frame\tools">
       <UniqueIdentifier>{19f5effd-40ff-45bc-8e06-2d19aacba034}</UniqueIdentifier>
     </Filter>
-    <Filter Include="00.frame\1.left">
-      <UniqueIdentifier>{61632ca8-a511-4682-bdcb-b5dc0b95d932}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="00.frame\1.left\library">
-      <UniqueIdentifier>{d22de338-67a5-4535-9061-a35e56341ffd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="00.frame\2.center">
-      <UniqueIdentifier>{1a05981d-aedb-430f-8602-e9f498d2596d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="00.frame\2.center\stage">
-      <UniqueIdentifier>{2b11e1a0-9b69-4748-ae7e-7337f2cf492a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="00.frame\2.center\stage_ext">
-      <UniqueIdentifier>{150b3615-65f9-4f0e-91a4-3a5348147615}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="00.frame\2.center\preview">
-      <UniqueIdentifier>{b87ee58f-e935-4243-8fc0-5e091731df77}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="00.frame\3.right">
-      <UniqueIdentifier>{94730e91-519c-4b73-91f6-b8e339fd5727}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="00.frame\3.right\world">
-      <UniqueIdentifier>{af64a2ef-51da-4c6f-95ab-6344ff1f2529}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="00.frame\3.right\world\list">
-      <UniqueIdentifier>{f4addaff-1dc3-4085-ae43-b09290f407fb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="00.frame\3.right\world\tree">
-      <UniqueIdentifier>{fabe2985-214e-40e8-a5a1-9e2f42db58b6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="00.frame\3.right\toolbar">
-      <UniqueIdentifier>{da6b78c1-d432-41ec-bd6e-c069e9595b48}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="00.frame\3.right\detail">
-      <UniqueIdentifier>{7653a908-a019-47e9-9c73-82f1621d2f93}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="00.frame\1.left\record">
-      <UniqueIdentifier>{83cf082a-2a64-43ca-bb0c-71b3b5e8f2ce}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="00.frame\3.right\script">
-      <UniqueIdentifier>{aebe23ba-7c5c-4957-8e0d-623fbdddc193}</UniqueIdentifier>
-    </Filter>
     <Filter Include="40.script">
       <UniqueIdentifier>{e5403ed2-e587-4720-82ab-24d87ef5a467}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="00.frame\2.center\stage\canvas">
-      <UniqueIdentifier>{f1c58060-7ecb-4d97-a8e3-e3075cdb4e94}</UniqueIdentifier>
     </Filter>
     <Filter Include="14.terrain">
       <UniqueIdentifier>{69bc9418-eaa2-4e86-961c-10ce77c57495}</UniqueIdentifier>
@@ -157,6 +112,48 @@
     <Filter Include="16.shape3d">
       <UniqueIdentifier>{3fff0a03-7ef9-4c86-982e-abc8de157516}</UniqueIdentifier>
     </Filter>
+    <Filter Include="00.frame\view">
+      <UniqueIdentifier>{a7e4a20c-49bd-4597-a9b9-c53d208d99e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00.frame\view\1.left">
+      <UniqueIdentifier>{61632ca8-a511-4682-bdcb-b5dc0b95d932}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00.frame\view\1.left\library">
+      <UniqueIdentifier>{d22de338-67a5-4535-9061-a35e56341ffd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00.frame\view\1.left\record">
+      <UniqueIdentifier>{83cf082a-2a64-43ca-bb0c-71b3b5e8f2ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00.frame\view\3.right">
+      <UniqueIdentifier>{94730e91-519c-4b73-91f6-b8e339fd5727}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00.frame\view\3.right\world">
+      <UniqueIdentifier>{af64a2ef-51da-4c6f-95ab-6344ff1f2529}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00.frame\view\3.right\world\list">
+      <UniqueIdentifier>{f4addaff-1dc3-4085-ae43-b09290f407fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00.frame\view\3.right\world\tree">
+      <UniqueIdentifier>{fabe2985-214e-40e8-a5a1-9e2f42db58b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00.frame\view\3.right\detail">
+      <UniqueIdentifier>{7653a908-a019-47e9-9c73-82f1621d2f93}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00.frame\view\3.right\script">
+      <UniqueIdentifier>{aebe23ba-7c5c-4957-8e0d-623fbdddc193}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00.frame\view\2.center">
+      <UniqueIdentifier>{1a05981d-aedb-430f-8602-e9f498d2596d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00.frame\view\2.center\stage">
+      <UniqueIdentifier>{2b11e1a0-9b69-4748-ae7e-7337f2cf492a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00.frame\view\2.center\stage\canvas">
+      <UniqueIdentifier>{f1c58060-7ecb-4d97-a8e3-e3075cdb4e94}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="00.frame\view\2.center\preview">
+      <UniqueIdentifier>{b87ee58f-e935-4243-8fc0-5e091731df77}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\frame\main.h">
@@ -169,13 +166,13 @@
       <Filter>00.frame\frame</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\frame\WxLibraryPanel.h">
-      <Filter>00.frame\1.left\library</Filter>
+      <Filter>00.frame\view\1.left\library</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\frame\WxSceneTreeCtrl.h">
-      <Filter>00.frame\3.right\world\tree</Filter>
+      <Filter>00.frame\view\3.right\world\tree</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\frame\WxDetailPanel.h">
-      <Filter>00.frame\3.right\detail</Filter>
+      <Filter>00.frame\view\3.right\detail</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\frame\Blackboard.h">
       <Filter>00.frame\frame</Filter>
@@ -199,25 +196,25 @@
       <Filter>10.scale9</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\frame\WxPreviewPanel.h">
-      <Filter>00.frame\2.center\preview</Filter>
+      <Filter>00.frame\view\2.center\preview</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\frame\WxPreviewCanvas.h">
-      <Filter>00.frame\2.center\preview</Filter>
+      <Filter>00.frame\view\2.center\preview</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\frame\WxStagePanel.h">
-      <Filter>00.frame\2.center\stage</Filter>
+      <Filter>00.frame\view\2.center\stage</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\scene2d\WxStagePage.h">
       <Filter>01.scene2d</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\frame\WxStagePage.h">
-      <Filter>00.frame\2.center\stage</Filter>
+      <Filter>00.frame\view\2.center\stage</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\scene3d\WxStagePage.h">
       <Filter>02.scene3d</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\frame\StagePageType.h">
-      <Filter>00.frame\2.center\stage</Filter>
+      <Filter>00.frame\view\2.center\stage</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\scale9\ResizeScale9OP.h">
       <Filter>10.scale9</Filter>
@@ -234,9 +231,6 @@
     <ClInclude Include="..\..\..\src\anim\WxStagePage.h">
       <Filter>12.anim</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\frame\WxStageExtPanel.h">
-      <Filter>00.frame\2.center\stage_ext</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\frame\typedef.h">
       <Filter>00.frame\frame</Filter>
     </ClInclude>
@@ -245,9 +239,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\particle3d\WxStagePage.h">
       <Filter>13.particle3d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\frame\WxToolbarPanel.h">
-      <Filter>00.frame\3.right\toolbar</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\particle3d\WxEmitterPanel.h">
       <Filter>13.particle3d\emitter</Filter>
@@ -274,34 +265,34 @@
       <Filter>00.frame\tools</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\frame\WxItemsListCtrl.h">
-      <Filter>00.frame\3.right\world\list</Filter>
+      <Filter>00.frame\view\3.right\world\list</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\frame\WxWorldPanel.h">
-      <Filter>00.frame\3.right\world</Filter>
+      <Filter>00.frame\view\3.right\world</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\frame\config.h">
       <Filter>00.frame\frame</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\frame\WxItemsListList.h">
-      <Filter>00.frame\3.right\world\list</Filter>
+      <Filter>00.frame\view\3.right\world\list</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\frame\WxItemsListUserData.h">
-      <Filter>00.frame\3.right\world\list</Filter>
+      <Filter>00.frame\view\3.right\world\list</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\frame\WxRecordPanel.h">
-      <Filter>00.frame\1.left\record</Filter>
+      <Filter>00.frame\view\1.left\record</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\frame\WxScriptPanel.h">
-      <Filter>00.frame\3.right\script</Filter>
+      <Filter>00.frame\view\3.right\script</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\frame\EditBackup.h">
       <Filter>00.frame\tools</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\frame\WxStageCanvas2D.h">
-      <Filter>00.frame\2.center\stage\canvas</Filter>
+      <Filter>00.frame\view\2.center\stage\canvas</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\frame\WxStageCanvas3D.h">
-      <Filter>00.frame\2.center\stage\canvas</Filter>
+      <Filter>00.frame\view\2.center\stage\canvas</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\terrain\WxStagePage.h">
       <Filter>14.terrain</Filter>
@@ -394,7 +385,10 @@
       <Filter>16.shape3d</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\frame\LeftDClickOP.h">
-      <Filter>00.frame\2.center\stage</Filter>
+      <Filter>00.frame\view\2.center\stage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\frame\WxStageSubPanel.h">
+      <Filter>00.frame\view</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -408,13 +402,13 @@
       <Filter>00.frame\frame</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\frame\WxLibraryPanel.cpp">
-      <Filter>00.frame\1.left\library</Filter>
+      <Filter>00.frame\view\1.left\library</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\frame\WxSceneTreeCtrl.cpp">
-      <Filter>00.frame\3.right\world\tree</Filter>
+      <Filter>00.frame\view\3.right\world\tree</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\frame\WxDetailPanel.cpp">
-      <Filter>00.frame\3.right\detail</Filter>
+      <Filter>00.frame\view\3.right\detail</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\frame\Blackboard.cpp">
       <Filter>00.frame\frame</Filter>
@@ -438,19 +432,19 @@
       <Filter>10.scale9</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\frame\WxPreviewPanel.cpp">
-      <Filter>00.frame\2.center\preview</Filter>
+      <Filter>00.frame\view\2.center\preview</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\frame\WxPreviewCanvas.cpp">
-      <Filter>00.frame\2.center\preview</Filter>
+      <Filter>00.frame\view\2.center\preview</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\frame\WxStagePanel.cpp">
-      <Filter>00.frame\2.center\stage</Filter>
+      <Filter>00.frame\view\2.center\stage</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\scene2d\WxStagePage.cpp">
       <Filter>01.scene2d</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\frame\WxStagePage.cpp">
-      <Filter>00.frame\2.center\stage</Filter>
+      <Filter>00.frame\view\2.center\stage</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\scene3d\WxStagePage.cpp">
       <Filter>02.scene3d</Filter>
@@ -470,14 +464,8 @@
     <ClCompile Include="..\..\..\src\anim\WxStagePage.cpp">
       <Filter>12.anim</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\frame\WxStageExtPanel.cpp">
-      <Filter>00.frame\2.center\stage_ext</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\particle3d\WxStagePage.cpp">
       <Filter>13.particle3d</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\frame\WxToolbarPanel.cpp">
-      <Filter>00.frame\3.right\toolbar</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\particle3d\WxEmitterPanel.cpp">
       <Filter>13.particle3d\emitter</Filter>
@@ -495,31 +483,31 @@
       <Filter>00.frame\tools</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\frame\WxItemsListCtrl.cpp">
-      <Filter>00.frame\3.right\world\list</Filter>
+      <Filter>00.frame\view\3.right\world\list</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\frame\WxWorldPanel.cpp">
-      <Filter>00.frame\3.right\world</Filter>
+      <Filter>00.frame\view\3.right\world</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\frame\GameObjType.cpp">
       <Filter>00.frame\tools</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\frame\WxItemsListList.cpp">
-      <Filter>00.frame\3.right\world\list</Filter>
+      <Filter>00.frame\view\3.right\world\list</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\frame\WxRecordPanel.cpp">
-      <Filter>00.frame\1.left\record</Filter>
+      <Filter>00.frame\view\1.left\record</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\frame\WxScriptPanel.cpp">
-      <Filter>00.frame\3.right\script</Filter>
+      <Filter>00.frame\view\3.right\script</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\frame\EditBackup.cpp">
       <Filter>00.frame\tools</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\frame\WxStageCanvas2D.cpp">
-      <Filter>00.frame\2.center\stage\canvas</Filter>
+      <Filter>00.frame\view\2.center\stage\canvas</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\frame\WxStageCanvas3D.cpp">
-      <Filter>00.frame\2.center\stage\canvas</Filter>
+      <Filter>00.frame\view\2.center\stage\canvas</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\terrain\WxStagePage.cpp">
       <Filter>14.terrain</Filter>
@@ -606,7 +594,10 @@
       <Filter>16.shape3d</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\frame\LeftDClickOP.cpp">
-      <Filter>00.frame\2.center\stage</Filter>
+      <Filter>00.frame\view\2.center\stage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\frame\WxStageSubPanel.cpp">
+      <Filter>00.frame\view</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -3,12 +3,11 @@
 #include "frame/WxRecordPanel.h"
 #include "frame/WxStagePanel.h"
 #include "frame/WxStagePage.h"
-#include "frame/WxStageExtPanel.h"
+#include "frame/WxStageSubPanel.h"
 #include "frame/WxPreviewPanel.h"
 #include "frame/WxPreviewCanvas.h"
 #include "frame/WxWorldPanel.h"
 #include "frame/WxDetailPanel.h"
-#include "frame/WxToolbarPanel.h"
 #include "frame/Blackboard.h"
 #include "frame/GameObjFactory.h"
 #include "frame/StagePageType.h"
@@ -297,7 +296,7 @@ wxWindow* Application::CreateStagePanel()
 
 wxWindow* Application::CreateStageExtPanel()
 {
-	auto stage_ext = new WxStageExtPanel(m_frame);
+	auto stage_ext = new WxStageSubPanel(m_frame);
 	Blackboard::Instance()->SetStageExtPanel(stage_ext);
 	return stage_ext;
 }
@@ -336,7 +335,7 @@ wxWindow* Application::CreateDetailPanel()
 
 wxWindow* Application::CreateToolbarPanel()
 {
-	auto toolbar = new WxToolbarPanel(m_frame);
+	auto toolbar = new WxStageSubPanel(m_frame);
 	Blackboard::Instance()->SetToolbarPanel(toolbar);
 	return toolbar;
 }

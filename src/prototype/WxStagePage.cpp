@@ -2,7 +2,7 @@
 
 #include "frame/AppStyle.h"
 #include "frame/Blackboard.h"
-#include "frame/WxToolbarPanel.h"
+#include "frame/WxStageSubPanel.h"
 
 #include <ee0/SubjectMgr.h>
 #include <ee0/WxLibraryPanel.h>
@@ -263,15 +263,10 @@ void WxStagePage::InitLibraryPanel()
 
 void WxStagePage::InitToolbarPanel()
 {
-	auto panel = Blackboard::Instance()->GetToolbarPanel();
-	auto sizer = panel->GetSizer();
-	if (sizer) {
-		sizer->Clear(true);
-	} else {
-		sizer = new wxBoxSizer(wxVERTICAL);
-	}
-	sizer->Add(/*m_toolbar = */new pt::WxToolbarPanel(panel, GetSubjectMgr()));
-	panel->SetSizer(sizer);
+    auto toolbar_panel = Blackboard::Instance()->GetToolbarPanel();
+    toolbar_panel->SetPagePanel(PAGE_PROTOTYPING, [&](wxPanel* parent)->wxPanel* {
+        return new pt::WxToolbarPanel(parent, GetSubjectMgr());
+    }, wxVERTICAL);
 }
 
 }

@@ -17,9 +17,9 @@ namespace eone
 
 class Application;
 class WxStagePanel;
-class WxStageExtPanel;
+class WxStageSubPanel;
 class WxPreviewPanel;
-class WxToolbarPanel;
+class WxStageSubPanel;
 
 class Blackboard
 {
@@ -36,14 +36,14 @@ public:
 	void SetStagePanel(WxStagePanel* stage) { m_stage = stage; }
 	WxStagePanel* GetStagePanel() { return m_stage; }
 
-	void SetStageExtPanel(WxStageExtPanel* stage_ext) { m_stage_ext = stage_ext; }
-	WxStageExtPanel* GetStageExtPanel() { return m_stage_ext; }
+	void SetStageExtPanel(WxStageSubPanel* stage_ext) { m_stage_ext = stage_ext; }
+	WxStageSubPanel* GetStageExtPanel() { return m_stage_ext; }
 
 	void SetPreviewPanel(WxPreviewPanel* preview) { m_preview = preview; }
 	WxPreviewPanel* GetPreviewPanel() { return m_preview; }
 
-	void SetToolbarPanel(WxToolbarPanel* toolbar) { m_toolbar = toolbar; }
-	WxToolbarPanel* GetToolbarPanel() { return m_toolbar; }
+	void SetToolbarPanel(WxStageSubPanel* toolbar) { m_toolbar = toolbar; }
+	WxStageSubPanel* GetToolbarPanel() { return m_toolbar; }
 
 	void InitRenderContext();
 	const ee0::RenderContext& GetRenderContext() const { return m_rc; }
@@ -54,9 +54,9 @@ private:
 
 	ee0::WxLibraryPanel* m_library;
 	WxStagePanel*        m_stage;
-	WxStageExtPanel*     m_stage_ext;
+	WxStageSubPanel*     m_stage_ext;
 	WxPreviewPanel*      m_preview;
-	WxToolbarPanel*      m_toolbar;
+	WxStageSubPanel*      m_toolbar;
 
 	wxGLCanvas* m_dummy_canvas;
 	ee0::RenderContext m_rc;

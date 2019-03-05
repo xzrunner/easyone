@@ -7,7 +7,7 @@
 #include "frame/Blackboard.h"
 #include "frame/Application.h"
 #include "frame/typedef.h"
-#include "frame/WxStageExtPanel.h"
+#include "frame/WxStageSubPanel.h"
 #include "frame/AppStyle.h"
 
 #include <ee0/SubjectMgr.h>
@@ -112,28 +112,19 @@ void WxStagePage::InitViewports()
 
 void WxStagePage::OnPageInit()
 {
-	auto bb = Blackboard::Instance();
-
-	auto panel = bb->GetStageExtPanel();
-	auto sizer = panel->GetSizer();
-	if (sizer) {
-		sizer->Clear(true);
-	} else {
-		sizer = new wxBoxSizer(wxHORIZONTAL);
-	}
-
-	auto preview_panel = new WxPreviewPanel(panel);
-	sizer->Add(preview_panel, 1, wxEXPAND);
+    auto stage_ext_panel = Blackboard::Instance()->GetStageExtPanel();
+    auto preview_panel = static_cast<WxPreviewPanel*>(stage_ext_panel->SetPagePanel(
+        PAGE_QUAKE, [](wxPanel* parent)->wxPanel* {
+        return new WxPreviewPanel(parent);
+    }, wxHORIZONTAL));
 
 	auto preview_canvas = std::make_shared<WxPreviewCanvas>(
-		preview_panel, bb->GetRenderContext());
+		preview_panel, Blackboard::Instance()->GetRenderContext());
 	preview_panel->GetImpl().SetCanvas(preview_canvas);
 
 	auto preview_op = std::make_shared<ee3::CameraFlyOP>(
 		preview_panel, preview_canvas->GetCamera(), preview_panel->GetSubjectMgr());
 	preview_panel->GetImpl().SetEditOP(preview_op);
-
-	panel->SetSizer(sizer);
 }
 
 #ifndef GAME_OBJ_ECS

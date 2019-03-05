@@ -335,10 +335,9 @@
     <ClInclude Include="..\..\..\src\frame\WxSettingsDialog.h" />
     <ClInclude Include="..\..\..\src\frame\WxStageCanvas2D.h" />
     <ClInclude Include="..\..\..\src\frame\WxStageCanvas3D.h" />
-    <ClInclude Include="..\..\..\src\frame\WxStageExtPanel.h" />
     <ClInclude Include="..\..\..\src\frame\WxStagePage.h" />
     <ClInclude Include="..\..\..\src\frame\WxStagePanel.h" />
-    <ClInclude Include="..\..\..\src\frame\WxToolbarPanel.h" />
+    <ClInclude Include="..\..\..\src\frame\WxStageSubPanel.h" />
     <ClInclude Include="..\..\..\src\frame\WxWorldPanel.h" />
     <ClInclude Include="..\..\..\src\mask\WxEditDialog.h" />
     <ClInclude Include="..\..\..\src\mask\WxStagePage.h" />
@@ -425,10 +424,9 @@
     <ClCompile Include="..\..\..\src\frame\WxSettingsDialog.cpp" />
     <ClCompile Include="..\..\..\src\frame\WxStageCanvas2D.cpp" />
     <ClCompile Include="..\..\..\src\frame\WxStageCanvas3D.cpp" />
-    <ClCompile Include="..\..\..\src\frame\WxStageExtPanel.cpp" />
     <ClCompile Include="..\..\..\src\frame\WxStagePage.cpp" />
     <ClCompile Include="..\..\..\src\frame\WxStagePanel.cpp" />
-    <ClCompile Include="..\..\..\src\frame\WxToolbarPanel.cpp" />
+    <ClCompile Include="..\..\..\src\frame\WxStageSubPanel.cpp" />
     <ClCompile Include="..\..\..\src\frame\WxWorldPanel.cpp" />
     <ClCompile Include="..\..\..\src\mask\WxEditDialog.cpp">
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/mask/</ObjectFileName>

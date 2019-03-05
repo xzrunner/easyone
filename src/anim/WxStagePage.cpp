@@ -4,7 +4,7 @@
 #include "frame/Blackboard.h"
 #include "frame/Application.h"
 #include "frame/typedef.h"
-#include "frame/WxStageExtPanel.h"
+#include "frame/WxStageSubPanel.h"
 #include "frame/AppStyle.h"
 #include "frame/GameObjFactory.h"
 #include "frame/MessageID.h"
@@ -103,15 +103,6 @@ void WxStagePage::Traverse(std::function<bool(const ee0::GameObj&)> func,
 
 void WxStagePage::OnPageInit()
 {
-	auto panel = Blackboard::Instance()->GetStageExtPanel();
-	auto sizer = panel->GetSizer();
-	if (sizer) {
-		sizer->Clear(true);
-	} else {
-		sizer = new wxBoxSizer(wxVERTICAL);
-	}
-	// todo ecs
-#ifndef GAME_OBJ_ECS
 	auto& canim = m_obj->GetSharedComp<n2::CompAnim>();
 	auto& canim_inst = m_obj->GetUniqueComp<n2::CompAnimInst>();
 
@@ -134,9 +125,10 @@ void WxStagePage::OnPageInit()
 	};
 	eanim::Callback::RegisterCallback(funs);
 
-	sizer->Add(new eanim::WxTimelinePanel(panel, m_sub_mgr, canim_inst.GetPlayCtrl()), 0, wxEXPAND);
-#endif // GAME_OBJ_ECS
-	panel->SetSizer(sizer);
+    auto stage_ext_panel = Blackboard::Instance()->GetStageExtPanel();
+    stage_ext_panel->SetPagePanel(PAGE_ANIM, [&](wxPanel* parent)->wxPanel* {
+        return new eanim::WxTimelinePanel(parent, m_sub_mgr, canim_inst.GetPlayCtrl());
+    }, wxVERTICAL);
 }
 
 #ifndef GAME_OBJ_ECS

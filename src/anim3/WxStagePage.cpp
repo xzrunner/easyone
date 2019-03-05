@@ -7,8 +7,7 @@
 #include "frame/Application.h"
 #include "frame/typedef.h"
 #include "frame/AppStyle.h"
-#include "frame/WxStageExtPanel.h"
-#include "frame/WxToolbarPanel.h"
+#include "frame/WxStageSubPanel.h"
 
 #include <ee0/SubjectMgr.h>
 #include <ee3/WxStageDropTarget.h>
@@ -136,16 +135,6 @@ void WxStagePage::LoadFromFileExt(const std::string& filepath)
 
 void WxStagePage::InitTimeLinePanel()
 {
-	auto panel = Blackboard::Instance()->GetStageExtPanel();
-	auto sizer = panel->GetSizer();
-	if (sizer) {
-		sizer->Clear(true);
-	} else {
-		sizer = new wxBoxSizer(wxVERTICAL);
-	}
-	// todo ecs
-#ifndef GAME_OBJ_ECS
-
 	// set callback
 	eanim::Callback::Funs funs;
 	funs.refresh_all_nodes = [&]() {
@@ -168,27 +157,19 @@ void WxStagePage::InitTimeLinePanel()
 	};
 	eanim::Callback::RegisterCallback(funs);
 
-	static anim::PlayCtrl pctrl;
-	sizer->Add(new eanim::WxTimelinePanel(panel, m_sub_mgr, pctrl), 0, wxEXPAND);
-#endif // GAME_OBJ_ECS
-	panel->SetSizer(sizer);
+    static anim::PlayCtrl pctrl;
+    auto stage_ext_panel = Blackboard::Instance()->GetStageExtPanel();
+    stage_ext_panel->SetPagePanel(PAGE_ANIM3, [&](wxPanel* parent)->wxPanel* {
+        return new eanim::WxTimelinePanel(parent, m_sub_mgr, pctrl);
+    }, wxVERTICAL);
 }
 
 void WxStagePage::InitPropertyPanel()
 {
-	auto panel = Blackboard::Instance()->GetToolbarPanel();
-	auto sizer = panel->GetSizer();
-	if (sizer) {
-		sizer->Clear(true);
-	}
-	else {
-		sizer = new wxBoxSizer(wxVERTICAL);
-	}
-	// todo
-#ifndef GAME_OBJ_ECS
-	sizer->Add(new WxPropertyPanel(panel, m_sub_mgr, m_layers));
-	panel->SetSizer(sizer);
-#endif // GAME_OBJ_ECS
+    auto toolbar_panel = Blackboard::Instance()->GetToolbarPanel();
+    toolbar_panel->SetPagePanel(PAGE_ANIM3, [&](wxPanel* parent)->wxPanel* {
+        return new WxPropertyPanel(toolbar_panel, m_sub_mgr, m_layers);
+    }, wxVERTICAL);
 }
 
 bool WxStagePage::OnSetCurrFrame(const ee0::VariantSet& variants)
