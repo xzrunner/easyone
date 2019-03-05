@@ -41,12 +41,14 @@ private:
 	bool DeleteSceneObj(const ee0::VariantSet& variants);
 	bool ClearSceneObj();
 
+    void CreateNewPage(const ee0::VariantSet& variants) const;
+
 	bool SetModelType(const std::string& model);
 
 	void UpdateShader();
 
 private:
-	WxToolbarPanel* m_toolbar = nullptr;
+    WxToolbarPanel* m_toolbar = nullptr;
 
 	std::string m_model_type;
 

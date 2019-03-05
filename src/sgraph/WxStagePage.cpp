@@ -5,6 +5,7 @@
 #include "frame/AppStyle.h"
 #include "frame/Blackboard.h"
 #include "frame/WxStageSubPanel.h"
+#include "frame/PanelFactory.h"
 
 #include <ee0/SubjectMgr.h>
 #include <ee0/MsgHelper.h>
@@ -59,6 +60,7 @@ WxStagePage::WxStagePage(wxWindow* parent, ECS_WORLD_PARAM const ee0::GameObj& o
 	m_messages.push_back(ee0::MSG_SCENE_NODE_INSERT);
 	m_messages.push_back(ee0::MSG_SCENE_NODE_DELETE);
 	m_messages.push_back(ee0::MSG_SCENE_NODE_CLEAR);
+    m_messages.push_back(ee0::MSG_STAGE_PAGE_NEW);
 	m_messages.push_back(MSG_SET_MODEL_TYPE);
 	m_messages.push_back(bp::MSG_BLUE_PRINT_CHANGED);
 }
@@ -79,6 +81,10 @@ void WxStagePage::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
 	case ee0::MSG_SCENE_NODE_CLEAR:
 		dirty = ClearSceneObj();
 		break;
+
+    case ee0::MSG_STAGE_PAGE_NEW:
+        CreateNewPage(variants);
+        break;
 
 	case MSG_SET_MODEL_TYPE:
 		dirty = SetModelType(variants.GetVariant("type").m_val.pc);
@@ -235,6 +241,27 @@ bool WxStagePage::ClearSceneObj()
 	ccomplex.children->clear();
 #endif // GAME_OBJ_ECS
 	return dirty;
+}
+
+void WxStagePage::CreateNewPage(const ee0::VariantSet& variants) const
+{
+    auto type_var = variants.GetVariant("type");
+    GD_ASSERT(type_var.m_type == ee0::VT_PCHAR, "no var in vars: type");
+    auto type = type_var.m_val.pc;
+
+    auto filepath_var = variants.GetVariant("filepath");
+    GD_ASSERT(filepath_var.m_type == ee0::VT_PCHAR, "no var in vars: filepath");
+    auto filepath = filepath_var.m_val.pc;
+
+    int page_type = -1;
+    if (strcmp(type, bp::PAGE_TYPE) == 0) {
+        page_type = PAGE_SHADER_GRAPH;
+    }
+    if (page_type >= 0)
+    {
+        auto page = PanelFactory::CreateStagePage(page_type, Blackboard::Instance()->GetStagePanel());
+        page->GetSubjectMgr()->NotifyObservers(ee0::MSG_STAGE_PAGE_ON_SHOW);
+    }
 }
 
 bool WxStagePage::SetModelType(const std::string& model)
