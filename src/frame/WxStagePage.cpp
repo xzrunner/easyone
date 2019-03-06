@@ -95,11 +95,18 @@ void WxStagePage::LoadFromFile(const std::string& filepath)
 	m_sub_mgr->NotifyObservers(ee0::MSG_NODE_SELECTION_CLEAR);
 	m_sub_mgr->NotifyObservers(ee0::MSG_SCENE_NODE_CLEAR);
 
-	auto casset = ns::CompFactory::Instance()->CreateAsset(filepath);
-	if (m_obj->HasSharedComp<n0::CompAsset>()) {
-		m_obj->RemoveSharedComp<n0::CompAsset>();
-	}
-	m_obj->AddSharedCompNoCreate<n0::CompAsset>(casset);
+	n0::CompAssetPtr casset = ns::CompFactory::Instance()->CreateAsset(filepath);
+    if (casset)
+    {
+        if (m_obj->HasSharedComp<n0::CompAsset>()) {
+            m_obj->RemoveSharedComp<n0::CompAsset>();
+        }
+        m_obj->AddSharedCompNoCreate<n0::CompAsset>(casset);
+    }
+    else
+    {
+        casset = m_obj->GetSharedCompPtr<n0::CompAsset>();
+    }
 
 	// FIXME: reinsert, for send insert msg to other panel
 	if (m_obj->HasSharedComp<n0::CompComplex>())
