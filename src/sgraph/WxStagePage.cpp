@@ -267,7 +267,8 @@ void WxStagePage::CreateNewPage(const ee0::VariantSet& variants) const
         page_type = PAGE_SHADER_GRAPH;
     }
     if (page_type >= 0) {
-        PanelFactory::CreateStagePage(page_type, Blackboard::Instance()->GetStagePanel());
+        auto stage_page = PanelFactory::CreateStagePage(page_type, Blackboard::Instance()->GetStagePanel());
+        stage_page->LoadFromFile(filepath);
     }
 }
 
