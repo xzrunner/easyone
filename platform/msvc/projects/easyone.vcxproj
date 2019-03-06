@@ -424,7 +424,10 @@
     <ClCompile Include="..\..\..\src\frame\WxSettingsDialog.cpp" />
     <ClCompile Include="..\..\..\src\frame\WxStageCanvas2D.cpp" />
     <ClCompile Include="..\..\..\src\frame\WxStageCanvas3D.cpp" />
-    <ClCompile Include="..\..\..\src\frame\WxStagePage.cpp" />
+    <ClCompile Include="..\..\..\src\frame\WxStagePage.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/frame/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/frame/</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="..\..\..\src\frame\WxStagePanel.cpp" />
     <ClCompile Include="..\..\..\src\frame\WxStageSubPanel.cpp" />
     <ClCompile Include="..\..\..\src\frame\WxWorldPanel.cpp" />
