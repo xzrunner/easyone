@@ -266,10 +266,8 @@ void WxStagePage::CreateNewPage(const ee0::VariantSet& variants) const
     if (strcmp(type, bp::PAGE_TYPE) == 0) {
         page_type = PAGE_SHADER_GRAPH;
     }
-    if (page_type >= 0)
-    {
-        auto page = PanelFactory::CreateStagePage(page_type, Blackboard::Instance()->GetStagePanel());
-        page->GetSubjectMgr()->NotifyObservers(ee0::MSG_STAGE_PAGE_ON_SHOW);
+    if (page_type >= 0) {
+        PanelFactory::CreateStagePage(page_type, Blackboard::Instance()->GetStagePanel());
     }
 }
 
