@@ -18,7 +18,7 @@ public:
 
 	const ee0::SubjectMgrPtr& GetSubjectMgr() const { return m_sub_mgr; }
 
-	WxStagePage& GetStagePage() { return *m_stage; }
+	const WxStagePage& GetStagePage() { return *m_stage; }
 
 private:
 	void RegisterMsg(ee0::SubjectMgr& sub_mgr);
@@ -28,7 +28,7 @@ private:
 private:
 	ee0::SubjectMgrPtr m_sub_mgr;
 
-	WxStagePage* m_stage;
+	const WxStagePage* m_stage;
 
 }; // WxPreviewPanel
 

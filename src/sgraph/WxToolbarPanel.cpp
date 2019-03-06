@@ -113,7 +113,7 @@ void WxToolbarPanel::OnSelected(const ee0::VariantSet& variants)
 {
 	auto var_obj = variants.GetVariant("obj");
 	GD_ASSERT(var_obj.m_type == ee0::VT_PVOID, "no var in vars: obj");
-	ee0::GameObj obj = *static_cast<ee0::GameObj*>(var_obj.m_val.pv);
+    const ee0::GameObj obj = *static_cast<const ee0::GameObj*>(var_obj.m_val.pv);
 	GD_ASSERT(GAME_OBJ_VALID(obj), "err scene obj");
 
 	auto& cnode = obj->GetUniqueComp<bp::CompNode>();

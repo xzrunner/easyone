@@ -196,7 +196,7 @@ void WxItemsListCtrl::InsertSceneObj(const ee0::VariantSet& variants)
 {
 	auto var = variants.GetVariant("obj");
 	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: obj");
-	ee0::GameObj* obj = static_cast<ee0::GameObj*>(var.m_val.pv);
+    const ee0::GameObj* obj = static_cast<const ee0::GameObj*>(var.m_val.pv);
 	GD_ASSERT(obj, "err model obj");
 
 	std::string filepath;
@@ -223,7 +223,7 @@ void WxItemsListCtrl::DeleteSceneObj(const ee0::VariantSet& variants)
 
 	auto var = variants.GetVariant("obj");
 	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: obj");
-	ee0::GameObj* obj = static_cast<ee0::GameObj*>(var.m_val.pv);
+    const ee0::GameObj* obj = static_cast<const ee0::GameObj*>(var.m_val.pv);
 	GD_ASSERT(obj, "err model obj");
 
 	int idx = QueryItemIndex(*obj);
@@ -243,7 +243,7 @@ void WxItemsListCtrl::ReorderSceneObj(const ee0::VariantSet& variants)
 
 	auto obj_var = variants.GetVariant("obj");
 	GD_ASSERT(obj_var.m_type == ee0::VT_PVOID, "no var in vars: obj");
-	ee0::GameObj* obj = static_cast<ee0::GameObj*>(obj_var.m_val.pv);
+    const ee0::GameObj* obj = static_cast<const ee0::GameObj*>(obj_var.m_val.pv);
 	GD_ASSERT(obj, "err model obj");
 
 	auto up_var = variants.GetVariant("up");
@@ -278,7 +278,7 @@ void WxItemsListCtrl::SelectSceneObj(const ee0::VariantSet& variants)
 {
 	auto var = variants.GetVariant("obj");
 	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: obj");
-	ee0::GameObj* obj = static_cast<ee0::GameObj*>(var.m_val.pv);
+    const ee0::GameObj* obj = static_cast<const ee0::GameObj*>(var.m_val.pv);
 	GD_ASSERT(obj, "err model obj");
 
 	bool multiple = false;
@@ -303,7 +303,7 @@ void WxItemsListCtrl::UnselectSceneObj(const ee0::VariantSet& variants)
 {
 	auto var = variants.GetVariant("obj");
 	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: obj");
-	ee0::GameObj* obj = static_cast<ee0::GameObj*>(var.m_val.pv);
+    const ee0::GameObj* obj = static_cast<const ee0::GameObj*>(var.m_val.pv);
 	GD_ASSERT(obj, "err model obj");
 
 	int idx = 0;
@@ -329,7 +329,7 @@ void WxItemsListCtrl::StagePageChanged(const ee0::VariantSet& variants)
 	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: new_page");
 	GD_ASSERT(var.m_val.pv, "err new_page");
 
-	auto new_page = static_cast<WxStagePage*>(var.m_val.pv);
+	auto new_page = static_cast<const WxStagePage*>(var.m_val.pv);
 
 	m_sub_mgr = new_page->GetSubjectMgr();
 	RegisterMsg(*m_sub_mgr);

@@ -192,20 +192,12 @@ void WxSceneTreeCtrl::OnSelChanged(wxTreeEvent& event)
 
 	ee0::Variant var_obj;
 	var_obj.m_type = ee0::VT_PVOID;
-#ifndef GAME_OBJ_ECS
-	var_obj.m_val.pv = &std::const_pointer_cast<n0::SceneNode>(obj);
-#else
-	var_obj.m_val.pv = &const_cast<e0::Entity&>(obj);
-#endif // GAME_OBJ_ECS
+	var_obj.m_val.pv = &obj;
 	vars.SetVariant("obj", var_obj);
 
 	ee0::Variant var_root;
 	var_root.m_type = ee0::VT_PVOID;
-#ifndef GAME_OBJ_ECS
-	var_root.m_val.pv = &std::const_pointer_cast<n0::SceneNode>(data->GetRoot());
-#else
-	var_root.m_val.pv = &const_cast<e0::Entity&>(data->GetRoot());
-#endif // GAME_OBJ_ECS
+	var_root.m_val.pv = &data->GetRoot();
 	vars.SetVariant("root", var_root);
 
 	ee0::Variant var_id;
@@ -350,7 +342,7 @@ void WxSceneTreeCtrl::SelectSceneObj(const ee0::VariantSet& variants)
 {
 	auto var = variants.GetVariant("obj");
 	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: obj");
-	ee0::GameObj* obj = static_cast<ee0::GameObj*>(var.m_val.pv);
+    const ee0::GameObj* obj = static_cast<const ee0::GameObj*>(var.m_val.pv);
 	GD_ASSERT(obj, "err model obj");
 
 	bool multiple = false;
@@ -366,7 +358,7 @@ void WxSceneTreeCtrl::UnselectSceneObj(const ee0::VariantSet& variants)
 {
 	auto var = variants.GetVariant("obj");
 	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: obj");
-	ee0::GameObj* obj = static_cast<ee0::GameObj*>(var.m_val.pv);
+    const ee0::GameObj* obj = static_cast<const ee0::GameObj*>(var.m_val.pv);
 	GD_ASSERT(obj, "err model obj");
 
 	UnselectSceneObj(*obj);
@@ -415,7 +407,7 @@ void WxSceneTreeCtrl::InsertSceneObj(const ee0::VariantSet& variants)
 {
 	auto var = variants.GetVariant("obj");
 	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: obj");
-	ee0::GameObj* obj = static_cast<ee0::GameObj*>(var.m_val.pv);
+    const ee0::GameObj* obj = static_cast<const ee0::GameObj*>(var.m_val.pv);
 	GD_ASSERT(obj, "err model obj");
 
 	InsertSceneObj(m_root, *obj, *obj, 0);
@@ -470,7 +462,7 @@ void WxSceneTreeCtrl::DeleteSceneObj(const ee0::VariantSet& variants)
 
 	auto var = variants.GetVariant("obj");
 	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: obj");
-	ee0::GameObj* obj = static_cast<ee0::GameObj*>(var.m_val.pv);
+    const ee0::GameObj* obj = static_cast<const ee0::GameObj*>(var.m_val.pv);
 	GD_ASSERT(obj, "err model obj");
 	DeleteSceneObj(*obj);
 }
@@ -504,7 +496,7 @@ void WxSceneTreeCtrl::ReorderSceneObj(const ee0::VariantSet& variants)
 
 	auto obj_var = variants.GetVariant("obj");
 	GD_ASSERT(obj_var.m_type == ee0::VT_PVOID, "no var in vars: obj");
-	ee0::GameObj* obj = static_cast<ee0::GameObj*>(obj_var.m_val.pv);
+    const ee0::GameObj* obj = static_cast<const ee0::GameObj*>(obj_var.m_val.pv);
 	GD_ASSERT(obj, "err model obj");
 
 	auto up_var = variants.GetVariant("up");
@@ -606,7 +598,7 @@ void WxSceneTreeCtrl::StagePageChanged(const ee0::VariantSet& variants)
 	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: new_page");
 	GD_ASSERT(var.m_val.pv, "err new_page");
 
-	auto new_page = static_cast<WxStagePage*>(var.m_val.pv);
+	auto new_page = static_cast<const WxStagePage*>(var.m_val.pv);
 
 	m_sub_mgr = new_page->GetSubjectMgr();
 	RegisterMsg(*m_sub_mgr);
@@ -722,11 +714,7 @@ void WxSceneTreeCtrl::MoveSceneObj(wxTreeItemId src, wxTreeItemId dst_parent)
 
 		ee0::Variant var_obj;
 		var_obj.m_type = ee0::VT_PVOID;
-#ifndef GAME_OBJ_ECS
-		var_obj.m_val.pv = &std::const_pointer_cast<n0::SceneNode>(src_obj);
-#else
-		var_obj.m_val.pv = &const_cast<e0::Entity&>(src_obj);
-#endif // GAME_OBJ_ECS
+		var_obj.m_val.pv = &src_obj;
 		vars.SetVariant("obj", var_obj);
 
 		m_sub_mgr->NotifyObservers(ee0::MSG_SCENE_NODE_INSERT, vars);
@@ -785,7 +773,7 @@ void WxSceneTreeCtrl::RebuildTree(const ee0::VariantSet& variants)
 {
 	auto var = variants.GetVariant("obj");
 	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: obj");
-	ee0::GameObj* obj = static_cast<ee0::GameObj*>(var.m_val.pv);
+    const ee0::GameObj* obj = static_cast<const ee0::GameObj*>(var.m_val.pv);
 	GD_ASSERT(obj, "err model obj");
 	m_root_obj = *obj;
 	RebuildTree(m_root_obj);
@@ -803,7 +791,7 @@ void WxSceneTreeCtrl::ChangeName(const ee0::VariantSet& variants)
 
 	auto var = variants.GetVariant("obj");
 	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: obj");
-	ee0::GameObj* obj = static_cast<ee0::GameObj*>(var.m_val.pv);
+    const ee0::GameObj* obj = static_cast<const ee0::GameObj*>(var.m_val.pv);
 	GD_ASSERT(obj, "err model obj");
 
 	GD_ASSERT(data->GetObj() == *obj, "err obj");
@@ -935,11 +923,7 @@ void WxSceneTreeCtrl::DeleteObjOutside(wxTreeItemId item)
 
 		ee0::Variant var_obj;
 		var_obj.m_type = ee0::VT_PVOID;
-#ifndef GAME_OBJ_ECS
-		var_obj.m_val.pv = &std::const_pointer_cast<n0::SceneNode>(data->GetObj());
-#else
-		var_obj.m_val.pv = &const_cast<e0::Entity&>(data->GetObj());
-#endif // GAME_OBJ_ECS
+		var_obj.m_val.pv = &data->GetObj();
 		vars.SetVariant("obj", var_obj);
 
 		m_sub_mgr->NotifyObservers(ee0::MSG_SCENE_NODE_DELETE, vars);

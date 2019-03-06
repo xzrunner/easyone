@@ -152,13 +152,13 @@ void WxDetailPanel::InitComponents(const ee0::VariantSet& variants)
 
 	auto var_obj = variants.GetVariant("obj");
 	GD_ASSERT(var_obj.m_type == ee0::VT_PVOID, "no var in vars: obj");
-	obj = *static_cast<ee0::GameObj*>(var_obj.m_val.pv);
+	obj = *static_cast<const ee0::GameObj*>(var_obj.m_val.pv);
 	GD_ASSERT(GAME_OBJ_VALID(obj), "err scene obj");
 
 	auto var_root = variants.GetVariant("root");
 	if (var_root.m_type != ee0::VT_EMPTY) {
 		GD_ASSERT(var_root.m_type == ee0::VT_PVOID, "no var in vars: obj");
-		root = *static_cast<ee0::GameObj*>(var_root.m_val.pv);
+		root = *static_cast<const ee0::GameObj*>(var_root.m_val.pv);
 	}
 
 	auto var_id = variants.GetVariant("id");
@@ -488,7 +488,7 @@ void WxDetailPanel::StagePageChanged(const ee0::VariantSet& variants)
 	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: new_page");
 	GD_ASSERT(var.m_val.pv, "err new_page");
 
-	auto new_page = static_cast<WxStagePage*>(var.m_val.pv);
+	auto new_page = static_cast<const WxStagePage*>(var.m_val.pv);
 
 	m_sub_mgr = new_page->GetSubjectMgr();
 	RegisterMsg(*m_sub_mgr);

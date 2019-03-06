@@ -75,7 +75,7 @@ void WxRecordPanel::OnAddAOP(const ee0::VariantSet& variants)
 	auto var = variants.GetVariant("aop");
 	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: aop");
 	GD_ASSERT(var.m_val.pv, "err aop");
-	auto& aop = *static_cast<std::shared_ptr<ee0::AtomicOP>*>(var.m_val.pv);
+	auto& aop = *static_cast<const std::shared_ptr<ee0::AtomicOP>*>(var.m_val.pv);
 	m_list->Append(aop->ToString());
 
 	m_list->SetSelection(m_list->GetCount() - 1);

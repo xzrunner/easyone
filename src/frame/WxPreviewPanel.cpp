@@ -40,7 +40,7 @@ void WxPreviewPanel::StagePageChanged(const ee0::VariantSet& variants)
 	auto var = variants.GetVariant("new_page");
 	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: new_page");
 	GD_ASSERT(var.m_val.pv, "err new_page");
-	auto new_page = static_cast<WxStagePage*>(var.m_val.pv);
+	auto new_page = static_cast<const WxStagePage*>(var.m_val.pv);
 	m_sub_mgr = new_page->GetSubjectMgr();
 	m_stage = new_page;
 

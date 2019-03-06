@@ -102,7 +102,7 @@ void WxStagePage::InsertSceneNode(const ee0::VariantSet& variants)
 
 	auto var = variants.GetVariant("obj");
 	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: obj");
-	ee0::GameObj* obj = static_cast<ee0::GameObj*>(var.m_val.pv);
+    const ee0::GameObj* obj = static_cast<const ee0::GameObj*>(var.m_val.pv);
 	GD_ASSERT(obj, "err scene obj");
 
 #ifndef GAME_OBJ_ECS
@@ -128,7 +128,7 @@ void WxStagePage::DeleteSceneNode(const ee0::VariantSet& variants)
 {
 	auto var = variants.GetVariant("obj");
 	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: obj");
-	ee0::GameObj* obj = static_cast<ee0::GameObj*>(var.m_val.pv);
+    const ee0::GameObj* obj = static_cast<const ee0::GameObj*>(var.m_val.pv);
 	GD_ASSERT(obj, "err scene obj");
 
 #ifndef GAME_OBJ_ECS
