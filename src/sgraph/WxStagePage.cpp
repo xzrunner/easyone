@@ -313,6 +313,10 @@ void WxStagePage::UpdateShader()
 
 		auto& ccomplex = m_obj->GetSharedComp<n0::CompComplex>();
 		auto& nodes = const_cast<std::vector<n0::SceneNodePtr>&>(ccomplex.GetAllChildren());
+        if (nodes.empty()) {
+            return;
+        }
+
 		bp::NodePtr final_node = nullptr;
         std::vector<bp::NodePtr> all_bp_nodes;
         all_bp_nodes.reserve(nodes.size());
@@ -326,7 +330,9 @@ void WxStagePage::UpdateShader()
 			}
             all_bp_nodes.push_back(bp_node);
 		}
-		assert(final_node);
+        if (!final_node) {
+            return;
+        }
 
 		sg::ShaderWeaver::ShaderType shader_type;
         if (m_model_type == rttr::type::get<sg::node::PBR>().get_name().to_string()) {
