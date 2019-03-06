@@ -61,6 +61,7 @@ private:
 	std::shared_ptr<ee3::SkeletonIKOP>    m_sk_ik_op   = nullptr;
 	std::shared_ptr<ee3::MeshIKOP>        m_mesh_ik_op = nullptr;
 
+    wxPanel* m_preview = nullptr;
 	WxToolbarPanel* m_toolbar = nullptr;
 
 	n0::SceneNodePtr m_preview_obj = nullptr;

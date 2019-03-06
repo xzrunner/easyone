@@ -50,7 +50,7 @@ private:
 	void InitToolbarPanel();
 
 private:
-//	WxToolbarPanel* m_toolbar = nullptr;
+	wxPanel* m_toolbar = nullptr;
 
 }; // WxStagePage
 

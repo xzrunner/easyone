@@ -59,6 +59,15 @@ void WxStagePage::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
 	bool dirty = false;
 	switch (msg)
 	{
+    case ee0::MSG_STAGE_PAGE_ON_SHOW:
+        m_timeline->Show();
+        m_timeline->GetParent()->Layout();
+        break;
+    case ee0::MSG_STAGE_PAGE_ON_HIDE:
+        m_timeline->Hide();
+        m_timeline->GetParent()->Layout();
+        break;
+
 	case eanim::MSG_SET_CURR_FRAME:
 		dirty = OnSetCurrFrame(variants);
 		break;
@@ -125,8 +134,9 @@ void WxStagePage::OnPageInit()
 	};
 	eanim::Callback::RegisterCallback(funs);
 
+    assert(!m_timeline);
     auto stage_ext_panel = Blackboard::Instance()->GetStageExtPanel();
-    stage_ext_panel->SetPagePanel(PAGE_ANIM, [&](wxPanel* parent)->wxPanel* {
+    m_timeline = stage_ext_panel->AddPagePanel([&](wxPanel* parent)->wxPanel* {
         return new eanim::WxTimelinePanel(parent, m_sub_mgr, canim_inst.GetPlayCtrl());
     }, wxVERTICAL);
 }

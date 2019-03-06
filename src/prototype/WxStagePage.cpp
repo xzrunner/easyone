@@ -263,8 +263,9 @@ void WxStagePage::InitLibraryPanel()
 
 void WxStagePage::InitToolbarPanel()
 {
+    assert(!m_toolbar);
     auto toolbar_panel = Blackboard::Instance()->GetToolbarPanel();
-    toolbar_panel->SetPagePanel(PAGE_PROTOTYPING, [&](wxPanel* parent)->wxPanel* {
+    m_toolbar = toolbar_panel->AddPagePanel([&](wxPanel* parent)->wxPanel* {
         return new pt::WxToolbarPanel(parent, GetSubjectMgr());
     }, wxVERTICAL);
 }

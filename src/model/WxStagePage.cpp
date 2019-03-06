@@ -47,6 +47,19 @@ void WxStagePage::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
 
 	switch (msg)
 	{
+    case ee0::MSG_STAGE_PAGE_ON_SHOW:
+        m_preview->Show();
+        m_preview->GetParent()->Layout();
+        m_toolbar->Show();
+        m_toolbar->GetParent()->Layout();
+        break;
+    case ee0::MSG_STAGE_PAGE_ON_HIDE:
+        m_preview->Hide();
+        m_preview->GetParent()->Layout();
+        m_toolbar->Hide();
+        m_toolbar->GetParent()->Layout();
+        break;
+
 	case ee0::MSG_SET_CANVAS_DIRTY:
 		m_preview_submgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
 		break;
@@ -163,10 +176,12 @@ void WxStagePage::LoadFromFileExt(const std::string& filepath)
 
 void WxStagePage::InitPreviewPanel()
 {
+    assert(!m_preview);
     auto stage_ext_panel = Blackboard::Instance()->GetStageExtPanel();
-    auto preview_panel = static_cast<WxPreviewPanel*>(stage_ext_panel->SetPagePanel(PAGE_MODEL, [](wxPanel* parent)->wxPanel* {
+    auto preview_panel = static_cast<WxPreviewPanel*>(stage_ext_panel->AddPagePanel([](wxPanel* parent)->wxPanel* {
         return new WxPreviewPanel(parent);
     }, wxHORIZONTAL));
+    m_preview = preview_panel;
 
 	m_preview_obj = m_obj->Clone();
 	auto preview_canvas = std::make_shared<WxPreviewCanvas>(
@@ -182,8 +197,9 @@ void WxStagePage::InitPreviewPanel()
 
 void WxStagePage::InitToolbarPanel()
 {
+    assert(!m_toolbar);
     auto toolbar_panel = Blackboard::Instance()->GetToolbarPanel();
-    m_toolbar = static_cast<WxToolbarPanel*>(toolbar_panel->SetPagePanel(PAGE_MODEL, [&](wxPanel* parent)->wxPanel* {
+    m_toolbar = static_cast<WxToolbarPanel*>(toolbar_panel->AddPagePanel([&](wxPanel* parent)->wxPanel* {
         return new WxToolbarPanel(parent, this);
     }, wxVERTICAL));
 }

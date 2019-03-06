@@ -24,6 +24,7 @@ public:
 
 public:
 	WxStagePage(wxWindow* parent, ECS_WORLD_PARAM const ee0::GameObj& obj, uint32_t app_style);
+    virtual ~WxStagePage();
 
 	virtual void OnNotify(uint32_t msg, const ee0::VariantSet& variants) override;
 
@@ -37,6 +38,8 @@ public:
 
 	void SetFilepath(const std::string& filepath);
 	const std::string& GetFilepath() const { return m_filepath; }
+
+    void InitPage();
 
 protected:
 	virtual void OnPageInit() {}
@@ -76,6 +79,9 @@ protected:
 	std::vector<uint32_t> m_messages;
 
 	EditBackup m_backup;
+
+private:
+    bool m_inited = false;
 
 }; // WxStagePage
 

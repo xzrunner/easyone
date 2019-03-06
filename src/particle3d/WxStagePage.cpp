@@ -29,6 +29,17 @@ void WxStagePage::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
 {
 	eone::WxStagePage::OnNotify(msg, variants);
 
+	switch (msg)
+	{
+    case ee0::MSG_STAGE_PAGE_ON_SHOW:
+        m_emitter->Show();
+        m_emitter->GetParent()->Layout();
+        break;
+    case ee0::MSG_STAGE_PAGE_ON_HIDE:
+        m_emitter->Hide();
+        m_emitter->GetParent()->Layout();
+        break;
+	}
 }
 
 void WxStagePage::Traverse(std::function<bool(const ee0::GameObj&)> func,
@@ -62,8 +73,9 @@ void WxStagePage::Traverse(std::function<bool(const ee0::GameObj&)> func,
 
 void WxStagePage::OnPageInit()
 {
+    assert(!m_emitter);
     auto toolbar_panel = Blackboard::Instance()->GetToolbarPanel();
-    toolbar_panel->SetPagePanel(PAGE_PARTICLE3D, [&](wxPanel* parent)->wxPanel* {
+    m_emitter = toolbar_panel->AddPagePanel([&](wxPanel* parent)->wxPanel* {
         auto& cp3d = m_obj->GetSharedComp<n2::CompParticle3d>();
         auto& cp3d_inst = m_obj->GetUniqueComp<n2::CompParticle3dInst>();
         return new WxEmitterPanel(parent, m_library, cp3d, cp3d_inst);

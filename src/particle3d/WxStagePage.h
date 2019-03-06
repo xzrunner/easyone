@@ -34,6 +34,8 @@ protected:
 private:
 	ee0::WxLibraryPanel* m_library;
 
+    wxPanel* m_emitter = nullptr;
+
 }; // WxStagePage
 
 }

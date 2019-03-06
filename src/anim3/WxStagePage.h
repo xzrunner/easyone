@@ -51,6 +51,9 @@ private:
 private:
 	std::vector<::anim::LayerPtr> m_layers;
 
+    wxPanel* m_timeline = nullptr;
+    wxPanel* m_property = nullptr;
+
 }; // WxStagePage
 
 }

@@ -42,6 +42,9 @@ private:
 
 	void RefreshAllNodes();
 
+private:
+    wxPanel* m_timeline = nullptr;
+
 }; // WxStagePage
 
 }

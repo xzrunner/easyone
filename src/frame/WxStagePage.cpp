@@ -43,11 +43,16 @@ WxStagePage::WxStagePage(wxWindow* parent, ECS_WORLD_PARAM const ee0::GameObj& o
 	, m_app_style(app_style)
 	, m_backup(m_sub_mgr)
 {
+    // trigger call RegisterAllMessages()
 	m_sub_mgr->RegisterObserver(ee0::MSG_STAGE_PAGE_ON_SHOW, this);
 
 	m_messages.push_back(ee0::MSG_SET_EDITOR_DIRTY);
-//	m_messages.push_back(ee0::MSG_STAGE_PAGE_ON_SHOW);
 	m_messages.push_back(ee0::MSG_STAGE_PAGE_ON_HIDE);
+}
+
+WxStagePage::~WxStagePage()
+{
+    m_sub_mgr->UnregisterObserver(ee0::MSG_STAGE_PAGE_ON_SHOW, this);
 }
 
 void WxStagePage::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
@@ -64,7 +69,7 @@ void WxStagePage::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
 		SetMoonContext();
 		RegisterAllMessages();
 		InitSubWindow();
-		OnPageInit();
+		InitPage();
 		break;
 	case ee0::MSG_STAGE_PAGE_ON_HIDE:
 		UnregisterAllMessages();
@@ -127,7 +132,7 @@ void WxStagePage::LoadFromFile(const std::string& filepath)
 		auto& cbb = m_obj->GetUniqueComp<n3::CompAABB>();
 		auto aabb = n3::AABBSystem::GetBounding(*casset);
 		// shrink
-		if (aabb.Width() > 10 || aabb.Height() > 10 || aabb.Depth() > 10) 
+		if (aabb.Width() > 10 || aabb.Height() > 10 || aabb.Depth() > 10)
 		{
 			const sm::vec3 scale(0.01f, 0.01f, 0.01f);
 			aabb.Scale(scale);
@@ -148,6 +153,14 @@ void WxStagePage::SetFilepath(const std::string& filepath)
 {
 	m_filepath = filepath;
 	m_backup.SetFilepath(GetBackupPath());
+}
+
+void WxStagePage::InitPage()
+{
+    if (!m_inited) {
+        OnPageInit();
+        m_inited = true;
+    }
 }
 
 std::string WxStagePage::GetBackupPath() const

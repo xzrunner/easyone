@@ -112,7 +112,7 @@ void WxStagePage::InitViewports()
 void WxStagePage::OnPageInit()
 {
     auto stage_ext_panel = Blackboard::Instance()->GetStageExtPanel();
-    stage_ext_panel->SetPagePanel(PAGE_SHAPE3D, [&](wxPanel* parent)->wxPanel* {
+    stage_ext_panel->AddPagePanel([&](wxPanel* parent)->wxPanel* {
         return nullptr;
     }, wxHORIZONTAL);
 }

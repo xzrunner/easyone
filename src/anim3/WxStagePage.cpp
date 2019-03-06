@@ -157,17 +157,19 @@ void WxStagePage::InitTimeLinePanel()
 	};
 	eanim::Callback::RegisterCallback(funs);
 
+    assert(!m_timeline);
     static anim::PlayCtrl pctrl;
     auto stage_ext_panel = Blackboard::Instance()->GetStageExtPanel();
-    stage_ext_panel->SetPagePanel(PAGE_ANIM3, [&](wxPanel* parent)->wxPanel* {
+    m_timeline = stage_ext_panel->AddPagePanel([&](wxPanel* parent)->wxPanel* {
         return new eanim::WxTimelinePanel(parent, m_sub_mgr, pctrl);
     }, wxVERTICAL);
 }
 
 void WxStagePage::InitPropertyPanel()
 {
+    assert(!m_property);
     auto toolbar_panel = Blackboard::Instance()->GetToolbarPanel();
-    toolbar_panel->SetPagePanel(PAGE_ANIM3, [&](wxPanel* parent)->wxPanel* {
+    m_property = toolbar_panel->AddPagePanel([&](wxPanel* parent)->wxPanel* {
         return new WxPropertyPanel(toolbar_panel, m_sub_mgr, m_layers);
     }, wxVERTICAL);
 }

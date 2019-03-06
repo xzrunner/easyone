@@ -85,6 +85,14 @@ void WxStagePage::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
     case ee0::MSG_STAGE_PAGE_NEW:
         CreateNewPage(variants);
         break;
+    case ee0::MSG_STAGE_PAGE_ON_SHOW:
+        m_toolbar->Show();
+        m_toolbar->GetParent()->Layout();
+        break;
+    case ee0::MSG_STAGE_PAGE_ON_HIDE:
+        m_toolbar->Hide();
+        m_toolbar->GetParent()->Layout();
+        break;
 
 	case MSG_SET_MODEL_TYPE:
 		dirty = SetModelType(variants.GetVariant("type").m_val.pc);
@@ -143,8 +151,9 @@ void WxStagePage::Traverse(std::function<bool(const ee0::GameObj&)> func,
 
 void WxStagePage::OnPageInit()
 {
+    assert(!m_toolbar);
     auto toolbar_panel = Blackboard::Instance()->GetToolbarPanel();
-    m_toolbar = static_cast<WxToolbarPanel*>(toolbar_panel->SetPagePanel(PAGE_SHADER_GRAPH, [&](wxPanel* parent)->wxPanel* {
+    m_toolbar = static_cast<WxToolbarPanel*>(toolbar_panel->AddPagePanel([&](wxPanel* parent)->wxPanel* {
         return new WxToolbarPanel(toolbar_panel, m_sub_mgr, &GetImpl().GetCanvas()->GetRenderContext());
     }, wxVERTICAL));
 

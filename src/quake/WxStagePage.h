@@ -59,6 +59,8 @@ private:
 
 	ee3::CameraMgr m_cam_mgr;
 
+    wxPanel* m_preview;
+
 }; // WxStagePage
 
 }
