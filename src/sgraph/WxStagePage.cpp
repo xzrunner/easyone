@@ -16,6 +16,9 @@
 #include <blueprint/MessageID.h>
 #include <blueprint/Pins.h>
 #include <blueprint/NSCompNode.h>
+#include <blueprint/node/Input.h>
+#include <blueprint/node/Output.h>
+#include <blueprint/node/Function.h>
 #include <shadergraph/ShaderGraph.h>
 #include <shadergraph/NodeBuilder.h>
 #include <shadergraph/ShaderWeaver.h>
@@ -29,6 +32,7 @@
 #include <painting3/Shader.h>
 #include <node0/SceneNode.h>
 #include <node0/CompComplex.h>
+#include <node2/CompBoundingBox.h>
 #include <sx/ResFileHelper.h>
 
 #include <boost/filesystem.hpp>
@@ -60,9 +64,25 @@ WxStagePage::WxStagePage(wxWindow* parent, ECS_WORLD_PARAM const ee0::GameObj& o
 	m_messages.push_back(ee0::MSG_SCENE_NODE_INSERT);
 	m_messages.push_back(ee0::MSG_SCENE_NODE_DELETE);
 	m_messages.push_back(ee0::MSG_SCENE_NODE_CLEAR);
+
     m_messages.push_back(ee0::MSG_STAGE_PAGE_NEW);
+
 	m_messages.push_back(MSG_SET_MODEL_TYPE);
 	m_messages.push_back(bp::MSG_BLUE_PRINT_CHANGED);
+}
+
+WxStagePage::~WxStagePage()
+{
+    if (m_parent_node) {
+        if (m_parent_node->HasUniqueComp<bp::CompNode>()) {
+            auto& cnode = m_parent_node->GetUniqueComp<bp::CompNode>();
+            auto bp_node = cnode.GetNode();
+            if (bp_node->get_type() == rttr::type::get<bp::node::Function>()) {
+                auto func_node = std::static_pointer_cast<bp::node::Function>(bp_node);
+                func_node->SetFilepath(m_filepath);
+            }
+        }
+    }
 }
 
 void WxStagePage::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
@@ -210,6 +230,40 @@ bool WxStagePage::InsertSceneObj(const ee0::VariantSet& variants)
 	ccomplex.children->push_back(*obj);
 #endif // GAME_OBJ_ECS
 
+    if (m_parent_node) {
+        if (m_parent_node->HasUniqueComp<bp::CompNode>()) {
+            auto& cnode = m_parent_node->GetUniqueComp<bp::CompNode>();
+            auto bp_node = cnode.GetNode();
+            if (bp_node->get_type() == rttr::type::get<bp::node::Function>()) {
+                auto func_node = std::static_pointer_cast<bp::node::Function>(bp_node);
+                if ((*obj)->HasUniqueComp<bp::CompNode>())
+                {
+                    auto& cbp = (*obj)->GetUniqueComp<bp::CompNode>();
+                    auto& bp_node = cbp.GetNode();
+                    auto bp_type = bp_node->get_type();
+                    if (bp_type == rttr::type::get<bp::node::Input>())
+                    {
+                        auto input = std::static_pointer_cast<bp::node::Input>(bp_node);
+                        input->SetParent(func_node);
+                        func_node->AddInputPort(input);
+                    }
+                    else if (bp_type == rttr::type::get<bp::node::Output>())
+                    {
+                        auto output = std::static_pointer_cast<bp::node::Output>(bp_node);
+                        output->SetParent(func_node);
+                        func_node->AddOutputPort(output);
+                    }
+
+                    // update aabb
+                    auto& st = func_node->GetStyle();
+                    m_parent_node->GetUniqueComp<n2::CompBoundingBox>().SetSize(
+                        *m_parent_node, sm::rect(st.width, st.height)
+                    );
+                }
+            }
+        }
+    }
+
 	return true;
 }
 
@@ -219,6 +273,33 @@ bool WxStagePage::DeleteSceneObj(const ee0::VariantSet& variants)
 	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: obj");
     const ee0::GameObj* obj = static_cast<const ee0::GameObj*>(var.m_val.pv);
 	GD_ASSERT(obj, "err scene obj");
+
+    if (m_parent_node) {
+        if (m_parent_node->HasUniqueComp<bp::CompNode>()) {
+            auto& cnode = m_parent_node->GetUniqueComp<bp::CompNode>();
+            auto bp_node = cnode.GetNode();
+            if (bp_node->get_type() == rttr::type::get<bp::node::Function>()) {
+                auto func_node = std::static_pointer_cast<bp::node::Function>(bp_node);
+                if ((*obj)->HasUniqueComp<bp::CompNode>())
+                {
+                    auto& cbp = (*obj)->GetUniqueComp<bp::CompNode>();
+                    auto& bp_node = cbp.GetNode();
+                    auto bp_type = bp_node->get_type();
+                    if (bp_type == rttr::type::get<bp::node::Input>()) {
+                        func_node->RemoveInputPort(std::static_pointer_cast<bp::node::Input>(bp_node));
+                    } else if (bp_type == rttr::type::get<bp::node::Output>()) {
+                        func_node->RemoveOutputPort(std::static_pointer_cast<bp::node::Output>(bp_node));
+                    }
+
+                    // update aabb
+                    auto& st = func_node->GetStyle();
+                    m_parent_node->GetUniqueComp<n2::CompBoundingBox>().SetSize(
+                        *m_parent_node, sm::rect(st.width, st.height)
+                    );
+                }
+            }
+        }
+    }
 
 #ifndef GAME_OBJ_ECS
 	auto& ccomplex = m_obj->GetSharedComp<n0::CompComplex>();
@@ -239,6 +320,23 @@ bool WxStagePage::DeleteSceneObj(const ee0::VariantSet& variants)
 
 bool WxStagePage::ClearSceneObj()
 {
+    if (m_parent_node) {
+        if (m_parent_node->HasUniqueComp<bp::CompNode>()) {
+            auto& cnode = m_parent_node->GetUniqueComp<bp::CompNode>();
+            auto bp_node = cnode.GetNode();
+            if (bp_node->get_type() == rttr::type::get<bp::node::Function>()) {
+                auto func_node = std::static_pointer_cast<bp::node::Function>(bp_node);
+                func_node->ClearAllPorts();
+
+                // update aabb
+                auto& st = func_node->GetStyle();
+                m_parent_node->GetUniqueComp<n2::CompBoundingBox>().SetSize(
+                    *m_parent_node, sm::rect(st.width, st.height)
+                );
+            }
+        }
+    }
+
 #ifndef GAME_OBJ_ECS
 	auto& ccomplex = m_obj->GetSharedComp<n0::CompComplex>();
 	bool dirty = !ccomplex.GetAllChildren().empty();
@@ -266,9 +364,29 @@ void WxStagePage::CreateNewPage(const ee0::VariantSet& variants) const
     if (strcmp(type, bp::PAGE_TYPE) == 0) {
         page_type = PAGE_SHADER_GRAPH;
     }
-    if (page_type >= 0) {
+    if (page_type >= 0)
+    {
         auto stage_page = PanelFactory::CreateStagePage(page_type, Blackboard::Instance()->GetStagePanel());
         stage_page->LoadFromFile(filepath);
+
+        if (page_type == PAGE_SHADER_GRAPH)
+        {
+            auto var = variants.GetVariant("obj");
+            GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: obj");
+            const ee0::GameObj* obj = static_cast<const ee0::GameObj*>(var.m_val.pv);
+            GD_ASSERT(obj, "err scene obj");
+
+            if ((*obj)->HasUniqueComp<bp::CompNode>())
+            {
+                auto& cbp = (*obj)->GetUniqueComp<bp::CompNode>();
+                auto& bp_node = cbp.GetNode();
+                if (bp_node->get_type() == rttr::type::get<bp::node::Function>())
+                {
+                    static_cast<sgraph::WxStagePage*>(stage_page)->SetParentNode(*obj);
+                    stage_page->SetFilepath(filepath);
+                }
+            }
+        }
     }
 }
 

@@ -14,6 +14,7 @@ class WxStagePage : public eone::WxStagePage
 {
 public:
 	WxStagePage(wxWindow* parent, ECS_WORLD_PARAM const ee0::GameObj& obj);
+    virtual ~WxStagePage();
 
 	virtual void OnNotify(uint32_t msg, const ee0::VariantSet& variants) override;
 
@@ -21,6 +22,10 @@ public:
 		const ee0::VariantSet& variants = ee0::VariantSet(), bool inverse = false) const override;
 
 	virtual int GetPageType() const override { return PAGE_SHADER_GRAPH; }
+
+    void SetParentNode(const n0::SceneNodePtr& parent_node) {
+        m_parent_node = parent_node;
+    }
 
 	static const std::string PAGE_TYPE;
 
@@ -51,6 +56,9 @@ private:
     WxToolbarPanel* m_toolbar = nullptr;
 
 	std::string m_model_type;
+
+    // bp::node::Function
+    n0::SceneNodePtr m_parent_node = nullptr;
 
 }; // WxStagePage
 
