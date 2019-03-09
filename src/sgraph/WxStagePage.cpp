@@ -271,8 +271,10 @@ bool WxStagePage::InsertSceneObj(const ee0::VariantSet& variants)
 	ccomplex.children->push_back(*obj);
 #endif // GAME_OBJ_ECS
 
-    if (m_parent_node) {
-        if (m_parent_node->HasUniqueComp<bp::CompNode>()) {
+    if (m_insert_to_parent && m_parent_node)
+    {
+        if (m_parent_node->HasUniqueComp<bp::CompNode>())
+        {
             auto& cnode = m_parent_node->GetUniqueComp<bp::CompNode>();
             auto bp_node = cnode.GetNode();
             if (bp_node->get_type() == rttr::type::get<bp::node::Function>()) {
@@ -294,8 +296,10 @@ bool WxStagePage::DeleteSceneObj(const ee0::VariantSet& variants)
     const ee0::GameObj* obj = static_cast<const ee0::GameObj*>(var.m_val.pv);
 	GD_ASSERT(obj, "err scene obj");
 
-    if (m_parent_node) {
-        if (m_parent_node->HasUniqueComp<bp::CompNode>()) {
+    if (m_parent_node)
+    {
+        if (m_parent_node->HasUniqueComp<bp::CompNode>())
+        {
             auto& cnode = m_parent_node->GetUniqueComp<bp::CompNode>();
             auto bp_node = cnode.GetNode();
             if (bp_node->get_type() == rttr::type::get<bp::node::Function>()) {
@@ -326,8 +330,10 @@ bool WxStagePage::DeleteSceneObj(const ee0::VariantSet& variants)
 
 bool WxStagePage::ClearSceneObj()
 {
-    if (m_parent_node) {
-        if (m_parent_node->HasUniqueComp<bp::CompNode>()) {
+    if (m_parent_node)
+    {
+        if (m_parent_node->HasUniqueComp<bp::CompNode>())
+        {
             auto& cnode = m_parent_node->GetUniqueComp<bp::CompNode>();
             auto bp_node = cnode.GetNode();
             if (bp_node->get_type() == rttr::type::get<bp::node::Function>()) {
@@ -391,12 +397,11 @@ void WxStagePage::CreateNewPage(const ee0::VariantSet& variants) const
                     stage_page->SetFilepath(filepath);
 
                     auto func_node = std::static_pointer_cast<bp::node::Function>(bp_node);
-                    auto& root_node = stage_page->GetEditedObj();
-                    assert(root_node->HasSharedComp<n0::CompComplex>());
-                    auto& root_ccomplex = root_node->GetSharedComp<n0::CompComplex>();
+                    sg_stage_page->EnableInsertToParent(false);
                     for (auto& c : func_node->GetChildren()) {
-                        root_ccomplex.AddChild(c);
+                        ee0::MsgHelper::InsertNode(*sg_stage_page->GetSubjectMgr(), c, false);
                     }
+                    sg_stage_page->EnableInsertToParent(true);
 
                     sg_stage_page->LoadNodeConnsFromFile(filepath);
                 }

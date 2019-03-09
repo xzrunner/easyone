@@ -35,6 +35,8 @@ public:
     ModelType GetModelType() const { return m_model_type; }
     void SetModelType(ModelType model_type);
 
+    void EnableInsertToParent(bool enable) { m_insert_to_parent = enable; }
+
 	static const std::string PAGE_TYPE;
 
 protected:
@@ -68,6 +70,8 @@ private:
 
     ModelType   m_model_type = ModelType::UNKNOWN;
     std::string m_model_type_str;
+
+    bool m_insert_to_parent = false;
 
 }; // WxStagePage
 
