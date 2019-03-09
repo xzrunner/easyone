@@ -70,10 +70,11 @@ void WxFrame::OnNew(wxCommandEvent& event)
 	auto app = std::static_pointer_cast<Application>(m_app);
 	auto type = static_cast<PageItemData*>(dlg.GetSelected())->type;
 #ifndef GAME_OBJ_ECS
-	PanelFactory::CreateStagePage(type, app->GetStagePanel());
+	auto page = PanelFactory::CreateStagePage(type, app->GetStagePanel());
 #else
-	PanelFactory::Create(app->GetWorld(), type, app->GetStagePanel());
+	auto page = PanelFactory::Create(app->GetWorld(), type, app->GetStagePanel());
 #endif // GAME_OBJ_ECS
+    app->GetStagePanel()->AddNewPage(page, GetPageName(page->GetPageType()));
 
 	WxStagePage* curr_page = static_cast<WxStagePage*>(app->GetStagePanel()->GetPage(app->GetStagePanel()->GetSelection()));
 	curr_page->GetSubjectMgr()->NotifyObservers(ee0::MSG_STAGE_PAGE_ON_SHOW);

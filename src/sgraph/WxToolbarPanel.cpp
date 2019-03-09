@@ -1,6 +1,5 @@
 #include "sgraph/WxToolbarPanel.h"
 #include "sgraph/WxStagePage.h"
-#include "sgraph/MessageID.h"
 
 #include <ee3/WxMaterialPreview.h>
 
@@ -18,17 +17,13 @@ namespace eone
 namespace sgraph
 {
 
-WxToolbarPanel::WxToolbarPanel(wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr,
-	                           const ee0::RenderContext* rc)
+WxToolbarPanel::WxToolbarPanel(wxWindow* parent, WxStagePage* stage_page)
 	: wxPanel(parent)
-	, m_sub_mgr(sub_mgr)
-    , m_model_type(ModelType::RAYMARCHING)
+    , m_stage_page(stage_page)
 {
-	InitLayout(rc);
+	InitLayout();
 
-    SetModelType(m_model_type);
-
-	sub_mgr->RegisterObserver(ee0::MSG_NODE_SELECTION_INSERT, this);
+    stage_page->GetSubjectMgr()->RegisterObserver(ee0::MSG_NODE_SELECTION_INSERT, this);
 }
 
 void WxToolbarPanel::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
@@ -41,72 +36,45 @@ void WxToolbarPanel::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
 	}
 }
 
-pt3::Material& WxToolbarPanel::GetPreviewMaterial()
-{
-	assert(m_preview);
-	return m_preview->GetMaterial();
-}
+//pt3::Material& WxToolbarPanel::GetPreviewMaterial()
+//{
+//	assert(m_preview);
+//	return m_preview->GetMaterial();
+//}
 
-void WxToolbarPanel::InitLayout(const ee0::RenderContext* rc)
+void WxToolbarPanel::InitLayout()
 {
+    auto sub_mgr = m_stage_page->GetSubjectMgr();
+
 	auto sizer = new wxBoxSizer(wxVERTICAL);
 	// model
 	{
 		wxArrayString choices;
+        choices.push_back("Null");
 		choices.push_back("Sprite");
 		choices.push_back("Phong");
 		choices.push_back("PBR");
         choices.push_back("Raymarching");
 		sizer->Add(m_model_ctrl = new wxRadioBox(this, wxID_ANY, "model_type",
 			wxDefaultPosition, wxDefaultSize, choices, 0, wxRA_SPECIFY_COLS));
-        m_model_ctrl->SetSelection(static_cast<int>(m_model_type));
+        m_model_ctrl->SetSelection(static_cast<int>(m_stage_page->GetModelType()));
 		Connect(m_model_ctrl->GetId(), wxEVT_COMMAND_CHOICE_SELECTED,
 			wxCommandEventHandler(WxToolbarPanel::OnModelTypeChange));
 	}
 	sizer->AddSpacer(10);
 	// preview
-	sizer->Add(m_preview = new ee3::WxMaterialPreview(this, sm::ivec2(300, 300), m_sub_mgr, rc, true));
+    auto& rc = m_stage_page->GetImpl().GetCanvas()->GetRenderContext();
+	sizer->Add(m_preview = new ee3::WxMaterialPreview(this, sm::ivec2(300, 300), sub_mgr, &rc, true));
 	sizer->AddSpacer(10);
 	// property
-	sizer->Add(m_prop = new sg::WxNodeProperty(this, m_sub_mgr));
+	sizer->Add(m_prop = new sg::WxNodeProperty(this, sub_mgr));
 
 	SetSizer(sizer);
 }
 
 void WxToolbarPanel::OnModelTypeChange(wxCommandEvent& event)
 {
-    SetModelType(static_cast<ModelType>(event.GetSelection()));
-}
-
-void WxToolbarPanel::SetModelType(ModelType type)
-{
-    std::string str;
-    switch (type)
-	{
-    case ModelType::SPRITE:
-        str = rttr::type::get<sg::node::Sprite>().get_name().to_string();
-		break;
-	case ModelType::PHONG:
-        str = rttr::type::get<sg::node::Phong>().get_name().to_string();
-		break;
-    case ModelType::PBR:
-        str = rttr::type::get<sg::node::PBR>().get_name().to_string();
-        break;
-    case ModelType::RAYMARCHING:
-        str = rttr::type::get<sg::node::Raymarching>().get_name().to_string();
-        break;
-    default:
-        return;
-	}
-
-    ee0::VariantSet vars;
-
-    ee0::Variant var;
-    var.m_type = ee0::VT_PCHAR;
-    var.m_val.pc = const_cast<char*>(str.c_str());
-    vars.SetVariant("type", var);
-
-    m_sub_mgr->NotifyObservers(MSG_SET_MODEL_TYPE, vars);
+    m_stage_page->SetModelType(static_cast<ModelType>(event.GetSelection()));
 }
 
 void WxToolbarPanel::OnSelected(const ee0::VariantSet& variants)

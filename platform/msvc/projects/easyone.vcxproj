@@ -372,6 +372,7 @@
     <ClInclude Include="..\..\..\src\script\WxStageCanvas.h" />
     <ClInclude Include="..\..\..\src\script\WxStagePage.h" />
     <ClInclude Include="..\..\..\src\sgraph\MessageID.h" />
+    <ClInclude Include="..\..\..\src\sgraph\ModelType.h" />
     <ClInclude Include="..\..\..\src\sgraph\WxStageCanvas.h" />
     <ClInclude Include="..\..\..\src\sgraph\WxStagePage.h" />
     <ClInclude Include="..\..\..\src\sgraph\WxToolbarPanel.h" />

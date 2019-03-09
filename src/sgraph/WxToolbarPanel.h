@@ -1,5 +1,7 @@
 #pragma once
 
+#include "sgraph/ModelType.h"
+
 #include <ee0/Observer.h>
 #include <ee0/typedef.h>
 
@@ -7,7 +9,6 @@
 
 class wxRadioBox;
 
-namespace pt3 { class Material; }
 namespace ee0 { class RenderContext; }
 namespace ee3 { class WxMaterialPreview; }
 namespace sg { class WxNodeProperty; }
@@ -17,40 +18,29 @@ namespace eone
 namespace sgraph
 {
 
+class WxStagePage;
+
 class WxToolbarPanel : public wxPanel, public ee0::Observer
 {
 public:
-	WxToolbarPanel(wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr,
-		const ee0::RenderContext* rc);
+	WxToolbarPanel(wxWindow* parent, WxStagePage* stage_page);
 
 	virtual void OnNotify(uint32_t msg, const ee0::VariantSet& variants) override;
 
-	pt3::Material& GetPreviewMaterial();
+//	pt3::Material& GetPreviewMaterial();
 
 	auto GetPreviewPanel() { return m_preview; }
 
 private:
-    enum class ModelType
-    {
-        SPRITE,
-        PHONG,
-        PBR,
-        RAYMARCHING,
-    };
-
-private:
-	void InitLayout(const ee0::RenderContext* rc);
+	void InitLayout();
 
 	void OnModelTypeChange(wxCommandEvent& event);
-
-    void SetModelType(ModelType type);
 
 	void OnSelected(const ee0::VariantSet& variants);
 
 private:
-	ee0::SubjectMgrPtr m_sub_mgr;
+    WxStagePage* m_stage_page;
 
-    ModelType   m_model_type;
 	wxRadioBox* m_model_ctrl;
 
 	ee3::WxMaterialPreview* m_preview;

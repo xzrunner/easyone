@@ -2,6 +2,9 @@
 
 #include "frame/WxStagePage.h"
 #include "frame/StagePageType.h"
+#include "sgraph/ModelType.h"
+
+#include <blueprint/typedef.h>
 
 namespace eone
 {
@@ -27,6 +30,11 @@ public:
         m_parent_node = parent_node;
     }
 
+    bool LoadNodeConnsFromFile(const std::string& filepath);
+
+    ModelType GetModelType() const { return m_model_type; }
+    void SetModelType(ModelType model_type);
+
 	static const std::string PAGE_TYPE;
 
 protected:
@@ -48,17 +56,18 @@ private:
 
     void CreateNewPage(const ee0::VariantSet& variants) const;
 
-	bool SetModelType(const std::string& model);
-
 	void UpdateShader();
+
+    void UpdateParentAABB(const bp::NodePtr& node);
 
 private:
     WxToolbarPanel* m_toolbar = nullptr;
 
-	std::string m_model_type;
-
     // bp::node::Function
     n0::SceneNodePtr m_parent_node = nullptr;
+
+    ModelType   m_model_type = ModelType::UNKNOWN;
+    std::string m_model_type_str;
 
 }; // WxStagePage
 
