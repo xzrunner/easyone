@@ -168,20 +168,13 @@ void WxStagePage::Traverse(std::function<bool(const ee0::GameObj&)> func,
 
 bool WxStagePage::LoadNodeConnsFromFile(const std::string& filepath)
 {
-	if (sx::ResFileHelper::Type(filepath) != sx::RES_FILE_JSON) {
-		return false;
-	}
-
-	auto dir = boost::filesystem::path(filepath).parent_path().string();
-	rapidjson::Document doc;
-	js::RapidJsonHelper::ReadFromFile(filepath.c_str(), doc);
-
-	// connection
-	auto& ccomplex = m_obj->GetSharedComp<n0::CompComplex>();
-	auto& nodes = const_cast<std::vector<n0::SceneNodePtr>&>(ccomplex.GetAllChildren());
-	bp::NSCompNode::LoadConnection(nodes, doc["nodes"]);
-
-    return true;
+	if (sx::ResFileHelper::Type(filepath) == sx::RES_FILE_JSON) {
+        auto& ccomplex = m_obj->GetSharedComp<n0::CompComplex>();
+        sg::NodeHelper::LoadConnections(ccomplex.GetAllChildren(), filepath);
+		return true;
+	} else {
+        return false;
+    }
 }
 
 void WxStagePage::SetModelType(ModelType model_type)
