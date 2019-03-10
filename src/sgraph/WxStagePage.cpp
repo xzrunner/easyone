@@ -23,6 +23,7 @@
 #include <shadergraph/NodeBuilder.h>
 #include <shadergraph/ShaderWeaver.h>
 #include <shadergraph/RegistNodes.h>
+#include <shadergraph/NodeHelper.h>
 
 #include <js/RapidJsonHelper.h>
 #include <unirender/VertexAttrib.h>
@@ -34,6 +35,7 @@
 #include <node0/CompComplex.h>
 #include <node2/CompBoundingBox.h>
 #include <sx/ResFileHelper.h>
+#include <ns/CompFactory.h>
 
 #include <boost/filesystem.hpp>
 
@@ -251,6 +253,8 @@ void WxStagePage::StoreToJsonExt(const std::string& dir, rapidjson::Value& val,
 
 void WxStagePage::LoadFromFileExt(const std::string& filepath)
 {
+    LoadFunctionNodes();
+
     if (LoadNodeConnsFromFile(filepath)) {
         m_sub_mgr->NotifyObservers(bp::MSG_BLUE_PRINT_CHANGED);
     }
@@ -503,6 +507,20 @@ void WxStagePage::UpdateParentAABB(const bp::NodePtr& node)
     m_parent_node->GetUniqueComp<n2::CompBoundingBox>().SetSize(
         *m_parent_node, sm::rect(st.width, st.height)
     );
+}
+
+void WxStagePage::LoadFunctionNodes()
+{
+    Traverse([&](const ee0::GameObj& obj)->bool
+    {
+        if (obj->HasUniqueComp<bp::CompNode>()) {
+            auto& bp_node = obj->GetUniqueComp<bp::CompNode>().GetNode();
+            if (bp_node->get_type() == rttr::type::get<bp::node::Function>()) {
+                sg::NodeHelper::LoadFunctionNode(obj, bp_node);
+            }
+        }
+        return true;
+    });
 }
 
 }

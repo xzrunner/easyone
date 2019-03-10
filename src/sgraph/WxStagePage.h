@@ -62,6 +62,8 @@ private:
 
     void UpdateParentAABB(const bp::NodePtr& node);
 
+    void LoadFunctionNodes();
+
 private:
     WxToolbarPanel* m_toolbar = nullptr;
 
