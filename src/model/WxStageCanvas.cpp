@@ -49,7 +49,8 @@ void WxStageCanvas::DrawBackground2D() const
 	pt.AddLine3D({ 0, -len, 0 }, { 0, len, 0 }, trans3d, 0xff00ff00, 2);
 	pt.AddLine3D({ 0, 0, -len }, { 0, 0, len }, trans3d, 0xffff0000, 2);
 
-	const float radius = 0.1f;
+//	const float radius = 0.1f;
+    const float radius = 15;
 	pt.AddCircleFilled(trans3d(sm::vec3(len, 0, 0)), radius, 0xff0000ff);
 	pt.AddCircleFilled(trans3d(sm::vec3(0, len, 0)), radius, 0xff00ff00);
 	pt.AddCircleFilled(trans3d(sm::vec3(0, 0, len)), radius, 0xffff0000);

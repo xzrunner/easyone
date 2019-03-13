@@ -27,7 +27,7 @@ public:
 
 	virtual void OnNotify(uint32_t msg, const ee0::VariantSet& variants) override;
 
-//	pt3::Material& GetPreviewMaterial();
+	//pt3::Material& GetPreviewMaterial();
 
 	auto GetPreviewPanel() { return m_preview; }
 

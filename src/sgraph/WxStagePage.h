@@ -62,6 +62,8 @@ private:
 
     void UpdateParentAABB(const bp::NodePtr& node);
 
+    void LoadFromExternFile(const std::string& filepath);
+
     void LoadFunctionNodes();
 
 private:

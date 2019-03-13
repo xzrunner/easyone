@@ -1,5 +1,6 @@
 #include "sgraph/WxStagePage.h"
 #include "sgraph/WxToolbarPanel.h"
+#include "sgraph/AmplifyLoader.h"
 
 #include "frame/AppStyle.h"
 #include "frame/Blackboard.h"
@@ -246,6 +247,8 @@ void WxStagePage::StoreToJsonExt(const std::string& dir, rapidjson::Value& val,
 
 void WxStagePage::LoadFromFileExt(const std::string& filepath)
 {
+    LoadFromExternFile(filepath);
+
     LoadFunctionNodes();
 
     if (LoadNodeConnsFromFile(filepath)) {
@@ -500,6 +503,29 @@ void WxStagePage::UpdateParentAABB(const bp::NodePtr& node)
     m_parent_node->GetUniqueComp<n2::CompBoundingBox>().SetSize(
         *m_parent_node, sm::rect(st.width, st.height)
     );
+}
+
+void WxStagePage::LoadFromExternFile(const std::string& filepath)
+{
+    std::vector<n0::SceneNodePtr> nodes;
+
+    auto type = sx::ResFileHelper::Type(filepath);
+    switch (type)
+    {
+    case sx::RES_FILE_SHADER:
+        break;
+    case sx::RES_FILE_ASSET:
+    {
+        AmplifyLoader loader;
+        loader.LoadAsset(filepath);
+        nodes = loader.GetNodes();
+    }
+        break;
+    }
+
+    for (auto& node : nodes) {
+        ee0::MsgHelper::InsertNode(*m_sub_mgr, node, false);
+    }
 }
 
 void WxStagePage::LoadFunctionNodes()

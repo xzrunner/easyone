@@ -134,6 +134,10 @@ void Application::LoadFromFile(const std::string& filepath)
 			new_type = PAGE_MODEL;
 		}
 		break;
+    case sx::RES_FILE_SHADER:
+    case sx::RES_FILE_ASSET:
+        new_type = PAGE_SHADER_GRAPH;
+        break;
 	case sx::RES_FILE_MAP:
 		new_type = PAGE_QUAKE;
 		break;
