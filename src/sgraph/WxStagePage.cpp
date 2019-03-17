@@ -1,6 +1,6 @@
 #include "sgraph/WxStagePage.h"
 #include "sgraph/WxToolbarPanel.h"
-#include "sgraph/AmplifyLoader.h"
+#include "sgraph/ASEImporter.h"
 
 #include "frame/AppStyle.h"
 #include "frame/Blackboard.h"
@@ -513,10 +513,15 @@ void WxStagePage::LoadFromExternFile(const std::string& filepath)
     switch (type)
     {
     case sx::RES_FILE_SHADER:
+    {
+        ASEImporter loader;
+        loader.LoadShader(filepath);
+        nodes = loader.GetNodes();
+    }
         break;
     case sx::RES_FILE_ASSET:
     {
-        AmplifyLoader loader;
+        ASEImporter loader;
         loader.LoadAsset(filepath);
         nodes = loader.GetNodes();
     }

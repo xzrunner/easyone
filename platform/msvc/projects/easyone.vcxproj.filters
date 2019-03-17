@@ -396,7 +396,7 @@
     <ClInclude Include="..\..\..\src\sgraph\ModelType.h">
       <Filter>32.sgraph\view</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\sgraph\AmplifyLoader.h">
+    <ClInclude Include="..\..\..\src\sgraph\ASEImporter.h">
       <Filter>32.sgraph\loader</Filter>
     </ClInclude>
   </ItemGroup>
@@ -608,7 +608,7 @@
     <ClCompile Include="..\..\..\src\frame\WxStageSubPanel.cpp">
       <Filter>00.frame\view</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\sgraph\AmplifyLoader.cpp">
+    <ClCompile Include="..\..\..\src\sgraph\ASEImporter.cpp">
       <Filter>32.sgraph\loader</Filter>
     </ClCompile>
   </ItemGroup>
