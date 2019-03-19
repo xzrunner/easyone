@@ -154,6 +154,7 @@ void ASEImporter::Load(const aseimp::FileLoader& loader, const std::string& dir)
 
         switch (src.cls)
         {
+            // Math Operators
         case aseimp::NodeClass::Saturate:
             bp_node = std::make_shared<sg::node::Saturate>();
             break;
@@ -169,6 +170,35 @@ void ASEImporter::Load(const aseimp::FileLoader& loader, const std::string& dir)
         case aseimp::NodeClass::Divide:
             bp_node = std::make_shared<sg::node::Divide>();
             break;
+        case aseimp::NodeClass::Remap:
+            bp_node = std::make_shared<sg::node::Remap>();
+            break;
+        case aseimp::NodeClass::Exponential:
+        {
+            auto exp = std::make_shared<sg::node::Exponential>();
+            exp->SetType(sg::PropMathBaseType::BASE_2);
+            bp_node = exp;
+        }
+            break;
+        case aseimp::NodeClass::Power:
+            bp_node = std::make_shared<sg::node::Power>();
+            break;
+        case aseimp::NodeClass::ScaleAndOffset:
+            bp_node = std::make_shared<sg::node::ScaleAndOffset>();
+            break;
+        case aseimp::NodeClass::Lerp:
+            bp_node = std::make_shared<sg::node::Lerp>();
+            break;
+        case aseimp::NodeClass::Smoothstep:
+            bp_node = std::make_shared<sg::node::Smoothstep>();
+            break;
+
+            // Logical Operators
+        case aseimp::NodeClass::Switch:
+            bp_node = std::make_shared<bp::node::Switch>();
+            break;
+
+            // Functions
         case aseimp::NodeClass::Input:
         {
             auto input = std::make_shared<bp::node::Input>();
@@ -199,6 +229,29 @@ void ASEImporter::Load(const aseimp::FileLoader& loader, const std::string& dir)
             bp_node = output;
         }
             break;
+        case aseimp::NodeClass::Function:
+        {
+            auto func = std::make_shared<bp::node::Function>();
+
+            std::string filename;
+            if (QueryString(src, "filename", filename))
+            {
+                func->SetFilepath(filename);
+
+                auto path = boost::filesystem::absolute(filename + ".asset", dir);
+                if (boost::filesystem::exists(path))
+                {
+                    ASEImporter loader;
+                    loader.LoadAsset(path.string());
+                    func->SetChildren(func, loader.GetNodes());
+                }
+            }
+
+            bp_node = func;
+        }
+            break;
+
+            // Constants And Properties
         case aseimp::NodeClass::Float:
         {
             auto vec1 = std::make_shared<sg::node::Vector1>();
@@ -269,12 +322,16 @@ void ASEImporter::Load(const aseimp::FileLoader& loader, const std::string& dir)
             bp_node = vec4;
         }
             break;
+
+            // Image Effects
         case aseimp::NodeClass::HSVToRGB:
             bp_node = std::make_shared<sg::node::HSVToRGB>();
             break;
         case aseimp::NodeClass::RGBToHSV:
             bp_node = std::make_shared<sg::node::RGBToHSV>();
             break;
+
+            // Camera And Screen
         case aseimp::NodeClass::ViewDirection:
         {
             auto view_dir = std::make_shared<sg::node::ViewDirection>();
@@ -301,17 +358,24 @@ void ASEImporter::Load(const aseimp::FileLoader& loader, const std::string& dir)
             bp_node = view_dir;
         }
             break;
+
+            // Light
         case aseimp::NodeClass::WorldSpaceLightDir:
             bp_node = std::make_shared<sg::node::WorldSpaceLightDir>();
             break;
+        case aseimp::NodeClass::LightColor:
+            bp_node = std::make_shared<sg::node::LightColor>();
+            break;
+        case aseimp::NodeClass::IndirectDiffuseLighting:
+            bp_node = std::make_shared<sg::node::IndirectDiffuseLighting>();
+            break;
+        case aseimp::NodeClass::IndirectSpecularLight:
+            bp_node = std::make_shared<sg::node::IndirectSpecularLight>();
+            break;
+
+            // Vector Operators
         case aseimp::NodeClass::Normalize:
             bp_node = std::make_shared<sg::node::Normalize>();
-            break;
-        case aseimp::NodeClass::Remap:
-            bp_node = std::make_shared<sg::node::Remap>();
-            break;
-        case aseimp::NodeClass::SampleTex2D:
-            bp_node = std::make_shared<sg::node::SampleTex2D>();
             break;
         case aseimp::NodeClass::ChannelMask:
         {
@@ -342,9 +406,76 @@ void ASEImporter::Load(const aseimp::FileLoader& loader, const std::string& dir)
             bp_node = cm;
         }
             break;
+        case aseimp::NodeClass::DotProduct:
+            bp_node = std::make_shared<sg::node::DotProduct>();
+            break;
+        case aseimp::NodeClass::Combine:
+            bp_node = std::make_shared<sg::node::Combine>();
+            break;
+
+            // Matrix Transform
         case aseimp::NodeClass::ViewMatrix:
             bp_node = std::make_shared<sg::node::ViewMatrix>();
             break;
+
+            // UV Coordinates
+        case aseimp::NodeClass::TexCoords:
+            bp_node = std::make_shared<sg::node::TexCoords>();
+            break;
+
+            // Textures
+        case aseimp::NodeClass::Tex2DAsset:
+            bp_node = std::make_shared<sg::node::Tex2DAsset>();
+            break;
+        case aseimp::NodeClass::SampleTex2D:
+            bp_node = std::make_shared<sg::node::SampleTex2D>();
+            break;
+        case aseimp::NodeClass::TextureTransform:
+            bp_node = std::make_shared<sg::node::TextureTransform>();
+            break;
+
+            // Surface Data
+        case aseimp::NodeClass::WorldNormalVector:
+            bp_node = std::make_shared<sg::node::WorldNormalVector>();
+            break;
+
+            // Miscellaneous
+        case aseimp::NodeClass::SetLocalVar:
+        {
+            auto set_var = std::make_shared<bp::node::SetLocalVar>();
+
+            std::string name;
+            if (QueryString(src, "name", name)) {
+                set_var->SetVarName(name);
+            }
+
+            bp_node = set_var;
+        }
+            break;
+        case aseimp::NodeClass::GetLocalVar:
+            bp_node = std::make_shared<bp::node::GetLocalVar>();
+            break;
+        case aseimp::NodeClass::CustomExpression:
+        {
+            auto custom = std::make_shared<sg::node::Custom>();
+
+            std::vector<sg::Node::PinsDesc> inputs, outputs;
+            InputPortASEImpToSG(inputs, src.inputs);
+            OutputPortASEImpToSG(outputs, src.outputs);
+
+            int input_count = CheckInt(src, "input_count");
+            assert(input_count == inputs.size());
+            for (int i = 0; i < input_count; ++i) {
+                inputs[i].name = CheckString(src, "input" + std::to_string(i));
+            }
+
+            custom->ResetPorts(inputs, outputs);
+
+            bp_node = custom;
+        }
+            break;
+
+            // Tools
         case aseimp::NodeClass::Commentary:
         {
             auto comm = std::make_shared<bp::node::Commentary>();
@@ -367,110 +498,8 @@ void ASEImporter::Load(const aseimp::FileLoader& loader, const std::string& dir)
             bp_node = comm;
         }
             break;
-        case aseimp::NodeClass::WorldNormalVector:
-            bp_node = std::make_shared<sg::node::WorldNormalVector>();
-            break;
-        case aseimp::NodeClass::SetLocalVar:
-        {
-            auto set_var = std::make_shared<bp::node::SetLocalVar>();
 
-            std::string name;
-            if (QueryString(src, "name", name)) {
-                set_var->SetVarName(name);
-            }
-
-            bp_node = set_var;
-        }
-            break;
-        case aseimp::NodeClass::GetLocalVar:
-            bp_node = std::make_shared<bp::node::GetLocalVar>();
-            break;
-        case aseimp::NodeClass::Function:
-        {
-            auto func = std::make_shared<bp::node::Function>();
-
-            std::string filename;
-            if (QueryString(src, "filename", filename))
-            {
-                func->SetFilepath(filename);
-
-                auto path = boost::filesystem::absolute(filename + ".asset", dir);
-                if (boost::filesystem::exists(path))
-                {
-                    ASEImporter loader;
-                    loader.LoadAsset(path.string());
-                    func->SetChildren(func, loader.GetNodes());
-                }
-            }
-
-            bp_node = func;
-        }
-            break;
-        case aseimp::NodeClass::DotProduct:
-            bp_node = std::make_shared<sg::node::DotProduct>();
-            break;
-        case aseimp::NodeClass::Tex2DAsset:
-            bp_node = std::make_shared<sg::node::Tex2DAsset>();
-            break;
-        case aseimp::NodeClass::Exponential:
-        {
-            auto exp = std::make_shared<sg::node::Exponential>();
-            exp->SetType(sg::PropMathBaseType::BASE_2);
-            bp_node = exp;
-        }
-            break;
-        case aseimp::NodeClass::TexCoords:
-            bp_node = std::make_shared<sg::node::TexCoords>();
-            break;
-        case aseimp::NodeClass::TextureTransform:
-            bp_node = std::make_shared<sg::node::TextureTransform>();
-            break;
-        case aseimp::NodeClass::Power:
-            bp_node = std::make_shared<sg::node::Power>();
-            break;
-        case aseimp::NodeClass::ScaleAndOffset:
-            bp_node = std::make_shared<sg::node::ScaleAndOffset>();
-            break;
-        case aseimp::NodeClass::IndirectDiffuseLighting:
-            bp_node = std::make_shared<sg::node::IndirectDiffuseLighting>();
-            break;
-        case aseimp::NodeClass::IndirectSpecularLight:
-            bp_node = std::make_shared<sg::node::IndirectSpecularLight>();
-            break;
-        case aseimp::NodeClass::Combine:
-            bp_node = std::make_shared<sg::node::Combine>();
-            break;
-        case aseimp::NodeClass::LightColor:
-            bp_node = std::make_shared<sg::node::LightColor>();
-            break;
-        case aseimp::NodeClass::Lerp:
-            bp_node = std::make_shared<sg::node::Lerp>();
-            break;
-        case aseimp::NodeClass::Switch:
-            bp_node = std::make_shared<bp::node::Switch>();
-            break;
-        case aseimp::NodeClass::Smoothstep:
-            bp_node = std::make_shared<sg::node::Smoothstep>();
-            break;
-        case aseimp::NodeClass::CustomExpression:
-        {
-            auto custom = std::make_shared<sg::node::Custom>();
-
-            std::vector<sg::Node::PinsDesc> inputs, outputs;
-            InputPortASEImpToSG(inputs, src.inputs);
-            OutputPortASEImpToSG(outputs, src.outputs);
-
-            int input_count = CheckInt(src, "input_count");
-            assert(input_count == inputs.size());
-            for (int i = 0; i < input_count; ++i) {
-                inputs[i].name = CheckString(src, "input" + std::to_string(i));
-            }
-
-            custom->ResetPorts(inputs, outputs);
-
-            bp_node = custom;
-        }
-            break;
+            // Master
         case aseimp::NodeClass::StandardSurfaceOutput:
         {
             int light_model;
