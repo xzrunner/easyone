@@ -23,7 +23,7 @@ public:
     void LoadAsset(const std::string& filepath);
     void LoadShader(const std::string& filepath);
 
-    auto& GetNodes() const { return m_nodes; }
+    auto& GetNodes() const { return m_scene_nodes; }
 
 private:
     void Load(const aseimp::FileLoader& loader, const std::string& dir);
@@ -35,9 +35,18 @@ private:
         const std::vector<aseimp::FileLoader::OutputPort>& src);
 
 private:
-    std::vector<n0::SceneNodePtr> m_nodes;
+    struct Node
+    {
+        Node(const aseimp::FileLoader::Node& src, bp::NodePtr dst) : src(src), dst(dst) {}
 
-    std::map<int, bp::NodePtr> m_bp_nodes;
+        const aseimp::FileLoader::Node& src;
+        bp::NodePtr dst;
+    };
+
+private:
+    std::vector<n0::SceneNodePtr> m_scene_nodes;
+
+    std::map<int, Node> m_map_nodes;
 
 }; // ASEImporter
 

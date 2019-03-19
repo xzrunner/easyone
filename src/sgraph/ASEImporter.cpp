@@ -528,8 +528,8 @@ void ASEImporter::Load(const aseimp::FileLoader& loader, const std::string& dir)
         const float y = -(src.y + style.height * 0.5f);
         ctrans.SetPosition(*dst, sm::vec2(x, y));
 
-        m_nodes.push_back(dst);
-        m_bp_nodes.insert({ src.uid, bp_node });
+        m_scene_nodes.push_back(dst);
+        m_map_nodes.insert({ src.uid, { src, bp_node } });
     }
 
     for (auto& conn : loader.GetConns())
@@ -539,14 +539,14 @@ void ASEImporter::Load(const aseimp::FileLoader& loader, const std::string& dir)
         int node_from = conn.node_from;
         int port_from = conn.port_from;
 
-        auto from = m_bp_nodes.find(node_from);
-        auto to   = m_bp_nodes.find(node_to);
-        if (from == m_bp_nodes.end() ||
-            to == m_bp_nodes.end()) {
+        auto from = m_map_nodes.find(node_from);
+        auto to   = m_map_nodes.find(node_to);
+        if (from == m_map_nodes.end() ||
+            to == m_map_nodes.end()) {
             return;
         }
 
-        auto from_type = from->second->get_type();
+        auto from_type = from->second.dst->get_type();
         if (from_type == rttr::type::get<sg::node::Vector2>() ||
             from_type == rttr::type::get<sg::node::Vector3>() ||
             from_type == rttr::type::get<sg::node::Vector4>())
@@ -554,7 +554,7 @@ void ASEImporter::Load(const aseimp::FileLoader& loader, const std::string& dir)
             assert(port_to == 0);
         }
 
-        auto to_type = to->second->get_type();
+        auto to_type = to->second.dst->get_type();
         if (to_type == rttr::type::get<sg::node::Smoothstep>())
         {
             switch (port_to)
@@ -571,11 +571,31 @@ void ASEImporter::Load(const aseimp::FileLoader& loader, const std::string& dir)
             }
         }
 
-        auto& from_ports = from->second->GetAllOutput();
-        auto& to_ports   = to->second->GetAllInput();
-        if (port_from >= 0 && port_from < static_cast<int>(from_ports.size()) &&
-            port_to >= 0 && port_to < static_cast<int>(to_ports.size())) {
-            bp::make_connecting(from_ports[port_from], to_ports[port_to]);
+        int idx_port_from = -1, idx_port_to = -1;
+        for (int i = 0, n = from->second.src.outputs.size(); i < n; ++i) {
+            if (port_from == from->second.src.outputs[i].port_id) {
+                idx_port_from = i;
+                break;
+            }
+        }
+        for (int i = 0, n = to->second.src.inputs.size(); i < n; ++i) {
+            if (port_to == to->second.src.inputs[i].port_id) {
+                idx_port_to = i;
+                break;
+            }
+        }
+        if (idx_port_from == -1) {
+            idx_port_from = port_from;
+        }
+        if (idx_port_to == -1) {
+            idx_port_to = port_to;
+        }
+
+        auto& from_ports = from->second.dst->GetAllOutput();
+        auto& to_ports   = to->second.dst->GetAllInput();
+        if (idx_port_from >= 0 && idx_port_from < static_cast<int>(from_ports.size()) &&
+            idx_port_to >= 0 && idx_port_to < static_cast<int>(to_ports.size())) {
+            bp::make_connecting(from_ports[idx_port_from], to_ports[idx_port_to]);
         } else {
             printf("conn fail:%d %d to %d %d\n", node_from, port_from, node_to, port_to);
         }
