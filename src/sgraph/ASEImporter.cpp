@@ -160,12 +160,14 @@ void ASEImporter::Load(const aseimp::FileLoader& loader, const std::string& dir)
             break;
         case aseimp::NodeClass::Add:
             bp_node = std::make_shared<sg::node::Add>();
+            bp_node->PrepareExtInputPorts(src.inputs.size());
             break;
         case aseimp::NodeClass::Subtract:
             bp_node = std::make_shared<sg::node::Subtract>();
             break;
         case aseimp::NodeClass::Multiply:
             bp_node = std::make_shared<sg::node::Multiply>();
+            bp_node->PrepareExtInputPorts(src.inputs.size());
             break;
         case aseimp::NodeClass::Divide:
             bp_node = std::make_shared<sg::node::Divide>();
