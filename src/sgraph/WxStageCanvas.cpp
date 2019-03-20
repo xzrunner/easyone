@@ -40,9 +40,9 @@ bool WxStageCanvas::OnUpdate()
 				canvas_dirty = true;
 				return false;
 			}
-			if (bp_node->IsSizeChanging())
+			if (bp_node->IsSizeChanged())
 			{
-				bp_node->SetSizeChanging(false);
+				bp_node->SetSizeChanged(false);
 				auto& st = bp_node->GetStyle();
 				sm::rect sz(st.width, st.height);
 				obj->GetUniqueComp<n2::CompBoundingBox>().SetSize(*obj, sz);

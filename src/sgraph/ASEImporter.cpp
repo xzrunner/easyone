@@ -6,8 +6,8 @@
 #include <blueprint/node/Input.h>
 #include <blueprint/node/Output.h>
 #include <blueprint/node/Commentary.h>
-#include <blueprint/node/SetLocalVar.h>
-#include <blueprint/node/GetLocalVar.h>
+#include <blueprint/node/SetReference.h>
+#include <blueprint/node/GetReference.h>
 #include <blueprint/node/Function.h>
 #include <blueprint/node/Switch.h>
 #include <shadergraph/RegistNodes.h>
@@ -442,20 +442,20 @@ void ASEImporter::Load(const aseimp::FileLoader& loader, const std::string& dir)
             break;
 
             // Miscellaneous
-        case aseimp::NodeClass::SetLocalVar:
+        case aseimp::NodeClass::SetReference:
         {
-            auto set_var = std::make_shared<bp::node::SetLocalVar>();
+            auto set_var = std::make_shared<bp::node::SetReference>();
 
             std::string name;
             if (QueryString(src, "name", name)) {
-                set_var->SetVarName(name);
+                set_var->SetName(name);
             }
 
             bp_node = set_var;
         }
             break;
-        case aseimp::NodeClass::GetLocalVar:
-            bp_node = std::make_shared<bp::node::GetLocalVar>();
+        case aseimp::NodeClass::GetReference:
+            bp_node = std::make_shared<bp::node::GetReference>();
             break;
         case aseimp::NodeClass::CustomExpression:
         {
