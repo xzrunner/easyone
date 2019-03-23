@@ -1,5 +1,6 @@
 #include "sgraph/ASEImporter.h"
 
+#include <ee0/AssetsMap.h>
 #include <blueprint/typedef.h>
 #include <blueprint/CompNode.h>
 #include <blueprint/Connecting.h>
@@ -130,26 +131,24 @@ void ASEImporter::LoadAsset(const std::string& filepath)
     aseimp::FileLoader loader;
     loader.LoadAsset(filepath);
 
-    auto dir = boost::filesystem::path(filepath).parent_path().string();
-    Load(loader, dir);
+    Load(loader);
 }
 
 void ASEImporter::LoadShader(const std::string& filepath)
 {
+    auto dir = boost::filesystem::path(filepath).parent_path().string();
+    ee0::AssetsMap::Instance()->LoadDirWithUnity(dir);
+
     aseimp::FileLoader loader;
     loader.LoadShader(filepath);
 
-    auto dir = boost::filesystem::path(filepath).parent_path().string();
-    Load(loader, dir);
+    Load(loader);
 }
 
-void ASEImporter::Load(const aseimp::FileLoader& loader, const std::string& dir)
+void ASEImporter::Load(const aseimp::FileLoader& loader)
 {
     for (auto& src : loader.GetNodes())
     {
-        auto dst = std::make_shared<n0::SceneNode>();
-        dst->AddUniqueComp<n0::CompIdentity>();
-
         bp::NodePtr bp_node = nullptr;
 
         switch (src.cls)
@@ -235,18 +234,14 @@ void ASEImporter::Load(const aseimp::FileLoader& loader, const std::string& dir)
         {
             auto func = std::make_shared<bp::node::Function>();
 
-            std::string filename;
-            if (QueryString(src, "filename", filename))
+            std::string function_guid;
+            if (QueryString(src, "function_guid", function_guid))
             {
-                func->SetFilepath(filename);
-
-                auto path = boost::filesystem::absolute(filename + ".asset", dir);
-                if (boost::filesystem::exists(path))
-                {
-                    ASEImporter loader;
-                    loader.LoadAsset(path.string());
-                    func->SetChildren(func, loader.GetNodes());
-                }
+                auto filepath = ee0::AssetsMap::Instance()->QueryFilepath(function_guid);
+                func->SetFilepath(filepath);
+                ASEImporter loader;
+                loader.LoadAsset(filepath);
+                func->SetChildren(func, loader.GetNodes());
             }
 
             bp_node = func;
@@ -427,10 +422,43 @@ void ASEImporter::Load(const aseimp::FileLoader& loader, const std::string& dir)
 
             // Textures
         case aseimp::NodeClass::Tex2DAsset:
-            bp_node = std::make_shared<sg::node::Tex2DAsset>();
+        {
+            auto tex = std::make_shared<sg::node::Tex2DAsset>();
+
+            std::string tex_guid;
+            if (QueryString(src, "material_tex_guid", tex_guid)) {
+                auto filepath = ee0::AssetsMap::Instance()->QueryFilepath(tex_guid);
+                if (!filepath.empty()) {
+                    tex->SetImagePath(filepath);
+                }
+            }
+
+            bp_node = tex;
+        }
             break;
         case aseimp::NodeClass::SampleTex2D:
+        {
             bp_node = std::make_shared<sg::node::SampleTex2D>();
+
+            std::string tex_guid;
+            if (QueryString(src, "material_tex_guid", tex_guid))
+            {
+                auto filepath = ee0::AssetsMap::Instance()->QueryFilepath(tex_guid);
+                if (!filepath.empty())
+                {
+                    sm::vec2 pos;
+                    auto& st = bp_node->GetStyle();
+                    pos.x = src.x - 100;
+                    pos.y = -(src.y + st.height * 0.5f) + 50;
+
+                    auto child = std::make_shared<sg::node::Tex2DAsset>();
+                    child->SetImagePath(filepath);
+                    CreateSceneNode(child, pos);
+
+                    bp::make_connecting(child->GetAllOutput()[0], bp_node->GetAllInput()[0]);
+                }
+            }
+        }
             break;
         case aseimp::NodeClass::TextureTransform:
             bp_node = std::make_shared<sg::node::TextureTransform>();
@@ -455,7 +483,16 @@ void ASEImporter::Load(const aseimp::FileLoader& loader, const std::string& dir)
         }
             break;
         case aseimp::NodeClass::GetReference:
-            bp_node = std::make_shared<bp::node::GetReference>();
+        {
+            auto get_var = std::make_shared<bp::node::GetReference>();
+
+            std::string name;
+            if (QueryString(src, "name", name)) {
+                get_var->SetName(name);
+            }
+
+            bp_node = get_var;
+        }
             break;
         case aseimp::NodeClass::CustomExpression:
         {
@@ -492,9 +529,14 @@ void ASEImporter::Load(const aseimp::FileLoader& loader, const std::string& dir)
             }
 
             std::string text;
-            if (QueryString(src, "text", text)) {
-                text = cpputil::StringHelper::UTF8ToGBK(text.c_str());
-                comm->SetCommentText(text);
+            if (QueryString(src, "text", text))
+            {
+                if (text.empty()) {
+                    if (QueryString(src, "title", text)) {
+                        text = cpputil::StringHelper::UTF8ToGBK(text.c_str());
+                        comm->SetCommentText(text);
+                    }
+                }
             }
 
             bp_node = comm;
@@ -517,20 +559,13 @@ void ASEImporter::Load(const aseimp::FileLoader& loader, const std::string& dir)
             continue;
         }
 
-        auto& cnode = dst->AddUniqueComp<bp::CompNode>();
-        cnode.SetNode(bp_node);
+        sm::vec2 pos;
+        auto& st = bp_node->GetStyle();
+        pos.x = src.x + st.width * 0.5f;
+        pos.y = -(src.y + st.height * 0.5f);
 
-        auto& style = bp_node->GetStyle();
-        dst->AddUniqueComp<n2::CompBoundingBox>(
-            sm::rect(style.width, style.height)
-        );
+        CreateSceneNode(bp_node, pos);
 
-        auto& ctrans = dst->AddUniqueComp<n2::CompTransform>();
-        const float x = src.x + style.width * 0.5f;
-        const float y = -(src.y + style.height * 0.5f);
-        ctrans.SetPosition(*dst, sm::vec2(x, y));
-
-        m_scene_nodes.push_back(dst);
         m_map_nodes.insert({ src.uid, { src, bp_node } });
     }
 
@@ -602,6 +637,25 @@ void ASEImporter::Load(const aseimp::FileLoader& loader, const std::string& dir)
             printf("conn fail:%d %d to %d %d\n", node_from, port_from, node_to, port_to);
         }
     }
+}
+
+void ASEImporter::CreateSceneNode(const bp::NodePtr& bp_node, const sm::vec2& pos)
+{
+    auto dst = std::make_shared<n0::SceneNode>();
+    dst->AddUniqueComp<n0::CompIdentity>();
+
+    auto& cnode = dst->AddUniqueComp<bp::CompNode>();
+    cnode.SetNode(bp_node);
+
+    auto& style = bp_node->GetStyle();
+    dst->AddUniqueComp<n2::CompBoundingBox>(
+        sm::rect(style.width, style.height)
+    );
+
+    auto& ctrans = dst->AddUniqueComp<n2::CompTransform>();
+    ctrans.SetPosition(*dst, pos);
+
+    m_scene_nodes.push_back(dst);
 }
 
 int ASEImporter::PortTypeASEImpToBP(aseimp::WirePortDataType type)

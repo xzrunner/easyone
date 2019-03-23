@@ -5,6 +5,7 @@
 
 #include <node0/typedef.h>
 #include <aseimp/FileLoader.h>
+#include <SM_Vector.h>
 
 #include <string>
 #include <vector>
@@ -26,7 +27,9 @@ public:
     auto& GetNodes() const { return m_scene_nodes; }
 
 private:
-    void Load(const aseimp::FileLoader& loader, const std::string& dir);
+    void Load(const aseimp::FileLoader& loader);
+
+    void CreateSceneNode(const bp::NodePtr& bp_node, const sm::vec2& pos);
 
     static int PortTypeASEImpToBP(aseimp::WirePortDataType type);
     static void InputPortASEImpToSG(std::vector<sg::Node::PinsDesc>& dst,
