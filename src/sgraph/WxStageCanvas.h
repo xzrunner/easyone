@@ -15,6 +15,9 @@ public:
 protected:
 	virtual bool OnUpdate() override;
 
+private:
+    void OnGetVarNameChanged() const;
+
 }; // WxStageCanvas
 
 }
