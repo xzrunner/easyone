@@ -398,7 +398,7 @@ ee0::EditOPPtr PanelFactory::CreateNode2DSelectOP(const std::shared_ptr<pt0::Cam
     auto prev_op = std::make_shared<LeftDClickOP>(camera, stage, rc, wc);
 
     auto op = std::make_shared<ee2::NodeSelectOP>(camera, stage);
-    op->SetPrevEditOP(prev_op);
+    op->AddPrevEditOP(prev_op);
 
     return op;
 }
