@@ -10,7 +10,12 @@
 #include <blueprint/node/SetReference.h>
 #include <blueprint/node/GetReference.h>
 #include <blueprint/node/Function.h>
+#include <blueprint/node/CompareLess.h>
+#include <blueprint/node/CompareEqual.h>
+#include <blueprint/node/CompareGreater.h>
+#include <blueprint/node/CompareNotEqual.h>
 #include <blueprint/node/Switch.h>
+#include <blueprint/node/SwitchMulti.h>
 #include <shadergraph/RegistNodes.h>
 #include <shadergraph/PinsType.h>
 #include <shadergraph/ReflectPropTypes.h>
@@ -154,8 +159,17 @@ void ASEImporter::Load(const aseimp::FileLoader& loader)
         switch (src.cls)
         {
             // Math Operators
+        case aseimp::NodeClass::Absolute:
+            bp_node = std::make_shared<sg::node::Absolute>();
+            break;
         case aseimp::NodeClass::Saturate:
             bp_node = std::make_shared<sg::node::Saturate>();
+            break;
+        case aseimp::NodeClass::Minimum:
+            bp_node = std::make_shared<sg::node::Minimum>();
+            break;
+        case aseimp::NodeClass::Maximum:
+            bp_node = std::make_shared<sg::node::Maximum>();
             break;
         case aseimp::NodeClass::Add:
             bp_node = std::make_shared<sg::node::Add>();
@@ -171,13 +185,23 @@ void ASEImporter::Load(const aseimp::FileLoader& loader)
         case aseimp::NodeClass::Divide:
             bp_node = std::make_shared<sg::node::Divide>();
             break;
+        case aseimp::NodeClass::OneMinus:
+            bp_node = std::make_shared<sg::node::OneMinus>();
+            break;
         case aseimp::NodeClass::Remap:
             bp_node = std::make_shared<sg::node::Remap>();
             break;
-        case aseimp::NodeClass::Exponential:
+        case aseimp::NodeClass::Exp2:
         {
             auto exp = std::make_shared<sg::node::Exponential>();
             exp->SetType(sg::PropMathBaseType::BASE_2);
+            bp_node = exp;
+        }
+            break;
+        case aseimp::NodeClass::ExpE:
+        {
+            auto exp = std::make_shared<sg::node::Exponential>();
+            exp->SetType(sg::PropMathBaseType::BASE_E);
             bp_node = exp;
         }
             break;
@@ -193,10 +217,43 @@ void ASEImporter::Load(const aseimp::FileLoader& loader)
         case aseimp::NodeClass::Smoothstep:
             bp_node = std::make_shared<sg::node::Smoothstep>();
             break;
+        case aseimp::NodeClass::FWidth:
+            bp_node = std::make_shared<sg::node::FWidth>();
+            break;
+        case aseimp::NodeClass::Sine:
+            bp_node = std::make_shared<sg::node::Sine>();
+            break;
+        case aseimp::NodeClass::Cosine:
+            bp_node = std::make_shared<sg::node::Cosine>();
+            break;
+        case aseimp::NodeClass::Tangent:
+            bp_node = std::make_shared<sg::node::Tangent>();
+            break;
+        case aseimp::NodeClass::Arcsine:
+            bp_node = std::make_shared<sg::node::Arcsine>();
+            break;
+        case aseimp::NodeClass::Arccosine:
+            bp_node = std::make_shared<sg::node::Arccosine>();
+            break;
 
             // Logical Operators
+        case aseimp::NodeClass::CompareLess:
+            bp_node = std::make_shared<bp::node::CompareLess>();
+            break;
+        case aseimp::NodeClass::CompareEqual:
+            bp_node = std::make_shared<bp::node::CompareEqual>();
+            break;
+        case aseimp::NodeClass::CompareGreater:
+            bp_node = std::make_shared<bp::node::CompareGreater>();
+            break;
+        case aseimp::NodeClass::CompareNotEqual:
+            bp_node = std::make_shared<bp::node::CompareNotEqual>();
+            break;
         case aseimp::NodeClass::Switch:
             bp_node = std::make_shared<bp::node::Switch>();
+            break;
+        case aseimp::NodeClass::SwitchMulti:
+            bp_node = std::make_shared<bp::node::SwitchMulti>();
             break;
 
             // Functions
@@ -238,10 +295,17 @@ void ASEImporter::Load(const aseimp::FileLoader& loader)
             if (QueryString(src, "function_guid", function_guid))
             {
                 auto filepath = ee0::AssetsMap::Instance()->QueryFilepath(function_guid);
-                func->SetFilepath(filepath);
-                ASEImporter loader;
-                loader.LoadAsset(filepath);
-                func->SetChildren(func, loader.GetNodes());
+                if (!filepath.empty()) 
+                {
+                    func->SetFilepath(filepath);
+                    ASEImporter loader;
+                    loader.LoadAsset(filepath);
+                    func->SetChildren(func, loader.GetNodes());
+                }
+                else
+                {
+                    printf("unkown function_guid %s\n", function_guid.c_str());
+                }
             }
 
             bp_node = func;
@@ -319,6 +383,12 @@ void ASEImporter::Load(const aseimp::FileLoader& loader)
             bp_node = vec4;
         }
             break;
+        case aseimp::NodeClass::PI:
+            bp_node = std::make_shared<sg::node::PI>();
+            break;
+        case aseimp::NodeClass::Color:
+            bp_node = std::make_shared<sg::node::Color>();
+            break;
 
             // Image Effects
         case aseimp::NodeClass::HSVToRGB:
@@ -359,6 +429,9 @@ void ASEImporter::Load(const aseimp::FileLoader& loader)
             // Light
         case aseimp::NodeClass::WorldSpaceLightDir:
             bp_node = std::make_shared<sg::node::WorldSpaceLightDir>();
+            break;
+        case aseimp::NodeClass::LightAttenuation:
+            bp_node = std::make_shared<sg::node::LightAttenuation>();
             break;
         case aseimp::NodeClass::LightColor:
             bp_node = std::make_shared<sg::node::LightColor>();
@@ -408,6 +481,45 @@ void ASEImporter::Load(const aseimp::FileLoader& loader)
             break;
         case aseimp::NodeClass::Combine:
             bp_node = std::make_shared<sg::node::Combine>();
+            break;
+        case aseimp::NodeClass::Split:
+            bp_node = std::make_shared<sg::node::Split>();
+            break;
+        case aseimp::NodeClass::TransformDirection:
+            bp_node = std::make_shared<sg::node::TransformDirection>();
+            break;
+        case aseimp::NodeClass::Length:
+            bp_node = std::make_shared<sg::node::Length>();
+            break;
+
+            // Vertex Data
+        case aseimp::NodeClass::VertexBitangent:
+            bp_node = std::make_shared<sg::node::VertexBitangent>();
+            break;
+        case aseimp::NodeClass::VertexNormal:
+            bp_node = std::make_shared<sg::node::VertexNormal>();
+            break;
+        case aseimp::NodeClass::VertexTangent:
+            bp_node = std::make_shared<sg::node::VertexTangent>();
+            break;
+
+            // Surface Data
+        case aseimp::NodeClass::WorldBitangent:
+            bp_node = std::make_shared<sg::node::WorldBitangent>();
+            break;
+        case aseimp::NodeClass::WorldPosition:
+            bp_node = std::make_shared<sg::node::WorldPosition>();
+            break;
+        case aseimp::NodeClass::WorldTangent:
+            bp_node = std::make_shared<sg::node::WorldTangent>();
+            break;
+
+            // Matrix Operators
+        case aseimp::NodeClass::MatrixConstruction:
+            bp_node = std::make_shared<sg::node::MatrixConstruction>();
+            break;
+        case aseimp::NodeClass::MatrixInverse:
+            bp_node = std::make_shared<sg::node::MatrixInverse>();
             break;
 
             // Matrix Transform
@@ -459,6 +571,12 @@ void ASEImporter::Load(const aseimp::FileLoader& loader)
                 }
             }
         }
+            break;
+        case aseimp::NodeClass::SampleTriplanar:
+            bp_node = std::make_shared<sg::node::SampleTriplanar>();
+            break;
+        case aseimp::NodeClass::UnpackScaleNormal:
+            bp_node = std::make_shared<sg::node::UnpackScaleNormal>();
             break;
         case aseimp::NodeClass::TextureTransform:
             bp_node = std::make_shared<sg::node::TextureTransform>();
@@ -513,6 +631,15 @@ void ASEImporter::Load(const aseimp::FileLoader& loader)
             bp_node = custom;
         }
             break;
+        case aseimp::NodeClass::VertexToFragment:
+            bp_node = std::make_shared<sg::node::VertexToFragment>();
+            break;
+        case aseimp::NodeClass::EncodeFloatRGBA:
+            bp_node = std::make_shared<sg::node::EncodeFloatRGBA>();
+            break;
+        case aseimp::NodeClass::DecodeFloatRGBA:
+            bp_node = std::make_shared<sg::node::DecodeFloatRGBA>();
+            break;
 
             // Tools
         case aseimp::NodeClass::Commentary:
@@ -556,6 +683,11 @@ void ASEImporter::Load(const aseimp::FileLoader& loader)
         }
 
         if (!bp_node) {
+            rttr::type enum_type = rttr::type::get<aseimp::NodeClass>();
+            assert(enum_type && enum_type.is_enumeration());
+            auto enum_node_cls = enum_type.get_enumeration();
+            auto name = enum_node_cls.value_to_name(src.cls).to_string();
+            printf("Create BP node fail: %s\n", name.c_str());
             continue;
         }
 
@@ -580,16 +712,17 @@ void ASEImporter::Load(const aseimp::FileLoader& loader)
         auto to   = m_map_nodes.find(node_to);
         if (from == m_map_nodes.end() ||
             to == m_map_nodes.end()) {
-            return;
+            printf("find node fail: %d to %d\n", node_from, node_to);
+            continue;
         }
 
-        auto from_type = from->second.dst->get_type();
-        if (from_type == rttr::type::get<sg::node::Vector2>() ||
-            from_type == rttr::type::get<sg::node::Vector3>() ||
-            from_type == rttr::type::get<sg::node::Vector4>())
-        {
-            assert(port_to == 0);
-        }
+        //auto from_type = from->second.dst->get_type();
+        //if (from_type == rttr::type::get<sg::node::Vector2>() ||
+        //    from_type == rttr::type::get<sg::node::Vector3>() ||
+        //    from_type == rttr::type::get<sg::node::Vector4>())
+        //{
+        //    assert(port_to == 0);
+        //}
 
         auto to_type = to->second.dst->get_type();
         if (to_type == rttr::type::get<sg::node::Smoothstep>())
