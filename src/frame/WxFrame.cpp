@@ -9,16 +9,26 @@
 
 #include <ee0/WxListSelectDlg.h>
 #include <ee0/SubjectMgr.h>
+#include <ee3/WxStageCanvas.h>
 
 #include <moon/Blackboard.h>
+#include <facade/ResPool.h>
+#include <facade/ImageCube.h>
 
 namespace eone
 {
+
+BEGIN_EVENT_TABLE(WxFrame, ee0::WxFrame)
+    EVT_MENU(ID_SKYBOX, WxFrame::OnSetSkybox)
+END_EVENT_TABLE()
 
 WxFrame::WxFrame()
 	: ee0::WxFrame("EasyOne", wxDefaultSize, wxDEFAULT_FRAME_STYLE | wxMAXIMIZE)
 {
 	moon::Blackboard::Instance()->SetWindow(this);
+
+    auto menu_bar = GetMenuBar();
+    menu_bar->Append(InitToolsBar(), "&Tools");
 }
 
 WxFrame::~WxFrame()
@@ -92,6 +102,27 @@ void WxFrame::OnSettings(wxCommandEvent& event)
 {
 	WxSettingsDialog dlg(this);
 	dlg.ShowModal();
+}
+
+wxMenu* WxFrame::InitToolsBar()
+{
+    wxMenu* menu = new wxMenu;
+    menu->Append(ID_SKYBOX, wxT("Skybox"), wxT("Skybox"));
+    return menu;
+}
+
+void WxFrame::OnSetSkybox(wxCommandEvent& event)
+{
+    wxFileDialog dlg(this, wxT("Open"), wxEmptyString, wxEmptyString, "*.hdr");
+    if (dlg.ShowModal() == wxID_OK)
+    {
+        auto img_cube = facade::ResPool::Instance().Fetch<facade::ImageCube>(dlg.GetPath().ToStdString());
+        auto stage_page = static_cast<WxStagePage*>(std::static_pointer_cast<Application>(m_app)->GetStagePanel()->GetCurrentPage());
+        auto canvas = stage_page->GetImpl().GetCanvas();
+        if (auto canvas3d = std::dynamic_pointer_cast<ee3::WxStageCanvas>(canvas)) {
+            canvas3d->SetSkybox(img_cube);
+        }
+    }
 }
 
 }
