@@ -24,6 +24,8 @@ public:
 
 	virtual int GetPageType() const override { return PAGE_SCENE3D; }
 
+    virtual void OnSetSkybox(const std::string& filepath);
+
 	static const std::string PAGE_TYPE;
 
 protected:

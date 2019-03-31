@@ -10,6 +10,7 @@
 #include <ee0/SubjectMgr.h>
 #include <ee0/MsgHelper.h>
 #include <ee3/WxStageDropTarget.h>
+#include <ee3/WxStageCanvas.h>
 
 #include <guard/check.h>
 #include <node0/SceneNode.h>
@@ -18,8 +19,8 @@
 #include <unirender/VertexAttrib.h>
 #include <unirender/Shader.h>
 #include <unirender/Blackboard.h>
-
-#include <unirender/RenderContext.h>
+#include <facade/ResPool.h>
+#include <facade/ImageCube.h>
 
 namespace eone
 {
@@ -84,6 +85,12 @@ void WxStagePage::Traverse(std::function<bool(const ee0::GameObj&)> func,
 		m_obj->GetSharedComp<n0::CompComplex>().Traverse(func, inverse);
 #endif // GAME_OBJ_ECS
 	}
+}
+
+void WxStagePage::OnSetSkybox(const std::string& filepath)
+{
+    auto img_cube = facade::ResPool::Instance().Fetch<facade::ImageCube>(filepath);
+    std::static_pointer_cast<ee3::WxStageCanvas>(GetImpl().GetCanvas())->SetSkybox(img_cube);
 }
 
 void WxStagePage::OnPageInit()

@@ -37,6 +37,8 @@
 #include <node2/CompBoundingBox.h>
 #include <sx/ResFileHelper.h>
 #include <ns/CompFactory.h>
+#include <facade/ResPool.h>
+#include <facade/ImageCube.h>
 
 #include <boost/filesystem.hpp>
 
@@ -165,6 +167,12 @@ void WxStagePage::Traverse(std::function<bool(const ee0::GameObj&)> func,
 		}
 #endif // GAME_OBJ_ECS
 	}
+}
+
+void WxStagePage::OnSetSkybox(const std::string& filepath)
+{
+    auto img_cube = facade::ResPool::Instance().Fetch<facade::ImageCube>(filepath);
+    m_toolbar->GetPreviewPanel()->SetSkybox(img_cube);
 }
 
 bool WxStagePage::LoadNodeConnsFromFile(const std::string& filepath)

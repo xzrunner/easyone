@@ -26,6 +26,8 @@ public:
 
 	virtual int GetPageType() const override { return PAGE_SHADER_GRAPH; }
 
+    virtual void OnSetSkybox(const std::string& filepath);
+
     void SetParentNode(const n0::SceneNodePtr& parent_node) {
         m_parent_node = parent_node;
     }

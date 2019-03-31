@@ -30,6 +30,8 @@ public:
 
 	virtual int GetPageType() const = 0;
 
+    virtual void OnSetSkybox(const std::string& filepath) {}
+
 	void StoreToJson(const std::string& dir, rapidjson::Value& val,
 		rapidjson::MemoryPoolAllocator<>& alloc) const;
 	void LoadFromFile(const std::string& filepath);
