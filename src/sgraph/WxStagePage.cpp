@@ -1,4 +1,5 @@
 #include "sgraph/WxStagePage.h"
+#include "sgraph/WxStageCanvas.h"
 #include "sgraph/WxToolbarPanel.h"
 #include "sgraph/ASEImporter.h"
 
@@ -473,7 +474,8 @@ void WxStagePage::UpdateShader()
         auto& rc = ur::Blackboard::Instance()->GetRenderContext();
         int old_vl_id = rc.GetBindedVertexLayoutID();
 
-		sg::ShaderWeaver sw(shader_type, *final_node, DEBUG_PRINT_SHADER, all_bp_nodes);
+        auto& gi = m_toolbar->GetPreviewPanel()->GetGlobalIllumination();
+		sg::ShaderWeaver sw(shader_type, *final_node, DEBUG_PRINT_SHADER, all_bp_nodes, gi);
 		auto& wc = canvas->GetWidnowContext().wc3;
 		auto shader = sw.CreateShader3();
         if (shader->IsValid()) {
