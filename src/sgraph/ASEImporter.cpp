@@ -21,6 +21,7 @@
 #include <shadergraph/ReflectPropTypes.h>
 #include <shadergraph/node/Custom.h>
 #include <shadergraph/node/StandardSurfaceOutput.h>
+#include <shadergraph/node/Tex2DAsset.h>
 
 #include <cpputil/StringHelper.h>
 #include <node0/SceneNode.h>
@@ -295,7 +296,7 @@ void ASEImporter::Load(const aseimp::FileLoader& loader)
             if (QueryString(src, "function_guid", function_guid))
             {
                 auto filepath = ee0::AssetsMap::Instance()->QueryFilepath(function_guid);
-                if (!filepath.empty()) 
+                if (!filepath.empty())
                 {
                     func->SetFilepath(filepath);
                     ASEImporter loader;
