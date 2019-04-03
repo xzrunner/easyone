@@ -211,3 +211,6 @@
 [submodule "ext/aseimp"]
 	path = ext/aseimp
 	url = git@github.com:xzrunner/aseimp.git
+[submodule "ext/sgconv"]
+	path = ext/sgconv
+	url = git@github.com:xzrunner/sgconv.git

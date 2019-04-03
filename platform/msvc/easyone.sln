@@ -189,6 +189,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "1.shaderlang_test", "..\..\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3.aseimp", "..\..\ext\aseimp\platform\msvc\projects\aseimp.vcxproj", "{740F5BEC-36F1-4DBA-AE91-8F9AFB782305}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "6.sgconv", "..\..\ext\sgconv\platform\msvc\projects\sgconv.vcxproj", "{7B97F144-E4F9-40C8-A67A-E75FB8B4EA9E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -495,6 +497,10 @@ Global
 		{740F5BEC-36F1-4DBA-AE91-8F9AFB782305}.Debug|Win32.Build.0 = Debug|Win32
 		{740F5BEC-36F1-4DBA-AE91-8F9AFB782305}.Release|Win32.ActiveCfg = Release|Win32
 		{740F5BEC-36F1-4DBA-AE91-8F9AFB782305}.Release|Win32.Build.0 = Release|Win32
+		{7B97F144-E4F9-40C8-A67A-E75FB8B4EA9E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{7B97F144-E4F9-40C8-A67A-E75FB8B4EA9E}.Debug|Win32.Build.0 = Debug|Win32
+		{7B97F144-E4F9-40C8-A67A-E75FB8B4EA9E}.Release|Win32.ActiveCfg = Release|Win32
+		{7B97F144-E4F9-40C8-A67A-E75FB8B4EA9E}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -581,6 +587,7 @@ Global
 		{84407E1F-8976-422B-AB16-D21448B90C41} = {21641371-9FF1-473B-8607-85E88E161C0A}
 		{C6D1C934-E1A1-4015-85AD-D13F2105D8FF} = {21641371-9FF1-473B-8607-85E88E161C0A}
 		{740F5BEC-36F1-4DBA-AE91-8F9AFB782305} = {55D85D01-599C-4F78-A116-BDBAEAF0D939}
+		{7B97F144-E4F9-40C8-A67A-E75FB8B4EA9E} = {3F90F0BC-4357-48B0-A92E-DA2826502647}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8D54C01A-3C82-4351-A325-2853C3E81322}

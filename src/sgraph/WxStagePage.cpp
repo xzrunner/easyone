@@ -1,7 +1,6 @@
 #include "sgraph/WxStagePage.h"
 #include "sgraph/WxStageCanvas.h"
 #include "sgraph/WxToolbarPanel.h"
-#include "sgraph/ASEImporter.h"
 
 #include "frame/AppStyle.h"
 #include "frame/Blackboard.h"
@@ -26,6 +25,7 @@
 #include <shadergraph/ShaderWeaver.h>
 #include <shadergraph/RegistNodes.h>
 #include <shadergraph/NodeHelper.h>
+#include <sgconv/ASEImporter.h>
 
 #include <js/RapidJsonHelper.h>
 #include <unirender/VertexAttrib.h>
@@ -524,14 +524,14 @@ void WxStagePage::LoadFromExternFile(const std::string& filepath)
     {
     case sx::RES_FILE_SHADER:
     {
-        ASEImporter loader;
+        sgconv::ASEImporter loader;
         loader.LoadShader(filepath);
         nodes = loader.GetNodes();
     }
         break;
     case sx::RES_FILE_ASSET:
     {
-        ASEImporter loader;
+        sgconv::ASEImporter loader;
         loader.LoadAsset(filepath);
         nodes = loader.GetNodes();
     }
