@@ -199,7 +199,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0.base", "0.base", "{AF3175
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.tools", "2.tools", "{7B938AA4-2196-4A91-B94F-E1C20BCCFA05}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.rendergraph", "4.rendergraph", "{AF5FD54D-12B0-4D18-AEE3-9A72DDD1CAE5}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.render", "4.render", "{AF5FD54D-12B0-4D18-AEE3-9A72DDD1CAE5}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "4.renderpipeline", "..\..\ext\renderpipeline\platform\msvc\projects\renderpipeline.vcxproj", "{1CBD9E7E-98C6-4D18-AC91-7683C4AB23FC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -515,6 +517,10 @@ Global
 		{D16C1C98-16E8-4D60-8209-E6AD7C80E918}.Debug|Win32.Build.0 = Debug|Win32
 		{D16C1C98-16E8-4D60-8209-E6AD7C80E918}.Release|Win32.ActiveCfg = Release|Win32
 		{D16C1C98-16E8-4D60-8209-E6AD7C80E918}.Release|Win32.Build.0 = Release|Win32
+		{1CBD9E7E-98C6-4D18-AC91-7683C4AB23FC}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1CBD9E7E-98C6-4D18-AC91-7683C4AB23FC}.Debug|Win32.Build.0 = Debug|Win32
+		{1CBD9E7E-98C6-4D18-AC91-7683C4AB23FC}.Release|Win32.ActiveCfg = Release|Win32
+		{1CBD9E7E-98C6-4D18-AC91-7683C4AB23FC}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -607,6 +613,7 @@ Global
 		{AF317573-4862-4C0B-9F3C-2C364C0EC958} = {E81D1B45-CF14-47DF-A9FD-98205E914709}
 		{7B938AA4-2196-4A91-B94F-E1C20BCCFA05} = {E81D1B45-CF14-47DF-A9FD-98205E914709}
 		{AF5FD54D-12B0-4D18-AEE3-9A72DDD1CAE5} = {E81D1B45-CF14-47DF-A9FD-98205E914709}
+		{1CBD9E7E-98C6-4D18-AC91-7683C4AB23FC} = {AF5FD54D-12B0-4D18-AEE3-9A72DDD1CAE5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8D54C01A-3C82-4351-A325-2853C3E81322}
