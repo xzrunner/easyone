@@ -17,6 +17,7 @@
 #include <blueprint/MessageID.h>
 #include <blueprint/Pins.h>
 #include <blueprint/NSCompNode.h>
+#include <blueprint/NodeHelper.h>
 #include <blueprint/node/Input.h>
 #include <blueprint/node/Output.h>
 #include <blueprint/node/Function.h>
@@ -24,7 +25,6 @@
 #include <shadergraph/NodeBuilder.h>
 #include <shadergraph/ShaderWeaver.h>
 #include <shadergraph/RegistNodes.h>
-#include <shadergraph/NodeHelper.h>
 #include <sgconv/ASEImporter.h>
 
 #include <js/RapidJsonHelper.h>
@@ -180,7 +180,7 @@ bool WxStagePage::LoadNodeConnsFromFile(const std::string& filepath)
 {
 	if (sx::ResFileHelper::Type(filepath) == sx::RES_FILE_JSON) {
         auto& ccomplex = m_obj->GetSharedComp<n0::CompComplex>();
-        sg::NodeHelper::LoadConnections(ccomplex.GetAllChildren(), filepath);
+        bp::NodeHelper::LoadConnections(ccomplex.GetAllChildren(), filepath);
 		return true;
 	} else {
         return false;
@@ -550,7 +550,7 @@ void WxStagePage::LoadFunctionNodes()
         if (obj->HasUniqueComp<bp::CompNode>()) {
             auto& bp_node = obj->GetUniqueComp<bp::CompNode>().GetNode();
             if (bp_node->get_type() == rttr::type::get<bp::node::Function>()) {
-                sg::NodeHelper::LoadFunctionNode(obj, bp_node);
+                bp::NodeHelper::LoadFunctionNode(obj, bp_node);
             }
         }
         return true;

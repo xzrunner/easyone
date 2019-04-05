@@ -82,9 +82,6 @@
     <Filter Include="32.sgraph\view">
       <UniqueIdentifier>{3cbcb8a6-40cd-42ae-a989-a2ada73d854e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="33.prototype">
-      <UniqueIdentifier>{061b6e62-1453-44e1-9ffc-eb85d6452762}</UniqueIdentifier>
-    </Filter>
     <Filter Include="15.shape2d">
       <UniqueIdentifier>{23e96ae8-8ab3-4cf5-860f-c6987ff09613}</UniqueIdentifier>
     </Filter>
@@ -153,6 +150,12 @@
     </Filter>
     <Filter Include="00.frame\view\2.center\preview">
       <UniqueIdentifier>{b87ee58f-e935-4243-8fc0-5e091731df77}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="20.prototype">
+      <UniqueIdentifier>{061b6e62-1453-44e1-9ffc-eb85d6452762}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="33.rgraph">
+      <UniqueIdentifier>{31182a01-d587-4a9e-8109-604526b31e39}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -358,7 +361,7 @@
       <Filter>32.sgraph\view</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\prototype\WxStagePage.h">
-      <Filter>33.prototype</Filter>
+      <Filter>20.prototype</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\frame\PanelFactory.h">
       <Filter>00.frame\tools</Filter>
@@ -392,6 +395,12 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\sgraph\ModelType.h">
       <Filter>32.sgraph\view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\rgraph\WxStagePage.h">
+      <Filter>33.rgraph</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\rgraph\WxToolbarPanel.h">
+      <Filter>33.rgraph</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -570,7 +579,7 @@
       <Filter>32.sgraph\view</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\prototype\WxStagePage.cpp">
-      <Filter>33.prototype</Filter>
+      <Filter>20.prototype</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\frame\PanelFactory.cpp">
       <Filter>00.frame\tools</Filter>
@@ -601,6 +610,12 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\frame\WxStageSubPanel.cpp">
       <Filter>00.frame\view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\rgraph\WxStagePage.cpp">
+      <Filter>33.rgraph</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\rgraph\WxToolbarPanel.cpp">
+      <Filter>33.rgraph</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

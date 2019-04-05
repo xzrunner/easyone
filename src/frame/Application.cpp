@@ -23,6 +23,7 @@
 #include "quake/WxStagePage.h"
 #include "sgraph/WxStagePage.h"
 #include "prototype/WxStagePage.h"
+#include "rgraph/WxStagePage.h"
 
 #include <ee0/MsgHelper.h>
 #include <ee0/SubjectMgr.h>
@@ -111,7 +112,9 @@ void Application::LoadFromFile(const std::string& filepath)
 				new_type = PAGE_SHADER_GRAPH;
 			} else if (type == prototype::WxStagePage::PAGE_TYPE) {
 				new_type = PAGE_PROTOTYPING;
-			}
+			} else if (type == rgraph::WxStagePage::PAGE_TYPE) {
+                new_type = PAGE_RENDER_GRAPH;
+            }
 		} else if (new_type_str == "n2_scale9") {
 			new_type = PAGE_SCALE9;
 		} else if (new_type_str == "n2_mask") {
@@ -288,8 +291,9 @@ wxWindow* Application::CreateStagePanel()
 
 	//auto page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_MODEL, m_stage);
 	//auto page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_ANIM3, m_stage);
-    auto page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_SHADER_GRAPH, m_stage);
+    //auto page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_SHADER_GRAPH, m_stage);
 	//auto page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_PROTOTYPING, m_stage);
+    auto page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_RENDER_GRAPH, m_stage);
 
 	//auto page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_QUAKE, m_stage);
 
