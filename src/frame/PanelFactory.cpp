@@ -59,7 +59,7 @@
 #include <moon/Blackboard.h>
 #include <moon/Context.h>
 #include <painting3/PerspCam.h>
-#include <blueprint/ConnectPinsOP.h>
+#include <blueprint/ConnectPinOP.h>
 #include <blueprint/Blueprint.h>
 #include <blueprint/ArrangeNodeOP.h>
 #include <blueprint/NodeSelectOP.h>
@@ -252,11 +252,11 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
         auto nodes = bp::Blueprint::Instance()->GetAllNodes();
         auto sg_nodes = sg::ShaderGraph::Instance()->GetAllNodes();
         std::copy(sg_nodes.begin(), sg_nodes.end(), std::back_inserter(nodes));
-		auto op = std::make_shared<bp::ConnectPinsOP>(canvas->GetCamera(), *page, nodes);
+		auto op = std::make_shared<bp::ConnectPinOP>(canvas->GetCamera(), *page, nodes);
 		op->SetPrevEditOP(arrange_op);
 		page->GetImpl().SetEditOP(op);
 
-        static_cast<sgraph::WxStagePage*>(page)->SetModelType(sgraph::ModelType::PHONG);
+        static_cast<sgraph::WxStagePage*>(page)->SetModelType(sgraph::ModelType::PBR);
 	}
 		break;
 	case PAGE_PROTOTYPING:
@@ -292,7 +292,7 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
 			canvas->GetCamera(), *page, ECS_WORLD_VAR cfg, select_op);
 
         auto& nodes = grp::GRP::Instance()->GetAllNodes();
-		auto op = std::make_shared<bp::ConnectPinsOP>(canvas->GetCamera(), *page, nodes);
+		auto op = std::make_shared<bp::ConnectPinOP>(canvas->GetCamera(), *page, nodes);
 		op->SetPrevEditOP(arrange_op);
 		page->GetImpl().SetEditOP(op);
     }
@@ -342,7 +342,7 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
 		auto arrange_op = std::make_shared<bp::ArrangeNodeOP>(
 			canvas->GetCamera(), *page, ECS_WORLD_VAR cfg, select_op);
 
-		auto op = std::make_shared<bp::ConnectPinsOP>(
+		auto op = std::make_shared<bp::ConnectPinOP>(
 			canvas->GetCamera(), *page, sg::ShaderGraph::Instance()->GetAllNodes()
 		);
 		op->SetPrevEditOP(arrange_op);

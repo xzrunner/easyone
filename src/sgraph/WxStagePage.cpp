@@ -15,7 +15,7 @@
 #include <blueprint/Blueprint.h>
 #include <blueprint/CompNode.h>
 #include <blueprint/MessageID.h>
-#include <blueprint/Pins.h>
+#include <blueprint/Pin.h>
 #include <blueprint/NSCompNode.h>
 #include <blueprint/NodeHelper.h>
 #include <blueprint/node/Input.h>
