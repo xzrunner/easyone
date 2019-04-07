@@ -214,9 +214,9 @@
 [submodule "ext/sgconv"]
 	path = ext/sgconv
 	url = git@github.com:xzrunner/sgconv.git
-[submodule "ext/grp"]
-	path = ext/grp
-	url = git@github.com:xzrunner/grp.git
+[submodule "ext/renderlab"]
+	path = ext/renderlab
+	url = git@github.com:xzrunner/renderlab.git
 [submodule "ext/renderpipeline"]
 	path = ext/renderpipeline
 	url = git@github.com:xzrunner/renderpipeline.git
