@@ -8,10 +8,13 @@
 #include "frame/WxStageSubPanel.h"
 
 #include <ee0/SubjectMgr.h>
+#include <ee0/WxStageCanvas.h>
 #include <blueprint/Blueprint.h>
 #include <blueprint/MessageID.h>
 #include <blueprint/NSCompNode.h>
 #include <blueprint/NodeHelper.h>
+#include <blueprint/Node.h>
+#include <blueprint/CompNode.h>
 
 #include <node0/SceneNode.h>
 #include <node0/CompComplex.h>
@@ -68,6 +71,10 @@ void WxStagePage::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
 
     case ee0::MSG_STAGE_PAGE_NEW:
         CreateNewPage(variants);
+        break;
+
+    case bp::MSG_BLUE_PRINT_CHANGED:
+        UpdateBlueprint();
         break;
 	}
 
@@ -245,6 +252,29 @@ void WxStagePage::CreateNewPage(const ee0::VariantSet& variants) const
             const ee0::GameObj* obj = static_cast<const ee0::GameObj*>(var.m_val.pv);
             GD_ASSERT(obj, "err scene obj");
         }
+    }
+}
+
+void WxStagePage::UpdateBlueprint()
+{
+    bool dirty = false;
+
+    auto& wc = GetImpl().GetCanvas()->GetWidnowContext();
+    bp::UpdateParams params(wc.wc2, wc.wc3);
+    Traverse([&](const ee0::GameObj& obj)->bool
+    {
+        if (obj->HasUniqueComp<bp::CompNode>())
+        {
+            auto& bp_node = obj->GetUniqueComp<bp::CompNode>().GetNode();
+            if (bp_node->Update(params)) {
+                dirty = true;
+            }
+        }
+        return true;
+    });
+
+    if (dirty) {
+        m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
     }
 }
 

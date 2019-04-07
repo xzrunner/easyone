@@ -47,6 +47,8 @@ private:
 
     void CreateNewPage(const ee0::VariantSet& variants) const;
 
+    void UpdateBlueprint();
+
 private:
     WxToolbarPanel* m_toolbar = nullptr;
 
