@@ -65,7 +65,7 @@
 #include <blueprint/NodeSelectOP.h>
 #include <shadergraph/ShaderGraph.h>
 #include <prototyping/ArrangeNodeOP.h>
-#include <grp/GRP.h>
+#include <renderlab/RenderLab.h>
 
 #include <boost/filesystem.hpp>
 
@@ -291,7 +291,7 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
 		auto arrange_op = std::make_shared<bp::ArrangeNodeOP>(
 			canvas->GetCamera(), *page, ECS_WORLD_VAR cfg, select_op);
 
-        auto& nodes = grp::GRP::Instance()->GetAllNodes();
+        auto& nodes = rlab::RenderLab::Instance()->GetAllNodes();
 		auto op = std::make_shared<bp::ConnectPinOP>(canvas->GetCamera(), *page, nodes);
 		op->SetPrevEditOP(arrange_op);
 		page->GetImpl().SetEditOP(op);

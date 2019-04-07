@@ -5,7 +5,7 @@
 
 #include <wx/panel.h>
 
-namespace grp { class WxNodeProperty; }
+namespace rlab { class WxNodeProperty; }
 
 namespace eone
 {
@@ -32,7 +32,7 @@ private:
 private:
     eone::WxStagePage* m_stage_page;
 
-    grp::WxNodeProperty* m_prop;
+    rlab::WxNodeProperty* m_prop;
 
 }; // WxToolbarPanel
 

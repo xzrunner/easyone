@@ -3,7 +3,7 @@
 #include "frame/WxStagePage.h"
 
 #include <ee0/SubjectMgr.h>
-#include <grp/WxNodeProperty.h>
+#include <renderlab/WxNodeProperty.h>
 
 #include <guard/check.h>
 #include <node0/SceneNode.h>
@@ -41,7 +41,7 @@ void WxToolbarPanel::InitLayout()
     auto sub_mgr = m_stage_page->GetSubjectMgr();
 
 	auto sizer = new wxBoxSizer(wxVERTICAL);
-	sizer->Add(m_prop = new grp::WxNodeProperty(this, sub_mgr));
+	sizer->Add(m_prop = new rlab::WxNodeProperty(this, sub_mgr));
 
 	SetSizer(sizer);
 }
