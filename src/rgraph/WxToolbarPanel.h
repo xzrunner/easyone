@@ -16,6 +16,7 @@ namespace rgraph
 {
 
 class WxStagePage;
+class WxPreviewPanel;
 
 class WxToolbarPanel : public wxPanel, public ee0::Observer
 {
@@ -24,6 +25,8 @@ public:
 
 	virtual void OnNotify(uint32_t msg, const ee0::VariantSet& variants) override;
 
+    auto GetPreviewPanel() { return m_preview; }
+
 private:
 	void InitLayout();
 
@@ -31,6 +34,8 @@ private:
 
 private:
     eone::WxStagePage* m_stage_page;
+
+    WxPreviewPanel* m_preview;
 
     rlab::WxNodeProperty* m_prop;
 

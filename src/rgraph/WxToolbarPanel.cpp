@@ -1,4 +1,5 @@
 #include "rgraph/WxToolbarPanel.h"
+#include "rgraph/WxPreviewPanel.h"
 
 #include "frame/WxStagePage.h"
 
@@ -41,6 +42,11 @@ void WxToolbarPanel::InitLayout()
     auto sub_mgr = m_stage_page->GetSubjectMgr();
 
 	auto sizer = new wxBoxSizer(wxVERTICAL);
+    // preview
+    auto& rc = m_stage_page->GetImpl().GetCanvas()->GetRenderContext();
+    sizer->Add(m_preview = new WxPreviewPanel(this, sub_mgr, &rc));
+    sizer->AddSpacer(10);
+    // property
 	sizer->Add(m_prop = new rlab::WxNodeProperty(this, sub_mgr));
 
 	SetSizer(sizer);

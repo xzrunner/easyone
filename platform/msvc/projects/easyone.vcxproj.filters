@@ -402,6 +402,9 @@
     <ClInclude Include="..\..\..\src\rgraph\WxToolbarPanel.h">
       <Filter>33.rgraph</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\rgraph\WxPreviewPanel.h">
+      <Filter>33.rgraph</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\frame\main.cpp">
@@ -615,6 +618,9 @@
       <Filter>33.rgraph</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\rgraph\WxToolbarPanel.cpp">
+      <Filter>33.rgraph</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\rgraph\WxPreviewPanel.cpp">
       <Filter>33.rgraph</Filter>
     </ClCompile>
   </ItemGroup>

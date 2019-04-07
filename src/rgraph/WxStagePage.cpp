@@ -1,5 +1,6 @@
 #include "rgraph/WxStagePage.h"
 #include "rgraph/WxToolbarPanel.h"
+#include "rgraph/WxPreviewPanel.h"
 
 #include "frame/AppStyle.h"
 #include "frame/Blackboard.h"
@@ -15,6 +16,7 @@
 #include <blueprint/NodeHelper.h>
 #include <blueprint/Node.h>
 #include <blueprint/CompNode.h>
+#include <renderlab/RegistNodes.h>
 
 #include <node0/SceneNode.h>
 #include <node0/CompComplex.h>
@@ -259,19 +261,34 @@ void WxStagePage::UpdateBlueprint()
 {
     bool dirty = false;
 
+    bp::NodePtr output2screen = nullptr;
+
     auto& wc = GetImpl().GetCanvas()->GetWidnowContext();
     bp::UpdateParams params(wc.wc2, wc.wc3);
     Traverse([&](const ee0::GameObj& obj)->bool
     {
-        if (obj->HasUniqueComp<bp::CompNode>())
-        {
-            auto& bp_node = obj->GetUniqueComp<bp::CompNode>().GetNode();
-            if (bp_node->Update(params)) {
-                dirty = true;
-            }
+        if (!obj->HasUniqueComp<bp::CompNode>()) {
+            return true;
+        }
+        auto& bp_node = obj->GetUniqueComp<bp::CompNode>().GetNode();
+        if (bp_node->Update(params)) {
+            dirty = true;
+        }
+        if (bp_node->get_type() == rttr::type::get<rlab::node::OutputToScreen>()) {
+            output2screen = bp_node;
         }
         return true;
     });
+
+    if (output2screen)
+    {
+        auto& conns = output2screen->GetAllInput()[0]->GetConnecting();
+        if (!conns.empty())
+        {
+            auto preview = m_toolbar->GetPreviewPanel();
+            preview->RebuildDrawList(conns[0]->GetFrom()->GetParent());
+        }
+    }
 
     if (dirty) {
         m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
