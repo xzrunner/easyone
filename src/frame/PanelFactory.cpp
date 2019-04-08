@@ -36,6 +36,7 @@
 #include "sgraph/WxStageCanvas.h"
 #include "prototype/WxStagePage.h"
 #include "rgraph/WxStagePage.h"
+#include "rgraph/WxStageCanvas.h"
 #include "bprint/WxStagePage.h"
 #include "quake/WxStagePage.h"
 #include "quake/WxStageCanvas.h"
@@ -275,7 +276,7 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
     {
 		auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX2D);
 		page = new rgraph::WxStagePage(frame, ECS_WORLD_VAR obj);
-        auto canvas = std::make_shared<WxStageCanvas2D>(page, rc);
+        auto canvas = std::make_shared<rgraph::WxStageCanvas>(page, rc);
         page->GetImpl().SetCanvas(canvas);
 
         auto prev_op = std::make_shared<LeftDClickOP>(canvas->GetCamera(), *page, rc, wc);

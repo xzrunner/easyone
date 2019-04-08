@@ -375,6 +375,7 @@
     <ClInclude Include="..\..\..\src\quake\WxStageCanvas.h" />
     <ClInclude Include="..\..\..\src\quake\WxStagePage.h" />
     <ClInclude Include="..\..\..\src\rgraph\WxPreviewPanel.h" />
+    <ClInclude Include="..\..\..\src\rgraph\WxStageCanvas.h" />
     <ClInclude Include="..\..\..\src\rgraph\WxStagePage.h" />
     <ClInclude Include="..\..\..\src\rgraph\WxToolbarPanel.h" />
     <ClInclude Include="..\..\..\src\scale9\ComposeGrids.h" />
@@ -526,11 +527,18 @@
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/rgraph/</ObjectFileName>
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/rgraph/</ObjectFileName>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\rgraph\WxStageCanvas.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/rgraph/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/rgraph/</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="..\..\..\src\rgraph\WxStagePage.cpp">
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/rgraph/</ObjectFileName>
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/rgraph/</ObjectFileName>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\rgraph\WxToolbarPanel.cpp" />
+    <ClCompile Include="..\..\..\src\rgraph\WxToolbarPanel.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/rgraph/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/rgraph/</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="..\..\..\src\scale9\ComposeGrids.cpp" />
     <ClCompile Include="..\..\..\src\scale9\ResizeScale9OP.cpp" />
     <ClCompile Include="..\..\..\src\scale9\WxEditDialog.cpp">

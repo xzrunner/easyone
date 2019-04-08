@@ -157,6 +157,12 @@
     <Filter Include="33.rgraph">
       <UniqueIdentifier>{31182a01-d587-4a9e-8109-604526b31e39}</UniqueIdentifier>
     </Filter>
+    <Filter Include="33.rgraph\stage">
+      <UniqueIdentifier>{4f2facd9-6a78-4462-802d-5691bb1ee6d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="33.rgraph\toolbar">
+      <UniqueIdentifier>{f2c86d53-a87d-4a9e-b055-e005172c05f8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\frame\main.h">
@@ -396,14 +402,17 @@
     <ClInclude Include="..\..\..\src\sgraph\ModelType.h">
       <Filter>32.sgraph\view</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\rgraph\WxStagePage.h">
-      <Filter>33.rgraph</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\rgraph\WxToolbarPanel.h">
-      <Filter>33.rgraph</Filter>
+      <Filter>33.rgraph\toolbar</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\rgraph\WxPreviewPanel.h">
-      <Filter>33.rgraph</Filter>
+      <Filter>33.rgraph\toolbar</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\rgraph\WxStagePage.h">
+      <Filter>33.rgraph\stage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\rgraph\WxStageCanvas.h">
+      <Filter>33.rgraph\stage</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -614,14 +623,17 @@
     <ClCompile Include="..\..\..\src\frame\WxStageSubPanel.cpp">
       <Filter>00.frame\view</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\rgraph\WxStagePage.cpp">
-      <Filter>33.rgraph</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\rgraph\WxToolbarPanel.cpp">
-      <Filter>33.rgraph</Filter>
+      <Filter>33.rgraph\toolbar</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\rgraph\WxPreviewPanel.cpp">
-      <Filter>33.rgraph</Filter>
+      <Filter>33.rgraph\toolbar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\rgraph\WxStagePage.cpp">
+      <Filter>33.rgraph\stage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\rgraph\WxStageCanvas.cpp">
+      <Filter>33.rgraph\stage</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
