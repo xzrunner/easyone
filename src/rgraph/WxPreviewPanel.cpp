@@ -7,8 +7,9 @@
 #include <painting3/PerspCam.h>
 #include <painting3/Blackboard.h>
 #include <painting3/WindowContext.h>
-#include <rendergraph/DrawList.h>
 #include <unirender/Blackboard.h>
+#include <rendergraph/DrawList.h>
+#include <rendergraph/RenderContext.h>
 #include <renderpipeline/RenderMgr.h>
 #include <renderpipeline/IRenderer.h>
 
@@ -90,7 +91,17 @@ void WxPreviewPanel::Canvas::OnDrawSprites() const
     {
         rp::RenderMgr::Instance()->SetRenderer(rp::RenderType::EXTERN);
 
-        auto& rc = ur::Blackboard::Instance()->GetRenderContext();
+        auto& ur_rc = ur::Blackboard::Instance()->GetRenderContext();
+
+        rg::RenderContext rc(ur_rc);
+        rc.cam_proj_mat = m_camera->GetProjectionMat();
+        rc.cam_view_mat = m_camera->GetViewMat();
+        if (m_camera->TypeID() == pt0::GetCamTypeID<pt3::PerspCam>()) {
+            auto persp = std::static_pointer_cast<pt3::PerspCam>(m_camera);
+            rc.cam_position = persp->GetPos();
+        }
+        rc.light_position.Set(4, 4, 4);
+
         m_draw_list->Draw(rc);
     }
 }
