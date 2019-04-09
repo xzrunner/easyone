@@ -16,6 +16,7 @@
 #include <blueprint/NodeHelper.h>
 #include <blueprint/Node.h>
 #include <blueprint/CompNode.h>
+#include <blueprint/CommentaryNodeHelper.h>
 #include <renderlab/RegistNodes.h>
 
 #include <node0/SceneNode.h>
@@ -165,6 +166,8 @@ void WxStagePage::StoreToJsonExt(const std::string& dir, rapidjson::Value& val,
 
 void WxStagePage::LoadFromFileExt(const std::string& filepath)
 {
+    bp::CommentaryNodeHelper::InsertNodeToCommentary(*this);
+
     if (LoadNodeConnsFromFile(filepath)) {
         m_sub_mgr->NotifyObservers(bp::MSG_BLUE_PRINT_CHANGED);
     }
