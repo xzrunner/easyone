@@ -2,6 +2,8 @@
 
 #include <ee0/SubjectMgr.h>
 #include <ee3/WorldTravelOP.h>
+#include <renderlab/Node.h>
+#include <renderlab/Evaluator.h>
 
 #include <painting0/Shader.h>
 #include <painting3/PerspCam.h>
@@ -19,12 +21,12 @@ namespace rgraph
 {
 
 WxPreviewPanel::WxPreviewPanel(wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr,
-                               const ee0::RenderContext* rc)
+                               const ee0::RenderContext* rc, const std::shared_ptr<rlab::Evaluator>& eval)
     : wxPanel(parent, wxID_ANY, wxDefaultPosition, wxSize(300, 300))
     , m_sub_mgr(sub_mgr)
     , m_edit_impl(this, m_sub_mgr)
 {
-    m_canvas = std::make_unique<Canvas>(this, rc);
+    m_canvas = std::make_unique<Canvas>(this, rc, eval);
 
     auto op = std::make_shared<ee3::WorldTravelOP>(
         m_canvas->GetCamera(), m_canvas->GetViewport(), m_sub_mgr
@@ -43,9 +45,12 @@ void WxPreviewPanel::OnSize(wxSizeEvent& event)
 // class WxPreviewPanel::Canvas
 //////////////////////////////////////////////////////////////////////////
 
-WxPreviewPanel::Canvas::Canvas(WxPreviewPanel* panel, const ee0::RenderContext* rc)
+WxPreviewPanel::Canvas::Canvas(WxPreviewPanel* panel,
+                               const ee0::RenderContext* rc,
+                               const std::shared_ptr<rlab::Evaluator>& eval)
     : ee0::WxStageCanvas(panel, panel->m_edit_impl, std::make_shared<pt3::PerspCam>(sm::vec3(0, 0, -1.5f), sm::vec3(0, 0, 0), sm::vec3(0, 1, 0)), rc, nullptr, HAS_3D)
     , m_panel(panel)
+    , m_eval(eval)
 {
     panel->m_sub_mgr->RegisterObserver(ee0::MSG_SET_CANVAS_DIRTY, this);
 }
@@ -65,13 +70,6 @@ void WxPreviewPanel::Canvas::OnNotify(uint32_t msg, const ee0::VariantSet& varia
     }
 }
 
-void WxPreviewPanel::Canvas::RebuildDrawList(const bp::Node& node)
-{
-    m_rg.ClearCache();
-    m_rg_node = m_rg.CreateGraphNode(node);
-    m_draw_list = std::make_shared<rg::DrawList>(m_rg_node);
-}
-
 void WxPreviewPanel::Canvas::OnSize(int w, int h)
 {
 	auto& wc = pt3::Blackboard::Instance()->GetWindowContext();
@@ -87,23 +85,24 @@ void WxPreviewPanel::Canvas::OnSize(int w, int h)
 
 void WxPreviewPanel::Canvas::OnDrawSprites() const
 {
-    if (m_draw_list)
-    {
-        rp::RenderMgr::Instance()->SetRenderer(rp::RenderType::EXTERN);
-
-        auto& ur_rc = ur::Blackboard::Instance()->GetRenderContext();
-
-        rg::RenderContext rc(ur_rc);
-        rc.cam_proj_mat = m_camera->GetProjectionMat();
-        rc.cam_view_mat = m_camera->GetViewMat();
-        if (m_camera->TypeID() == pt0::GetCamTypeID<pt3::PerspCam>()) {
-            auto persp = std::static_pointer_cast<pt3::PerspCam>(m_camera);
-            rc.cam_position = persp->GetPos();
-        }
-        rc.light_position.Set(4, 4, 4);
-
-        m_draw_list->Draw(rc);
+    if (!m_eval || m_eval->IsEmpty()) {
+        return;
     }
+
+    rp::RenderMgr::Instance()->SetRenderer(rp::RenderType::EXTERN);
+
+    auto& ur_rc = ur::Blackboard::Instance()->GetRenderContext();
+
+    rg::RenderContext rc(ur_rc);
+    rc.cam_proj_mat = m_camera->GetProjectionMat();
+    rc.cam_view_mat = m_camera->GetViewMat();
+    if (m_camera->TypeID() == pt0::GetCamTypeID<pt3::PerspCam>()) {
+        auto persp = std::static_pointer_cast<pt3::PerspCam>(m_camera);
+        rc.cam_position = persp->GetPos();
+    }
+    rc.light_position.Set(4, 4, 4);
+
+    m_eval->Draw(rc);
 }
 
 }

@@ -25,8 +25,6 @@ public:
 
 	virtual void OnNotify(uint32_t msg, const ee0::VariantSet& variants) override;
 
-    auto GetPreviewPanel() { return m_preview; }
-
 private:
 	void InitLayout();
 

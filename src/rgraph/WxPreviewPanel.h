@@ -11,8 +11,8 @@
 
 #include <wx/panel.h>
 
-namespace rg { class DrawList; }
 namespace bp { class Node; }
+namespace rlab { class Evaluator; }
 
 namespace eone
 {
@@ -23,11 +23,7 @@ class WxPreviewPanel : public wxPanel
 {
 public:
     WxPreviewPanel(wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr,
-        const ee0::RenderContext* rc);
-
-    void RebuildDrawList(const bp::Node& node) {
-        m_canvas->RebuildDrawList(node);
-    }
+        const ee0::RenderContext* rc, const std::shared_ptr<rlab::Evaluator>& eval);
 
 private:
     void OnSize(wxSizeEvent& event);
@@ -36,14 +32,13 @@ private:
     class Canvas : public ee0::WxStageCanvas, public ee0::Observer
     {
     public:
-        Canvas(WxPreviewPanel* panel, const ee0::RenderContext* rc);
+        Canvas(WxPreviewPanel* panel, const ee0::RenderContext* rc,
+            const std::shared_ptr<rlab::Evaluator>& eval);
         virtual ~Canvas();
 
         virtual void OnNotify(uint32_t msg, const ee0::VariantSet& variants) override;
 
         const pt3::Viewport& GetViewport() const { return m_viewport; }
-
-        void RebuildDrawList(const bp::Node& node);
 
     private:
         virtual void OnSize(int w, int h) override;
@@ -54,10 +49,7 @@ private:
 
         pt3::Viewport m_viewport;
 
-        rlab::RenderGraph m_rg;
-
-        rg::NodePtr m_rg_node = nullptr;
-        std::shared_ptr<rg::DrawList> m_draw_list = nullptr;
+        const std::shared_ptr<rlab::Evaluator>& m_eval;
 
     }; // Canvas
 

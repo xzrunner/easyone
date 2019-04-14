@@ -5,6 +5,8 @@
 
 #include <blueprint/typedef.h>
 
+namespace rlab { class Evaluator; }
+
 namespace eone
 {
 namespace rgraph
@@ -25,6 +27,8 @@ public:
 	virtual int GetPageType() const override { return PAGE_RENDER_GRAPH; }
 
     bool LoadNodeConnsFromFile(const std::string& filepath);
+
+    auto& GetEval() const { return m_eval; }
 
 	static const std::string PAGE_TYPE;
 
@@ -47,10 +51,13 @@ private:
 
     void CreateNewPage(const ee0::VariantSet& variants) const;
 
+    bool UpdateNodes();
     void UpdateBlueprint();
 
 private:
     WxToolbarPanel* m_toolbar = nullptr;
+
+    std::shared_ptr<rlab::Evaluator> m_eval = nullptr;
 
 }; // WxStagePage
 

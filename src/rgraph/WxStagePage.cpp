@@ -18,6 +18,8 @@
 #include <blueprint/CompNode.h>
 #include <blueprint/CommentaryNodeHelper.h>
 #include <renderlab/RegistNodes.h>
+#include <renderlab/Evaluator.h>
+#include <renderlab/Blackboard.h>
 
 #include <node0/SceneNode.h>
 #include <node0/CompComplex.h>
@@ -39,12 +41,15 @@ const std::string WxStagePage::PAGE_TYPE = "render_graph";
 
 WxStagePage::WxStagePage(wxWindow* parent, ECS_WORLD_PARAM const ee0::GameObj& obj)
 	: eone::WxStagePage(parent, ECS_WORLD_VAR obj, SHOW_STAGE | SHOW_TOOLBAR | TOOLBAR_LFET)
+    , m_eval(std::make_shared<rlab::Evaluator>())
 {
 	static bool inited = false;
 	if (!inited) {
 		inited = true;
 		bp::Blueprint::Instance();
 	}
+
+    rlab::Blackboard::Instance()->SetEval(m_eval);
 
 	m_messages.push_back(ee0::MSG_SCENE_NODE_INSERT);
 	m_messages.push_back(ee0::MSG_SCENE_NODE_DELETE);
@@ -260,12 +265,9 @@ void WxStagePage::CreateNewPage(const ee0::VariantSet& variants) const
     }
 }
 
-void WxStagePage::UpdateBlueprint()
+bool WxStagePage::UpdateNodes()
 {
     bool dirty = false;
-
-    bp::NodePtr output2screen = nullptr;
-
     auto& wc = GetImpl().GetCanvas()->GetWidnowContext();
     bp::UpdateParams params(wc.wc2, wc.wc3);
     Traverse([&](const ee0::GameObj& obj)->bool
@@ -277,21 +279,29 @@ void WxStagePage::UpdateBlueprint()
         if (bp_node->Update(params)) {
             dirty = true;
         }
-        if (bp_node->get_type() == rttr::type::get<rlab::node::OutputToScreen>()) {
-            output2screen = bp_node;
+        return true;
+    });
+    return dirty;
+}
+
+void WxStagePage::UpdateBlueprint()
+{
+    rlab::Blackboard::Instance()->SetEval(m_eval);
+
+    bool dirty = UpdateNodes();
+
+    std::vector<std::shared_ptr<rlab::Node>> nodes;
+    Traverse([&](const ee0::GameObj& obj)->bool
+    {
+        if (!obj->HasUniqueComp<bp::CompNode>()) {
+            return true;
         }
+        auto& bp_node = obj->GetUniqueComp<bp::CompNode>().GetNode();
+        nodes.push_back(std::static_pointer_cast<rlab::Node>(bp_node));
         return true;
     });
 
-    if (output2screen)
-    {
-        auto& conns = output2screen->GetAllInput()[0]->GetConnecting();
-        if (!conns.empty())
-        {
-            auto preview = m_toolbar->GetPreviewPanel();
-            preview->RebuildDrawList(conns[0]->GetFrom()->GetParent());
-        }
-    }
+    m_eval->Rebuild(nodes);
 
     if (dirty) {
         m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
