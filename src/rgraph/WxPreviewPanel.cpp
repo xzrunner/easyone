@@ -100,7 +100,7 @@ void WxPreviewPanel::Canvas::OnDrawSprites() const
         auto persp = std::static_pointer_cast<pt3::PerspCam>(m_camera);
         rc.cam_position = persp->GetPos();
     }
-    rc.light_position.Set(-2, 4, -1);
+    rc.light_position.Set(0, 2, -4);
 
     m_eval->Draw(rc);
 }
