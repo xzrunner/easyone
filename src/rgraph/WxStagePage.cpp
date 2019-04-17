@@ -297,7 +297,9 @@ void WxStagePage::UpdateBlueprint()
             return true;
         }
         auto& bp_node = obj->GetUniqueComp<bp::CompNode>().GetNode();
-        nodes.push_back(std::static_pointer_cast<rlab::Node>(bp_node));
+        if (bp_node->get_derived_info().m_type.is_derived_from<rlab::Node>()) {
+            nodes.push_back(std::static_pointer_cast<rlab::Node>(bp_node));
+        }
         return true;
     });
 
