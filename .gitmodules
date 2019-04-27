@@ -220,3 +220,6 @@
 [submodule "ext/renderpipeline"]
 	path = ext/renderpipeline
 	url = git@github.com:xzrunner/renderpipeline.git
+[submodule "ext/uniphysics"]
+	path = ext/uniphysics
+	url = git@github.com:xzrunner/uniphysics.git
