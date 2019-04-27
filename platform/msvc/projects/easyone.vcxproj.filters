@@ -163,6 +163,9 @@
     <Filter Include="33.rgraph\toolbar">
       <UniqueIdentifier>{f2c86d53-a87d-4a9e-b055-e005172c05f8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="34.physics3d">
+      <UniqueIdentifier>{a4d0724a-65f7-410e-af7d-5c0d8bd12b92}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\frame\main.h">
@@ -414,6 +417,12 @@
     <ClInclude Include="..\..\..\src\rgraph\WxStageCanvas.h">
       <Filter>33.rgraph\stage</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\physics3d\WxStagePage.h">
+      <Filter>34.physics3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\physics3d\WxStageCanvas.h">
+      <Filter>34.physics3d</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\frame\main.cpp">
@@ -634,6 +643,12 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\rgraph\WxStageCanvas.cpp">
       <Filter>33.rgraph\stage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\physics3d\WxStagePage.cpp">
+      <Filter>34.physics3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\physics3d\WxStageCanvas.cpp">
+      <Filter>34.physics3d</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -205,6 +205,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "nodes", "nodes", "{B62F40DE
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "6.renderlab", "..\..\ext\renderlab\platform\msvc\projects\renderlab.vcxproj", "{D16C1C98-16E8-4D60-8209-E6AD7C80E918}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "0.uniphysics", "..\..\ext\uniphysics\platform\msvc\projects\uniphysics.vcxproj", "{A94BC06E-93B2-4F30-AB4E-7D677A1D5B54}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -523,6 +525,10 @@ Global
 		{D16C1C98-16E8-4D60-8209-E6AD7C80E918}.Debug|Win32.Build.0 = Debug|Win32
 		{D16C1C98-16E8-4D60-8209-E6AD7C80E918}.Release|Win32.ActiveCfg = Release|Win32
 		{D16C1C98-16E8-4D60-8209-E6AD7C80E918}.Release|Win32.Build.0 = Release|Win32
+		{A94BC06E-93B2-4F30-AB4E-7D677A1D5B54}.Debug|Win32.ActiveCfg = Debug|Win32
+		{A94BC06E-93B2-4F30-AB4E-7D677A1D5B54}.Debug|Win32.Build.0 = Debug|Win32
+		{A94BC06E-93B2-4F30-AB4E-7D677A1D5B54}.Release|Win32.ActiveCfg = Release|Win32
+		{A94BC06E-93B2-4F30-AB4E-7D677A1D5B54}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -617,6 +623,7 @@ Global
 		{1CBD9E7E-98C6-4D18-AC91-7683C4AB23FC} = {AF5FD54D-12B0-4D18-AEE3-9A72DDD1CAE5}
 		{B62F40DE-E89D-4F03-8E1B-A1BD52D48067} = {3F90F0BC-4357-48B0-A92E-DA2826502647}
 		{D16C1C98-16E8-4D60-8209-E6AD7C80E918} = {B62F40DE-E89D-4F03-8E1B-A1BD52D48067}
+		{A94BC06E-93B2-4F30-AB4E-7D677A1D5B54} = {55D85D01-599C-4F78-A116-BDBAEAF0D939}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8D54C01A-3C82-4351-A325-2853C3E81322}

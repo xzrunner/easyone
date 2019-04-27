@@ -40,6 +40,8 @@
 #include "bprint/WxStagePage.h"
 #include "quake/WxStagePage.h"
 #include "quake/WxStageCanvas.h"
+#include "physics3d/WxStagePage.h"
+#include "physics3d/WxStageCanvas.h"
 
 #include <ee0/WxListSelectDlg.h>
 #include <ee0/MsgHelper.h>
@@ -296,6 +298,18 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
 		auto op = std::make_shared<bp::ConnectPinOP>(canvas->GetCamera(), *page, nodes);
 		op->SetPrevEditOP(arrange_op);
 		page->GetImpl().SetEditOP(op);
+    }
+        break;
+    case PAGE_PHYSICS3D:
+    {
+        auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX3D);
+        page = new physics3d::WxStagePage(frame, library, ECS_WORLD_VAR obj);
+        auto canvas = std::make_shared<physics3d::WxStageCanvas>(page, rc);
+        page->GetImpl().SetCanvas(canvas);
+
+        auto op = std::make_shared<ee3::NodeArrangeOP>(
+            canvas->GetCamera(), *page, canvas->GetViewport());
+        page->GetImpl().SetEditOP(op);
     }
         break;
 
