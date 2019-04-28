@@ -2,21 +2,12 @@
 
 #include <ee0/GameObj.h>
 
-#include <uniphysics/cloth/JobManager.h>
+#include "physics3d/PhysicsMgr.h"
 
 #include "frame/WxStagePage.h"
 #include "frame/StagePageType.h"
 
 namespace ee0 { class WxLibraryPanel; }
-namespace up
-{
-namespace cloth
-{
-    class Factory;
-    class Cloth;
-    class MultithreadedSolverHelper;
-}
-}
 
 namespace eone
 {
@@ -37,7 +28,7 @@ public:
 
     virtual void OnSetSkybox(const std::string& filepath);
 
-    void DoSimulationStep(float dt);
+    auto& GetPhysicsMgr() { return m_physics; }
 
 	static const std::string PAGE_TYPE;
 
@@ -56,14 +47,11 @@ private:
 	void DeleteSceneNode(const ee0::VariantSet& variants);
 	void ClearSceneNode();
 
+    void InitRigidObj();
     void InitClothObj();
 
 private:
-    up::cloth::JobManager m_job_mgr;
-
-    std::unique_ptr<up::cloth::Factory> m_factory = nullptr;
-
-    std::map<std::shared_ptr<up::cloth::Solver>, up::cloth::MultithreadedSolverHelper> m_solvers;
+    PhysicsMgr m_physics;
 
 }; // WxStagePage
 

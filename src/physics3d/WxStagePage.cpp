@@ -19,16 +19,13 @@
 #include <node3/CompModel.h>
 #include <node3/CompCloth.h>
 #include <sx/ResFileHelper.h>
-#include <uniphysics/cloth/ClothMeshData.h>
-#include <uniphysics/cloth/Solver.h>
-#include <uniphysics/cloth/nv/Factory.h>
 #include <unirender/VertexAttrib.h>
 #include <unirender/Shader.h>
 #include <unirender/Blackboard.h>
+#include <uniphysics/cloth/ClothMeshData.h>
+#include <uniphysics/rigid/bullet/Shape.h>
 #include <facade/ResPool.h>
 #include <facade/ImageCube.h>
-
-#include <NvCloth/Factory.h>
 
 namespace eone
 {
@@ -47,8 +44,6 @@ WxStagePage::WxStagePage(wxWindow* parent, ee0::WxLibraryPanel* library, ECS_WOR
 	if (library) {
 		SetDropTarget(new ee3::WxStageDropTarget(ECS_WORLD_VAR library, this));
 	}
-
-    m_factory = std::make_unique<up::cloth::nv::Factory>(nv::cloth::Platform::CPU);
 }
 
 void WxStagePage::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
@@ -103,21 +98,10 @@ void WxStagePage::OnSetSkybox(const std::string& filepath)
     std::static_pointer_cast<ee3::WxStageCanvas>(GetImpl().GetCanvas())->SetSkybox(img_cube);
 }
 
-void WxStagePage::DoSimulationStep(float dt)
-{
-    // start
-    for (auto& s : m_solvers) {
-        s.second.StartSimulation(dt);
-    }
-    // wait
-    for (auto& s : m_solvers) {
-        s.second.WaitForSimulation();
-    }
-}
-
 void WxStagePage::OnPageInit()
 {
-    InitClothObj();
+    InitRigidObj();
+//    InitClothObj();
 }
 
 #ifndef GAME_OBJ_ECS
@@ -177,6 +161,29 @@ void WxStagePage::ClearSceneNode()
 #endif // GAME_OBJ_ECS
 }
 
+void WxStagePage::InitRigidObj()
+{
+    auto obj = m_physics.CreateBox(0.0f, sm::vec3(50, 50, 50), sm::vec3(0, -50, 0), sm::vec4(0, 0, 1, 1));
+
+    auto shape = std::make_shared<up::rigid::bullet::Shape>();
+    shape->InitBoxShape(sm::vec3(0.1f, 0.1f, 0.1f));
+    const float mass = 1.0f;
+    const size_t ARRAY_SIZE_X = 5;
+    const size_t ARRAY_SIZE_Y = 5;
+    const size_t ARRAY_SIZE_Z = 5;
+	for (int k = 0; k < ARRAY_SIZE_Y; k++)
+	{
+		for (int i = 0; i < ARRAY_SIZE_X; i++)
+		{
+			for (int j = 0; j < ARRAY_SIZE_Z; j++)
+			{
+                sm::vec3 pos(0.2f * i, 2 + .2f * k, 0.2f * j);
+                auto obj = m_physics.CreateBox(mass, *shape, pos, sm::vec4(1, 0, 0, 1));
+			}
+		}
+	}
+}
+
 void WxStagePage::InitClothObj()
 {
     up::cloth::ClothMeshData cloth_mesh;
@@ -188,13 +195,7 @@ void WxStagePage::InitClothObj()
     cloth_mesh.GeneratePlaneCloth(6.f, 7.f, 49, 59, false, transform);
     cloth_mesh.AttachClothPlaneByAngles(49, 59);
 
-    auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_MODEL);
-    auto& ccloth = obj->AddUniqueComp<n3::CompCloth>();
-    ccloth.BuildFromClothMesh(sm::vec3(0, 0, 0), *m_factory, cloth_mesh);
-
-    auto solver = ccloth.GetSolver();
-    m_solvers[solver].Initialize(solver.get(), &m_job_mgr);
-
+    auto obj = m_physics.CreateCloth(sm::vec3(0, 0, 0), cloth_mesh);
     m_obj->GetSharedComp<n0::CompComplex>().AddChild(obj);
 }
 

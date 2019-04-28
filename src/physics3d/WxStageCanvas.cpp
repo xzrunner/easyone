@@ -22,7 +22,7 @@ bool WxStageCanvas::OnUpdate()
     //}
     //m_last_time = curr_time;
 
-    static_cast<WxStagePage*>(m_stage)->DoSimulationStep(dt);
+    static_cast<WxStagePage*>(m_stage)->GetPhysicsMgr().DoSimulationStep(dt);
 
     return true;
 }

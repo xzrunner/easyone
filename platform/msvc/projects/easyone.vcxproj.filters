@@ -423,6 +423,9 @@
     <ClInclude Include="..\..\..\src\physics3d\WxStageCanvas.h">
       <Filter>34.physics3d</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\physics3d\PhysicsMgr.h">
+      <Filter>34.physics3d</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\frame\main.cpp">
@@ -648,6 +651,9 @@
       <Filter>34.physics3d</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\physics3d\WxStageCanvas.cpp">
+      <Filter>34.physics3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\physics3d\PhysicsMgr.cpp">
       <Filter>34.physics3d</Filter>
     </ClCompile>
   </ItemGroup>
