@@ -47,7 +47,8 @@
 namespace eone
 {
 
-ee0::GameObj GameObjFactory::Create(ECS_WORLD_PARAM GameObjType type)
+ee0::GameObj GameObjFactory::Create(ECS_WORLD_PARAM GameObjType type,
+                                    const std::shared_ptr<n0::CompAsset>& shared_comp)
 {
 	if (type == GAME_OBJ_UNKNOWN) {
 		return GAME_OBJ_NULL;
@@ -67,7 +68,11 @@ ee0::GameObj GameObjFactory::Create(ECS_WORLD_PARAM GameObjType type)
 	case GAME_OBJ_IMAGE:
 		{
 #ifndef GAME_OBJ_ECS
-			obj->AddSharedComp<n2::CompImage>();
+            if (shared_comp) {
+                obj->AddSharedCompNoCreate(shared_comp);
+            } else {
+                obj->AddSharedComp<n2::CompImage>();
+            }
 #else
 			world.AddComponent<e2::CompImage>(obj);
 #endif // GAME_OBJ_ECS
@@ -75,13 +80,21 @@ ee0::GameObj GameObjFactory::Create(ECS_WORLD_PARAM GameObjType type)
 		}
 		break;
 	case GAME_OBJ_IMAGE3D:
-		obj->AddSharedComp<n3::CompImage3D>();
+        if (shared_comp) {
+            obj->AddSharedCompNoCreate(shared_comp);
+        } else {
+            obj->AddSharedComp<n3::CompImage3D>();
+        }
 		break;
 	case GAME_OBJ_TEXT:
 		{
 #ifndef GAME_OBJ_ECS
-			auto& ctext = obj->AddSharedComp<n2::CompText>();
-			auto& tb = ctext.GetText().tb;
+            if (shared_comp) {
+                obj->AddSharedCompNoCreate(shared_comp);
+            } else {
+                obj->AddSharedComp<n2::CompText>();
+            }
+            auto& tb = obj->GetSharedComp<n2::CompText>().GetText().tb;
 #else
 			auto& ctext = world.AddComponent<e2::CompText>(obj);
 			auto& tb = ctext.text.tb;
@@ -92,7 +105,11 @@ ee0::GameObj GameObjFactory::Create(ECS_WORLD_PARAM GameObjType type)
 	case GAME_OBJ_MASK:
 		{
 #ifndef GAME_OBJ_ECS
-			obj->AddSharedComp<n2::CompMask>();
+            if (shared_comp) {
+                obj->AddSharedCompNoCreate(shared_comp);
+            } else {
+                obj->AddSharedComp<n2::CompMask>();
+            }
 #else
 			world.AddComponent<e2::CompMask>(obj);
 #endif // GAME_OBJ_ECS
@@ -102,7 +119,11 @@ ee0::GameObj GameObjFactory::Create(ECS_WORLD_PARAM GameObjType type)
 	case GAME_OBJ_MESH:
 		{
 #ifndef GAME_OBJ_ECS
-			obj->AddSharedComp<n2::CompMesh>();
+            if (shared_comp) {
+                obj->AddSharedCompNoCreate(shared_comp);
+            } else {
+                obj->AddSharedComp<n2::CompMesh>();
+            }
 #else
 			world.AddComponent<e2::CompMesh>(obj);
 #endif // GAME_OBJ_ECS
@@ -112,7 +133,11 @@ ee0::GameObj GameObjFactory::Create(ECS_WORLD_PARAM GameObjType type)
 	case GAME_OBJ_SCALE9:
 		{
 #ifndef GAME_OBJ_ECS
-			obj->AddSharedComp<n2::CompScale9>();
+            if (shared_comp) {
+                obj->AddSharedCompNoCreate(shared_comp);
+            } else {
+                obj->AddSharedComp<n2::CompScale9>();
+            }
 #else
 			world.AddComponent<e2::CompScale9>(obj);
 #endif // GAME_OBJ_ECS
@@ -129,7 +154,12 @@ ee0::GameObj GameObjFactory::Create(ECS_WORLD_PARAM GameObjType type)
 
 			layer->AddKeyFrame(std::make_unique<anim::KeyFrame>(0));
 
-			auto& canim = obj->AddSharedComp<n2::CompAnim>();
+            if (shared_comp) {
+                obj->AddSharedCompNoCreate(shared_comp);
+            } else {
+                obj->AddSharedComp<n2::CompAnim>();
+            }
+			auto& canim = obj->GetSharedComp<n2::CompAnim>();
 			canim.AddLayer(layer);
 
 			obj->AddUniqueComp<n2::CompAnimInst>(canim.GetAnimTemplate());
@@ -141,7 +171,11 @@ ee0::GameObj GameObjFactory::Create(ECS_WORLD_PARAM GameObjType type)
 #ifndef GAME_OBJ_ECS
 			sz.Build(100, 100);
 
-			obj->AddSharedComp<n2::CompParticle3d>(particle3d::MAX_COMPONENTS);
+            if (shared_comp) {
+                obj->AddSharedCompNoCreate(shared_comp);
+            } else {
+                obj->AddSharedComp<n2::CompParticle3d>(particle3d::MAX_COMPONENTS);
+            }
 			auto& cp3d = obj->GetSharedCompPtr<n2::CompParticle3d>();
 			obj->AddUniqueComp<n2::CompParticle3dInst>(cp3d);
 #endif // GAME_OBJ_ECS
@@ -152,8 +186,17 @@ ee0::GameObj GameObjFactory::Create(ECS_WORLD_PARAM GameObjType type)
 		{
 			is_2d = false;
 #ifndef GAME_OBJ_ECS
-			obj->AddSharedComp<n3::CompModel>();
-			obj->AddUniqueComp<n3::CompModelInst>();
+            if (shared_comp) {
+                obj->AddSharedCompNoCreate(shared_comp);
+                auto& cmodel_inst = obj->AddUniqueComp<n3::CompModelInst>();
+                auto model = std::static_pointer_cast<n3::CompModel>(shared_comp)->GetModel();
+                if (model) {
+                    cmodel_inst.SetModel(model, 0);
+                }
+            } else {
+                obj->AddSharedComp<n3::CompModel>();
+                obj->AddUniqueComp<n3::CompModelInst>();
+            }
 #endif // GAME_OBJ_ECS
 		}
 		break;
@@ -221,7 +264,11 @@ ee0::GameObj GameObjFactory::Create(ECS_WORLD_PARAM GameObjType type)
 	case GAME_OBJ_COMPLEX2D:
 		is_2d = true;
 #ifndef GAME_OBJ_ECS
-		obj->AddSharedComp<n0::CompComplex>();
+        if (shared_comp) {
+            obj->AddSharedCompNoCreate(shared_comp);
+        } else {
+            obj->AddSharedComp<n0::CompComplex>();
+        }
 #else
 		world.AddComponent<e2::CompComplex>(obj);
 #endif // GAME_OBJ_ECS
@@ -230,7 +277,11 @@ ee0::GameObj GameObjFactory::Create(ECS_WORLD_PARAM GameObjType type)
 	case GAME_OBJ_COMPLEX3D:
 		is_2d = false;
 #ifndef GAME_OBJ_ECS
-		obj->AddSharedComp<n0::CompComplex>();
+        if (shared_comp) {
+            obj->AddSharedCompNoCreate(shared_comp);
+        } else {
+            obj->AddSharedComp<n0::CompComplex>();
+        }
 #else
 		world.AddComponent<e2::CompComplex>(obj);
 #endif // GAME_OBJ_ECS

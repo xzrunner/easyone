@@ -12,7 +12,8 @@ namespace eone
 class GameObjFactory
 {
 public:
-	static ee0::GameObj Create(ECS_WORLD_PARAM GameObjType type);
+	static ee0::GameObj Create(ECS_WORLD_PARAM GameObjType type,
+        const std::shared_ptr<n0::CompAsset>& shared_comp = nullptr);
 
 }; // GameObjFactory
 
