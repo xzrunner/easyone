@@ -4,6 +4,7 @@
 
 #include <SM_Vector.h>
 #include <uniphysics/cloth/JobManager.h>
+#include <node0/typedef.h>
 
 #include <boost/noncopyable.hpp>
 
@@ -41,8 +42,8 @@ public:
 
     ee0::GameObj CreateBox(float mass, const sm::vec3& half_extents,
         const sm::vec3& pos, const sm::vec4& color);
-    ee0::GameObj CreateBox(float mass, const up::rigid::Shape& shape,
-        const sm::vec3& pos, const sm::vec4& color);
+    ee0::GameObj CreateBox(float mass, const std::shared_ptr<up::rigid::Shape>& shape,
+        const sm::vec3& pos, const sm::vec4& color, const n0::CompAssetPtr& model_comp = nullptr);
 
     void DoSimulationStep(float dt);
 

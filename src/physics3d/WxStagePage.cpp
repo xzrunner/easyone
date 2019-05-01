@@ -14,9 +14,11 @@
 
 #include <guard/check.h>
 #include <model/Model.h>
+#include <model/MeshBuider.h>
 #include <node0/SceneNode.h>
 #include <node0/CompComplex.h>
 #include <node3/CompModel.h>
+#include <node3/CompModelInst.h>
 #include <node3/CompCloth.h>
 #include <sx/ResFileHelper.h>
 #include <unirender/VertexAttrib.h>
@@ -163,10 +165,34 @@ void WxStagePage::ClearSceneNode()
 
 void WxStagePage::InitRigidObj()
 {
-    auto obj = m_physics.CreateBox(0.0f, sm::vec3(50, 50, 50), sm::vec3(0, -50, 0), sm::vec4(0, 0, 1, 1));
+    // ground
+    {
+        sm::vec3 half_extents(50, 50, 50);
+        auto obj = m_physics.CreateBox(0.0f, half_extents, sm::vec3(0, -50, 0), sm::vec4(0, 0, 1, 1));
 
-    auto shape = std::make_shared<up::rigid::bullet::Shape>();
-    shape->InitBoxShape(sm::vec3(0.1f, 0.1f, 0.1f));
+        auto model = std::make_shared<model::Model>();
+        model->materials.emplace_back(std::make_unique<model::Model::Material>());
+        auto mesh = model::MeshBuider::CreateCube(half_extents);
+        model->meshes.push_back(std::move(mesh));
+
+        obj->GetSharedComp<n3::CompModel>().SetModel(model);
+        obj->GetUniqueComp<n3::CompModelInst>().SetModel(model, 0);
+
+        ee0::MsgHelper::InsertNode(*m_sub_mgr, obj);
+    }
+
+    sm::vec3 half_extents(0.1f, 0.1f, 0.1f);
+    m_box_shape = std::make_shared<up::rigid::bullet::Shape>();
+    m_box_shape->InitBoxShape(half_extents);
+
+    auto box_comp = std::make_shared<n3::CompModel>();
+    auto model = std::make_shared<model::Model>();
+    model->materials.emplace_back(std::make_unique<model::Model::Material>());
+    auto mesh = model::MeshBuider::CreateCube(half_extents);
+    model->meshes.push_back(std::move(mesh));
+    box_comp->SetModel(model);
+    m_box_comp = box_comp;
+
     const float mass = 1.0f;
     const size_t ARRAY_SIZE_X = 5;
     const size_t ARRAY_SIZE_Y = 5;
@@ -178,7 +204,8 @@ void WxStagePage::InitRigidObj()
 			for (int j = 0; j < ARRAY_SIZE_Z; j++)
 			{
                 sm::vec3 pos(0.2f * i, 2 + .2f * k, 0.2f * j);
-                auto obj = m_physics.CreateBox(mass, *shape, pos, sm::vec4(1, 0, 0, 1));
+                auto obj = m_physics.CreateBox(mass, m_box_shape, pos, sm::vec4(1, 0, 0, 1), m_box_comp);
+                ee0::MsgHelper::InsertNode(*m_sub_mgr, obj);
 			}
 		}
 	}

@@ -9,6 +9,8 @@
 
 namespace ee0 { class WxLibraryPanel; }
 
+namespace up { namespace rigid { class Shape; } }
+
 namespace eone
 {
 namespace physics3d
@@ -52,6 +54,9 @@ private:
 
 private:
     PhysicsMgr m_physics;
+
+    std::shared_ptr<up::rigid::Shape> m_box_shape = nullptr;
+    n0::CompAssetPtr                  m_box_comp  = nullptr;
 
 }; // WxStagePage
 
