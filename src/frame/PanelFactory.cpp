@@ -52,6 +52,7 @@
 #include <ee3/WorldTravelOP.h>
 #include <ee3/CameraDriveOP.h>
 #include <ee3/SkeletonJointOP.h>
+#include <ee3/DragRigidOP.h>
 
 #include <node0/SceneNode.h>
 #include <node2/CompMask.h>
@@ -303,12 +304,14 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
     case PAGE_PHYSICS3D:
     {
         auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX3D);
-        page = new physics3d::WxStagePage(frame, library, ECS_WORLD_VAR obj);
+        auto p3_page = new physics3d::WxStagePage(frame, library, ECS_WORLD_VAR obj);
+        page = p3_page;
         auto canvas = std::make_shared<physics3d::WxStageCanvas>(page, rc);
         page->GetImpl().SetCanvas(canvas);
 
-        auto op = std::make_shared<ee3::NodeArrangeOP>(
-            canvas->GetCamera(), *page, canvas->GetViewport());
+        auto& world = p3_page->GetPhysicsMgr().GetWorld();
+        auto op = std::make_shared<ee3::DragRigidOP>(
+            canvas->GetCamera(), *page, canvas->GetViewport(), world);
         page->GetImpl().SetEditOP(op);
     }
         break;

@@ -23,7 +23,7 @@ namespace physics3d
 
 PhysicsMgr::PhysicsMgr()
 {
-    m_world = std::make_unique<up::rigid::bullet::World>();
+    m_world = std::make_shared<up::rigid::bullet::World>();
     m_factory = std::make_unique<up::cloth::nv::Factory>(nv::cloth::Platform::CPU);
 }
 

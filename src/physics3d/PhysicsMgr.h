@@ -47,9 +47,11 @@ public:
 
     void DoSimulationStep(float dt);
 
+    auto& GetWorld() const { return m_world; }
+
 private:
     // rigid
-    std::unique_ptr<up::rigid::World> m_world = nullptr;
+    std::shared_ptr<up::rigid::World> m_world = nullptr;
 
     // cloth
     up::cloth::JobManager m_job_mgr;
