@@ -223,3 +223,9 @@
 [submodule "ext/uniphysics"]
 	path = ext/uniphysics
 	url = git@github.com:xzrunner/uniphysics.git
+[submodule "ext/raytracing"]
+	path = ext/raytracing
+	url = git@github.com:xzrunner/raytracing.git
+[submodule "ext/raylab"]
+	path = ext/raylab
+	url = git@github.com:xzrunner/raylab.git

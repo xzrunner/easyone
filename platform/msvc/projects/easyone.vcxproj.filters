@@ -166,6 +166,15 @@
     <Filter Include="34.physics3d">
       <UniqueIdentifier>{a4d0724a-65f7-410e-af7d-5c0d8bd12b92}</UniqueIdentifier>
     </Filter>
+    <Filter Include="35.raygraph">
+      <UniqueIdentifier>{244022ff-cc98-4467-9cac-22839fef6bf1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="35.raygraph\stage">
+      <UniqueIdentifier>{08287b85-7c44-48e6-9551-4c6703127f5e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="35.raygraph\toolbar">
+      <UniqueIdentifier>{5297a011-f6ab-4370-bd4c-154535e8ac2d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\frame\main.h">
@@ -426,6 +435,12 @@
     <ClInclude Include="..\..\..\src\physics3d\PhysicsMgr.h">
       <Filter>34.physics3d</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\raygraph\WxStagePage.h">
+      <Filter>35.raygraph\stage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\raygraph\WxToolbarPanel.h">
+      <Filter>35.raygraph\toolbar</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\frame\main.cpp">
@@ -655,6 +670,12 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\physics3d\PhysicsMgr.cpp">
       <Filter>34.physics3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\raygraph\WxStagePage.cpp">
+      <Filter>35.raygraph\stage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\raygraph\WxToolbarPanel.cpp">
+      <Filter>35.raygraph\toolbar</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

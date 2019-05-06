@@ -207,6 +207,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "6.renderlab", "..\..\ext\re
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "0.uniphysics", "..\..\ext\uniphysics\platform\msvc\projects\uniphysics.vcxproj", "{A94BC06E-93B2-4F30-AB4E-7D677A1D5B54}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "1.raytracing", "..\..\ext\raytracing\platform\msvc\projects\raytracing.vcxproj", "{58774258-6A0E-4ABF-94A4-2743CF495237}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "1.raylab", "..\..\ext\raylab\platform\msvc\projects\raylab.vcxproj", "{7F806517-AF5C-466E-8B85-16A44E546642}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -1307,6 +1311,34 @@ Global
 		{A94BC06E-93B2-4F30-AB4E-7D677A1D5B54}.RelWithDebInfo|Win32.Build.0 = Release|Win32
 		{A94BC06E-93B2-4F30-AB4E-7D677A1D5B54}.RelWithDebInfo|x64.ActiveCfg = Release|Win32
 		{A94BC06E-93B2-4F30-AB4E-7D677A1D5B54}.RelWithDebInfo|x64.Build.0 = Release|Win32
+		{58774258-6A0E-4ABF-94A4-2743CF495237}.Debug|Win32.ActiveCfg = Debug|Win32
+		{58774258-6A0E-4ABF-94A4-2743CF495237}.Debug|Win32.Build.0 = Debug|Win32
+		{58774258-6A0E-4ABF-94A4-2743CF495237}.Debug|x64.ActiveCfg = Debug|Win32
+		{58774258-6A0E-4ABF-94A4-2743CF495237}.MinSizeRel|Win32.ActiveCfg = Release|Win32
+		{58774258-6A0E-4ABF-94A4-2743CF495237}.MinSizeRel|Win32.Build.0 = Release|Win32
+		{58774258-6A0E-4ABF-94A4-2743CF495237}.MinSizeRel|x64.ActiveCfg = Release|Win32
+		{58774258-6A0E-4ABF-94A4-2743CF495237}.MinSizeRel|x64.Build.0 = Release|Win32
+		{58774258-6A0E-4ABF-94A4-2743CF495237}.Release|Win32.ActiveCfg = Release|Win32
+		{58774258-6A0E-4ABF-94A4-2743CF495237}.Release|Win32.Build.0 = Release|Win32
+		{58774258-6A0E-4ABF-94A4-2743CF495237}.Release|x64.ActiveCfg = Release|Win32
+		{58774258-6A0E-4ABF-94A4-2743CF495237}.RelWithDebInfo|Win32.ActiveCfg = Release|Win32
+		{58774258-6A0E-4ABF-94A4-2743CF495237}.RelWithDebInfo|Win32.Build.0 = Release|Win32
+		{58774258-6A0E-4ABF-94A4-2743CF495237}.RelWithDebInfo|x64.ActiveCfg = Release|Win32
+		{58774258-6A0E-4ABF-94A4-2743CF495237}.RelWithDebInfo|x64.Build.0 = Release|Win32
+		{7F806517-AF5C-466E-8B85-16A44E546642}.Debug|Win32.ActiveCfg = Debug|Win32
+		{7F806517-AF5C-466E-8B85-16A44E546642}.Debug|Win32.Build.0 = Debug|Win32
+		{7F806517-AF5C-466E-8B85-16A44E546642}.Debug|x64.ActiveCfg = Debug|Win32
+		{7F806517-AF5C-466E-8B85-16A44E546642}.MinSizeRel|Win32.ActiveCfg = Release|Win32
+		{7F806517-AF5C-466E-8B85-16A44E546642}.MinSizeRel|Win32.Build.0 = Release|Win32
+		{7F806517-AF5C-466E-8B85-16A44E546642}.MinSizeRel|x64.ActiveCfg = Release|Win32
+		{7F806517-AF5C-466E-8B85-16A44E546642}.MinSizeRel|x64.Build.0 = Release|Win32
+		{7F806517-AF5C-466E-8B85-16A44E546642}.Release|Win32.ActiveCfg = Release|Win32
+		{7F806517-AF5C-466E-8B85-16A44E546642}.Release|Win32.Build.0 = Release|Win32
+		{7F806517-AF5C-466E-8B85-16A44E546642}.Release|x64.ActiveCfg = Release|Win32
+		{7F806517-AF5C-466E-8B85-16A44E546642}.RelWithDebInfo|Win32.ActiveCfg = Release|Win32
+		{7F806517-AF5C-466E-8B85-16A44E546642}.RelWithDebInfo|Win32.Build.0 = Release|Win32
+		{7F806517-AF5C-466E-8B85-16A44E546642}.RelWithDebInfo|x64.ActiveCfg = Release|Win32
+		{7F806517-AF5C-466E-8B85-16A44E546642}.RelWithDebInfo|x64.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1402,6 +1434,8 @@ Global
 		{B62F40DE-E89D-4F03-8E1B-A1BD52D48067} = {3F90F0BC-4357-48B0-A92E-DA2826502647}
 		{D16C1C98-16E8-4D60-8209-E6AD7C80E918} = {B62F40DE-E89D-4F03-8E1B-A1BD52D48067}
 		{A94BC06E-93B2-4F30-AB4E-7D677A1D5B54} = {55D85D01-599C-4F78-A116-BDBAEAF0D939}
+		{58774258-6A0E-4ABF-94A4-2743CF495237} = {AF5FD54D-12B0-4D18-AEE3-9A72DDD1CAE5}
+		{7F806517-AF5C-466E-8B85-16A44E546642} = {B62F40DE-E89D-4F03-8E1B-A1BD52D48067}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8D54C01A-3C82-4351-A325-2853C3E81322}
