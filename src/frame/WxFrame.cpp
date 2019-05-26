@@ -64,6 +64,7 @@ void WxFrame::OnNew(wxCommandEvent& event)
 		{ "Prototyping", new PageItemData(eone::PAGE_PROTOTYPING) },
         { "RenderGraph", new PageItemData(eone::PAGE_RENDER_GRAPH) },
         { "RayGraph",    new PageItemData(eone::PAGE_RAY_GRAPH) },
+        { "GuiGraph",    new PageItemData(eone::PAGE_GUI_GRAPH) },
 
 		{ "Script...",   new PageItemData(eone::PAGE_SCRIPT) },
 		{ "Blueprint",   new PageItemData(eone::PAGE_BLUEPRINT) },

@@ -230,14 +230,17 @@ void WxStagePage::InitSubWindow()
 	} else {
 		ui_mgr.GetPane(STR_STAGE_PANEL).Hide();
 	}
-	if (m_app_style & SHOW_STAGE_EXT) {
-		ui_mgr.GetPane(STR_STAGE_EXT_PANEL).Show();
-		if (m_app_style & STAGE_EXT_LFET) {
-			ui_mgr.GetPane(STR_STAGE_EXT_PANEL).Left().MinSize(500, -1);
-		}
-	} else {
-		ui_mgr.GetPane(STR_STAGE_EXT_PANEL).Hide();
-	}
+    if (m_app_style & SHOW_STAGE_EXT) {
+        ui_mgr.GetPane(STR_STAGE_EXT_PANEL).Show();
+        if (m_app_style & STAGE_EXT_LFET) {
+            ui_mgr.GetPane(STR_STAGE_EXT_PANEL).Left().MinSize(500, -1);
+        }
+        if (m_app_style & STAGE_EXT_RIGHT) {
+            ui_mgr.GetPane(STR_STAGE_EXT_PANEL).Right().MinSize(500, -1);
+        }
+    } else {
+	    ui_mgr.GetPane(STR_STAGE_EXT_PANEL).Hide();
+    }
 	if (m_app_style & SHOW_PREVIEW) {
 		ui_mgr.GetPane(STR_PREVIEW_PANEL).Show();
 	} else {

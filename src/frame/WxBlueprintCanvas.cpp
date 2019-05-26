@@ -1,4 +1,4 @@
-#include "rgraph/WxStageCanvas.h"
+#include "frame/WxBlueprintCanvas.h"
 
 #include <ee0/WxStagePage.h>
 #include <ee0/MsgHelper.h>
@@ -12,15 +12,13 @@
 
 namespace eone
 {
-namespace rgraph
-{
 
-WxStageCanvas::WxStageCanvas(eone::WxStagePage* stage, const ee0::RenderContext& rc)
+WxBlueprintCanvas::WxBlueprintCanvas(eone::WxStagePage* stage, const ee0::RenderContext& rc)
 	: WxStageCanvas2D(stage, rc)
 {
 }
 
-bool WxStageCanvas::OnUpdate()
+bool WxBlueprintCanvas::OnUpdate()
 {
 	WxStageCanvas2D::OnUpdate();
 
@@ -58,5 +56,4 @@ bool WxStageCanvas::OnUpdate()
 	return canvas_dirty;
 }
 
-}
 }

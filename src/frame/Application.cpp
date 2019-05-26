@@ -26,6 +26,7 @@
 #include "rgraph/WxStagePage.h"
 #include "physics3d/WxStagePage.h"
 #include "raygraph/WxStagePage.h"
+#include "guigraph/WxStagePage.h"
 
 #include <ee0/MsgHelper.h>
 #include <ee0/SubjectMgr.h>
@@ -120,6 +121,8 @@ void Application::LoadFromFile(const std::string& filepath)
                 new_type = PAGE_PHYSICS3D;
             } else if (type == raygraph::WxStagePage::PAGE_TYPE) {
                 new_type = PAGE_RAY_GRAPH;
+            } else if (type == guigraph::WxStagePage::PAGE_TYPE) {
+                new_type = PAGE_GUI_GRAPH;
             }
 		} else if (new_type_str == "n2_scale9") {
 			new_type = PAGE_SCALE9;
@@ -215,9 +218,6 @@ void Application::InitLayout()
 	m_mgr.AddPane(stage, wxAuiPaneInfo().Name(STR_STAGE_PANEL).
 		Caption(STR_STAGE_PANEL).CenterPane().PaneBorder(false));
 
-	m_mgr.AddPane(stage_ext, wxAuiPaneInfo().Name(STR_STAGE_EXT_PANEL).
-		Caption(STR_STAGE_EXT_PANEL).CenterPane().PaneBorder(false));
-
 	m_mgr.AddPane(preview, wxAuiPaneInfo().Name(STR_PREVIEW_PANEL).
 		Caption(STR_PREVIEW_PANEL).CenterPane().PaneBorder(false));
 
@@ -232,6 +232,9 @@ void Application::InitLayout()
 
 	m_mgr.AddPane(toolbar, wxAuiPaneInfo().Name(STR_TOOLBAR_PANEL).
 		Caption(STR_TOOLBAR_PANEL).Right().Row(0).MinSize(300, 0).PaneBorder(false));
+
+    m_mgr.AddPane(stage_ext, wxAuiPaneInfo().Name(STR_STAGE_EXT_PANEL).
+        Caption(STR_STAGE_EXT_PANEL).CenterPane().PaneBorder(false));
 
 	m_mgr.Update();
 }
@@ -301,7 +304,8 @@ wxWindow* Application::CreateStagePanel()
 	//auto page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_PROTOTYPING, m_stage);
     //auto page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_RENDER_GRAPH, m_stage);
     //auto page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_PHYSICS3D, m_stage);
-    auto page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_RAY_GRAPH, m_stage);
+    //auto page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_RAY_GRAPH, m_stage);
+    auto page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_GUI_GRAPH, m_stage);
 
 	//auto page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_QUAKE, m_stage);
 

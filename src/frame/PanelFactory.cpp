@@ -10,6 +10,7 @@
 #include "frame/WxPreviewPanel.h"
 #include "frame/WxPreviewCanvas.h"
 #include "frame/WxLibraryPanel.h"
+#include "frame/WxBlueprintCanvas.h"
 
 #include "scene2d/WxStagePage.h"
 #include "scene3d/WxStagePage.h"
@@ -36,13 +37,13 @@
 #include "sgraph/WxStageCanvas.h"
 #include "prototype/WxStagePage.h"
 #include "rgraph/WxStagePage.h"
-#include "rgraph/WxStageCanvas.h"
 #include "bprint/WxStagePage.h"
 #include "quake/WxStagePage.h"
 #include "quake/WxStageCanvas.h"
 #include "physics3d/WxStagePage.h"
 #include "physics3d/WxStageCanvas.h"
 #include "raygraph/WxStagePage.h"
+#include "guigraph/WxStagePage.h"
 
 #include <ee0/WxListSelectDlg.h>
 #include <ee0/MsgHelper.h>
@@ -281,7 +282,7 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
     {
 		auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX2D);
 		page = new rgraph::WxStagePage(frame, ECS_WORLD_VAR obj);
-        auto canvas = std::make_shared<rgraph::WxStageCanvas>(page, rc);
+        auto canvas = std::make_shared<WxBlueprintCanvas>(page, rc);
         page->GetImpl().SetCanvas(canvas);
 
         auto prev_op = std::make_shared<LeftDClickOP>(canvas->GetCamera(), *page, rc, wc);
@@ -321,7 +322,7 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
     {
 		auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX2D);
 		page = new raygraph::WxStagePage(frame, ECS_WORLD_VAR obj);
-        auto canvas = std::make_shared<rgraph::WxStageCanvas>(page, rc);
+        auto canvas = std::make_shared<WxBlueprintCanvas>(page, rc);
         page->GetImpl().SetCanvas(canvas);
 
         auto prev_op = std::make_shared<LeftDClickOP>(canvas->GetCamera(), *page, rc, wc);
@@ -340,6 +341,22 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
         auto& nodes = raylab::RayLab::Instance()->GetAllNodes();
 		auto op = std::make_shared<bp::ConnectPinOP>(canvas->GetCamera(), *page, nodes);
 		op->SetPrevEditOP(arrange_op);
+		page->GetImpl().SetEditOP(op);
+    }
+        break;
+    case PAGE_GUI_GRAPH:
+    {
+		auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX2D);
+        page = new guigraph::WxStagePage(frame, ECS_WORLD_VAR obj);
+		auto canvas = std::make_shared<WxStageCanvas2D>(page, ECS_WORLD_VAR rc);
+
+		page->GetImpl().SetCanvas(canvas);
+
+		auto prev_op = CreateNode2DSelectOP(canvas->GetCamera(), *page, rc, wc);
+
+		auto op = std::make_shared<ee2::ArrangeNodeOP>(
+			canvas->GetCamera(), *page, ECS_WORLD_VAR ee2::ArrangeNodeCfg(), prev_op);
+
 		page->GetImpl().SetEditOP(op);
     }
         break;

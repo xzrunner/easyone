@@ -22,7 +22,7 @@ wxPanel* WxStageSubPanel::AddPagePanel(std::function<wxPanel*(wxPanel* parent)> 
 
     auto panel = page_creator(this);
     if (panel) {
-        sizer->Add(panel, 0, wxEXPAND);
+        sizer->Add(panel, 1, wxEXPAND);
 //        sizer->Add(panel);
     }
 

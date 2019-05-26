@@ -178,8 +178,8 @@ void WxStagePage::InitPreviewPanel()
 {
     assert(!m_preview);
     auto stage_ext_panel = Blackboard::Instance()->GetStageExtPanel();
-    auto preview_panel = static_cast<WxPreviewPanel*>(stage_ext_panel->AddPagePanel([](wxPanel* parent)->wxPanel* {
-        return new WxPreviewPanel(parent);
+    auto preview_panel = static_cast<WxPreviewPanel*>(stage_ext_panel->AddPagePanel([&](wxPanel* parent)->wxPanel* {
+        return new WxPreviewPanel(stage_ext_panel);
     }, wxHORIZONTAL));
     m_preview = preview_panel;
 
