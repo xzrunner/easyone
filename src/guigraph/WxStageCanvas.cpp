@@ -17,6 +17,7 @@ WxStageCanvas::WxStageCanvas(eone::WxStagePage* stage, ECS_WORLD_PARAM
                              const ee0::RenderContext& rc)
     : ee2::WxStageCanvas(stage, ECS_WORLD_VAR &rc)
 {
+    InitGui();
 }
 
 bool WxStageCanvas::OnUpdate()
@@ -42,7 +43,8 @@ void WxStageCanvas::DrawForeground() const
         nodes.push_back(bp_node);
     }
 
-    guilab::Evaluator::Draw(nodes);
+    auto& ctx = GetWidnowContext().egui;
+    guilab::Evaluator::Draw(nodes, *ctx);
 }
 
 }
