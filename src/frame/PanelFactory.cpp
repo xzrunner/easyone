@@ -44,6 +44,7 @@
 #include "physics3d/WxStageCanvas.h"
 #include "raygraph/WxStagePage.h"
 #include "guigraph/WxStagePage.h"
+#include "guigraph/WxStageCanvas.h"
 
 #include <ee0/WxListSelectDlg.h>
 #include <ee0/MsgHelper.h>
@@ -348,7 +349,7 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
     {
 		auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX2D);
         page = new guigraph::WxStagePage(frame, ECS_WORLD_VAR obj);
-		auto canvas = std::make_shared<WxStageCanvas2D>(page, ECS_WORLD_VAR rc);
+		auto canvas = std::make_shared<guigraph::WxStageCanvas>(page, ECS_WORLD_VAR rc);
 
 		page->GetImpl().SetCanvas(canvas);
 

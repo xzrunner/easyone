@@ -26,8 +26,6 @@ public:
 
 	virtual int GetPageType() const override { return PAGE_RENDER_GRAPH; }
 
-    bool LoadNodeConnsFromFile(const std::string& filepath);
-
     auto& GetEval() const { return m_eval; }
 
 	static const std::string PAGE_TYPE;

@@ -26,6 +26,7 @@
 #include <node2/CompTransform.h>
 #include <node2/CompBoundingBox.h>
 #include <sx/ResFileHelper.h>
+#include <js/RapidJsonHelper.h>
 
 namespace eone
 {
@@ -126,17 +127,6 @@ void WxStagePage::Traverse(std::function<bool(const ee0::GameObj&)> func,
 	}
 }
 
-bool WxStagePage::LoadNodeConnsFromFile(const std::string& filepath)
-{
-	if (sx::ResFileHelper::Type(filepath) == sx::RES_FILE_JSON) {
-        auto& ccomplex = m_obj->GetSharedComp<n0::CompComplex>();
-        bp::NodeHelper::LoadConnections(ccomplex.GetAllChildren(), filepath);
-		return true;
-	} else {
-        return false;
-    }
-}
-
 void WxStagePage::OnPageInit()
 {
     assert(!m_toolbar);
@@ -181,7 +171,14 @@ void WxStagePage::LoadFromFileExt(const std::string& filepath)
 {
     bp::CommentaryNodeHelper::InsertNodeToCommentary(*this);
 
-    if (LoadNodeConnsFromFile(filepath)) {
+    if (sx::ResFileHelper::Type(filepath) == sx::RES_FILE_JSON)
+    {
+        rapidjson::Document doc;
+        js::RapidJsonHelper::ReadFromFile(filepath.c_str(), doc);
+
+        auto& ccomplex = m_obj->GetSharedComp<n0::CompComplex>();
+        bp::NSCompNode::LoadConnection(ccomplex.GetAllChildren(), doc["nodes"]);
+
         m_sub_mgr->NotifyObservers(bp::MSG_BLUE_PRINT_CHANGED);
     }
 }

@@ -367,6 +367,7 @@
     <ClInclude Include="..\..\..\src\frame\WxStageSubPanel.h" />
     <ClInclude Include="..\..\..\src\frame\WxWorldPanel.h" />
     <ClInclude Include="..\..\..\src\guigraph\WxGraphPage.h" />
+    <ClInclude Include="..\..\..\src\guigraph\WxStageCanvas.h" />
     <ClInclude Include="..\..\..\src\guigraph\WxStagePage.h" />
     <ClInclude Include="..\..\..\src\guigraph\WxToolbarPanel.h" />
     <ClInclude Include="..\..\..\src\mask\WxEditDialog.h" />
@@ -472,6 +473,10 @@
     <ClCompile Include="..\..\..\src\frame\WxStageSubPanel.cpp" />
     <ClCompile Include="..\..\..\src\frame\WxWorldPanel.cpp" />
     <ClCompile Include="..\..\..\src\guigraph\WxGraphPage.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/guigraph/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/guigraph/</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\guigraph\WxStageCanvas.cpp">
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/guigraph/</ObjectFileName>
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/guigraph/</ObjectFileName>
     </ClCompile>

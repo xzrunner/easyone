@@ -55,14 +55,14 @@ protected:
 		rapidjson::MemoryPoolAllocator<>& alloc) const {}
 	virtual void LoadFromFileExt(const std::string& filepath) {}
 
+    void RegisterAllMessages();
+    void UnregisterAllMessages();
+
 private:
 	std::string GetBackupPath() const;
 	void LoadFromBackup();
 
 	void SetEditorDirty(const ee0::VariantSet& variants);
-
-	void RegisterAllMessages();
-	void UnregisterAllMessages();
 
 	void InitSubWindow();
 

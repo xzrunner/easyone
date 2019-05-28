@@ -22,7 +22,7 @@ public:
 
     virtual int GetPageType() const override { return PAGE_GUI_GRAPH; }
 
-    bool LoadNodeConnsFromFile(const std::string& filepath);
+    n0::SceneNodePtr GetGraphObj() const { return m_graph_obj; }
 
     static const std::string PAGE_TYPE;
 
@@ -47,9 +47,6 @@ private:
     bool ClearSceneObj();
 
     void CreateNewPage(const ee0::VariantSet& variants) const;
-
-    bool UpdateNodes();
-    void UpdateBlueprint();
 
 private:
     WxToolbarPanel* m_toolbar = nullptr;

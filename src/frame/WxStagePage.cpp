@@ -170,6 +170,20 @@ void WxStagePage::InitPage()
     }
 }
 
+void WxStagePage::RegisterAllMessages()
+{
+	for (auto& msg : m_messages) {
+		m_sub_mgr->RegisterObserver(msg, this);
+	}
+}
+
+void WxStagePage::UnregisterAllMessages()
+{
+	for (auto& msg : m_messages) {
+		m_sub_mgr->UnregisterObserver(msg, this);
+	}
+}
+
 std::string WxStagePage::GetBackupPath() const
 {
 	return m_filepath + ".backup";
@@ -196,20 +210,6 @@ void WxStagePage::SetEditorDirty(const ee0::VariantSet& variants)
 		page_name += "*";
 	}
 	stage_panel->SetPageText(stage_panel->GetSelection(), page_name);
-}
-
-void WxStagePage::RegisterAllMessages()
-{
-	for (auto& msg : m_messages) {
-		m_sub_mgr->RegisterObserver(msg, this);
-	}
-}
-
-void WxStagePage::UnregisterAllMessages()
-{
-	for (auto& msg : m_messages) {
-		m_sub_mgr->UnregisterObserver(msg, this);
-	}
 }
 
 void WxStagePage::InitSubWindow()

@@ -1,5 +1,4 @@
 #include "guigraph/WxToolbarPanel.h"
-//#include "guigraph/WxPreviewPanel.h"
 #include "guigraph/WxStagePage.h"
 
 #include "frame/WxStagePage.h"
@@ -7,7 +6,7 @@
 #include <ee0/SubjectMgr.h>
 #include <blueprint/CompNode.h>
 #include <blueprint/MessageID.h>
-#include <raylab/WxNodeProperty.h>
+#include <guilab/WxNodeProperty.h>
 
 #include <guard/check.h>
 #include <node0/SceneNode.h>
@@ -44,7 +43,7 @@ void WxToolbarPanel::InitLayout()
 
 	auto sizer = new wxBoxSizer(wxVERTICAL);
     // property
-	sizer->Add(m_prop = new raylab::WxNodeProperty(this, sub_mgr)/*, 1, wxEXPAND*/);
+	sizer->Add(m_prop = new guilab::WxNodeProperty(this, sub_mgr)/*, 1, wxEXPAND*/);
 
 	SetSizer(sizer);
 }

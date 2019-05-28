@@ -22,8 +22,6 @@ public:
 
     virtual int GetPageType() const override { return PAGE_RAY_GRAPH; }
 
-    bool LoadNodeConnsFromFile(const std::string& filepath);
-
     static const std::string PAGE_TYPE;
 
 protected:

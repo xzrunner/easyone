@@ -462,6 +462,9 @@
     <ClInclude Include="..\..\..\src\guigraph\WxGraphPage.h">
       <Filter>36.guigraph\graph</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\guigraph\WxStageCanvas.h">
+      <Filter>36.guigraph\stage</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\frame\main.cpp">
@@ -706,6 +709,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\guigraph\WxGraphPage.cpp">
       <Filter>36.guigraph\graph</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\guigraph\WxStageCanvas.cpp">
+      <Filter>36.guigraph\stage</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -32,8 +32,6 @@ public:
         m_parent_node = parent_node;
     }
 
-    bool LoadNodeConnsFromFile(const std::string& filepath);
-
     ModelType GetModelType() const { return m_model_type; }
     void SetModelType(ModelType model_type);
 

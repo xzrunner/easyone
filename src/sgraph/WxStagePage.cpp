@@ -176,17 +176,6 @@ void WxStagePage::OnSetSkybox(const std::string& filepath)
     m_toolbar->GetPreviewPanel()->SetSkybox(img_cube);
 }
 
-bool WxStagePage::LoadNodeConnsFromFile(const std::string& filepath)
-{
-	if (sx::ResFileHelper::Type(filepath) == sx::RES_FILE_JSON) {
-        auto& ccomplex = m_obj->GetSharedComp<n0::CompComplex>();
-        bp::NodeHelper::LoadConnections(ccomplex.GetAllChildren(), filepath);
-		return true;
-	} else {
-        return false;
-    }
-}
-
 void WxStagePage::SetModelType(ModelType model_type)
 {
 	if (m_model_type == model_type) {
@@ -260,7 +249,14 @@ void WxStagePage::LoadFromFileExt(const std::string& filepath)
 
     LoadFunctionNodes();
 
-    if (LoadNodeConnsFromFile(filepath)) {
+    if (sx::ResFileHelper::Type(filepath) == sx::RES_FILE_JSON)
+    {
+        rapidjson::Document doc;
+        js::RapidJsonHelper::ReadFromFile(filepath.c_str(), doc);
+
+        auto& ccomplex = m_obj->GetSharedComp<n0::CompComplex>();
+        bp::NSCompNode::LoadConnection(ccomplex.GetAllChildren(), doc["nodes"]);
+
         m_sub_mgr->NotifyObservers(bp::MSG_BLUE_PRINT_CHANGED);
     }
 }
@@ -412,7 +408,14 @@ void WxStagePage::CreateNewPage(const ee0::VariantSet& variants) const
                     }
                     sg_stage_page->EnableInsertToParent(true);
 
-                    sg_stage_page->LoadNodeConnsFromFile(filepath);
+                    if (sx::ResFileHelper::Type(filepath) == sx::RES_FILE_JSON)
+                    {
+                        rapidjson::Document doc;
+                        js::RapidJsonHelper::ReadFromFile(filepath, doc);
+
+                        auto& ccomplex = sg_stage_page->GetEditedObj()->GetSharedComp<n0::CompComplex>();
+                        bp::NSCompNode::LoadConnection(ccomplex.GetAllChildren(), doc["nodes"]);
+                    }
                 }
             }
         }

@@ -5,11 +5,7 @@
 
 #include <wx/panel.h>
 
-namespace raylab
-{
-    class WxPreviewPanel;
-    class WxNodeProperty;
-}
+namespace guilab { class WxNodeProperty; }
 
 namespace eone
 {
@@ -18,8 +14,6 @@ class WxStagePage;
 
 namespace guigraph
 {
-
-class WxPreviewPanel;
 
 class WxToolbarPanel : public wxPanel, public ee0::Observer
 {
@@ -36,9 +30,7 @@ private:
 private:
     eone::WxStagePage* m_stage_page;
 
-    raylab::WxPreviewPanel* m_preview;
-
-    raylab::WxNodeProperty* m_prop;
+    guilab::WxNodeProperty* m_prop;
 
 }; // WxToolbarPanel
 
