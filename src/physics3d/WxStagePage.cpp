@@ -102,8 +102,8 @@ void WxStagePage::OnSetSkybox(const std::string& filepath)
 
 void WxStagePage::OnPageInit()
 {
-    InitRigidObj();
-//    InitClothObj();
+//    InitRigidScene();
+//    InitClothScene();
 }
 
 #ifndef GAME_OBJ_ECS
@@ -163,7 +163,7 @@ void WxStagePage::ClearSceneNode()
 #endif // GAME_OBJ_ECS
 }
 
-void WxStagePage::InitRigidObj()
+void WxStagePage::InitRigidScene()
 {
     // ground
     {
@@ -211,7 +211,7 @@ void WxStagePage::InitRigidObj()
 	}
 }
 
-void WxStagePage::InitClothObj()
+void WxStagePage::InitClothScene()
 {
     up::cloth::ClothMeshData cloth_mesh;
 
@@ -224,6 +224,11 @@ void WxStagePage::InitClothObj()
 
     auto obj = m_physics.CreateCloth(sm::vec3(0, 0, 0), cloth_mesh);
     m_obj->GetSharedComp<n0::CompComplex>().AddChild(obj);
+}
+
+void WxStagePage::InitPbdScene()
+{
+
 }
 
 }

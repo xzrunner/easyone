@@ -1,4 +1,7 @@
-#include "physics3d/WxStageCanvas.h"
+#include "physics3d/WxStageCanvas3D.h"
+
+#ifdef MODULE_PHYSICS3D
+
 #include "physics3d/WxStagePage.h"
 
 namespace eone
@@ -6,12 +9,12 @@ namespace eone
 namespace physics3d
 {
 
-WxStageCanvas::WxStageCanvas(eone::WxStagePage* stage, const ee0::RenderContext& rc)
-    : WxStageCanvas3D(stage, rc)
+WxStageCanvas3D::WxStageCanvas3D(eone::WxStagePage* stage, const ee0::RenderContext& rc)
+    : eone::WxStageCanvas3D(stage, rc)
 {
 }
 
-bool WxStageCanvas::OnUpdate()
+bool WxStageCanvas3D::OnUpdate()
 {
     WxStageCanvas3D::OnUpdate();
 
@@ -29,3 +32,5 @@ bool WxStageCanvas::OnUpdate()
 
 }
 }
+
+#endif // MODULE_PHYSICS3D

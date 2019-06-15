@@ -79,9 +79,6 @@
     <Filter Include="32.sgraph">
       <UniqueIdentifier>{70521c8d-51e2-405c-a78a-764746df18c2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="32.sgraph\view">
-      <UniqueIdentifier>{3cbcb8a6-40cd-42ae-a989-a2ada73d854e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="15.shape2d">
       <UniqueIdentifier>{23e96ae8-8ab3-4cf5-860f-c6987ff09613}</UniqueIdentifier>
     </Filter>
@@ -90,15 +87,6 @@
     </Filter>
     <Filter Include="30.model\view">
       <UniqueIdentifier>{b64f9923-3d77-4435-909e-2bf91d6cf011}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="30.model\view\stage">
-      <UniqueIdentifier>{ea565ae8-a723-4e0f-badb-f136732eda78}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="30.model\view\preview">
-      <UniqueIdentifier>{da8dc5bc-7e31-4c1a-97cf-542e2a3109ff}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="30.model\view\toolbar">
-      <UniqueIdentifier>{cd750af6-a7cf-44b7-a07e-a6a2bc527d35}</UniqueIdentifier>
     </Filter>
     <Filter Include="17.mesh">
       <UniqueIdentifier>{24edf818-6761-4d2f-bdfd-58f5acf6ab5d}</UniqueIdentifier>
@@ -186,6 +174,21 @@
     </Filter>
     <Filter Include="36.guigraph\graph">
       <UniqueIdentifier>{d785e9ca-6261-4a5e-a645-356f93b680d6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="32.sgraph\stage">
+      <UniqueIdentifier>{3cbcb8a6-40cd-42ae-a989-a2ada73d854e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="32.sgraph\toolbar">
+      <UniqueIdentifier>{c2aa6c30-b4f7-4ab7-9f49-172532929a3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="30.model\preview">
+      <UniqueIdentifier>{da8dc5bc-7e31-4c1a-97cf-542e2a3109ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="30.model\stage">
+      <UniqueIdentifier>{ea565ae8-a723-4e0f-badb-f136732eda78}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="30.model\toolbar">
+      <UniqueIdentifier>{cd750af6-a7cf-44b7-a07e-a6a2bc527d35}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -349,16 +352,16 @@
       <Filter>00.frame\frame</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\model\WxStageCanvas.h">
-      <Filter>30.model\view\stage</Filter>
+      <Filter>30.model\stage</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\model\WxStagePage.h">
-      <Filter>30.model\view\stage</Filter>
+      <Filter>30.model\stage</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\model\WxPreviewPanel.h">
-      <Filter>30.model\view\preview</Filter>
+      <Filter>30.model\preview</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\model\WxPreviewCanvas.h">
-      <Filter>30.model\view\preview</Filter>
+      <Filter>30.model\preview</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\anim3\CompBone.h">
       <Filter>31.anim3\dataset</Filter>
@@ -373,22 +376,10 @@
       <Filter>31.anim3\view\toolbar</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\model\WxToolbarPanel.h">
-      <Filter>30.model\view\toolbar</Filter>
+      <Filter>30.model\toolbar</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\bprint\WxStagePage.h">
       <Filter>41.bprint</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\sgraph\MessageID.h">
-      <Filter>32.sgraph</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\sgraph\WxStagePage.h">
-      <Filter>32.sgraph\view</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\sgraph\WxToolbarPanel.h">
-      <Filter>32.sgraph\view</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\sgraph\WxStageCanvas.h">
-      <Filter>32.sgraph\view</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\prototype\WxStagePage.h">
       <Filter>20.prototype</Filter>
@@ -423,9 +414,6 @@
     <ClInclude Include="..\..\..\src\frame\WxStageSubPanel.h">
       <Filter>00.frame\view</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\sgraph\ModelType.h">
-      <Filter>32.sgraph\view</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\rgraph\WxToolbarPanel.h">
       <Filter>33.rgraph\toolbar</Filter>
     </ClInclude>
@@ -436,9 +424,6 @@
       <Filter>33.rgraph\stage</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\physics3d\WxStagePage.h">
-      <Filter>34.physics3d</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\physics3d\WxStageCanvas.h">
       <Filter>34.physics3d</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\physics3d\PhysicsMgr.h">
@@ -464,6 +449,27 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\guigraph\WxStageCanvas.h">
       <Filter>36.guigraph\stage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\physics3d\PBDSceneOP.h">
+      <Filter>34.physics3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sgraph\ModelType.h">
+      <Filter>32.sgraph</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sgraph\WxStagePage.h">
+      <Filter>32.sgraph\stage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sgraph\WxStageCanvas.h">
+      <Filter>32.sgraph\stage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\sgraph\WxToolbarPanel.h">
+      <Filter>32.sgraph\toolbar</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\physics3d\WxStageCanvas2D.h">
+      <Filter>34.physics3d</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\physics3d\WxStageCanvas3D.h">
+      <Filter>34.physics3d</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -603,16 +609,16 @@
       <Filter>50.quake\view\preview</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\model\WxStageCanvas.cpp">
-      <Filter>30.model\view\stage</Filter>
+      <Filter>30.model\stage</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\model\WxStagePage.cpp">
-      <Filter>30.model\view\stage</Filter>
+      <Filter>30.model\stage</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\model\WxPreviewPanel.cpp">
-      <Filter>30.model\view\preview</Filter>
+      <Filter>30.model\preview</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\model\WxPreviewCanvas.cpp">
-      <Filter>30.model\view\preview</Filter>
+      <Filter>30.model\preview</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\anim3\CompBone.cpp">
       <Filter>31.anim3\dataset</Filter>
@@ -627,19 +633,10 @@
       <Filter>31.anim3\view\toolbar</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\model\WxToolbarPanel.cpp">
-      <Filter>30.model\view\toolbar</Filter>
+      <Filter>30.model\toolbar</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\bprint\WxStagePage.cpp">
       <Filter>41.bprint</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\sgraph\WxStagePage.cpp">
-      <Filter>32.sgraph\view</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\sgraph\WxToolbarPanel.cpp">
-      <Filter>32.sgraph\view</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\sgraph\WxStageCanvas.cpp">
-      <Filter>32.sgraph\view</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\prototype\WxStagePage.cpp">
       <Filter>20.prototype</Filter>
@@ -686,9 +683,6 @@
     <ClCompile Include="..\..\..\src\physics3d\WxStagePage.cpp">
       <Filter>34.physics3d</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\physics3d\WxStageCanvas.cpp">
-      <Filter>34.physics3d</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\physics3d\PhysicsMgr.cpp">
       <Filter>34.physics3d</Filter>
     </ClCompile>
@@ -712,6 +706,24 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\guigraph\WxStageCanvas.cpp">
       <Filter>36.guigraph\stage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\physics3d\PBDSceneOP.cpp">
+      <Filter>34.physics3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sgraph\WxStageCanvas.cpp">
+      <Filter>32.sgraph\stage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sgraph\WxStagePage.cpp">
+      <Filter>32.sgraph\stage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sgraph\WxToolbarPanel.cpp">
+      <Filter>32.sgraph\toolbar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\physics3d\WxStageCanvas2D.cpp">
+      <Filter>34.physics3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\physics3d\WxStageCanvas3D.cpp">
+      <Filter>34.physics3d</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

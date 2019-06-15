@@ -49,8 +49,9 @@ private:
 	void DeleteSceneNode(const ee0::VariantSet& variants);
 	void ClearSceneNode();
 
-    void InitRigidObj();
-    void InitClothObj();
+    void InitRigidScene();
+    void InitClothScene();
+    void InitPbdScene();
 
 private:
     PhysicsMgr m_physics;

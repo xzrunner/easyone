@@ -42,6 +42,7 @@
 #include "quake/WxStageCanvas.h"
 #include "physics3d/WxStagePage.h"
 #include "physics3d/WxStageCanvas.h"
+#include "physics3d/PBDSceneOP.h"
 #include "raygraph/WxStagePage.h"
 #include "guigraph/WxStagePage.h"
 #include "guigraph/WxStageCanvas.h"
@@ -76,6 +77,8 @@
 #include <raylab/RayLab.h>
 
 #include <boost/filesystem.hpp>
+
+#define PHYSICS_PBD_SCENE
 
 namespace eone
 {
@@ -310,12 +313,22 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
         auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX3D);
         auto p3_page = new physics3d::WxStagePage(frame, library, ECS_WORLD_VAR obj);
         page = p3_page;
+#ifdef PHYSICS_PBD_SCENE
+        auto canvas = std::make_shared<WxStageCanvas2D>(page, rc);
+#else
         auto canvas = std::make_shared<physics3d::WxStageCanvas>(page, rc);
+#endif // PHYSICS_PBD_SCENE
         page->GetImpl().SetCanvas(canvas);
 
         auto& world = p3_page->GetPhysicsMgr().GetWorld();
+#ifdef PHYSICS_PBD_SCENE
+        auto op = std::make_shared<physics3d::PBDSceneOP>(
+            canvas->GetCamera(), page->GetSubjectMgr());
+#else
         auto op = std::make_shared<ee3::DragRigidOP>(
             canvas->GetCamera(), *page, canvas->GetViewport(), world);
+#endif // PHYSICS_PBD_SCENE
+
         page->GetImpl().SetEditOP(op);
     }
         break;

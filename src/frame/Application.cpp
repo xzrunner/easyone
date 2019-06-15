@@ -303,9 +303,9 @@ wxWindow* Application::CreateStagePanel()
     //auto page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_SHADER_GRAPH, m_stage);
 	//auto page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_PROTOTYPING, m_stage);
     //auto page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_RENDER_GRAPH, m_stage);
-    //auto page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_PHYSICS3D, m_stage);
+    auto page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_PHYSICS3D, m_stage);
     //auto page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_RAY_GRAPH, m_stage);
-    auto page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_GUI_GRAPH, m_stage);
+    //auto page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_GUI_GRAPH, m_stage);
 
 	//auto page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_QUAKE, m_stage);
 
