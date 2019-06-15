@@ -1,5 +1,7 @@
 #include "anim/WxStagePage.h"
 
+#ifdef MODULE_ANIM
+
 #include "frame/WxStagePage.h"
 #include "frame/Blackboard.h"
 #include "frame/Application.h"
@@ -210,3 +212,5 @@ void WxStagePage::RefreshAllNodes()
 
 }
 }
+
+#endif // MODULE_ANIM

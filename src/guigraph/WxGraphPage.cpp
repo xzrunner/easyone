@@ -1,5 +1,7 @@
 #include "guigraph/WxGraphPage.h"
 
+#ifdef MODULE_GUIGRAPH
+
 #include <ee0/SubjectMgr.h>
 #include <ee0/EditPanelImpl.h>
 #include <ee0/GameObj.h>
@@ -225,3 +227,5 @@ bool WxGraphPage::UpdateNodes()
 
 }
 }
+
+#endif // MODULE_GUIGRAPH

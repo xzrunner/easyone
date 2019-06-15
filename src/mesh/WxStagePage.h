@@ -1,5 +1,9 @@
 #pragma once
 
+#include "frame/config.h"
+
+#ifdef MODULE_MESH
+
 #include "frame/WxStagePage.h"
 #include "frame/StagePageType.h"
 
@@ -36,3 +40,5 @@ private:
 
 }
 }
+
+#endif // MODULE_MESH

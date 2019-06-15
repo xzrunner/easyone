@@ -1,5 +1,9 @@
 #pragma once
 
+#include "frame/config.h"
+
+#ifdef MODULE_ANIM3
+
 #include <ee0/Observer.h>
 #include <ee0/GuiCallback.h>
 #include <ee0/typedef.h>
@@ -42,3 +46,5 @@ private:
 
 }
 }
+
+#endif // MODULE_ANIM3

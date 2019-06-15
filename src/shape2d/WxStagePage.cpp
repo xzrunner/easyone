@@ -1,5 +1,7 @@
 #include "shape2d/WxStagePage.h"
 
+#ifdef MODULE_SHAPE2D
+
 #include "frame/WxStagePage.h"
 #include "frame/Blackboard.h"
 #include "frame/Application.h"
@@ -170,3 +172,5 @@ bool WxStagePage::ClearSceneObj()
 
 }
 }
+
+#endif // MODULE_SHAPE2D

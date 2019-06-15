@@ -1,6 +1,9 @@
 #include "frame/GameObjFactory.h"
+#include "frame/config.h"
 
+#ifdef MODULE_PARTICLE3D
 #include "particle3d/config.h"
+#endif // MODULE_PARTICLE3D
 
 #ifndef GAME_OBJ_ECS
 #include <node0/SceneNode.h>
@@ -37,8 +40,10 @@
 #include <entity2/CompTransform.h>
 #endif // GAME_OBJ_ECS
 
+#ifdef MODULE_ANIM
 #include <anim/KeyFrame.h>
 #include <anim/Layer.h>
+#endif // MODULE_ANIM
 #include <emitter/P3dTemplate.h>
 #include <painting3/PointLight.h>
 #include <painting3/MaterialMgr.h>
@@ -144,6 +149,7 @@ ee0::GameObj GameObjFactory::Create(ECS_WORLD_PARAM GameObjType type,
 			sz.Build(100, 100);
 		}
 		break;
+#ifdef MODULE_ANIM
 	case GAME_OBJ_ANIM:
 		{
 #ifndef GAME_OBJ_ECS
@@ -166,6 +172,8 @@ ee0::GameObj GameObjFactory::Create(ECS_WORLD_PARAM GameObjType type,
 #endif // GAME_OBJ_ECS
 		}
 		break;
+#endif // MODULE_ANIM
+#ifdef MODULE_PARTICLE3D
 	case GAME_OBJ_PARTICLE3D:
 		{
 #ifndef GAME_OBJ_ECS
@@ -181,7 +189,9 @@ ee0::GameObj GameObjFactory::Create(ECS_WORLD_PARAM GameObjType type,
 #endif // GAME_OBJ_ECS
 		}
 		break;
+#endif // MODULE_PARTICLE3D
 
+#ifdef MODULE_MODEL
 	case GAME_OBJ_MODEL:
 		{
 			is_2d = false;
@@ -200,6 +210,7 @@ ee0::GameObj GameObjFactory::Create(ECS_WORLD_PARAM GameObjType type,
 #endif // GAME_OBJ_ECS
 		}
 		break;
+#endif // MODULE_MODEL
 
     case GAME_OBJ_LIGHT:
     {

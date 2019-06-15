@@ -1,5 +1,9 @@
 #pragma once
 
+#include "frame/config.h"
+
+#ifdef MODULE_MODEL
+
 #include <ee3/WxStageCanvas.h>
 
 namespace ur { class Shader; }
@@ -43,3 +47,5 @@ private:
 
 }
 }
+
+#endif // MODULE_MODEL

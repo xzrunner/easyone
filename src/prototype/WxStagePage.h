@@ -1,5 +1,9 @@
 #pragma once
 
+#include "frame/config.h"
+
+#ifdef MODULE_PROTOTYPE
+
 #include "frame/WxStagePage.h"
 #include "frame/StagePageType.h"
 
@@ -56,3 +60,5 @@ private:
 
 }
 }
+
+#endif // MODULE_PROTOTYPE

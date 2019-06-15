@@ -1,5 +1,7 @@
 #include "shape2d/WxStageCanvas.h"
 
+#ifdef MODULE_SHAPE2D
+
 #include "frame/WxStagePage.h"
 
 #include <ee2/CamControlOP.h>
@@ -104,3 +106,5 @@ void WxStageCanvas::DrawBackground() const
 
 }
 }
+
+#endif // MODULE_SHAPE2D

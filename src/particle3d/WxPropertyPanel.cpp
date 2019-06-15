@@ -1,4 +1,7 @@
 #include "particle3d/WxPropertyPanel.h"
+
+#ifdef MODULE_PARTICLE3D
+
 #include "particle3d/Languages.h"
 #include "particle3d/config.h"
 #include "particle3d/WxComponentPanel.h"
@@ -655,3 +658,5 @@ void WxPropertyPanel::OnSetBlend(wxCommandEvent& event)
 
 }
 }
+
+#endif // MODULE_PARTICLE3D

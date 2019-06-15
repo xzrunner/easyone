@@ -1,5 +1,9 @@
 #pragma once
 
+#include "frame/config.h"
+
+#ifdef MODULE_MASK
+
 #include "frame/WxStagePage.h"
 #include "frame/StagePageType.h"
 
@@ -38,3 +42,5 @@ private:
 
 }
 }
+
+#endif // MODULE_MASK

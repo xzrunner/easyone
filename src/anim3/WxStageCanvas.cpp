@@ -1,4 +1,7 @@
 #include "anim3/WxStageCanvas.h"
+
+#ifdef MODULE_ANIM3
+
 #include "anim3/WxStagePage.h"
 
 #include "frame/WxStagePage.h"
@@ -80,3 +83,5 @@ void WxStageCanvas::DrawForeground3D() const
 
 }
 }
+
+#endif // MODULE_ANIM3

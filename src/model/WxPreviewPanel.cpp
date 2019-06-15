@@ -1,5 +1,7 @@
 #include "model/WxPreviewPanel.h"
 
+#ifdef MODULE_MODEL
+
 namespace eone
 {
 namespace model
@@ -12,3 +14,5 @@ WxPreviewPanel::WxPreviewPanel(wxWindow* parent)
 
 }
 }
+
+#endif // MODULE_MODEL

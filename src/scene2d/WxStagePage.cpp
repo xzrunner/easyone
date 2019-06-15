@@ -1,5 +1,7 @@
 #include "scene2d/WxStagePage.h"
 
+#ifdef MODULE_SCENE2D
+
 #include "frame/WxStagePage.h"
 #include "frame/Blackboard.h"
 #include "frame/Application.h"
@@ -234,3 +236,5 @@ bool WxStagePage::ReorderSceneObj(const ee0::VariantSet& variants)
 
 }
 }
+
+#endif // MODULE_SCENE2D

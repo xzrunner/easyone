@@ -1,4 +1,7 @@
 #include "scale9/WxEditDialog.h"
+
+#ifdef MODULE_SCALE9
+
 #include "scale9/WxStagePage.h"
 #include "scale9/WxStageCanvas.h"
 
@@ -98,3 +101,5 @@ wxWindow* WxEditDialog::CreateDetailPanel()
 
 }
 }
+
+#endif // MODULE_SCALE9

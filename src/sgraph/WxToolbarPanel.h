@@ -1,5 +1,9 @@
 #pragma once
 
+#include "frame/config.h"
+
+#ifdef MODULE_SHADERGRAPH
+
 #include "sgraph/ModelType.h"
 
 #include <ee0/Observer.h>
@@ -51,3 +55,5 @@ private:
 
 }
 }
+
+#endif // MODULE_SHADERGRAPH

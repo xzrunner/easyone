@@ -1,4 +1,7 @@
 #include "anim3/WxStagePage.h"
+
+#ifdef MODULE_ANIM3
+
 #include "anim3/WxPropertyPanel.h"
 #include "anim3/CompBone.h"
 
@@ -237,3 +240,5 @@ void WxStagePage::ReloadAnimation(::model::ModelInstance& model_inst,
 
 }
 }
+
+#endif // MODULE_ANIM3

@@ -1,5 +1,9 @@
 #pragma once
 
+#include "frame/config.h"
+
+#ifdef MODULE_SCALE9
+
 #include <ee2/WxStageCanvas.h>
 
 namespace eone
@@ -24,3 +28,5 @@ protected:
 
 }
 }
+
+#endif // MODULE_SCALE9

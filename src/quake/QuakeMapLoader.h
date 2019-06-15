@@ -1,5 +1,9 @@
 #pragma once
 
+#include "frame/config.h"
+
+#ifdef MODULE_QUAKE
+
 #include <string>
 
 namespace ee0 { class SubjectMgr; }
@@ -19,3 +23,5 @@ public:
 
 }
 }
+
+#endif // MODULE_QUAKE

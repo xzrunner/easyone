@@ -1,5 +1,9 @@
 #pragma once
 
+#include "frame/config.h"
+
+#ifdef MODULE_PARTICLE3D
+
 #include <ee0/GuiCallback.h>
 
 #include <wx/panel.h>
@@ -64,3 +68,5 @@ private:
 
 }
 }
+
+#endif // MODULE_PARTICLE3D

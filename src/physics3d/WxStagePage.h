@@ -1,5 +1,9 @@
 #pragma once
 
+#include "frame/config.h"
+
+#ifdef MODULE_PHYSICS3D
+
 #include <ee0/GameObj.h>
 
 #include "physics3d/PhysicsMgr.h"
@@ -63,3 +67,5 @@ private:
 
 }
 }
+
+#endif // MODULE_PHYSICS3D

@@ -1,5 +1,7 @@
 #include "physics3d/WxStagePage.h"
 
+#ifdef MODULE_PHYSICS3D
+
 #include "frame/WxStagePage.h"
 #include "frame/Blackboard.h"
 #include "frame/Application.h"
@@ -233,3 +235,5 @@ void WxStagePage::InitPbdScene()
 
 }
 }
+
+#endif // MODULE_PHYSICS3D

@@ -1,5 +1,9 @@
 #pragma once
 
+#include "frame/config.h"
+
+#ifdef MODULE_PARTICLE3D
+
 #include "frame/WxStagePage.h"
 #include "frame/StagePageType.h"
 
@@ -40,3 +44,5 @@ private:
 
 }
 }
+
+#endif // MODULE_PARTICLE3D

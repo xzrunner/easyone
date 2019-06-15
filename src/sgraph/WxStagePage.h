@@ -1,5 +1,9 @@
 #pragma once
 
+#include "frame/config.h"
+
+#ifdef MODULE_SHADERGRAPH
+
 #include "frame/WxStagePage.h"
 #include "frame/StagePageType.h"
 #include "sgraph/ModelType.h"
@@ -81,3 +85,5 @@ private:
 
 }
 }
+
+#endif // MODULE_SHADERGRAPH

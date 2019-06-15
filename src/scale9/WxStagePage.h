@@ -1,5 +1,9 @@
 #pragma once
 
+#include "frame/config.h"
+
+#ifdef MODULE_SCALE9
+
 #include "frame/WxStagePage.h"
 #include "frame/StagePageType.h"
 
@@ -48,3 +52,5 @@ private:
 
 }
 }
+
+#endif // MODULE_SCALE9

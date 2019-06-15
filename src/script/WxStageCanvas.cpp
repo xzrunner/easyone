@@ -1,5 +1,7 @@
 #include "script/WxStageCanvas.h"
 
+#ifdef MODULE_SCRIPT
+
 #include "frame/WxStagePage.h"
 #include "frame/Blackboard.h"
 
@@ -148,3 +150,5 @@ void WxStageCanvas::BindMoonCtx() const
 
 }
 }
+
+#endif // MODULE_SCRIPT

@@ -1,5 +1,7 @@
 #include "script/WxStagePage.h"
 
+#ifdef MODULE_SCRIPT
+
 #include "frame/WxStagePage.h"
 #include "frame/Blackboard.h"
 #include "frame/Application.h"
@@ -66,3 +68,5 @@ void WxStagePage::StoreToJsonExt(const std::string& dir, rapidjson::Value& val,
 
 }
 }
+
+#endif // MODULE_SCRIPT

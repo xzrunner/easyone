@@ -1,5 +1,9 @@
 #pragma once
 
+#include "frame/config.h"
+
+#ifdef MODULE_MODEL
+
 #include <ee0/typedef.h>
 
 #include <wx/panel.h>
@@ -54,3 +58,5 @@ private:
 
 }
 }
+
+#endif // MODULE_MODEL

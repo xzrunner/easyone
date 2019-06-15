@@ -1,4 +1,7 @@
 #include "scale9/WxStageCanvas.h"
+
+#ifdef MODULE_SCALE9
+
 #include "scale9/ComposeGrids.h"
 
 #include "frame/WxStagePage.h"
@@ -52,3 +55,5 @@ void WxStageCanvas::DrawForeground() const
 
 }
 }
+
+#endif // MODULE_SCALE9

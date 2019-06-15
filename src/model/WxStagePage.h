@@ -1,5 +1,9 @@
 #pragma once
 
+#include "frame/config.h"
+
+#ifdef MODULE_MODEL
+
 #include <ee0/GameObj.h>
 
 #include "frame/WxStagePage.h"
@@ -70,3 +74,5 @@ private:
 
 }
 }
+
+#endif // MODULE_MODEL

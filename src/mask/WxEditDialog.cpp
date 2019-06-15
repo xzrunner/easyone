@@ -1,5 +1,7 @@
 #include "mask/WxEditDialog.h"
 
+#ifdef MODULE_MASK
+
 #include "frame/WxWorldPanel.h"
 #include "frame/WxDetailPanel.h"
 #include "frame/WxPreviewPanel.h"
@@ -97,3 +99,5 @@ wxWindow* WxEditDialog::CreateDetailPanel()
 
 }
 }
+
+#endif // MODULE_MASK

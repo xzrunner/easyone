@@ -1,4 +1,7 @@
 #include "model/WxStagePage.h"
+
+#ifdef MODULE_MODEL
+
 #include "model/WxPreviewPanel.h"
 #include "model/WxPreviewCanvas.h"
 #include "model/WxToolbarPanel.h"
@@ -206,3 +209,5 @@ void WxStagePage::InitToolbarPanel()
 
 }
 }
+
+#endif // MODULE_MODEL

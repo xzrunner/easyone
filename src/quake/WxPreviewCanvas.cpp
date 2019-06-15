@@ -1,4 +1,7 @@
 #include "quake/WxPreviewCanvas.h"
+
+#ifdef MODULE_QUAKE
+
 #include "quake/WxPreviewPanel.h"
 
 #include <ee0/SubjectMgr.h>
@@ -73,3 +76,5 @@ void WxPreviewCanvas::RegisterMsg(ee0::SubjectMgr& sub_mgr)
 
 }
 }
+
+#endif // MODULE_QUAKE

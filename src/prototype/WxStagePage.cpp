@@ -1,5 +1,7 @@
 #include "prototype/WxStagePage.h"
 
+#ifdef MODULE_PROTOTYPE
+
 #include "frame/AppStyle.h"
 #include "frame/Blackboard.h"
 #include "frame/WxStageSubPanel.h"
@@ -272,3 +274,5 @@ void WxStagePage::InitToolbarPanel()
 
 }
 }
+
+#endif // MODULE_PROTOTYPE

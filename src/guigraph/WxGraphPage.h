@@ -1,5 +1,9 @@
 #pragma once
 
+#include "frame/config.h"
+
+#ifdef MODULE_GUIGRAPH
+
 #include "frame/WxStagePage.h"
 
 namespace eone
@@ -44,3 +48,5 @@ private:
 
 }
 }
+
+#endif // MODULE_GUIGRAPH

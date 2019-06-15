@@ -1,5 +1,7 @@
 #include "quake/WxStageCanvas.h"
 
+#ifdef MODULE_QUAKE
+
 #include <unirender/VertexAttrib.h>
 #include <unirender/Blackboard.h>
 #include <tessellation/Painter.h>
@@ -162,3 +164,5 @@ void WxStageCanvas::DrawGUI() const
 
 }
 }
+
+#endif // MODULE_QUAKE

@@ -1,4 +1,7 @@
 #include "rgraph/WxToolbarPanel.h"
+
+#ifdef MODULE_RENDERGRAPH
+
 #include "rgraph/WxPreviewPanel.h"
 #include "rgraph/WxStagePage.h"
 
@@ -67,3 +70,5 @@ void WxToolbarPanel::OnSelected(const ee0::VariantSet& variants)
 
 }
 }
+
+#endif // MODULE_RENDERGRAPH

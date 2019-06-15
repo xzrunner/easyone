@@ -1,5 +1,7 @@
 #include "particle3d/PlayParticlesOP.h"
 
+#ifdef MODULE_PARTICLE3D
+
 #include <ee0/CameraHelper.h>
 
 #include <emitter/P3dInstance.h>
@@ -57,3 +59,5 @@ bool PlayParticlesOP::OnMouseDrag(int x, int y)
 
 }
 }
+
+#endif // MODULE_PARTICLE3D

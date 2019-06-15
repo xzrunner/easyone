@@ -1,4 +1,7 @@
 #include "sgraph/WxStagePage.h"
+
+#ifdef MODULE_SHADERGRAPH
+
 #include "sgraph/WxStageCanvas.h"
 #include "sgraph/WxToolbarPanel.h"
 
@@ -562,3 +565,5 @@ void WxStagePage::LoadFunctionNodes()
 
 }
 }
+
+#endif // MODULE_SHADERGRAPH

@@ -1,5 +1,9 @@
 #pragma once
 
+#include "frame/config.h"
+
+#ifdef MODULE_SHAPE3D
+
 #include <frame/WxStageCanvas3D.h>
 
 namespace dw3 { class EditOpMgr; }
@@ -36,3 +40,5 @@ private:
 
 }
 }
+
+#endif // MODULE_SHAPE3D

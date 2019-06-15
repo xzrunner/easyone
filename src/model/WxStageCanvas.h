@@ -1,5 +1,9 @@
 #pragma once
 
+#include "frame/config.h"
+
+#ifdef MODULE_MODEL
+
 #include "frame/WxStageCanvas3D.h"
 
 namespace eone
@@ -24,3 +28,5 @@ private:
 
 }
 }
+
+#endif // MODULE_MODEL

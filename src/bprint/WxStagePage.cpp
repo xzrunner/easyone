@@ -1,5 +1,7 @@
 #include "bprint/WxStagePage.h"
 
+#ifdef MODULE_BLUEPRINT
+
 #include "frame/WxStagePage.h"
 #include "frame/Blackboard.h"
 #include "frame/Application.h"
@@ -168,3 +170,5 @@ bool WxStagePage::ClearSceneObj()
 
 }
 }
+
+#endif // MODULE_BLUEPRINT

@@ -1,5 +1,7 @@
 #include "mask/WxStagePage.h"
 
+#ifdef MODULE_MASK
+
 #include "frame/Blackboard.h"
 #include "frame/Application.h"
 #include "frame/typedef.h"
@@ -172,3 +174,5 @@ void WxStagePage::ClearSceneNode()
 
 }
 }
+
+#endif // MODULE_MASK

@@ -1,5 +1,7 @@
 #include "mesh/EditPointsMeshView.h"
 
+#ifdef MODULE_MESH
+
 #include <node2/CompMesh.h>
 #include <painting2/Mesh.h>
 #include <polymesh/PointsMesh.h>
@@ -227,3 +229,5 @@ void EditPointsMeshView::ShapeChanged(const std::shared_ptr<gs::Shape>& shape)
 
 }
 }
+
+#endif // MODULE_MESH

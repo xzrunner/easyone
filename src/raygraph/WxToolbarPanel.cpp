@@ -1,4 +1,7 @@
 #include "raygraph/WxToolbarPanel.h"
+
+#ifdef MODULE_RAYGRAPH
+
 //#include "raygraph/WxPreviewPanel.h"
 #include "raygraph/WxStagePage.h"
 
@@ -66,3 +69,5 @@ void WxToolbarPanel::OnSelected(const ee0::VariantSet& variants)
 
 }
 }
+
+#endif // MODULE_RAYGRAPH

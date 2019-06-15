@@ -1,5 +1,9 @@
 #pragma once
 
+#include "frame/config.h"
+
+#ifdef MODULE_ANIM3
+
 #include <SM_Vector.h>
 #include <SM_Quaternion.h>
 #include <node0/CompAsset.h>
@@ -59,3 +63,5 @@ private:
 
 }
 }
+
+#endif // MODULE_ANIM3

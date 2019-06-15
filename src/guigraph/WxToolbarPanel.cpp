@@ -1,4 +1,7 @@
 #include "guigraph/WxToolbarPanel.h"
+
+#ifdef MODULE_GUIGRAPH
+
 #include "guigraph/WxStagePage.h"
 
 #include "frame/WxStagePage.h"
@@ -61,3 +64,5 @@ void WxToolbarPanel::OnSelected(const ee0::VariantSet& variants)
 
 }
 }
+
+#endif // MODULE_GUIGRAPH

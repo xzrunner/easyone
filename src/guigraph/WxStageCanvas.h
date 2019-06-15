@@ -1,5 +1,9 @@
 #pragma once
 
+#include "frame/config.h"
+
+#ifdef MODULE_GUIGRAPH
+
 #include <ee2/WxStageCanvas.h>
 
 namespace eone
@@ -25,3 +29,5 @@ protected:
 
 }
 }
+
+#endif // MODULE_GUIGRAPH

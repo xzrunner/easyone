@@ -1,5 +1,7 @@
 #include "scale9/ComposeGrids.h"
 
+#ifdef MODULE_SCALE9
+
 #include <ee0/color_config.h>
 
 #include <tessellation/Painter.h>
@@ -51,3 +53,5 @@ sm::vec2 ComposeGrids::GetGridCenter(int col, int row)
 
 }
 }
+
+#endif // MODULE_SCALE9

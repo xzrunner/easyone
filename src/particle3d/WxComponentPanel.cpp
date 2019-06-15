@@ -1,4 +1,7 @@
 #include "particle3d/WxComponentPanel.h"
+
+#ifdef MODULE_PARTICLE3D
+
 #include "particle3d/Languages.h"
 #include "particle3d/config.h"
 
@@ -333,3 +336,5 @@ void WxComponentPanel::ChangeColor(uint8_t rgba[4])
 
 }
 }
+
+#endif // MODULE_PARTICLE3D

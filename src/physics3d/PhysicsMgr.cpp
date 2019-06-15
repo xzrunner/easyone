@@ -1,5 +1,7 @@
 #include "physics3d/PhysicsMgr.h"
 
+#ifdef MODULE_PHYSICS3D
+
 #include "frame/GameObjFactory.h"
 
 #include <uniphysics/rigid/bullet/World.h>
@@ -88,3 +90,5 @@ void PhysicsMgr::DoSimulationStep(float dt)
 
 }
 }
+
+#endif // MODULE_PHYSICS3D

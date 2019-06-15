@@ -1,5 +1,9 @@
 #pragma once
 
+#include "frame/config.h"
+
+#ifdef MODULE_PARTICLE3D
+
 #include <ee0/GameObj.h>
 #include <ee0/WxDropTarget.h>
 
@@ -80,3 +84,5 @@ private:
 
 }
 }
+
+#endif // MODULE_PARTICLE3D

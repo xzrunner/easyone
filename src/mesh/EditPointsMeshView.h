@@ -1,5 +1,9 @@
 #pragma once
 
+#include "frame/config.h"
+
+#ifdef MODULE_MESH
+
 #include <node0/typedef.h>
 
 #include <drawing2/EditView.h>
@@ -51,3 +55,5 @@ private:
 
 }
 }
+
+#endif // MODULE_MESH

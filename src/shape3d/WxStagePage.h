@@ -1,5 +1,9 @@
 #pragma once
 
+#include "frame/config.h"
+
+#ifdef MODULE_SHAPE3D
+
 #include "frame/WxStagePage.h"
 #include "frame/StagePageType.h"
 
@@ -59,3 +63,5 @@ private:
 
 }
 }
+
+#endif // MODULE_SHAPE3D

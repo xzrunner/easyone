@@ -1,4 +1,7 @@
 #include "model/WxPreviewCanvas.h"
+
+#ifdef MODULE_MODEL
+
 #include "model/WxPreviewPanel.h"
 
 #include <ee0/SubjectMgr.h>
@@ -132,3 +135,5 @@ void WxPreviewCanvas::DrawGUI() const
 
 }
 }
+
+#endif // MODULE_MODEL

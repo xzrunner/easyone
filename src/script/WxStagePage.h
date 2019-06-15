@@ -1,5 +1,9 @@
 #pragma once
 
+#include "frame/config.h"
+
+#ifdef MODULE_SCRIPT
+
 #include "frame/WxStagePage.h"
 #include "frame/StagePageType.h"
 
@@ -35,3 +39,5 @@ protected:
 
 }
 }
+
+#endif // MODULE_SCRIPT

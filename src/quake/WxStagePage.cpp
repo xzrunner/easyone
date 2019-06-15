@@ -1,4 +1,7 @@
 #include "quake/WxStagePage.h"
+
+#ifdef MODULE_QUAKE
+
 #include "quake/QuakeMapLoader.h"
 #include "quake/WxPreviewPanel.h"
 #include "quake/WxPreviewCanvas.h"
@@ -213,3 +216,5 @@ void WxStagePage::ClearSceneNode()
 
 }
 }
+
+#endif // MODULE_QUAKE

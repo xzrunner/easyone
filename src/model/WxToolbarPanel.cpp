@@ -1,4 +1,7 @@
 #include "model/WxToolbarPanel.h"
+
+#ifdef MODULE_MODEL
+
 #include "model/WxStagePage.h"
 
 #include <ee0/SubjectMgr.h>
@@ -129,3 +132,5 @@ WxToolbarPanel::WxTreeScrolled::WxTreeScrolled(wxWindow* parent, const ee0::Subj
 
 }
 }
+
+#endif // MODULE_MODEL

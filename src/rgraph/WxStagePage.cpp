@@ -1,4 +1,7 @@
 #include "rgraph/WxStagePage.h"
+
+#ifdef MODULE_RENDERGRAPH
+
 #include "rgraph/WxToolbarPanel.h"
 #include "rgraph/WxPreviewPanel.h"
 
@@ -311,3 +314,5 @@ void WxStagePage::UpdateBlueprint()
 
 }
 }
+
+#endif // MODULE_RENDERGRAPH

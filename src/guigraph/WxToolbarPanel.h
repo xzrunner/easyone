@@ -1,5 +1,9 @@
 #pragma once
 
+#include "frame/config.h"
+
+#ifdef MODULE_GUIGRAPH
+
 #include <ee0/Observer.h>
 #include <ee0/typedef.h>
 
@@ -36,3 +40,5 @@ private:
 
 }
 }
+
+#endif // MODULE_GUIGRAPH

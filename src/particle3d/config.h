@@ -1,5 +1,9 @@
 #pragma once
 
+#include "frame/config.h"
+
+#ifdef MODULE_PARTICLE3D
+
 namespace eone
 {
 namespace particle3d
@@ -29,3 +33,5 @@ static const int MAX_COMPONENTS = 256;
 
 }
 }
+
+#endif // MODULE_PARTICLE3D

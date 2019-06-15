@@ -1,4 +1,7 @@
 #include "guigraph/WxStageCanvas.h"
+
+#ifdef MODULE_GUIGRAPH
+
 #include "guigraph/WxStagePage.h"
 
 #include <blueprint/Node.h>
@@ -49,3 +52,5 @@ void WxStageCanvas::DrawForeground() const
 
 }
 }
+
+#endif // MODULE_GUIGRAPH

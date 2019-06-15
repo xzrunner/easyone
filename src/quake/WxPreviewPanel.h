@@ -1,5 +1,9 @@
 #pragma once
 
+#include "frame/config.h"
+
+#ifdef MODULE_QUAKE
+
 #include <ee0/WxStagePage.h>
 
 namespace eone
@@ -20,3 +24,5 @@ public:
 
 }
 }
+
+#endif // MODULE_QUAKE

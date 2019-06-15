@@ -1,4 +1,7 @@
 #include "raygraph/WxStagePage.h"
+
+#ifdef MODULE_RAYGRAPH
+
 #include "raygraph/WxToolbarPanel.h"
 
 #include "frame/AppStyle.h"
@@ -319,3 +322,5 @@ void WxStagePage::UpdateBlueprint()
 
 }
 }
+
+#endif // MODULE_RAYGRAPH

@@ -1,5 +1,9 @@
 #pragma once
 
+#include "frame/config.h"
+
+#ifdef MODULE_RAYGRAPH
+
 #include "frame/WxStagePage.h"
 #include "frame/StagePageType.h"
 
@@ -53,3 +57,5 @@ private:
 
 }
 }
+
+#endif // MODULE_RAYGRAPH

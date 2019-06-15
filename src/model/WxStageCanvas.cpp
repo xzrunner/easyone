@@ -1,4 +1,7 @@
 #include "model/WxStageCanvas.h"
+
+#ifdef MODULE_MODEL
+
 #include "model/WxStagePage.h"
 
 #include "frame/WxStagePage.h"
@@ -109,3 +112,5 @@ void WxStageCanvas::DrawForeground3D() const
 
 }
 }
+
+#endif // MODULE_MODEL

@@ -1,5 +1,9 @@
 #pragma once
 
+#include "frame/config.h"
+
+#ifdef MODULE_ANIM3
+
 #include "frame/WxStagePage.h"
 #include "frame/StagePageType.h"
 
@@ -58,3 +62,5 @@ private:
 
 }
 }
+
+#endif // MODULE_ANIM3

@@ -11,41 +11,81 @@
 #include "frame/WxPreviewCanvas.h"
 #include "frame/WxLibraryPanel.h"
 #include "frame/WxBlueprintCanvas.h"
+#include "frame/config.h"
 
+#ifdef MODULE_SCENE2D
 #include "scene2d/WxStagePage.h"
+#endif // MODULE_SCENE2D
+#ifdef MODULE_SCENE3D
 #include "scene3d/WxStagePage.h"
+#endif // MODULE_SCENE3D
+#ifdef MODULE_SCALE9
 #include "scale9/WxStagePage.h"
 #include "scale9/WxStageCanvas.h"
 #include "scale9/ResizeScale9OP.h"
+#endif // MODULE_SCALE9
+#ifdef MODULE_MASK
 #include "mask/WxStagePage.h"
+#endif // MODULE_MASK
+#ifdef MODULE_MESH
 #include "mesh/WxStagePage.h"
 #include "mesh/WxStageCanvas.h"
+#endif // MODULE_MESH
+#ifdef MODULE_SCRIPT
 #include "script/WxStagePage.h"
 #include "script/WxStageCanvas.h"
+#endif // MODULE_SCRIPT
+#ifdef MODULE_ANIM
 #include "anim/WxStagePage.h"
+#endif // MODULE_ANIM
+#ifdef MODULE_PARTICLE3D
 #include "particle3d/WxStagePage.h"
 #include "particle3d/PlayParticlesOP.h"
+#endif // MODULE_PARTICLE3D
+#ifdef MODULE_SHAPE2D
 #include "shape2d/WxStagePage.h"
 #include "shape2d/WxStageCanvas.h"
+#endif // MODULE_SHAPE2D
+#ifdef MODULE_SHAPE3D
 #include "shape3d/WxStagePage.h"
 #include "shape3d/WxStageCanvas.h"
+#endif // MODULE_SHAPE3D
+#ifdef MODULE_MODEL
 #include "model/WxStagePage.h"
 #include "model/WxStageCanvas.h"
+#endif // MODULE_MODEL
+#ifdef MODULE_ANIM3
 #include "anim3/WxStagePage.h"
 #include "anim3/WxStageCanvas.h"
+#endif // MODULE_ANIM3
+#ifdef MODULE_SHADERGRAPH
 #include "sgraph/WxStagePage.h"
 #include "sgraph/WxStageCanvas.h"
+#endif // MODULE_SHADERGRAPH
+#ifdef MODULE_PROTOTYPE
 #include "prototype/WxStagePage.h"
+#endif // MODULE_PROTOTYPE
+#ifdef MODULE_RENDERGRAPH
 #include "rgraph/WxStagePage.h"
+#endif // MODULE_RENDERGRAPH
+#ifdef MODULE_BLUEPRINT
 #include "bprint/WxStagePage.h"
+#endif // MODULE_BLUEPRINT
+#ifdef MODULE_QUAKE
 #include "quake/WxStagePage.h"
 #include "quake/WxStageCanvas.h"
+#endif // MODULE_QUAKE
 #include "physics3d/WxStagePage.h"
-#include "physics3d/WxStageCanvas.h"
+#include "physics3d/WxStageCanvas2D.h"
+#include "physics3d/WxStageCanvas3D.h"
 #include "physics3d/PBDSceneOP.h"
+#ifdef MODULE_RAYGRAPH
 #include "raygraph/WxStagePage.h"
+#endif // MODULE_RAYGRAPH
+#ifdef MODULE_GUIGRAPH
 #include "guigraph/WxStagePage.h"
 #include "guigraph/WxStageCanvas.h"
+#endif // MODULE_GUIGRAPH
 
 #include <ee0/WxListSelectDlg.h>
 #include <ee0/MsgHelper.h>
@@ -95,6 +135,7 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
 
 	switch (page_type)
 	{
+#ifdef MODULE_SCENE2D
 	case PAGE_SCENE2D:
 	{
 		auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX2D);
@@ -111,6 +152,8 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
 		page->GetImpl().SetEditOP(op);
 	}
 		break;
+#endif // MODULE_SCENE2D
+#ifdef MODULE_SCENE3D
 	case PAGE_SCENE3D:
 	{
 		auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX3D);
@@ -123,6 +166,8 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
 		page->GetImpl().SetEditOP(op);
 	}
 		break;
+#endif // MODULE_SCENE3D
+#ifdef MODULE_SCALE9
 	case PAGE_SCALE9:
 	{
 		auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_SCALE9);
@@ -133,6 +178,8 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
 		page->GetImpl().SetEditOP(CreateNode2DSelectOP(canvas->GetCamera(), *page, rc, wc));
 	}
 		break;
+#endif // MODULE_SCALE9
+#ifdef MODULE_MASK
 	case PAGE_MASK:
 	{
 		auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_MASK);
@@ -148,6 +195,8 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
 		page->GetImpl().SetEditOP(op);
 	}
 		break;
+#endif // MODULE_MASK
+#ifdef MODULE_MESH
 	case PAGE_MESH:
 	{
 		auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_MESH);
@@ -156,6 +205,8 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
 		page->GetImpl().SetCanvas(canvas);
 	}
 		break;
+#endif // MODULE_MESH
+#ifdef MODULE_ANIM
 	case PAGE_ANIM:
 	{
 		auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_ANIM);
@@ -171,6 +222,8 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
 		page->GetImpl().SetEditOP(op);
 	}
 		break;
+#endif // MODULE_ANIM
+#ifdef MODULE_PARTICLE3D
 	case PAGE_PARTICLE3D:
 	{
 		auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_PARTICLE3D);
@@ -189,6 +242,8 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
 #endif // GAME_OBJ_ECS
 	}
 		break;
+#endif // MODULE_PARTICLE3D
+#ifdef MODULE_SHAPE2D
 	case PAGE_SHAPE2D:
 	{
 		auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX2D);
@@ -199,6 +254,8 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
 		page->GetImpl().SetCanvas(canvas);
 	}
 		break;
+#endif // MODULE_SHAPE2D
+#ifdef MODULE_SHAPE3D
 	case PAGE_SHAPE3D:
 	{
 		auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX3D);
@@ -212,7 +269,9 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
 		shape_page->InitEditOP(canvas->GetCamera(), canvas->GetViewport());
 	}
 		break;
+#endif // MODULE_SHAPE3D
 
+#ifdef MODULE_MODEL
 	case PAGE_MODEL:
 	{
 		auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_MODEL);
@@ -223,6 +282,8 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
 		mpage->InitEditOp(canvas->GetCamera(), canvas->GetViewport());
 	}
 		break;
+#endif // MODULE_MODEL
+#ifdef MODULE_ANIM3
 	case PAGE_ANIM3:
 	{
 		auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_MODEL);
@@ -240,6 +301,8 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
 		page->GetImpl().SetEditOP(op);
 	}
 		break;
+#endif // MODULE_ANIM3
+#ifdef MODULE_SHADERGRAPH
 	case PAGE_SHADER_GRAPH:
 	{
 		auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX2D);
@@ -270,6 +333,8 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
         static_cast<sgraph::WxStagePage*>(page)->SetModelType(sgraph::ModelType::PBR);
 	}
 		break;
+#endif // MODULE_SHADERGRAPH
+#ifdef MODULE_PROTOTYPE
 	case PAGE_PROTOTYPING:
 	{
 		auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX2D);
@@ -282,6 +347,8 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
 		page->GetImpl().SetEditOP(op);
 	}
 		break;
+#endif // MODULE_PROTOTYPE
+#ifdef MODULE_RENDERGRAPH
     case PAGE_RENDER_GRAPH:
     {
 		auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX2D);
@@ -308,15 +375,16 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
 		page->GetImpl().SetEditOP(op);
     }
         break;
+#endif // MODULE_RENDERGRAPH
     case PAGE_PHYSICS3D:
     {
         auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX3D);
         auto p3_page = new physics3d::WxStagePage(frame, library, ECS_WORLD_VAR obj);
         page = p3_page;
 #ifdef PHYSICS_PBD_SCENE
-        auto canvas = std::make_shared<WxStageCanvas2D>(page, rc);
+        auto canvas = std::make_shared<physics3d::WxStageCanvas2D>(page, rc);
 #else
-        auto canvas = std::make_shared<physics3d::WxStageCanvas>(page, rc);
+        auto canvas = std::make_shared<physics3d::WxStageCanvas3D>(page, rc);
 #endif // PHYSICS_PBD_SCENE
         page->GetImpl().SetCanvas(canvas);
 
@@ -332,6 +400,7 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
         page->GetImpl().SetEditOP(op);
     }
         break;
+#ifdef MODULE_RAYGRAPH
     case PAGE_RAY_GRAPH:
     {
 		auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX2D);
@@ -358,6 +427,8 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
 		page->GetImpl().SetEditOP(op);
     }
         break;
+#endif // MODULE_RAYGRAPH
+#ifdef MODULE_GUIGRAPH
     case PAGE_GUI_GRAPH:
     {
 		auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX2D);
@@ -374,7 +445,9 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
 		page->GetImpl().SetEditOP(op);
     }
         break;
+#endif // MODULE_GUIGRAPH
 
+#ifdef MODULE_SCRIPT
 	case PAGE_SCRIPT:
 	{
 		std::string filter = "*.lua";
@@ -401,7 +474,9 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
 		page->GetImpl().SetEditOP(op);
 	}
 		break;
+#endif // MODULE_SCRIPT
 
+#ifdef MODULE_BLUEPRINT
 	case PAGE_BLUEPRINT:
 	{
 		auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX2D);
@@ -426,7 +501,9 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
 		page->GetImpl().SetEditOP(op);
 	}
 		break;
+#endif // MODULE_BLUEPRINT
 
+#ifdef MODULE_QUAKE
 	case PAGE_QUAKE:
 	{
 		auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX3D);
@@ -439,6 +516,7 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
 		quake_page->InitEditOP(canvas->GetCamera(), canvas->GetViewport());
 	}
 		break;
+#endif // MODULE_QUAKE
 	}
 
 	return page;
@@ -459,6 +537,7 @@ void PanelFactory::CreatePreviewOP(
 
 	switch (curr_page->GetPageType())
 	{
+#ifdef MODULE_SCENE2D
 	case PAGE_SCENE2D:
 	{
 		auto preview_op = std::make_shared<ee2::CamControlOP>(
@@ -466,6 +545,8 @@ void PanelFactory::CreatePreviewOP(
 		preview->GetImpl().SetEditOP(preview_op);
 	}
 		break;
+#endif // MODULE_SCENE2D
+#ifdef MODULE_SCENE3D
 	case PAGE_SCENE3D:
 	{
 		//auto preview_op = std::make_shared<ee3::WorldTravelOP>(
@@ -473,6 +554,8 @@ void PanelFactory::CreatePreviewOP(
 		//preview->GetImpl().SetEditOP(preview_op);
 	}
 		break;
+#endif // MODULE_SCENE3D
+#ifdef MODULE_SCALE9
 	case PAGE_SCALE9:
 	{
 		auto preview_op = std::make_shared<scale9::ResizeScale9OP>(
@@ -480,6 +563,8 @@ void PanelFactory::CreatePreviewOP(
 		preview->GetImpl().SetEditOP(preview_op);
 	}
 		break;
+#endif // MODULE_SCALE9
+#ifdef MODULE_MASK
 	case PAGE_MASK:
 	{
 		auto preview_op = std::make_shared<ee2::CamControlOP>(
@@ -487,6 +572,8 @@ void PanelFactory::CreatePreviewOP(
 		preview->GetImpl().SetEditOP(preview_op);
 	}
 		break;
+#endif // MODULE_MASK
+#ifdef MODULE_MESH
 	case PAGE_MESH:
 	{
 		auto preview_op = std::make_shared<ee2::CamControlOP>(
@@ -494,6 +581,7 @@ void PanelFactory::CreatePreviewOP(
 		preview->GetImpl().SetEditOP(preview_op);
 	}
 		break;
+#endif // MODULE_MESH
 	}
 }
 

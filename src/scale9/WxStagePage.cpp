@@ -1,4 +1,7 @@
 #include "scale9/WxStagePage.h"
+
+#ifdef MODULE_SCALE9
+
 #include "scale9/ComposeGrids.h"
 #include "scale9/ResizeScale9OP.h"
 
@@ -274,3 +277,5 @@ void WxStagePage::TraverseGrids(std::function<bool(const ee0::GameObj&)> func) c
 
 }
 }
+
+#endif // MODULE_SCALE9

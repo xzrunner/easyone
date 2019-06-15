@@ -1,5 +1,9 @@
 #pragma once
 
+#include "frame/config.h"
+
+#ifdef MODULE_MESH
+
 #include "mesh/EditPointsMeshView.h"
 
 #include <ee2/WxStageCanvas.h>
@@ -42,3 +46,5 @@ private:
 
 }
 }
+
+#endif // MODULE_MESH

@@ -1,5 +1,7 @@
 #include "scale9/ResizeScale9OP.h"
 
+#ifdef MODULE_SCALE9
+
 #include "frame/WxPreviewPanel.h"
 #include "frame/WxPreviewCanvas.h"
 
@@ -171,3 +173,5 @@ bool ResizeScale9OP::OnDraw() const
 
 }
 }
+
+#endif // MODULE_SCALE9

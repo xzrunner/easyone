@@ -1,5 +1,7 @@
 #include "mesh/WxStageCanvas.h"
 
+#ifdef MODULE_MESH
+
 #include "frame/WxStagePage.h"
 
 #include <ee2/CamControlOP.h>
@@ -156,3 +158,5 @@ void WxStageCanvas::DrawForeground() const
 
 }
 }
+
+#endif // MODULE_MESH

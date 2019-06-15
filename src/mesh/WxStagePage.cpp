@@ -1,5 +1,7 @@
 #include "mesh/WxStagePage.h"
 
+#ifdef MODULE_MESH
+
 #include "frame/Blackboard.h"
 #include "frame/Application.h"
 #include "frame/typedef.h"
@@ -101,3 +103,5 @@ void WxStagePage::InsertSceneNode(const ee0::VariantSet& variants)
 
 }
 }
+
+#endif // MODULE_MESH

@@ -1,4 +1,7 @@
 #include "guigraph/WxStagePage.h"
+
+#ifdef MODULE_GUIGRAPH
+
 #include "guigraph/WxToolbarPanel.h"
 #include "guigraph/WxGraphPage.h"
 
@@ -283,3 +286,5 @@ void WxStagePage::CreateNewPage(const ee0::VariantSet& variants) const
 
 }
 }
+
+#endif // MODULE_GUIGRAPH

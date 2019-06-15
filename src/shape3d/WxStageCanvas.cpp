@@ -1,5 +1,7 @@
 #include "shape3d/WxStageCanvas.h"
 
+#ifdef MODULE_SHAPE3D
+
 #include <unirender/VertexAttrib.h>
 #include <unirender/Blackboard.h>
 #include <tessellation/Painter.h>
@@ -162,3 +164,5 @@ void WxStageCanvas::DrawGUI() const
 
 }
 }
+
+#endif // MODULE_SHAPE3D

@@ -1,5 +1,9 @@
 #pragma once
 
+#include "frame/config.h"
+
+#ifdef MODULE_PARTICLE3D
+
 #include <ee2/CamControlOP.h>
 
 #include <node0/typedef.h>
@@ -25,3 +29,5 @@ private:
 
 }
 }
+
+#endif // MODULE_PARTICLE3D

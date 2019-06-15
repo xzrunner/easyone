@@ -1,5 +1,7 @@
 #include "physics3d/PBDSceneOP.h"
 
+#ifdef MODULE_PHYSICS3D
+
 #include <ee2/CamZoomState.h>
 
 #include <pbd/simulation.h>
@@ -54,3 +56,5 @@ bool PBDSceneOP::Update(float dt)
 
 }
 }
+
+#endif // MODULE_PHYSICS3D

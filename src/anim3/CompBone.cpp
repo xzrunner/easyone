@@ -1,5 +1,7 @@
 #include "anim3/CompBone.h"
 
+#ifdef MODULE_ANIM3
+
 namespace eone
 {
 namespace anim3
@@ -21,3 +23,5 @@ CompBone::CompBone(model::ModelInstance& model_inst,
 
 }
 }
+
+#endif // MODULE_ANIM3

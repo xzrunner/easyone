@@ -1,5 +1,9 @@
 #pragma once
 
+#include "frame/config.h"
+
+#ifdef MODULE_PHYSICS3D
+
 #include <ee0/EditOP.h>
 #include <ee0/typedef.h>
 
@@ -31,3 +35,5 @@ private:
 
 }
 }
+
+#endif // MODULE_PHYSICS3D

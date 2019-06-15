@@ -1,5 +1,9 @@
 #pragma once
 
+#include "frame/config.h"
+
+#ifdef MODULE_SHADERGRAPH
+
 namespace eone
 {
 namespace sgraph
@@ -16,3 +20,5 @@ enum class ModelType
 
 }
 }
+
+#endif // MODULE_SHADERGRAPH

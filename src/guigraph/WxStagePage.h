@@ -1,5 +1,9 @@
 #pragma once
 
+#include "frame/config.h"
+
+#ifdef MODULE_GUIGRAPH
+
 #include "frame/WxStagePage.h"
 #include "frame/StagePageType.h"
 
@@ -58,3 +62,5 @@ private:
 
 }
 }
+
+#endif // MODULE_GUIGRAPH

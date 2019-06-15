@@ -1,5 +1,9 @@
 #pragma once
 
+#include "frame/config.h"
+
+#ifdef MODULE_PARTICLE3D
+
 #include "particle3d/WxEmitterPanel.h"
 
 #include <ee0/GuiCallback.h>
@@ -65,3 +69,5 @@ private:
 
 }
 }
+
+#endif // MODULE_PARTICLE3D

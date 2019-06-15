@@ -1,5 +1,9 @@
 #pragma once
 
+#include "frame/config.h"
+
+#ifdef MODULE_BLUEPRINT
+
 #include <ee0/GameObj.h>
 
 #include "frame/WxStagePage.h"
@@ -40,3 +44,5 @@ private:
 
 }
 }
+
+#endif // MODULE_BLUEPRINT

@@ -1,5 +1,9 @@
 #pragma once
 
+#include "frame/config.h"
+
+#ifdef MODULE_SCRIPT
+
 #include <ee2/WxStageCanvas.h>
 
 #include <moon/StagePageScript.h>
@@ -39,3 +43,5 @@ private:
 
 }
 }
+
+#endif // MODULE_SCRIPT

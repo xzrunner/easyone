@@ -1,5 +1,9 @@
 #pragma once
 
+#include "frame/config.h"
+
+#ifdef MODULE_SHAPE2D
+
 #include <ee2/WxStageCanvas.h>
 
 #include <drawing2/CommonEditView.h>
@@ -41,3 +45,5 @@ private:
 
 }
 }
+
+#endif // MODULE_SHAPE2D

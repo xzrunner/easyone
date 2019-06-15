@@ -1,5 +1,9 @@
 #pragma once
 
+#include "frame/config.h"
+
+#ifdef MODULE_SCALE9
+
 #include <ee0/GameObj.h>
 #include <ee0/EditOP.h>
 
@@ -51,3 +55,5 @@ private:
 
 }
 }
+
+#endif // MODULE_SCALE9

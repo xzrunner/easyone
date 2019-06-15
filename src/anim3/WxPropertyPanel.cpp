@@ -1,4 +1,7 @@
 #include "anim3/WxPropertyPanel.h"
+
+#ifdef MODULE_ANIM3
+
 #include "anim3/CompBone.h"
 
 #include <ee0/SubjectMgr.h>
@@ -130,3 +133,5 @@ void WxPropertyPanel::OnSetCurrFrame(const ee0::VariantSet& variants)
 
 }
 }
+
+#endif // MODULE_ANIM3

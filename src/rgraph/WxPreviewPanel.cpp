@@ -1,5 +1,7 @@
 #include "rgraph/WxPreviewPanel.h"
 
+#ifdef MODULE_RENDERGRAPH
+
 #include <ee0/SubjectMgr.h>
 #include <ee3/WorldTravelOP.h>
 #include <renderlab/Node.h>
@@ -107,3 +109,5 @@ void WxPreviewPanel::Canvas::OnDrawSprites() const
 
 }
 }
+
+#endif // MODULE_RENDERGRAPH

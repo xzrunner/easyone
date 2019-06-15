@@ -15,18 +15,39 @@
 #include "frame/Blackboard.h"
 #include "frame/typedef.h"
 #include "frame/WxScriptPanel.h"
+#include "frame/config.h"
 
+#ifdef MODULE_SCENE2D
 #include "scene2d/WxStagePage.h"
+#endif // MODULE_SCENE2D
+#ifdef MODULE_SCENE3D
 #include "scene3d/WxStagePage.h"
+#endif // MODULE_SCENE3D
+#ifdef MODULE_SHAPE2D
 #include "shape2d/WxStagePage.h"
+#endif // MODULE_SHAPE2D
+#ifdef MODULE_SHAPE3D
 #include "shape3d/WxStagePage.h"
+#endif MODULE_SHAPE3D
+#ifdef MODULE_QUAKE
 #include "quake/WxStagePage.h"
+#endif // MODULE_QUAKE
+#ifdef MODULE_SHADERGRAPH
 #include "sgraph/WxStagePage.h"
+#endif // MODULE_SHADERGRAPH
+#ifdef MODULE_PROTOTYPE
 #include "prototype/WxStagePage.h"
+#endif // MODULE_PROTOTYPE
+#ifdef MODULE_RENDERGRAPH
 #include "rgraph/WxStagePage.h"
+#endif // MODULE_RENDERGRAPH
 #include "physics3d/WxStagePage.h"
+#ifdef MODULE_RAYGRAPH
 #include "raygraph/WxStagePage.h"
+#endif // MODULE_RAYGRAPH
+#ifdef MODULE_GUIGRAPH
 #include "guigraph/WxStagePage.h"
+#endif // MODULE_GUIGRAPH
 
 #include <ee0/MsgHelper.h>
 #include <ee0/SubjectMgr.h>
@@ -101,28 +122,50 @@ void Application::LoadFromFile(const std::string& filepath)
 		if (new_type_str == "n0_complex") {
 			assert(doc.HasMember("page_type"));
 			auto type = doc["page_type"].GetString();
-			if (type == scene2d::WxStagePage::PAGE_TYPE) {
+            if (type == "") {
+                ;
+#ifdef MODULE_SCENE2D
+            } else if (type == scene2d::WxStagePage::PAGE_TYPE) {
 				new_type = PAGE_SCENE2D;
+#endif // MODULE_SCENE2D
+#ifdef MODULE_SCENE3D
 			} else if (type == scene3d::WxStagePage::PAGE_TYPE) {
 				new_type = PAGE_SCENE3D;
+#endif // MODULE_SCENE3D
+#ifdef MODULE_SHAPE2D
 			} else if (type == shape2d::WxStagePage::PAGE_TYPE) {
 				new_type = PAGE_SHAPE2D;
+#endif // MODULE_SHAPE2D
+#ifdef MODULE_SHAPE3D
 			} else if (type == shape3d::WxStagePage::PAGE_TYPE) {
 				new_type = PAGE_SHAPE3D;
+#endif // MODULE_SHAPE3D
+#ifdef MODULE_QUAKE
 			} else if (type == quake::WxStagePage::PAGE_TYPE) {
 				new_type = PAGE_QUAKE;
+#endif // MODULE_QUAKE
+#ifdef MODULE_SHADERGRAPH
 			} else if (type == sgraph::WxStagePage::PAGE_TYPE) {
 				new_type = PAGE_SHADER_GRAPH;
+#endif // MODULE_SHADERGRAPH
+#ifdef MODULE_PROTOTYPE
 			} else if (type == prototype::WxStagePage::PAGE_TYPE) {
 				new_type = PAGE_PROTOTYPING;
+#endif // MODULE_PROTOTYPE
+#ifdef MODULE_RENDERGRAPH
 			} else if (type == rgraph::WxStagePage::PAGE_TYPE) {
                 new_type = PAGE_RENDER_GRAPH;
+#endif // MODULE_RENDERGRAPH
             } else if (type == physics3d::WxStagePage::PAGE_TYPE) {
                 new_type = PAGE_PHYSICS3D;
+#ifdef MODULE_RAYGRAPH
             } else if (type == raygraph::WxStagePage::PAGE_TYPE) {
                 new_type = PAGE_RAY_GRAPH;
+#endif // MODULE_RAYGRAPH
+#ifdef MODULE_GUIGRAPH
             } else if (type == guigraph::WxStagePage::PAGE_TYPE) {
                 new_type = PAGE_GUI_GRAPH;
+#endif // MODULE_GUIGRAPH
             }
 		} else if (new_type_str == "n2_scale9") {
 			new_type = PAGE_SCALE9;

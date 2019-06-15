@@ -1,4 +1,7 @@
 #include "particle3d/WxEmitterPanel.h"
+
+#ifdef MODULE_PARTICLE3D
+
 #include "particle3d/WxPropertyPanel.h"
 #include "particle3d/WxComponentPanel.h"
 #include "particle3d/Languages.h"
@@ -247,3 +250,5 @@ OnDropText(wxCoord x, wxCoord y, const wxString& text)
 
 }
 }
+
+#endif // MODULE_PARTICLE3D

@@ -1,5 +1,9 @@
 #pragma once
 
+#include "frame/config.h"
+
+#ifdef MODULE_SCENE3D
+
 #include <ee0/GameObj.h>
 
 #include "frame/WxStagePage.h"
@@ -47,3 +51,5 @@ private:
 
 }
 }
+
+#endif // MODULE_SCENE3D

@@ -1,5 +1,9 @@
 #pragma once
 
+#include "frame/config.h"
+
+#ifdef MODULE_QUAKE
+
 #include <ee3/WxStageCanvas.h>
 
 namespace ur { class Shader; }
@@ -33,3 +37,5 @@ private:
 
 }
 }
+
+#endif // MODULE_QUAKE

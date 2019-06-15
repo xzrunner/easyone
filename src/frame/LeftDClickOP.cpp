@@ -4,8 +4,12 @@
 #include "frame/Application.h"
 #include "frame/WxStagePanel.h"
 
+#ifdef MODULE_MASK
 #include "mask/WxEditDialog.h"
+#endif // MODULE_MASK
+#ifdef MODULE_SCALE9
 #include "scale9/WxEditDialog.h"
+#endif // MODULE_SCALE9
 
 #include <ee0/WxStageCanvas.h>
 #include <ee0/EditOpState.h>
@@ -34,9 +38,11 @@ void OpenEditDialog(ee0::WxStagePage& stage, ECS_WORLD_PARAM
 	if (world.HasComponent<e2::CompMask>(obj))
 #endif // GAME_OBJ_ECS
 	{
+#ifdef MODULE_MASK
 		auto& canvas = stage.GetImpl().GetCanvas();
 		eone::mask::WxEditDialog dlg(stage_panel, rc, wc, ECS_WORLD_VAR obj);
 		dlg.ShowModal();
+#endif // MODULE_MASK
 	}
 #ifndef GAME_OBJ_ECS
 	else if (obj->HasSharedComp<n2::CompScale9>())
@@ -44,9 +50,11 @@ void OpenEditDialog(ee0::WxStagePage& stage, ECS_WORLD_PARAM
 	else if (world.HasComponent<e2::CompScale9>(obj))
 #endif // GAME_OBJ_ECS
 	{
+#ifdef MODULE_SCALE9
 		auto& canvas = stage.GetImpl().GetCanvas();
 		eone::scale9::WxEditDialog dlg(stage_panel, rc, wc, ECS_WORLD_VAR obj);
 		dlg.ShowModal();
+#endif // MODULE_SCALE9
 	}
 }
 

@@ -1,5 +1,9 @@
 #pragma once
 
+#include "frame/config.h"
+
+#ifdef MODULE_RENDERGRAPH
+
 #include <ee0/WxStageCanvas.h>
 #include <ee0/Observer.h>
 #include <ee0/typedef.h>
@@ -62,3 +66,5 @@ private:
 
 }
 }
+
+#endif // MODULE_RENDERGRAPH

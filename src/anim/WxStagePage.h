@@ -1,5 +1,9 @@
 #pragma once
 
+#include "frame/config.h"
+
+#ifdef MODULE_ANIM
+
 #include <ee0/GameObj.h>
 #include <ee0/Config.h>
 
@@ -49,3 +53,5 @@ private:
 
 }
 }
+
+#endif // MODULE_ANIM

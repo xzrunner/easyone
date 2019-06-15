@@ -1,4 +1,7 @@
 #include "particle3d/WxStagePage.h"
+
+#ifdef MODULE_PARTICLE3D
+
 #include "particle3d/WxEmitterPanel.h"
 
 #include "frame/Blackboard.h"
@@ -91,3 +94,5 @@ const n0::NodeComp& WxStagePage::GetEditedObjComp() const
 
 }
 }
+
+#endif // MODULE_PARTICLE3D

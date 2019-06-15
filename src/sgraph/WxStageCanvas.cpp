@@ -1,5 +1,7 @@
 #include "sgraph/WxStageCanvas.h"
 
+#ifdef MODULE_SHADERGRAPH
+
 #include <ee0/WxStagePage.h>
 #include <ee0/MsgHelper.h>
 #include <ee0/SubjectMgr.h>
@@ -147,3 +149,5 @@ void WxStageCanvas::OnGetVarNameChanged() const
 
 }
 }
+
+#endif // MODULE_SHADERGRAPH

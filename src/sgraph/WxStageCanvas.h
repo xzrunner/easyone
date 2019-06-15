@@ -1,5 +1,9 @@
 #pragma once
 
+#include "frame/config.h"
+
+#ifdef MODULE_SHADERGRAPH
+
 #include "frame/WxStageCanvas2D.h"
 
 namespace eone
@@ -22,3 +26,5 @@ private:
 
 }
 }
+
+#endif // MODULE_SHADERGRAPH

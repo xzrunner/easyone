@@ -1,5 +1,7 @@
 #include "scene3d/WxStagePage.h"
 
+#ifdef MODULE_SCENE3D
+
 #include "frame/WxStagePage.h"
 #include "frame/Blackboard.h"
 #include "frame/Application.h"
@@ -161,3 +163,5 @@ void WxStagePage::ClearSceneNode()
 
 }
 }
+
+#endif // MODULE_SCENE3D

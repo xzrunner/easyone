@@ -1,5 +1,9 @@
 #pragma once
 
+#include "frame/config.h"
+
+#ifdef MODULE_QUAKE
+
 #include "frame/WxStagePage.h"
 #include "frame/StagePageType.h"
 
@@ -65,3 +69,5 @@ private:
 
 }
 }
+
+#endif // MODULE_QUAKE

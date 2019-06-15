@@ -1,5 +1,9 @@
 #pragma once
 
+#include "frame/config.h"
+
+#ifdef MODULE_MASK
+
 #include <ee0/GameObj.h>
 
 #include <wx/dialog.h>
@@ -47,3 +51,5 @@ private:
 
 }
 }
+
+#endif // MODULE_MASK

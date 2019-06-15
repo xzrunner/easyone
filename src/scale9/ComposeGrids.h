@@ -1,5 +1,9 @@
 #pragma once
 
+#include "frame/config.h"
+
+#ifdef MODULE_SCALE9
+
 #include <SM_Vector.h>
 
 namespace eone
@@ -20,3 +24,5 @@ public:
 
 }
 }
+
+#endif // MODULE_SCALE9

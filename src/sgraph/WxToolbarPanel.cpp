@@ -1,4 +1,7 @@
 #include "sgraph/WxToolbarPanel.h"
+
+#ifdef MODULE_SHADERGRAPH
+
 #include "sgraph/WxStagePage.h"
 
 #include <ee3/WxMaterialPreview.h>
@@ -90,3 +93,5 @@ void WxToolbarPanel::OnSelected(const ee0::VariantSet& variants)
 
 }
 }
+
+#endif // MODULE_SHADERGRAPH

@@ -1,5 +1,7 @@
 #include "quake/QuakeMapLoader.h"
 
+#ifdef MODULE_QUAKE
+
 #include <ee0/MsgHelper.h>
 
 #include <model/Model.h>
@@ -48,3 +50,5 @@ void QuakeMapLoader::LoadFromFile(ee0::SubjectMgr& sub_mgr,
 
 }
 }
+
+#endif // MODULE_QUAKE
