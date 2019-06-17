@@ -16,7 +16,7 @@ PBDSceneOP::PBDSceneOP(const std::shared_ptr<pt0::Camera>& camera,
     : ee0::EditOP(camera)
 {
     m_sim = std::make_unique<pbd::Simulation>();
-    m_sim->resize(glm::ivec2(10, 10));
+    m_sim->Resize(glm::ivec2(10, 10));
 
     m_cam_op = std::make_unique<ee2::CamZoomState>(camera, sub_mgr);
 }
@@ -38,7 +38,7 @@ bool PBDSceneOP::OnDraw() const
         return true;
     }
 
-    m_sim->draw();
+    m_sim->Draw();
 
     return false;
 }
@@ -49,7 +49,7 @@ bool PBDSceneOP::Update(float dt)
         return true;
     }
 
-    m_sim->tick(dt);
+    m_sim->Tick(dt);
 
     return false;
 }
