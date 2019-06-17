@@ -232,3 +232,6 @@
 [submodule "ext/guilab"]
 	path = ext/guilab
 	url = git@github.com:xzrunner/guilab.git
+[submodule "ext/pbd"]
+	path = ext/pbd
+	url = git@github.com:xzrunner/pbd.git
