@@ -156,8 +156,10 @@ void Application::LoadFromFile(const std::string& filepath)
 			} else if (type == rgraph::WxStagePage::PAGE_TYPE) {
                 new_type = PAGE_RENDER_GRAPH;
 #endif // MODULE_RENDERGRAPH
+#ifdef MODULE_PHYSICS3D
             } else if (type == physics3d::WxStagePage::PAGE_TYPE) {
                 new_type = PAGE_PHYSICS3D;
+#endif // MODULE_PHYSICS3D
 #ifdef MODULE_RAYGRAPH
             } else if (type == raygraph::WxStagePage::PAGE_TYPE) {
                 new_type = PAGE_RAY_GRAPH;

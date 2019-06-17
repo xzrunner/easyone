@@ -376,6 +376,7 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
     }
         break;
 #endif // MODULE_RENDERGRAPH
+#ifdef MODULE_PHYSICS3D
     case PAGE_PHYSICS3D:
     {
         auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX3D);
@@ -400,6 +401,7 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
         page->GetImpl().SetEditOP(op);
     }
         break;
+#endif // MODULE_PHYSICS3D
 #ifdef MODULE_RAYGRAPH
     case PAGE_RAY_GRAPH:
     {
