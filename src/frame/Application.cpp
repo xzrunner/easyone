@@ -332,29 +332,69 @@ wxWindow* Application::CreateStagePanel()
 	m_stage->Freeze();
 	Blackboard::Instance()->SetStagePanel(m_stage);
 
-	//auto page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_SCENE2D, m_stage);
-    //auto page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_SCENE3D, m_stage);
+    WxStagePage* page = nullptr;
 
-	//auto page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_SCALE9, m_stage);
-	//auto page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_SCRIPT, m_stage);
-	//auto page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_ANIM, m_stage);
-	//auto page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_PARTICLE3D, m_stage);
-	//auto page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_SHAPE2D, m_stage);
-	//auto page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_SHAPE3D, m_stage);
-	//auto page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_MESH, m_stage);
+#ifdef MODULE_SCENE2D
+	page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_SCENE2D, m_stage);
+#endif // MODULE_SCENE2D
+#ifdef MODULE_SCENE3D
+    page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_SCENE3D, m_stage);
+#endif // MODULE_SCENE3D
 
-	//auto page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_MODEL, m_stage);
-	//auto page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_ANIM3, m_stage);
-    //auto page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_SHADER_GRAPH, m_stage);
-	//auto page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_PROTOTYPING, m_stage);
-    //auto page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_RENDER_GRAPH, m_stage);
-    auto page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_PHYSICS3D, m_stage);
-    //auto page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_RAY_GRAPH, m_stage);
-    //auto page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_GUI_GRAPH, m_stage);
+#ifdef MODULE_SCALE9
+	page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_SCALE9, m_stage);
+#endif // MODULE_SCALE9
+#ifdef MODULE_SCRIPT
+	page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_SCRIPT, m_stage);
+#endif // MODULE_SCRIPT
+#ifdef MODULE_ANIM
+	page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_ANIM, m_stage);
+#endif // MODULE_ANIM
+#ifdef MODULE_PARTICLE3D
+	page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_PARTICLE3D, m_stage);
+#endif // MODULE_PARTICLE3D
+#ifdef MODULE_SHAPE2D
+	page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_SHAPE2D, m_stage);
+#endif // MODULE_SHAPE2D
+#ifdef MODULE_SHAPE3D
+	page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_SHAPE3D, m_stage);
+#endif // MODULE_SHAPE3D
+#ifdef MODULE_MESH
+	page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_MESH, m_stage);
+#endif // MODULE_MESH
 
-	//auto page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_QUAKE, m_stage);
+#ifdef MODULE_MODEL
+	page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_MODEL, m_stage);
+#endif // MODULE_MODEL
+#ifdef MODULE_ANIM3
+	page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_ANIM3, m_stage);
+#endif // MODULE_ANIM3
+#ifdef MODULE_SHADERGRAPH
+    page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_SHADER_GRAPH, m_stage);
+#endif // MODULE_SHADERGRAPH
+#ifdef MODULE_PROTOTYPE
+	page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_PROTOTYPING, m_stage);
+#endif // MODULE_PROTOTYPE
+#ifdef MODULE_RENDERGRAPH
+    page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_RENDER_GRAPH, m_stage);
+#endif // MODULE_RENDERGRAPH
+#ifdef MODULE_PHYSICS3D
+    page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_PHYSICS3D, m_stage);
+#endif // MODULE_PHYSICS3D
+#ifdef MODULE_RAYGRAPH
+    page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_RAY_GRAPH, m_stage);
+#endif // MODULE_RAYGRAPH
+#ifdef MODULE_GUIGRAPH
+    page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_GUI_GRAPH, m_stage);
+#endif // MODULE_GUIGRAPH
 
-	//auto page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_BLUEPRINT, m_stage);
+#ifdef MODULE_QUAKE
+	page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_QUAKE, m_stage);
+#endif // MODULE_QUAKE
+
+#ifdef MODULE_BLUEPRINT
+	page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_BLUEPRINT, m_stage);
+#endif // MODULE_BLUEPRINT
 
     m_stage->AddNewPage(page, GetPageName(page->GetPageType()));
 
