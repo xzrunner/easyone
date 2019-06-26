@@ -199,22 +199,7 @@ void WxItemsListCtrl::InsertSceneObj(const ee0::VariantSet& variants)
     const ee0::GameObj* obj = static_cast<const ee0::GameObj*>(var.m_val.pv);
 	GD_ASSERT(obj, "err model obj");
 
-	std::string filepath;
-#ifndef GAME_OBJ_ECS
-	filepath = (*obj)->GetUniqueComp<n0::CompIdentity>().GetFilepath();
-#else
-	auto& ceditor = m_world.GetComponent<ee0::CompEntityEditor>(*obj);
-	if (ceditor.filepath) {
-		filepath = *ceditor.filepath;
-	} else {
-		filtpath = "";
-	}
-#endif // GAME_OBJ_ECS
-	auto item = std::make_shared<ee0::WxLibraryItem>(filepath);
-	std::unique_ptr<ee0::WxLibraryItem::UserData> ud
-		= std::make_unique<WxItemsListUserData>(*obj, *obj, 0);
-	item->SetUD(ud);
-	m_list->Insert(item, 0);
+    InsertGameObj(*obj);
 }
 
 void WxItemsListCtrl::DeleteSceneObj(const ee0::VariantSet& variants)
@@ -325,6 +310,8 @@ void WxItemsListCtrl::ClearALLSelected()
 
 void WxItemsListCtrl::StagePageChanged(const ee0::VariantSet& variants)
 {
+    ClearSceneObj();
+
 	auto var = variants.GetVariant("new_page");
 	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: new_page");
 	GD_ASSERT(var.m_val.pv, "err new_page");
@@ -334,7 +321,11 @@ void WxItemsListCtrl::StagePageChanged(const ee0::VariantSet& variants)
 	m_sub_mgr = new_page->GetSubjectMgr();
 	RegisterMsg(*m_sub_mgr);
 
-	ClearSceneObj();
+    new_page->Traverse([&](const ee0::GameObj& obj)->bool
+    {
+        InsertGameObj(obj);
+        return true;
+    });
 }
 
 int WxItemsListCtrl::QueryItemIndex(const ee0::GameObj& obj) const
@@ -348,6 +339,26 @@ int WxItemsListCtrl::QueryItemIndex(const ee0::GameObj& obj) const
 		}
 	}
 	return -1;
+}
+
+void WxItemsListCtrl::InsertGameObj(const ee0::GameObj& obj)
+{
+	std::string filepath;
+#ifndef GAME_OBJ_ECS
+	filepath = obj->GetUniqueComp<n0::CompIdentity>().GetFilepath();
+#else
+	auto& ceditor = m_world.GetComponent<ee0::CompEntityEditor>(obj);
+	if (ceditor.filepath) {
+		filepath = *ceditor.filepath;
+	} else {
+		filtpath = "";
+	}
+#endif // GAME_OBJ_ECS
+	auto item = std::make_shared<ee0::WxLibraryItem>(filepath);
+	std::unique_ptr<ee0::WxLibraryItem::UserData> ud
+		= std::make_unique<WxItemsListUserData>(obj, obj, 0);
+	item->SetUD(ud);
+	m_list->Insert(item, 0);
 }
 
 }

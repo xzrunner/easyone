@@ -49,6 +49,8 @@ private:
 
 	int QueryItemIndex(const ee0::GameObj& obj) const;
 
+    void InsertGameObj(const ee0::GameObj& obj);
+
 private:
 	ECS_WORLD_SELF_DEF
 	ee0::SubjectMgrPtr m_sub_mgr;
