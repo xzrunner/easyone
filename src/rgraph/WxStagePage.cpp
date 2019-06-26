@@ -84,6 +84,14 @@ void WxStagePage::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
     case ee0::MSG_STAGE_PAGE_NEW:
         CreateNewPage(variants);
         break;
+    case ee0::MSG_STAGE_PAGE_ON_SHOW:
+        m_toolbar->Show();
+        m_toolbar->GetParent()->Layout();
+        break;
+    case ee0::MSG_STAGE_PAGE_ON_HIDE:
+        m_toolbar->Hide();
+        m_toolbar->GetParent()->Layout();
+        break;
 
     case bp::MSG_BLUE_PRINT_CHANGED:
         UpdateBlueprint();
