@@ -9,6 +9,7 @@
 #include "sgraph/ModelType.h"
 
 #include <blueprint/typedef.h>
+#include <blueprint/StageFuncNode.h>
 
 namespace eone
 {
@@ -32,14 +33,8 @@ public:
 
     virtual void OnSetSkybox(const std::string& filepath);
 
-    void SetParentNode(const n0::SceneNodePtr& parent_node) {
-        m_parent_node = parent_node;
-    }
-
     ModelType GetModelType() const { return m_model_type; }
     void SetModelType(ModelType model_type);
-
-    void EnableInsertToParent(bool enable) { m_insert_to_parent = enable; }
 
 	static const std::string PAGE_TYPE;
 
@@ -64,22 +59,19 @@ private:
 
 	void UpdateShader();
 
-    void UpdateParentAABB(const bp::NodePtr& node);
-
     void LoadFromExternFile(const std::string& filepath);
 
     void LoadFunctionNodes();
 
+    auto& GetFuncNodeHelper() { return m_func_node_helper; }
+
 private:
     WxToolbarPanel* m_toolbar = nullptr;
 
-    // bp::node::Function
-    n0::SceneNodePtr m_parent_node = nullptr;
+    bp::StageFuncNode m_func_node_helper;
 
     ModelType   m_model_type = ModelType::UNKNOWN;
     std::string m_model_type_str;
-
-    bool m_insert_to_parent = false;
 
 }; // WxStagePage
 

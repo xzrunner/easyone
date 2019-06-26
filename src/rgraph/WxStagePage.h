@@ -8,6 +8,7 @@
 #include "frame/StagePageType.h"
 
 #include <blueprint/typedef.h>
+#include <blueprint/StageFuncNode.h>
 
 namespace rlab { class Evaluator; }
 
@@ -22,6 +23,7 @@ class WxStagePage : public eone::WxStagePage
 {
 public:
 	WxStagePage(wxWindow* parent, ECS_WORLD_PARAM const ee0::GameObj& obj);
+    virtual ~WxStagePage();
 
 	virtual void OnNotify(uint32_t msg, const ee0::VariantSet& variants) override;
 
@@ -56,10 +58,16 @@ private:
     bool UpdateNodes();
     void UpdateBlueprint();
 
+    void LoadFunctionNodes();
+
+    auto& GetFuncNodeHelper() { return m_func_node_helper; }
+
 private:
     WxToolbarPanel* m_toolbar = nullptr;
 
     std::shared_ptr<rlab::Evaluator> m_eval = nullptr;
+
+    bp::StageFuncNode m_func_node_helper;
 
 }; // WxStagePage
 

@@ -13,6 +13,7 @@
 
 #include <ee0/SubjectMgr.h>
 #include <ee0/WxStageCanvas.h>
+#include <ee0/MsgHelper.h>
 #include <blueprint/Blueprint.h>
 #include <blueprint/MessageID.h>
 #include <blueprint/NSCompNode.h>
@@ -20,6 +21,7 @@
 #include <blueprint/Node.h>
 #include <blueprint/CompNode.h>
 #include <blueprint/CommentaryNodeHelper.h>
+#include <blueprint/node/Function.h>
 #include <renderlab/RegistNodes.h>
 #include <renderlab/Evaluator.h>
 #include <renderlab/Blackboard.h>
@@ -62,6 +64,11 @@ WxStagePage::WxStagePage(wxWindow* parent, ECS_WORLD_PARAM const ee0::GameObj& o
     m_messages.push_back(ee0::MSG_STAGE_PAGE_NEW);
 
 	m_messages.push_back(bp::MSG_BLUE_PRINT_CHANGED);
+}
+
+WxStagePage::~WxStagePage()
+{
+    m_func_node_helper.SetFilepath(m_filepath);
 }
 
 void WxStagePage::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
@@ -174,6 +181,8 @@ void WxStagePage::LoadFromFileExt(const std::string& filepath)
 {
     bp::CommentaryNodeHelper::InsertNodeToCommentary(*this);
 
+    LoadFunctionNodes();
+
     if (sx::ResFileHelper::Type(filepath) == sx::RES_FILE_JSON)
     {
         rapidjson::Document doc;
@@ -201,6 +210,8 @@ bool WxStagePage::InsertSceneObj(const ee0::VariantSet& variants)
 	ccomplex.children->push_back(*obj);
 #endif // GAME_OBJ_ECS
 
+    m_func_node_helper.InsertSceneObj(*obj);
+
 	return true;
 }
 
@@ -210,6 +221,8 @@ bool WxStagePage::DeleteSceneObj(const ee0::VariantSet& variants)
 	GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: obj");
     const ee0::GameObj* obj = static_cast<const ee0::GameObj*>(var.m_val.pv);
 	GD_ASSERT(obj, "err scene obj");
+
+    m_func_node_helper.DeleteSceneObj(*obj);
 
 #ifndef GAME_OBJ_ECS
 	auto& ccomplex = m_obj->GetSharedComp<n0::CompComplex>();
@@ -230,6 +243,8 @@ bool WxStagePage::DeleteSceneObj(const ee0::VariantSet& variants)
 
 bool WxStagePage::ClearSceneObj()
 {
+    m_func_node_helper.ClearSceneObj();
+
 #ifndef GAME_OBJ_ECS
 	auto& ccomplex = m_obj->GetSharedComp<n0::CompComplex>();
 	bool dirty = !ccomplex.GetAllChildren().empty();
@@ -269,6 +284,36 @@ void WxStagePage::CreateNewPage(const ee0::VariantSet& variants) const
             GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: obj");
             const ee0::GameObj* obj = static_cast<const ee0::GameObj*>(var.m_val.pv);
             GD_ASSERT(obj, "err scene obj");
+
+            if ((*obj)->HasUniqueComp<bp::CompNode>())
+            {
+                auto& cbp = (*obj)->GetUniqueComp<bp::CompNode>();
+                auto& bp_node = cbp.GetNode();
+                if (bp_node->get_type() == rttr::type::get<bp::node::Function>())
+                {
+                    auto sg_stage_page = static_cast<rgraph::WxStagePage*>(stage_page);
+                    auto& func_node_helper = sg_stage_page->GetFuncNodeHelper();
+
+                    func_node_helper.SetParentNode(*obj);
+                    stage_page->SetFilepath(filepath);
+
+                    auto func_node = std::static_pointer_cast<bp::node::Function>(bp_node);
+                    func_node_helper.EnableInsert(false);
+                    for (auto& c : func_node->GetChildren()) {
+                        ee0::MsgHelper::InsertNode(*sg_stage_page->GetSubjectMgr(), c, false);
+                    }
+                    func_node_helper.EnableInsert(true);
+
+                    if (sx::ResFileHelper::Type(filepath) == sx::RES_FILE_JSON)
+                    {
+                        rapidjson::Document doc;
+                        js::RapidJsonHelper::ReadFromFile(filepath, doc);
+
+                        auto& ccomplex = sg_stage_page->GetEditedObj()->GetSharedComp<n0::CompComplex>();
+                        bp::NSCompNode::LoadConnection(ccomplex.GetAllChildren(), doc["nodes"]);
+                    }
+                }
+            }
         }
     }
 }
@@ -318,6 +363,20 @@ void WxStagePage::UpdateBlueprint()
     if (dirty) {
         m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
     }
+}
+
+void WxStagePage::LoadFunctionNodes()
+{
+    Traverse([&](const ee0::GameObj& obj)->bool
+    {
+        if (obj->HasUniqueComp<bp::CompNode>()) {
+            auto& bp_node = obj->GetUniqueComp<bp::CompNode>().GetNode();
+            if (bp_node->get_type() == rttr::type::get<bp::node::Function>()) {
+                bp::NodeHelper::LoadFunctionNode(obj, bp_node);
+            }
+        }
+        return true;
+    });
 }
 
 }
