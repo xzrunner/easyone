@@ -343,16 +343,14 @@ void WxStagePage::UpdateBlueprint()
 
     bool dirty = UpdateNodes();
 
-    std::vector<std::shared_ptr<rlab::Node>> nodes;
+    std::vector<bp::NodePtr> nodes;
     Traverse([&](const ee0::GameObj& obj)->bool
     {
         if (!obj->HasUniqueComp<bp::CompNode>()) {
             return true;
         }
         auto& bp_node = obj->GetUniqueComp<bp::CompNode>().GetNode();
-        if (bp_node->get_derived_info().m_type.is_derived_from<rlab::Node>()) {
-            nodes.push_back(std::static_pointer_cast<rlab::Node>(bp_node));
-        }
+        nodes.push_back(bp_node);
         return true;
     });
 
