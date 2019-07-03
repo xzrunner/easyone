@@ -235,3 +235,6 @@
 [submodule "ext/pbd"]
 	path = ext/pbd
 	url = git@github.com:xzrunner/pbd.git
+[submodule "ext/pbr"]
+	path = ext/pbr
+	url = git@github.com:xzrunner/pbr.git
