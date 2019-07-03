@@ -48,6 +48,9 @@
 #ifdef MODULE_GUIGRAPH
 #include "guigraph/WxStagePage.h"
 #endif // MODULE_GUIGRAPH
+#ifdef MODULE_PBRGRAPH
+#include "pbrgraph/WxStagePage.h"
+#endif // MODULE_PBRGRAPH
 
 #include <ee0/MsgHelper.h>
 #include <ee0/SubjectMgr.h>
@@ -168,6 +171,10 @@ void Application::LoadFromFile(const std::string& filepath)
             } else if (type == guigraph::WxStagePage::PAGE_TYPE) {
                 new_type = PAGE_GUI_GRAPH;
 #endif // MODULE_GUIGRAPH
+#ifdef MODULE_PBRGRAPH
+            } else if (type == pbrgraph::WxStagePage::PAGE_TYPE) {
+                new_type = PAGE_PBR_GRAPH;
+#endif // MODULE_PBRGRAPH
             }
 		} else if (new_type_str == "n2_scale9") {
 			new_type = PAGE_SCALE9;
@@ -387,6 +394,9 @@ wxWindow* Application::CreateStagePanel()
 #ifdef MODULE_GUIGRAPH
     page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_GUI_GRAPH, m_stage);
 #endif // MODULE_GUIGRAPH
+#ifdef MODULE_PBRGRAPH
+    page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_PBR_GRAPH, m_stage);
+#endif // MODULE_PBRGRAPH
 
 #ifdef MODULE_QUAKE
 	page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_QUAKE, m_stage);

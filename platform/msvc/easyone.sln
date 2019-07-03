@@ -209,11 +209,13 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "0.uniphysics", "..\..\ext\u
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "1.raytracing", "..\..\ext\raytracing\platform\msvc\projects\raytracing.vcxproj", "{58774258-6A0E-4ABF-94A4-2743CF495237}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "1.raylab", "..\..\ext\raylab\platform\msvc\projects\raylab.vcxproj", "{7F806517-AF5C-466E-8B85-16A44E546642}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "6.raylab", "..\..\ext\raylab\platform\msvc\projects\raylab.vcxproj", "{7F806517-AF5C-466E-8B85-16A44E546642}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "7.guilab", "..\..\ext\guilab\platform\msvc\projects\guilab.vcxproj", "{29604CC7-D979-4656-97E6-1BBB81A83ABD}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "0.pbd", "..\..\ext\pbd\platform\msvc\projects\pbd.vcxproj", "{CCA38C84-502D-4E56-AA72-457DA4F398B2}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3.pbr", "..\..\ext\pbr\platform\msvc\projects\pbr.vcxproj", "{F51C8E88-A274-460E-BD21-F4661A09AE10}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -1371,6 +1373,20 @@ Global
 		{CCA38C84-502D-4E56-AA72-457DA4F398B2}.RelWithDebInfo|Win32.Build.0 = Release|Win32
 		{CCA38C84-502D-4E56-AA72-457DA4F398B2}.RelWithDebInfo|x64.ActiveCfg = Release|Win32
 		{CCA38C84-502D-4E56-AA72-457DA4F398B2}.RelWithDebInfo|x64.Build.0 = Release|Win32
+		{F51C8E88-A274-460E-BD21-F4661A09AE10}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F51C8E88-A274-460E-BD21-F4661A09AE10}.Debug|Win32.Build.0 = Debug|Win32
+		{F51C8E88-A274-460E-BD21-F4661A09AE10}.Debug|x64.ActiveCfg = Debug|Win32
+		{F51C8E88-A274-460E-BD21-F4661A09AE10}.MinSizeRel|Win32.ActiveCfg = Release|Win32
+		{F51C8E88-A274-460E-BD21-F4661A09AE10}.MinSizeRel|Win32.Build.0 = Release|Win32
+		{F51C8E88-A274-460E-BD21-F4661A09AE10}.MinSizeRel|x64.ActiveCfg = Release|Win32
+		{F51C8E88-A274-460E-BD21-F4661A09AE10}.MinSizeRel|x64.Build.0 = Release|Win32
+		{F51C8E88-A274-460E-BD21-F4661A09AE10}.Release|Win32.ActiveCfg = Release|Win32
+		{F51C8E88-A274-460E-BD21-F4661A09AE10}.Release|Win32.Build.0 = Release|Win32
+		{F51C8E88-A274-460E-BD21-F4661A09AE10}.Release|x64.ActiveCfg = Release|Win32
+		{F51C8E88-A274-460E-BD21-F4661A09AE10}.RelWithDebInfo|Win32.ActiveCfg = Release|Win32
+		{F51C8E88-A274-460E-BD21-F4661A09AE10}.RelWithDebInfo|Win32.Build.0 = Release|Win32
+		{F51C8E88-A274-460E-BD21-F4661A09AE10}.RelWithDebInfo|x64.ActiveCfg = Release|Win32
+		{F51C8E88-A274-460E-BD21-F4661A09AE10}.RelWithDebInfo|x64.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1470,6 +1486,7 @@ Global
 		{7F806517-AF5C-466E-8B85-16A44E546642} = {B62F40DE-E89D-4F03-8E1B-A1BD52D48067}
 		{29604CC7-D979-4656-97E6-1BBB81A83ABD} = {B62F40DE-E89D-4F03-8E1B-A1BD52D48067}
 		{CCA38C84-502D-4E56-AA72-457DA4F398B2} = {71D877EC-55A6-43CA-AD4F-47F0246AF149}
+		{F51C8E88-A274-460E-BD21-F4661A09AE10} = {AF5FD54D-12B0-4D18-AEE3-9A72DDD1CAE5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8D54C01A-3C82-4351-A325-2853C3E81322}

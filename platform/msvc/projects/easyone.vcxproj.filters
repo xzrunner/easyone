@@ -190,6 +190,15 @@
     <Filter Include="30.model\toolbar">
       <UniqueIdentifier>{cd750af6-a7cf-44b7-a07e-a6a2bc527d35}</UniqueIdentifier>
     </Filter>
+    <Filter Include="37.pbrgraph">
+      <UniqueIdentifier>{1c2431ea-483d-46ac-8218-2b397e7475a9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="37.pbrgraph\stage">
+      <UniqueIdentifier>{8baae836-0f40-47d9-aed3-fb8971c736b6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="37.pbrgraph\toolbar">
+      <UniqueIdentifier>{aba76f7e-54ec-4b9c-934b-03aa309053dc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\frame\main.h">
@@ -471,6 +480,15 @@
     <ClInclude Include="..\..\..\src\physics3d\WxStageCanvas3D.h">
       <Filter>34.physics3d</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\pbrgraph\WxStagePage.h">
+      <Filter>37.pbrgraph\stage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\pbrgraph\WxPreviewPanel.h">
+      <Filter>37.pbrgraph\toolbar</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\pbrgraph\WxToolbarPanel.h">
+      <Filter>37.pbrgraph\toolbar</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\frame\main.cpp">
@@ -724,6 +742,15 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\physics3d\WxStageCanvas3D.cpp">
       <Filter>34.physics3d</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\pbrgraph\WxStagePage.cpp">
+      <Filter>37.pbrgraph\stage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\pbrgraph\WxPreviewPanel.cpp">
+      <Filter>37.pbrgraph\toolbar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\pbrgraph\WxToolbarPanel.cpp">
+      <Filter>37.pbrgraph\toolbar</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

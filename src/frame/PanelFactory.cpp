@@ -86,6 +86,9 @@
 #include "guigraph/WxStagePage.h"
 #include "guigraph/WxStageCanvas.h"
 #endif // MODULE_GUIGRAPH
+#ifdef MODULE_PBRGRAPH
+#include "pbrgraph/WxStagePage.h"
+#endif // MODULE_PBRGRAPH
 
 #include <ee0/WxListSelectDlg.h>
 #include <ee0/MsgHelper.h>
@@ -448,6 +451,34 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
     }
         break;
 #endif // MODULE_GUIGRAPH
+#ifdef MODULE_PBRGRAPH
+    case PAGE_PBR_GRAPH:
+    {
+		auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX2D);
+		page = new pbrgraph::WxStagePage(frame, ECS_WORLD_VAR obj);
+        auto canvas = std::make_shared<WxBlueprintCanvas>(page, rc);
+        page->GetImpl().SetCanvas(canvas);
+
+        auto prev_op = std::make_shared<LeftDClickOP>(canvas->GetCamera(), *page, rc, wc);
+
+        auto select_op = std::make_shared<bp::NodeSelectOP>(canvas->GetCamera(), *page);
+        select_op->AddPrevEditOP(prev_op);
+
+		ee2::ArrangeNodeCfg cfg;
+		cfg.is_auto_align_open = false;
+		cfg.is_deform_open = false;
+		cfg.is_offset_open = false;
+		cfg.is_rotate_open = false;
+		auto arrange_op = std::make_shared<bp::ArrangeNodeOP>(
+			canvas->GetCamera(), *page, ECS_WORLD_VAR cfg, select_op);
+
+        auto& nodes = rlab::RenderLab::Instance()->GetAllNodes();
+		auto op = std::make_shared<bp::ConnectPinOP>(canvas->GetCamera(), *page, nodes);
+		op->SetPrevEditOP(arrange_op);
+		page->GetImpl().SetEditOP(op);
+    }
+        break;
+#endif // MODULE_PBRGRAPH
 
 #ifdef MODULE_SCRIPT
 	case PAGE_SCRIPT:

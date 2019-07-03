@@ -28,6 +28,7 @@ enum StagePageType
     PAGE_PHYSICS3D,
     PAGE_RAY_GRAPH,
     PAGE_GUI_GRAPH,
+    PAGE_PBR_GRAPH,
 
 	PAGE_SCRIPT,
 	PAGE_BLUEPRINT,
@@ -74,6 +75,8 @@ std::string GetPageName(int type)
         return "RayGraph";
     case PAGE_GUI_GRAPH:
         return "GuiGraph";
+    case PAGE_PBR_GRAPH:
+        return "PbrGraph";
 
 	case PAGE_SCRIPT:
 		return "Script";
