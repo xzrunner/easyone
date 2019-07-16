@@ -51,6 +51,9 @@
 #ifdef MODULE_PBRGRAPH
 #include "pbrgraph/WxStagePage.h"
 #endif // MODULE_PBRGRAPH
+#ifdef MODULE_ITTGRAPH
+#include "ittgraph/WxStagePage.h"
+#endif // MODULE_ITTGRAPH
 
 #include <ee0/MsgHelper.h>
 #include <ee0/SubjectMgr.h>
@@ -175,6 +178,10 @@ void Application::LoadFromFile(const std::string& filepath)
             } else if (type == pbrgraph::WxStagePage::PAGE_TYPE) {
                 new_type = PAGE_PBR_GRAPH;
 #endif // MODULE_PBRGRAPH
+#ifdef MODULE_ITTGRAPH
+            } else if (type == ittgraph::WxStagePage::PAGE_TYPE) {
+                new_type = PAGE_ITT_GRAPH;
+#endif // MODULE_ITTGRAPH
             }
 		} else if (new_type_str == "n2_scale9") {
 			new_type = PAGE_SCALE9;
@@ -397,6 +404,9 @@ wxWindow* Application::CreateStagePanel()
 #ifdef MODULE_PBRGRAPH
     page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_PBR_GRAPH, m_stage);
 #endif // MODULE_PBRGRAPH
+#ifdef MODULE_ITTGRAPH
+    page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_ITT_GRAPH, m_stage);
+#endif // MODULE_ITTGRAPH
 
 #ifdef MODULE_QUAKE
 	page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_QUAKE, m_stage);

@@ -89,6 +89,10 @@
 #ifdef MODULE_PBRGRAPH
 #include "pbrgraph/WxStagePage.h"
 #endif // MODULE_PBRGRAPH
+#ifdef MODULE_ITTGRAPH
+#include "ittgraph/WxStagePage.h"
+#include "ittgraph/WxStageCanvas.h"
+#endif // MODULE_ITTGRAPH
 
 #include <ee0/WxListSelectDlg.h>
 #include <ee0/MsgHelper.h>
@@ -116,8 +120,15 @@
 #include <blueprint/NodeSelectOP.h>
 #include <shadergraph/ShaderGraph.h>
 #include <prototyping/ArrangeNodeOP.h>
+#ifdef MODULE_RENDERGRAPH
 #include <renderlab/RenderLab.h>
+#endif // MODULE_RENDERGRAPH
+#ifdef MODULE_RAYGRAPH
 #include <raylab/RayLab.h>
+#endif // MODULE_RAYGRAPH
+#ifdef MODULE_ITTGRAPH
+#include <intention/Intention.h>
+#endif // MODULE_ITTGRAPH
 
 #include <boost/filesystem.hpp>
 
@@ -479,6 +490,22 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
     }
         break;
 #endif // MODULE_PBRGRAPH
+#ifdef MODULE_ITTGRAPH
+    case PAGE_ITT_GRAPH:
+    {
+        auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX2D);
+        page = new ittgraph::WxStagePage(frame, ECS_WORLD_VAR obj);
+        auto canvas = std::make_shared<ittgraph::WxStageCanvas>(page, ECS_WORLD_VAR rc);
+
+        page->GetImpl().SetCanvas(canvas);
+
+        auto op = std::make_shared<ee3::NodeArrangeOP>(
+            canvas->GetCamera(), *page, canvas->GetViewport());
+
+        page->GetImpl().SetEditOP(op);
+    }
+        break;
+#endif // MODULE_ITTGRAPH
 
 #ifdef MODULE_SCRIPT
 	case PAGE_SCRIPT:

@@ -199,6 +199,18 @@
     <Filter Include="37.pbrgraph\toolbar">
       <UniqueIdentifier>{aba76f7e-54ec-4b9c-934b-03aa309053dc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="38.ittgraph">
+      <UniqueIdentifier>{4071076e-ce32-4c1f-b9f4-893b04a94385}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="38.ittgraph\stage">
+      <UniqueIdentifier>{9e5f6349-33ad-4adf-81ce-1d933b3374bb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="38.ittgraph\toolbar">
+      <UniqueIdentifier>{8ce606f0-9ebd-4058-b119-b4d3fc89cc66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="38.ittgraph\graph">
+      <UniqueIdentifier>{5d7c3621-e939-47ea-a92d-36305bb3a01c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\frame\main.h">
@@ -489,6 +501,18 @@
     <ClInclude Include="..\..\..\src\pbrgraph\WxToolbarPanel.h">
       <Filter>37.pbrgraph\toolbar</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\ittgraph\WxStagePage.h">
+      <Filter>38.ittgraph\stage</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\ittgraph\WxToolbarPanel.h">
+      <Filter>38.ittgraph\toolbar</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\ittgraph\WxGraphPage.h">
+      <Filter>38.ittgraph\graph</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\ittgraph\WxStageCanvas.h">
+      <Filter>38.ittgraph\stage</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\frame\main.cpp">
@@ -751,6 +775,18 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\pbrgraph\WxToolbarPanel.cpp">
       <Filter>37.pbrgraph\toolbar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\ittgraph\WxStagePage.cpp">
+      <Filter>38.ittgraph\stage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\ittgraph\WxToolbarPanel.cpp">
+      <Filter>38.ittgraph\toolbar</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\ittgraph\WxGraphPage.cpp">
+      <Filter>38.ittgraph\graph</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\ittgraph\WxStageCanvas.cpp">
+      <Filter>38.ittgraph\stage</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

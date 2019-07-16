@@ -57,7 +57,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <Optimization>Disabled</Optimization>
-      <AdditionalIncludeDirectories>..\..\..\src;..\..\..\ext\easyeditor0\include;..\..\..\ext\easyeditor2\include;..\..\..\ext\easyeditor3\include;..\..\..\ext\cu\src;..\..\..\ext\ds\src\ds;..\..\..\ext\sm\src\sm;..\..\..\ext\ps\src\ps;..\..\..\ext\gtxt\src\gtxt;..\..\..\ext\rigging\src\rigging;..\..\..\ext\uniphysics\include;..\..\..\ext\uniphysics\external;..\..\..\ext\unirender\include;..\..\..\ext\renderpipeline\include;..\..\..\ext\primitive\include;..\..\..\ext\geoshape\include;..\..\..\ext\tessellation\include;..\..\..\ext\painting0\include;..\..\..\ext\painting2\include;..\..\..\ext\painting3\include;..\..\..\ext\drawing2\include;..\..\..\ext\drawing3\include;..\..\..\ext\model\include;..\..\..\ext\js\include;..\..\..\ext\bimp\include;..\..\..\ext\guard\include;..\..\..\ext\logger\src\logger;..\..\..\ext\polymesh\include;..\..\..\ext\facade\include;..\..\..\ext\node0\include;..\..\..\ext\node2\include;..\..\..\ext\node3\include;..\..\..\ext\entity0\include;..\..\..\ext\entity2\include;..\..\..\ext\entity3\include;..\..\..\ext\memmgr\include;..\..\..\ext\nserializer\include;..\..\..\ext\serializerx\include;..\..\..\ext\aseimp\include;..\..\..\ext\cpputil\include;..\..\..\ext\moon\include;..\..\..\ext\easygui\include;..\..\..\ext\anim\include;..\..\..\ext\emitter\include;..\..\..\ext\pbd\include;..\..\..\ext\lexer\include;..\..\..\ext\quake\include;..\..\..\ext\halfedge\include;..\..\..\ext\blueprint\include;..\..\..\ext\eanim\include;..\..\..\ext\prototyping\include;..\..\..\ext\shadergraph\include;..\..\..\ext\sgconv\include;..\..\..\ext\rendergraph\include;..\..\..\ext\renderlab\include;..\..\..\ext\raytracing\include;..\..\..\ext\raylab\include;..\..\..\ext\pbr\include;..\..\..\ext\guilab\include;..\..\..\ext\shaderweaver\include;..\..\..\ext\external-editor\wx\include;..\..\..\ext\external\json\include;..\..\..\ext\external\rapidjson\include;..\..\..\ext\external\freetype\include;..\..\..\ext\external\c99;..\..\..\ext\external\lua\include;..\..\..\ext\external\boost\include;..\..\..\ext\external\rttr\include;..\..\..\ext\external\yaml-cpp\include;..\..\..\ext\external\nvcloth\include;..\..\..\ext\external\pxshared\include;..\..\..\ext\external\bullet\include;..\..\..\ext\external\glm\include;..\..\..\ext\external\eigen\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\src;..\..\..\ext\easyeditor0\include;..\..\..\ext\easyeditor2\include;..\..\..\ext\easyeditor3\include;..\..\..\ext\cu\src;..\..\..\ext\ds\src\ds;..\..\..\ext\sm\src\sm;..\..\..\ext\ps\src\ps;..\..\..\ext\gtxt\src\gtxt;..\..\..\ext\rigging\src\rigging;..\..\..\ext\uniphysics\include;..\..\..\ext\uniphysics\external;..\..\..\ext\unirender\include;..\..\..\ext\renderpipeline\include;..\..\..\ext\primitive\include;..\..\..\ext\geoshape\include;..\..\..\ext\tessellation\include;..\..\..\ext\painting0\include;..\..\..\ext\painting2\include;..\..\..\ext\painting3\include;..\..\..\ext\drawing2\include;..\..\..\ext\drawing3\include;..\..\..\ext\model\include;..\..\..\ext\js\include;..\..\..\ext\bimp\include;..\..\..\ext\guard\include;..\..\..\ext\logger\src\logger;..\..\..\ext\polymesh\include;..\..\..\ext\facade\include;..\..\..\ext\node0\include;..\..\..\ext\node2\include;..\..\..\ext\node3\include;..\..\..\ext\entity0\include;..\..\..\ext\entity2\include;..\..\..\ext\entity3\include;..\..\..\ext\memmgr\include;..\..\..\ext\nserializer\include;..\..\..\ext\serializerx\include;..\..\..\ext\aseimp\include;..\..\..\ext\cpputil\include;..\..\..\ext\moon\include;..\..\..\ext\easygui\include;..\..\..\ext\anim\include;..\..\..\ext\emitter\include;..\..\..\ext\pbd\include;..\..\..\ext\lexer\include;..\..\..\ext\quake\include;..\..\..\ext\halfedge\include;..\..\..\ext\blueprint\include;..\..\..\ext\eanim\include;..\..\..\ext\prototyping\include;..\..\..\ext\shadergraph\include;..\..\..\ext\sgconv\include;..\..\..\ext\rendergraph\include;..\..\..\ext\renderlab\include;..\..\..\ext\everything\include;..\..\..\ext\intention\include;..\..\..\ext\raytracing\include;..\..\..\ext\raylab\include;..\..\..\ext\pbr\include;..\..\..\ext\guilab\include;..\..\..\ext\shaderweaver\include;..\..\..\ext\external-editor\wx\include;..\..\..\ext\external\json\include;..\..\..\ext\external\rapidjson\include;..\..\..\ext\external\freetype\include;..\..\..\ext\external\c99;..\..\..\ext\external\lua\include;..\..\..\ext\external\boost\include;..\..\..\ext\external\rttr\include;..\..\..\ext\external\yaml-cpp\include;..\..\..\ext\external\nvcloth\include;..\..\..\ext\external\pxshared\include;..\..\..\ext\external\bullet\include;..\..\..\ext\external\glm\include;..\..\..\ext\external\eigen\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;__STDC_LIMIT_MACROS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <MinimalRebuild>true</MinimalRebuild>
       <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
@@ -84,7 +84,7 @@
     <ClCompile>
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <AdditionalIncludeDirectories>..\..\..\src;..\..\..\ext\easyeditor0\include;..\..\..\ext\easyeditor2\include;..\..\..\ext\easyeditor3\include;..\..\..\ext\cu\src;..\..\..\ext\ds\src\ds;..\..\..\ext\sm\src\sm;..\..\..\ext\ps\src\ps;..\..\..\ext\gtxt\src\gtxt;..\..\..\ext\rigging\src\rigging;..\..\..\ext\uniphysics\include;..\..\..\ext\uniphysics\external;..\..\..\ext\unirender\include;..\..\..\ext\renderpipeline\include;..\..\..\ext\primitive\include;..\..\..\ext\geoshape\include;..\..\..\ext\tessellation\include;..\..\..\ext\painting0\include;..\..\..\ext\painting2\include;..\..\..\ext\painting3\include;..\..\..\ext\drawing2\include;..\..\..\ext\drawing3\include;..\..\..\ext\model\include;..\..\..\ext\js\include;..\..\..\ext\bimp\include;..\..\..\ext\guard\include;..\..\..\ext\logger\src\logger;..\..\..\ext\polymesh\include;..\..\..\ext\facade\include;..\..\..\ext\node0\include;..\..\..\ext\node2\include;..\..\..\ext\node3\include;..\..\..\ext\entity0\include;..\..\..\ext\entity2\include;..\..\..\ext\entity3\include;..\..\..\ext\memmgr\include;..\..\..\ext\nserializer\include;..\..\..\ext\serializerx\include;..\..\..\ext\aseimp\include;..\..\..\ext\cpputil\include;..\..\..\ext\moon\include;..\..\..\ext\easygui\include;..\..\..\ext\anim\include;..\..\..\ext\emitter\include;..\..\..\ext\pbd\include;..\..\..\ext\lexer\include;..\..\..\ext\quake\include;..\..\..\ext\halfedge\include;..\..\..\ext\blueprint\include;..\..\..\ext\eanim\include;..\..\..\ext\prototyping\include;..\..\..\ext\shadergraph\include;..\..\..\ext\sgconv\include;..\..\..\ext\rendergraph\include;..\..\..\ext\renderlab\include;..\..\..\ext\raytracing\include;..\..\..\ext\raylab\include;..\..\..\ext\pbr\include;..\..\..\ext\guilab\include;..\..\..\ext\shaderweaver\include;..\..\..\ext\external-editor\wx\include;..\..\..\ext\external\json\include;..\..\..\ext\external\rapidjson\include;..\..\..\ext\external\freetype\include;..\..\..\ext\external\c99;..\..\..\ext\external\lua\include;..\..\..\ext\external\boost\include;..\..\..\ext\external\rttr\include;..\..\..\ext\external\yaml-cpp\include;..\..\..\ext\external\nvcloth\include;..\..\..\ext\external\pxshared\include;..\..\..\ext\external\bullet\include;..\..\..\ext\external\glm\include;..\..\..\ext\external\eigen\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\..\src;..\..\..\ext\easyeditor0\include;..\..\..\ext\easyeditor2\include;..\..\..\ext\easyeditor3\include;..\..\..\ext\cu\src;..\..\..\ext\ds\src\ds;..\..\..\ext\sm\src\sm;..\..\..\ext\ps\src\ps;..\..\..\ext\gtxt\src\gtxt;..\..\..\ext\rigging\src\rigging;..\..\..\ext\uniphysics\include;..\..\..\ext\uniphysics\external;..\..\..\ext\unirender\include;..\..\..\ext\renderpipeline\include;..\..\..\ext\primitive\include;..\..\..\ext\geoshape\include;..\..\..\ext\tessellation\include;..\..\..\ext\painting0\include;..\..\..\ext\painting2\include;..\..\..\ext\painting3\include;..\..\..\ext\drawing2\include;..\..\..\ext\drawing3\include;..\..\..\ext\model\include;..\..\..\ext\js\include;..\..\..\ext\bimp\include;..\..\..\ext\guard\include;..\..\..\ext\logger\src\logger;..\..\..\ext\polymesh\include;..\..\..\ext\facade\include;..\..\..\ext\node0\include;..\..\..\ext\node2\include;..\..\..\ext\node3\include;..\..\..\ext\entity0\include;..\..\..\ext\entity2\include;..\..\..\ext\entity3\include;..\..\..\ext\memmgr\include;..\..\..\ext\nserializer\include;..\..\..\ext\serializerx\include;..\..\..\ext\aseimp\include;..\..\..\ext\cpputil\include;..\..\..\ext\moon\include;..\..\..\ext\easygui\include;..\..\..\ext\anim\include;..\..\..\ext\emitter\include;..\..\..\ext\pbd\include;..\..\..\ext\lexer\include;..\..\..\ext\quake\include;..\..\..\ext\halfedge\include;..\..\..\ext\blueprint\include;..\..\..\ext\eanim\include;..\..\..\ext\prototyping\include;..\..\..\ext\shadergraph\include;..\..\..\ext\sgconv\include;..\..\..\ext\rendergraph\include;..\..\..\ext\renderlab\include;..\..\..\ext\everything\include;..\..\..\ext\intention\include;..\..\..\ext\raytracing\include;..\..\..\ext\raylab\include;..\..\..\ext\pbr\include;..\..\..\ext\guilab\include;..\..\..\ext\shaderweaver\include;..\..\..\ext\external-editor\wx\include;..\..\..\ext\external\json\include;..\..\..\ext\external\rapidjson\include;..\..\..\ext\external\freetype\include;..\..\..\ext\external\c99;..\..\..\ext\external\lua\include;..\..\..\ext\external\boost\include;..\..\..\ext\external\rttr\include;..\..\..\ext\external\yaml-cpp\include;..\..\..\ext\external\nvcloth\include;..\..\..\ext\external\pxshared\include;..\..\..\ext\external\bullet\include;..\..\..\ext\external\glm\include;..\..\..\ext\external\eigen\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;__STDC_LIMIT_MACROS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -161,11 +161,17 @@
     <ProjectReference Include="..\..\..\ext\easygui\platform\msvc\projects\easygui.vcxproj">
       <Project>{ca94b934-9855-4a8e-89d7-bea7602a2f42}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\everything\platform\msvc\projects\everything.vcxproj">
+      <Project>{a1c0a31a-8fa7-4835-afd5-77f44c93e040}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\ext\geoshape\platform\msvc\projects\geoshape.vcxproj">
       <Project>{9a710155-9500-4166-a566-9d6e59f68d0a}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\..\ext\guilab\platform\msvc\projects\guilab.vcxproj">
       <Project>{29604cc7-d979-4656-97e6-1bbb81a83abd}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\intention\platform\msvc\projects\intention.vcxproj">
+      <Project>{1e9cf0df-3499-40f5-bd40-630a9b92d41b}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\..\ext\meshlab\platform\msvc\projects\meshlab.vcxproj">
       <Project>{c9054af1-3165-4ff6-be75-06215b3f6ca9}</Project>
@@ -376,6 +382,10 @@
     <ClInclude Include="..\..\..\src\guigraph\WxStageCanvas.h" />
     <ClInclude Include="..\..\..\src\guigraph\WxStagePage.h" />
     <ClInclude Include="..\..\..\src\guigraph\WxToolbarPanel.h" />
+    <ClInclude Include="..\..\..\src\ittgraph\WxGraphPage.h" />
+    <ClInclude Include="..\..\..\src\ittgraph\WxStageCanvas.h" />
+    <ClInclude Include="..\..\..\src\ittgraph\WxStagePage.h" />
+    <ClInclude Include="..\..\..\src\ittgraph\WxToolbarPanel.h" />
     <ClInclude Include="..\..\..\src\mask\WxEditDialog.h" />
     <ClInclude Include="..\..\..\src\mask\WxStagePage.h" />
     <ClInclude Include="..\..\..\src\mesh\EditPointsMeshView.h" />
@@ -497,6 +507,22 @@
     <ClCompile Include="..\..\..\src\guigraph\WxToolbarPanel.cpp">
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/guigraph/</ObjectFileName>
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/guigraph/</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\ittgraph\WxGraphPage.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/ittgraph/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/ittgraph/</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\ittgraph\WxStageCanvas.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/ittgraph/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/ittgraph/</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\ittgraph\WxStagePage.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/ittgraph/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/ittgraph/</ObjectFileName>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\ittgraph\WxToolbarPanel.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/ittgraph/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/ittgraph/</ObjectFileName>
     </ClCompile>
     <ClCompile Include="..\..\..\src\mask\WxEditDialog.cpp">
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/mask/</ObjectFileName>
