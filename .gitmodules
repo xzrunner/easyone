@@ -238,3 +238,9 @@
 [submodule "ext/pbr"]
 	path = ext/pbr
 	url = git@github.com:xzrunner/pbr.git
+[submodule "ext/intention"]
+	path = ext/intention
+	url = git@github.com:xzrunner/intention.git
+[submodule "ext/everything"]
+	path = ext/everything
+	url = git@github.com:xzrunner/everything.git
