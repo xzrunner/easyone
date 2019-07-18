@@ -244,3 +244,6 @@
 [submodule "ext/everything"]
 	path = ext/everything
 	url = git@github.com:xzrunner/everything.git
+[submodule "ext/polymesh3"]
+	path = ext/polymesh3
+	url = git@github.com:xzrunner/polymesh3.git
