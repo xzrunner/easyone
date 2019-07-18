@@ -86,8 +86,8 @@
 	path = ext/gtxt/src/gtxt
 	url = git@github.com:xzrunner/gtxt.git
 [submodule "ext/polymesh"]
-	path = ext/polymesh
-	url = git@github.com:xzrunner/polymesh.git
+	path = ext/polymesh2
+	url = git@github.com:xzrunner/polymesh2.git
 [submodule "ext/texpack/src/texpack"]
 	path = ext/texpack/src/texpack
 	url = git@github.com:xzrunner/texpack.git
