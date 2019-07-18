@@ -4,7 +4,7 @@
 
 #include <node2/CompMesh.h>
 #include <painting2/Mesh.h>
-#include <polymesh/PointsMesh.h>
+#include <polymesh2/PointsMesh.h>
 #include <geoshape/Polygon.h>
 #include <geoshape/Point2D.h>
 
@@ -14,7 +14,7 @@ namespace
 class Polygon : public gs::Polygon
 {
 public:
-	Polygon(pm::PointsMesh& mesh)
+	Polygon(pm2::PointsMesh& mesh)
 		: gs::Polygon(mesh.GetOuterLine())
 		, m_mesh(mesh)
 	{
@@ -26,14 +26,14 @@ public:
 	}
 
 private:
-	pm::PointsMesh& m_mesh;
+	pm2::PointsMesh& m_mesh;
 
 }; // Polygon
 
 class Point : public gs::Point2D
 {
 public:
-	Point(pm::PointsMesh& mesh, int idx, eone::mesh::EditPointsMeshView::Mode mode)
+	Point(pm2::PointsMesh& mesh, int idx, eone::mesh::EditPointsMeshView::Mode mode)
 		: m_mesh(mesh)
 		, m_idx(idx)
 	{
@@ -70,7 +70,7 @@ public:
 	int GetIndex() const { return m_idx; }
 
 private:
-	pm::PointsMesh& m_mesh;
+	pm2::PointsMesh& m_mesh;
 	int m_idx = -1;
 
 }; // Point
@@ -99,7 +99,7 @@ void EditPointsMeshView::Traverse(std::function<bool(const std::shared_ptr<gs::S
 		return;
 	}
 
-	auto pmesh = static_cast<pm::PointsMesh*>(pm_mesh.get());
+	auto pmesh = static_cast<pm2::PointsMesh*>(pm_mesh.get());
 	if (!func(std::make_shared<Polygon>(*pmesh))) {
 		return;
 	}
@@ -145,7 +145,7 @@ void EditPointsMeshView::Insert(const std::shared_ptr<gs::Shape>& shape)
 	{
 		if (shape->get_type() == rttr::type::get<gs::Point2D>())
 		{
-			auto points_mesh = static_cast<pm::PointsMesh*>(pm_mesh.get());
+			auto points_mesh = static_cast<pm2::PointsMesh*>(pm_mesh.get());
 			auto points = points_mesh->GetInnerPoints();
 			points.push_back(std::static_pointer_cast<gs::Point2D>(shape)->GetPos());
 			points_mesh->SetInnerPoints(points);
@@ -157,7 +157,7 @@ void EditPointsMeshView::Insert(const std::shared_ptr<gs::Shape>& shape)
 		{
 			std::vector<sm::vec2> points;
 			auto& verts = std::static_pointer_cast<gs::Polygon>(shape)->GetVertices();
-			auto pm_mesh = std::make_unique<pm::PointsMesh>(verts, points, mesh->GetWidth(), mesh->GetHeight());
+			auto pm_mesh = std::make_unique<pm2::PointsMesh>(verts, points, mesh->GetWidth(), mesh->GetHeight());
 			mesh->SetMesh(std::move(pm_mesh));
 		}
 	}
@@ -187,7 +187,7 @@ void EditPointsMeshView::Delete(const std::shared_ptr<gs::Shape>& shape)
 		auto point = std::static_pointer_cast<Point>(shape);
 		auto idx = point->GetIndex();
 
-		auto pmesh = static_cast<pm::PointsMesh*>(pm_mesh.get());
+		auto pmesh = static_cast<pm2::PointsMesh*>(pm_mesh.get());
 		auto verts = pmesh->GetInnerPoints();
 		verts.erase(verts.begin() + idx);
 		pmesh->SetInnerPoints(verts);

@@ -24,7 +24,7 @@
 #include <node0/SceneNode.h>
 #include <node2/CompMesh.h>
 #include <node2/RenderSystem.h>
-#include <polymesh/PointsMesh.h>
+#include <polymesh2/PointsMesh.h>
 
 namespace eone
 {
@@ -136,7 +136,7 @@ void WxStageCanvas::DrawForeground() const
 	};
 	m_edit_view.Traverse(draw_shape);
 
-	auto pmesh = static_cast<pm::PointsMesh*>(mesh->GetMesh().get());
+	auto pmesh = static_cast<pm2::PointsMesh*>(mesh->GetMesh().get());
 	if (pmesh)
 	{
 		auto& tris = pmesh->GetMeshData();
