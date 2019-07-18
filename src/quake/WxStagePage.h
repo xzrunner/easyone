@@ -63,7 +63,7 @@ private:
 
 	ee3::CameraMgr m_cam_mgr;
 
-    wxPanel* m_preview;
+    wxPanel* m_preview = nullptr;
 
 }; // WxStagePage
 
