@@ -2,6 +2,11 @@
 
 #ifdef MODULE_ITTGRAPH
 
+#include "ittgraph/WxToolbarPanel.h"
+
+#include "frame/Blackboard.h"
+#include "frame/WxStageSubPanel.h"
+
 #include <ee0/SubjectMgr.h>
 #include <ee0/EditPanelImpl.h>
 #include <ee0/GameObj.h>
@@ -51,6 +56,8 @@ WxGraphPage::WxGraphPage(wxWindow* parent, const ee0::GameObj& obj)
 	m_messages.push_back(bp::MSG_BLUE_PRINT_CHANGED);
 
     RegisterAllMessages();
+
+    InitToolbarPanel();
 }
 
 void WxGraphPage::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
@@ -62,6 +69,8 @@ void WxGraphPage::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
 	{
 	case ee0::MSG_SCENE_NODE_INSERT:
 		dirty = InsertSceneObj(variants);
+        // fixme
+        UpdateBlueprint();
 		break;
 	case ee0::MSG_SCENE_NODE_DELETE:
 		dirty = DeleteSceneObj(variants);
@@ -147,6 +156,11 @@ void WxGraphPage::LoadFromJson(const rapidjson::Value& val, const std::string& d
 	m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
 }
 
+void WxGraphPage::OnPageInit()
+{
+    InitToolbarPanel();
+}
+
 const n0::NodeComp& WxGraphPage::GetEditedObjComp() const
 {
     return m_obj->GetSharedComp<n0::CompComplex>();
@@ -177,6 +191,15 @@ void WxGraphPage::StoreToJsonExt(const std::string& dir, rapidjson::Value& val,
 //        m_sub_mgr->NotifyObservers(bp::MSG_BLUE_PRINT_CHANGED);
 //    }
 //}
+
+void WxGraphPage::InitToolbarPanel()
+{
+    assert(!m_toolbar);
+    auto toolbar_panel = Blackboard::Instance()->GetToolbarPanel();
+    m_toolbar = static_cast<WxToolbarPanel*>(toolbar_panel->AddPagePanel([&](wxPanel* parent)->wxPanel* {
+        return new WxToolbarPanel(toolbar_panel, this);
+    }, wxVERTICAL));
+}
 
 bool WxGraphPage::InsertSceneObj(const ee0::VariantSet& variants)
 {

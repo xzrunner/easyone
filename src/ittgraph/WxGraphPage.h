@@ -13,6 +13,8 @@ namespace eone
 namespace ittgraph
 {
 
+class WxToolbarPanel;
+
 class WxGraphPage : public eone::WxStagePage
 {
 public:
@@ -33,6 +35,8 @@ public:
     static const std::string PAGE_TYPE;
 
 protected:
+    virtual void OnPageInit() override;
+
     virtual const n0::NodeComp& GetEditedObjComp() const override;
 
     virtual void StoreToJsonExt(const std::string& dir, rapidjson::Value& val,
@@ -41,6 +45,8 @@ protected:
     //virtual void LoadFromFileExt(const std::string& filepath) override;
 
 private:
+    void InitToolbarPanel();
+
     bool InsertSceneObj(const ee0::VariantSet& variants);
     bool DeleteSceneObj(const ee0::VariantSet& variants);
     bool ClearSceneObj();
@@ -50,6 +56,8 @@ private:
     bool UpdateNodes();
 
 private:
+    WxToolbarPanel* m_toolbar = nullptr;
+
     std::shared_ptr<itt::Evaluator> m_eval = nullptr;
 
 }; // WxGraphPage

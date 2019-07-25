@@ -12,8 +12,6 @@ namespace eone
 namespace ittgraph
 {
 
-class WxToolbarPanel;
-
 class WxStagePage : public eone::WxStagePage
 {
 public:
@@ -43,7 +41,6 @@ protected:
     virtual void LoadFromFileExt(const std::string& filepath) override;
 
 private:
-    void InitToolbarPanel();
     void InitGraphPanel();
 
     bool InsertSceneObj(const ee0::VariantSet& variants);
@@ -53,7 +50,6 @@ private:
     void CreateNewPage(const ee0::VariantSet& variants) const;
 
 private:
-    WxToolbarPanel* m_toolbar = nullptr;
     wxPanel* m_graph_panel = nullptr;
 
     n0::SceneNodePtr m_graph_obj = nullptr;

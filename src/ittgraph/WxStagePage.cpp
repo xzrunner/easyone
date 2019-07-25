@@ -2,7 +2,6 @@
 
 #ifdef MODULE_ITTGRAPH
 
-#include "ittgraph/WxToolbarPanel.h"
 #include "ittgraph/WxGraphPage.h"
 
 #include "frame/AppStyle.h"
@@ -121,7 +120,6 @@ void WxStagePage::Traverse(std::function<bool(const ee0::GameObj&)> func,
 
 void WxStagePage::OnPageInit()
 {
-    InitToolbarPanel();
     InitGraphPanel();
 }
 
@@ -150,16 +148,6 @@ void WxStagePage::LoadFromFileExt(const std::string& filepath)
     auto dir = boost::filesystem::path(filepath).parent_path().string();
     static_cast<WxGraphPage*>(m_graph_panel)->LoadFromJson(doc["graph"], dir);
 }
-
-void WxStagePage::InitToolbarPanel()
-{
-    assert(!m_toolbar);
-    auto toolbar_panel = Blackboard::Instance()->GetToolbarPanel();
-    m_toolbar = static_cast<WxToolbarPanel*>(toolbar_panel->AddPagePanel([&](wxPanel* parent)->wxPanel* {
-        return new WxToolbarPanel(toolbar_panel, this);
-    }, wxVERTICAL));
-}
-
 
 void WxStagePage::InitGraphPanel()
 {
