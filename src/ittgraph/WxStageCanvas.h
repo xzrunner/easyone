@@ -23,6 +23,7 @@ public:
 protected:
     virtual bool OnUpdate() override;
 
+    virtual void DrawBackground3D() const override;
     virtual void DrawForeground3D() const override;
 
 }; // WxStageCanvas
