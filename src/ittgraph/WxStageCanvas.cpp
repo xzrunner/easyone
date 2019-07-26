@@ -8,14 +8,17 @@
 #include <blueprint/CompNode.h>
 #include <intention/Evaluator.h>
 #include <intention/Blackboard.h>
+#include <intention/Node.h>
 
 #include <node0/SceneNode.h>
 #include <node0/CompComplex.h>
+#include <node3/RenderSystem.h>
 #include <painting3/MaterialMgr.h>
 #include <painting3/Blackboard.h>
 #include <painting3/WindowContext.h>
 #include <painting3/PerspCam.h>
 #include <everything/Evaluator.h>
+#include <everything/Node.h>
 
 namespace eone
 {
@@ -45,31 +48,68 @@ void WxStageCanvas::DrawForeground3D() const
         return;
     }
 
-    pt0::RenderContext ctx;
-    ctx.AddVar(
+    pt0::RenderContext rc;
+    rc.AddVar(
         pt3::MaterialMgr::PositionUniforms::light_pos.name,
         pt0::RenderVariant(sm::vec3(0, 2, -4))
     );
     if (m_camera->TypeID() == pt0::GetCamTypeID<pt3::PerspCam>())
     {
         auto persp = std::static_pointer_cast<pt3::PerspCam>(m_camera);
-        ctx.AddVar(
+        rc.AddVar(
             pt3::MaterialMgr::PositionUniforms::cam_pos.name,
             pt0::RenderVariant(persp->GetPos())
         );
     }
     auto& wc = pt3::Blackboard::Instance()->GetWindowContext();
     assert(wc);
-    ctx.AddVar(
+    rc.AddVar(
         pt3::MaterialMgr::PosTransUniforms::view.name,
         pt0::RenderVariant(wc->GetViewMat())
     );
-    ctx.AddVar(
+    rc.AddVar(
         pt3::MaterialMgr::PosTransUniforms::projection.name,
         pt0::RenderVariant(wc->GetProjMat())
     );
 
-    evt::Evaluator::Draw(ctx, eval->GetBackNodes());
+    auto graph_obj = static_cast<WxStagePage*>(m_stage)->GetGraphObj();
+    auto& ccomplex = graph_obj->GetSharedComp<n0::CompComplex>();
+    for (auto& obj : ccomplex.GetAllChildren())
+    {
+        if (!obj->HasUniqueComp<bp::CompNode>()) {
+            continue;
+        }
+
+        auto& bp_node = obj->GetUniqueComp<bp::CompNode>().GetNode();
+        if (!bp_node->get_type().is_derived_from<itt::Node>()) {
+            continue;
+        }
+
+        auto itt_node = std::static_pointer_cast<itt::Node>(bp_node);
+        if (!itt_node->GetDisplay()) {
+            continue;
+        }
+
+        auto evt_node = eval->QueryEvtNode(bp_node.get());
+        if (!evt_node) {
+            continue;
+        }
+
+        auto sn = evt_node->GetSceneNode();
+        if (!sn) {
+            continue;
+        }
+
+        pt3::RenderParams rp;
+
+        // draw face
+        rp.type = pt3::RenderParams::DRAW_MESH;
+        n3::RenderSystem::Draw(*sn, rp, rc);
+
+        // draw edge
+        rp.type = pt3::RenderParams::DRAW_BORDER_MESH;
+        n3::RenderSystem::Draw(*sn, rp, rc);
+    }
 }
 
 }

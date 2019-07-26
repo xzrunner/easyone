@@ -21,6 +21,7 @@
 #include <blueprint/CompNode.h>
 #include <intention/Evaluator.h>
 #include <intention/Blackboard.h>
+#include <intention/Everything.h>
 
 #include <node0/SceneNode.h>
 #include <node0/CompComplex.h>
@@ -250,12 +251,15 @@ void WxGraphPage::UpdateBlueprint()
         return true;
     });
 
-    if (!nodes.empty()) {
-        m_eval->Rebuild(nodes);
+    if (!nodes.empty() && m_eval->Execute(nodes)) {
+        dirty = true;
     }
 
     if (dirty) {
         m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
+    } else {
+        int zz = 0;
+        assert(0);
     }
 }
 
