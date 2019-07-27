@@ -510,9 +510,6 @@
     <ClInclude Include="..\..\..\src\ittgraph\WxGraphPage.h">
       <Filter>38.ittgraph\graph</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\ittgraph\WxStageCanvas.h">
-      <Filter>38.ittgraph\stage</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\frame\main.cpp">
@@ -784,9 +781,6 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\ittgraph\WxGraphPage.cpp">
       <Filter>38.ittgraph\graph</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\ittgraph\WxStageCanvas.cpp">
-      <Filter>38.ittgraph\stage</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
