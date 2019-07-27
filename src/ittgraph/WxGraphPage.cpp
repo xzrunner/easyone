@@ -20,7 +20,6 @@
 #include <blueprint/Node.h>
 #include <blueprint/CompNode.h>
 #include <intention/Evaluator.h>
-#include <intention/Blackboard.h>
 #include <intention/Everything.h>
 
 #include <node0/SceneNode.h>
@@ -48,13 +47,14 @@ WxGraphPage::WxGraphPage(wxWindow* parent, const ee0::GameObj& obj)
         bp::Blueprint::Instance();
     }
 
-    itt::Blackboard::Instance()->SetEval(m_eval);
-
 	m_messages.push_back(ee0::MSG_SCENE_NODE_INSERT);
 	m_messages.push_back(ee0::MSG_SCENE_NODE_DELETE);
 	m_messages.push_back(ee0::MSG_SCENE_NODE_CLEAR);
 
-	m_messages.push_back(bp::MSG_BLUE_PRINT_CHANGED);
+    m_messages.push_back(bp::MSG_BP_CONN_INSERT);
+    m_messages.push_back(bp::MSG_BP_CONN_DELETE);
+    m_messages.push_back(bp::MSG_BP_CONN_REBUILD);
+    m_messages.push_back(bp::MSG_BP_NODE_PROP_CHANGED);
 
     RegisterAllMessages();
 
@@ -70,8 +70,6 @@ void WxGraphPage::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
 	{
 	case ee0::MSG_SCENE_NODE_INSERT:
 		dirty = InsertSceneObj(variants);
-        // fixme
-        UpdateBlueprint();
 		break;
 	case ee0::MSG_SCENE_NODE_DELETE:
 		dirty = DeleteSceneObj(variants);
@@ -80,13 +78,25 @@ void WxGraphPage::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
 		dirty = ClearSceneObj();
 		break;
 
-    case bp::MSG_BLUE_PRINT_CHANGED:
-        UpdateBlueprint();
+    case bp::MSG_BP_CONN_INSERT:
+        dirty = AfterInsertNodeConn(variants);
+        break;
+    case bp::MSG_BP_CONN_DELETE:
+        dirty = BeforeDeleteNodeConn(variants);
+        break;
+    case bp::MSG_BP_CONN_REBUILD:
+        m_eval->OnRebuildConnection();
+        dirty = true;
+        break;
+    case bp::MSG_BP_NODE_PROP_CHANGED:
+        dirty = UpdateNodeProp(variants);
         break;
 	}
 
-	if (dirty) {
+	if (dirty)
+    {
 		m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
+        m_preview_canvas->SetDirty();
 	}
 }
 
@@ -145,7 +155,7 @@ void WxGraphPage::LoadFromJson(const rapidjson::Value& val, const std::string& d
     bp::CommentaryNodeHelper::InsertNodeToCommentary(*this);
     auto& ccomplex = m_obj->GetSharedComp<n0::CompComplex>();
     bp::NSCompNode::LoadConnection(ccomplex.GetAllChildren(), val["nodes"]);
-    m_sub_mgr->NotifyObservers(bp::MSG_BLUE_PRINT_CHANGED);
+    m_sub_mgr->NotifyObservers(bp::MSG_BP_CONN_REBUILD);
 
 	if (m_obj->HasUniqueComp<n2::CompBoundingBox>())
 	{
@@ -212,6 +222,11 @@ bool WxGraphPage::InsertSceneObj(const ee0::VariantSet& variants)
     auto& ccomplex = m_obj->GetSharedComp<n0::CompComplex>();
     ccomplex.AddChild(*obj);
 
+    if ((*obj)->HasUniqueComp<bp::CompNode>()) {
+        auto& bp_node = (*obj)->GetUniqueComp<bp::CompNode>().GetNode();
+        m_eval->OnAddNode(*bp_node);
+    }
+
     return true;
 }
 
@@ -223,7 +238,14 @@ bool WxGraphPage::DeleteSceneObj(const ee0::VariantSet& variants)
 	GD_ASSERT(obj, "err scene obj");
 
 	auto& ccomplex = m_obj->GetSharedComp<n0::CompComplex>();
-	return ccomplex.RemoveChild(*obj);
+	bool dirty = ccomplex.RemoveChild(*obj);
+
+    if (dirty && (*obj)->HasUniqueComp<bp::CompNode>()) {
+        auto& bp_node = (*obj)->GetUniqueComp<bp::CompNode>().GetNode();
+        m_eval->OnRemoveNode(*bp_node);
+    }
+
+    return dirty;
 }
 
 bool WxGraphPage::ClearSceneObj()
@@ -231,56 +253,73 @@ bool WxGraphPage::ClearSceneObj()
 	auto& ccomplex = m_obj->GetSharedComp<n0::CompComplex>();
 	bool dirty = !ccomplex.GetAllChildren().empty();
 	ccomplex.RemoveAllChildren();
+
+    m_eval->OnClearAllNodes();
+
 	return dirty;
 }
 
-void WxGraphPage::UpdateBlueprint()
+bool WxGraphPage::AfterInsertNodeConn(const ee0::VariantSet& variants)
 {
-    itt::Blackboard::Instance()->SetEval(m_eval);
+    auto var = variants.GetVariant("conn");
+    GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: conn");
+    const std::shared_ptr<bp::Connecting>* conn = static_cast<const std::shared_ptr<bp::Connecting>*>(var.m_val.pv);
+    GD_ASSERT(conn, "err conn");
 
-    bool dirty = UpdateNodes();
+    m_eval->OnConnected(**conn);
 
-    std::vector<bp::NodePtr> nodes;
-    Traverse([&](const ee0::GameObj& obj)->bool
+    return true;
+}
+
+bool WxGraphPage::BeforeDeleteNodeConn(const ee0::VariantSet& variants)
+{
+    auto var = variants.GetVariant("conn");
+    GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: conn");
+    const std::shared_ptr<bp::Connecting>* conn = static_cast<const std::shared_ptr<bp::Connecting>*>(var.m_val.pv);
+    GD_ASSERT(conn, "err conn");
+
+    m_eval->OnDisconnecting(**conn);
+
+    return true;
+}
+
+bool WxGraphPage::UpdateNodeProp(const ee0::VariantSet& variants)
+{
+    auto var = variants.GetVariant("obj");
+    GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: obj");
+    const ee0::GameObj* obj = static_cast<const ee0::GameObj*>(var.m_val.pv);
+    GD_ASSERT(obj, "err scene obj");
+
+    if ((*obj)->HasUniqueComp<bp::CompNode>())
     {
-        if (!obj->HasUniqueComp<bp::CompNode>()) {
-            return true;
-        }
-        auto& bp_node = obj->GetUniqueComp<bp::CompNode>().GetNode();
-        nodes.push_back(bp_node);
+        auto& bp_node = (*obj)->GetUniqueComp<bp::CompNode>().GetNode();
+        m_eval->OnNodePropChanged(bp_node);
         return true;
-    });
-
-    if (!nodes.empty() && m_eval->Execute(nodes)) {
-        dirty = true;
     }
-
-    if (dirty) {
-        m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
-    } else {
-        int zz = 0;
-        assert(0);
+    else
+    {
+        return false;
     }
 }
 
-bool WxGraphPage::UpdateNodes()
-{
-    bool dirty = false;
-    auto& wc = GetImpl().GetCanvas()->GetWidnowContext();
-    bp::UpdateParams params(wc.wc2, wc.wc3);
-    Traverse([&](const ee0::GameObj& obj)->bool
-    {
-        if (!obj->HasUniqueComp<bp::CompNode>()) {
-            return true;
-        }
-        auto& bp_node = obj->GetUniqueComp<bp::CompNode>().GetNode();
-        if (bp_node->Update(params)) {
-            dirty = true;
-        }
-        return true;
-    });
-    return dirty;
-}
+//bool WxGraphPage::UpdateNodes()
+//{
+//    bool dirty = false;
+//    auto& wc = GetImpl().GetCanvas()->GetWidnowContext();
+//    bp::UpdateParams params(wc.wc2, wc.wc3);
+//    Traverse([&](const ee0::GameObj& obj)->bool
+//    {
+//        if (!obj->HasUniqueComp<bp::CompNode>()) {
+//            return true;
+//        }
+//        auto& bp_node = obj->GetUniqueComp<bp::CompNode>().GetNode();
+//        if (bp_node->Update(params)) {
+//            dirty = true;
+//        }
+//        return true;
+//    });
+//    return dirty;
+//}
 
 }
 }

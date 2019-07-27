@@ -22,6 +22,7 @@
 #include <blueprint/ArrangeNodeOP.h>
 #include <blueprint/ConnectPinOP.h>
 #include <intention/Intention.h>
+#include <intention/WxStageCanvas.h>
 
 #include <node0/SceneNode.h>
 #include <node0/CompComplex.h>
@@ -157,6 +158,10 @@ void WxStagePage::InitGraphPanel()
     m_graph_panel = stage_ext_panel->AddPagePanel([&](wxPanel* parent)->wxPanel*
     {
         auto panel = new WxGraphPage(parent, m_graph_obj);
+
+        auto preview_canvas = std::static_pointer_cast<itt::WxStageCanvas>(GetImpl().GetCanvas());
+        preview_canvas->SetEval(panel->GetEval());
+        panel->SetPreviewCanvas(preview_canvas);
 
         auto canvas = std::make_shared<WxBlueprintCanvas>(
             panel, Blackboard::Instance()->GetRenderContext()

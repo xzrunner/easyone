@@ -32,6 +32,10 @@ public:
 
     auto& GetEval() const { return m_eval; }
 
+    void SetPreviewCanvas(const std::shared_ptr<ee0::WxStageCanvas>& canvas) {
+        m_preview_canvas = canvas;
+    }
+
     static const std::string PAGE_TYPE;
 
 protected:
@@ -51,14 +55,18 @@ private:
     bool DeleteSceneObj(const ee0::VariantSet& variants);
     bool ClearSceneObj();
 
-    void UpdateBlueprint();
+    bool AfterInsertNodeConn(const ee0::VariantSet& variants);
+    bool BeforeDeleteNodeConn(const ee0::VariantSet& variants);
+    bool UpdateNodeProp(const ee0::VariantSet& variants);
 
-    bool UpdateNodes();
+//    bool UpdateNodes();
 
 private:
     WxToolbarPanel* m_toolbar = nullptr;
 
     std::shared_ptr<itt::Evaluator> m_eval = nullptr;
+
+    std::shared_ptr<ee0::WxStageCanvas> m_preview_canvas = nullptr;
 
 }; // WxGraphPage
 
