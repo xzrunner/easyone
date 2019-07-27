@@ -55,7 +55,10 @@ WxStagePage::WxStagePage(wxWindow* parent, ECS_WORLD_PARAM const ee0::GameObj& o
 
     m_messages.push_back(ee0::MSG_STAGE_PAGE_NEW);
 
-	m_messages.push_back(bp::MSG_BLUE_PRINT_CHANGED);
+    m_messages.push_back(bp::MSG_BP_CONN_INSERT);
+    m_messages.push_back(bp::MSG_BP_CONN_DELETE);
+    m_messages.push_back(bp::MSG_BP_CONN_REBUILD);
+    m_messages.push_back(bp::MSG_BP_NODE_PROP_CHANGED);
 }
 
 void WxStagePage::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
@@ -79,7 +82,10 @@ void WxStagePage::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
         CreateNewPage(variants);
         break;
 
-    case bp::MSG_BLUE_PRINT_CHANGED:
+    case bp::MSG_BP_CONN_INSERT:
+    case bp::MSG_BP_CONN_DELETE:
+    case bp::MSG_BP_CONN_REBUILD:
+    case bp::MSG_BP_NODE_PROP_CHANGED:
         UpdateBlueprint();
         break;
 	}
@@ -182,7 +188,7 @@ void WxStagePage::LoadFromFileExt(const std::string& filepath)
         auto& ccomplex = m_obj->GetSharedComp<n0::CompComplex>();
         bp::NSCompNode::LoadConnection(ccomplex.GetAllChildren(), doc["nodes"]);
 
-        m_sub_mgr->NotifyObservers(bp::MSG_BLUE_PRINT_CHANGED);
+        m_sub_mgr->NotifyObservers(bp::MSG_BP_CONN_REBUILD);
     }
 }
 
