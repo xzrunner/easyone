@@ -6,6 +6,7 @@
 
 #include "frame/WxStagePage.h"
 
+namespace bp { class Node; }
 namespace itt { class Evaluator; }
 
 namespace eone
@@ -58,6 +59,9 @@ private:
     bool AfterInsertNodeConn(const ee0::VariantSet& variants);
     bool BeforeDeleteNodeConn(const ee0::VariantSet& variants);
     bool UpdateNodeProp(const ee0::VariantSet& variants);
+
+    void ClearNodeDisplayTag();
+    void SetDisplay(const bp::Node& node);
 
 //    bool UpdateNodes();
 

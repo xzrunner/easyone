@@ -21,6 +21,8 @@
 #include <blueprint/CompNode.h>
 #include <intention/Evaluator.h>
 #include <intention/Everything.h>
+#include <intention/MessageID.h>
+#include <intention/Node.h>
 
 #include <node0/SceneNode.h>
 #include <node0/CompComplex.h>
@@ -56,6 +58,8 @@ WxGraphPage::WxGraphPage(wxWindow* parent, const ee0::GameObj& obj)
     m_messages.push_back(bp::MSG_BP_CONN_REBUILD);
     m_messages.push_back(bp::MSG_BP_NODE_PROP_CHANGED);
 
+    m_messages.push_back(itt::MSG_CLEAR_NODE_DISPLAY_TAG);
+
     RegisterAllMessages();
 
     InitToolbarPanel();
@@ -90,6 +94,11 @@ void WxGraphPage::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
         break;
     case bp::MSG_BP_NODE_PROP_CHANGED:
         dirty = UpdateNodeProp(variants);
+        break;
+
+    case itt::MSG_CLEAR_NODE_DISPLAY_TAG:
+        ClearNodeDisplayTag();
+        dirty = true;
         break;
 	}
 
@@ -222,8 +231,10 @@ bool WxGraphPage::InsertSceneObj(const ee0::VariantSet& variants)
     auto& ccomplex = m_obj->GetSharedComp<n0::CompComplex>();
     ccomplex.AddChild(*obj);
 
-    if ((*obj)->HasUniqueComp<bp::CompNode>()) {
+    if ((*obj)->HasUniqueComp<bp::CompNode>())
+    {
         auto& bp_node = (*obj)->GetUniqueComp<bp::CompNode>().GetNode();
+        SetDisplay(*bp_node);
         m_eval->OnAddNode(*bp_node);
     }
 
@@ -300,6 +311,31 @@ bool WxGraphPage::UpdateNodeProp(const ee0::VariantSet& variants)
     {
         return false;
     }
+}
+
+void WxGraphPage::ClearNodeDisplayTag()
+{
+    for (auto& itr : m_eval->GetAllNodes())
+    {
+        auto bp_node = itr.first;
+        if (bp_node->get_type().is_derived_from<itt::Node>())
+        {
+            auto itt_node = static_cast<const itt::Node*>(bp_node);
+            const_cast<itt::Node*>(itt_node)->SetDisplay(false);
+        }
+    }
+}
+
+void WxGraphPage::SetDisplay(const bp::Node& node)
+{
+    if (!node.get_type().is_derived_from<itt::Node>()) {
+        return;
+    }
+
+    ClearNodeDisplayTag();
+
+    auto& itt_node = static_cast<const itt::Node&>(node);
+    const_cast<itt::Node&>(itt_node).SetDisplay(true);
 }
 
 //bool WxGraphPage::UpdateNodes()
