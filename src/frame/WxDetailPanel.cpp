@@ -416,9 +416,9 @@ void WxDetailPanel::InitComponents(const ee0::GameObj& obj)
 		m_components.push_back(panel);
 	}
 
-	if (m_owp.GetNode()->HasUniqueComp<n2::CompShape>())
+	if (m_owp.GetNode()->HasSharedComp<n2::CompShape>())
 	{
-		auto& comp = m_owp.GetNode()->GetUniqueComp<n2::CompShape>();
+		auto& comp = m_owp.GetNode()->GetSharedComp<n2::CompShape>();
 		auto panel = new ee2::WxCompShapePanel(this, comp);
 		m_comp_sizer->Insert(m_components.size(), panel);
 		m_components.push_back(panel);
@@ -599,7 +599,7 @@ void WxDetailPanel::OnAddPress(wxCommandEvent& event)
 	{
 		auto& shape = std::make_shared<gs::Circle>();
 		shape->SetRadius(50);
-		auto& comp = m_owp.GetNode()->AddUniqueComp<n2::CompShape>(shape);
+		auto& comp = m_owp.GetNode()->AddSharedComp<n2::CompShape>(shape);
 		auto panel = new ee2::WxCompShapePanel(this, comp);
 		m_comp_sizer->Insert(m_components.size(), panel);
 		m_components.push_back(panel);
@@ -609,7 +609,7 @@ void WxDetailPanel::OnAddPress(wxCommandEvent& event)
 	{
 		auto& shape = std::make_shared<gs::Rect>();
 		shape->SetRect(sm::rect(100, 100));
-		auto& comp = m_owp.GetNode()->AddUniqueComp<n2::CompShape>(shape);
+		auto& comp = m_owp.GetNode()->AddSharedComp<n2::CompShape>(shape);
 		auto panel = new ee2::WxCompShapePanel(this, comp);
 		m_comp_sizer->Insert(m_components.size(), panel);
 		m_components.push_back(panel);
