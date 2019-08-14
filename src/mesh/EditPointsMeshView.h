@@ -28,20 +28,20 @@ public:
 	EditPointsMeshView(n2::CompMesh& cmesh);
 
 	// node
-	virtual void Traverse(std::function<bool(const std::shared_ptr<gs::Shape>&)> func) const override;
-	virtual void Insert(const std::shared_ptr<gs::Shape>& shape) override;
-	virtual void Delete(const std::shared_ptr<gs::Shape>& shape) override;
+	virtual void Traverse(std::function<bool(const std::shared_ptr<gs::Shape2D>&)> func) const override;
+	virtual void Insert(const std::shared_ptr<gs::Shape2D>& shape) override;
+	virtual void Delete(const std::shared_ptr<gs::Shape2D>& shape) override;
 	virtual void Clear() override;
 
 	// selection
-	virtual void AddSelected(const std::shared_ptr<gs::Shape>& shape) override;
+	virtual void AddSelected(const std::shared_ptr<gs::Shape2D>& shape) override;
 	virtual void ClearSelectionSet() override;
 
 	// canvas
 	virtual void SetCanvasDirty() override;
 
 	// shape
-	virtual void ShapeChanged(const std::shared_ptr<gs::Shape>& shape) override;
+	virtual void ShapeChanged(const std::shared_ptr<gs::Shape2D>& shape) override;
 
 	Mode GetMode() const { return m_mode; }
 	void SetMode(Mode mode) { m_mode = mode; }

@@ -129,7 +129,7 @@ void WxStageCanvas::DrawForeground() const
 
 	tess::Painter pt;
 
-	auto draw_shape = [&pt](const std::shared_ptr<gs::Shape>& shape)->bool
+	auto draw_shape = [&pt](const std::shared_ptr<gs::Shape2D>& shape)->bool
 	{
 		pt2::RenderSystem::DrawShape(pt, *shape, 0xff000000);
 		return true;

@@ -87,7 +87,7 @@ EditPointsMeshView::EditPointsMeshView(n2::CompMesh& cmesh)
 {
 }
 
-void EditPointsMeshView::Traverse(std::function<bool(const std::shared_ptr<gs::Shape>&)> func) const
+void EditPointsMeshView::Traverse(std::function<bool(const std::shared_ptr<gs::Shape2D>&)> func) const
 {
 	auto& mesh = m_cmesh.GetMesh();
 	if (!mesh) {
@@ -130,7 +130,7 @@ void EditPointsMeshView::Traverse(std::function<bool(const std::shared_ptr<gs::S
 	}
 }
 
-void EditPointsMeshView::Insert(const std::shared_ptr<gs::Shape>& shape)
+void EditPointsMeshView::Insert(const std::shared_ptr<gs::Shape2D>& shape)
 {
 	if (m_mode != Mode::BUILD) {
 		return;
@@ -163,7 +163,7 @@ void EditPointsMeshView::Insert(const std::shared_ptr<gs::Shape>& shape)
 	}
 }
 
-void EditPointsMeshView::Delete(const std::shared_ptr<gs::Shape>& shape)
+void EditPointsMeshView::Delete(const std::shared_ptr<gs::Shape2D>& shape)
 {
 	if (m_mode != Mode::BUILD) {
 		return;
@@ -206,7 +206,7 @@ void EditPointsMeshView::Clear()
 	}
 }
 
-void EditPointsMeshView::AddSelected(const std::shared_ptr<gs::Shape>& shape)
+void EditPointsMeshView::AddSelected(const std::shared_ptr<gs::Shape2D>& shape)
 {
 }
 
@@ -218,7 +218,7 @@ void EditPointsMeshView::SetCanvasDirty()
 {
 }
 
-void EditPointsMeshView::ShapeChanged(const std::shared_ptr<gs::Shape>& shape)
+void EditPointsMeshView::ShapeChanged(const std::shared_ptr<gs::Shape2D>& shape)
 {
 	if (shape->get_type() == rttr::type::get<gs::Polygon>()) {
 		std::static_pointer_cast<Polygon>(shape)->OnChanged(m_mode);
