@@ -17,7 +17,7 @@
 #include <geoshape/Point2D.h>
 #include <geoshape/Rect.h>
 #include <geoshape/Circle.h>
-#include <geoshape/Polyline.h>
+#include <geoshape/Polyline2D.h>
 #include <drawing2/EditShapeOP.h>
 #include <drawing2/RenderStyle.h>
 
@@ -82,8 +82,8 @@ void WxStageCanvas::OnDrawGUI() const
 		m_edit_shape_op->ChangeEditState(rttr::type::get<gs::Circle>().get_id());
 	}
 	y -= h;
-	if (egui::radio_button(uid++, "POLYLINE", shape_type == rttr::type::get<gs::Polyline>().get_id(), x, y, *ctx, dirty)) {
-		m_edit_shape_op->ChangeEditState(rttr::type::get<gs::Polyline>().get_id());
+	if (egui::radio_button(uid++, "POLYLINE", shape_type == rttr::type::get<gs::Polyline2D>().get_id(), x, y, *ctx, dirty)) {
+		m_edit_shape_op->ChangeEditState(rttr::type::get<gs::Polyline2D>().get_id());
 	}
 	y -= h;
 

@@ -5,17 +5,17 @@
 #include <node2/CompMesh.h>
 #include <painting2/Mesh.h>
 #include <polymesh2/PointsMesh.h>
-#include <geoshape/Polygon.h>
+#include <geoshape/Polygon2D.h>
 #include <geoshape/Point2D.h>
 
 namespace
 {
 
-class Polygon : public gs::Polygon
+class Polygon : public gs::Polygon2D
 {
 public:
 	Polygon(pm2::PointsMesh& mesh)
-		: gs::Polygon(mesh.GetOuterLine())
+		: gs::Polygon2D(mesh.GetOuterLine())
 		, m_mesh(mesh)
 	{
 	}
@@ -153,10 +153,10 @@ void EditPointsMeshView::Insert(const std::shared_ptr<gs::Shape2D>& shape)
 	}
 	else
 	{
-		if (shape->get_type() == rttr::type::get<gs::Polygon>())
+		if (shape->get_type() == rttr::type::get<gs::Polygon2D>())
 		{
 			std::vector<sm::vec2> points;
-			auto& verts = std::static_pointer_cast<gs::Polygon>(shape)->GetVertices();
+			auto& verts = std::static_pointer_cast<gs::Polygon2D>(shape)->GetVertices();
 			auto pm_mesh = std::make_unique<pm2::PointsMesh>(verts, points, mesh->GetWidth(), mesh->GetHeight());
 			mesh->SetMesh(std::move(pm_mesh));
 		}
@@ -178,7 +178,7 @@ void EditPointsMeshView::Delete(const std::shared_ptr<gs::Shape2D>& shape)
 		return;
 	}
 
-	if (shape->get_type() == rttr::type::get<gs::Polygon>())
+	if (shape->get_type() == rttr::type::get<gs::Polygon2D>())
 	{
 		mesh->SetMesh(nullptr);
 	}
@@ -220,7 +220,7 @@ void EditPointsMeshView::SetCanvasDirty()
 
 void EditPointsMeshView::ShapeChanged(const std::shared_ptr<gs::Shape2D>& shape)
 {
-	if (shape->get_type() == rttr::type::get<gs::Polygon>()) {
+	if (shape->get_type() == rttr::type::get<gs::Polygon2D>()) {
 		std::static_pointer_cast<Polygon>(shape)->OnChanged(m_mode);
 	} else if (shape->get_type() == rttr::type::get<gs::Point2D>()) {
 		std::static_pointer_cast<Point>(shape)->OnChanged(m_mode);
