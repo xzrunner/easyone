@@ -247,3 +247,6 @@
 [submodule "ext/polymesh3"]
 	path = ext/polymesh3
 	url = git@github.com:xzrunner/polymesh3.git
+[submodule "ext/vexc"]
+	path = ext/vexc
+	url = git@github.com:xzrunner/vexc.git
