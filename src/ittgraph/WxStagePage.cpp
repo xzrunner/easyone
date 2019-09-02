@@ -23,6 +23,7 @@
 #include <blueprint/ConnectPinOP.h>
 #include <intention/Intention.h>
 #include <intention/WxStageCanvas.h>
+#include <intention/RightPopupMenu.h>
 
 #include <node0/SceneNode.h>
 #include <node0/CompComplex.h>
@@ -158,6 +159,9 @@ void WxStagePage::InitGraphPanel()
     m_graph_panel = stage_ext_panel->AddPagePanel([&](wxPanel* parent)->wxPanel*
     {
         auto panel = new WxGraphPage(parent, m_graph_obj);
+        auto& panel_impl = panel->GetImpl();
+
+        panel_impl.SetPopupMenu(std::make_shared<itt::RightPopupMenu>(panel));
 
         auto preview_canvas = std::static_pointer_cast<itt::WxStageCanvas>(GetImpl().GetCanvas());
         preview_canvas->SetEval(panel->GetEval());
@@ -166,7 +170,7 @@ void WxStagePage::InitGraphPanel()
         auto canvas = std::make_shared<WxBlueprintCanvas>(
             panel, Blackboard::Instance()->GetRenderContext()
         );
-        panel->GetImpl().SetCanvas(canvas);
+        panel_impl.SetCanvas(canvas);
 
         auto prev_op = std::make_shared<ee2::NodeSelectOP>(canvas->GetCamera(), *panel);
 
@@ -184,7 +188,7 @@ void WxStagePage::InitGraphPanel()
         auto& nodes = itt::Intention::Instance()->GetAllNodes();
         auto op = std::make_shared<bp::ConnectPinOP>(canvas->GetCamera(), *panel, nodes);
         op->SetPrevEditOP(arrange_op);
-        panel->GetImpl().SetEditOP(op);
+        panel_impl.SetEditOP(op);
 
         return panel;
     }, wxVERTICAL);
