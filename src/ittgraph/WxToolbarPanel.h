@@ -10,6 +10,7 @@
 #include <wx/panel.h>
 
 namespace itt { class WxNodeProperty; }
+namespace ee0 { class WxNavigationBar; }
 
 namespace eone
 {
@@ -36,6 +37,8 @@ private:
     eone::WxStagePage* m_stage_page;
 
     itt::WxNodeProperty* m_prop;
+
+    ee0::WxNavigationBar* m_nav_bar;
 
 }; // WxToolbarPanel
 

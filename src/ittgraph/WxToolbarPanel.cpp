@@ -7,6 +7,7 @@
 #include "frame/WxStagePage.h"
 
 #include <ee0/SubjectMgr.h>
+#include <ee0/WxNavigationBar.h>
 #include <blueprint/CompNode.h>
 #include <blueprint/MessageID.h>
 #include <intention/WxNodeProperty.h>
@@ -51,7 +52,9 @@ void WxToolbarPanel::InitLayout()
 
 	auto sizer = new wxBoxSizer(wxVERTICAL);
     // property
-	sizer->Add(m_prop = new itt::WxNodeProperty(this, sub_mgr)/*, 1, wxEXPAND*/);
+	sizer->Add(m_prop = new itt::WxNodeProperty(this, sub_mgr), wxEXPAND);
+    // nav bar
+    sizer->Add(m_nav_bar = new ee0::WxNavigationBar(this));
 
 	SetSizer(sizer);
 }
