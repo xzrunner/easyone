@@ -27,7 +27,9 @@ WxToolbarPanel::WxToolbarPanel(wxWindow* parent, eone::WxStagePage* stage_page)
 {
 	InitLayout();
 
-    stage_page->GetSubjectMgr()->RegisterObserver(ee0::MSG_NODE_SELECTION_INSERT, this);
+    auto& sub_mgr = stage_page->GetSubjectMgr();
+    sub_mgr->RegisterObserver(ee0::MSG_NODE_SELECTION_INSERT, this);
+    sub_mgr->RegisterObserver(ee0::MSG_NODE_SELECTION_CLEAR, this);
 }
 
 void WxToolbarPanel::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
@@ -35,8 +37,11 @@ void WxToolbarPanel::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
 	switch (msg)
 	{
 	case ee0::MSG_NODE_SELECTION_INSERT:
-		OnSelected(variants);
+		OnSelectionInsert(variants);
 		break;
+    case ee0::MSG_NODE_SELECTION_CLEAR:
+        OnSelectionClear(variants);
+        break;
 	}
 }
 
@@ -51,7 +56,7 @@ void WxToolbarPanel::InitLayout()
 	SetSizer(sizer);
 }
 
-void WxToolbarPanel::OnSelected(const ee0::VariantSet& variants)
+void WxToolbarPanel::OnSelectionInsert(const ee0::VariantSet& variants)
 {
 	auto var_obj = variants.GetVariant("obj");
 	GD_ASSERT(var_obj.m_type == ee0::VT_PVOID, "no var in vars: obj");
@@ -60,6 +65,11 @@ void WxToolbarPanel::OnSelected(const ee0::VariantSet& variants)
 
 	auto& cnode = obj->GetUniqueComp<bp::CompNode>();
 	m_prop->LoadFromNode(obj, cnode.GetNode());
+}
+
+void WxToolbarPanel::OnSelectionClear(const ee0::VariantSet& variants)
+{
+    m_prop->Clear();
 }
 
 }

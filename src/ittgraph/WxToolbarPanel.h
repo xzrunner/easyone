@@ -29,7 +29,8 @@ public:
 private:
 	void InitLayout();
 
-    void OnSelected(const ee0::VariantSet& variants);
+    void OnSelectionInsert(const ee0::VariantSet& variants);
+    void OnSelectionClear(const ee0::VariantSet& variants);
 
 private:
     eone::WxStagePage* m_stage_page;
