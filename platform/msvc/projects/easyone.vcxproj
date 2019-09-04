@@ -338,6 +338,9 @@
     <ProjectReference Include="..\..\..\ext\unirender\platform\msvc\projects\unirender.vcxproj">
       <Project>{637a0e9c-1867-459d-8611-65a064e3b2c2}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\vexc\platform\msvc\projects\vexc.vcxproj">
+      <Project>{7bad2f78-e25a-481e-87bd-d10ce3fc7586}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\ext\volume\platform\msvc\projects\volume.vcxproj">
       <Project>{e9e3c6d8-5b33-4afc-b1a1-0c1541bf8ddf}</Project>
     </ProjectReference>
