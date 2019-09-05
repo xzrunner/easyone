@@ -28,9 +28,6 @@ public:
 
     virtual int GetPageType() const { return 0; }
 
-    // fixme: copy from eone::WxStagePage::LoadFromFile()
-    void LoadFromJson(const rapidjson::Value& val, const std::string& dir);
-
     auto GetSceneTree() const { return m_stree; }
 
     void SetPreviewCanvas(const std::shared_ptr<ee0::WxStageCanvas>& canvas) {
@@ -45,11 +42,6 @@ protected:
     virtual void OnPageInit() override;
 
     virtual const n0::NodeComp& GetEditedObjComp() const override;
-
-    virtual void StoreToJsonExt(const std::string& dir, rapidjson::Value& val,
-        rapidjson::MemoryPoolAllocator<>& alloc) const override;
-    // move to LoadFromJson()
-    //virtual void LoadFromFileExt(const std::string& filepath) override;
 
 private:
     void InitToolbarPanel();

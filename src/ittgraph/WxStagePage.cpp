@@ -25,12 +25,15 @@
 #include <intention/WxStageCanvas.h>
 #include <intention/RightPopupMenu.h>
 #include <intention/NodeSelectOP.h>
+#include <intention/SceneTree.h>
+#include <intention/Serializer.h>
 
 #include <node0/SceneNode.h>
 #include <node0/CompComplex.h>
 #include <node0/CompIdentity.h>
 #include <node2/CompTransform.h>
 #include <node2/CompBoundingBox.h>
+#include <ns/CompSerializer.h>
 #include <sx/ResFileHelper.h>
 #include <js/RapidJsonHelper.h>
 
@@ -136,9 +139,8 @@ const n0::NodeComp& WxStagePage::GetEditedObjComp() const
 void WxStagePage::StoreToJsonExt(const std::string& dir, rapidjson::Value& val,
                                  rapidjson::MemoryPoolAllocator<>& alloc) const
 {
-    rapidjson::Value graph_val;
-    static_cast<WxGraphPage*>(m_graph_panel)->StoreToJson(dir, graph_val, alloc);
-    val.AddMember("graph", graph_val, alloc);
+    auto group_stage = static_cast<eone::WxStagePage*>(m_graph_panel);
+    itt::Serializer::StoreToJson(*group_stage, group_stage->GetEditedObj(), dir, val, alloc);
 
     val.AddMember("page_type", rapidjson::Value(PAGE_TYPE.c_str(), alloc), alloc);
 }
@@ -149,7 +151,9 @@ void WxStagePage::LoadFromFileExt(const std::string& filepath)
     js::RapidJsonHelper::ReadFromFile(filepath.c_str(), doc);
 
     auto dir = boost::filesystem::path(filepath).parent_path().string();
-    static_cast<WxGraphPage*>(m_graph_panel)->LoadFromJson(doc["graph"], dir);
+
+    auto group_stage = static_cast<eone::WxStagePage*>(m_graph_panel);
+    itt::Serializer::LoadFromJson(*group_stage, group_stage->GetEditedObj(), doc["graph"], dir);
 }
 
 void WxStagePage::InitGraphPanel()

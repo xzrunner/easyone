@@ -16,7 +16,6 @@
 #include <blueprint/MessageID.h>
 #include <blueprint/NodeHelper.h>
 #include <blueprint/NSCompNode.h>
-#include <blueprint/CommentaryNodeHelper.h>
 #include <blueprint/Node.h>
 #include <blueprint/CompNode.h>
 #include <intention/Evaluator.h>
@@ -24,6 +23,7 @@
 #include <intention/MessageID.h>
 #include <intention/Node.h>
 #include <intention/SceneTree.h>
+#include <intention/Serializer.h>
 
 #include <node0/SceneNode.h>
 #include <node0/CompComplex.h>
@@ -146,51 +146,6 @@ void WxGraphPage::Traverse(std::function<bool(const ee0::GameObj&)> func,
     }
 }
 
-void WxGraphPage::LoadFromJson(const rapidjson::Value& val, const std::string& dir)
-{
-    m_sub_mgr->NotifyObservers(ee0::MSG_NODE_SELECTION_CLEAR);
-    m_sub_mgr->NotifyObservers(ee0::MSG_SCENE_NODE_CLEAR);
-
-    n0::CompAssetPtr casset = ns::CompFactory::Instance()->CreateAsset(val, dir);
-    if (casset)
-    {
-        if (m_obj->HasSharedComp<n0::CompAsset>()) {
-            m_obj->RemoveSharedComp<n0::CompAsset>();
-        }
-        m_obj->AddSharedCompNoCreate<n0::CompAsset>(casset);
-    }
-    else
-    {
-        casset = m_obj->GetSharedCompPtr<n0::CompAsset>();
-    }
-    // FIXME: reinsert, for send insert msg to other panel
-    if (m_obj->HasSharedComp<n0::CompComplex>())
-    {
-        auto& ccomplex = m_obj->GetSharedComp<n0::CompComplex>();
-        auto nodes = ccomplex.GetAllChildren();
-        ccomplex.RemoveAllChildren();
-        for (auto& node : nodes) {
-            ee0::MsgHelper::InsertNode(*m_sub_mgr, node, false);
-        }
-    }
-
-    // copy from
-    // LoadFromFileExt(filepath);
-    bp::CommentaryNodeHelper::InsertNodeToCommentary(*this);
-    auto& ccomplex = m_obj->GetSharedComp<n0::CompComplex>();
-    bp::NSCompNode::LoadConnection(ccomplex.GetAllChildren(), val["nodes"]);
-    m_sub_mgr->NotifyObservers(bp::MSG_BP_CONN_REBUILD);
-
-	if (m_obj->HasUniqueComp<n2::CompBoundingBox>())
-	{
-		auto& cbb = m_obj->GetUniqueComp<n2::CompBoundingBox>();
-		auto aabb = n2::AABBSystem::Instance()->GetBounding(*m_obj);
-		cbb.SetSize(*m_obj, aabb);
-	}
-
-	m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
-}
-
 void WxGraphPage::OnPageInit()
 {
     InitToolbarPanel();
@@ -200,32 +155,6 @@ const n0::NodeComp& WxGraphPage::GetEditedObjComp() const
 {
     return m_obj->GetSharedComp<n0::CompComplex>();
 }
-
-void WxGraphPage::StoreToJsonExt(const std::string& dir, rapidjson::Value& val,
-	                             rapidjson::MemoryPoolAllocator<>& alloc) const
-{
-	// connection
-	auto& ccomplex = m_obj->GetSharedComp<n0::CompComplex>();
-	bp::NSCompNode::StoreConnection(ccomplex.GetAllChildren(), val["nodes"], alloc);
-
-	val.AddMember("page_type", rapidjson::Value(PAGE_TYPE.c_str(), alloc), alloc);
-}
-
-//void WxGraphPage::LoadFromFileExt(const std::string& filepath)
-//{
-//    bp::CommentaryNodeHelper::InsertNodeToCommentary(*this);
-//
-//    if (sx::ResFileHelper::Type(filepath) == sx::RES_FILE_JSON)
-//    {
-//        rapidjson::Document doc;
-//        js::RapidJsonHelper::ReadFromFile(filepath.c_str(), doc);
-//
-//        auto& ccomplex = m_obj->GetSharedComp<n0::CompComplex>();
-//        bp::NSCompNode::LoadConnection(ccomplex.GetAllChildren(), doc["nodes"]);
-//
-//        m_sub_mgr->NotifyObservers(bp::MSG_BLUE_PRINT_CHANGED);
-//    }
-//}
 
 void WxGraphPage::InitToolbarPanel()
 {
