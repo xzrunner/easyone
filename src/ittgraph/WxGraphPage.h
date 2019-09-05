@@ -7,7 +7,7 @@
 #include "frame/WxStagePage.h"
 
 namespace bp { class Node; }
-namespace itt { class Evaluator; }
+namespace itt { class SceneTree; }
 
 namespace eone
 {
@@ -31,11 +31,13 @@ public:
     // fixme: copy from eone::WxStagePage::LoadFromFile()
     void LoadFromJson(const rapidjson::Value& val, const std::string& dir);
 
-    auto& GetEval() const { return m_eval; }
+    auto GetSceneTree() const { return m_stree; }
 
     void SetPreviewCanvas(const std::shared_ptr<ee0::WxStageCanvas>& canvas) {
         m_preview_canvas = canvas;
     }
+
+    void SetRootNode(const n0::SceneNodePtr& root) { m_obj = root; }
 
     static const std::string PAGE_TYPE;
 
@@ -54,21 +56,20 @@ private:
 
     bool InsertSceneObj(const ee0::VariantSet& variants);
     bool DeleteSceneObj(const ee0::VariantSet& variants);
-    bool ClearSceneObj();
 
     bool AfterInsertNodeConn(const ee0::VariantSet& variants);
     bool BeforeDeleteNodeConn(const ee0::VariantSet& variants);
     bool UpdateNodeProp(const ee0::VariantSet& variants);
 
-    void ClearNodeDisplayTag();
-    void SetDisplay(const bp::Node& node);
+    bool ChangeSceneRoot(const ee0::VariantSet& variants);
+    bool PathSeekToPrev(const ee0::VariantSet& variants);
 
 //    bool UpdateNodes();
 
 private:
     WxToolbarPanel* m_toolbar = nullptr;
 
-    std::shared_ptr<itt::Evaluator> m_eval = nullptr;
+    std::shared_ptr<itt::SceneTree> m_stree = nullptr;
 
     std::shared_ptr<ee0::WxStageCanvas> m_preview_canvas = nullptr;
 

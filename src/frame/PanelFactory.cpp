@@ -500,7 +500,8 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
         page->GetImpl().SetCanvas(canvas);
 
         auto op = std::make_shared<ee3::NodeArrangeOP>(
-            canvas->GetCamera(), *page, canvas->GetViewport());
+            canvas->GetCamera(), *page, canvas->GetViewport()
+        );
 
         page->GetImpl().SetEditOP(op);
     }

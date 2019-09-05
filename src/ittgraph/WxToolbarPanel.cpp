@@ -11,6 +11,8 @@
 #include <blueprint/CompNode.h>
 #include <blueprint/MessageID.h>
 #include <intention/WxNodeProperty.h>
+#include <intention/MessageID.h>
+#include <intention/Node.h>
 
 #include <guard/check.h>
 #include <node0/SceneNode.h>
@@ -31,6 +33,7 @@ WxToolbarPanel::WxToolbarPanel(wxWindow* parent, eone::WxStagePage* stage_page)
     auto& sub_mgr = stage_page->GetSubjectMgr();
     sub_mgr->RegisterObserver(ee0::MSG_NODE_SELECTION_INSERT, this);
     sub_mgr->RegisterObserver(ee0::MSG_NODE_SELECTION_CLEAR, this);
+    sub_mgr->RegisterObserver(itt::MSG_SCENE_ROOT_TO_NEXT_LEVEL, this);
 }
 
 void WxToolbarPanel::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
@@ -43,6 +46,9 @@ void WxToolbarPanel::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
     case ee0::MSG_NODE_SELECTION_CLEAR:
         OnSelectionClear(variants);
         break;
+    case itt::MSG_SCENE_ROOT_TO_NEXT_LEVEL:
+        OnRootToNextLevel(variants);
+        break;
 	}
 }
 
@@ -54,7 +60,19 @@ void WxToolbarPanel::InitLayout()
     // property
 	sizer->Add(m_prop = new itt::WxNodeProperty(this, sub_mgr), wxEXPAND);
     // nav bar
-    sizer->Add(m_nav_bar = new ee0::WxNavigationBar(this));
+    m_nav_bar = new ee0::WxNavigationBar(this);
+    m_nav_bar->SetSeekCallback([&](size_t depth)
+    {
+        ee0::VariantSet vars;
+
+        ee0::Variant var;
+        var.m_type = ee0::VT_ULONG;
+        var.m_val.ul = depth;
+        vars.SetVariant("depth", var);
+
+        m_stage_page->GetSubjectMgr()->NotifyObservers(itt::MSG_SCENE_ROOT_SEEK_TO_PREV_LEVEL, vars);
+    });
+    sizer->Add(m_nav_bar);
 
 	SetSizer(sizer);
 }
@@ -73,6 +91,26 @@ void WxToolbarPanel::OnSelectionInsert(const ee0::VariantSet& variants)
 void WxToolbarPanel::OnSelectionClear(const ee0::VariantSet& variants)
 {
     m_prop->Clear();
+}
+
+void WxToolbarPanel::OnRootToNextLevel(const ee0::VariantSet& variants)
+{
+    auto var_obj = variants.GetVariant("obj");
+    GD_ASSERT(var_obj.m_type == ee0::VT_PVOID, "no var in vars: obj");
+    const ee0::GameObj obj = *static_cast<const ee0::GameObj*>(var_obj.m_val.pv);
+    GD_ASSERT(GAME_OBJ_VALID(obj), "err scene obj");
+
+    if (!obj->HasUniqueComp<bp::CompNode>()) {
+        return;
+    }
+    auto& cnode = obj->GetUniqueComp<bp::CompNode>();
+    auto& bp_node = cnode.GetNode();
+    if (!bp_node->get_type().is_derived_from<itt::Node>()) {
+        return;
+    }
+
+    auto itt_node = std::static_pointer_cast<itt::Node>(bp_node);
+    m_nav_bar->Push(itt_node->GetName());
 }
 
 }

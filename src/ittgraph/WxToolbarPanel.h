@@ -33,6 +33,8 @@ private:
     void OnSelectionInsert(const ee0::VariantSet& variants);
     void OnSelectionClear(const ee0::VariantSet& variants);
 
+    void OnRootToNextLevel(const ee0::VariantSet& variants);
+
 private:
     eone::WxStagePage* m_stage_page;
 

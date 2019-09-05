@@ -24,6 +24,7 @@
 #include <intention/Intention.h>
 #include <intention/WxStageCanvas.h>
 #include <intention/RightPopupMenu.h>
+#include <intention/NodeSelectOP.h>
 
 #include <node0/SceneNode.h>
 #include <node0/CompComplex.h>
@@ -164,7 +165,7 @@ void WxStagePage::InitGraphPanel()
         panel_impl.SetPopupMenu(std::make_shared<itt::RightPopupMenu>(panel));
 
         auto preview_canvas = std::static_pointer_cast<itt::WxStageCanvas>(GetImpl().GetCanvas());
-        preview_canvas->SetEval(panel->GetEval());
+        preview_canvas->SetSceneTree(panel->GetSceneTree());
         panel->SetPreviewCanvas(preview_canvas);
 
         auto canvas = std::make_shared<WxBlueprintCanvas>(
@@ -172,10 +173,8 @@ void WxStagePage::InitGraphPanel()
         );
         panel_impl.SetCanvas(canvas);
 
-        auto prev_op = std::make_shared<ee2::NodeSelectOP>(canvas->GetCamera(), *panel);
-
-        auto select_op = std::make_shared<bp::NodeSelectOP>(canvas->GetCamera(), *panel);
-        select_op->AddPrevEditOP(prev_op);
+        auto select_op = std::make_shared<itt::NodeSelectOP>(canvas->GetCamera(), *panel);
+        select_op->SetSceneTree(panel->GetSceneTree());
 
         ee2::ArrangeNodeCfg cfg;
         cfg.is_auto_align_open = false;
