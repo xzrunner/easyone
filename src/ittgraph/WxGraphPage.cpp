@@ -256,6 +256,7 @@ bool WxGraphPage::PathSeekToPrev(const ee0::VariantSet& variants)
     GD_ASSERT(var.m_type == ee0::VT_ULONG, "no var in vars: obj");
     auto depth = var.m_val.ul;
     if (m_stree->SetDepth(depth)) {
+        m_sub_mgr->NotifyObservers(ee0::MSG_NODE_SELECTION_CLEAR);
         m_obj = m_stree->GetCurrNode();
         return true;
     } else {
