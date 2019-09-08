@@ -159,7 +159,7 @@ void WxStagePage::LoadFromFileExt(const std::string& filepath)
     auto stree = bp_page->GetSceneTree();
     itt::Serializer::LoadFromJson(*bp_page, stree->GetRoot(), doc["graph"], dir);
 
-    stree->Init();
+    stree->AfterLoadFromFile();
 }
 
 void WxStagePage::InitGraphPanel()
