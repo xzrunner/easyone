@@ -50,7 +50,9 @@ WxGraphPage::WxGraphPage(wxWindow* parent, const ee0::GameObj& obj)
         cnode.SetNode(std::make_shared<itt::node::Geometry>());
     }
     m_stree->Add(m_obj);
+#ifdef ITT_SCENE_TREE_DUMMY_ROOT
     m_stree->ToNextLevel(m_obj);
+#endif // ITT_SCENE_TREE_DUMMY_ROOT
 
     static bool inited = false;
     if (!inited) {
