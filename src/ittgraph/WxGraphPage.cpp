@@ -24,6 +24,7 @@
 #include <intention/Node.h>
 #include <intention/SceneTree.h>
 #include <intention/Serializer.h>
+#include <intention/RegistNodes.h>
 
 #include <node0/SceneNode.h>
 #include <node0/CompComplex.h>
@@ -44,7 +45,12 @@ WxGraphPage::WxGraphPage(wxWindow* parent, const ee0::GameObj& obj)
     : eone::WxStagePage(parent, obj, 0)
 {
     m_stree = std::make_shared<itt::SceneTree>();
+    if (!m_obj->HasUniqueComp<bp::CompNode>()) {
+        auto& cnode = m_obj->AddUniqueComp<bp::CompNode>();
+        cnode.SetNode(std::make_shared<itt::node::Geometry>());
+    }
     m_stree->Add(m_obj);
+    m_stree->ToNextLevel(m_obj);
 
     static bool inited = false;
     if (!inited) {
