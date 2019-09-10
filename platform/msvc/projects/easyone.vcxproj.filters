@@ -205,9 +205,6 @@
     <Filter Include="38.ittgraph\stage">
       <UniqueIdentifier>{9e5f6349-33ad-4adf-81ce-1d933b3374bb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="38.ittgraph\toolbar">
-      <UniqueIdentifier>{8ce606f0-9ebd-4058-b119-b4d3fc89cc66}</UniqueIdentifier>
-    </Filter>
     <Filter Include="38.ittgraph\graph">
       <UniqueIdentifier>{5d7c3621-e939-47ea-a92d-36305bb3a01c}</UniqueIdentifier>
     </Filter>
@@ -504,9 +501,6 @@
     <ClInclude Include="..\..\..\src\ittgraph\WxStagePage.h">
       <Filter>38.ittgraph\stage</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\ittgraph\WxToolbarPanel.h">
-      <Filter>38.ittgraph\toolbar</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\ittgraph\WxGraphPage.h">
       <Filter>38.ittgraph\graph</Filter>
     </ClInclude>
@@ -775,9 +769,6 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\ittgraph\WxStagePage.cpp">
       <Filter>38.ittgraph\stage</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\ittgraph\WxToolbarPanel.cpp">
-      <Filter>38.ittgraph\toolbar</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\ittgraph\WxGraphPage.cpp">
       <Filter>38.ittgraph\graph</Filter>

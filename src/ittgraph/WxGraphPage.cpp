@@ -25,6 +25,7 @@
 #include <intention/SceneTree.h>
 #include <intention/Serializer.h>
 #include <intention/RegistNodes.h>
+#include <intention/WxToolbarPanel.h>
 
 #include <node0/SceneNode.h>
 #include <node0/CompComplex.h>
@@ -168,8 +169,8 @@ void WxGraphPage::InitToolbarPanel()
 {
     assert(!m_toolbar);
     auto toolbar_panel = Blackboard::Instance()->GetToolbarPanel();
-    m_toolbar = static_cast<WxToolbarPanel*>(toolbar_panel->AddPagePanel([&](wxPanel* parent)->wxPanel* {
-        return new WxToolbarPanel(toolbar_panel, this);
+    m_toolbar = static_cast<itt::WxToolbarPanel*>(toolbar_panel->AddPagePanel([&](wxPanel* parent)->wxPanel* {
+        return new itt::WxToolbarPanel(toolbar_panel, this);
     }, wxVERTICAL));
 }
 

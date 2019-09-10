@@ -7,14 +7,12 @@
 #include "frame/WxStagePage.h"
 
 namespace bp { class Node; }
-namespace itt { class SceneTree; }
+namespace itt { class SceneTree; class WxToolbarPanel; }
 
 namespace eone
 {
 namespace ittgraph
 {
-
-class WxToolbarPanel;
 
 class WxGraphPage : public eone::WxStagePage
 {
@@ -59,7 +57,7 @@ private:
 //    bool UpdateNodes();
 
 private:
-    WxToolbarPanel* m_toolbar = nullptr;
+    itt::WxToolbarPanel* m_toolbar = nullptr;
 
     std::shared_ptr<itt::SceneTree> m_stree = nullptr;
 

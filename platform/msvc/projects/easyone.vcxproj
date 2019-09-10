@@ -390,7 +390,6 @@
     <ClInclude Include="..\..\..\src\guigraph\WxToolbarPanel.h" />
     <ClInclude Include="..\..\..\src\ittgraph\WxGraphPage.h" />
     <ClInclude Include="..\..\..\src\ittgraph\WxStagePage.h" />
-    <ClInclude Include="..\..\..\src\ittgraph\WxToolbarPanel.h" />
     <ClInclude Include="..\..\..\src\mask\WxEditDialog.h" />
     <ClInclude Include="..\..\..\src\mask\WxStagePage.h" />
     <ClInclude Include="..\..\..\src\mesh\EditPointsMeshView.h" />
@@ -518,10 +517,6 @@
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/ittgraph/</ObjectFileName>
     </ClCompile>
     <ClCompile Include="..\..\..\src\ittgraph\WxStagePage.cpp">
-      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/ittgraph/</ObjectFileName>
-      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/ittgraph/</ObjectFileName>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\ittgraph\WxToolbarPanel.cpp">
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/ittgraph/</ObjectFileName>
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/ittgraph/</ObjectFileName>
     </ClCompile>
