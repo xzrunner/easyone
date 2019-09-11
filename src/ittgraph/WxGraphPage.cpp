@@ -2,8 +2,6 @@
 
 #ifdef MODULE_ITTGRAPH
 
-#include "ittgraph/WxToolbarPanel.h"
-
 #include "frame/Blackboard.h"
 #include "frame/WxStageSubPanel.h"
 
@@ -170,7 +168,7 @@ void WxGraphPage::InitToolbarPanel()
     assert(!m_toolbar);
     auto toolbar_panel = Blackboard::Instance()->GetToolbarPanel();
     m_toolbar = static_cast<itt::WxToolbarPanel*>(toolbar_panel->AddPagePanel([&](wxPanel* parent)->wxPanel* {
-        return new itt::WxToolbarPanel(toolbar_panel, this);
+        return new itt::WxToolbarPanel(toolbar_panel, this, m_stree);
     }, wxVERTICAL));
 }
 
