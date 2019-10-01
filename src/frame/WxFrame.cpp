@@ -66,7 +66,7 @@ void WxFrame::OnNew(wxCommandEvent& event)
         { "RayGraph",    new PageItemData(eone::PAGE_RAY_GRAPH) },
         { "GuiGraph",    new PageItemData(eone::PAGE_GUI_GRAPH) },
         { "PbrGraph",    new PageItemData(eone::PAGE_PBR_GRAPH) },
-        { "IttGraph",    new PageItemData(eone::PAGE_ITT_GRAPH) },
+        { "HdiSop",      new PageItemData(eone::PAGE_HDI_SOP) },
 
 		{ "Script...",   new PageItemData(eone::PAGE_SCRIPT) },
 		{ "Blueprint",   new PageItemData(eone::PAGE_BLUEPRINT) },

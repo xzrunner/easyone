@@ -2,14 +2,14 @@
 
 #include "frame/config.h"
 
-#ifdef MODULE_ITTGRAPH
+#ifdef MODULE_HDI_SOP
 
 #include "frame/WxStagePage.h"
 #include "frame/StagePageType.h"
 
 namespace eone
 {
-namespace ittgraph
+namespace hdi_sop
 {
 
 class WxStagePage : public eone::WxStagePage
@@ -22,7 +22,7 @@ public:
     virtual void Traverse(std::function<bool(const ee0::GameObj&)> func,
         const ee0::VariantSet& variants = ee0::VariantSet(), bool inverse = false) const override;
 
-    virtual int GetPageType() const override { return PAGE_ITT_GRAPH; }
+    virtual int GetPageType() const override { return PAGE_HDI_SOP; }
 
     n0::SceneNodePtr GetGraphObj() const { return m_graph_obj; }
 
@@ -59,4 +59,4 @@ private:
 }
 }
 
-#endif // MODULE_ITTGRAPH
+#endif // MODULE_HDI_SOP

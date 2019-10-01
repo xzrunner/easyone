@@ -2,7 +2,7 @@
 
 #include "frame/config.h"
 
-#ifdef MODULE_ITTGRAPH
+#ifdef MODULE_HDI_SOP
 
 #include "frame/WxStagePage.h"
 
@@ -11,7 +11,7 @@ namespace sopv { class SceneTree; class WxToolbarPanel; }
 
 namespace eone
 {
-namespace ittgraph
+namespace hdi_sop
 {
 
 class WxGraphPage : public eone::WxStagePage
@@ -68,4 +68,4 @@ private:
 }
 }
 
-#endif // MODULE_ITTGRAPH
+#endif // MODULE_HDI_SOP

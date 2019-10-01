@@ -51,9 +51,9 @@
 #ifdef MODULE_PBRGRAPH
 #include "pbrgraph/WxStagePage.h"
 #endif // MODULE_PBRGRAPH
-#ifdef MODULE_ITTGRAPH
-#include "ittgraph/WxStagePage.h"
-#endif // MODULE_ITTGRAPH
+#ifdef MODULE_HDI_SOP
+#include "hdi_sop/WxStagePage.h"
+#endif // MODULE_HDI_SOP
 
 #include <ee0/MsgHelper.h>
 #include <ee0/SubjectMgr.h>
@@ -178,10 +178,10 @@ void Application::LoadFromFile(const std::string& filepath)
             } else if (type == pbrgraph::WxStagePage::PAGE_TYPE) {
                 new_type = PAGE_PBR_GRAPH;
 #endif // MODULE_PBRGRAPH
-#ifdef MODULE_ITTGRAPH
-            } else if (type == ittgraph::WxStagePage::PAGE_TYPE) {
-                new_type = PAGE_ITT_GRAPH;
-#endif // MODULE_ITTGRAPH
+#ifdef MODULE_HDI_SOP
+            } else if (type == hdi_sop::WxStagePage::PAGE_TYPE) {
+                new_type = PAGE_HDI_SOP;
+#endif // MODULE_HDI_SOP
             }
 		} else if (new_type_str == "n2_scale9") {
 			new_type = PAGE_SCALE9;
@@ -404,9 +404,9 @@ wxWindow* Application::CreateStagePanel()
 #ifdef MODULE_PBRGRAPH
     page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_PBR_GRAPH, m_stage);
 #endif // MODULE_PBRGRAPH
-#ifdef MODULE_ITTGRAPH
-    page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_ITT_GRAPH, m_stage);
-#endif // MODULE_ITTGRAPH
+#ifdef MODULE_HDI_SOP
+    page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_HDI_SOP, m_stage);
+#endif // MODULE_HDI_SOP
 
 #ifdef MODULE_QUAKE
 	page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_QUAKE, m_stage);

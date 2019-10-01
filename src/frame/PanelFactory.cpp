@@ -89,9 +89,9 @@
 #ifdef MODULE_PBRGRAPH
 #include "pbrgraph/WxStagePage.h"
 #endif // MODULE_PBRGRAPH
-#ifdef MODULE_ITTGRAPH
-#include "ittgraph/WxStagePage.h"
-#endif // MODULE_ITTGRAPH
+#ifdef MODULE_HDI_SOP
+#include "hdi_sop/WxStagePage.h"
+#endif // MODULE_HDI_SOP
 
 #include <ee0/WxListSelectDlg.h>
 #include <ee0/MsgHelper.h>
@@ -125,10 +125,10 @@
 #ifdef MODULE_RAYGRAPH
 #include <raylab/RayLab.h>
 #endif // MODULE_RAYGRAPH
-#ifdef MODULE_ITTGRAPH
+#ifdef MODULE_HDI_SOP
 #include <sopview/SOPView.h>
 #include <sopview/WxStageCanvas.h>
-#endif // MODULE_ITTGRAPH
+#endif // MODULE_HDI_SOP
 
 #include <boost/filesystem.hpp>
 
@@ -490,11 +490,11 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
     }
         break;
 #endif // MODULE_PBRGRAPH
-#ifdef MODULE_ITTGRAPH
-    case PAGE_ITT_GRAPH:
+#ifdef MODULE_HDI_SOP
+    case PAGE_HDI_SOP:
     {
         auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX2D);
-        page = new ittgraph::WxStagePage(frame, ECS_WORLD_VAR obj);
+        page = new hdi_sop::WxStagePage(frame, ECS_WORLD_VAR obj);
         auto canvas = std::make_shared<sopv::WxStageCanvas>(page, ECS_WORLD_VAR rc);
 
         page->GetImpl().SetCanvas(canvas);
@@ -506,7 +506,7 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
         page->GetImpl().SetEditOP(op);
     }
         break;
-#endif // MODULE_ITTGRAPH
+#endif // MODULE_HDI_SOP
 
 #ifdef MODULE_SCRIPT
 	case PAGE_SCRIPT:

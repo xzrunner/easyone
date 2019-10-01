@@ -1,6 +1,6 @@
-#include "ittgraph/WxGraphPage.h"
+#include "hdi_sop/WxGraphPage.h"
 
-#ifdef MODULE_ITTGRAPH
+#ifdef MODULE_HDI_SOP
 
 #include "frame/Blackboard.h"
 #include "frame/WxStageSubPanel.h"
@@ -35,10 +35,10 @@
 
 namespace eone
 {
-namespace ittgraph
+namespace hdi_sop
 {
 
-const std::string WxGraphPage::PAGE_TYPE = "itt_graph";
+const std::string WxGraphPage::PAGE_TYPE = "hdi_sop";
 
 WxGraphPage::WxGraphPage(wxWindow* parent, const ee0::GameObj& obj)
     : eone::WxStagePage(parent, obj, 0)
@@ -49,9 +49,9 @@ WxGraphPage::WxGraphPage(wxWindow* parent, const ee0::GameObj& obj)
         cnode.SetNode(std::make_shared<sopv::node::Geometry>());
     }
     m_stree->Add(m_obj);
-#ifdef ITT_SCENE_TREE_DUMMY_ROOT
+#ifdef SOPV_SCENE_TREE_DUMMY_ROOT
     m_stree->ToNextLevel(m_obj);
-#endif // ITT_SCENE_TREE_DUMMY_ROOT
+#endif // SOPV_SCENE_TREE_DUMMY_ROOT
 
     static bool inited = false;
     if (!inited) {
@@ -293,4 +293,4 @@ bool WxGraphPage::PathSeekToPrev(const ee0::VariantSet& variants)
 }
 }
 
-#endif // MODULE_ITTGRAPH
+#endif // MODULE_HDI_SOP

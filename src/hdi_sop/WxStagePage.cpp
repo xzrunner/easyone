@@ -1,8 +1,8 @@
-#include "ittgraph/WxStagePage.h"
+#include "hdi_sop/WxStagePage.h"
 
-#ifdef MODULE_ITTGRAPH
+#ifdef MODULE_HDI_SOP
 
-#include "ittgraph/WxGraphPage.h"
+#include "hdi_sop/WxGraphPage.h"
 
 #include "frame/AppStyle.h"
 #include "frame/Blackboard.h"
@@ -41,10 +41,10 @@
 
 namespace eone
 {
-namespace ittgraph
+namespace hdi_sop
 {
 
-const std::string WxStagePage::PAGE_TYPE = "itt_stage";
+const std::string WxStagePage::PAGE_TYPE = "sop_stage";
 
 WxStagePage::WxStagePage(wxWindow* parent, ECS_WORLD_PARAM const ee0::GameObj& obj)
 	: eone::WxStagePage(parent, ECS_WORLD_VAR obj, SHOW_STAGE | SHOW_TOOLBAR | SHOW_STAGE_EXT | STAGE_EXT_RIGHT)
@@ -272,7 +272,7 @@ void WxStagePage::CreateNewPage(const ee0::VariantSet& variants) const
 
     int page_type = -1;
     if (strcmp(type, bp::PAGE_TYPE) == 0) {
-        page_type = PAGE_ITT_GRAPH;
+        page_type = PAGE_HDI_SOP;
     }
     if (page_type >= 0)
     {
@@ -280,7 +280,7 @@ void WxStagePage::CreateNewPage(const ee0::VariantSet& variants) const
         auto stage_page = PanelFactory::CreateStagePage(page_type, stage_panel);
         stage_panel->AddNewPage(stage_page, GetPageName(stage_page->GetPageType()));
 
-        if (page_type == PAGE_ITT_GRAPH)
+        if (page_type == PAGE_HDI_SOP)
         {
             auto var = variants.GetVariant("obj");
             GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: obj");
@@ -293,4 +293,4 @@ void WxStagePage::CreateNewPage(const ee0::VariantSet& variants) const
 }
 }
 
-#endif // MODULE_ITTGRAPH
+#endif // MODULE_HDI_SOP
