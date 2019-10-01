@@ -239,10 +239,10 @@
 	path = ext/pbr
 	url = git@github.com:xzrunner/pbr.git
 [submodule "ext/intention"]
-	path = ext/intention
+	path = ext/sopview
 	url = git@github.com:xzrunner/intention.git
 [submodule "ext/everything"]
-	path = ext/everything
+	path = ext/sop
 	url = git@github.com:xzrunner/everything.git
 [submodule "ext/polymesh3"]
 	path = ext/polymesh3
