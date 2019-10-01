@@ -21,12 +21,12 @@
 #include <blueprint/NodeSelectOP.h>
 #include <blueprint/ArrangeNodeOP.h>
 #include <blueprint/ConnectPinOP.h>
-#include <intention/Intention.h>
-#include <intention/WxStageCanvas.h>
-#include <intention/RightPopupMenu.h>
-#include <intention/NodeSelectOP.h>
-#include <intention/SceneTree.h>
-#include <intention/Serializer.h>
+#include <sopview/SOPView.h>
+#include <sopview/WxStageCanvas.h>
+#include <sopview/RightPopupMenu.h>
+#include <sopview/NodeSelectOP.h>
+#include <sopview/SceneTree.h>
+#include <sopview/Serializer.h>
 
 #include <node0/SceneNode.h>
 #include <node0/CompComplex.h>
@@ -55,7 +55,7 @@ WxStagePage::WxStagePage(wxWindow* parent, ECS_WORLD_PARAM const ee0::GameObj& o
 
     m_messages.push_back(ee0::MSG_STAGE_PAGE_NEW);
 
-    itt::Serializer::Init();
+    sopv::Serializer::Init();
 }
 
 void WxStagePage::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
@@ -143,7 +143,7 @@ void WxStagePage::StoreToJsonExt(const std::string& dir, rapidjson::Value& val,
 {
     auto bp_page = static_cast<WxGraphPage*>(m_graph_panel);
     auto stree = bp_page->GetSceneTree();
-    itt::Serializer::StoreToJson(stree->GetRoot(), dir, val, alloc);
+    sopv::Serializer::StoreToJson(stree->GetRoot(), dir, val, alloc);
 
     val.AddMember("page_type", rapidjson::Value(PAGE_TYPE.c_str(), alloc), alloc);
 }
@@ -157,7 +157,7 @@ void WxStagePage::LoadFromFileExt(const std::string& filepath)
 
     auto bp_page = static_cast<WxGraphPage*>(m_graph_panel);
     auto stree = bp_page->GetSceneTree();
-    itt::Serializer::LoadFromJson(*bp_page, stree->GetRoot(), doc["graph"], dir);
+    sopv::Serializer::LoadFromJson(*bp_page, stree->GetRoot(), doc["graph"], dir);
 
     stree->AfterLoadFromFile();
 }
@@ -172,9 +172,9 @@ void WxStagePage::InitGraphPanel()
         auto panel = new WxGraphPage(parent, m_graph_obj);
         auto& panel_impl = panel->GetImpl();
 
-        panel_impl.SetPopupMenu(std::make_shared<itt::RightPopupMenu>(panel));
+        panel_impl.SetPopupMenu(std::make_shared<sopv::RightPopupMenu>(panel));
 
-        auto preview_canvas = std::static_pointer_cast<itt::WxStageCanvas>(GetImpl().GetCanvas());
+        auto preview_canvas = std::static_pointer_cast<sopv::WxStageCanvas>(GetImpl().GetCanvas());
         preview_canvas->SetSceneTree(panel->GetSceneTree());
         panel->SetPreviewCanvas(preview_canvas);
 
@@ -183,7 +183,7 @@ void WxStagePage::InitGraphPanel()
         );
         panel_impl.SetCanvas(canvas);
 
-        auto select_op = std::make_shared<itt::NodeSelectOP>(canvas->GetCamera(), *panel);
+        auto select_op = std::make_shared<sopv::NodeSelectOP>(canvas->GetCamera(), *panel);
         select_op->SetSceneTree(panel->GetSceneTree());
 
         ee2::ArrangeNodeCfg cfg;
@@ -194,7 +194,7 @@ void WxStagePage::InitGraphPanel()
         auto arrange_op = std::make_shared<bp::ArrangeNodeOP>(
             canvas->GetCamera(), *panel, ECS_WORLD_VAR cfg, select_op);
 
-        auto& nodes = itt::Intention::Instance()->GetAllNodes();
+        auto& nodes = sopv::SOPView::Instance()->GetAllNodes();
         auto op = std::make_shared<bp::ConnectPinOP>(canvas->GetCamera(), *panel, nodes);
         op->SetPrevEditOP(arrange_op);
         panel_impl.SetEditOP(op);

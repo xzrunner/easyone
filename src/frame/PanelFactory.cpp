@@ -126,8 +126,8 @@
 #include <raylab/RayLab.h>
 #endif // MODULE_RAYGRAPH
 #ifdef MODULE_ITTGRAPH
-#include <intention/Intention.h>
-#include <intention/WxStageCanvas.h>
+#include <sopview/SOPView.h>
+#include <sopview/WxStageCanvas.h>
 #endif // MODULE_ITTGRAPH
 
 #include <boost/filesystem.hpp>
@@ -495,7 +495,7 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
     {
         auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX2D);
         page = new ittgraph::WxStagePage(frame, ECS_WORLD_VAR obj);
-        auto canvas = std::make_shared<itt::WxStageCanvas>(page, ECS_WORLD_VAR rc);
+        auto canvas = std::make_shared<sopv::WxStageCanvas>(page, ECS_WORLD_VAR rc);
 
         page->GetImpl().SetCanvas(canvas);
 

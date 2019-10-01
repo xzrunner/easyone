@@ -215,9 +215,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "0.pbd", "..\..\ext\pbd\plat
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3.pbr", "..\..\ext\pbr\platform\msvc\projects\pbr.vcxproj", "{F51C8E88-A274-460E-BD21-F4661A09AE10}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "5.everything", "..\..\ext\everything\platform\msvc\projects\everything.vcxproj", "{A1C0A31A-8FA7-4835-AFD5-77F44C93E040}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "5.sop", "..\..\ext\sop\platform\msvc\projects\sop.vcxproj", "{A1C0A31A-8FA7-4835-AFD5-77F44C93E040}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "7.intention", "..\..\ext\intention\platform\msvc\projects\intention.vcxproj", "{1E9CF0DF-3499-40F5-BD40-630A9B92D41B}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "7.sopview", "..\..\ext\sopview\platform\msvc\projects\sopview.vcxproj", "{1E9CF0DF-3499-40F5-BD40-630A9B92D41B}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "geometry", "geometry", "{ADC6C803-9AFA-4B84-BB35-6F7B302A9AC5}"
 EndProject
@@ -225,7 +225,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "2.polymesh3", "..\..\ext\po
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "2.polymesh2", "..\..\ext\polymesh2\platform\msvc\projects\polymesh2.vcxproj", "{748F2E41-4C8F-4C0F-A90A-26ECA6741A34}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "5.everything_test", "..\..\ext\everything\platform\msvc\projects\everything_test.vcxproj", "{A4C6B0B3-6CC9-47DF-A93D-6A60CDF383C6}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "5.sop_test", "..\..\ext\sop\platform\msvc\projects\sop_test.vcxproj", "{A4C6B0B3-6CC9-47DF-A93D-6A60CDF383C6}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.compiler", "1.compiler", "{7C8CDD05-F5CA-49BF-BE75-E9DBA3B2D3B6}"
 EndProject

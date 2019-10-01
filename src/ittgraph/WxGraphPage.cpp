@@ -16,14 +16,14 @@
 #include <blueprint/NSCompNode.h>
 #include <blueprint/Node.h>
 #include <blueprint/CompNode.h>
-#include <intention/Evaluator.h>
-#include <intention/Everything.h>
-#include <intention/MessageID.h>
-#include <intention/Node.h>
-#include <intention/SceneTree.h>
-#include <intention/Serializer.h>
-#include <intention/RegistNodes.h>
-#include <intention/WxToolbarPanel.h>
+#include <sopview/Evaluator.h>
+#include <sopview/SOP.h>
+#include <sopview/MessageID.h>
+#include <sopview/Node.h>
+#include <sopview/SceneTree.h>
+#include <sopview/Serializer.h>
+#include <sopview/RegistNodes.h>
+#include <sopview/WxToolbarPanel.h>
 
 #include <node0/SceneNode.h>
 #include <node0/CompComplex.h>
@@ -43,10 +43,10 @@ const std::string WxGraphPage::PAGE_TYPE = "itt_graph";
 WxGraphPage::WxGraphPage(wxWindow* parent, const ee0::GameObj& obj)
     : eone::WxStagePage(parent, obj, 0)
 {
-    m_stree = std::make_shared<itt::SceneTree>();
+    m_stree = std::make_shared<sopv::SceneTree>();
     if (!m_obj->HasUniqueComp<bp::CompNode>()) {
         auto& cnode = m_obj->AddUniqueComp<bp::CompNode>();
-        cnode.SetNode(std::make_shared<itt::node::Geometry>());
+        cnode.SetNode(std::make_shared<sopv::node::Geometry>());
     }
     m_stree->Add(m_obj);
 #ifdef ITT_SCENE_TREE_DUMMY_ROOT
@@ -68,9 +68,9 @@ WxGraphPage::WxGraphPage(wxWindow* parent, const ee0::GameObj& obj)
     m_messages.push_back(bp::MSG_BP_CONN_REBUILD);
     m_messages.push_back(bp::MSG_BP_NODE_PROP_CHANGED);
 
-    m_messages.push_back(itt::MSG_CLEAR_NODE_DISPLAY_TAG);
-    m_messages.push_back(itt::MSG_SCENE_ROOT_TO_NEXT_LEVEL);
-    m_messages.push_back(itt::MSG_SCENE_ROOT_SEEK_TO_PREV_LEVEL);
+    m_messages.push_back(sopv::MSG_CLEAR_NODE_DISPLAY_TAG);
+    m_messages.push_back(sopv::MSG_SCENE_ROOT_TO_NEXT_LEVEL);
+    m_messages.push_back(sopv::MSG_SCENE_ROOT_SEEK_TO_PREV_LEVEL);
 
     RegisterAllMessages();
 
@@ -112,14 +112,14 @@ void WxGraphPage::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
         dirty = UpdateNodeProp(variants);
         break;
 
-    case itt::MSG_CLEAR_NODE_DISPLAY_TAG:
+    case sopv::MSG_CLEAR_NODE_DISPLAY_TAG:
         m_stree->ClearNodeDisplayTag();
         dirty = true;
         break;
-    case itt::MSG_SCENE_ROOT_TO_NEXT_LEVEL:
+    case sopv::MSG_SCENE_ROOT_TO_NEXT_LEVEL:
         dirty = ChangeSceneRoot(variants);
         break;
-    case itt::MSG_SCENE_ROOT_SEEK_TO_PREV_LEVEL:
+    case sopv::MSG_SCENE_ROOT_SEEK_TO_PREV_LEVEL:
         dirty = PathSeekToPrev(variants);
         break;
 	}
@@ -167,8 +167,8 @@ void WxGraphPage::InitToolbarPanel()
 {
     assert(!m_toolbar);
     auto toolbar_panel = Blackboard::Instance()->GetToolbarPanel();
-    m_toolbar = static_cast<itt::WxToolbarPanel*>(toolbar_panel->AddPagePanel([&](wxPanel* parent)->wxPanel* {
-        return new itt::WxToolbarPanel(toolbar_panel, this, m_stree);
+    m_toolbar = static_cast<sopv::WxToolbarPanel*>(toolbar_panel->AddPagePanel([&](wxPanel* parent)->wxPanel* {
+        return new sopv::WxToolbarPanel(toolbar_panel, this, m_stree);
     }, wxVERTICAL));
 }
 
