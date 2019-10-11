@@ -157,7 +157,9 @@ void WxStagePage::LoadFromFileExt(const std::string& filepath)
 
     auto bp_page = static_cast<WxGraphPage*>(m_graph_panel);
     auto stree = bp_page->GetSceneTree();
+    stree->EnableSetNodeDisplay(false);
     sopv::Serializer::LoadFromJson(*bp_page, stree->GetRoot(), doc["graph"], dir);
+    stree->EnableSetNodeDisplay(true);
 
     stree->AfterLoadFromFile();
 }
