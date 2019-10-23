@@ -24,6 +24,8 @@
 #include <sopview/Serializer.h>
 #include <sopview/RegistNodes.h>
 #include <sopview/WxToolbarPanel.h>
+#include <sopview/WxStageCanvas.h>
+#include <sopview/WxGeoProperty.h>
 
 #include <node0/SceneNode.h>
 #include <node0/CompComplex.h>
@@ -150,6 +152,22 @@ void WxGraphPage::Traverse(std::function<bool(const ee0::GameObj&)> func,
         // todo ecs
     default:
         m_obj->GetSharedComp<n0::CompComplex>().Traverse(func, inverse);
+    }
+}
+
+void WxGraphPage::SetPreviewCanvas(const std::shared_ptr<ee0::WxStageCanvas>& canvas)
+{
+    m_preview_canvas = canvas;
+
+    if (m_preview_canvas)
+    {
+        assert(m_toolbar);
+        auto prop_view = m_toolbar->GetGeoPropView();
+        prop_view->SetPreviewCanvas(m_preview_canvas);
+
+        auto canvas = std::static_pointer_cast<sopv::WxStageCanvas>(m_preview_canvas);
+        canvas->SetPropView(prop_view);
+        canvas->SetGraphStage(this);
     }
 }
 

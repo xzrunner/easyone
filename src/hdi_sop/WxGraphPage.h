@@ -28,9 +28,7 @@ public:
 
     auto GetSceneTree() const { return m_stree; }
 
-    void SetPreviewCanvas(const std::shared_ptr<ee0::WxStageCanvas>& canvas) {
-        m_preview_canvas = canvas;
-    }
+    void SetPreviewCanvas(const std::shared_ptr<ee0::WxStageCanvas>& canvas);
 
     void SetRootNode(const n0::SceneNodePtr& root) { m_obj = root; }
 
