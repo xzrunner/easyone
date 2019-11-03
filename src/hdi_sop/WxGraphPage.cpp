@@ -241,6 +241,10 @@ bool WxGraphPage::BeforeDeleteNodeConn(const ee0::VariantSet& variants)
 bool WxGraphPage::UpdateNodeProp(const ee0::VariantSet& variants)
 {
     auto var = variants.GetVariant("obj");
+    if (var.m_type == ee0::VT_EMPTY) {
+        return false;
+    }
+
     GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: obj");
     const ee0::GameObj* obj = static_cast<const ee0::GameObj*>(var.m_val.pv);
     GD_ASSERT(obj, "err scene obj");
