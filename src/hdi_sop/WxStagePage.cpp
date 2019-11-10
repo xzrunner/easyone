@@ -27,6 +27,7 @@
 #include <sopview/NodeSelectOP.h>
 #include <sopview/SceneTree.h>
 #include <sopview/Serializer.h>
+#include <sopview/PyLoader.h>
 
 #include <node0/SceneNode.h>
 #include <node0/CompComplex.h>
@@ -150,18 +151,32 @@ void WxStagePage::StoreToJsonExt(const std::string& dir, rapidjson::Value& val,
 
 void WxStagePage::LoadFromFileExt(const std::string& filepath)
 {
-    rapidjson::Document doc;
-    js::RapidJsonHelper::ReadFromFile(filepath.c_str(), doc);
+    auto type = sx::ResFileHelper::Type(filepath);
+    switch (type)
+    {
+    case sx::RES_FILE_JSON:
+    {
+        rapidjson::Document doc;
+        js::RapidJsonHelper::ReadFromFile(filepath.c_str(), doc);
 
-    auto dir = boost::filesystem::path(filepath).parent_path().string();
+        auto dir = boost::filesystem::path(filepath).parent_path().string();
 
-    auto bp_page = static_cast<WxGraphPage*>(m_graph_panel);
-    auto stree = bp_page->GetSceneTree();
-    stree->EnableSetNodeDisplay(false);
-    sopv::Serializer::LoadFromJson(*bp_page, stree->GetRoot(), doc["graph"], dir);
-    stree->EnableSetNodeDisplay(true);
+        auto bp_page = static_cast<WxGraphPage*>(m_graph_panel);
+        auto stree = bp_page->GetSceneTree();
+        stree->EnableSetNodeDisplay(false);
+        sopv::Serializer::LoadFromJson(*bp_page, stree->GetRoot(), doc["graph"], dir);
+        stree->EnableSetNodeDisplay(true);
 
-    stree->AfterLoadFromFile();
+        stree->AfterLoadFromFile();
+    }
+        break;
+    case sx::RES_FILE_PYTHON:
+    {
+        sopv::PyLoader loader;
+        loader.RunFile(filepath);
+    }
+        break;
+    }
 }
 
 void WxStagePage::InitGraphPanel()

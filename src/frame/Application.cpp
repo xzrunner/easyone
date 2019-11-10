@@ -209,6 +209,10 @@ void Application::LoadFromFile(const std::string& filepath)
     case sx::RES_FILE_ASSET:
         new_type = PAGE_SHADER_GRAPH;
         break;
+    case sx::RES_FILE_PYTHON:
+        // todo
+        new_type = PAGE_HDI_SOP;
+        break;
 	case sx::RES_FILE_MAP:
 		new_type = PAGE_QUAKE;
 		break;
