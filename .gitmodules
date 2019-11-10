@@ -250,3 +250,6 @@
 [submodule "ext/vexc"]
 	path = ext/vexc
 	url = git@github.com:xzrunner/vexc.git
+[submodule "ext/dungeon"]
+	path = ext/dungeon
+	url = git@github.com:xzrunner/dungeon.git
