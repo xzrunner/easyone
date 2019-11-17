@@ -46,9 +46,12 @@ WxGraphPage::WxGraphPage(wxWindow* parent, const ee0::GameObj& obj)
     : eone::WxStagePage(parent, obj, 0)
 {
     m_stree = std::make_shared<sopv::SceneTree>();
-    if (!m_obj->HasUniqueComp<bp::CompNode>()) {
+    if (!m_obj->HasUniqueComp<bp::CompNode>())
+    {
         auto& cnode = m_obj->AddUniqueComp<bp::CompNode>();
-        cnode.SetNode(std::make_shared<sopv::node::Geometry>());
+        auto node = std::make_shared<sopv::node::Geometry>();
+        node->SetName("obj");
+        cnode.SetNode(node);
     }
     m_stree->Add(m_obj);
 #ifdef SOPV_SCENE_TREE_DUMMY_ROOT
