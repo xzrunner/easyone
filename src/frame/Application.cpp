@@ -54,6 +54,9 @@
 #ifdef MODULE_HDI_SOP
 #include "hdi_sop/WxStagePage.h"
 #endif // MODULE_HDI_SOP
+#ifdef MODULE_CITY
+#include "city/WxStagePage.h"
+#endif // MOUDLE_CITY
 
 #include <ee0/MsgHelper.h>
 #include <ee0/SubjectMgr.h>
@@ -182,6 +185,10 @@ void Application::LoadFromFile(const std::string& filepath)
             } else if (type == hdi_sop::WxStagePage::PAGE_TYPE) {
                 new_type = PAGE_HDI_SOP;
 #endif // MODULE_HDI_SOP
+#ifdef MODULE_CITY
+            } else if (type == city::WxStagePage::PAGE_TYPE) {
+                new_type = PAGE_CITY;
+#endif // MODULE_CITY
             }
 		} else if (new_type_str == "n2_scale9") {
 			new_type = PAGE_SCALE9;
@@ -410,6 +417,9 @@ wxWindow* Application::CreateStagePanel()
 #endif // MODULE_PBRGRAPH
 #ifdef MODULE_HDI_SOP
     page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_HDI_SOP, m_stage);
+#endif // MODULE_HDI_SOP
+#ifdef MODULE_CITY
+    page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_CITY, m_stage);
 #endif // MODULE_HDI_SOP
 
 #ifdef MODULE_QUAKE

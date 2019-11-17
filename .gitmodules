@@ -253,3 +253,9 @@
 [submodule "ext/dungeon"]
 	path = ext/dungeon
 	url = git@github.com:xzrunner/dungeon.git
+[submodule "ext/cgaview"]
+	path = ext/cgaview
+	url = git@github.com:xzrunner/cgaview.git
+[submodule "ext/cga"]
+	path = ext/cga
+	url = git@github.com:xzrunner/cga.git

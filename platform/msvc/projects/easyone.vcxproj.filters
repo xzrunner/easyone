@@ -208,6 +208,9 @@
     <Filter Include="38.hdi_sop\graph">
       <UniqueIdentifier>{5d7c3621-e939-47ea-a92d-36305bb3a01c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="39.city">
+      <UniqueIdentifier>{e325d5ab-d25a-402a-b72e-14b9d74b6d03}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\frame\main.h">
@@ -510,6 +513,12 @@
     <ClInclude Include="..\..\..\src\hdi_sop\WxStagePage.h">
       <Filter>38.hdi_sop\stage</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\city\WxGraphPage.h">
+      <Filter>39.city</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\city\WxStagePage.h">
+      <Filter>39.city</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\frame\main.cpp">
@@ -773,12 +782,23 @@
     <ClCompile Include="..\..\..\src\pbrgraph\WxToolbarPanel.cpp">
       <Filter>37.pbrgraph\toolbar</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\src\chart\WxStagePage.cpp">
+      <Filter>18.chart</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\chart\DataAnalysis.cpp">
+      <Filter>18.chart</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\hdi_sop\WxGraphPage.cpp">
       <Filter>38.hdi_sop\graph</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\hdi_sop\WxStagePage.cpp">
       <Filter>38.hdi_sop\stage</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\city\WxGraphPage.cpp">
+      <Filter>39.city</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\city\WxStagePage.cpp">
+      <Filter>39.city</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

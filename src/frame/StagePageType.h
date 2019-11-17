@@ -30,6 +30,7 @@ enum StagePageType
     PAGE_GUI_GRAPH,
     PAGE_PBR_GRAPH,
     PAGE_HDI_SOP,
+    PAGE_CITY,
 
 	PAGE_SCRIPT,
 	PAGE_BLUEPRINT,
@@ -80,6 +81,8 @@ std::string GetPageName(int type)
         return "PbrGraph";
     case PAGE_HDI_SOP:
         return "HdiSop";
+    case PAGE_CITY:
+        return "City";
 
 	case PAGE_SCRIPT:
 		return "Script";

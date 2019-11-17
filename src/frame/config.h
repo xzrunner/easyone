@@ -21,7 +21,8 @@
 //#define MODULE_RAYGRAPH
 //#define MODULE_GUIGRAPH
 //#define MODULE_PBRGRAPH
-#define MODULE_HDI_SOP
+//#define MODULE_HDI_SOP
+#define MODULE_CITY
 //#define MODULE_SCRIPT
 //#define MODULE_BLUEPRINT
 //#define MODULE_QUAKE

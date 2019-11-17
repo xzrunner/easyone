@@ -235,6 +235,12 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "1.vexc_test", "..\..\ext\ve
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "1.dungeon", "..\..\ext\dungeon\platform\msvc\projects\dungeon.vcxproj", "{B5E9DF4C-1827-470C-B4EB-0BA1B2DC37BE}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "5.cga", "..\..\ext\cga\platform\msvc\projects\cga.vcxproj", "{304BFD0C-2979-4A12-8449-C0F35A518F34}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "houdini", "houdini", "{D172AE51-2AA4-4C11-9A72-A9AFC5528CCE}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "7.cgaview", "..\..\ext\cgaview\platform\msvc\projects\cgaview.vcxproj", "{9B8ADC4D-126B-4569-B374-AC81FB76D05C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
