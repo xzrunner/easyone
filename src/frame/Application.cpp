@@ -54,6 +54,12 @@
 #ifdef MODULE_HDI_SOP
 #include "hdi_sop/WxStagePage.h"
 #endif // MODULE_HDI_SOP
+#ifdef MODULE_HDI_VOP
+#include "hdi_vop/WxStagePage.h"
+#endif // MODULE_HDI_VOP
+#ifdef MODULE_HDI_SOP
+#include "hdi_sop/WxStagePage.h"
+#endif // MODULE_HDI_SOP
 #ifdef MODULE_CITY
 #include "city/WxStagePage.h"
 #endif // MOUDLE_CITY
@@ -185,6 +191,10 @@ void Application::LoadFromFile(const std::string& filepath)
             } else if (type == hdi_sop::WxStagePage::PAGE_TYPE) {
                 new_type = PAGE_HDI_SOP;
 #endif // MODULE_HDI_SOP
+#ifdef MODULE_HDI_VOP
+            } else if (type == hdi_vop::WxStagePage::PAGE_TYPE) {
+                new_type = PAGE_HDI_VOP;
+#endif // MODULE_HDI_VOP
 #ifdef MODULE_CITY
             } else if (type == city::WxStagePage::PAGE_TYPE) {
                 new_type = PAGE_CITY;
@@ -418,9 +428,12 @@ wxWindow* Application::CreateStagePanel()
 #ifdef MODULE_HDI_SOP
     page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_HDI_SOP, m_stage);
 #endif // MODULE_HDI_SOP
+#ifdef MODULE_HDI_VOP
+    page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_HDI_VOP, m_stage);
+#endif // MODULE_HDI_VOP
 #ifdef MODULE_CITY
     page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_CITY, m_stage);
-#endif // MODULE_HDI_SOP
+#endif // MODULE_CITY
 
 #ifdef MODULE_QUAKE
 	page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_QUAKE, m_stage);

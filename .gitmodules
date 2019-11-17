@@ -259,3 +259,9 @@
 [submodule "ext/cga"]
 	path = ext/cga
 	url = git@github.com:xzrunner/cga.git
+[submodule "ext/vopview"]
+	path = ext/vopview
+	url = git@github.com:xzrunner/vopview.git
+[submodule "ext/vop"]
+	path = ext/vop
+	url = git@github.com:xzrunner/vop.git

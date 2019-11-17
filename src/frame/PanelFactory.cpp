@@ -92,6 +92,9 @@
 #ifdef MODULE_HDI_SOP
 #include "hdi_sop/WxStagePage.h"
 #endif // MODULE_HDI_SOP
+#ifdef MODULE_HDI_VOP
+#include "hdi_vop/WxStagePage.h"
+#endif // MODULE_HDI_VOP
 #ifdef MODULE_CITY
 #include "city/WxStagePage.h"
 #endif // MODULE_CITY
@@ -132,6 +135,10 @@
 #include <sopview/SOPView.h>
 #include <sopview/WxStageCanvas.h>
 #endif // MODULE_HDI_SOP
+#ifdef MODULE_HDI_VOP
+#include <vopview/VOPView.h>
+#include <vopview/WxStageCanvas.h>
+#endif // MODULE_HDI_VOP
 #ifdef MODULE_CITY
 #include <cgaview/CGAView.h>
 #include <cgaview/WxStageCanvas.h>
@@ -514,6 +521,23 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
     }
         break;
 #endif // MODULE_HDI_SOP
+#ifdef MODULE_HDI_VOP
+    case PAGE_HDI_VOP:
+    {
+        auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX2D);
+        page = new hdi_vop::WxStagePage(frame, ECS_WORLD_VAR obj);
+        auto canvas = std::make_shared<vopv::WxStageCanvas>(page, ECS_WORLD_VAR rc);
+
+        page->GetImpl().SetCanvas(canvas);
+
+        auto op = std::make_shared<ee3::NodeArrangeOP>(
+            canvas->GetCamera(), *page, canvas->GetViewport()
+        );
+
+        page->GetImpl().SetEditOP(op);
+    }
+        break;
+#endif // MODULE_HDI_VOP
 #ifdef MODULE_CITY
     case PAGE_CITY:
     {

@@ -202,14 +202,11 @@
     <Filter Include="38.hdi_sop">
       <UniqueIdentifier>{4071076e-ce32-4c1f-b9f4-893b04a94385}</UniqueIdentifier>
     </Filter>
-    <Filter Include="38.hdi_sop\stage">
-      <UniqueIdentifier>{9e5f6349-33ad-4adf-81ce-1d933b3374bb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="38.hdi_sop\graph">
-      <UniqueIdentifier>{5d7c3621-e939-47ea-a92d-36305bb3a01c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="39.city">
       <UniqueIdentifier>{e325d5ab-d25a-402a-b72e-14b9d74b6d03}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="38.hdi_vop">
+      <UniqueIdentifier>{43e59f9b-dd76-49f3-ba43-0b0a68a0557f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -507,17 +504,23 @@
     <ClInclude Include="..\..\..\src\chart\DataAnalysis.h">
       <Filter>18.chart</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\hdi_sop\WxGraphPage.h">
-      <Filter>38.hdi_sop\graph</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\hdi_sop\WxStagePage.h">
-      <Filter>38.hdi_sop\stage</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\city\WxGraphPage.h">
       <Filter>39.city</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\city\WxStagePage.h">
       <Filter>39.city</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\hdi_vop\WxGraphPage.h">
+      <Filter>38.hdi_vop</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\hdi_vop\WxStagePage.h">
+      <Filter>38.hdi_vop</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\hdi_sop\WxStagePage.h">
+      <Filter>38.hdi_sop</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\hdi_sop\WxGraphPage.h">
+      <Filter>38.hdi_sop</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -788,17 +791,23 @@
     <ClCompile Include="..\..\..\src\chart\DataAnalysis.cpp">
       <Filter>18.chart</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\hdi_sop\WxGraphPage.cpp">
-      <Filter>38.hdi_sop\graph</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\hdi_sop\WxStagePage.cpp">
-      <Filter>38.hdi_sop\stage</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\city\WxGraphPage.cpp">
       <Filter>39.city</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\city\WxStagePage.cpp">
       <Filter>39.city</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\hdi_vop\WxGraphPage.cpp">
+      <Filter>38.hdi_vop</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\hdi_vop\WxStagePage.cpp">
+      <Filter>38.hdi_vop</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\hdi_sop\WxStagePage.cpp">
+      <Filter>38.hdi_sop</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\hdi_sop\WxGraphPage.cpp">
+      <Filter>38.hdi_sop</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
