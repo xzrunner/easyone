@@ -173,8 +173,7 @@ void WxStagePage::LoadFromFileExt(const std::string& filepath)
     case sx::RES_FILE_PYTHON:
     {
         auto bp_page = static_cast<WxGraphPage*>(m_graph_panel);
-        auto stree = bp_page->GetSceneTree();
-        sopv::PyLoader loader(bp_page->GetSubjectMgr(), stree->GetCurrEval());
+        sopv::PyLoader loader(bp_page->GetSceneTree());
         loader.RunFile(filepath);
     }
         break;
