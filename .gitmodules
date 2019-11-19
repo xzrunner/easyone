@@ -265,3 +265,6 @@
 [submodule "ext/vop"]
 	path = ext/vop
 	url = git@github.com:xzrunner/vop.git
+[submodule "ext/hdiop"]
+	path = ext/hdiop
+	url = git@github.com:xzrunner/hdiop.git
