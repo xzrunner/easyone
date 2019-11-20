@@ -17,7 +17,6 @@
 #include <blueprint/Node.h>
 #include <blueprint/CompNode.h>
 #include <sopview/Evaluator.h>
-#include <sopview/SOP.h>
 #include <sopview/MessageID.h>
 #include <sopview/Node.h>
 #include <sopview/SceneTree.h>
