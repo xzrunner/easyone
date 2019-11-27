@@ -201,20 +201,20 @@ void WxStagePage::InitGraphPanel()
         );
         panel_impl.SetCanvas(canvas);
 
-        auto select_op = std::make_shared<sopv::NodeSelectOP>(canvas->GetCamera(), *panel);
-        select_op->SetSceneTree(panel->GetSceneTree());
+        auto select_op_sop = std::make_shared<sopv::NodeSelectOP>(canvas->GetCamera(), *panel);
+        select_op_sop->SetSceneTree(panel->GetSceneTree());
 
         ee2::ArrangeNodeCfg cfg;
         cfg.is_auto_align_open = false;
         cfg.is_deform_open = false;
         cfg.is_offset_open = false;
         cfg.is_rotate_open = false;
-        auto arrange_op = std::make_shared<bp::ArrangeNodeOP>(
-            canvas->GetCamera(), *panel, ECS_WORLD_VAR cfg, select_op);
+        auto arrange_op_sop = std::make_shared<bp::ArrangeNodeOP>(
+            canvas->GetCamera(), *panel, ECS_WORLD_VAR cfg, select_op_sop);
 
         auto& nodes = sopv::SOPView::Instance()->GetAllNodes();
         auto op = std::make_shared<bp::ConnectPinOP>(canvas->GetCamera(), *panel, nodes);
-        op->SetPrevEditOP(arrange_op);
+        op->SetPrevEditOP(arrange_op_sop);
         panel_impl.SetEditOP(op);
 
         return panel;

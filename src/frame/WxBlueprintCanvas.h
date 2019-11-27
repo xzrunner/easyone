@@ -8,7 +8,7 @@ namespace eone
 class WxBlueprintCanvas : public WxStageCanvas2D
 {
 public:
-	WxBlueprintCanvas(eone::WxStagePage* stage, const ee0::RenderContext& rc);
+	WxBlueprintCanvas(ee0::WxStagePage* stage, const ee0::RenderContext& rc);
 
 protected:
 	virtual bool OnUpdate() override;

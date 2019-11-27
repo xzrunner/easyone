@@ -13,7 +13,7 @@
 namespace eone
 {
 
-WxBlueprintCanvas::WxBlueprintCanvas(eone::WxStagePage* stage, const ee0::RenderContext& rc)
+WxBlueprintCanvas::WxBlueprintCanvas(ee0::WxStagePage* stage, const ee0::RenderContext& rc)
 	: WxStageCanvas2D(stage, rc)
 {
 }

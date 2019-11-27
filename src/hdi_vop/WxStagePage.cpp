@@ -136,29 +136,29 @@ const n0::NodeComp& WxStagePage::GetEditedObjComp() const
 void WxStagePage::StoreToJsonExt(const std::string& dir, rapidjson::Value& val,
                                  rapidjson::MemoryPoolAllocator<>& alloc) const
 {
-    auto bp_page = static_cast<WxGraphPage*>(m_graph_panel);
-    vopv::Serializer::StoreToJson(bp_page->GetEditedObj(), dir, val, alloc);
+    //auto bp_page = static_cast<WxGraphPage*>(m_graph_panel);
+    //vopv::Serializer::StoreToJson(bp_page->GetEditedObj(), dir, val, alloc);
 
-    val.AddMember("page_type", rapidjson::Value(PAGE_TYPE.c_str(), alloc), alloc);
+    //val.AddMember("page_type", rapidjson::Value(PAGE_TYPE.c_str(), alloc), alloc);
 }
 
 void WxStagePage::LoadFromFileExt(const std::string& filepath)
 {
-    auto type = sx::ResFileHelper::Type(filepath);
-    switch (type)
-    {
-    case sx::RES_FILE_JSON:
-    {
-        rapidjson::Document doc;
-        js::RapidJsonHelper::ReadFromFile(filepath.c_str(), doc);
+    //auto type = sx::ResFileHelper::Type(filepath);
+    //switch (type)
+    //{
+    //case sx::RES_FILE_JSON:
+    //{
+    //    rapidjson::Document doc;
+    //    js::RapidJsonHelper::ReadFromFile(filepath.c_str(), doc);
 
-        auto dir = boost::filesystem::path(filepath).parent_path().string();
+    //    auto dir = boost::filesystem::path(filepath).parent_path().string();
 
-        auto bp_page = static_cast<WxGraphPage*>(m_graph_panel);
-        vopv::Serializer::LoadFromJson(*bp_page, bp_page->GetEditedObj(), doc["graph"], dir);
-    }
-        break;
-    }
+    //    auto bp_page = static_cast<WxGraphPage*>(m_graph_panel);
+    //    vopv::Serializer::LoadFromJson(*bp_page, bp_page->GetEditedObj(), doc["graph"], dir);
+    //}
+    //    break;
+    //}
 }
 
 void WxStagePage::InitGraphPanel()

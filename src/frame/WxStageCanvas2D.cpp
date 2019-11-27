@@ -20,7 +20,7 @@
 namespace eone
 {
 
-WxStageCanvas2D::WxStageCanvas2D(WxStagePage* stage, ECS_WORLD_PARAM
+WxStageCanvas2D::WxStageCanvas2D(ee0::WxStagePage* stage, ECS_WORLD_PARAM
 	                             const ee0::RenderContext& rc)
 	: ee2::WxStageCanvas(stage, ECS_WORLD_VAR &rc)
 {
