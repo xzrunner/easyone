@@ -188,34 +188,13 @@ void WxStagePage::InitGraphPanel()
     m_graph_panel = stage_ext_panel->AddPagePanel([&](wxPanel* parent)->wxPanel*
     {
         auto panel = new WxGraphPage(parent, m_graph_obj);
-        auto& panel_impl = panel->GetImpl();
-
-        panel_impl.SetPopupMenu(std::make_shared<sopv::RightPopupMenu>(panel));
-
-        auto preview_canvas = std::static_pointer_cast<sopv::WxStageCanvas>(GetImpl().GetCanvas());
-        preview_canvas->SetSceneTree(panel->GetSceneTree());
-        panel->SetPreviewCanvas(preview_canvas);
 
         auto canvas = std::make_shared<WxBlueprintCanvas>(
             panel, Blackboard::Instance()->GetRenderContext()
         );
-        panel_impl.SetCanvas(canvas);
 
-        auto select_op_sop = std::make_shared<sopv::NodeSelectOP>(canvas->GetCamera(), *panel);
-        select_op_sop->SetSceneTree(panel->GetSceneTree());
-
-        ee2::ArrangeNodeCfg cfg;
-        cfg.is_auto_align_open = false;
-        cfg.is_deform_open = false;
-        cfg.is_offset_open = false;
-        cfg.is_rotate_open = false;
-        auto arrange_op_sop = std::make_shared<bp::ArrangeNodeOP>(
-            canvas->GetCamera(), *panel, ECS_WORLD_VAR cfg, select_op_sop);
-
-        auto& nodes = sopv::SOPView::Instance()->GetAllNodes();
-        auto op = std::make_shared<bp::ConnectPinOP>(canvas->GetCamera(), *panel, nodes);
-        op->SetPrevEditOP(arrange_op_sop);
-        panel_impl.SetEditOP(op);
+        auto preview_canvas = std::static_pointer_cast<sopv::WxStageCanvas>(GetImpl().GetCanvas());
+        panel->SetupCanvas(canvas, preview_canvas);
 
         return panel;
     }, wxVERTICAL);
