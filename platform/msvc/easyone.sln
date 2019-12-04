@@ -251,7 +251,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "houdini", "houdini", "{27C5
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "7.vopview", "..\..\ext\vopview\platform\msvc\projects\vopview.vcxproj", "{5944EB1A-E633-4156-8495-D0B59DE9A5BD}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "5.hdiop", "..\..\ext\hdiop\platform\msvc\projects\hdiop.vcxproj", "{0120800F-D01F-4106-BD08-64FBCDFF9EBD}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "5.dag", "..\..\ext\dag\platform\msvc\projects\dag.vcxproj", "{0120800F-D01F-4106-BD08-64FBCDFF9EBD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
