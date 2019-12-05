@@ -51,6 +51,8 @@ WxStagePage::WxStagePage(wxWindow* parent, ECS_WORLD_PARAM const ee0::GameObj& o
 	m_messages.push_back(ee0::MSG_SCENE_NODE_CLEAR);
 
     m_messages.push_back(ee0::MSG_STAGE_PAGE_NEW);
+
+    cgav::Serializer::Init();
 }
 
 void WxStagePage::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
@@ -137,7 +139,7 @@ void WxStagePage::StoreToJsonExt(const std::string& dir, rapidjson::Value& val,
                                  rapidjson::MemoryPoolAllocator<>& alloc) const
 {
     auto bp_page = static_cast<WxGraphPage*>(m_graph_panel);
-    cgav::Serializer::StoreToJson(bp_page->GetEditedObj(), dir, val, alloc);
+    cgav::Serializer::StoreToJson(bp_page->GetRootNode(), dir, val, alloc);
 
     val.AddMember("page_type", rapidjson::Value(PAGE_TYPE.c_str(), alloc), alloc);
 }
@@ -155,7 +157,7 @@ void WxStagePage::LoadFromFileExt(const std::string& filepath)
         auto dir = boost::filesystem::path(filepath).parent_path().string();
 
         auto bp_page = static_cast<WxGraphPage*>(m_graph_panel);
-        cgav::Serializer::LoadFromJson(*bp_page, bp_page->GetEditedObj(), doc["graph"], dir);
+        cgav::Serializer::LoadFromJson(*bp_page, bp_page->GetRootNode(), doc["graph"], dir);
     }
         break;
     }
