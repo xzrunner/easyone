@@ -50,6 +50,10 @@
 #include "shape3d/WxStagePage.h"
 #include "shape3d/WxStageCanvas.h"
 #endif // MODULE_SHAPE3D
+#ifdef MODULE_CAD
+#include "cad/WxStagePage.h"
+#include "cad/WxStageCanvas.h"
+#endif // MODULE_CAD
 #ifdef MODULE_MODEL
 #include "model/WxStagePage.h"
 #include "model/WxStageCanvas.h"
@@ -298,6 +302,19 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
 	}
 		break;
 #endif // MODULE_SHAPE3D
+#ifdef MODULE_CAD
+	case PAGE_CAD:
+	{
+		auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX2D);
+
+        auto cad_page = new cad::WxStagePage(frame, library, ECS_WORLD_VAR obj);
+        page = cad_page;
+
+		auto canvas = std::make_shared<cad::WxStageCanvas>(page, rc, cad_page->GetEditView());
+		page->GetImpl().SetCanvas(canvas);
+	}
+		break;
+#endif // MODULE_CAD
 
 #ifdef MODULE_MODEL
 	case PAGE_MODEL:

@@ -19,6 +19,7 @@ enum StagePageType
 	PAGE_PARTICLE3D,
 	PAGE_SHAPE2D,
 	PAGE_SHAPE3D,
+    PAGE_CAD,
 
 	PAGE_MODEL,
 	PAGE_ANIM3,
@@ -63,6 +64,8 @@ std::string GetPageName(int type)
 		return "Shape2D";
 	case PAGE_SHAPE3D:
 		return "Shape3D";
+    case PAGE_CAD:
+        return "CAD";
 
 	case PAGE_MODEL:
 		return "Model";

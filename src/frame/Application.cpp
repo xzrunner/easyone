@@ -29,6 +29,9 @@
 #ifdef MODULE_SHAPE3D
 #include "shape3d/WxStagePage.h"
 #endif MODULE_SHAPE3D
+#ifdef MODULE_CAD
+#include "cad/WxStagePage.h"
+#endif MODULE_CAD
 #ifdef MODULE_QUAKE
 #include "quake/WxStagePage.h"
 #endif // MODULE_QUAKE
@@ -155,6 +158,10 @@ void Application::LoadFromFile(const std::string& filepath)
 			} else if (type == shape3d::WxStagePage::PAGE_TYPE) {
 				new_type = PAGE_SHAPE3D;
 #endif // MODULE_SHAPE3D
+#ifdef MODULE_CAD
+			} else if (type == cad::WxStagePage::PAGE_TYPE) {
+				new_type = PAGE_CAD;
+#endif // MODULE_CAD
 #ifdef MODULE_QUAKE
 			} else if (type == quake::WxStagePage::PAGE_TYPE) {
 				new_type = PAGE_QUAKE;
@@ -397,6 +404,9 @@ wxWindow* Application::CreateStagePanel()
 #ifdef MODULE_MESH
 	page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_MESH, m_stage);
 #endif // MODULE_MESH
+#ifdef MODULE_CAD
+	page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_CAD, m_stage);
+#endif // MODULE_CAD
 
 #ifdef MODULE_MODEL
 	page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_MODEL, m_stage);

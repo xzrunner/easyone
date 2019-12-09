@@ -57,6 +57,7 @@ void WxFrame::OnNew(wxCommandEvent& event)
 		{ "Particle3d",  new PageItemData(eone::PAGE_PARTICLE3D) },
 		{ "Shape2d",     new PageItemData(eone::PAGE_SHAPE2D) },
 		{ "Shape3d",     new PageItemData(eone::PAGE_SHAPE3D) },
+        { "CAD",         new PageItemData(eone::PAGE_CAD) },
 
 		{ "Scale9",      new PageItemData(eone::PAGE_SCALE9) },
 

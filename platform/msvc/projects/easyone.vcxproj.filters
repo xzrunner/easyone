@@ -208,6 +208,9 @@
     <Filter Include="38.hdi_vop">
       <UniqueIdentifier>{43e59f9b-dd76-49f3-ba43-0b0a68a0557f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="18.cad">
+      <UniqueIdentifier>{7bf87204-fae7-4ad2-89b3-f57e02f9068b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\frame\main.h">
@@ -498,12 +501,6 @@
     <ClInclude Include="..\..\..\src\pbrgraph\WxToolbarPanel.h">
       <Filter>37.pbrgraph\toolbar</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\chart\WxStagePage.h">
-      <Filter>18.chart</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\chart\DataAnalysis.h">
-      <Filter>18.chart</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\city\WxGraphPage.h">
       <Filter>39.city</Filter>
     </ClInclude>
@@ -521,6 +518,12 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\hdi_sop\WxGraphPage.h">
       <Filter>38.hdi_sop</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cad\WxStageCanvas.h">
+      <Filter>18.cad</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\cad\WxStagePage.h">
+      <Filter>18.cad</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -785,12 +788,6 @@
     <ClCompile Include="..\..\..\src\pbrgraph\WxToolbarPanel.cpp">
       <Filter>37.pbrgraph\toolbar</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\chart\WxStagePage.cpp">
-      <Filter>18.chart</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\chart\DataAnalysis.cpp">
-      <Filter>18.chart</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\city\WxGraphPage.cpp">
       <Filter>39.city</Filter>
     </ClCompile>
@@ -808,6 +805,12 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\hdi_sop\WxGraphPage.cpp">
       <Filter>38.hdi_sop</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cad\WxStageCanvas.cpp">
+      <Filter>18.cad</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\cad\WxStagePage.cpp">
+      <Filter>18.cad</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
