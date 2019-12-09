@@ -268,3 +268,12 @@
 [submodule "ext/hdiop"]
 	path = ext/dag
 	url = git@github.com:xzrunner/dag.git
+[submodule "ext/constraints2"]
+	path = ext/constraints2
+	url = git@github.com:xzrunner/constraints2.git
+[submodule "ext/sketch"]
+	path = ext/sketch
+	url = git@github.com:xzrunner/sketch.git
+[submodule "ext/layout2"]
+	path = ext/layout2
+	url = git@github.com:xzrunner/layout2.git
