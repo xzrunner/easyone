@@ -196,15 +196,15 @@
 [submodule "ext/easygui"]
 	path = ext/easygui
 	url = git@github.com:xzrunner/easygui.git
-[submodule "ext/drawing2"]
-	path = ext/drawing2
-	url = git@github.com:xzrunner/drawing2.git
+[submodule "ext/draft2"]
+	path = ext/draft2
+	url = git@github.com:xzrunner/draft2.git
 [submodule "ext/meshlab"]
 	path = ext/meshlab
 	url = git@github.com:xzrunner/meshlab.git
-[submodule "ext/drawing3"]
-	path = ext/drawing3
-	url = git@github.com:xzrunner/drawing3.git
+[submodule "ext/draft3"]
+	path = ext/draft3
+	url = git@github.com:xzrunner/draft3.git
 [submodule "ext/volume"]
 	path = ext/volume
 	url = git@github.com:xzrunner/volume.git
