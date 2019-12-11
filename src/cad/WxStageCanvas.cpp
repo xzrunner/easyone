@@ -19,7 +19,7 @@
 #include <geoshape/Rect.h>
 #include <geoshape/Circle.h>
 #include <geoshape/Polyline2D.h>
-#include <drawing2/RenderStyle.h>
+#include <draft2/RenderStyle.h>
 #include <sketch/EditShapeOP.h>
 
 namespace eone
@@ -30,14 +30,14 @@ namespace cad
 WxStageCanvas::WxStageCanvas(eone::WxStagePage* stage,
 	                         ECS_WORLD_PARAM
 	                         const ee0::RenderContext& rc,
-                             dw2::EditView& edit_view)
+                             draft2::EditView& edit_view)
 	: ee2::WxStageCanvas(stage, ECS_WORLD_VAR &rc)
 {
 	InitGui();
 
 	auto cam_op = std::make_shared<ee2::CamControlOP>(GetCamera(), stage->GetSubjectMgr());
 	m_edit_shape_op = std::make_shared<sketch::EditShapeOP>(
-		*stage, GetCamera(), edit_view, dw2::NODE_RADIUS, rttr::type::get<gs::Point2D>().get_id()
+		*stage, GetCamera(), edit_view, draft2::NODE_RADIUS, rttr::type::get<gs::Point2D>().get_id()
 	);
 	m_edit_shape_op->SetPrevEditOP(cam_op);
 	m_stage->GetImpl().SetEditOP(m_edit_shape_op);

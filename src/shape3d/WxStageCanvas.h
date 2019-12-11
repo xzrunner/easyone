@@ -20,7 +20,7 @@ class WxStageCanvas : public WxStageCanvas3D
 {
 public:
 	WxStageCanvas(eone::WxStagePage* stage, ECS_WORLD_PARAM
-		const ee0::RenderContext& rc, dw3::EditOpMgr& op_mgr);
+		const ee0::RenderContext& rc, draft3::EditOpMgr& op_mgr);
 
 protected:
     virtual void DrawBackground2D() const override;
@@ -34,7 +34,7 @@ private:
 	void DrawGUI() const;
 
 private:
-	dw3::EditOpMgr& m_op_mgr;
+	draft3::EditOpMgr& m_op_mgr;
 
 }; // WxStageCanvas
 

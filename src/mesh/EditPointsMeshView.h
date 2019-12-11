@@ -6,7 +6,7 @@
 
 #include <node0/typedef.h>
 
-#include <drawing2/EditView.h>
+#include <draft2/EditView.h>
 
 namespace n2 { class CompMesh; }
 
@@ -15,7 +15,7 @@ namespace eone
 namespace mesh
 {
 
-class EditPointsMeshView : public dw2::EditView
+class EditPointsMeshView : public draft2::EditView
 {
 public:
 	enum class Mode

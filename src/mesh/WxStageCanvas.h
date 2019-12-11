@@ -38,7 +38,7 @@ private:
 
 	mutable sm::ivec2 m_last_screen_sz;
 
-	std::shared_ptr<dw2::EditShapeOP> m_edit_shape_op = nullptr;
+	std::shared_ptr<draft2::EditShapeOP> m_edit_shape_op = nullptr;
 
 	mutable uint32_t m_last_shape_type = 0;
 

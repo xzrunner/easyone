@@ -24,7 +24,7 @@ class WxStageCanvas : public ee2::WxStageCanvas
 public:
 	WxStageCanvas(eone::WxStagePage* stage,
 		ECS_WORLD_PARAM const ee0::RenderContext& rc,
-        dw2::EditView& edit_view);
+        draft2::EditView& edit_view);
 
 protected:
 	virtual void OnDrawGUI() const override;

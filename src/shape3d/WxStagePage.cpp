@@ -99,7 +99,7 @@ void WxStagePage::Traverse(std::function<bool(const ee0::GameObj&)> func,
 void WxStagePage::InitEditOP(const std::shared_ptr<pt0::Camera>& cam, const pt3::Viewport& vp)
 {
 	m_editor_mgr.Init(m_cam_mgr, cam, vp);
-	m_editor_mgr.SetCurrOp(dw3::EditOpMgr::Operator::DRAW);
+	m_editor_mgr.SetCurrOp(draft3::EditOpMgr::Operator::DRAW);
 }
 
 void WxStagePage::InitViewports()

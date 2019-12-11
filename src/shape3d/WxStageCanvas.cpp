@@ -9,11 +9,11 @@
 #include <painting3/PerspCam.h>
 #include <painting3/Blackboard.h>
 #include <painting3/WindowContext.h>
-#include <drawing3/DrawFaceShader.h>
-#include <drawing3/DrawEdgeShader.h>
-#include <drawing3/face.glsl>
-#include <drawing3/edge.glsl>
-#include <drawing3/EditOpMgr.h>
+#include <draft3/DrawFaceShader.h>
+#include <draft3/DrawEdgeShader.h>
+#include <draft3/face.glsl>
+#include <draft3/edge.glsl>
+#include <draft3/EditOpMgr.h>
 #include <node3/RenderSystem.h>
 #include <facade/RenderContext.h>
 #include <facade/Facade.h>
@@ -34,7 +34,7 @@ namespace shape3d
 {
 
 WxStageCanvas::WxStageCanvas(eone::WxStagePage* stage, ECS_WORLD_PARAM
-	                         const ee0::RenderContext& rc, dw3::EditOpMgr& op_mgr)
+	                         const ee0::RenderContext& rc, draft3::EditOpMgr& op_mgr)
 	: WxStageCanvas3D(stage, ECS_WORLD_VAR rc, true)
 	, m_op_mgr(op_mgr)
 {
@@ -88,9 +88,9 @@ void WxStageCanvas::InitShaders() const
 	std::vector<std::string> textures;
 
 	auto& rc = ur::Blackboard::Instance()->GetRenderContext();
-	FACE_SHADER = std::make_shared<dw3::DrawFaceShader>(
+	FACE_SHADER = std::make_shared<draft3::DrawFaceShader>(
 		&rc, face_vs, face_fs, textures, layout);
-	EDGE_SHADER = std::make_shared<dw3::DrawEdgeShader>(
+	EDGE_SHADER = std::make_shared<draft3::DrawEdgeShader>(
 		&rc, edge_vs, edge_fs, textures, layout);
 }
 
@@ -134,24 +134,24 @@ void WxStageCanvas::DrawGUI() const
 	float y = sz.y * 0.5f - 40;
 	float h = 25;
 	auto op_type = m_op_mgr.GetCurrOp();
-	if (egui::radio_button(uid++, "DRAW", op_type == dw3::EditOpMgr::Operator::DRAW, x, y, *ctx, dirty)) {
-		m_op_mgr.SetCurrOp(dw3::EditOpMgr::Operator::DRAW);
+	if (egui::radio_button(uid++, "DRAW", op_type == draft3::EditOpMgr::Operator::DRAW, x, y, *ctx, dirty)) {
+		m_op_mgr.SetCurrOp(draft3::EditOpMgr::Operator::DRAW);
 	}
 	y -= h;
-	if (egui::radio_button(uid++, "ARRANGE", op_type == dw3::EditOpMgr::Operator::ARRANGE, x, y, *ctx, dirty)) {
-		m_op_mgr.SetCurrOp(dw3::EditOpMgr::Operator::ARRANGE);
+	if (egui::radio_button(uid++, "ARRANGE", op_type == draft3::EditOpMgr::Operator::ARRANGE, x, y, *ctx, dirty)) {
+		m_op_mgr.SetCurrOp(draft3::EditOpMgr::Operator::ARRANGE);
 	}
 	y -= h;
-	if (egui::radio_button(uid++, "VERTEX", op_type == dw3::EditOpMgr::Operator::VERTEX, x, y, *ctx, dirty)) {
-		m_op_mgr.SetCurrOp(dw3::EditOpMgr::Operator::VERTEX);
+	if (egui::radio_button(uid++, "VERTEX", op_type == draft3::EditOpMgr::Operator::VERTEX, x, y, *ctx, dirty)) {
+		m_op_mgr.SetCurrOp(draft3::EditOpMgr::Operator::VERTEX);
 	}
 	y -= h;
-	if (egui::radio_button(uid++, "EDGE", op_type == dw3::EditOpMgr::Operator::EDGE, x, y, *ctx, dirty)) {
-		m_op_mgr.SetCurrOp(dw3::EditOpMgr::Operator::EDGE);
+	if (egui::radio_button(uid++, "EDGE", op_type == draft3::EditOpMgr::Operator::EDGE, x, y, *ctx, dirty)) {
+		m_op_mgr.SetCurrOp(draft3::EditOpMgr::Operator::EDGE);
 	}
 	y -= h;
-	if (egui::radio_button(uid++, "FACE", op_type == dw3::EditOpMgr::Operator::FACE, x, y, *ctx, dirty)) {
-		m_op_mgr.SetCurrOp(dw3::EditOpMgr::Operator::FACE);
+	if (egui::radio_button(uid++, "FACE", op_type == draft3::EditOpMgr::Operator::FACE, x, y, *ctx, dirty)) {
+		m_op_mgr.SetCurrOp(draft3::EditOpMgr::Operator::FACE);
 	}
 	y -= h;
 

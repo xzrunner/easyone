@@ -159,7 +159,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "1.prim_test", "..\..\ext\pr
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.primitive", "1.primitive", "{DD7B1C17-1B46-4A0E-8729-C90E2A09A3E6}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3.drawing2", "..\..\ext\drawing2\platform\msvc\projects\drawing2.vcxproj", "{75155982-29A5-4AB4-924C-03DE0A904C17}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3.draft2", "..\..\ext\draft2\platform\msvc\projects\draft2.vcxproj", "{75155982-29A5-4AB4-924C-03DE0A904C17}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "1.geoshape", "..\..\ext\geoshape\platform\msvc\projects\geoshape.vcxproj", "{9A710155-9500-4166-A566-9D6E59F68D0A}"
 EndProject
@@ -177,7 +177,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "5.egui_test", "..\..\ext\ea
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "2.meshlab", "..\..\ext\meshlab\platform\msvc\projects\meshlab.vcxproj", "{C9054AF1-3165-4FF6-BE75-06215B3F6CA9}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3.drawing3", "..\..\ext\drawing3\platform\msvc\projects\drawing3.vcxproj", "{3032565A-882F-438D-B5A3-DA583B9E0682}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3.draft3", "..\..\ext\draft3\platform\msvc\projects\draft3.vcxproj", "{3032565A-882F-438D-B5A3-DA583B9E0682}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "1.volume", "..\..\ext\volume\platform\msvc\projects\volume.vcxproj", "{E9E3C6D8-5B33-4AFC-B1A1-0C1541BF8DDF}"
 EndProject

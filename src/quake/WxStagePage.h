@@ -10,7 +10,7 @@
 #include <ee0/GameObj.h>
 #include <ee3/CameraMgr.h>
 
-#include <drawing3/EditOpMgr.h>
+#include <draft3/EditOpMgr.h>
 
 namespace ee0 { class WxLibraryPanel; }
 namespace pt3 { class Viewport; }
@@ -59,7 +59,7 @@ private:
 	void ClearSceneNode();
 
 private:
-	dw3::EditOpMgr m_editor_mgr;
+	draft3::EditOpMgr m_editor_mgr;
 
 	ee3::CameraMgr m_cam_mgr;
 

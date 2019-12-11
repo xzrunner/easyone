@@ -18,8 +18,8 @@
 #include <geoshape/Rect.h>
 #include <geoshape/Circle.h>
 #include <geoshape/Polyline2D.h>
-#include <drawing2/EditShapeOP.h>
-#include <drawing2/RenderStyle.h>
+#include <draft2/EditShapeOP.h>
+#include <draft2/RenderStyle.h>
 
 namespace eone
 {
@@ -35,8 +35,8 @@ WxStageCanvas::WxStageCanvas(eone::WxStagePage* stage,
 	InitGui();
 
 	auto cam_op = std::make_shared<ee2::CamControlOP>(GetCamera(), stage->GetSubjectMgr());
-	m_edit_shape_op = std::make_shared<dw2::EditShapeOP>(
-		GetCamera(), m_edit_view, dw2::NODE_RADIUS, rttr::type::get<gs::Point2D>().get_id()
+	m_edit_shape_op = std::make_shared<draft2::EditShapeOP>(
+		GetCamera(), m_edit_view, draft2::NODE_RADIUS, rttr::type::get<gs::Point2D>().get_id()
 	);
 	m_edit_shape_op->SetPrevEditOP(cam_op);
 	m_stage->GetImpl().SetEditOP(m_edit_shape_op);
