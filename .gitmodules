@@ -277,3 +277,6 @@
 [submodule "ext/layout2"]
 	path = ext/layout2
 	url = git@github.com:xzrunner/layout2.git
+[submodule "ext/cgac"]
+	path = ext/cgac
+	url = git@github.com:xzrunner/cgac.git
