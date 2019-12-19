@@ -277,6 +277,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "1.cgac", "..\..\ext\cgac\pl
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "cga", "cga", "{73AE3015-3AAB-42D3-AD1C-2D27A018CD2E}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "5.cga_test", "..\..\ext\cga\platform\msvc\projects\cga_test.vcxproj", "{80F18473-4F3A-4C86-9755-E8982E1B0539}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -1699,6 +1701,20 @@ Global
 		{265A1D5A-05C2-4B2A-9EA5-DC8DE7C1AE57}.RelWithDebInfo|Win32.Build.0 = Release|Win32
 		{265A1D5A-05C2-4B2A-9EA5-DC8DE7C1AE57}.RelWithDebInfo|x64.ActiveCfg = Release|Win32
 		{265A1D5A-05C2-4B2A-9EA5-DC8DE7C1AE57}.RelWithDebInfo|x64.Build.0 = Release|Win32
+		{80F18473-4F3A-4C86-9755-E8982E1B0539}.Debug|Win32.ActiveCfg = Debug|Win32
+		{80F18473-4F3A-4C86-9755-E8982E1B0539}.Debug|Win32.Build.0 = Debug|Win32
+		{80F18473-4F3A-4C86-9755-E8982E1B0539}.Debug|x64.ActiveCfg = Debug|Win32
+		{80F18473-4F3A-4C86-9755-E8982E1B0539}.MinSizeRel|Win32.ActiveCfg = Release|Win32
+		{80F18473-4F3A-4C86-9755-E8982E1B0539}.MinSizeRel|Win32.Build.0 = Release|Win32
+		{80F18473-4F3A-4C86-9755-E8982E1B0539}.MinSizeRel|x64.ActiveCfg = Release|Win32
+		{80F18473-4F3A-4C86-9755-E8982E1B0539}.MinSizeRel|x64.Build.0 = Release|Win32
+		{80F18473-4F3A-4C86-9755-E8982E1B0539}.Release|Win32.ActiveCfg = Release|Win32
+		{80F18473-4F3A-4C86-9755-E8982E1B0539}.Release|Win32.Build.0 = Release|Win32
+		{80F18473-4F3A-4C86-9755-E8982E1B0539}.Release|x64.ActiveCfg = Release|Win32
+		{80F18473-4F3A-4C86-9755-E8982E1B0539}.RelWithDebInfo|Win32.ActiveCfg = Release|Win32
+		{80F18473-4F3A-4C86-9755-E8982E1B0539}.RelWithDebInfo|Win32.Build.0 = Release|Win32
+		{80F18473-4F3A-4C86-9755-E8982E1B0539}.RelWithDebInfo|x64.ActiveCfg = Release|Win32
+		{80F18473-4F3A-4C86-9755-E8982E1B0539}.RelWithDebInfo|x64.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -1828,6 +1844,7 @@ Global
 		{BCA725DD-258B-4025-8806-0CD21A58302C} = {31BEF595-41C4-4317-ACE6-A897A82E03D6}
 		{265A1D5A-05C2-4B2A-9EA5-DC8DE7C1AE57} = {73AE3015-3AAB-42D3-AD1C-2D27A018CD2E}
 		{73AE3015-3AAB-42D3-AD1C-2D27A018CD2E} = {31BEF595-41C4-4317-ACE6-A897A82E03D6}
+		{80F18473-4F3A-4C86-9755-E8982E1B0539} = {73AE3015-3AAB-42D3-AD1C-2D27A018CD2E}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8D54C01A-3C82-4351-A325-2853C3E81322}
