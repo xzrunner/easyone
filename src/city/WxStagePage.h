@@ -7,6 +7,8 @@
 #include "frame/WxStagePage.h"
 #include "frame/StagePageType.h"
 
+namespace cgav { class WxEditorPanel; class WxGraphPage; }
+
 namespace eone
 {
 namespace city
@@ -41,7 +43,8 @@ protected:
     virtual void LoadFromFileExt(const std::string& filepath) override;
 
 private:
-    void InitGraphPanel();
+    void InitEditorPanel();
+    cgav::WxGraphPage* CreateGraphPanel(wxWindow* parent) const;
 
     bool InsertSceneObj(const ee0::VariantSet& variants);
     bool DeleteSceneObj(const ee0::VariantSet& variants);
@@ -50,7 +53,7 @@ private:
     void CreateNewPage(const ee0::VariantSet& variants) const;
 
 private:
-    wxPanel* m_graph_panel = nullptr;
+    cgav::WxEditorPanel* m_editor_panel = nullptr;
 
     n0::SceneNodePtr m_graph_obj = nullptr;
 

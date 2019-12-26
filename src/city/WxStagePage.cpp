@@ -33,6 +33,7 @@
 #include <cgaview/CGAView.h>
 #include <cgaview/WxStageCanvas.h>
 #include <cgaview/Serializer.h>
+#include <cgaview/WxEditorPanel.h>
 
 #include <boost/filesystem.hpp>
 
@@ -125,7 +126,7 @@ void WxStagePage::Traverse(std::function<bool(const ee0::GameObj&)> func,
 
 void WxStagePage::OnPageInit()
 {
-    InitGraphPanel();
+    InitEditorPanel();
 }
 
 #ifndef GAME_OBJ_ECS
@@ -138,7 +139,7 @@ const n0::NodeComp& WxStagePage::GetEditedObjComp() const
 void WxStagePage::StoreToJsonExt(const std::string& dir, rapidjson::Value& val,
                                  rapidjson::MemoryPoolAllocator<>& alloc) const
 {
-    auto bp_page = static_cast<WxGraphPage*>(m_graph_panel);
+    auto bp_page = static_cast<WxGraphPage*>(m_editor_panel->GetGraphPage());
     cgav::Serializer::StoreToJson(bp_page->GetRootNode(), dir, val, alloc);
 
     val.AddMember("page_type", rapidjson::Value(PAGE_TYPE.c_str(), alloc), alloc);
@@ -156,48 +157,55 @@ void WxStagePage::LoadFromFileExt(const std::string& filepath)
 
         auto dir = boost::filesystem::path(filepath).parent_path().string();
 
-        auto bp_page = static_cast<WxGraphPage*>(m_graph_panel);
+        auto bp_page = static_cast<WxGraphPage*>(m_editor_panel->GetGraphPage());
         cgav::Serializer::LoadFromJson(*bp_page, bp_page->GetRootNode(), doc["graph"], dir);
     }
         break;
     }
 }
 
-void WxStagePage::InitGraphPanel()
+void WxStagePage::InitEditorPanel()
 {
     m_graph_obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX2D);
 
     auto stage_ext_panel = Blackboard::Instance()->GetStageExtPanel();
-    m_graph_panel = stage_ext_panel->AddPagePanel([&](wxPanel* parent)->wxPanel*
-    {
-        auto panel = new WxGraphPage(parent, m_graph_obj);
-        auto& panel_impl = panel->GetImpl();
 
-        auto preview_canvas = std::static_pointer_cast<cgav::WxStageCanvas>(GetImpl().GetCanvas());
-        panel->SetPreviewCanvas(preview_canvas);
+    m_editor_panel = new cgav::WxEditorPanel(stage_ext_panel, [&](wxWindow* parent) -> cgav::WxGraphPage* {
+        return CreateGraphPanel(parent);
+    });
+    stage_ext_panel->AddPagePanel(m_editor_panel, wxVERTICAL);
+}
 
-        auto canvas = std::make_shared<WxBlueprintCanvas>(
-            panel, Blackboard::Instance()->GetRenderContext()
-        );
-        panel_impl.SetCanvas(canvas);
+cgav::WxGraphPage*
+WxStagePage::CreateGraphPanel(wxWindow* parent) const
+{
+    auto panel = new WxGraphPage(parent, m_graph_obj);
+    auto& panel_impl = panel->GetImpl();
 
-        auto select_op = std::make_shared<bp::NodeSelectOP>(canvas->GetCamera(), *panel);
+    auto preview_canvas = std::static_pointer_cast<cgav::WxStageCanvas>(GetImpl().GetCanvas());
+    panel->SetPreviewCanvas(preview_canvas);
 
-        ee2::ArrangeNodeCfg cfg;
-        cfg.is_auto_align_open = false;
-        cfg.is_deform_open = false;
-        cfg.is_offset_open = false;
-        cfg.is_rotate_open = false;
-        auto arrange_op = std::make_shared<bp::ArrangeNodeOP>(
-            canvas->GetCamera(), *panel, ECS_WORLD_VAR cfg, select_op);
+    auto canvas = std::make_shared<WxBlueprintCanvas>(
+        panel, Blackboard::Instance()->GetRenderContext()
+    );
+    panel_impl.SetCanvas(canvas);
 
-        auto& nodes = cgav::CGAView::Instance()->GetAllNodes();
-        auto op = std::make_shared<bp::ConnectPinOP>(canvas->GetCamera(), *panel, nodes);
-        op->SetPrevEditOP(arrange_op);
-        panel_impl.SetEditOP(op);
+    auto select_op = std::make_shared<bp::NodeSelectOP>(canvas->GetCamera(), *panel);
 
-        return panel;
-    }, wxVERTICAL);
+    ee2::ArrangeNodeCfg cfg;
+    cfg.is_auto_align_open = false;
+    cfg.is_deform_open = false;
+    cfg.is_offset_open = false;
+    cfg.is_rotate_open = false;
+    auto arrange_op = std::make_shared<bp::ArrangeNodeOP>(
+        canvas->GetCamera(), *panel, ECS_WORLD_VAR cfg, select_op);
+
+    auto& nodes = cgav::CGAView::Instance()->GetAllNodes();
+    auto op = std::make_shared<bp::ConnectPinOP>(canvas->GetCamera(), *panel, nodes);
+    op->SetPrevEditOP(arrange_op);
+    panel_impl.SetEditOP(op);
+
+    return panel;
 }
 
 bool WxStagePage::InsertSceneObj(const ee0::VariantSet& variants)
