@@ -10,7 +10,7 @@ WxStageSubPanel::WxStageSubPanel(wxWindow* parent)
 {
 }
 
-wxPanel* WxStageSubPanel::AddPagePanel(std::function<wxPanel*(wxPanel* parent)> page_creator, int orient)
+void WxStageSubPanel::AddPagePanel(wxWindow* panel, int orient)
 {
     bool new_sizer = false;
 
@@ -20,7 +20,6 @@ wxPanel* WxStageSubPanel::AddPagePanel(std::function<wxPanel*(wxPanel* parent)> 
 		sizer = new wxBoxSizer(orient);
 	}
 
-    auto panel = page_creator(this);
     if (panel) {
         sizer->Add(panel, 1, wxEXPAND);
 //        sizer->Add(panel);
@@ -29,8 +28,6 @@ wxPanel* WxStageSubPanel::AddPagePanel(std::function<wxPanel*(wxPanel* parent)> 
     if (new_sizer) {
         SetSizer(sizer);
     }
-
-    return panel;
 }
 
 }

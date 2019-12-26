@@ -24,9 +24,8 @@ WxGraphPage::WxGraphPage(wxWindow* parent, const ee0::GameObj& obj)
 
     auto toolbar_panel = Blackboard::Instance()->GetToolbarPanel();
 
-    auto toolbar = static_cast<cgav::WxToolbarPanel*>(toolbar_panel->AddPagePanel([&](wxPanel* parent)->wxPanel* {
-        return new cgav::WxToolbarPanel(toolbar_panel, this);
-    }, wxVERTICAL));
+    auto toolbar = new cgav::WxToolbarPanel(toolbar_panel, this);
+    toolbar_panel->AddPagePanel(toolbar, wxVERTICAL);
     SetToolbarPanel(toolbar);
 }
 

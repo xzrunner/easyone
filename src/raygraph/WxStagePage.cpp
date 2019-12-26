@@ -140,9 +140,8 @@ void WxStagePage::OnPageInit()
 {
     assert(!m_toolbar);
     auto toolbar_panel = Blackboard::Instance()->GetToolbarPanel();
-    m_toolbar = static_cast<WxToolbarPanel*>(toolbar_panel->AddPagePanel([&](wxPanel* parent)->wxPanel* {
-        return new WxToolbarPanel(toolbar_panel, this);
-    }, wxVERTICAL));
+    m_toolbar = new WxToolbarPanel(toolbar_panel, this);
+    toolbar_panel->AddPagePanel(m_toolbar, wxVERTICAL);
 
     auto bp_node = std::make_shared<raylab::node::World>();
     auto node = std::make_shared<n0::SceneNode>();

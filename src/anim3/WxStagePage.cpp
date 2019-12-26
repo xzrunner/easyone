@@ -163,18 +163,16 @@ void WxStagePage::InitTimeLinePanel()
     assert(!m_timeline);
     static anim::PlayCtrl pctrl;
     auto stage_ext_panel = Blackboard::Instance()->GetStageExtPanel();
-    m_timeline = stage_ext_panel->AddPagePanel([&](wxPanel* parent)->wxPanel* {
-        return new eanim::WxTimelinePanel(parent, m_sub_mgr, pctrl);
-    }, wxVERTICAL);
+    m_timeline = new eanim::WxTimelinePanel(stage_ext_panel, m_sub_mgr, pctrl);
+    stage_ext_panel->AddPagePanel(m_timeline, wxVERTICAL);
 }
 
 void WxStagePage::InitPropertyPanel()
 {
     assert(!m_property);
     auto toolbar_panel = Blackboard::Instance()->GetToolbarPanel();
-    m_property = toolbar_panel->AddPagePanel([&](wxPanel* parent)->wxPanel* {
-        return new WxPropertyPanel(toolbar_panel, m_sub_mgr, m_layers);
-    }, wxVERTICAL);
+    m_property = new WxPropertyPanel(toolbar_panel, m_sub_mgr, m_layers);
+    toolbar_panel->AddPagePanel(m_property, wxVERTICAL);
 }
 
 bool WxStagePage::OnSetCurrFrame(const ee0::VariantSet& variants)

@@ -78,11 +78,11 @@ void WxStagePage::OnPageInit()
 {
     assert(!m_emitter);
     auto toolbar_panel = Blackboard::Instance()->GetToolbarPanel();
-    m_emitter = toolbar_panel->AddPagePanel([&](wxPanel* parent)->wxPanel* {
-        auto& cp3d = m_obj->GetSharedComp<n2::CompParticle3d>();
-        auto& cp3d_inst = m_obj->GetUniqueComp<n2::CompParticle3dInst>();
-        return new WxEmitterPanel(parent, m_library, cp3d, cp3d_inst);
-    }, wxVERTICAL);
+
+    auto& cp3d = m_obj->GetSharedComp<n2::CompParticle3d>();
+    auto& cp3d_inst = m_obj->GetUniqueComp<n2::CompParticle3dInst>();
+    auto panel = new WxEmitterPanel(toolbar_panel, m_library, cp3d, cp3d_inst);
+    m_emitter = toolbar_panel->AddPagePanel(panel, wxVERTICAL);
 }
 
 #ifndef GAME_OBJ_ECS

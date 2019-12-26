@@ -117,9 +117,8 @@ void WxStagePage::OnPageInit()
 {
     assert(!m_preview);
     auto stage_ext_panel = Blackboard::Instance()->GetStageExtPanel();
-    auto preview_panel = static_cast<WxPreviewPanel*>(stage_ext_panel->AddPagePanel([](wxPanel* parent)->wxPanel* {
-        return new WxPreviewPanel(parent);
-    }, wxHORIZONTAL));
+    auto preview_panel = new WxPreviewPanel(stage_ext_panel);
+    stage_ext_panel->AddPagePanel(preview_panel, wxHORIZONTAL);
     m_preview = preview_panel;
 
 	auto preview_canvas = std::make_shared<WxPreviewCanvas>(

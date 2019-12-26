@@ -114,9 +114,7 @@ void WxStagePage::InitViewports()
 void WxStagePage::OnPageInit()
 {
     auto stage_ext_panel = Blackboard::Instance()->GetStageExtPanel();
-    stage_ext_panel->AddPagePanel([&](wxPanel* parent)->wxPanel* {
-        return nullptr;
-    }, wxHORIZONTAL);
+    stage_ext_panel->AddPagePanel(nullptr, wxHORIZONTAL);
 }
 
 #ifndef GAME_OBJ_ECS

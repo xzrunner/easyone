@@ -181,9 +181,8 @@ void WxStagePage::InitPreviewPanel()
 {
     assert(!m_preview);
     auto stage_ext_panel = Blackboard::Instance()->GetStageExtPanel();
-    auto preview_panel = static_cast<WxPreviewPanel*>(stage_ext_panel->AddPagePanel([&](wxPanel* parent)->wxPanel* {
-        return new WxPreviewPanel(stage_ext_panel);
-    }, wxHORIZONTAL));
+    auto preview_panel = new WxPreviewPanel(stage_ext_panel);
+    stage_ext_panel->AddPagePanel(preview_panel, wxHORIZONTAL);
     m_preview = preview_panel;
 
 	m_preview_obj = m_obj->Clone();
@@ -202,9 +201,8 @@ void WxStagePage::InitToolbarPanel()
 {
     assert(!m_toolbar);
     auto toolbar_panel = Blackboard::Instance()->GetToolbarPanel();
-    m_toolbar = static_cast<WxToolbarPanel*>(toolbar_panel->AddPagePanel([&](wxPanel* parent)->wxPanel* {
-        return new WxToolbarPanel(parent, this);
-    }, wxVERTICAL));
+    m_toolbar = new WxToolbarPanel(toolbar_panel, this);
+    toolbar_panel->AddPagePanel(m_toolbar, wxVERTICAL);
 }
 
 }

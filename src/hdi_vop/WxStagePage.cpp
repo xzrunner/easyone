@@ -168,36 +168,36 @@ void WxStagePage::InitGraphPanel()
     m_graph_obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX2D);
 
     auto stage_ext_panel = Blackboard::Instance()->GetStageExtPanel();
-    m_graph_panel = stage_ext_panel->AddPagePanel([&](wxPanel* parent)->wxPanel*
-    {
-        auto panel = new WxGraphPage(parent, m_graph_obj);
-        auto& panel_impl = panel->GetImpl();
 
-        auto preview_canvas = std::static_pointer_cast<vopv::WxStageCanvas>(GetImpl().GetCanvas());
-        panel->SetPreviewCanvas(preview_canvas);
+    auto panel = new WxGraphPage(stage_ext_panel, m_graph_obj);
+    auto& panel_impl = panel->GetImpl();
 
-        auto canvas = std::make_shared<WxBlueprintCanvas>(
-            panel, Blackboard::Instance()->GetRenderContext()
-        );
-        panel_impl.SetCanvas(canvas);
+    auto preview_canvas = std::static_pointer_cast<vopv::WxStageCanvas>(GetImpl().GetCanvas());
+    panel->SetPreviewCanvas(preview_canvas);
 
-        auto select_op = std::make_shared<bp::NodeSelectOP>(canvas->GetCamera(), *panel);
+    auto canvas = std::make_shared<WxBlueprintCanvas>(
+        panel, Blackboard::Instance()->GetRenderContext()
+    );
+    panel_impl.SetCanvas(canvas);
 
-        ee2::ArrangeNodeCfg cfg;
-        cfg.is_auto_align_open = false;
-        cfg.is_deform_open = false;
-        cfg.is_offset_open = false;
-        cfg.is_rotate_open = false;
-        auto arrange_op = std::make_shared<bp::ArrangeNodeOP>(
-            canvas->GetCamera(), *panel, ECS_WORLD_VAR cfg, select_op);
+    auto select_op = std::make_shared<bp::NodeSelectOP>(canvas->GetCamera(), *panel);
 
-        auto& nodes = vopv::VOPView::Instance()->GetAllNodes();
-        auto op = std::make_shared<bp::ConnectPinOP>(canvas->GetCamera(), *panel, nodes);
-        op->SetPrevEditOP(arrange_op);
-        panel_impl.SetEditOP(op);
+    ee2::ArrangeNodeCfg cfg;
+    cfg.is_auto_align_open = false;
+    cfg.is_deform_open = false;
+    cfg.is_offset_open = false;
+    cfg.is_rotate_open = false;
+    auto arrange_op = std::make_shared<bp::ArrangeNodeOP>(
+        canvas->GetCamera(), *panel, ECS_WORLD_VAR cfg, select_op);
 
-        return panel;
-    }, wxVERTICAL);
+    auto& nodes = vopv::VOPView::Instance()->GetAllNodes();
+    auto op = std::make_shared<bp::ConnectPinOP>(canvas->GetCamera(), *panel, nodes);
+    op->SetPrevEditOP(arrange_op);
+    panel_impl.SetEditOP(op);
+
+    m_graph_panel = panel;
+
+    stage_ext_panel->AddPagePanel(m_graph_panel, wxVERTICAL);
 }
 
 bool WxStagePage::InsertSceneObj(const ee0::VariantSet& variants)

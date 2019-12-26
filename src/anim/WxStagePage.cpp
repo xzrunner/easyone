@@ -138,9 +138,8 @@ void WxStagePage::OnPageInit()
 
     assert(!m_timeline);
     auto stage_ext_panel = Blackboard::Instance()->GetStageExtPanel();
-    m_timeline = stage_ext_panel->AddPagePanel([&](wxPanel* parent)->wxPanel* {
-        return new eanim::WxTimelinePanel(parent, m_sub_mgr, canim_inst.GetPlayCtrl());
-    }, wxVERTICAL);
+    m_timeline = new eanim::WxTimelinePanel(stage_ext_panel, m_sub_mgr, canim_inst.GetPlayCtrl());
+    stage_ext_panel->AddPagePanel(m_timeline, wxVERTICAL);
 }
 
 #ifndef GAME_OBJ_ECS

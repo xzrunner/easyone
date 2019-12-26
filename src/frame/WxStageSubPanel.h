@@ -10,7 +10,7 @@ class WxStageSubPanel : public wxPanel
 public:
 	WxStageSubPanel(wxWindow* parent);
 
-    wxPanel* AddPagePanel(std::function<wxPanel*(wxPanel* parent)> page_creator, int orient);
+    void AddPagePanel(wxWindow* panel, int orient);
 
 }; // WxStageSubPanel
 
