@@ -9,7 +9,7 @@
 #include <array>
 
 namespace sketch { class EditShapeOP; }
-namespace dw2 { class EditView; }
+namespace draft2 { class EditView; }
 
 namespace eone
 {

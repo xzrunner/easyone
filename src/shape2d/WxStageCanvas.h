@@ -10,7 +10,7 @@
 
 #include <array>
 
-namespace dw2 { class EditShapeOP; }
+namespace draft2 { class EditShapeOP; }
 
 namespace eone
 {

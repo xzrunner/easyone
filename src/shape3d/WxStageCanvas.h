@@ -6,7 +6,7 @@
 
 #include <frame/WxStageCanvas3D.h>
 
-namespace dw3 { class EditOpMgr; }
+namespace draft3 { class EditOpMgr; }
 
 namespace eone
 {
