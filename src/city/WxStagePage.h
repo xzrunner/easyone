@@ -7,6 +7,9 @@
 #include "frame/WxStagePage.h"
 #include "frame/StagePageType.h"
 
+#include <cgaview/PreviewScene.h>
+
+namespace cga { class EvalContext; }
 namespace cgav { class WxEditorPanel; class WxGraphPage; }
 
 namespace eone
@@ -27,6 +30,10 @@ public:
     virtual int GetPageType() const override { return PAGE_CITY; }
 
     n0::SceneNodePtr GetGraphObj() const { return m_graph_obj; }
+
+    //auto& GetPreviewScene() const { return m_scene; }
+
+    void InitEditOP();
 
     static const std::string PAGE_TYPE;
 
@@ -56,6 +63,11 @@ private:
     cgav::WxEditorPanel* m_editor_panel = nullptr;
 
     n0::SceneNodePtr m_graph_obj = nullptr;
+
+    //cgav::PreviewScene m_scene;
+
+    ee0::EditOPPtr m_view_op = nullptr;
+    ee0::EditOPPtr m_edit_op = nullptr;
 
 }; // WxStagePage
 

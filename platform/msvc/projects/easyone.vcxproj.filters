@@ -501,9 +501,6 @@
     <ClInclude Include="..\..\..\src\pbrgraph\WxToolbarPanel.h">
       <Filter>37.pbrgraph\toolbar</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\city\WxGraphPage.h">
-      <Filter>39.city</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\city\WxStagePage.h">
       <Filter>39.city</Filter>
     </ClInclude>
@@ -787,9 +784,6 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\pbrgraph\WxToolbarPanel.cpp">
       <Filter>37.pbrgraph\toolbar</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\city\WxGraphPage.cpp">
-      <Filter>39.city</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\city\WxStagePage.cpp">
       <Filter>39.city</Filter>
