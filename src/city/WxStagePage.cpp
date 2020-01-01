@@ -18,6 +18,7 @@
 #include <ee2/NodeSelectOP.h>
 #include <ee3/NodeArrangeOP.h>
 #include <ee3/WxStageCanvas.h>
+#include <ee3/WorldTravelOP.h>
 #include <ee3/CameraDriveOP.h>
 #include <blueprint/NodeSelectOP.h>
 #include <blueprint/ArrangeNodeOP.h>
@@ -38,7 +39,8 @@
 #include <cgaview/WxToolbarPanel.h>
 #include <cgaview/WxGraphPage.h>
 #include <cgaview/MessageID.h>
-#include <draft3/EditPolylineOP.h>
+#include <draft3/PolygonBuildOP.h>
+#include <draft3/PolygonSelectOP.h>
 
 #include <boost/filesystem.hpp>
 
@@ -144,16 +146,18 @@ void WxStagePage::InitEditOP()
     auto canvas = GetImpl().GetCanvas();
     assert(canvas);
     auto& vp = std::static_pointer_cast<ee3::WxStageCanvas>(canvas)->GetViewport();
-    m_view_op = std::make_shared<ee3::NodeArrangeOP>(
+    m_view_op = std::make_shared<draft3::PolygonSelectOP>(
         canvas->GetCamera(), *this, vp
     );
-    m_edit_op = std::make_shared<draft3::EditPolylineOP>(
+    m_edit_op = std::make_shared<draft3::PolygonBuildOP>(
         canvas->GetCamera(), vp, GetSubjectMgr()
     );
-    auto cam_op = std::make_shared<ee3::CameraDriveOP>(
+    m_view_op->SetPrevEditOP(std::make_shared<ee3::WorldTravelOP>(
         canvas->GetCamera(), vp, GetSubjectMgr()
-    );
-    m_edit_op->SetPrevEditOP(cam_op);
+    ));
+    m_edit_op->SetPrevEditOP(std::make_shared<ee3::CameraDriveOP>(
+        canvas->GetCamera(), vp, GetSubjectMgr()
+    ));
     GetImpl().SetEditOP(m_view_op);
 }
 
