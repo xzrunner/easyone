@@ -7,6 +7,8 @@
 #include "frame/WxStagePage.h"
 #include "frame/StagePageType.h"
 
+#include <cgaview/PreviewPage.h>
+
 namespace cga { class EvalContext; }
 namespace cgav { class WxEditorPanel; class WxGraphPage; }
 
@@ -58,6 +60,8 @@ private:
     void CreateNewPage(const ee0::VariantSet& variants) const;
 
 private:
+    cgav::PreviewPage m_preview_impl;
+
     cgav::WxEditorPanel* m_editor_panel = nullptr;
 
     n0::SceneNodePtr m_graph_obj = nullptr;
