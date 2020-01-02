@@ -128,6 +128,9 @@
     <ProjectReference Include="..\..\..\ext\camera25\platform\msvc\projects\camera25.vcxproj">
       <Project>{510eaacb-b026-43f3-a68d-3ec421e46dd0}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\cgaeasy\platform\msvc\projects\cgaeasy.vcxproj">
+      <Project>{d3726c18-8ebe-4e6b-9fb9-ef88645f679b}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\ext\cgaview\platform\msvc\projects\cgaview.vcxproj">
       <Project>{9b8adc4d-126b-4569-b374-ac81fb76d05c}</Project>
     </ProjectReference>
