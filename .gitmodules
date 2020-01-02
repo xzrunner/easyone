@@ -280,3 +280,6 @@
 [submodule "ext/cgac"]
 	path = ext/cgac
 	url = git@github.com:xzrunner/cgac.git
+[submodule "ext/cgaeasy"]
+	path = ext/cgaeasy
+	url = git@github.com:xzrunner/cgaeasy.git
