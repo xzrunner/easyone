@@ -18,8 +18,6 @@
 #include <ee2/NodeSelectOP.h>
 #include <ee3/NodeArrangeOP.h>
 #include <ee3/WxStageCanvas.h>
-#include <ee3/WorldTravelOP.h>
-#include <ee3/CameraDriveOP.h>
 #include <blueprint/NodeSelectOP.h>
 #include <blueprint/ArrangeNodeOP.h>
 #include <blueprint/ConnectPinOP.h>
@@ -39,8 +37,6 @@
 #include <cgaview/WxToolbarPanel.h>
 #include <cgaview/WxGraphPage.h>
 #include <cgaview/MessageID.h>
-#include <draft3/PolygonBuildOP.h>
-#include <draft3/PolygonSelectOP.h>
 
 #include <boost/filesystem.hpp>
 
@@ -60,9 +56,6 @@ WxStagePage::WxStagePage(wxWindow* parent, ECS_WORLD_PARAM const ee0::GameObj& o
 	m_messages.push_back(ee0::MSG_SCENE_NODE_CLEAR);
 
     m_messages.push_back(ee0::MSG_STAGE_PAGE_NEW);
-
-    m_messages.push_back(cgav::MSG_SET_VIEW_EDITOP);
-    m_messages.push_back(cgav::MSG_SET_DRAW_EDITOP);
 
     cgav::Serializer::Init();
 }
@@ -86,13 +79,6 @@ void WxStagePage::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
 
     case ee0::MSG_STAGE_PAGE_NEW:
         CreateNewPage(variants);
-        break;
-
-    case cgav::MSG_SET_VIEW_EDITOP:
-        GetImpl().SetEditOP(m_view_op);
-        break;
-    case cgav::MSG_SET_DRAW_EDITOP:
-        GetImpl().SetEditOP(m_edit_op);
         break;
 	}
 
@@ -142,26 +128,6 @@ void WxStagePage::Traverse(std::function<bool(const ee0::GameObj&)> func,
 	}
 }
 
-void WxStagePage::InitEditOP()
-{
-    auto canvas = GetImpl().GetCanvas();
-    assert(canvas);
-    auto& vp = std::static_pointer_cast<ee3::WxStageCanvas>(canvas)->GetViewport();
-    m_view_op = std::make_shared<draft3::PolygonSelectOP>(
-        canvas->GetCamera(), *this, vp
-    );
-    m_edit_op = std::make_shared<draft3::PolygonBuildOP>(
-        canvas->GetCamera(), vp, GetSubjectMgr()
-    );
-    m_view_op->SetPrevEditOP(std::make_shared<ee3::WorldTravelOP>(
-        canvas->GetCamera(), vp, GetSubjectMgr()
-    ));
-    m_edit_op->SetPrevEditOP(std::make_shared<ee3::CameraDriveOP>(
-        canvas->GetCamera(), vp, GetSubjectMgr()
-    ));
-    GetImpl().SetEditOP(m_view_op);
-}
-
 void WxStagePage::OnPageInit()
 {
     InitEditorPanel();
@@ -177,29 +143,29 @@ const n0::NodeComp& WxStagePage::GetEditedObjComp() const
 void WxStagePage::StoreToJsonExt(const std::string& dir, rapidjson::Value& val,
                                  rapidjson::MemoryPoolAllocator<>& alloc) const
 {
-    auto bp_page = m_editor_panel->GetGraphPage();
-    cgav::Serializer::StoreToJson(bp_page->GetRootNode(), dir, val, alloc);
+    //auto bp_page = m_editor_panel->GetGraphPage();
+    //cgav::Serializer::StoreToJson(bp_page->GetRootNode(), dir, val, alloc);
 
-    val.AddMember("page_type", rapidjson::Value(PAGE_TYPE.c_str(), alloc), alloc);
+    //val.AddMember("page_type", rapidjson::Value(PAGE_TYPE.c_str(), alloc), alloc);
 }
 
 void WxStagePage::LoadFromFileExt(const std::string& filepath)
 {
-    auto type = sx::ResFileHelper::Type(filepath);
-    switch (type)
-    {
-    case sx::RES_FILE_JSON:
-    {
-        rapidjson::Document doc;
-        js::RapidJsonHelper::ReadFromFile(filepath.c_str(), doc);
+    //auto type = sx::ResFileHelper::Type(filepath);
+    //switch (type)
+    //{
+    //case sx::RES_FILE_JSON:
+    //{
+    //    rapidjson::Document doc;
+    //    js::RapidJsonHelper::ReadFromFile(filepath.c_str(), doc);
 
-        auto dir = boost::filesystem::path(filepath).parent_path().string();
+    //    auto dir = boost::filesystem::path(filepath).parent_path().string();
 
-        auto bp_page = m_editor_panel->GetGraphPage();
-        cgav::Serializer::LoadFromJson(*bp_page, bp_page->GetRootNode(), doc["graph"], dir);
-    }
-        break;
-    }
+    //    auto bp_page = m_editor_panel->GetGraphPage();
+    //    cgav::Serializer::LoadFromJson(*bp_page, bp_page->GetRootNode(), doc["graph"], dir);
+    //}
+    //    break;
+    //}
 }
 
 void WxStagePage::InitEditorPanel()
@@ -208,21 +174,24 @@ void WxStagePage::InitEditorPanel()
 
     auto stage_ext_panel = Blackboard::Instance()->GetStageExtPanel();
 
+    cgav::WxToolbarPanel* toolbar = nullptr;
     m_editor_panel = new cgav::WxEditorPanel(stage_ext_panel, [&](wxWindow* parent, cga::EvalContext& ctx) -> cgav::WxGraphPage*
     {
         auto graph_page = CreateGraphPanel(parent);
+        m_preview_impl.SetGraphPage(graph_page);
 
         auto toolbar_panel = Blackboard::Instance()->GetToolbarPanel();
 
-        auto toolbar = new cgav::WxToolbarPanel(
+        toolbar = new cgav::WxToolbarPanel(
             toolbar_panel, ctx, graph_page->GetSubjectMgr(), GetSubjectMgr()
         );
         toolbar_panel->AddPagePanel(toolbar, wxVERTICAL);
-        graph_page->SetToolbarPanel(toolbar);
 
         return graph_page;
     });
     stage_ext_panel->AddPagePanel(m_editor_panel, wxVERTICAL);
+
+    toolbar->SetEditorPanel(m_editor_panel);
 }
 
 cgav::WxGraphPage*
@@ -230,9 +199,6 @@ WxStagePage::CreateGraphPanel(wxWindow* parent) const
 {
     auto panel = new cgav::WxGraphPage(parent, nullptr, m_graph_obj);
     auto& panel_impl = panel->GetImpl();
-
-    auto preview_canvas = std::static_pointer_cast<cgav::WxPreviewCanvas>(GetImpl().GetCanvas());
-    panel->SetPreviewCanvas(preview_canvas);
 
     auto canvas = std::make_shared<WxBlueprintCanvas>(
         panel, Blackboard::Instance()->GetRenderContext()
