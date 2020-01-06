@@ -10,7 +10,7 @@
 #include <cgaview/PreviewPage.h>
 
 namespace cga { class EvalContext; }
-namespace cgav { class WxEditorPanel; class WxGraphPage; }
+namespace cgav { class WxEditorPanel; class WxToolbarPanel; class WxGraphPage; }
 
 namespace eone
 {
@@ -60,7 +60,8 @@ private:
 private:
     cgav::PreviewPage m_preview_impl;
 
-    cgav::WxEditorPanel* m_editor_panel = nullptr;
+    cgav::WxEditorPanel*  m_editor_panel  = nullptr;
+    cgav::WxToolbarPanel* m_toolbar_panel = nullptr;
 
     n0::SceneNodePtr m_graph_obj = nullptr;
 

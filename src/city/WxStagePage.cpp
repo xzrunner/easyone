@@ -21,6 +21,13 @@
 #include <blueprint/NodeSelectOP.h>
 #include <blueprint/ArrangeNodeOP.h>
 #include <blueprint/ConnectPinOP.h>
+#include <cgaview/CGAView.h>
+#include <cgaview/WxPreviewCanvas.h>
+#include <cgaview/WxEditorPanel.h>
+#include <cgaview/WxToolbarPanel.h>
+#include <cgaview/WxGraphPage.h>
+#include <cgaview/MessageID.h>
+#include <cgaview/Serializer.h>
 
 #include <node0/SceneNode.h>
 #include <node0/CompComplex.h>
@@ -30,13 +37,7 @@
 #include <ns/CompSerializer.h>
 #include <sx/ResFileHelper.h>
 #include <js/RapidJsonHelper.h>
-#include <cgaview/CGAView.h>
-#include <cgaview/WxPreviewCanvas.h>
-#include <cgaview/Serializer.h>
-#include <cgaview/WxEditorPanel.h>
-#include <cgaview/WxToolbarPanel.h>
-#include <cgaview/WxGraphPage.h>
-#include <cgaview/MessageID.h>
+#include <memmgr/LinearAllocator.h>
 
 #include <boost/filesystem.hpp>
 
@@ -143,29 +144,24 @@ const n0::NodeComp& WxStagePage::GetEditedObjComp() const
 void WxStagePage::StoreToJsonExt(const std::string& dir, rapidjson::Value& val,
                                  rapidjson::MemoryPoolAllocator<>& alloc) const
 {
-    //auto bp_page = m_editor_panel->GetGraphPage();
-    //cgav::Serializer::StoreToJson(bp_page->GetRootNode(), dir, val, alloc);
+    rapidjson::Value scene_val;
+    m_editor_panel->GetScene().StoreToJson(dir, scene_val, alloc);
+    val.AddMember("scene", scene_val, alloc);
 
-    //val.AddMember("page_type", rapidjson::Value(PAGE_TYPE.c_str(), alloc), alloc);
+    val.AddMember("page_type", rapidjson::Value(PAGE_TYPE.c_str(), alloc), alloc);
 }
 
 void WxStagePage::LoadFromFileExt(const std::string& filepath)
 {
-    //auto type = sx::ResFileHelper::Type(filepath);
-    //switch (type)
-    //{
-    //case sx::RES_FILE_JSON:
-    //{
-    //    rapidjson::Document doc;
-    //    js::RapidJsonHelper::ReadFromFile(filepath.c_str(), doc);
+    rapidjson::Document doc;
+    js::RapidJsonHelper::ReadFromFile(filepath.c_str(), doc);
 
-    //    auto dir = boost::filesystem::path(filepath).parent_path().string();
+    mm::LinearAllocator alloc;
+    auto dir = boost::filesystem::path(filepath).parent_path().string();
+    const_cast<cgav::Scene&>(m_editor_panel->GetScene()).LoadFromJson(alloc, dir, doc["scene"]);
+    m_toolbar_panel->ReloadRulesList();
 
-    //    auto bp_page = m_editor_panel->GetGraphPage();
-    //    cgav::Serializer::LoadFromJson(*bp_page, bp_page->GetRootNode(), doc["graph"], dir);
-    //}
-    //    break;
-    //}
+    m_preview_impl.InitSceneNodeRule(m_editor_panel->GetScene());
 }
 
 void WxStagePage::InitEditorPanel()
@@ -174,7 +170,6 @@ void WxStagePage::InitEditorPanel()
 
     auto stage_ext_panel = Blackboard::Instance()->GetStageExtPanel();
 
-    cgav::WxToolbarPanel* toolbar = nullptr;
     m_editor_panel = new cgav::WxEditorPanel(stage_ext_panel, [&](wxWindow* parent, cga::EvalContext& ctx) -> cgav::WxGraphPage*
     {
         auto graph_page = CreateGraphPanel(parent);
@@ -182,16 +177,16 @@ void WxStagePage::InitEditorPanel()
 
         auto toolbar_panel = Blackboard::Instance()->GetToolbarPanel();
 
-        toolbar = new cgav::WxToolbarPanel(
+        m_toolbar_panel = new cgav::WxToolbarPanel(
             toolbar_panel, ctx, graph_page->GetSubjectMgr(), GetSubjectMgr()
         );
-        toolbar_panel->AddPagePanel(toolbar, wxVERTICAL);
+        toolbar_panel->AddPagePanel(m_toolbar_panel, wxVERTICAL);
 
         return graph_page;
     });
     stage_ext_panel->AddPagePanel(m_editor_panel, wxVERTICAL);
 
-    toolbar->SetEditorPanel(m_editor_panel);
+    m_toolbar_panel->SetEditorPanel(m_editor_panel);
 }
 
 cgav::WxGraphPage*
