@@ -283,3 +283,6 @@
 [submodule "ext/cgaeasy"]
 	path = ext/cgaeasy
 	url = git@github.com:xzrunner/cgaeasy.git
+[submodule "ext/nurbs"]
+	path = ext/nurbs
+	url = git@github.com:xzrunner/nurbs.git
