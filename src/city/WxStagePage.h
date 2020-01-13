@@ -33,6 +33,8 @@ public:
 
     void InitEditOP() { m_preview_impl.InitEditOP(); }
 
+    auto& GetPreviewImpl() const { return m_preview_impl; }
+
     static const std::string PAGE_TYPE;
 
 protected:
@@ -49,7 +51,7 @@ protected:
 
 private:
     void InitEditorPanel();
-    cgav::WxGraphPage* CreateGraphPanel(wxWindow* parent) const;
+    cgav::WxGraphPage* CreateGraphPanel(wxWindow* parent, cgav::Scene& scene) const;
 
     bool InsertSceneObj(const ee0::VariantSet& variants);
     bool DeleteSceneObj(const ee0::VariantSet& variants);

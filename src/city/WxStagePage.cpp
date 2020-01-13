@@ -171,11 +171,9 @@ void WxStagePage::InitEditorPanel()
     auto stage_ext_panel = Blackboard::Instance()->GetStageExtPanel();
 
     m_editor_panel = new cgav::WxEditorPanel(stage_ext_panel, m_sub_mgr,
-        [&](wxWindow* parent, cga::EvalContext& ctx) -> cgav::WxGraphPage*
+        [&](wxWindow* parent, cgav::Scene& scene, cga::EvalContext& ctx) -> cgav::WxGraphPage*
     {
-        auto graph_page = CreateGraphPanel(parent);
-        m_preview_impl.SetGraphPage(graph_page);
-
+        auto graph_page = CreateGraphPanel(parent, scene);
         auto toolbar_panel = Blackboard::Instance()->GetToolbarPanel();
 
         m_toolbar_panel = new cgav::WxToolbarPanel(
@@ -187,13 +185,15 @@ void WxStagePage::InitEditorPanel()
     });
     stage_ext_panel->AddPagePanel(m_editor_panel, wxVERTICAL);
 
+    std::static_pointer_cast<cgav::WxPreviewCanvas>
+        (GetImpl().GetCanvas())->SetEditorPanel(m_editor_panel);
     m_toolbar_panel->SetEditorPanel(m_editor_panel);
 }
 
 cgav::WxGraphPage*
-WxStagePage::CreateGraphPanel(wxWindow* parent) const
+WxStagePage::CreateGraphPanel(wxWindow* parent, cgav::Scene& scene) const
 {
-    auto panel = new cgav::WxGraphPage(parent, m_sub_mgr, m_graph_obj);
+    auto panel = new cgav::WxGraphPage(parent, scene, m_sub_mgr, m_graph_obj);
     auto& panel_impl = panel->GetImpl();
 
     auto canvas = std::make_shared<WxBlueprintCanvas>(
