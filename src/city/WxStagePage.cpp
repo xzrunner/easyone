@@ -158,7 +158,8 @@ void WxStagePage::LoadFromFileExt(const std::string& filepath)
 
     mm::LinearAllocator alloc;
     auto dir = boost::filesystem::path(filepath).parent_path().string();
-    const_cast<cgav::Scene&>(m_editor_panel->GetScene()).LoadFromJson(alloc, dir, doc["scene"]);
+    const_cast<cgav::Scene&>(m_editor_panel->GetScene()).LoadFromJson(
+        alloc, dir, doc["scene"], m_editor_panel->GetTextPageStrPool());
     m_toolbar_panel->ReloadRulesList();
 
     m_preview_impl.InitSceneNodeRule(m_editor_panel->GetScene());
