@@ -286,3 +286,6 @@
 [submodule "ext/nurbs"]
 	path = ext/nurbs
 	url = git@github.com:xzrunner/nurbs.git
+[submodule "ext/terrview"]
+	path = ext/terrview
+	url = git@github.com:xzrunner/terrview.git
