@@ -33,6 +33,7 @@ enum StagePageType
     PAGE_HDI_SOP,
     PAGE_HDI_VOP,
     PAGE_CITY,
+    PAGE_TERR,
 
 	PAGE_SCRIPT,
 	PAGE_BLUEPRINT,
@@ -89,6 +90,8 @@ std::string GetPageName(int type)
         return "HdiVop";
     case PAGE_CITY:
         return "City";
+    case PAGE_TERR:
+        return "Terr";
 
 	case PAGE_SCRIPT:
 		return "Script";

@@ -37,27 +37,6 @@
     <Filter Include="00.frame\tools">
       <UniqueIdentifier>{19f5effd-40ff-45bc-8e06-2d19aacba034}</UniqueIdentifier>
     </Filter>
-    <Filter Include="40.script">
-      <UniqueIdentifier>{e5403ed2-e587-4720-82ab-24d87ef5a467}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="14.terrain">
-      <UniqueIdentifier>{69bc9418-eaa2-4e86-961c-10ce77c57495}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="50.quake">
-      <UniqueIdentifier>{f6b3457a-0b5f-4899-a4a3-9993706ed2f0}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="50.quake\view">
-      <UniqueIdentifier>{2e1f98fa-7522-4702-87f5-5b04dcd9a120}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="50.quake\view\stage">
-      <UniqueIdentifier>{4db40f89-49c2-4512-9164-3ce39578ccdb}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="50.quake\view\preview">
-      <UniqueIdentifier>{fc0d4e42-d230-4e57-b44d-1edfec6ada2c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="41.bprint">
-      <UniqueIdentifier>{2a19c5fb-533d-4152-bb7a-6a5db2f2050b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="31.anim3">
       <UniqueIdentifier>{303c6513-429e-45d1-8e02-9625e7967cce}</UniqueIdentifier>
     </Filter>
@@ -211,6 +190,27 @@
     <Filter Include="18.cad">
       <UniqueIdentifier>{7bf87204-fae7-4ad2-89b3-f57e02f9068b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="50.script">
+      <UniqueIdentifier>{e5403ed2-e587-4720-82ab-24d87ef5a467}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="51.bprint">
+      <UniqueIdentifier>{2a19c5fb-533d-4152-bb7a-6a5db2f2050b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="52.quake">
+      <UniqueIdentifier>{f6b3457a-0b5f-4899-a4a3-9993706ed2f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="52.quake\view">
+      <UniqueIdentifier>{2e1f98fa-7522-4702-87f5-5b04dcd9a120}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="52.quake\view\stage">
+      <UniqueIdentifier>{4db40f89-49c2-4512-9164-3ce39578ccdb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="52.quake\view\preview">
+      <UniqueIdentifier>{fc0d4e42-d230-4e57-b44d-1edfec6ada2c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="40.terr">
+      <UniqueIdentifier>{390d38a4-57f9-4fe7-b770-fa13f0555688}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\frame\main.h">
@@ -280,10 +280,10 @@
       <Filter>00.frame\frame</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\script\WxStagePage.h">
-      <Filter>40.script</Filter>
+      <Filter>50.script</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\script\WxStageCanvas.h">
-      <Filter>40.script</Filter>
+      <Filter>50.script</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\anim\WxStagePage.h">
       <Filter>12.anim</Filter>
@@ -351,23 +351,20 @@
     <ClInclude Include="..\..\..\src\frame\WxStageCanvas3D.h">
       <Filter>00.frame\view\2.center\stage\canvas</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\terrain\WxStagePage.h">
-      <Filter>14.terrain</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\quake\QuakeMapLoader.h">
-      <Filter>50.quake</Filter>
+      <Filter>52.quake</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\quake\WxStageCanvas.h">
-      <Filter>50.quake\view\stage</Filter>
+      <Filter>52.quake\view\stage</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\quake\WxStagePage.h">
-      <Filter>50.quake\view\stage</Filter>
+      <Filter>52.quake\view\stage</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\quake\WxPreviewPanel.h">
-      <Filter>50.quake\view\preview</Filter>
+      <Filter>52.quake\view\preview</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\quake\WxPreviewCanvas.h">
-      <Filter>50.quake\view\preview</Filter>
+      <Filter>52.quake\view\preview</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\frame\AppStyle.h">
       <Filter>00.frame\frame</Filter>
@@ -400,7 +397,7 @@
       <Filter>30.model\toolbar</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\bprint\WxStagePage.h">
-      <Filter>41.bprint</Filter>
+      <Filter>51.bprint</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\prototype\WxStagePage.h">
       <Filter>20.prototype</Filter>
@@ -522,6 +519,9 @@
     <ClInclude Include="..\..\..\src\cad\WxStagePage.h">
       <Filter>18.cad</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\terrain\WxStagePage.h">
+      <Filter>40.terr</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\frame\main.cpp">
@@ -588,10 +588,10 @@
       <Filter>00.frame\frame</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\script\WxStagePage.cpp">
-      <Filter>40.script</Filter>
+      <Filter>50.script</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\script\WxStageCanvas.cpp">
-      <Filter>40.script</Filter>
+      <Filter>50.script</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\anim\WxStagePage.cpp">
       <Filter>12.anim</Filter>
@@ -641,23 +641,20 @@
     <ClCompile Include="..\..\..\src\frame\WxStageCanvas3D.cpp">
       <Filter>00.frame\view\2.center\stage\canvas</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\terrain\WxStagePage.cpp">
-      <Filter>14.terrain</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\quake\QuakeMapLoader.cpp">
-      <Filter>50.quake</Filter>
+      <Filter>52.quake</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\quake\WxStageCanvas.cpp">
-      <Filter>50.quake\view\stage</Filter>
+      <Filter>52.quake\view\stage</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\quake\WxStagePage.cpp">
-      <Filter>50.quake\view\stage</Filter>
+      <Filter>52.quake\view\stage</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\quake\WxPreviewPanel.cpp">
-      <Filter>50.quake\view\preview</Filter>
+      <Filter>52.quake\view\preview</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\quake\WxPreviewCanvas.cpp">
-      <Filter>50.quake\view\preview</Filter>
+      <Filter>52.quake\view\preview</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\model\WxStageCanvas.cpp">
       <Filter>30.model\stage</Filter>
@@ -687,7 +684,7 @@
       <Filter>30.model\toolbar</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\bprint\WxStagePage.cpp">
-      <Filter>41.bprint</Filter>
+      <Filter>51.bprint</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\prototype\WxStagePage.cpp">
       <Filter>20.prototype</Filter>
@@ -805,6 +802,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\cad\WxStagePage.cpp">
       <Filter>18.cad</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\terrain\WxStagePage.cpp">
+      <Filter>40.terr</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

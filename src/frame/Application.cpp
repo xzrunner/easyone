@@ -66,6 +66,9 @@
 #ifdef MODULE_CITY
 #include "city/WxStagePage.h"
 #endif // MOUDLE_CITY
+#ifdef MODULE_TERR
+#include "terrain/WxStagePage.h"
+#endif // MODULE_TERR
 
 #include <ee0/MsgHelper.h>
 #include <ee0/SubjectMgr.h>
@@ -206,6 +209,10 @@ void Application::LoadFromFile(const std::string& filepath)
             } else if (type == city::WxStagePage::PAGE_TYPE) {
                 new_type = PAGE_CITY;
 #endif // MODULE_CITY
+#ifdef MODULE_TERR
+            } else if (type == terrain::WxStagePage::PAGE_TYPE) {
+                new_type = PAGE_TERR;
+#endif // MODULE_TERR
             }
 		} else if (new_type_str == "n2_scale9") {
 			new_type = PAGE_SCALE9;
@@ -444,6 +451,9 @@ wxWindow* Application::CreateStagePanel()
 #ifdef MODULE_CITY
     page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_CITY, m_stage);
 #endif // MODULE_CITY
+#ifdef MODULE_TERR
+    page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_TERR, m_stage);
+#endif // MODULE_TERR
 
 #ifdef MODULE_QUAKE
 	page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_QUAKE, m_stage);

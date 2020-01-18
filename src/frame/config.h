@@ -12,7 +12,7 @@
 //#define MODULE_SHAPE2D
 //#define MODULE_SHAPE3D
 //#define MODULE_MESH
-#define MODULE_CAD
+//#define MODULE_CAD
 //#define MODULE_PROTOTYPE
 //#define MODULE_MODEL
 //#define MODULE_ANIM3
@@ -23,8 +23,9 @@
 //#define MODULE_GUIGRAPH
 //#define MODULE_PBRGRAPH
 //#define MODULE_HDI_SOP
-#define MODULE_HDI_VOP
+//#define MODULE_HDI_VOP
 //#define MODULE_CITY
+#define MODULE_TERR
 //#define MODULE_SCRIPT
 //#define MODULE_BLUEPRINT
 //#define MODULE_QUAKE

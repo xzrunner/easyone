@@ -102,6 +102,9 @@
 #ifdef MODULE_CITY
 #include "city/WxStagePage.h"
 #endif // MODULE_CITY
+#ifdef MODULE_TERR
+#include "terrain/WxStagePage.h"
+#endif // MODULE_TERR
 
 #include <ee0/WxListSelectDlg.h>
 #include <ee0/MsgHelper.h>
@@ -150,6 +153,9 @@
 #include <cgaview/CGAView.h>
 #include <cgaview/WxPreviewCanvas.h>
 #endif // MODULE_CITY
+#ifdef MODULE_TERR
+#include <terrview/WxPreviewCanvas.h>
+#endif // MODULE_TERR
 
 #include <boost/filesystem.hpp>
 
@@ -572,6 +578,23 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
     }
         break;
 #endif // MODULE_CITY
+#ifdef MODULE_TERR
+    case PAGE_TERR:
+    {
+        auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX2D);
+        page = new terrain::WxStagePage(frame, ECS_WORLD_VAR obj);
+        auto canvas = std::make_shared<terrv::WxPreviewCanvas>(page, ECS_WORLD_VAR rc);
+
+        page->GetImpl().SetCanvas(canvas);
+
+        auto op = std::make_shared<ee3::NodeArrangeOP>(
+            canvas->GetCamera(), *page, canvas->GetViewport()
+        );
+
+        page->GetImpl().SetEditOP(op);
+    }
+        break;
+#endif // MODULE_TERR
 
 #ifdef MODULE_SCRIPT
 	case PAGE_SCRIPT:
