@@ -31,16 +31,20 @@ void WxStageCanvas2D::DrawForeground() const
 	ee2::WxStageCanvas::DrawForeground();
 
 #ifndef GAME_OBJ_ECS
-	auto obj = static_cast<WxStagePage*>(m_stage)->GetEditedObj();
-	if (obj->HasUniqueComp<n2::CompScissor>())
-	{
-		float line_width = 2.0f;
-		if (m_camera->TypeID() == pt0::GetCamTypeID<pt2::OrthoCamera>()) {
-			line_width *= std::dynamic_pointer_cast<pt2::OrthoCamera>(m_camera)->GetScale();
-		}
-		auto& cscissor = obj->GetUniqueComp<n2::CompScissor>();
-		n2::RenderSystem::Instance()->DrawScissorRect(cscissor.GetRect(), line_width, sm::Matrix2D());
-	}
+    auto eone_page = dynamic_cast<WxStagePage*>(m_stage);
+    if (eone_page)
+    {
+	    auto obj = eone_page->GetEditedObj();
+	    if (obj->HasUniqueComp<n2::CompScissor>())
+	    {
+		    float line_width = 2.0f;
+		    if (m_camera->TypeID() == pt0::GetCamTypeID<pt2::OrthoCamera>()) {
+			    line_width *= std::dynamic_pointer_cast<pt2::OrthoCamera>(m_camera)->GetScale();
+		    }
+		    auto& cscissor = obj->GetUniqueComp<n2::CompScissor>();
+		    n2::RenderSystem::Instance()->DrawScissorRect(cscissor.GetRect(), line_width, sm::Matrix2D());
+	    }
+    }
 #else
 	// todo ecs
 #endif // GAME_OBJ_ECS
