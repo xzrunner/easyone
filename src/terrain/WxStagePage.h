@@ -7,10 +7,10 @@
 #include "frame/WxStagePage.h"
 #include "frame/StagePageType.h"
 
-#include <cgaview/PreviewPage.h>
+#include <terrview/PreviewPage.h>
 
 namespace cga { class EvalContext; }
-namespace cgav { class WxEditorPanel; class WxToolbarPanel; class WxGraphPage; }
+namespace terrv { class WxEditorPanel; class WxToolbarPanel; class WxGraphPage; }
 
 namespace eone
 {
@@ -29,7 +29,7 @@ public:
 
     virtual int GetPageType() const override { return PAGE_TERR; }
 
-    n0::SceneNodePtr GetGraphObj() const { return m_graph_obj; }
+    //n0::SceneNodePtr GetGraphObj() const { return m_graph_obj; }
 
     void InitEditOP() { m_preview_impl.InitEditOP(); }
 
@@ -50,8 +50,7 @@ protected:
     virtual void LoadFromFileExt(const std::string& filepath) override;
 
 private:
-    void InitEditorPanel();
-    cgav::WxGraphPage* CreateGraphPanel(wxWindow* parent, cgav::Scene& scene) const;
+    terrv::WxGraphPage* CreateGraphPanel(wxWindow* parent) const;
 
     bool InsertSceneObj(const ee0::VariantSet& variants);
     bool DeleteSceneObj(const ee0::VariantSet& variants);
@@ -60,12 +59,13 @@ private:
     void CreateNewPage(const ee0::VariantSet& variants) const;
 
 private:
-    cgav::PreviewPage m_preview_impl;
+    terrv::PreviewPage m_preview_impl;
 
-    cgav::WxEditorPanel*  m_editor_panel  = nullptr;
-    cgav::WxToolbarPanel* m_toolbar_panel = nullptr;
+    terrv::WxEditorPanel*  m_editor_panel  = nullptr;
+    terrv::WxToolbarPanel* m_toolbar_panel = nullptr;
 
     n0::SceneNodePtr m_graph_obj = nullptr;
+    terrv::WxGraphPage* m_graph_page = nullptr;
 
 }; // WxStagePage
 

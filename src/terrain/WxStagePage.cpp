@@ -21,13 +21,11 @@
 #include <blueprint/NodeSelectOP.h>
 #include <blueprint/ArrangeNodeOP.h>
 #include <blueprint/ConnectPinOP.h>
-#include <cgaview/CGAView.h>
-#include <cgaview/WxPreviewCanvas.h>
-#include <cgaview/WxEditorPanel.h>
-#include <cgaview/WxToolbarPanel.h>
-#include <cgaview/WxGraphPage.h>
-#include <cgaview/MessageID.h>
-#include <cgaview/Serializer.h>
+#include <blueprint/Serializer.h>
+#include <terrview/WxPreviewCanvas.h>
+#include <terrview/WxGraphPage.h>
+#include <terrview/TerrView.h>
+#include <terrview/WxToolbarPanel.h>
 
 #include <node0/SceneNode.h>
 #include <node0/CompComplex.h>
@@ -57,8 +55,6 @@ WxStagePage::WxStagePage(wxWindow* parent, ECS_WORLD_PARAM const ee0::GameObj& o
 	m_messages.push_back(ee0::MSG_SCENE_NODE_CLEAR);
 
     m_messages.push_back(ee0::MSG_STAGE_PAGE_NEW);
-
-    cgav::Serializer::Init();
 }
 
 void WxStagePage::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
@@ -131,7 +127,18 @@ void WxStagePage::Traverse(std::function<bool(const ee0::GameObj&)> func,
 
 void WxStagePage::OnPageInit()
 {
-    InitEditorPanel();
+    m_graph_obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX2D);
+
+    auto stage_ext_panel = Blackboard::Instance()->GetStageExtPanel();
+    m_graph_page = CreateGraphPanel(stage_ext_panel);
+    stage_ext_panel->AddPagePanel(m_graph_page, wxVERTICAL);
+
+    auto toolbar_panel = Blackboard::Instance()->GetToolbarPanel();
+    auto toolbar_page = new terrv::WxToolbarPanel(toolbar_panel, m_graph_page->GetSubjectMgr());
+    toolbar_panel->AddPagePanel(toolbar_page, wxVERTICAL);
+
+    auto prev_canvas = std::static_pointer_cast<terrv::WxPreviewCanvas>(GetImpl().GetCanvas());
+    prev_canvas->SetGraphPage(m_graph_page);
 }
 
 #ifndef GAME_OBJ_ECS
@@ -144,57 +151,34 @@ const n0::NodeComp& WxStagePage::GetEditedObjComp() const
 void WxStagePage::StoreToJsonExt(const std::string& dir, rapidjson::Value& val,
                                  rapidjson::MemoryPoolAllocator<>& alloc) const
 {
-    rapidjson::Value scene_val;
-    m_editor_panel->GetScene().StoreToJson(dir, scene_val, alloc);
-    val.AddMember("scene", scene_val, alloc);
+    rapidjson::Value gval;
+    bp::Serializer::StoreToJson(m_graph_obj, dir, gval, alloc);
+    val.AddMember("graph", gval, alloc);
 
     val.AddMember("page_type", rapidjson::Value(PAGE_TYPE.c_str(), alloc), alloc);
 }
 
 void WxStagePage::LoadFromFileExt(const std::string& filepath)
 {
-    rapidjson::Document doc;
-    js::RapidJsonHelper::ReadFromFile(filepath.c_str(), doc);
-
-    mm::LinearAllocator alloc;
-    auto dir = boost::filesystem::path(filepath).parent_path().string();
-    const_cast<cgav::Scene&>(m_editor_panel->GetScene()).LoadFromJson(
-        alloc, dir, doc["scene"], m_editor_panel->GetTextPageStrPool());
-    m_toolbar_panel->ReloadRulesList();
-
-    m_preview_impl.InitSceneNodeRule(m_editor_panel->GetScene());
-}
-
-void WxStagePage::InitEditorPanel()
-{
-    m_graph_obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX2D);
-
-    auto stage_ext_panel = Blackboard::Instance()->GetStageExtPanel();
-
-    m_editor_panel = new cgav::WxEditorPanel(stage_ext_panel, m_sub_mgr,
-        [&](wxWindow* parent, cgav::Scene& scene, cga::EvalContext& ctx) -> cgav::WxGraphPage*
+    auto type = sx::ResFileHelper::Type(filepath);
+    switch (type)
     {
-        auto graph_page = CreateGraphPanel(parent, scene);
-        auto toolbar_panel = Blackboard::Instance()->GetToolbarPanel();
+    case sx::RES_FILE_JSON:
+    {
+        rapidjson::Document doc;
+        js::RapidJsonHelper::ReadFromFile(filepath.c_str(), doc);
 
-        m_toolbar_panel = new cgav::WxToolbarPanel(
-            toolbar_panel, ctx, graph_page->GetSubjectMgr(), GetSubjectMgr()
-        );
-        toolbar_panel->AddPagePanel(m_toolbar_panel, wxVERTICAL);
-
-        return graph_page;
-    });
-    stage_ext_panel->AddPagePanel(m_editor_panel, wxVERTICAL);
-
-    std::static_pointer_cast<cgav::WxPreviewCanvas>
-        (GetImpl().GetCanvas())->SetEditorPanel(m_editor_panel);
-    m_toolbar_panel->SetEditorPanel(m_editor_panel);
+        auto dir = boost::filesystem::path(filepath).parent_path().string();
+        bp::Serializer::LoadFromJson(*m_graph_page, m_graph_obj, doc["graph"], dir);
+    }
+    break;
+    }
 }
 
-cgav::WxGraphPage*
-WxStagePage::CreateGraphPanel(wxWindow* parent, cgav::Scene& scene) const
+terrv::WxGraphPage*
+WxStagePage::CreateGraphPanel(wxWindow* parent) const
 {
-    auto panel = new cgav::WxGraphPage(parent, scene, m_sub_mgr, m_graph_obj);
+    auto panel = new terrv::WxGraphPage(parent, m_graph_obj, m_sub_mgr);
     auto& panel_impl = panel->GetImpl();
 
     auto canvas = std::make_shared<WxBlueprintCanvas>(
@@ -212,7 +196,7 @@ WxStagePage::CreateGraphPanel(wxWindow* parent, cgav::Scene& scene) const
     auto arrange_op = std::make_shared<bp::ArrangeNodeOP>(
         canvas->GetCamera(), *panel, ECS_WORLD_VAR cfg, select_op);
 
-    auto& nodes = cgav::CGAView::Instance()->GetAllNodes();
+    auto& nodes = terrv::TerrView::Instance()->GetAllNodes();
     auto op = std::make_shared<bp::ConnectPinOP>(canvas->GetCamera(), *panel, nodes);
     op->SetPrevEditOP(arrange_op);
     panel_impl.SetEditOP(op);
