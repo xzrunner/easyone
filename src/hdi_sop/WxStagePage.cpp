@@ -21,12 +21,12 @@
 #include <blueprint/NodeSelectOP.h>
 #include <blueprint/ArrangeNodeOP.h>
 #include <blueprint/ConnectPinOP.h>
+#include <blueprint/Serializer.h>
 #include <sopview/SOPView.h>
 #include <sopview/WxStageCanvas.h>
 #include <sopview/RightPopupMenu.h>
 #include <sopview/NodeSelectOP.h>
 #include <sopview/SceneTree.h>
-#include <sopview/Serializer.h>
 #include <sopview/PyLoader.h>
 
 #include <node0/SceneNode.h>
@@ -55,8 +55,6 @@ WxStagePage::WxStagePage(wxWindow* parent, ECS_WORLD_PARAM const ee0::GameObj& o
 	m_messages.push_back(ee0::MSG_SCENE_NODE_CLEAR);
 
     m_messages.push_back(ee0::MSG_STAGE_PAGE_NEW);
-
-    sopv::Serializer::Init();
 }
 
 void WxStagePage::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
@@ -144,7 +142,10 @@ void WxStagePage::StoreToJsonExt(const std::string& dir, rapidjson::Value& val,
 {
     auto bp_page = static_cast<WxGraphPage*>(m_graph_panel);
     auto stree = bp_page->GetSceneTree();
-    sopv::Serializer::StoreToJson(stree->GetRoot(), dir, val, alloc);
+
+    rapidjson::Value gval;
+    bp::Serializer::StoreToJson(stree->GetRoot(), dir, gval, alloc);
+    val.AddMember("graph", gval, alloc);
 
     val.AddMember("page_type", rapidjson::Value(PAGE_TYPE.c_str(), alloc), alloc);
 }

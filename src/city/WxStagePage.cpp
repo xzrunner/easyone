@@ -27,7 +27,6 @@
 #include <cgaview/WxToolbarPanel.h>
 #include <cgaview/WxGraphPage.h>
 #include <cgaview/MessageID.h>
-#include <cgaview/Serializer.h>
 
 #include <node0/SceneNode.h>
 #include <node0/CompComplex.h>
@@ -57,8 +56,6 @@ WxStagePage::WxStagePage(wxWindow* parent, ECS_WORLD_PARAM const ee0::GameObj& o
 	m_messages.push_back(ee0::MSG_SCENE_NODE_CLEAR);
 
     m_messages.push_back(ee0::MSG_STAGE_PAGE_NEW);
-
-    cgav::Serializer::Init();
 }
 
 void WxStagePage::OnNotify(uint32_t msg, const ee0::VariantSet& variants)

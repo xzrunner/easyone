@@ -21,6 +21,7 @@
 #include <blueprint/NodeSelectOP.h>
 #include <blueprint/ArrangeNodeOP.h>
 #include <blueprint/ConnectPinOP.h>
+#include <blueprint/Serializer.h>
 
 #include <node0/SceneNode.h>
 #include <node0/CompComplex.h>
@@ -32,7 +33,6 @@
 #include <js/RapidJsonHelper.h>
 #include <vopview/VOPView.h>
 #include <vopview/WxStageCanvas.h>
-#include <vopview/Serializer.h>
 
 #include <boost/filesystem.hpp>
 
@@ -51,8 +51,6 @@ WxStagePage::WxStagePage(wxWindow* parent, ECS_WORLD_PARAM const ee0::GameObj& o
 	m_messages.push_back(ee0::MSG_SCENE_NODE_CLEAR);
 
     m_messages.push_back(ee0::MSG_STAGE_PAGE_NEW);
-
-    vopv::Serializer::Init();
 }
 
 void WxStagePage::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
