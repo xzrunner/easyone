@@ -144,6 +144,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "0.shaderweaver_test", "..\..\ext\shaderweaver\platform\msvc\projects\shaderweaver_test.vcxproj", "{4C731ABF-78E1-48B3-8B34-41D4209E038A}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1.shader", "1.shader", "{21641371-9FF1-473B-8607-85E88E161C0A}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\ext\unirender\include\unirender\typedef.h = ..\..\ext\unirender\include\unirender\typedef.h
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "3.entity0", "3.entity0", "{330F0C4E-0E29-4000-992E-FCB5CD8AEEF0}"
 EndProject
