@@ -22,6 +22,8 @@
 #include <blueprint/ArrangeNodeOP.h>
 #include <blueprint/ConnectPinOP.h>
 #include <blueprint/Serializer.h>
+#include <blueprint/NSCompNode.h>
+#include <blueprint/MessageID.h>
 #include <terrview/WxPreviewCanvas.h>
 #include <terrview/WxGraphPage.h>
 #include <terrview/TerrView.h>
@@ -155,6 +157,10 @@ void WxStagePage::StoreToJsonExt(const std::string& dir, rapidjson::Value& val,
     bp::Serializer::StoreToJson(m_graph_obj, dir, gval, alloc);
     val.AddMember("graph", gval, alloc);
 
+    assert(m_graph_obj->HasSharedComp<n0::CompComplex>());
+    auto& ccomplex = m_graph_obj->GetSharedComp<n0::CompComplex>();
+    bp::NSCompNode::StoreConnection(ccomplex.GetAllChildren(), val["graph"]["nodes"], alloc);
+
     val.AddMember("page_type", rapidjson::Value(PAGE_TYPE.c_str(), alloc), alloc);
 }
 
@@ -170,6 +176,11 @@ void WxStagePage::LoadFromFileExt(const std::string& filepath)
 
         auto dir = boost::filesystem::path(filepath).parent_path().string();
         bp::Serializer::LoadFromJson(*m_graph_page, m_graph_obj, doc["graph"], dir);
+
+        auto& ccomplex = m_graph_obj->GetSharedComp<n0::CompComplex>();
+        bp::NSCompNode::LoadConnection(ccomplex.GetAllChildren(), doc["graph"]["nodes"]);
+
+        m_graph_page->GetSubjectMgr()->NotifyObservers(bp::MSG_BP_CONN_REBUILD);
     }
     break;
     }
