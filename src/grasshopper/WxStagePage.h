@@ -2,18 +2,18 @@
 
 #include "frame/config.h"
 
-#ifdef MODULE_TERR
+#ifdef MODULE_GH
 
 #include "frame/WxStagePage.h"
 #include "frame/StagePageType.h"
 
-#include <terrview/PreviewPage.h>
+#include <ghview/PreviewPage.h>
 
-namespace terrv { class WxEditorPanel; class WxToolbarPanel; class WxGraphPage; }
+namespace ghv { class WxEditorPanel; class WxToolbarPanel; class WxGraphPage; }
 
 namespace eone
 {
-namespace terrain
+namespace grasshopper
 {
 
 class WxStagePage : public eone::WxStagePage
@@ -26,7 +26,7 @@ public:
     virtual void Traverse(std::function<bool(const ee0::GameObj&)> func,
         const ee0::VariantSet& variants = ee0::VariantSet(), bool inverse = false) const override;
 
-    virtual int GetPageType() const override { return PAGE_TERR; }
+    virtual int GetPageType() const override { return PAGE_GH; }
 
     //n0::SceneNodePtr GetGraphObj() const { return m_graph_obj; }
 
@@ -49,7 +49,7 @@ protected:
     virtual void LoadFromFileExt(const std::string& filepath) override;
 
 private:
-    terrv::WxGraphPage* CreateGraphPanel(wxWindow* parent) const;
+    ghv::WxGraphPage* CreateGraphPanel(wxWindow* parent) const;
 
     bool InsertSceneObj(const ee0::VariantSet& variants);
     bool DeleteSceneObj(const ee0::VariantSet& variants);
@@ -58,17 +58,17 @@ private:
     void CreateNewPage(const ee0::VariantSet& variants) const;
 
 private:
-    terrv::PreviewPage m_preview_impl;
+    ghv::PreviewPage m_preview_impl;
 
-    terrv::WxEditorPanel*  m_editor_panel  = nullptr;
-    terrv::WxToolbarPanel* m_toolbar_panel = nullptr;
+    ghv::WxEditorPanel*  m_editor_panel  = nullptr;
+    ghv::WxToolbarPanel* m_toolbar_panel = nullptr;
 
     n0::SceneNodePtr m_graph_obj = nullptr;
-    terrv::WxGraphPage* m_graph_page = nullptr;
+    ghv::WxGraphPage* m_graph_page = nullptr;
 
 }; // WxStagePage
 
 }
 }
 
-#endif // MODULE_TERR
+#endif // MODULE_GH

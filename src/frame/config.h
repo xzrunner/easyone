@@ -25,7 +25,8 @@
 //#define MODULE_HDI_SOP
 //#define MODULE_HDI_VOP
 //#define MODULE_CITY
-#define MODULE_TERR
+//#define MODULE_TERR
+#define MODULE_GH
 //#define MODULE_SCRIPT
 //#define MODULE_BLUEPRINT
 //#define MODULE_QUAKE

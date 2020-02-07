@@ -71,6 +71,7 @@ void WxFrame::OnNew(wxCommandEvent& event)
         { "HdiVop",      new PageItemData(eone::PAGE_HDI_VOP) },
         { "City",        new PageItemData(eone::PAGE_CITY) },
         { "Terr",        new PageItemData(eone::PAGE_TERR) },
+        { "Gh",          new PageItemData(eone::PAGE_GH) },
 
 		{ "Script...",   new PageItemData(eone::PAGE_SCRIPT) },
 		{ "Blueprint",   new PageItemData(eone::PAGE_BLUEPRINT) },

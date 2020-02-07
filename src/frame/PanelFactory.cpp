@@ -105,6 +105,9 @@
 #ifdef MODULE_TERR
 #include "terrain/WxStagePage.h"
 #endif // MODULE_TERR
+#ifdef MODULE_GH
+#include "grasshopper/WxStagePage.h"
+#endif // MODULE_GH
 
 #include <ee0/WxListSelectDlg.h>
 #include <ee0/MsgHelper.h>
@@ -156,6 +159,9 @@
 #ifdef MODULE_TERR
 #include <terrview/WxPreviewCanvas.h>
 #endif // MODULE_TERR
+#ifdef MODULE_GH
+#include <ghview/WxPreviewCanvas.h>
+#endif // MODULE_GH
 
 #include <boost/filesystem.hpp>
 
@@ -595,6 +601,23 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
     }
         break;
 #endif // MODULE_TERR
+#ifdef MODULE_GH
+    case PAGE_GH:
+    {
+        auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX2D);
+        page = new grasshopper::WxStagePage(frame, ECS_WORLD_VAR obj);
+        auto canvas = std::make_shared<ghv::WxPreviewCanvas>(page, ECS_WORLD_VAR rc);
+
+        page->GetImpl().SetCanvas(canvas);
+
+        auto op = std::make_shared<ee3::NodeArrangeOP>(
+            canvas->GetCamera(), *page, canvas->GetViewport()
+        );
+
+        page->GetImpl().SetEditOP(op);
+    }
+        break;
+#endif // MODULE_GH
 
 #ifdef MODULE_SCRIPT
 	case PAGE_SCRIPT:

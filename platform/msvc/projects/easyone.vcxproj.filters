@@ -211,6 +211,9 @@
     <Filter Include="40.terr">
       <UniqueIdentifier>{390d38a4-57f9-4fe7-b770-fa13f0555688}</UniqueIdentifier>
     </Filter>
+    <Filter Include="41.grasshopper">
+      <UniqueIdentifier>{f1fb352f-f5f0-44b8-b203-4000161b068b}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\frame\main.h">
@@ -522,6 +525,9 @@
     <ClInclude Include="..\..\..\src\terrain\WxStagePage.h">
       <Filter>40.terr</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\grasshopper\WxStagePage.h">
+      <Filter>41.grasshopper</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\frame\main.cpp">
@@ -805,6 +811,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\terrain\WxStagePage.cpp">
       <Filter>40.terr</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\grasshopper\WxStagePage.cpp">
+      <Filter>41.grasshopper</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
