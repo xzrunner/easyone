@@ -289,3 +289,10 @@
 [submodule "ext/terrview"]
 	path = ext/terrview
 	url = git@github.com:xzrunner/terrview.git
+[submodule "ext/gh"]
+	path = ext/gh
+	url = git@github.com:xzrunner/gh.git
+[submodule "ext/ghview"]
+	path = ext/ghview
+	url = git@github.com:xzrunner/ghview.git
+	branch = master
