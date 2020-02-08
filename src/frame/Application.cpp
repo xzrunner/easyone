@@ -72,6 +72,9 @@
 #ifdef MODULE_GH
 #include "grasshopper/WxStagePage.h"
 #endif // MODULE_GH
+#ifdef MODULE_TD
+#include "touchdesigner/WxStagePage.h"
+#endif // MODULE_TD
 
 #include <ee0/MsgHelper.h>
 #include <ee0/SubjectMgr.h>
@@ -220,6 +223,10 @@ void Application::LoadFromFile(const std::string& filepath)
             } else if (type == grasshopper::WxStagePage::PAGE_TYPE) {
                 new_type = PAGE_GH;
 #endif // MODULE_GH
+#ifdef MODULE_TD
+            } else if (type == touchdesigner::WxStagePage::PAGE_TYPE) {
+                new_type = PAGE_TD;
+#endif // MODULE_TD
             }
 		} else if (new_type_str == "n2_scale9") {
 			new_type = PAGE_SCALE9;
@@ -463,7 +470,10 @@ wxWindow* Application::CreateStagePanel()
 #endif // MODULE_TERR
 #ifdef MODULE_GH
     page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_GH, m_stage);
-#endif // MODULE_TERR
+#endif // MODULE_GH
+#ifdef MODULE_TD
+    page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_TD, m_stage);
+#endif // MODULE_TD
 
 #ifdef MODULE_QUAKE
 	page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_QUAKE, m_stage);

@@ -214,6 +214,9 @@
     <Filter Include="41.grasshopper">
       <UniqueIdentifier>{f1fb352f-f5f0-44b8-b203-4000161b068b}</UniqueIdentifier>
     </Filter>
+    <Filter Include="42.touchdesigner">
+      <UniqueIdentifier>{7245bbe5-8020-4ac7-947a-77080fb501ed}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\frame\main.h">
@@ -528,6 +531,9 @@
     <ClInclude Include="..\..\..\src\grasshopper\WxStagePage.h">
       <Filter>41.grasshopper</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\touchdesigner\WxStagePage.h">
+      <Filter>42.touchdesigner</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\frame\main.cpp">
@@ -814,6 +820,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\grasshopper\WxStagePage.cpp">
       <Filter>41.grasshopper</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\touchdesigner\WxStagePage.cpp">
+      <Filter>42.touchdesigner</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -72,6 +72,7 @@ void WxFrame::OnNew(wxCommandEvent& event)
         { "City",        new PageItemData(eone::PAGE_CITY) },
         { "Terr",        new PageItemData(eone::PAGE_TERR) },
         { "Gh",          new PageItemData(eone::PAGE_GH) },
+        { "Td",          new PageItemData(eone::PAGE_TD) },
 
 		{ "Script...",   new PageItemData(eone::PAGE_SCRIPT) },
 		{ "Blueprint",   new PageItemData(eone::PAGE_BLUEPRINT) },

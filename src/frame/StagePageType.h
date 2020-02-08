@@ -35,6 +35,7 @@ enum StagePageType
     PAGE_CITY,
     PAGE_TERR,
     PAGE_GH,
+    PAGE_TD,
 
 	PAGE_SCRIPT,
 	PAGE_BLUEPRINT,
@@ -95,6 +96,8 @@ std::string GetPageName(int type)
         return "Terr";
     case PAGE_GH:
         return "Gh";
+    case PAGE_TD:
+        return "Td";
 
 	case PAGE_SCRIPT:
 		return "Script";

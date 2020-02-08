@@ -108,6 +108,9 @@
 #ifdef MODULE_GH
 #include "grasshopper/WxStagePage.h"
 #endif // MODULE_GH
+#ifdef MODULE_TD
+#include "touchdesigner/WxStagePage.h"
+#endif // MODULE_TD
 
 #include <ee0/WxListSelectDlg.h>
 #include <ee0/MsgHelper.h>
@@ -162,6 +165,9 @@
 #ifdef MODULE_GH
 #include <ghview/WxPreviewCanvas.h>
 #endif // MODULE_GH
+#ifdef MODULE_TD
+#include <tdview/WxPreviewCanvas.h>
+#endif // MODULE_TD
 
 #include <boost/filesystem.hpp>
 
@@ -618,6 +624,23 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
     }
         break;
 #endif // MODULE_GH
+#ifdef MODULE_TD
+    case PAGE_TD:
+    {
+        auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX2D);
+        page = new touchdesigner::WxStagePage(frame, ECS_WORLD_VAR obj);
+        auto canvas = std::make_shared<tdv::WxPreviewCanvas>(page, ECS_WORLD_VAR rc);
+
+        page->GetImpl().SetCanvas(canvas);
+
+        auto op = std::make_shared<ee3::NodeArrangeOP>(
+            canvas->GetCamera(), *page, canvas->GetViewport()
+        );
+
+        page->GetImpl().SetEditOP(op);
+    }
+        break;
+#endif // MODULE_TD
 
 #ifdef MODULE_SCRIPT
 	case PAGE_SCRIPT:
