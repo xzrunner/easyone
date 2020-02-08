@@ -2,12 +2,12 @@
 
 #include "frame/config.h"
 
-#ifdef MODULE_GH
+#ifdef MODULE_GRASSHOPPER
 
 #include "frame/WxStagePage.h"
 #include "frame/StagePageType.h"
 
-#include <ghview/PreviewPage.h>
+#include <ghv/PreviewPage.h>
 
 namespace ghv { class WxEditorPanel; class WxToolbarPanel; class WxGraphPage; }
 
@@ -26,7 +26,7 @@ public:
     virtual void Traverse(std::function<bool(const ee0::GameObj&)> func,
         const ee0::VariantSet& variants = ee0::VariantSet(), bool inverse = false) const override;
 
-    virtual int GetPageType() const override { return PAGE_GH; }
+    virtual int GetPageType() const override { return PAGE_GRASSHOPPER; }
 
     //n0::SceneNodePtr GetGraphObj() const { return m_graph_obj; }
 
@@ -71,4 +71,4 @@ private:
 }
 }
 
-#endif // MODULE_GH
+#endif // MODULE_GRASSHOPPER

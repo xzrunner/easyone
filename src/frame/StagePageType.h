@@ -34,7 +34,7 @@ enum StagePageType
     PAGE_HDI_VOP,
     PAGE_CITY,
     PAGE_WORLDMACHINE,
-    PAGE_GH,
+    PAGE_GRASSHOPPER,
     PAGE_TD,
 
 	PAGE_SCRIPT,
@@ -94,8 +94,8 @@ std::string GetPageName(int type)
         return "City";
     case PAGE_WORLDMACHINE:
         return "WorldMachine";
-    case PAGE_GH:
-        return "Gh";
+    case PAGE_GRASSHOPPER:
+        return "Grasshopper";
     case PAGE_TD:
         return "Td";
 

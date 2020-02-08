@@ -105,9 +105,9 @@
 #ifdef MODULE_WORLDMACHINE
 #include "worldmachine/WxStagePage.h"
 #endif // MODULE_WORLDMACHINE
-#ifdef MODULE_GH
+#ifdef MODULE_GRASSHOPPER
 #include "grasshopper/WxStagePage.h"
-#endif // MODULE_GH
+#endif // MODULE_GRASSHOPPER
 #ifdef MODULE_TD
 #include "touchdesigner/WxStagePage.h"
 #endif // MODULE_TD
@@ -162,9 +162,9 @@
 #ifdef MODULE_WORLDMACHINE
 #include <wmv/WxPreviewCanvas.h>
 #endif // MODULE_WORLDMACHINE
-#ifdef MODULE_GH
-#include <ghview/WxPreviewCanvas.h>
-#endif // MODULE_GH
+#ifdef MODULE_GRASSHOPPER
+#include <ghv/WxPreviewCanvas.h>
+#endif // MODULE_GRASSHOPPER
 #ifdef MODULE_TD
 #include <tdview/WxPreviewCanvas.h>
 #endif // MODULE_TD
@@ -607,8 +607,8 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
     }
         break;
 #endif // MODULE_WORLDMACHINE
-#ifdef MODULE_GH
-    case PAGE_GH:
+#ifdef MODULE_GRASSHOPPER
+    case PAGE_GRASSHOPPER:
     {
         auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX2D);
         page = new grasshopper::WxStagePage(frame, ECS_WORLD_VAR obj);
@@ -623,7 +623,7 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
         page->GetImpl().SetEditOP(op);
     }
         break;
-#endif // MODULE_GH
+#endif // MODULE_GRASSHOPPER
 #ifdef MODULE_TD
     case PAGE_TD:
     {

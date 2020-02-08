@@ -290,7 +290,7 @@
 	path = ext/gh
 	url = git@github.com:xzrunner/gh.git
 [submodule "ext/ghview"]
-	path = ext/ghview
+	path = ext/ghv
 	url = git@github.com:xzrunner/ghview.git
 	branch = master
 [submodule "ext/td"]

@@ -296,7 +296,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "gh", "gh", "{CF49749E-1484-
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "5.gh", "..\..\ext\gh\platform\msvc\projects\gh.vcxproj", "{1FFF764C-06CD-4935-939C-71922C6148FD}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "7.ghview", "..\..\ext\ghview\platform\msvc\projects\ghview.vcxproj", "{36CE6C84-870C-4F0E-8518-D821EF1E7601}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "7.ghv", "..\..\ext\ghv\platform\msvc\projects\ghv.vcxproj", "{36CE6C84-870C-4F0E-8518-D821EF1E7601}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "td", "td", "{639C679A-0707-41D1-BA82-0CB1779259EE}"
 EndProject
