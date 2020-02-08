@@ -102,9 +102,9 @@
 #ifdef MODULE_CITY
 #include "city/WxStagePage.h"
 #endif // MODULE_CITY
-#ifdef MODULE_TERR
-#include "terrain/WxStagePage.h"
-#endif // MODULE_TERR
+#ifdef MODULE_WORLDMACHINE
+#include "worldmachine/WxStagePage.h"
+#endif // MODULE_WORLDMACHINE
 #ifdef MODULE_GH
 #include "grasshopper/WxStagePage.h"
 #endif // MODULE_GH
@@ -159,9 +159,9 @@
 #include <cgaview/CGAView.h>
 #include <cgaview/WxPreviewCanvas.h>
 #endif // MODULE_CITY
-#ifdef MODULE_TERR
-#include <terrview/WxPreviewCanvas.h>
-#endif // MODULE_TERR
+#ifdef MODULE_WORLDMACHINE
+#include <wmv/WxPreviewCanvas.h>
+#endif // MODULE_WORLDMACHINE
 #ifdef MODULE_GH
 #include <ghview/WxPreviewCanvas.h>
 #endif // MODULE_GH
@@ -590,12 +590,12 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
     }
         break;
 #endif // MODULE_CITY
-#ifdef MODULE_TERR
-    case PAGE_TERR:
+#ifdef MODULE_WORLDMACHINE
+    case PAGE_WORLDMACHINE:
     {
         auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX2D);
-        page = new terrain::WxStagePage(frame, ECS_WORLD_VAR obj);
-        auto canvas = std::make_shared<terrv::WxPreviewCanvas>(page, ECS_WORLD_VAR rc);
+        page = new worldmachine::WxStagePage(frame, ECS_WORLD_VAR obj);
+        auto canvas = std::make_shared<wmv::WxPreviewCanvas>(page, ECS_WORLD_VAR rc);
 
         page->GetImpl().SetCanvas(canvas);
 
@@ -606,7 +606,7 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
         page->GetImpl().SetEditOP(op);
     }
         break;
-#endif // MODULE_TERR
+#endif // MODULE_WORLDMACHINE
 #ifdef MODULE_GH
     case PAGE_GH:
     {

@@ -70,7 +70,7 @@ void WxFrame::OnNew(wxCommandEvent& event)
         { "HdiSop",      new PageItemData(eone::PAGE_HDI_SOP) },
         { "HdiVop",      new PageItemData(eone::PAGE_HDI_VOP) },
         { "City",        new PageItemData(eone::PAGE_CITY) },
-        { "Terr",        new PageItemData(eone::PAGE_TERR) },
+        { "WorldMachine", new PageItemData(eone::PAGE_WORLDMACHINE) },
         { "Gh",          new PageItemData(eone::PAGE_GH) },
         { "Td",          new PageItemData(eone::PAGE_TD) },
 

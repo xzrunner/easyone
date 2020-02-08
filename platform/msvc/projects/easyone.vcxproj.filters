@@ -208,14 +208,14 @@
     <Filter Include="52.quake\view\preview">
       <UniqueIdentifier>{fc0d4e42-d230-4e57-b44d-1edfec6ada2c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="40.terr">
-      <UniqueIdentifier>{390d38a4-57f9-4fe7-b770-fa13f0555688}</UniqueIdentifier>
-    </Filter>
     <Filter Include="41.grasshopper">
       <UniqueIdentifier>{f1fb352f-f5f0-44b8-b203-4000161b068b}</UniqueIdentifier>
     </Filter>
     <Filter Include="42.touchdesigner">
       <UniqueIdentifier>{7245bbe5-8020-4ac7-947a-77080fb501ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="40.worldmachine">
+      <UniqueIdentifier>{390d38a4-57f9-4fe7-b770-fa13f0555688}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -525,14 +525,14 @@
     <ClInclude Include="..\..\..\src\cad\WxStagePage.h">
       <Filter>18.cad</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\terrain\WxStagePage.h">
-      <Filter>40.terr</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\grasshopper\WxStagePage.h">
       <Filter>41.grasshopper</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\touchdesigner\WxStagePage.h">
       <Filter>42.touchdesigner</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\worldmachine\WxStagePage.h">
+      <Filter>40.worldmachine</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -815,14 +815,14 @@
     <ClCompile Include="..\..\..\src\cad\WxStagePage.cpp">
       <Filter>18.cad</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\terrain\WxStagePage.cpp">
-      <Filter>40.terr</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\grasshopper\WxStagePage.cpp">
       <Filter>41.grasshopper</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\touchdesigner\WxStagePage.cpp">
       <Filter>42.touchdesigner</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\worldmachine\WxStagePage.cpp">
+      <Filter>40.worldmachine</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

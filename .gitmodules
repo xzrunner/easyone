@@ -146,7 +146,7 @@
 	path = ext/entity3
 	url = git@github.com:xzrunner/entity3.git
 [submodule "ext/terr"]
-	path = ext/terr
+	path = ext/wm
 	url = git@github.com:xzrunner/terr.git
 [submodule "ext/vtex"]
 	path = ext/vtex
@@ -300,5 +300,5 @@
 	path = ext/tdview
 	url = git@github.com:xzrunner/tdview.git
 [submodule "ext/terrview"]
-	path = ext/terrview
+	path = ext/wmv
 	url = git@github.com:xzrunner/terrview.git
