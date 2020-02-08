@@ -1,6 +1,6 @@
 #include "touchdesigner/WxStagePage.h"
 
-#ifdef MODULE_TD
+#ifdef MODULE_TOUCH_DESIGNER
 
 #include "frame/AppStyle.h"
 #include "frame/Blackboard.h"
@@ -24,11 +24,11 @@
 #include <blueprint/Serializer.h>
 #include <blueprint/NSCompNode.h>
 #include <blueprint/MessageID.h>
-#include <tdview/WxPreviewCanvas.h>
-#include <tdview/WxGraphPage.h>
-#include <tdview/GraphEditOP.h>
-#include <tdview/TdView.h>
-#include <tdview/WxToolbarPanel.h>
+#include <tdv/WxPreviewCanvas.h>
+#include <tdv/WxGraphPage.h>
+#include <tdv/GraphEditOP.h>
+#include <tdv/TDV.h>
+#include <tdv/WxToolbarPanel.h>
 
 #include <node0/SceneNode.h>
 #include <node0/CompComplex.h>
@@ -205,7 +205,7 @@ WxStagePage::CreateGraphPanel(wxWindow* parent) const
     auto arrange_op = std::make_shared<bp::ArrangeNodeOP>(
         canvas->GetCamera(), *panel, ECS_WORLD_VAR cfg, select_op);
 
-    auto& nodes = tdv::TdView::Instance()->GetAllNodes();
+    auto& nodes = tdv::TDV::Instance()->GetAllNodes();
     auto op = std::make_shared<tdv::GraphEditOP>(canvas->GetCamera(), *panel, nodes);
     op->SetPrevEditOP(arrange_op);
     panel_impl.SetEditOP(op);
@@ -282,7 +282,7 @@ void WxStagePage::CreateNewPage(const ee0::VariantSet& variants) const
 
     int page_type = -1;
     if (strcmp(type, bp::PAGE_TYPE) == 0) {
-        page_type = PAGE_TD;
+        page_type = PAGE_TOUCH_DESIGNER;
     }
     if (page_type >= 0)
     {
@@ -290,7 +290,7 @@ void WxStagePage::CreateNewPage(const ee0::VariantSet& variants) const
         auto stage_page = PanelFactory::CreateStagePage(page_type, stage_panel);
         stage_panel->AddNewPage(stage_page, GetPageName(stage_page->GetPageType()));
 
-        if (page_type == PAGE_TD)
+        if (page_type == PAGE_TOUCH_DESIGNER)
         {
             auto var = variants.GetVariant("obj");
             GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: obj");
@@ -303,4 +303,4 @@ void WxStagePage::CreateNewPage(const ee0::VariantSet& variants) const
 }
 }
 
-#endif // MODULE_TD
+#endif // MODULE_TOUCH_DESIGNER

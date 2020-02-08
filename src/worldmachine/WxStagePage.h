@@ -2,7 +2,7 @@
 
 #include "frame/config.h"
 
-#ifdef MODULE_WORLDMACHINE
+#ifdef MODULE_WORLD_MACHINE
 
 #include "frame/WxStagePage.h"
 #include "frame/StagePageType.h"
@@ -26,7 +26,7 @@ public:
     virtual void Traverse(std::function<bool(const ee0::GameObj&)> func,
         const ee0::VariantSet& variants = ee0::VariantSet(), bool inverse = false) const override;
 
-    virtual int GetPageType() const override { return PAGE_WORLDMACHINE; }
+    virtual int GetPageType() const override { return PAGE_WORLD_MACHINE; }
 
     //n0::SceneNodePtr GetGraphObj() const { return m_graph_obj; }
 
@@ -71,4 +71,4 @@ private:
 }
 }
 
-#endif // MODULE_WORLDMACHINE
+#endif // MODULE_WORLD_MACHINE

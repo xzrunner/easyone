@@ -47,37 +47,37 @@ void WxFrame::OnNew(wxCommandEvent& event)
 
 	const std::vector<std::pair<std::string, wxTreeItemData*>> PAGE_LIST =
 	{
-		{ "Scene2D",     new PageItemData(eone::PAGE_SCENE2D) },
-		{ "Scene3D",     new PageItemData(eone::PAGE_SCENE3D) },
+		{ "Scene2D",         new PageItemData(eone::PAGE_SCENE2D) },
+		{ "Scene3D",         new PageItemData(eone::PAGE_SCENE3D) },
 
-		{ "Scale9",      new PageItemData(eone::PAGE_SCALE9) },
-		{ "Mask",        new PageItemData(eone::PAGE_MASK) },
-		{ "Mesh",        new PageItemData(eone::PAGE_MESH) },
-		{ "Anim",        new PageItemData(eone::PAGE_ANIM) },
-		{ "Particle3d",  new PageItemData(eone::PAGE_PARTICLE3D) },
-		{ "Shape2d",     new PageItemData(eone::PAGE_SHAPE2D) },
-		{ "Shape3d",     new PageItemData(eone::PAGE_SHAPE3D) },
-        { "CAD",         new PageItemData(eone::PAGE_CAD) },
+		{ "Scale9",          new PageItemData(eone::PAGE_SCALE9) },
+		{ "Mask",            new PageItemData(eone::PAGE_MASK) },
+		{ "Mesh",            new PageItemData(eone::PAGE_MESH) },
+		{ "Anim",            new PageItemData(eone::PAGE_ANIM) },
+		{ "Particle3d",      new PageItemData(eone::PAGE_PARTICLE3D) },
+		{ "Shape2d",         new PageItemData(eone::PAGE_SHAPE2D) },
+		{ "Shape3d",         new PageItemData(eone::PAGE_SHAPE3D) },
+        { "CAD",             new PageItemData(eone::PAGE_CAD) },
 
-		{ "Scale9",      new PageItemData(eone::PAGE_SCALE9) },
+		{ "Scale9",          new PageItemData(eone::PAGE_SCALE9) },
 
-		{ "ShaderGraph", new PageItemData(eone::PAGE_SHADER_GRAPH) },
-		{ "Prototyping", new PageItemData(eone::PAGE_PROTOTYPING) },
-        { "RenderGraph", new PageItemData(eone::PAGE_RENDER_GRAPH) },
-        { "RayGraph",    new PageItemData(eone::PAGE_RAY_GRAPH) },
-        { "GuiGraph",    new PageItemData(eone::PAGE_GUI_GRAPH) },
-        { "PbrGraph",    new PageItemData(eone::PAGE_PBR_GRAPH) },
-        { "HdiSop",      new PageItemData(eone::PAGE_HDI_SOP) },
-        { "HdiVop",      new PageItemData(eone::PAGE_HDI_VOP) },
-        { "City",        new PageItemData(eone::PAGE_CITY) },
-        { "WorldMachine", new PageItemData(eone::PAGE_WORLDMACHINE) },
-        { "Grasshopper",  new PageItemData(eone::PAGE_GRASSHOPPER) },
-        { "Td",          new PageItemData(eone::PAGE_TD) },
+		{ "ShaderGraph",     new PageItemData(eone::PAGE_SHADER_GRAPH) },
+		{ "Prototyping",     new PageItemData(eone::PAGE_PROTOTYPING) },
+        { "RenderGraph",     new PageItemData(eone::PAGE_RENDER_GRAPH) },
+        { "RayGraph",        new PageItemData(eone::PAGE_RAY_GRAPH) },
+        { "GuiGraph",        new PageItemData(eone::PAGE_GUI_GRAPH) },
+        { "PbrGraph",        new PageItemData(eone::PAGE_PBR_GRAPH) },
+        { "HdiSop",          new PageItemData(eone::PAGE_HDI_SOP) },
+        { "HdiVop",          new PageItemData(eone::PAGE_HDI_VOP) },
+        { "City",            new PageItemData(eone::PAGE_CITY) },
+        { "WorldMachine",    new PageItemData(eone::PAGE_WORLD_MACHINE) },
+        { "Grasshopper",     new PageItemData(eone::PAGE_GRASSHOPPER) },
+        { "TouchDesigner",   new PageItemData(eone::PAGE_TOUCH_DESIGNER) },
 
-		{ "Script...",   new PageItemData(eone::PAGE_SCRIPT) },
-		{ "Blueprint",   new PageItemData(eone::PAGE_BLUEPRINT) },
+		{ "Script...",       new PageItemData(eone::PAGE_SCRIPT) },
+		{ "Blueprint",       new PageItemData(eone::PAGE_BLUEPRINT) },
 
-		{ "Quake",       new PageItemData(eone::PAGE_QUAKE) },
+		{ "Quake",           new PageItemData(eone::PAGE_QUAKE) },
 	};
 
 	ee0::WxListSelectDlg dlg(this, "New page", PAGE_LIST, wxGetMousePosition());

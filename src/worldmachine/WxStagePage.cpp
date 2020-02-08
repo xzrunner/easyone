@@ -1,6 +1,6 @@
 #include "worldmachine/WxStagePage.h"
 
-#ifdef MODULE_WORLDMACHINE
+#ifdef MODULE_WORLD_MACHINE
 
 #include "frame/AppStyle.h"
 #include "frame/Blackboard.h"
@@ -284,7 +284,7 @@ void WxStagePage::CreateNewPage(const ee0::VariantSet& variants) const
 
     int page_type = -1;
     if (strcmp(type, bp::PAGE_TYPE) == 0) {
-        page_type = PAGE_WORLDMACHINE;
+        page_type = PAGE_WORLD_MACHINE;
     }
     if (page_type >= 0)
     {
@@ -292,7 +292,7 @@ void WxStagePage::CreateNewPage(const ee0::VariantSet& variants) const
         auto stage_page = PanelFactory::CreateStagePage(page_type, stage_panel);
         stage_panel->AddNewPage(stage_page, GetPageName(stage_page->GetPageType()));
 
-        if (page_type == PAGE_WORLDMACHINE)
+        if (page_type == PAGE_WORLD_MACHINE)
         {
             auto var = variants.GetVariant("obj");
             GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: obj");
@@ -305,4 +305,4 @@ void WxStagePage::CreateNewPage(const ee0::VariantSet& variants) const
 }
 }
 
-#endif // MODULE_WORLDMACHINE
+#endif // MODULE_WORLD_MACHINE

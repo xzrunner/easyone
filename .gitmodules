@@ -297,7 +297,7 @@
 	path = ext/td
 	url = git@github.com:xzrunner/td.git
 [submodule "ext/tdview"]
-	path = ext/tdview
+	path = ext/tdv
 	url = git@github.com:xzrunner/tdview.git
 [submodule "ext/terrview"]
 	path = ext/wmv

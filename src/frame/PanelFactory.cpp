@@ -102,15 +102,15 @@
 #ifdef MODULE_CITY
 #include "city/WxStagePage.h"
 #endif // MODULE_CITY
-#ifdef MODULE_WORLDMACHINE
+#ifdef MODULE_WORLD_MACHINE
 #include "worldmachine/WxStagePage.h"
-#endif // MODULE_WORLDMACHINE
+#endif // MODULE_WORLD_MACHINE
 #ifdef MODULE_GRASSHOPPER
 #include "grasshopper/WxStagePage.h"
 #endif // MODULE_GRASSHOPPER
-#ifdef MODULE_TD
+#ifdef MODULE_TOUCH_DESIGNER
 #include "touchdesigner/WxStagePage.h"
-#endif // MODULE_TD
+#endif // MODULE_TOUCH_DESIGNER
 
 #include <ee0/WxListSelectDlg.h>
 #include <ee0/MsgHelper.h>
@@ -159,15 +159,15 @@
 #include <cgaview/CGAView.h>
 #include <cgaview/WxPreviewCanvas.h>
 #endif // MODULE_CITY
-#ifdef MODULE_WORLDMACHINE
+#ifdef MODULE_WORLD_MACHINE
 #include <wmv/WxPreviewCanvas.h>
-#endif // MODULE_WORLDMACHINE
+#endif // MODULE_WORLD_MACHINE
 #ifdef MODULE_GRASSHOPPER
 #include <ghv/WxPreviewCanvas.h>
 #endif // MODULE_GRASSHOPPER
-#ifdef MODULE_TD
-#include <tdview/WxPreviewCanvas.h>
-#endif // MODULE_TD
+#ifdef MODULE_TOUCH_DESIGNER
+#include <tdv/WxPreviewCanvas.h>
+#endif // MODULE_TOUCH_DESIGNER
 
 #include <boost/filesystem.hpp>
 
@@ -590,8 +590,8 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
     }
         break;
 #endif // MODULE_CITY
-#ifdef MODULE_WORLDMACHINE
-    case PAGE_WORLDMACHINE:
+#ifdef MODULE_WORLD_MACHINE
+    case PAGE_WORLD_MACHINE:
     {
         auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX2D);
         page = new worldmachine::WxStagePage(frame, ECS_WORLD_VAR obj);
@@ -606,7 +606,7 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
         page->GetImpl().SetEditOP(op);
     }
         break;
-#endif // MODULE_WORLDMACHINE
+#endif // MODULE_WORLD_MACHINE
 #ifdef MODULE_GRASSHOPPER
     case PAGE_GRASSHOPPER:
     {
@@ -624,8 +624,8 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
     }
         break;
 #endif // MODULE_GRASSHOPPER
-#ifdef MODULE_TD
-    case PAGE_TD:
+#ifdef MODULE_TOUCH_DESIGNER
+    case PAGE_TOUCH_DESIGNER:
     {
         auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX2D);
         page = new touchdesigner::WxStagePage(frame, ECS_WORLD_VAR obj);
@@ -640,7 +640,7 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
         page->GetImpl().SetEditOP(op);
     }
         break;
-#endif // MODULE_TD
+#endif // MODULE_TOUCH_DESIGNER
 
 #ifdef MODULE_SCRIPT
 	case PAGE_SCRIPT:

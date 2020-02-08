@@ -66,15 +66,15 @@
 #ifdef MODULE_CITY
 #include "city/WxStagePage.h"
 #endif // MOUDLE_CITY
-#ifdef MODULE_WORLDMACHINE
+#ifdef MODULE_WORLD_MACHINE
 #include "worldmachine/WxStagePage.h"
-#endif // MODULE_WORLDMACHINE
+#endif // MODULE_WORLD_MACHINE
 #ifdef MODULE_GRASSHOPPER
 #include "grasshopper/WxStagePage.h"
 #endif // MODULE_GRASSHOPPER
-#ifdef MODULE_TD
+#ifdef MODULE_TOUCH_DESIGNER
 #include "touchdesigner/WxStagePage.h"
-#endif // MODULE_TD
+#endif // MODULE_TOUCH_DESIGNER
 
 #include <ee0/MsgHelper.h>
 #include <ee0/SubjectMgr.h>
@@ -215,18 +215,18 @@ void Application::LoadFromFile(const std::string& filepath)
             } else if (type == city::WxStagePage::PAGE_TYPE) {
                 new_type = PAGE_CITY;
 #endif // MODULE_CITY
-#ifdef MODULE_WORLDMACHINE
+#ifdef MODULE_WORLD_MACHINE
             } else if (type == worldmachine::WxStagePage::PAGE_TYPE) {
-                new_type = PAGE_WORLDMACHINE;
-#endif // MODULE_WORLDMACHINE
+                new_type = PAGE_WORLD_MACHINE;
+#endif // MODULE_WORLD_MACHINE
 #ifdef MODULE_GRASSHOPPER
             } else if (type == grasshopper::WxStagePage::PAGE_TYPE) {
                 new_type = PAGE_GRASSHOPPER;
 #endif // MODULE_GRASSHOPPER
-#ifdef MODULE_TD
+#ifdef MODULE_TOUCH_DESIGNER
             } else if (type == touchdesigner::WxStagePage::PAGE_TYPE) {
-                new_type = PAGE_TD;
-#endif // MODULE_TD
+                new_type = PAGE_TOUCH_DESIGNER;
+#endif // MODULE_TOUCH_DESIGNER
             }
 		} else if (new_type_str == "n2_scale9") {
 			new_type = PAGE_SCALE9;
@@ -465,15 +465,15 @@ wxWindow* Application::CreateStagePanel()
 #ifdef MODULE_CITY
     page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_CITY, m_stage);
 #endif // MODULE_CITY
-#ifdef MODULE_WORLDMACHINE
-    page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_WORLDMACHINE, m_stage);
-#endif // MODULE_WORLDMACHINE
+#ifdef MODULE_WORLD_MACHINE
+    page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_WORLD_MACHINE, m_stage);
+#endif // MODULE_WORLD_MACHINE
 #ifdef MODULE_GRASSHOPPER
     page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_GRASSHOPPER, m_stage);
 #endif // MODULE_GRASSHOPPER
-#ifdef MODULE_TD
-    page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_TD, m_stage);
-#endif // MODULE_TD
+#ifdef MODULE_TOUCH_DESIGNER
+    page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_TOUCH_DESIGNER, m_stage);
+#endif // MODULE_TOUCH_DESIGNER
 
 #ifdef MODULE_QUAKE
 	page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_QUAKE, m_stage);

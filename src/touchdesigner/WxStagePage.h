@@ -2,12 +2,12 @@
 
 #include "frame/config.h"
 
-#ifdef MODULE_TD
+#ifdef MODULE_TOUCH_DESIGNER
 
 #include "frame/WxStagePage.h"
 #include "frame/StagePageType.h"
 
-#include <tdview/PreviewPage.h>
+#include <tdv/PreviewPage.h>
 
 namespace tdv { class WxEditorPanel; class WxToolbarPanel; class WxGraphPage; }
 
@@ -26,7 +26,7 @@ public:
     virtual void Traverse(std::function<bool(const ee0::GameObj&)> func,
         const ee0::VariantSet& variants = ee0::VariantSet(), bool inverse = false) const override;
 
-    virtual int GetPageType() const override { return PAGE_TD; }
+    virtual int GetPageType() const override { return PAGE_TOUCH_DESIGNER; }
 
     //n0::SceneNodePtr GetGraphObj() const { return m_graph_obj; }
 
@@ -71,4 +71,4 @@ private:
 }
 }
 
-#endif // MODULE_TD
+#endif // MODULE_TOUCH_DESIGNER
