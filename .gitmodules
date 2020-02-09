@@ -254,10 +254,10 @@
 	path = ext/dungeon
 	url = git@github.com:xzrunner/dungeon.git
 [submodule "ext/cgaview"]
-	path = ext/cgaview
+	path = ext/cev
 	url = git@github.com:xzrunner/cgaview.git
 [submodule "ext/cga"]
-	path = ext/cga
+	path = ext/ce
 	url = git@github.com:xzrunner/cga.git
 [submodule "ext/vopview"]
 	path = ext/vopview
@@ -281,7 +281,7 @@
 	path = ext/cgac
 	url = git@github.com:xzrunner/cgac.git
 [submodule "ext/cgaeasy"]
-	path = ext/cgaeasy
+	path = ext/cep
 	url = git@github.com:xzrunner/cgaeasy.git
 [submodule "ext/nurbs"]
 	path = ext/nurbs

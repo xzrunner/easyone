@@ -2,19 +2,19 @@
 
 #include "frame/config.h"
 
-#ifdef MODULE_CITY
+#ifdef MODULE_CITY_ENGINE
 
 #include "frame/WxStagePage.h"
 #include "frame/StagePageType.h"
 
-#include <cgaview/PreviewPage.h>
+#include <cev/PreviewPage.h>
 
-namespace cga { class EvalContext; }
-namespace cgav { class WxEditorPanel; class WxToolbarPanel; class WxGraphPage; }
+namespace ce { class EvalContext; }
+namespace cev { class WxEditorPanel; class WxToolbarPanel; class WxGraphPage; }
 
 namespace eone
 {
-namespace city
+namespace cityengine
 {
 
 class WxStagePage : public eone::WxStagePage
@@ -27,7 +27,7 @@ public:
     virtual void Traverse(std::function<bool(const ee0::GameObj&)> func,
         const ee0::VariantSet& variants = ee0::VariantSet(), bool inverse = false) const override;
 
-    virtual int GetPageType() const override { return PAGE_CITY; }
+    virtual int GetPageType() const override { return PAGE_CITY_ENGINE; }
 
     n0::SceneNodePtr GetGraphObj() const { return m_graph_obj; }
 
@@ -51,7 +51,7 @@ protected:
 
 private:
     void InitEditorPanel();
-    cgav::WxGraphPage* CreateGraphPanel(wxWindow* parent, cgav::Scene& scene) const;
+    cev::WxGraphPage* CreateGraphPanel(wxWindow* parent, cev::Scene& scene) const;
 
     bool InsertSceneObj(const ee0::VariantSet& variants);
     bool DeleteSceneObj(const ee0::VariantSet& variants);
@@ -60,10 +60,10 @@ private:
     void CreateNewPage(const ee0::VariantSet& variants) const;
 
 private:
-    cgav::PreviewPage m_preview_impl;
+    cev::PreviewPage m_preview_impl;
 
-    cgav::WxEditorPanel*  m_editor_panel  = nullptr;
-    cgav::WxToolbarPanel* m_toolbar_panel = nullptr;
+    cev::WxEditorPanel*  m_editor_panel  = nullptr;
+    cev::WxToolbarPanel* m_toolbar_panel = nullptr;
 
     n0::SceneNodePtr m_graph_obj = nullptr;
 
@@ -72,4 +72,4 @@ private:
 }
 }
 
-#endif // MODULE_CITY
+#endif // MODULE_CITY_ENGINE

@@ -22,6 +22,7 @@
 #include <blueprint/ArrangeNodeOP.h>
 #include <blueprint/ConnectPinOP.h>
 #include <blueprint/Serializer.h>
+#include <blueprint/NSCompNode.h>
 #include <sopview/SOPView.h>
 #include <sopview/WxStageCanvas.h>
 #include <sopview/RightPopupMenu.h>
@@ -147,6 +148,10 @@ void WxStagePage::StoreToJsonExt(const std::string& dir, rapidjson::Value& val,
     bp::Serializer::StoreToJson(stree->GetRoot(), dir, gval, alloc);
     val.AddMember("graph", gval, alloc);
 
+    //assert(m_graph_obj->HasSharedComp<n0::CompComplex>());
+    //auto& ccomplex = m_graph_obj->GetSharedComp<n0::CompComplex>();
+    //bp::NSCompNode::StoreConnection(ccomplex.GetAllChildren(), val["graph"]["nodes"], alloc);
+
     val.AddMember("page_type", rapidjson::Value(PAGE_TYPE.c_str(), alloc), alloc);
 }
 
@@ -165,7 +170,9 @@ void WxStagePage::LoadFromFileExt(const std::string& filepath)
         auto bp_page = static_cast<WxGraphPage*>(m_graph_panel);
         auto stree = bp_page->GetSceneTree();
         stree->LoadBegin();
-        sopv::Serializer::LoadFromJson(*bp_page, stree->GetRoot(), doc["graph"], dir);
+        bp::Serializer::LoadFromJson(*bp_page, stree->GetRoot(), doc["graph"], dir);
+        auto& ccomplex = m_graph_obj->GetSharedComp<n0::CompComplex>();
+        bp::NSCompNode::LoadConnection(ccomplex.GetAllChildren(), doc["graph"]["nodes"]);
         stree->LoadEnd();
 
         stree->AfterLoadFromFile();
