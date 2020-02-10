@@ -52,7 +52,7 @@ void WxToolbarPanel::InitLayout()
     sizer->Add(m_preview = new WxPreviewPanel(this, sub_mgr, &rc, eval));
     sizer->AddSpacer(10);
     // property
-	sizer->Add(m_prop = new rlab::WxNodeProperty(this, sub_mgr));
+	sizer->Add(m_prop = new rlab::WxNodeProperty(this, sub_mgr), wxEXPAND);
 
 	SetSizer(sizer);
 }
