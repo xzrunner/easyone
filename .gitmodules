@@ -302,3 +302,9 @@
 [submodule "ext/terrview"]
 	path = ext/wmv
 	url = git@github.com:xzrunner/terrview.git
+[submodule "ext/visiongraph"]
+	path = ext/visiongraph
+	url = git@github.com:xzrunner/visiongraph.git
+[submodule "ext/visiongraphv"]
+	path = ext/visiongraphv
+	url = git@github.com:xzrunner/visiongraphv.git

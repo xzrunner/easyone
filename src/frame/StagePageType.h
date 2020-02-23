@@ -36,6 +36,7 @@ enum StagePageType
     PAGE_WORLD_MACHINE,
     PAGE_GRASSHOPPER,
     PAGE_TOUCH_DESIGNER,
+    PAGE_VISION_LAB,
 
 	PAGE_SCRIPT,
 	PAGE_BLUEPRINT,
@@ -98,6 +99,8 @@ std::string GetPageName(int type)
         return "Grasshopper";
     case PAGE_TOUCH_DESIGNER:
         return "TouchDesigner";
+    case PAGE_VISION_LAB:
+        return "VisionGraph";
 
 	case PAGE_SCRIPT:
 		return "Script";

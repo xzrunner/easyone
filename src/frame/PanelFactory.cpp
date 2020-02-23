@@ -111,6 +111,9 @@
 #ifdef MODULE_TOUCH_DESIGNER
 #include "touchdesigner/WxStagePage.h"
 #endif // MODULE_TOUCH_DESIGNER
+#ifdef MODULE_VISION_LAB
+#include "visionlab/WxStagePage.h"
+#endif // MODULE_VISION_LAB
 
 #include <ee0/WxListSelectDlg.h>
 #include <ee0/MsgHelper.h>
@@ -167,6 +170,9 @@
 #ifdef MODULE_TOUCH_DESIGNER
 #include <tdv/WxPreviewCanvas.h>
 #endif // MODULE_TOUCH_DESIGNER
+#ifdef MODULE_VISION_LAB
+#include <visiongraphv/WxPreviewCanvas.h>
+#endif // MODULE_VISION_LAB
 
 #include <boost/filesystem.hpp>
 
@@ -640,6 +646,23 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
     }
         break;
 #endif // MODULE_TOUCH_DESIGNER
+#ifdef MODULE_VISION_LAB
+    case PAGE_VISION_LAB:
+    {
+        auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX2D);
+        page = new visionlab::WxStagePage(frame, ECS_WORLD_VAR obj);
+        auto canvas = std::make_shared<vgv::WxPreviewCanvas>(page, ECS_WORLD_VAR rc);
+
+        page->GetImpl().SetCanvas(canvas);
+
+        auto op = std::make_shared<ee3::NodeArrangeOP>(
+            canvas->GetCamera(), *page, canvas->GetViewport()
+        );
+
+        page->GetImpl().SetEditOP(op);
+    }
+        break;
+#endif // MODULE_VISION_LAB
 
 #ifdef MODULE_SCRIPT
 	case PAGE_SCRIPT:

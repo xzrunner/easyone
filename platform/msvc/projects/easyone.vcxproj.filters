@@ -217,6 +217,9 @@
     <Filter Include="40.worldmachine">
       <UniqueIdentifier>{390d38a4-57f9-4fe7-b770-fa13f0555688}</UniqueIdentifier>
     </Filter>
+    <Filter Include="43.visionlab">
+      <UniqueIdentifier>{925c065a-c09e-4723-b39e-2f30c17cab7a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\frame\main.h">
@@ -534,6 +537,9 @@
     <ClInclude Include="..\..\..\src\worldmachine\WxStagePage.h">
       <Filter>40.worldmachine</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\visionlab\WxStagePage.h">
+      <Filter>43.visionlab</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\frame\main.cpp">
@@ -823,6 +829,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\worldmachine\WxStagePage.cpp">
       <Filter>40.worldmachine</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\visionlab\WxStagePage.cpp">
+      <Filter>43.visionlab</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

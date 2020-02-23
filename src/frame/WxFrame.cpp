@@ -73,6 +73,7 @@ void WxFrame::OnNew(wxCommandEvent& event)
         { "WorldMachine",    new PageItemData(eone::PAGE_WORLD_MACHINE) },
         { "Grasshopper",     new PageItemData(eone::PAGE_GRASSHOPPER) },
         { "TouchDesigner",   new PageItemData(eone::PAGE_TOUCH_DESIGNER) },
+        { "VisionGraph",     new PageItemData(eone::PAGE_VISION_LAB) },
 
 		{ "Script...",       new PageItemData(eone::PAGE_SCRIPT) },
 		{ "Blueprint",       new PageItemData(eone::PAGE_BLUEPRINT) },
