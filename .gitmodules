@@ -308,3 +308,9 @@
 [submodule "ext/visiongraphv"]
 	path = ext/visiongraphv
 	url = git@github.com:xzrunner/visiongraphv.git
+[submodule "ext/sd"]
+	path = ext/sd
+	url = git@github.com:xzrunner/sd.git
+[submodule "ext/sdv"]
+	path = ext/sdv
+	url = git@github.com:xzrunner/sdv.git

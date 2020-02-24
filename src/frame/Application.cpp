@@ -78,6 +78,9 @@
 #ifdef MODULE_VISION_LAB
 #include "visionlab/WxStagePage.h"
 #endif // MODULE_VISION_LAB
+#ifdef MODULE_SUBSTANCE_DESIGNER
+#include "substancedesigner/WxStagePage.h"
+#endif // MODULE_SUBSTANCE_DESIGNER
 
 #include <ee0/MsgHelper.h>
 #include <ee0/SubjectMgr.h>
@@ -234,6 +237,10 @@ void Application::LoadFromFile(const std::string& filepath)
             } else if (type == visionlab::WxStagePage::PAGE_TYPE) {
                 new_type = PAGE_VISION_LAB;
 #endif // MODULE_VISION_LAB
+#ifdef MODULE_SUBSTANCE_DESIGNER
+            } else if (type == substancedesigner::WxStagePage::PAGE_TYPE) {
+                new_type = PAGE_SUBSTANCE_DESIGNER;
+#endif // MODULE_SUBSTANCE_DESIGNER
             }
 		} else if (new_type_str == "n2_scale9") {
 			new_type = PAGE_SCALE9;
@@ -484,6 +491,9 @@ wxWindow* Application::CreateStagePanel()
 #ifdef MODULE_VISION_LAB
     page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_VISION_LAB, m_stage);
 #endif // MODULE_VISION_LAB
+#ifdef MODULE_SUBSTANCE_DESIGNER
+    page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_SUBSTANCE_DESIGNER, m_stage);
+#endif // MODULE_SUBSTANCE_DESIGNER
 
 #ifdef MODULE_QUAKE
 	page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_QUAKE, m_stage);

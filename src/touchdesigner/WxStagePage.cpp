@@ -47,7 +47,7 @@ namespace eone
 namespace touchdesigner
 {
 
-const std::string WxStagePage::PAGE_TYPE = "gh_stage";
+const std::string WxStagePage::PAGE_TYPE = "td_stage";
 
 WxStagePage::WxStagePage(wxWindow* parent, ECS_WORLD_PARAM const ee0::GameObj& obj)
     : eone::WxStagePage(parent, ECS_WORLD_VAR obj, SHOW_STAGE | SHOW_TOOLBAR | SHOW_STAGE_EXT | STAGE_EXT_RIGHT)

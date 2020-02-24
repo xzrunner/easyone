@@ -211,14 +211,17 @@
     <Filter Include="41.grasshopper">
       <UniqueIdentifier>{f1fb352f-f5f0-44b8-b203-4000161b068b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="42.touchdesigner">
-      <UniqueIdentifier>{7245bbe5-8020-4ac7-947a-77080fb501ed}</UniqueIdentifier>
-    </Filter>
     <Filter Include="40.worldmachine">
       <UniqueIdentifier>{390d38a4-57f9-4fe7-b770-fa13f0555688}</UniqueIdentifier>
     </Filter>
     <Filter Include="43.visionlab">
       <UniqueIdentifier>{925c065a-c09e-4723-b39e-2f30c17cab7a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="44.substancedesigner">
+      <UniqueIdentifier>{9faf4299-7f0d-4886-ad8a-012eeb438c39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="42.touchdesigner">
+      <UniqueIdentifier>{7245bbe5-8020-4ac7-947a-77080fb501ed}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -540,6 +543,9 @@
     <ClInclude Include="..\..\..\src\visionlab\WxStagePage.h">
       <Filter>43.visionlab</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\substancedesigner\WxStagePage.h">
+      <Filter>44.substancedesigner</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\frame\main.cpp">
@@ -832,6 +838,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\visionlab\WxStagePage.cpp">
       <Filter>43.visionlab</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\substancedesigner\WxStagePage.cpp">
+      <Filter>44.substancedesigner</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
