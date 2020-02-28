@@ -48,9 +48,10 @@ namespace worldmachine
 
 const std::string WxStagePage::PAGE_TYPE = "terr_stage";
 
-WxStagePage::WxStagePage(wxWindow* parent, ECS_WORLD_PARAM const ee0::GameObj& obj)
+WxStagePage::WxStagePage(wxWindow* parent, ECS_WORLD_PARAM const ee0::GameObj& obj,
+                         const ee0::RenderContext& rc)
     : eone::WxStagePage(parent, ECS_WORLD_VAR obj, SHOW_STAGE | SHOW_TOOLBAR | SHOW_STAGE_EXT | STAGE_EXT_RIGHT)
-    , m_preview_impl(*this)
+    , m_preview_impl(*this, rc)
 {
 	m_messages.push_back(ee0::MSG_SCENE_NODE_INSERT);
 	m_messages.push_back(ee0::MSG_SCENE_NODE_DELETE);

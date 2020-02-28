@@ -605,16 +605,7 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
     case PAGE_WORLD_MACHINE:
     {
         auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX2D);
-        page = new worldmachine::WxStagePage(frame, ECS_WORLD_VAR obj);
-        auto canvas = std::make_shared<wmv::WxPreviewCanvas>(page, ECS_WORLD_VAR rc);
-
-        page->GetImpl().SetCanvas(canvas);
-
-        auto op = std::make_shared<ee3::NodeArrangeOP>(
-            canvas->GetCamera(), *page, canvas->GetViewport()
-        );
-
-        page->GetImpl().SetEditOP(op);
+        page = new worldmachine::WxStagePage(frame, ECS_WORLD_VAR obj, rc);
     }
         break;
 #endif // MODULE_WORLD_MACHINE

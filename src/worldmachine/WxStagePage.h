@@ -19,7 +19,8 @@ namespace worldmachine
 class WxStagePage : public eone::WxStagePage
 {
 public:
-    WxStagePage(wxWindow* parent, ECS_WORLD_PARAM const ee0::GameObj& obj);
+    WxStagePage(wxWindow* parent, ECS_WORLD_PARAM const ee0::GameObj& obj,
+        const ee0::RenderContext& rc);
 
     virtual void OnNotify(uint32_t msg, const ee0::VariantSet& variants) override;
 
@@ -29,8 +30,6 @@ public:
     virtual int GetPageType() const override { return PAGE_WORLD_MACHINE; }
 
     //n0::SceneNodePtr GetGraphObj() const { return m_graph_obj; }
-
-    void InitEditOP() { m_preview_impl.InitEditOP(); }
 
     auto& GetPreviewImpl() const { return m_preview_impl; }
 
