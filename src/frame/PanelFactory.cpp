@@ -102,9 +102,9 @@
 #ifdef MODULE_CITY_ENGINE
 #include "cityengine/WxStagePage.h"
 #endif // MODULE_CITY_ENGINE
-#ifdef MODULE_WORLD_MACHINE
-#include "worldmachine/WxStagePage.h"
-#endif // MODULE_WORLD_MACHINE
+#ifdef MODULE_TERRAIN
+#include "terrain/WxStagePage.h"
+#endif // MODULE_TERRAIN
 #ifdef MODULE_GRASSHOPPER
 #include "grasshopper/WxStagePage.h"
 #endif // MODULE_GRASSHOPPER
@@ -164,9 +164,9 @@
 #include <cev/CEV.h>
 #include <cev/WxPreviewCanvas.h>
 #endif // MODULE_CITY_ENGINE
-#ifdef MODULE_WORLD_MACHINE
-#include <wmv/WxPreviewCanvas.h>
-#endif // MODULE_WORLD_MACHINE
+#ifdef MODULE_TERRAIN
+#include <terrainlab/WxPreviewCanvas.h>
+#endif // MODULE_TERRAIN
 #ifdef MODULE_GRASSHOPPER
 #include <ghv/WxPreviewCanvas.h>
 #endif // MODULE_GRASSHOPPER
@@ -601,14 +601,14 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
     }
         break;
 #endif // MODULE_CITY_ENGINE
-#ifdef MODULE_WORLD_MACHINE
-    case PAGE_WORLD_MACHINE:
+#ifdef MODULE_TERRAIN
+    case PAGE_TERRAIN:
     {
         auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX2D);
-        page = new worldmachine::WxStagePage(frame, ECS_WORLD_VAR obj, rc);
+        page = new terrain::WxStagePage(frame, ECS_WORLD_VAR obj, rc);
     }
         break;
-#endif // MODULE_WORLD_MACHINE
+#endif // MODULE_TERRAIN
 #ifdef MODULE_GRASSHOPPER
     case PAGE_GRASSHOPPER:
     {

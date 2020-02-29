@@ -2,18 +2,18 @@
 
 #include "frame/config.h"
 
-#ifdef MODULE_WORLD_MACHINE
+#ifdef MODULE_TERRAIN
 
 #include "frame/WxStagePage.h"
 #include "frame/StagePageType.h"
 
-#include <wmv/PreviewPage.h>
+#include <terrainlab/PreviewPage.h>
 
-namespace wmv { class WxEditorPanel; class WxToolbarPanel; class WxGraphPage; }
+namespace terrainlab { class WxEditorPanel; class WxToolbarPanel; class WxGraphPage; }
 
 namespace eone
 {
-namespace worldmachine
+namespace terrain
 {
 
 class WxStagePage : public eone::WxStagePage
@@ -27,7 +27,7 @@ public:
     virtual void Traverse(std::function<bool(const ee0::GameObj&)> func,
         const ee0::VariantSet& variants = ee0::VariantSet(), bool inverse = false) const override;
 
-    virtual int GetPageType() const override { return PAGE_WORLD_MACHINE; }
+    virtual int GetPageType() const override { return PAGE_TERRAIN; }
 
     //n0::SceneNodePtr GetGraphObj() const { return m_graph_obj; }
 
@@ -48,7 +48,7 @@ protected:
     virtual void LoadFromFileExt(const std::string& filepath) override;
 
 private:
-    wmv::WxGraphPage* CreateGraphPanel(wxWindow* parent) const;
+    terrainlab::WxGraphPage* CreateGraphPanel(wxWindow* parent) const;
 
     bool InsertSceneObj(const ee0::VariantSet& variants);
     bool DeleteSceneObj(const ee0::VariantSet& variants);
@@ -57,17 +57,17 @@ private:
     void CreateNewPage(const ee0::VariantSet& variants) const;
 
 private:
-    wmv::PreviewPage m_preview_impl;
+    terrainlab::PreviewPage m_preview_impl;
 
-    wmv::WxEditorPanel*  m_editor_panel  = nullptr;
-    wmv::WxToolbarPanel* m_toolbar_panel = nullptr;
+    terrainlab::WxEditorPanel*  m_editor_panel  = nullptr;
+    terrainlab::WxToolbarPanel* m_toolbar_panel = nullptr;
 
     n0::SceneNodePtr m_graph_obj = nullptr;
-    wmv::WxGraphPage* m_graph_page = nullptr;
+    terrainlab::WxGraphPage* m_graph_page = nullptr;
 
 }; // WxStagePage
 
 }
 }
 
-#endif // MODULE_WORLD_MACHINE
+#endif // MODULE_TERRAIN

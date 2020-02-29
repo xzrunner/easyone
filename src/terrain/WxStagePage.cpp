@@ -1,6 +1,6 @@
-#include "worldmachine/WxStagePage.h"
+#include "terrain/WxStagePage.h"
 
-#ifdef MODULE_WORLD_MACHINE
+#ifdef MODULE_TERRAIN
 
 #include "frame/AppStyle.h"
 #include "frame/Blackboard.h"
@@ -24,10 +24,10 @@
 #include <blueprint/Serializer.h>
 #include <blueprint/NSCompNode.h>
 #include <blueprint/MessageID.h>
-#include <wmv/WxPreviewCanvas.h>
-#include <wmv/WxGraphPage.h>
-#include <wmv/WMV.h>
-#include <wmv/WxToolbarPanel.h>
+#include <terrainlab/WxPreviewCanvas.h>
+#include <terrainlab/WxGraphPage.h>
+#include <terrainlab/TerrainLab.h>
+#include <terrainlab/WxToolbarPanel.h>
 
 #include <node0/SceneNode.h>
 #include <node0/CompComplex.h>
@@ -43,7 +43,7 @@
 
 namespace eone
 {
-namespace worldmachine
+namespace terrain
 {
 
 const std::string WxStagePage::PAGE_TYPE = "terr_stage";
@@ -137,10 +137,10 @@ void WxStagePage::OnPageInit()
     stage_ext_panel->AddPagePanel(m_graph_page, wxVERTICAL);
 
     auto toolbar_panel = Blackboard::Instance()->GetToolbarPanel();
-    auto toolbar_page = new wmv::WxToolbarPanel(toolbar_panel, m_graph_page->GetSubjectMgr());
+    auto toolbar_page = new terrainlab::WxToolbarPanel(toolbar_panel, m_graph_page->GetSubjectMgr());
     toolbar_panel->AddPagePanel(toolbar_page, wxVERTICAL);
 
-    auto prev_canvas = std::static_pointer_cast<wmv::WxPreviewCanvas>(GetImpl().GetCanvas());
+    auto prev_canvas = std::static_pointer_cast<terrainlab::WxPreviewCanvas>(GetImpl().GetCanvas());
     prev_canvas->SetGraphPage(m_graph_page);
 }
 
@@ -187,10 +187,10 @@ void WxStagePage::LoadFromFileExt(const std::string& filepath)
     }
 }
 
-wmv::WxGraphPage*
+terrainlab::WxGraphPage*
 WxStagePage::CreateGraphPanel(wxWindow* parent) const
 {
-    auto panel = new wmv::WxGraphPage(parent, m_graph_obj, m_sub_mgr);
+    auto panel = new terrainlab::WxGraphPage(parent, m_graph_obj, m_sub_mgr);
     auto& panel_impl = panel->GetImpl();
 
     auto canvas = std::make_shared<WxBlueprintCanvas>(
@@ -208,7 +208,7 @@ WxStagePage::CreateGraphPanel(wxWindow* parent) const
     auto arrange_op = std::make_shared<bp::ArrangeNodeOP>(
         canvas->GetCamera(), *panel, ECS_WORLD_VAR cfg, select_op);
 
-    auto& nodes = wmv::WMV::Instance()->GetAllNodes();
+    auto& nodes = terrainlab::TerrainLab::Instance()->GetAllNodes();
     auto op = std::make_shared<bp::ConnectPinOP>(canvas->GetCamera(), *panel, nodes);
     op->SetPrevEditOP(arrange_op);
     panel_impl.SetEditOP(op);
@@ -285,7 +285,7 @@ void WxStagePage::CreateNewPage(const ee0::VariantSet& variants) const
 
     int page_type = -1;
     if (strcmp(type, bp::PAGE_TYPE) == 0) {
-        page_type = PAGE_WORLD_MACHINE;
+        page_type = PAGE_TERRAIN;
     }
     if (page_type >= 0)
     {
@@ -293,7 +293,7 @@ void WxStagePage::CreateNewPage(const ee0::VariantSet& variants) const
         auto stage_page = PanelFactory::CreateStagePage(page_type, stage_panel);
         stage_panel->AddNewPage(stage_page, GetPageName(stage_page->GetPageType()));
 
-        if (page_type == PAGE_WORLD_MACHINE)
+        if (page_type == PAGE_TERRAIN)
         {
             auto var = variants.GetVariant("obj");
             GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: obj");
@@ -306,4 +306,4 @@ void WxStagePage::CreateNewPage(const ee0::VariantSet& variants) const
 }
 }
 
-#endif // MODULE_WORLD_MACHINE
+#endif // MODULE_TERRAIN
