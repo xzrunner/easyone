@@ -69,7 +69,7 @@ void WxFrame::OnNew(wxCommandEvent& event)
         { "PbrGraph",        new PageItemData(eone::PAGE_PBR_GRAPH) },
         { "HdiSop",          new PageItemData(eone::PAGE_HDI_SOP) },
         { "HdiVop",          new PageItemData(eone::PAGE_HDI_VOP) },
-        { "CityEngine",      new PageItemData(eone::PAGE_CITY_ENGINE) },
+        { "Architectural",   new PageItemData(eone::PAGE_ARCHITECTURAL) },
         { "Terrain",         new PageItemData(eone::PAGE_TERRAIN) },
         { "Grasshopper",     new PageItemData(eone::PAGE_GRASSHOPPER) },
         { "TouchDesigner",   new PageItemData(eone::PAGE_TOUCH_DESIGNER) },

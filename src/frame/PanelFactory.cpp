@@ -99,9 +99,9 @@
 #ifdef MODULE_HDI_VOP
 #include "hdi_vop/WxStagePage.h"
 #endif // MODULE_HDI_VOP
-#ifdef MODULE_CITY_ENGINE
-#include "cityengine/WxStagePage.h"
-#endif // MODULE_CITY_ENGINE
+#ifdef MODULE_ARCHITECTURAL
+#include "architectural/WxStagePage.h"
+#endif // MODULE_ARCHITECTURAL
 #ifdef MODULE_TERRAIN
 #include "terrain/WxStagePage.h"
 #endif // MODULE_TERRAIN
@@ -158,12 +158,12 @@
 #include <vopview/VOPView.h>
 #include <vopview/WxStageCanvas.h>
 #endif // MODULE_HDI_VOP
-#ifdef MODULE_CITY_ENGINE
+#ifdef MODULE_ARCHITECTURAL
 #include <draft2/EditPolylineOP.h>
 #include <draft2/ShapeCapture.h>
-#include <cev/CEV.h>
-#include <cev/WxPreviewCanvas.h>
-#endif // MODULE_CITY_ENGINE
+#include <archlab/ArchLab.h>
+#include <archlab/WxPreviewCanvas.h>
+#endif // MODULE_ARCHITECTURAL
 #ifdef MODULE_TERRAIN
 #include <terrainlab/WxPreviewCanvas.h>
 #endif // MODULE_TERRAIN
@@ -587,20 +587,20 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
     }
         break;
 #endif // MODULE_HDI_VOP
-#ifdef MODULE_CITY_ENGINE
-    case PAGE_CITY_ENGINE:
+#ifdef MODULE_ARCHITECTURAL
+    case PAGE_ARCHITECTURAL:
     {
         auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX2D);
 
-        auto city_stage = new cityengine::WxStagePage(frame, ECS_WORLD_VAR obj);
+        auto city_stage = new architectural::WxStagePage(frame, ECS_WORLD_VAR obj);
         page = city_stage;
-        auto canvas = std::make_shared<cev::WxPreviewCanvas>(page, ECS_WORLD_VAR rc);
+        auto canvas = std::make_shared<archlab::WxPreviewCanvas>(page, ECS_WORLD_VAR rc);
 
         page->GetImpl().SetCanvas(canvas);
         city_stage->InitEditOP();
     }
         break;
-#endif // MODULE_CITY_ENGINE
+#endif // MODULE_ARCHITECTURAL
 #ifdef MODULE_TERRAIN
     case PAGE_TERRAIN:
     {

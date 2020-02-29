@@ -1,6 +1,6 @@
-#include "cityengine/WxStagePage.h"
+#include "architectural/WxStagePage.h"
 
-#ifdef MODULE_CITY_ENGINE
+#ifdef MODULE_ARCHITECTURAL
 
 #include "frame/AppStyle.h"
 #include "frame/Blackboard.h"
@@ -21,12 +21,12 @@
 #include <blueprint/NodeSelectOP.h>
 #include <blueprint/ArrangeNodeOP.h>
 #include <blueprint/ConnectPinOP.h>
-#include <cev/CEV.h>
-#include <cev/WxPreviewCanvas.h>
-#include <cev/WxEditorPanel.h>
-#include <cev/WxToolbarPanel.h>
-#include <cev/WxGraphPage.h>
-#include <cev/MessageID.h>
+#include <archlab/ArchLab.h>
+#include <archlab/WxPreviewCanvas.h>
+#include <archlab/WxEditorPanel.h>
+#include <archlab/WxToolbarPanel.h>
+#include <archlab/WxGraphPage.h>
+#include <archlab/MessageID.h>
 
 #include <node0/SceneNode.h>
 #include <node0/CompComplex.h>
@@ -42,7 +42,7 @@
 
 namespace eone
 {
-namespace cityengine
+namespace architectural
 {
 
 const std::string WxStagePage::PAGE_TYPE = "city_stage";
@@ -155,7 +155,7 @@ void WxStagePage::LoadFromFileExt(const std::string& filepath)
 
     mm::LinearAllocator alloc;
     auto dir = boost::filesystem::path(filepath).parent_path().string();
-    const_cast<cev::Scene&>(m_editor_panel->GetScene()).LoadFromJson(
+    const_cast<archlab::Scene&>(m_editor_panel->GetScene()).LoadFromJson(
         alloc, dir, doc["scene"], m_editor_panel->GetTextPageStrPool());
     m_toolbar_panel->ReloadRulesList();
 
@@ -168,13 +168,13 @@ void WxStagePage::InitEditorPanel()
 
     auto stage_ext_panel = Blackboard::Instance()->GetStageExtPanel();
 
-    m_editor_panel = new cev::WxEditorPanel(stage_ext_panel, m_sub_mgr,
-        [&](wxWindow* parent, cev::Scene& scene, ce::EvalContext& ctx) -> cev::WxGraphPage*
+    m_editor_panel = new archlab::WxEditorPanel(stage_ext_panel, m_sub_mgr,
+        [&](wxWindow* parent, archlab::Scene& scene, archgraph::EvalContext& ctx) -> archlab::WxGraphPage*
     {
         auto graph_page = CreateGraphPanel(parent, scene);
         auto toolbar_panel = Blackboard::Instance()->GetToolbarPanel();
 
-        m_toolbar_panel = new cev::WxToolbarPanel(
+        m_toolbar_panel = new archlab::WxToolbarPanel(
             toolbar_panel, ctx, graph_page->GetSubjectMgr(), GetSubjectMgr()
         );
         toolbar_panel->AddPagePanel(m_toolbar_panel, wxVERTICAL);
@@ -183,15 +183,15 @@ void WxStagePage::InitEditorPanel()
     });
     stage_ext_panel->AddPagePanel(m_editor_panel, wxVERTICAL);
 
-    std::static_pointer_cast<cev::WxPreviewCanvas>
+    std::static_pointer_cast<archlab::WxPreviewCanvas>
         (GetImpl().GetCanvas())->SetEditorPanel(m_editor_panel);
     m_toolbar_panel->SetEditorPanel(m_editor_panel);
 }
 
-cev::WxGraphPage*
-WxStagePage::CreateGraphPanel(wxWindow* parent, cev::Scene& scene) const
+archlab::WxGraphPage*
+WxStagePage::CreateGraphPanel(wxWindow* parent, archlab::Scene& scene) const
 {
-    auto panel = new cev::WxGraphPage(parent, scene, m_sub_mgr, m_graph_obj);
+    auto panel = new archlab::WxGraphPage(parent, scene, m_sub_mgr, m_graph_obj);
     auto& panel_impl = panel->GetImpl();
 
     auto canvas = std::make_shared<WxBlueprintCanvas>(
@@ -209,7 +209,7 @@ WxStagePage::CreateGraphPanel(wxWindow* parent, cev::Scene& scene) const
     auto arrange_op = std::make_shared<bp::ArrangeNodeOP>(
         canvas->GetCamera(), *panel, ECS_WORLD_VAR cfg, select_op);
 
-    auto& nodes = cev::CEV::Instance()->GetAllNodes();
+    auto& nodes = archlab::ArchLab::Instance()->GetAllNodes();
     auto op = std::make_shared<bp::ConnectPinOP>(canvas->GetCamera(), *panel, nodes);
     op->SetPrevEditOP(arrange_op);
     panel_impl.SetEditOP(op);
@@ -286,7 +286,7 @@ void WxStagePage::CreateNewPage(const ee0::VariantSet& variants) const
 
     int page_type = -1;
     if (strcmp(type, bp::PAGE_TYPE) == 0) {
-        page_type = PAGE_CITY_ENGINE;
+        page_type = PAGE_ARCHITECTURAL;
     }
     if (page_type >= 0)
     {
@@ -294,7 +294,7 @@ void WxStagePage::CreateNewPage(const ee0::VariantSet& variants) const
         auto stage_page = PanelFactory::CreateStagePage(page_type, stage_panel);
         stage_panel->AddNewPage(stage_page, GetPageName(stage_page->GetPageType()));
 
-        if (page_type == PAGE_CITY_ENGINE)
+        if (page_type == PAGE_ARCHITECTURAL)
         {
             auto var = variants.GetVariant("obj");
             GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: obj");
@@ -307,4 +307,4 @@ void WxStagePage::CreateNewPage(const ee0::VariantSet& variants) const
 }
 }
 
-#endif // MODULE_CITY_ENGINE
+#endif // MODULE_ARCHITECTURAL

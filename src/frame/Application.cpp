@@ -63,8 +63,8 @@
 #ifdef MODULE_HDI_SOP
 #include "hdi_sop/WxStagePage.h"
 #endif // MODULE_HDI_SOP
-#ifdef MODULE_CITY_ENGINE
-#include "cityengine/WxStagePage.h"
+#ifdef MODULE_ARCHITECTURAL
+#include "architectural/WxStagePage.h"
 #endif // MOUDLE_CITY
 #ifdef MODULE_TERRAIN
 #include "terrain/WxStagePage.h"
@@ -217,10 +217,10 @@ void Application::LoadFromFile(const std::string& filepath)
             } else if (type == hdi_vop::WxStagePage::PAGE_TYPE) {
                 new_type = PAGE_HDI_VOP;
 #endif // MODULE_HDI_VOP
-#ifdef MODULE_CITY_ENGINE
-            } else if (type == cityengine::WxStagePage::PAGE_TYPE) {
-                new_type = PAGE_CITY_ENGINE;
-#endif // MODULE_CITY_ENGINE
+#ifdef MODULE_ARCHITECTURAL
+            } else if (type == architectural::WxStagePage::PAGE_TYPE) {
+                new_type = PAGE_ARCHITECTURAL;
+#endif // MODULE_ARCHITECTURAL
 #ifdef MODULE_TERRAIN
             } else if (type == terrain::WxStagePage::PAGE_TYPE) {
                 new_type = PAGE_TERRAIN;
@@ -476,9 +476,9 @@ wxWindow* Application::CreateStagePanel()
 #ifdef MODULE_HDI_VOP
     page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_HDI_VOP, m_stage);
 #endif // MODULE_HDI_VOP
-#ifdef MODULE_CITY_ENGINE
-    page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_CITY_ENGINE, m_stage);
-#endif // MODULE_CITY_ENGINE
+#ifdef MODULE_ARCHITECTURAL
+    page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_ARCHITECTURAL, m_stage);
+#endif // MODULE_ARCHITECTURAL
 #ifdef MODULE_TERRAIN
     page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_TERRAIN, m_stage);
 #endif // MODULE_TERRAIN

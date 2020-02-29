@@ -181,9 +181,6 @@
     <Filter Include="38.hdi_sop">
       <UniqueIdentifier>{4071076e-ce32-4c1f-b9f4-893b04a94385}</UniqueIdentifier>
     </Filter>
-    <Filter Include="39.cityengine">
-      <UniqueIdentifier>{e325d5ab-d25a-402a-b72e-14b9d74b6d03}</UniqueIdentifier>
-    </Filter>
     <Filter Include="38.hdi_vop">
       <UniqueIdentifier>{43e59f9b-dd76-49f3-ba43-0b0a68a0557f}</UniqueIdentifier>
     </Filter>
@@ -222,6 +219,9 @@
     </Filter>
     <Filter Include="60.terrain">
       <UniqueIdentifier>{390d38a4-57f9-4fe7-b770-fa13f0555688}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="63.architectural">
+      <UniqueIdentifier>{e325d5ab-d25a-402a-b72e-14b9d74b6d03}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -510,9 +510,6 @@
     <ClInclude Include="..\..\..\src\pbrgraph\WxToolbarPanel.h">
       <Filter>37.pbrgraph\toolbar</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\cityengine\WxStagePage.h">
-      <Filter>39.cityengine</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\hdi_vop\WxGraphPage.h">
       <Filter>38.hdi_vop</Filter>
     </ClInclude>
@@ -545,6 +542,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\terrain\WxStagePage.h">
       <Filter>60.terrain</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\architectural\WxStagePage.h">
+      <Filter>63.architectural</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -806,9 +806,6 @@
     <ClCompile Include="..\..\..\src\pbrgraph\WxToolbarPanel.cpp">
       <Filter>37.pbrgraph\toolbar</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\cityengine\WxStagePage.cpp">
-      <Filter>39.cityengine</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\hdi_vop\WxGraphPage.cpp">
       <Filter>38.hdi_vop</Filter>
     </ClCompile>
@@ -841,6 +838,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\terrain\WxStagePage.cpp">
       <Filter>60.terrain</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\architectural\WxStagePage.cpp">
+      <Filter>63.architectural</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

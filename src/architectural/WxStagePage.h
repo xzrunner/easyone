@@ -2,19 +2,19 @@
 
 #include "frame/config.h"
 
-#ifdef MODULE_CITY_ENGINE
+#ifdef MODULE_ARCHITECTURAL
 
 #include "frame/WxStagePage.h"
 #include "frame/StagePageType.h"
 
-#include <cev/PreviewPage.h>
+#include <archlab/PreviewPage.h>
 
-namespace ce { class EvalContext; }
-namespace cev { class WxEditorPanel; class WxToolbarPanel; class WxGraphPage; }
+namespace archgraph { class EvalContext; }
+namespace archlab { class WxEditorPanel; class WxToolbarPanel; class WxGraphPage; }
 
 namespace eone
 {
-namespace cityengine
+namespace architectural
 {
 
 class WxStagePage : public eone::WxStagePage
@@ -27,7 +27,7 @@ public:
     virtual void Traverse(std::function<bool(const ee0::GameObj&)> func,
         const ee0::VariantSet& variants = ee0::VariantSet(), bool inverse = false) const override;
 
-    virtual int GetPageType() const override { return PAGE_CITY_ENGINE; }
+    virtual int GetPageType() const override { return PAGE_ARCHITECTURAL; }
 
     n0::SceneNodePtr GetGraphObj() const { return m_graph_obj; }
 
@@ -51,7 +51,7 @@ protected:
 
 private:
     void InitEditorPanel();
-    cev::WxGraphPage* CreateGraphPanel(wxWindow* parent, cev::Scene& scene) const;
+    archlab::WxGraphPage* CreateGraphPanel(wxWindow* parent, archlab::Scene& scene) const;
 
     bool InsertSceneObj(const ee0::VariantSet& variants);
     bool DeleteSceneObj(const ee0::VariantSet& variants);
@@ -60,10 +60,10 @@ private:
     void CreateNewPage(const ee0::VariantSet& variants) const;
 
 private:
-    cev::PreviewPage m_preview_impl;
+    archlab::PreviewPage m_preview_impl;
 
-    cev::WxEditorPanel*  m_editor_panel  = nullptr;
-    cev::WxToolbarPanel* m_toolbar_panel = nullptr;
+    archlab::WxEditorPanel*  m_editor_panel  = nullptr;
+    archlab::WxToolbarPanel* m_toolbar_panel = nullptr;
 
     n0::SceneNodePtr m_graph_obj = nullptr;
 
@@ -72,4 +72,4 @@ private:
 }
 }
 
-#endif // MODULE_CITY_ENGINE
+#endif // MODULE_ARCHITECTURAL
