@@ -34,6 +34,7 @@ enum StagePageType
     PAGE_HDI_VOP,
     PAGE_ARCHITECTURAL,
     PAGE_TERRAIN,
+    PAGE_CITY,
     PAGE_GRASSHOPPER,
     PAGE_TOUCH_DESIGNER,
     PAGE_VISION_LAB,
@@ -96,6 +97,8 @@ std::string GetPageName(int type)
         return "Architectural";
     case PAGE_TERRAIN:
         return "Terrain";
+    case PAGE_CITY:
+        return "City";
     case PAGE_GRASSHOPPER:
         return "Grasshopper";
     case PAGE_TOUCH_DESIGNER:

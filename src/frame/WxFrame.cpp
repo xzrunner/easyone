@@ -71,6 +71,7 @@ void WxFrame::OnNew(wxCommandEvent& event)
         { "HdiVop",          new PageItemData(eone::PAGE_HDI_VOP) },
         { "Architectural",   new PageItemData(eone::PAGE_ARCHITECTURAL) },
         { "Terrain",         new PageItemData(eone::PAGE_TERRAIN) },
+        { "City",            new PageItemData(eone::PAGE_CITY) },
         { "Grasshopper",     new PageItemData(eone::PAGE_GRASSHOPPER) },
         { "TouchDesigner",   new PageItemData(eone::PAGE_TOUCH_DESIGNER) },
         { "VisionGraph",     new PageItemData(eone::PAGE_VISION_LAB) },

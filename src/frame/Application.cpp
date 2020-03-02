@@ -69,6 +69,9 @@
 #ifdef MODULE_TERRAIN
 #include "terrain/WxStagePage.h"
 #endif // MODULE_TERRAIN
+#ifdef MODULE_CITY
+#include "city/WxStagePage.h"
+#endif // MODULE_CITY
 #ifdef MODULE_GRASSHOPPER
 #include "grasshopper/WxStagePage.h"
 #endif // MODULE_GRASSHOPPER
@@ -225,6 +228,10 @@ void Application::LoadFromFile(const std::string& filepath)
             } else if (type == terrain::WxStagePage::PAGE_TYPE) {
                 new_type = PAGE_TERRAIN;
 #endif // MODULE_TERRAIN
+#ifdef MODULE_CITY
+            } else if (type == city::WxStagePage::PAGE_TYPE) {
+                new_type = PAGE_CITY;
+#endif // MODULE_CITY
 #ifdef MODULE_GRASSHOPPER
             } else if (type == grasshopper::WxStagePage::PAGE_TYPE) {
                 new_type = PAGE_GRASSHOPPER;
@@ -482,6 +489,9 @@ wxWindow* Application::CreateStagePanel()
 #ifdef MODULE_TERRAIN
     page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_TERRAIN, m_stage);
 #endif // MODULE_TERRAIN
+#ifdef MODULE_CITY
+    page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_CITY, m_stage);
+#endif // MODULE_CITY
 #ifdef MODULE_GRASSHOPPER
     page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_GRASSHOPPER, m_stage);
 #endif // MODULE_GRASSHOPPER

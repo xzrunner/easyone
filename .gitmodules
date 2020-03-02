@@ -314,3 +314,9 @@
 [submodule "ext/sdv"]
 	path = ext/sdv
 	url = git@github.com:xzrunner/sdv.git
+[submodule "ext/citygraph"]
+	path = ext/citygraph
+	url = git@github.com:xzrunner/citygraph.git
+[submodule "ext/citylab"]
+	path = ext/citylab
+	url = git@github.com:xzrunner/citylab.git

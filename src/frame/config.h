@@ -8,7 +8,6 @@
 //#define MODULE_MASK
 //#define MODULE_ANIM
 //#define MODULE_PARTICLE3D
-//#define MODULE_TERRAIN
 //#define MODULE_SHAPE2D
 //#define MODULE_SHAPE3D
 //#define MODULE_MESH
@@ -24,8 +23,9 @@
 //#define MODULE_PBRGRAPH
 //#define MODULE_HDI_SOP
 //#define MODULE_HDI_VOP
-#define MODULE_ARCHITECTURAL
+//#define MODULE_ARCHITECTURAL
 //#define MODULE_TERRAIN
+#define MODULE_CITY
 //#define MODULE_GRASSHOPPER
 //#define MODULE_TOUCH_DESIGNER
 //#define MODULE_VISION_LAB

@@ -105,6 +105,9 @@
 #ifdef MODULE_TERRAIN
 #include "terrain/WxStagePage.h"
 #endif // MODULE_TERRAIN
+#ifdef MODULE_CITY
+#include "city/WxStagePage.h"
+#endif // MODULE_CITY
 #ifdef MODULE_GRASSHOPPER
 #include "grasshopper/WxStagePage.h"
 #endif // MODULE_GRASSHOPPER
@@ -167,6 +170,9 @@
 #ifdef MODULE_TERRAIN
 #include <terrainlab/WxPreviewCanvas.h>
 #endif // MODULE_TERRAIN
+#ifdef MODULE_CITY
+#include <citylab/WxPreviewCanvas.h>
+#endif // MODULE_CITY
 #ifdef MODULE_GRASSHOPPER
 #include <ghv/WxPreviewCanvas.h>
 #endif // MODULE_GRASSHOPPER
@@ -609,6 +615,14 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
     }
         break;
 #endif // MODULE_TERRAIN
+#ifdef MODULE_CITY
+    case PAGE_CITY:
+    {
+        auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX2D);
+        page = new city::WxStagePage(frame, ECS_WORLD_VAR obj, rc);
+    }
+        break;
+#endif // MODULE_CITY
 #ifdef MODULE_GRASSHOPPER
     case PAGE_GRASSHOPPER:
     {

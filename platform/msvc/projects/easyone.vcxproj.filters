@@ -223,6 +223,9 @@
     <Filter Include="63.architectural">
       <UniqueIdentifier>{e325d5ab-d25a-402a-b72e-14b9d74b6d03}</UniqueIdentifier>
     </Filter>
+    <Filter Include="62.city">
+      <UniqueIdentifier>{f7e92bb0-7f96-4662-8129-2bfd08dcdff8}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\frame\main.h">
@@ -546,6 +549,9 @@
     <ClInclude Include="..\..\..\src\architectural\WxStagePage.h">
       <Filter>63.architectural</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\city\WxStagePage.h">
+      <Filter>62.city</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\frame\main.cpp">
@@ -841,6 +847,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\architectural\WxStagePage.cpp">
       <Filter>63.architectural</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\city\WxStagePage.cpp">
+      <Filter>62.city</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
