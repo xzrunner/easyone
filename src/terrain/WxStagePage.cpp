@@ -24,10 +24,11 @@
 #include <blueprint/Serializer.h>
 #include <blueprint/NSCompNode.h>
 #include <blueprint/MessageID.h>
+#include <blueprint/WxGraphPage.h>
+#include <blueprint/WxToolbarPanel.h>
 #include <terrainlab/WxPreviewCanvas.h>
-#include <terrainlab/WxGraphPage.h>
 #include <terrainlab/TerrainLab.h>
-#include <terrainlab/WxToolbarPanel.h>
+#include <terrainlab/MessageID.h>
 
 #include <node0/SceneNode.h>
 #include <node0/CompComplex.h>
@@ -38,6 +39,7 @@
 #include <sx/ResFileHelper.h>
 #include <js/RapidJsonHelper.h>
 #include <memmgr/LinearAllocator.h>
+#include <terraingraph/DeviceVarType.h>
 
 #include <boost/filesystem.hpp>
 
@@ -133,15 +135,16 @@ void WxStagePage::OnPageInit()
     m_graph_obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX2D);
 
     auto stage_ext_panel = Blackboard::Instance()->GetStageExtPanel();
-    m_graph_page = CreateGraphPanel(stage_ext_panel);
+    auto graph_page = CreateGraphPanel(stage_ext_panel);
+    m_graph_page = graph_page;
     stage_ext_panel->AddPagePanel(m_graph_page, wxVERTICAL);
 
     auto toolbar_panel = Blackboard::Instance()->GetToolbarPanel();
-    auto toolbar_page = new terrainlab::WxToolbarPanel(toolbar_panel, m_graph_page->GetSubjectMgr());
+    auto toolbar_page = new bp::WxToolbarPanel(toolbar_panel, m_graph_page->GetSubjectMgr());
     toolbar_panel->AddPagePanel(toolbar_page, wxVERTICAL);
 
     auto prev_canvas = std::static_pointer_cast<terrainlab::WxPreviewCanvas>(GetImpl().GetCanvas());
-    prev_canvas->SetGraphPage(m_graph_page);
+    prev_canvas->SetGraphPage(graph_page);
 }
 
 #ifndef GAME_OBJ_ECS
@@ -187,10 +190,12 @@ void WxStagePage::LoadFromFileExt(const std::string& filepath)
     }
 }
 
-terrainlab::WxGraphPage*
+bp::WxGraphPage<terraingraph::DeviceVarType>*
 WxStagePage::CreateGraphPanel(wxWindow* parent) const
 {
-    auto panel = new terrainlab::WxGraphPage(parent, m_graph_obj, m_sub_mgr);
+    auto panel = new bp::WxGraphPage<terraingraph::DeviceVarType>(
+        parent, m_graph_obj, m_sub_mgr, terrainlab::MSG_HEIGHTMAP_CHANGED, "terraingraph", "terrainlab"
+    );
     auto& panel_impl = panel->GetImpl();
 
     auto canvas = std::make_shared<WxBlueprintCanvas>(

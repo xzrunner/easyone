@@ -7,9 +7,12 @@
 #include "frame/WxStagePage.h"
 #include "frame/StagePageType.h"
 
+#include <blueprint/WxGraphPage.h>
 #include <terrainlab/PreviewPage.h>
 
-namespace terrainlab { class WxEditorPanel; class WxToolbarPanel; class WxGraphPage; }
+#include <terraingraph/DeviceVarType.h>
+
+namespace terrainlab { class WxEditorPanel; class WxToolbarPanel; }
 
 namespace eone
 {
@@ -48,7 +51,8 @@ protected:
     virtual void LoadFromFileExt(const std::string& filepath) override;
 
 private:
-    terrainlab::WxGraphPage* CreateGraphPanel(wxWindow* parent) const;
+    bp::WxGraphPage<terraingraph::DeviceVarType>*
+        CreateGraphPanel(wxWindow* parent) const;
 
     bool InsertSceneObj(const ee0::VariantSet& variants);
     bool DeleteSceneObj(const ee0::VariantSet& variants);
@@ -62,8 +66,8 @@ private:
     terrainlab::WxEditorPanel*  m_editor_panel  = nullptr;
     terrainlab::WxToolbarPanel* m_toolbar_panel = nullptr;
 
-    n0::SceneNodePtr m_graph_obj = nullptr;
-    terrainlab::WxGraphPage* m_graph_page = nullptr;
+    n0::SceneNodePtr  m_graph_obj = nullptr;
+    ee0::WxStagePage* m_graph_page = nullptr;
 
 }; // WxStagePage
 
