@@ -282,9 +282,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3.visiongraph", "..\..\ext\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "7.visiongraphv", "..\..\ext\visiongraphv\platform\msvc\projects\visiongraphv.vcxproj", "{975B6480-FF5E-4674-8482-FBE0B8D82362}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "5.sd", "..\..\ext\sd\platform\msvc\projects\sd.vcxproj", "{3E25FBE5-28C4-432E-8928-6B99A9E9119B}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "5.texgraph", "..\..\ext\texgraph\platform\msvc\projects\texgraph.vcxproj", "{3E25FBE5-28C4-432E-8928-6B99A9E9119B}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "7.sdv", "..\..\ext\sdv\platform\msvc\projects\sdv.vcxproj", "{655701AC-2693-47F4-BCED-C5FC578AD7A0}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "7.texlab", "..\..\ext\texlab\platform\msvc\projects\texlab.vcxproj", "{655701AC-2693-47F4-BCED-C5FC578AD7A0}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "8.virtual_world", "8.virtual_world", "{AF44EAB5-ACD1-42CA-B602-4AC36AD796C1}"
 EndProject
@@ -322,7 +322,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "camera", "camera", "{1C54BA
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "1.heightfield", "..\..\ext\heightfield\platform\msvc\projects\heightfield.vcxproj", "{7A1831B8-BC46-48CC-AB3B-0F851F21CA71}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "8.graph", "8.graph", "{EA7994B2-593D-4E3F-9ECB-A3B848CD5583}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "8.graph_editor", "8.graph_editor", "{EA7994B2-593D-4E3F-9ECB-A3B848CD5583}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "shader", "shader", "{0BFDB5AE-9FE9-45E4-AC38-B931F8DB3762}"
 EndProject

@@ -1,6 +1,6 @@
-#include "substancedesigner/WxStagePage.h"
+#include "material/WxStagePage.h"
 
-#ifdef MODULE_SUBSTANCE_DESIGNER
+#ifdef MODULE_MATERIAL
 
 #include "frame/AppStyle.h"
 #include "frame/Blackboard.h"
@@ -24,10 +24,10 @@
 #include <blueprint/Serializer.h>
 #include <blueprint/NSCompNode.h>
 #include <blueprint/MessageID.h>
-#include <sdv/WxPreviewCanvas.h>
-#include <sdv/WxGraphPage.h>
-#include <sdv/SDV.h>
-#include <sdv/WxToolbarPanel.h>
+#include <texlab/WxPreviewCanvas.h>
+#include <texlab/WxGraphPage.h>
+#include <texlab/TexLab.h>
+#include <texlab/WxToolbarPanel.h>
 
 #include <node0/SceneNode.h>
 #include <node0/CompComplex.h>
@@ -43,10 +43,10 @@
 
 namespace eone
 {
-namespace substancedesigner
+namespace material
 {
 
-const std::string WxStagePage::PAGE_TYPE = "sd_stage";
+const std::string WxStagePage::PAGE_TYPE = "material_stage";
 
 WxStagePage::WxStagePage(wxWindow* parent, ECS_WORLD_PARAM const ee0::GameObj& obj)
     : eone::WxStagePage(parent, ECS_WORLD_VAR obj, SHOW_STAGE | SHOW_TOOLBAR | SHOW_STAGE_EXT | STAGE_EXT_RIGHT)
@@ -136,7 +136,7 @@ void WxStagePage::OnPageInit()
     stage_ext_panel->AddPagePanel(m_graph_page, wxVERTICAL);
 
     auto toolbar_panel = Blackboard::Instance()->GetToolbarPanel();
-    auto toolbar_page = new sdv::WxToolbarPanel(toolbar_panel, m_graph_page->GetSubjectMgr());
+    auto toolbar_page = new texlab::WxToolbarPanel(toolbar_panel, m_graph_page->GetSubjectMgr());
     toolbar_panel->AddPagePanel(toolbar_page, wxVERTICAL);
 }
 
@@ -183,10 +183,10 @@ void WxStagePage::LoadFromFileExt(const std::string& filepath)
     }
 }
 
-sdv::WxGraphPage*
+texlab::WxGraphPage*
 WxStagePage::CreateGraphPanel(wxWindow* parent) const
 {
-    auto panel = new sdv::WxGraphPage(parent, m_graph_obj, m_sub_mgr);
+    auto panel = new texlab::WxGraphPage(parent, m_graph_obj, m_sub_mgr);
     auto& panel_impl = panel->GetImpl();
 
     auto canvas = std::make_shared<WxBlueprintCanvas>(
@@ -204,7 +204,7 @@ WxStagePage::CreateGraphPanel(wxWindow* parent) const
     auto arrange_op = std::make_shared<bp::ArrangeNodeOP>(
         canvas->GetCamera(), *panel, ECS_WORLD_VAR cfg, select_op);
 
-    auto& nodes = sdv::SDV::Instance()->GetAllNodes();
+    auto& nodes = texlab::TexLab::Instance()->GetAllNodes();
     auto op = std::make_shared<bp::ConnectPinOP>(canvas->GetCamera(), *panel, nodes);
     op->SetPrevEditOP(arrange_op);
     panel_impl.SetEditOP(op);
@@ -281,7 +281,7 @@ void WxStagePage::CreateNewPage(const ee0::VariantSet& variants) const
 
     int page_type = -1;
     if (strcmp(type, bp::PAGE_TYPE) == 0) {
-        page_type = PAGE_SUBSTANCE_DESIGNER;
+        page_type = PAGE_MATERIAL;
     }
     if (page_type >= 0)
     {
@@ -289,7 +289,7 @@ void WxStagePage::CreateNewPage(const ee0::VariantSet& variants) const
         auto stage_page = PanelFactory::CreateStagePage(page_type, stage_panel);
         stage_panel->AddNewPage(stage_page, GetPageName(stage_page->GetPageType()));
 
-        if (page_type == PAGE_SUBSTANCE_DESIGNER)
+        if (page_type == PAGE_MATERIAL)
         {
             auto var = variants.GetVariant("obj");
             GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: obj");
@@ -302,4 +302,4 @@ void WxStagePage::CreateNewPage(const ee0::VariantSet& variants) const
 }
 }
 
-#endif // MODULE_SUBSTANCE_DESIGNER
+#endif // MODULE_MATERIAL

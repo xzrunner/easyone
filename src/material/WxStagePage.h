@@ -2,18 +2,18 @@
 
 #include "frame/config.h"
 
-#ifdef MODULE_SUBSTANCE_DESIGNER
+#ifdef MODULE_MATERIAL
 
 #include "frame/WxStagePage.h"
 #include "frame/StagePageType.h"
 
-#include <sdv/PreviewPage.h>
+#include <texlab/PreviewPage.h>
 
-namespace sdv { class WxEditorPanel; class WxToolbarPanel; class WxGraphPage; }
+namespace texlab { class WxEditorPanel; class WxToolbarPanel; class WxGraphPage; }
 
 namespace eone
 {
-namespace substancedesigner
+namespace material
 {
 
 class WxStagePage : public eone::WxStagePage
@@ -26,7 +26,7 @@ public:
     virtual void Traverse(std::function<bool(const ee0::GameObj&)> func,
         const ee0::VariantSet& variants = ee0::VariantSet(), bool inverse = false) const override;
 
-    virtual int GetPageType() const override { return PAGE_SUBSTANCE_DESIGNER; }
+    virtual int GetPageType() const override { return PAGE_MATERIAL; }
 
     //n0::SceneNodePtr GetGraphObj() const { return m_graph_obj; }
 
@@ -49,7 +49,7 @@ protected:
     virtual void LoadFromFileExt(const std::string& filepath) override;
 
 private:
-    sdv::WxGraphPage* CreateGraphPanel(wxWindow* parent) const;
+    texlab::WxGraphPage* CreateGraphPanel(wxWindow* parent) const;
 
     bool InsertSceneObj(const ee0::VariantSet& variants);
     bool DeleteSceneObj(const ee0::VariantSet& variants);
@@ -58,17 +58,17 @@ private:
     void CreateNewPage(const ee0::VariantSet& variants) const;
 
 private:
-    sdv::PreviewPage m_preview_impl;
+    texlab::PreviewPage m_preview_impl;
 
-    sdv::WxEditorPanel*  m_editor_panel  = nullptr;
-    sdv::WxToolbarPanel* m_toolbar_panel = nullptr;
+    texlab::WxEditorPanel*  m_editor_panel  = nullptr;
+    texlab::WxToolbarPanel* m_toolbar_panel = nullptr;
 
     n0::SceneNodePtr m_graph_obj = nullptr;
-    sdv::WxGraphPage* m_graph_page = nullptr;
+    texlab::WxGraphPage* m_graph_page = nullptr;
 
 }; // WxStagePage
 
 }
 }
 
-#endif // MODULE_SUBSTANCE_DESIGNER
+#endif // MODULE_MATERIAL

@@ -75,7 +75,7 @@ void WxFrame::OnNew(wxCommandEvent& event)
         { "Geometry",        new PageItemData(eone::PAGE_GEOMETRY) },
         { "TouchDesigner",   new PageItemData(eone::PAGE_TOUCH_DESIGNER) },
         { "VisionGraph",     new PageItemData(eone::PAGE_VISION_LAB) },
-        { "SubstanceDesigner", new PageItemData(eone::PAGE_SUBSTANCE_DESIGNER) },
+        { "Material",        new PageItemData(eone::PAGE_MATERIAL) },
 
 		{ "Script...",       new PageItemData(eone::PAGE_SCRIPT) },
 		{ "Blueprint",       new PageItemData(eone::PAGE_BLUEPRINT) },

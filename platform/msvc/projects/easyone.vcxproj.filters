@@ -537,9 +537,6 @@
     <ClInclude Include="..\..\..\src\visionlab\WxStagePage.h">
       <Filter>43.visionlab</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\substancedesigner\WxStagePage.h">
-      <Filter>61.material</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\terrain\WxStagePage.h">
       <Filter>80.terrain</Filter>
     </ClInclude>
@@ -551,6 +548,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\geometry\WxStagePage.h">
       <Filter>60.geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\material\WxStagePage.h">
+      <Filter>61.material</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -836,9 +836,6 @@
     <ClCompile Include="..\..\..\src\visionlab\WxStagePage.cpp">
       <Filter>43.visionlab</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\substancedesigner\WxStagePage.cpp">
-      <Filter>61.material</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\terrain\WxStagePage.cpp">
       <Filter>80.terrain</Filter>
     </ClCompile>
@@ -850,6 +847,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\geometry\WxStagePage.cpp">
       <Filter>60.geometry</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\material\WxStagePage.cpp">
+      <Filter>61.material</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

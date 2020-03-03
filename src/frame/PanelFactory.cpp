@@ -117,9 +117,9 @@
 #ifdef MODULE_VISION_LAB
 #include "visionlab/WxStagePage.h"
 #endif // MODULE_VISION_LAB
-#ifdef MODULE_SUBSTANCE_DESIGNER
-#include "substancedesigner/WxStagePage.h"
-#endif // MODULE_SUBSTANCE_DESIGNER
+#ifdef MODULE_MATERIAL
+#include "material/WxStagePage.h"
+#endif // MODULE_MATERIAL
 
 #include <ee0/WxListSelectDlg.h>
 #include <ee0/MsgHelper.h>
@@ -182,9 +182,9 @@
 #ifdef MODULE_VISION_LAB
 #include <visiongraphv/WxPreviewCanvas.h>
 #endif // MODULE_VISION_LAB
-#ifdef MODULE_SUBSTANCE_DESIGNER
-#include <sdv/WxPreviewCanvas.h>
-#endif // MODULE_SUBSTANCE_DESIGNER
+#ifdef MODULE_MATERIAL
+#include <texlab/WxPreviewCanvas.h>
+#endif // MODULE_MATERIAL
 
 #include <boost/filesystem.hpp>
 
@@ -674,12 +674,12 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
     }
         break;
 #endif // MODULE_VISION_LAB
-#ifdef MODULE_SUBSTANCE_DESIGNER
-    case PAGE_SUBSTANCE_DESIGNER:
+#ifdef MODULE_MATERIAL
+    case PAGE_MATERIAL:
     {
         auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX2D);
-        page = new substancedesigner::WxStagePage(frame, ECS_WORLD_VAR obj);
-        auto canvas = std::make_shared<sdv::WxPreviewCanvas>(page, ECS_WORLD_VAR rc);
+        page = new material::WxStagePage(frame, ECS_WORLD_VAR obj);
+        auto canvas = std::make_shared<texlab::WxPreviewCanvas>(page, ECS_WORLD_VAR rc);
 
         page->GetImpl().SetCanvas(canvas);
 
@@ -690,7 +690,7 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
         page->GetImpl().SetEditOP(op);
     }
         break;
-#endif // MODULE_SUBSTANCE_DESIGNER
+#endif // MODULE_MATERIAL
 
 #ifdef MODULE_SCRIPT
 	case PAGE_SCRIPT:
