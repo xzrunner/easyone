@@ -320,3 +320,6 @@
 [submodule "ext/citylab"]
 	path = ext/citylab
 	url = git@github.com:xzrunner/citylab.git
+[submodule "ext/heightfield"]
+	path = ext/heightfield
+	url = git@github.com:xzrunner/heightfield.git
