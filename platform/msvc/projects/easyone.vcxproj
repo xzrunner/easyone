@@ -194,6 +194,9 @@
     <ProjectReference Include="..\..\..\ext\gh\platform\msvc\projects\gh.vcxproj">
       <Project>{1fff764c-06cd-4935-939c-71922c6148fd}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\heightfield\platform\msvc\projects\heightfield.vcxproj">
+      <Project>{7a1831b8-bc46-48cc-ab3b-0f851f21ca71}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\ext\sdv\platform\msvc\projects\sdv.vcxproj">
       <Project>{655701ac-2693-47f4-bced-c5fc578ad7a0}</Project>
     </ProjectReference>
