@@ -28,6 +28,7 @@
 #include <blueprint/WxToolbarPanel.h>
 #include <citylab/WxPreviewCanvas.h>
 #include <citylab/CityLab.h>
+#include <citylab/MessageID.h>
 
 #include <node0/SceneNode.h>
 #include <node0/CompComplex.h>
@@ -51,7 +52,7 @@ const std::string WxStagePage::PAGE_TYPE = "city_stage";
 WxStagePage::WxStagePage(wxWindow* parent, ECS_WORLD_PARAM const ee0::GameObj& obj,
                          const ee0::RenderContext& rc)
     : eone::WxStagePage(parent, ECS_WORLD_VAR obj, SHOW_STAGE | SHOW_TOOLBAR | SHOW_STAGE_EXT | STAGE_EXT_RIGHT)
-    , m_preview_impl(*this)
+    , m_preview_impl(*this, rc)
 {
 	m_messages.push_back(ee0::MSG_SCENE_NODE_INSERT);
 	m_messages.push_back(ee0::MSG_SCENE_NODE_DELETE);
@@ -141,8 +142,8 @@ void WxStagePage::OnPageInit()
     auto toolbar_page = new bp::WxToolbarPanel(toolbar_panel, m_graph_page->GetSubjectMgr());
     toolbar_panel->AddPagePanel(toolbar_page, wxVERTICAL);
 
-//    auto prev_canvas = std::static_pointer_cast<citylab::WxPreviewCanvas>(GetImpl().GetCanvas());
-//    prev_canvas->SetGraphPage(graph_page);
+    auto prev_canvas = std::static_pointer_cast<citylab::WxPreviewCanvas>(GetImpl().GetCanvas());
+    prev_canvas->SetGraphPage(graph_page);
 }
 
 #ifndef GAME_OBJ_ECS
@@ -188,11 +189,11 @@ void WxStagePage::LoadFromFileExt(const std::string& filepath)
     }
 }
 
-bp::WxGraphPage<citygraph::OpVarType>*
+bp::WxGraphPage<citygraph::ParamType>*
 WxStagePage::CreateGraphPanel(wxWindow* parent) const
 {
-    auto panel = new bp::WxGraphPage<citygraph::OpVarType>(
-        parent, m_graph_obj, m_sub_mgr, 0, "citygraph", "citylab"
+    auto panel = new bp::WxGraphPage<citygraph::ParamType>(
+        parent, m_graph_obj, m_sub_mgr, citylab::MSG_ROAD_CHANGED, "citygraph", "citylab"
     );
     auto& panel_impl = panel->GetImpl();
 

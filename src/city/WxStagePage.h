@@ -10,7 +10,7 @@
 #include <blueprint/WxGraphPage.h>
 #include <citylab/PreviewPage.h>
 
-#include <citygraph/OpVarType.h>
+#include <citygraph/ParamType.h>
 
 namespace ee0 { class RenderContext; }
 namespace citylab { class WxEditorPanel; class WxToolbarPanel; }
@@ -52,7 +52,7 @@ protected:
     virtual void LoadFromFileExt(const std::string& filepath) override;
 
 private:
-    bp::WxGraphPage<citygraph::OpVarType>*
+    bp::WxGraphPage<citygraph::ParamType>*
         CreateGraphPanel(wxWindow* parent) const;
 
     bool InsertSceneObj(const ee0::VariantSet& variants);
