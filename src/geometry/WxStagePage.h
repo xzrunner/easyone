@@ -2,18 +2,18 @@
 
 #include "frame/config.h"
 
-#ifdef MODULE_GRASSHOPPER
+#ifdef MODULE_GEOMETRY
 
 #include "frame/WxStagePage.h"
 #include "frame/StagePageType.h"
 
-#include <ghv/PreviewPage.h>
+#include <geolab/PreviewPage.h>
 
-namespace ghv { class WxEditorPanel; class WxToolbarPanel; class WxGraphPage; }
+namespace geolab { class WxEditorPanel; class WxToolbarPanel; class WxGraphPage; }
 
 namespace eone
 {
-namespace grasshopper
+namespace geometry
 {
 
 class WxStagePage : public eone::WxStagePage
@@ -26,7 +26,7 @@ public:
     virtual void Traverse(std::function<bool(const ee0::GameObj&)> func,
         const ee0::VariantSet& variants = ee0::VariantSet(), bool inverse = false) const override;
 
-    virtual int GetPageType() const override { return PAGE_GRASSHOPPER; }
+    virtual int GetPageType() const override { return PAGE_GEOMETRY; }
 
     //n0::SceneNodePtr GetGraphObj() const { return m_graph_obj; }
 
@@ -49,7 +49,7 @@ protected:
     virtual void LoadFromFileExt(const std::string& filepath) override;
 
 private:
-    ghv::WxGraphPage* CreateGraphPanel(wxWindow* parent) const;
+    geolab::WxGraphPage* CreateGraphPanel(wxWindow* parent) const;
 
     bool InsertSceneObj(const ee0::VariantSet& variants);
     bool DeleteSceneObj(const ee0::VariantSet& variants);
@@ -58,17 +58,17 @@ private:
     void CreateNewPage(const ee0::VariantSet& variants) const;
 
 private:
-    ghv::PreviewPage m_preview_impl;
+    geolab::PreviewPage m_preview_impl;
 
-    ghv::WxEditorPanel*  m_editor_panel  = nullptr;
-    ghv::WxToolbarPanel* m_toolbar_panel = nullptr;
+    geolab::WxEditorPanel*  m_editor_panel  = nullptr;
+    geolab::WxToolbarPanel* m_toolbar_panel = nullptr;
 
     n0::SceneNodePtr m_graph_obj = nullptr;
-    ghv::WxGraphPage* m_graph_page = nullptr;
+    geolab::WxGraphPage* m_graph_page = nullptr;
 
 }; // WxStagePage
 
 }
 }
 
-#endif // MODULE_GRASSHOPPER
+#endif // MODULE_GEOMETRY

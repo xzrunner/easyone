@@ -108,9 +108,9 @@
 #ifdef MODULE_CITY
 #include "city/WxStagePage.h"
 #endif // MODULE_CITY
-#ifdef MODULE_GRASSHOPPER
-#include "grasshopper/WxStagePage.h"
-#endif // MODULE_GRASSHOPPER
+#ifdef MODULE_GEOMETRY
+#include "geometry/WxStagePage.h"
+#endif // MODULE_GEOMETRY
 #ifdef MODULE_TOUCH_DESIGNER
 #include "touchdesigner/WxStagePage.h"
 #endif // MODULE_TOUCH_DESIGNER
@@ -173,9 +173,9 @@
 #ifdef MODULE_CITY
 #include <citylab/WxPreviewCanvas.h>
 #endif // MODULE_CITY
-#ifdef MODULE_GRASSHOPPER
-#include <ghv/WxPreviewCanvas.h>
-#endif // MODULE_GRASSHOPPER
+#ifdef MODULE_GEOMETRY
+#include <geolab/WxPreviewCanvas.h>
+#endif // MODULE_GEOMETRY
 #ifdef MODULE_TOUCH_DESIGNER
 #include <tdv/WxPreviewCanvas.h>
 #endif // MODULE_TOUCH_DESIGNER
@@ -623,12 +623,12 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
     }
         break;
 #endif // MODULE_CITY
-#ifdef MODULE_GRASSHOPPER
-    case PAGE_GRASSHOPPER:
+#ifdef MODULE_GEOMETRY
+    case PAGE_GEOMETRY:
     {
         auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX2D);
-        page = new grasshopper::WxStagePage(frame, ECS_WORLD_VAR obj);
-        auto canvas = std::make_shared<ghv::WxPreviewCanvas>(page, ECS_WORLD_VAR rc);
+        page = new geometry::WxStagePage(frame, ECS_WORLD_VAR obj);
+        auto canvas = std::make_shared<geolab::WxPreviewCanvas>(page, ECS_WORLD_VAR rc);
 
         page->GetImpl().SetCanvas(canvas);
 
@@ -639,7 +639,7 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
         page->GetImpl().SetEditOP(op);
     }
         break;
-#endif // MODULE_GRASSHOPPER
+#endif // MODULE_GEOMETRY
 #ifdef MODULE_TOUCH_DESIGNER
     case PAGE_TOUCH_DESIGNER:
     {

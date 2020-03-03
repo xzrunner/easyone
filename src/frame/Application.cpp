@@ -72,9 +72,9 @@
 #ifdef MODULE_CITY
 #include "city/WxStagePage.h"
 #endif // MODULE_CITY
-#ifdef MODULE_GRASSHOPPER
-#include "grasshopper/WxStagePage.h"
-#endif // MODULE_GRASSHOPPER
+#ifdef MODULE_GEOMETRY
+#include "geometry/WxStagePage.h"
+#endif // MODULE_GEOMETRY
 #ifdef MODULE_TOUCH_DESIGNER
 #include "touchdesigner/WxStagePage.h"
 #endif // MODULE_TOUCH_DESIGNER
@@ -232,10 +232,10 @@ void Application::LoadFromFile(const std::string& filepath)
             } else if (type == city::WxStagePage::PAGE_TYPE) {
                 new_type = PAGE_CITY;
 #endif // MODULE_CITY
-#ifdef MODULE_GRASSHOPPER
-            } else if (type == grasshopper::WxStagePage::PAGE_TYPE) {
-                new_type = PAGE_GRASSHOPPER;
-#endif // MODULE_GRASSHOPPER
+#ifdef MODULE_GEOMETRY
+            } else if (type == geometry::WxStagePage::PAGE_TYPE) {
+                new_type = PAGE_GEOMETRY;
+#endif // MODULE_GEOMETRY
 #ifdef MODULE_TOUCH_DESIGNER
             } else if (type == touchdesigner::WxStagePage::PAGE_TYPE) {
                 new_type = PAGE_TOUCH_DESIGNER;
@@ -492,9 +492,9 @@ wxWindow* Application::CreateStagePanel()
 #ifdef MODULE_CITY
     page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_CITY, m_stage);
 #endif // MODULE_CITY
-#ifdef MODULE_GRASSHOPPER
-    page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_GRASSHOPPER, m_stage);
-#endif // MODULE_GRASSHOPPER
+#ifdef MODULE_GEOMETRY
+    page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_GEOMETRY, m_stage);
+#endif // MODULE_GEOMETRY
 #ifdef MODULE_TOUCH_DESIGNER
     page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_TOUCH_DESIGNER, m_stage);
 #endif // MODULE_TOUCH_DESIGNER

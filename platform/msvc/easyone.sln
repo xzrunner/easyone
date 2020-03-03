@@ -270,9 +270,9 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "1.nurbs", "..\..\ext\nurbs\
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "terrainlab", "..\..\ext\terrainlab\platform\msvc\projects\terrainlab.vcxproj", "{755C7AED-F6A9-4829-A8CA-210B2664724F}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "5.gh", "..\..\ext\gh\platform\msvc\projects\gh.vcxproj", "{1FFF764C-06CD-4935-939C-71922C6148FD}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "5.geograph", "..\..\ext\geograph\platform\msvc\projects\geograph.vcxproj", "{1FFF764C-06CD-4935-939C-71922C6148FD}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "7.ghv", "..\..\ext\ghv\platform\msvc\projects\ghv.vcxproj", "{36CE6C84-870C-4F0E-8518-D821EF1E7601}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "7.geolab", "..\..\ext\geolab\platform\msvc\projects\geolab.vcxproj", "{36CE6C84-870C-4F0E-8518-D821EF1E7601}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "5.td", "..\..\ext\td\platform\msvc\projects\td.vcxproj", "{9288B548-5121-4D7F-B7D6-BB54E0FD687F}"
 EndProject

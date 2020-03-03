@@ -55,9 +55,6 @@
     <Filter Include="31.anim3\view\toolbar">
       <UniqueIdentifier>{d125071b-873b-42e0-b907-8da574b2882f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="32.sgraph">
-      <UniqueIdentifier>{70521c8d-51e2-405c-a78a-764746df18c2}</UniqueIdentifier>
-    </Filter>
     <Filter Include="15.shape2d">
       <UniqueIdentifier>{23e96ae8-8ab3-4cf5-860f-c6987ff09613}</UniqueIdentifier>
     </Filter>
@@ -121,15 +118,6 @@
     <Filter Include="20.prototype">
       <UniqueIdentifier>{061b6e62-1453-44e1-9ffc-eb85d6452762}</UniqueIdentifier>
     </Filter>
-    <Filter Include="33.rgraph">
-      <UniqueIdentifier>{31182a01-d587-4a9e-8109-604526b31e39}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="33.rgraph\stage">
-      <UniqueIdentifier>{4f2facd9-6a78-4462-802d-5691bb1ee6d9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="33.rgraph\toolbar">
-      <UniqueIdentifier>{f2c86d53-a87d-4a9e-b055-e005172c05f8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="34.physics3d">
       <UniqueIdentifier>{a4d0724a-65f7-410e-af7d-5c0d8bd12b92}</UniqueIdentifier>
     </Filter>
@@ -141,24 +129,6 @@
     </Filter>
     <Filter Include="35.raygraph\toolbar">
       <UniqueIdentifier>{5297a011-f6ab-4370-bd4c-154535e8ac2d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="36.guigraph">
-      <UniqueIdentifier>{3c07c0e4-3044-49c7-82eb-fa4a81f14293}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="36.guigraph\stage">
-      <UniqueIdentifier>{f9dbbb55-681f-42df-a9e9-6b27098046cd}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="36.guigraph\toolbar">
-      <UniqueIdentifier>{970a49b1-a7cf-4f10-ac72-fcfcd9295fed}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="36.guigraph\graph">
-      <UniqueIdentifier>{d785e9ca-6261-4a5e-a645-356f93b680d6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="32.sgraph\stage">
-      <UniqueIdentifier>{3cbcb8a6-40cd-42ae-a989-a2ada73d854e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="32.sgraph\toolbar">
-      <UniqueIdentifier>{c2aa6c30-b4f7-4ab7-9f49-172532929a3c}</UniqueIdentifier>
     </Filter>
     <Filter Include="30.model\preview">
       <UniqueIdentifier>{da8dc5bc-7e31-4c1a-97cf-542e2a3109ff}</UniqueIdentifier>
@@ -205,26 +175,56 @@
     <Filter Include="52.quake\view\preview">
       <UniqueIdentifier>{fc0d4e42-d230-4e57-b44d-1edfec6ada2c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="41.grasshopper">
-      <UniqueIdentifier>{f1fb352f-f5f0-44b8-b203-4000161b068b}</UniqueIdentifier>
-    </Filter>
     <Filter Include="43.visionlab">
       <UniqueIdentifier>{925c065a-c09e-4723-b39e-2f30c17cab7a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="44.substancedesigner">
-      <UniqueIdentifier>{9faf4299-7f0d-4886-ad8a-012eeb438c39}</UniqueIdentifier>
     </Filter>
     <Filter Include="42.touchdesigner">
       <UniqueIdentifier>{7245bbe5-8020-4ac7-947a-77080fb501ed}</UniqueIdentifier>
     </Filter>
-    <Filter Include="60.terrain">
+    <Filter Include="80.terrain">
       <UniqueIdentifier>{390d38a4-57f9-4fe7-b770-fa13f0555688}</UniqueIdentifier>
     </Filter>
-    <Filter Include="63.architectural">
+    <Filter Include="82.city">
+      <UniqueIdentifier>{f7e92bb0-7f96-4662-8129-2bfd08dcdff8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="83.architectural">
       <UniqueIdentifier>{e325d5ab-d25a-402a-b72e-14b9d74b6d03}</UniqueIdentifier>
     </Filter>
-    <Filter Include="62.city">
-      <UniqueIdentifier>{f7e92bb0-7f96-4662-8129-2bfd08dcdff8}</UniqueIdentifier>
+    <Filter Include="60.geometry">
+      <UniqueIdentifier>{f1fb352f-f5f0-44b8-b203-4000161b068b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="61.material">
+      <UniqueIdentifier>{9faf4299-7f0d-4886-ad8a-012eeb438c39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="62.shader">
+      <UniqueIdentifier>{70521c8d-51e2-405c-a78a-764746df18c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="62.shader\stage">
+      <UniqueIdentifier>{3cbcb8a6-40cd-42ae-a989-a2ada73d854e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="62.shader\toolbar">
+      <UniqueIdentifier>{c2aa6c30-b4f7-4ab7-9f49-172532929a3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="63.render">
+      <UniqueIdentifier>{31182a01-d587-4a9e-8109-604526b31e39}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="63.render\stage">
+      <UniqueIdentifier>{4f2facd9-6a78-4462-802d-5691bb1ee6d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="63.render\toolbar">
+      <UniqueIdentifier>{f2c86d53-a87d-4a9e-b055-e005172c05f8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="64.gui">
+      <UniqueIdentifier>{3c07c0e4-3044-49c7-82eb-fa4a81f14293}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="64.gui\stage">
+      <UniqueIdentifier>{f9dbbb55-681f-42df-a9e9-6b27098046cd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="64.gui\toolbar">
+      <UniqueIdentifier>{970a49b1-a7cf-4f10-ac72-fcfcd9295fed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="64.gui\graph">
+      <UniqueIdentifier>{d785e9ca-6261-4a5e-a645-356f93b680d6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -448,13 +448,13 @@
       <Filter>00.frame\view</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\rgraph\WxToolbarPanel.h">
-      <Filter>33.rgraph\toolbar</Filter>
+      <Filter>63.render\toolbar</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\rgraph\WxPreviewPanel.h">
-      <Filter>33.rgraph\toolbar</Filter>
+      <Filter>63.render\toolbar</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\rgraph\WxStagePage.h">
-      <Filter>33.rgraph\stage</Filter>
+      <Filter>63.render\stage</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\physics3d\WxStagePage.h">
       <Filter>34.physics3d</Filter>
@@ -469,34 +469,34 @@
       <Filter>35.raygraph\toolbar</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\guigraph\WxStagePage.h">
-      <Filter>36.guigraph\stage</Filter>
+      <Filter>64.gui\stage</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\guigraph\WxToolbarPanel.h">
-      <Filter>36.guigraph\toolbar</Filter>
+      <Filter>64.gui\toolbar</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\frame\WxBlueprintCanvas.h">
       <Filter>00.frame\view\2.center\stage\canvas</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\guigraph\WxGraphPage.h">
-      <Filter>36.guigraph\graph</Filter>
+      <Filter>64.gui\graph</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\guigraph\WxStageCanvas.h">
-      <Filter>36.guigraph\stage</Filter>
+      <Filter>64.gui\stage</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\physics3d\PBDSceneOP.h">
       <Filter>34.physics3d</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\sgraph\ModelType.h">
-      <Filter>32.sgraph</Filter>
+      <Filter>62.shader</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\sgraph\WxStagePage.h">
-      <Filter>32.sgraph\stage</Filter>
+      <Filter>62.shader\stage</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\sgraph\WxStageCanvas.h">
-      <Filter>32.sgraph\stage</Filter>
+      <Filter>62.shader\stage</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\sgraph\WxToolbarPanel.h">
-      <Filter>32.sgraph\toolbar</Filter>
+      <Filter>62.shader\toolbar</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\physics3d\WxStageCanvas2D.h">
       <Filter>34.physics3d</Filter>
@@ -531,9 +531,6 @@
     <ClInclude Include="..\..\..\src\cad\WxStagePage.h">
       <Filter>18.cad</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\grasshopper\WxStagePage.h">
-      <Filter>41.grasshopper</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\touchdesigner\WxStagePage.h">
       <Filter>42.touchdesigner</Filter>
     </ClInclude>
@@ -541,16 +538,19 @@
       <Filter>43.visionlab</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\substancedesigner\WxStagePage.h">
-      <Filter>44.substancedesigner</Filter>
+      <Filter>61.material</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\terrain\WxStagePage.h">
-      <Filter>60.terrain</Filter>
+      <Filter>80.terrain</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\architectural\WxStagePage.h">
-      <Filter>63.architectural</Filter>
+      <Filter>83.architectural</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\src\city\WxStagePage.h">
-      <Filter>62.city</Filter>
+      <Filter>82.city</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\geometry\WxStagePage.h">
+      <Filter>60.geometry</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -750,13 +750,13 @@
       <Filter>00.frame\view</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\rgraph\WxToolbarPanel.cpp">
-      <Filter>33.rgraph\toolbar</Filter>
+      <Filter>63.render\toolbar</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\rgraph\WxPreviewPanel.cpp">
-      <Filter>33.rgraph\toolbar</Filter>
+      <Filter>63.render\toolbar</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\rgraph\WxStagePage.cpp">
-      <Filter>33.rgraph\stage</Filter>
+      <Filter>63.render\stage</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\physics3d\WxStagePage.cpp">
       <Filter>34.physics3d</Filter>
@@ -771,31 +771,31 @@
       <Filter>35.raygraph\toolbar</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\guigraph\WxStagePage.cpp">
-      <Filter>36.guigraph\stage</Filter>
+      <Filter>64.gui\stage</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\guigraph\WxToolbarPanel.cpp">
-      <Filter>36.guigraph\toolbar</Filter>
+      <Filter>64.gui\toolbar</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\frame\WxBlueprintCanvas.cpp">
       <Filter>00.frame\view\2.center\stage\canvas</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\guigraph\WxGraphPage.cpp">
-      <Filter>36.guigraph\graph</Filter>
+      <Filter>64.gui\graph</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\guigraph\WxStageCanvas.cpp">
-      <Filter>36.guigraph\stage</Filter>
+      <Filter>64.gui\stage</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\physics3d\PBDSceneOP.cpp">
       <Filter>34.physics3d</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\sgraph\WxStageCanvas.cpp">
-      <Filter>32.sgraph\stage</Filter>
+      <Filter>62.shader\stage</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\sgraph\WxStagePage.cpp">
-      <Filter>32.sgraph\stage</Filter>
+      <Filter>62.shader\stage</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\sgraph\WxToolbarPanel.cpp">
-      <Filter>32.sgraph\toolbar</Filter>
+      <Filter>62.shader\toolbar</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\physics3d\WxStageCanvas2D.cpp">
       <Filter>34.physics3d</Filter>
@@ -830,9 +830,6 @@
     <ClCompile Include="..\..\..\src\cad\WxStagePage.cpp">
       <Filter>18.cad</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\grasshopper\WxStagePage.cpp">
-      <Filter>41.grasshopper</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\touchdesigner\WxStagePage.cpp">
       <Filter>42.touchdesigner</Filter>
     </ClCompile>
@@ -840,16 +837,19 @@
       <Filter>43.visionlab</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\substancedesigner\WxStagePage.cpp">
-      <Filter>44.substancedesigner</Filter>
+      <Filter>61.material</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\terrain\WxStagePage.cpp">
-      <Filter>60.terrain</Filter>
+      <Filter>80.terrain</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\architectural\WxStagePage.cpp">
-      <Filter>63.architectural</Filter>
+      <Filter>83.architectural</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\src\city\WxStagePage.cpp">
-      <Filter>62.city</Filter>
+      <Filter>82.city</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\geometry\WxStagePage.cpp">
+      <Filter>60.geometry</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

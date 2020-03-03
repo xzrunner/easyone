@@ -72,7 +72,7 @@ void WxFrame::OnNew(wxCommandEvent& event)
         { "Architectural",   new PageItemData(eone::PAGE_ARCHITECTURAL) },
         { "Terrain",         new PageItemData(eone::PAGE_TERRAIN) },
         { "City",            new PageItemData(eone::PAGE_CITY) },
-        { "Grasshopper",     new PageItemData(eone::PAGE_GRASSHOPPER) },
+        { "Geometry",        new PageItemData(eone::PAGE_GEOMETRY) },
         { "TouchDesigner",   new PageItemData(eone::PAGE_TOUCH_DESIGNER) },
         { "VisionGraph",     new PageItemData(eone::PAGE_VISION_LAB) },
         { "SubstanceDesigner", new PageItemData(eone::PAGE_SUBSTANCE_DESIGNER) },

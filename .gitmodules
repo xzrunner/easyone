@@ -287,10 +287,10 @@
 	path = ext/nurbs
 	url = git@github.com:xzrunner/nurbs.git
 [submodule "ext/gh"]
-	path = ext/gh
+	path = ext/geograph
 	url = git@github.com:xzrunner/gh.git
 [submodule "ext/ghview"]
-	path = ext/ghv
+	path = ext/geolab
 	url = git@github.com:xzrunner/ghview.git
 	branch = master
 [submodule "ext/td"]

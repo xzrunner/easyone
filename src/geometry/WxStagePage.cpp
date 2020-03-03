@@ -1,6 +1,6 @@
-#include "grasshopper/WxStagePage.h"
+#include "geometry/WxStagePage.h"
 
-#ifdef MODULE_GRASSHOPPER
+#ifdef MODULE_GEOMETRY
 
 #include "frame/AppStyle.h"
 #include "frame/Blackboard.h"
@@ -24,10 +24,10 @@
 #include <blueprint/Serializer.h>
 #include <blueprint/NSCompNode.h>
 #include <blueprint/MessageID.h>
-#include <ghv/WxPreviewCanvas.h>
-#include <ghv/WxGraphPage.h>
-#include <ghv/GHV.h>
-#include <ghv/WxToolbarPanel.h>
+#include <geolab/WxPreviewCanvas.h>
+#include <geolab/WxGraphPage.h>
+#include <geolab/GeoLab.h>
+#include <geolab/WxToolbarPanel.h>
 
 #include <node0/SceneNode.h>
 #include <node0/CompComplex.h>
@@ -43,10 +43,10 @@
 
 namespace eone
 {
-namespace grasshopper
+namespace geometry
 {
 
-const std::string WxStagePage::PAGE_TYPE = "gh_stage";
+const std::string WxStagePage::PAGE_TYPE = "geo_stage";
 
 WxStagePage::WxStagePage(wxWindow* parent, ECS_WORLD_PARAM const ee0::GameObj& obj)
     : eone::WxStagePage(parent, ECS_WORLD_VAR obj, SHOW_STAGE | SHOW_TOOLBAR | SHOW_STAGE_EXT | STAGE_EXT_RIGHT)
@@ -136,7 +136,7 @@ void WxStagePage::OnPageInit()
     stage_ext_panel->AddPagePanel(m_graph_page, wxVERTICAL);
 
     auto toolbar_panel = Blackboard::Instance()->GetToolbarPanel();
-    auto toolbar_page = new ghv::WxToolbarPanel(toolbar_panel, m_graph_page->GetSubjectMgr());
+    auto toolbar_page = new geolab::WxToolbarPanel(toolbar_panel, m_graph_page->GetSubjectMgr());
     toolbar_panel->AddPagePanel(toolbar_page, wxVERTICAL);
 }
 
@@ -183,10 +183,10 @@ void WxStagePage::LoadFromFileExt(const std::string& filepath)
     }
 }
 
-ghv::WxGraphPage*
+geolab::WxGraphPage*
 WxStagePage::CreateGraphPanel(wxWindow* parent) const
 {
-    auto panel = new ghv::WxGraphPage(parent, m_graph_obj, m_sub_mgr);
+    auto panel = new geolab::WxGraphPage(parent, m_graph_obj, m_sub_mgr);
     auto& panel_impl = panel->GetImpl();
 
     auto canvas = std::make_shared<WxBlueprintCanvas>(
@@ -204,7 +204,7 @@ WxStagePage::CreateGraphPanel(wxWindow* parent) const
     auto arrange_op = std::make_shared<bp::ArrangeNodeOP>(
         canvas->GetCamera(), *panel, ECS_WORLD_VAR cfg, select_op);
 
-    auto& nodes = ghv::GHV::Instance()->GetAllNodes();
+    auto& nodes = geolab::GeoLab::Instance()->GetAllNodes();
     auto op = std::make_shared<bp::ConnectPinOP>(canvas->GetCamera(), *panel, nodes);
     op->SetPrevEditOP(arrange_op);
     panel_impl.SetEditOP(op);
@@ -281,7 +281,7 @@ void WxStagePage::CreateNewPage(const ee0::VariantSet& variants) const
 
     int page_type = -1;
     if (strcmp(type, bp::PAGE_TYPE) == 0) {
-        page_type = PAGE_GRASSHOPPER;
+        page_type = PAGE_GEOMETRY;
     }
     if (page_type >= 0)
     {
@@ -289,7 +289,7 @@ void WxStagePage::CreateNewPage(const ee0::VariantSet& variants) const
         auto stage_page = PanelFactory::CreateStagePage(page_type, stage_panel);
         stage_panel->AddNewPage(stage_page, GetPageName(stage_page->GetPageType()));
 
-        if (page_type == PAGE_GRASSHOPPER)
+        if (page_type == PAGE_GEOMETRY)
         {
             auto var = variants.GetVariant("obj");
             GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: obj");
@@ -302,4 +302,4 @@ void WxStagePage::CreateNewPage(const ee0::VariantSet& variants) const
 }
 }
 
-#endif // MODULE_GRASSHOPPER
+#endif // MODULE_GEOMETRY
