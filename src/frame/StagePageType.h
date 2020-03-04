@@ -39,6 +39,7 @@ enum StagePageType
     PAGE_TOUCH_DESIGNER,
     PAGE_VISION_LAB,
     PAGE_MATERIAL,
+    PAGE_EDITOP,
 
 	PAGE_SCRIPT,
 	PAGE_BLUEPRINT,
@@ -107,6 +108,8 @@ std::string GetPageName(int type)
         return "VisionGraph";
     case PAGE_MATERIAL:
         return "Material";
+    case PAGE_EDITOP:
+        return "EditOp";
 
 	case PAGE_SCRIPT:
 		return "Script";

@@ -323,3 +323,9 @@
 [submodule "ext/heightfield"]
 	path = ext/heightfield
 	url = git@github.com:xzrunner/heightfield.git
+[submodule "ext/editoplab"]
+	path = ext/editoplab
+	url = git@github.com:xzrunner/editoplab.git
+[submodule "ext/editopgraph"]
+	path = ext/editopgraph
+	url = git@github.com:xzrunner/editopgraph.git

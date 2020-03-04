@@ -120,6 +120,9 @@
 #ifdef MODULE_MATERIAL
 #include "material/WxStagePage.h"
 #endif // MODULE_MATERIAL
+#ifdef MODULE_EDITOP
+#include "editop/WxStagePage.h"
+#endif // MODULE_EDITOP
 
 #include <ee0/WxListSelectDlg.h>
 #include <ee0/MsgHelper.h>
@@ -185,6 +188,9 @@
 #ifdef MODULE_MATERIAL
 #include <texlab/WxPreviewCanvas.h>
 #endif // MODULE_MATERIAL
+#ifdef MODULE_EDITOP
+#include <editoplab/WxPreviewCanvas.h>
+#endif // MODULE_EDITOP
 
 #include <boost/filesystem.hpp>
 
@@ -691,6 +697,14 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
     }
         break;
 #endif // MODULE_MATERIAL
+#ifdef MODULE_EDITOP
+    case PAGE_EDITOP:
+    {
+        auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX2D);
+        page = new editop::WxStagePage(frame, ECS_WORLD_VAR obj, rc);
+    }
+    break;
+#endif // MODULE_EDITOP
 
 #ifdef MODULE_SCRIPT
 	case PAGE_SCRIPT:
