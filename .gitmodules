@@ -329,3 +329,6 @@
 [submodule "ext/editopgraph"]
 	path = ext/editopgraph
 	url = git@github.com:xzrunner/editopgraph.git
+[submodule "ext/terraintiler"]
+	path = ext/terraintiler
+	url = git@github.com:xzrunner/terraintiler.git

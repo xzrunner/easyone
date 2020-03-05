@@ -354,6 +354,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "editopgraph", "..\..\ext\ed
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "editoplab", "..\..\ext\editoplab\platform\msvc\projects\editoplab.vcxproj", "{E9583757-1E78-45B4-BAE0-052DA6E26FF0}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3.vtex", "..\..\ext\vtex\platform\msvc\projects\vtex.vcxproj", "{EB17C700-1495-4066-9722-D62B71C0C55A}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "terraintiler", "..\..\ext\terraintiler\platform\msvc\projects\terraintiler.vcxproj", "{D0AD535C-403E-419B-BDDA-69C4DF3A75DE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -2014,6 +2018,34 @@ Global
 		{E9583757-1E78-45B4-BAE0-052DA6E26FF0}.RelWithDebInfo|Win32.Build.0 = Release|Win32
 		{E9583757-1E78-45B4-BAE0-052DA6E26FF0}.RelWithDebInfo|x64.ActiveCfg = Release|Win32
 		{E9583757-1E78-45B4-BAE0-052DA6E26FF0}.RelWithDebInfo|x64.Build.0 = Release|Win32
+		{EB17C700-1495-4066-9722-D62B71C0C55A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{EB17C700-1495-4066-9722-D62B71C0C55A}.Debug|Win32.Build.0 = Debug|Win32
+		{EB17C700-1495-4066-9722-D62B71C0C55A}.Debug|x64.ActiveCfg = Debug|Win32
+		{EB17C700-1495-4066-9722-D62B71C0C55A}.MinSizeRel|Win32.ActiveCfg = Release|Win32
+		{EB17C700-1495-4066-9722-D62B71C0C55A}.MinSizeRel|Win32.Build.0 = Release|Win32
+		{EB17C700-1495-4066-9722-D62B71C0C55A}.MinSizeRel|x64.ActiveCfg = Release|Win32
+		{EB17C700-1495-4066-9722-D62B71C0C55A}.MinSizeRel|x64.Build.0 = Release|Win32
+		{EB17C700-1495-4066-9722-D62B71C0C55A}.Release|Win32.ActiveCfg = Release|Win32
+		{EB17C700-1495-4066-9722-D62B71C0C55A}.Release|Win32.Build.0 = Release|Win32
+		{EB17C700-1495-4066-9722-D62B71C0C55A}.Release|x64.ActiveCfg = Release|Win32
+		{EB17C700-1495-4066-9722-D62B71C0C55A}.RelWithDebInfo|Win32.ActiveCfg = Release|Win32
+		{EB17C700-1495-4066-9722-D62B71C0C55A}.RelWithDebInfo|Win32.Build.0 = Release|Win32
+		{EB17C700-1495-4066-9722-D62B71C0C55A}.RelWithDebInfo|x64.ActiveCfg = Release|Win32
+		{EB17C700-1495-4066-9722-D62B71C0C55A}.RelWithDebInfo|x64.Build.0 = Release|Win32
+		{D0AD535C-403E-419B-BDDA-69C4DF3A75DE}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D0AD535C-403E-419B-BDDA-69C4DF3A75DE}.Debug|Win32.Build.0 = Debug|Win32
+		{D0AD535C-403E-419B-BDDA-69C4DF3A75DE}.Debug|x64.ActiveCfg = Debug|Win32
+		{D0AD535C-403E-419B-BDDA-69C4DF3A75DE}.MinSizeRel|Win32.ActiveCfg = Release|Win32
+		{D0AD535C-403E-419B-BDDA-69C4DF3A75DE}.MinSizeRel|Win32.Build.0 = Release|Win32
+		{D0AD535C-403E-419B-BDDA-69C4DF3A75DE}.MinSizeRel|x64.ActiveCfg = Release|Win32
+		{D0AD535C-403E-419B-BDDA-69C4DF3A75DE}.MinSizeRel|x64.Build.0 = Release|Win32
+		{D0AD535C-403E-419B-BDDA-69C4DF3A75DE}.Release|Win32.ActiveCfg = Release|Win32
+		{D0AD535C-403E-419B-BDDA-69C4DF3A75DE}.Release|Win32.Build.0 = Release|Win32
+		{D0AD535C-403E-419B-BDDA-69C4DF3A75DE}.Release|x64.ActiveCfg = Release|Win32
+		{D0AD535C-403E-419B-BDDA-69C4DF3A75DE}.RelWithDebInfo|Win32.ActiveCfg = Release|Win32
+		{D0AD535C-403E-419B-BDDA-69C4DF3A75DE}.RelWithDebInfo|Win32.Build.0 = Release|Win32
+		{D0AD535C-403E-419B-BDDA-69C4DF3A75DE}.RelWithDebInfo|x64.ActiveCfg = Release|Win32
+		{D0AD535C-403E-419B-BDDA-69C4DF3A75DE}.RelWithDebInfo|x64.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -2178,6 +2210,8 @@ Global
 		{020CC88A-3D69-4702-A4F2-CC41AD1F5C80} = {714EE77D-0739-4D2D-8ABB-ECE75859295C}
 		{017820DF-68C9-41CE-9860-078EDD5BC203} = {099DB50C-57D6-4905-A84D-9EC0E2147E5C}
 		{E9583757-1E78-45B4-BAE0-052DA6E26FF0} = {099DB50C-57D6-4905-A84D-9EC0E2147E5C}
+		{EB17C700-1495-4066-9722-D62B71C0C55A} = {A1A7198A-5783-46A3-A0DF-BA9CCFB729B1}
+		{D0AD535C-403E-419B-BDDA-69C4DF3A75DE} = {A1A7198A-5783-46A3-A0DF-BA9CCFB729B1}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8D54C01A-3C82-4351-A325-2853C3E81322}

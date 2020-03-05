@@ -33,9 +33,9 @@
 //#define MODULE_PBRGRAPH
 //#define MODULE_GEOMETRY
 //#define MODULE_MATERIAL
-#define MODULE_EDITOP
+//#define MODULE_EDITOP
 
-//#define MODULE_TERRAIN
+#define MODULE_TERRAIN
 //#define MODULE_CITY
 //#define MODULE_ARCHITECTURAL
 

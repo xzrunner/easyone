@@ -203,6 +203,9 @@
     <ProjectReference Include="..\..\..\ext\heightfield\platform\msvc\projects\heightfield.vcxproj">
       <Project>{7a1831b8-bc46-48cc-ab3b-0f851f21ca71}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\terraintiler\platform\msvc\projects\terraintiler.vcxproj">
+      <Project>{d0ad535c-403e-419b-bdda-69c4df3a75de}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\ext\texlab\platform\msvc\projects\texlab.vcxproj">
       <Project>{655701ac-2693-47f4-bced-c5fc578ad7a0}</Project>
     </ProjectReference>
