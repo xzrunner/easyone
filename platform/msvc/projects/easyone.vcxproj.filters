@@ -229,6 +229,9 @@
     <Filter Include="65.editop">
       <UniqueIdentifier>{7516b747-6b4b-4164-a616-8979c0d73421}</UniqueIdentifier>
     </Filter>
+    <Filter Include="66.task">
+      <UniqueIdentifier>{308374cd-f6de-4cc3-897d-bb62af428bb2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\frame\main.h">
@@ -558,6 +561,9 @@
     <ClInclude Include="..\..\..\src\editop\WxStagePage.h">
       <Filter>65.editop</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\task\WxStagePage.h">
+      <Filter>66.task</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\frame\main.cpp">
@@ -859,6 +865,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\editop\WxStagePage.cpp">
       <Filter>65.editop</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\task\WxStagePage.cpp">
+      <Filter>66.task</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

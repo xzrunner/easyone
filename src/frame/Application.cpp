@@ -87,6 +87,9 @@
 #ifdef MODULE_EDITOP
 #include "editop/WxStagePage.h"
 #endif // MODULE_EDITOP
+#ifdef MODULE_TASK
+#include "task/WxStagePage.h"
+#endif // MODULE_TASK
 
 #include <ee0/MsgHelper.h>
 #include <ee0/SubjectMgr.h>
@@ -255,6 +258,10 @@ void Application::LoadFromFile(const std::string& filepath)
             } else if (type == editop::WxStagePage::PAGE_TYPE) {
                 new_type = PAGE_EDITOP;
 #endif // MODULE_EDITOP
+#ifdef MODULE_TASK
+            } else if (type == editop::WxStagePage::PAGE_TYPE) {
+                new_type = PAGE_TASK;
+#endif // MODULE_TASK
             }
 		} else if (new_type_str == "n2_scale9") {
 			new_type = PAGE_SCALE9;
@@ -514,6 +521,9 @@ wxWindow* Application::CreateStagePanel()
 #ifdef MODULE_EDITOP
     page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_EDITOP, m_stage);
 #endif // MODULE_EDITOP
+#ifdef MODULE_TASK
+    page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_TASK, m_stage);
+#endif // MODULE_TASK
 
 #ifdef MODULE_QUAKE
 	page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_QUAKE, m_stage);

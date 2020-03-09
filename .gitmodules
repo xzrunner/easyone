@@ -332,3 +332,12 @@
 [submodule "ext/terraintiler"]
 	path = ext/terraintiler
 	url = git@github.com:xzrunner/terraintiler.git
+[submodule "ext/gis"]
+	path = ext/gis
+	url = git@github.com:xzrunner/gis.git
+[submodule "ext/taskgraph"]
+	path = ext/taskgraph
+	url = git@github.com:xzrunner/taskgraph.git
+[submodule "ext/tasklab"]
+	path = ext/tasklab
+	url = git@github.com:xzrunner/tasklab.git
