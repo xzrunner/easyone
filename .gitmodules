@@ -129,7 +129,7 @@
 	url = git@github.com:xzrunner/emitter.git
 [submodule "ext/ecsx"]
 	path = ext/entity0
-	url = git@github.com:xzrunner/ecsx.git
+	url = git@github.com:xzrunner/entity0.git
 [submodule "ext/serializerx"]
 	path = ext/serializerx
 	url = git@github.com:xzrunner/serializerx.git
@@ -147,7 +147,7 @@
 	url = git@github.com:xzrunner/entity3.git
 [submodule "ext/terr"]
 	path = ext/terraingraph
-	url = git@github.com:xzrunner/terr.git
+	url = git@github.com:xzrunner/terraingraph.git
 [submodule "ext/vtex"]
 	path = ext/vtex
 	url = git@github.com:xzrunner/vtex.git
@@ -240,10 +240,10 @@
 	url = git@github.com:xzrunner/pbr.git
 [submodule "ext/intention"]
 	path = ext/sopview
-	url = git@github.com:xzrunner/intention.git
+	url = git@github.com:xzrunner/sopview.git
 [submodule "ext/everything"]
 	path = ext/sop
-	url = git@github.com:xzrunner/everything.git
+	url = git@github.com:xzrunner/sop.git
 [submodule "ext/polymesh3"]
 	path = ext/polymesh3
 	url = git@github.com:xzrunner/polymesh3.git
@@ -255,10 +255,10 @@
 	url = git@github.com:xzrunner/dungeon.git
 [submodule "ext/cgaview"]
 	path = ext/archlab
-	url = git@github.com:xzrunner/cgaview.git
+	url = git@github.com:xzrunner/archlab.git
 [submodule "ext/cga"]
 	path = ext/archgraph
-	url = git@github.com:xzrunner/cga.git
+	url = git@github.com:xzrunner/archgraph.git
 [submodule "ext/vopview"]
 	path = ext/vopview
 	url = git@github.com:xzrunner/vopview.git
@@ -279,19 +279,19 @@
 	url = git@github.com:xzrunner/layout2.git
 [submodule "ext/cgac"]
 	path = ext/cga
-	url = git@github.com:xzrunner/cgac.git
+	url = git@github.com:xzrunner/cga.git
 [submodule "ext/cgaeasy"]
 	path = ext/easyarchgraph
-	url = git@github.com:xzrunner/cgaeasy.git
+	url = git@github.com:xzrunner/easyarchgraph.git
 [submodule "ext/nurbs"]
 	path = ext/nurbs
 	url = git@github.com:xzrunner/nurbs.git
 [submodule "ext/gh"]
 	path = ext/geograph
-	url = git@github.com:xzrunner/gh.git
+	url = git@github.com:xzrunner/geograph.git
 [submodule "ext/ghview"]
 	path = ext/geolab
-	url = git@github.com:xzrunner/ghview.git
+	url = git@github.com:xzrunner/geolab.git
 	branch = master
 [submodule "ext/td"]
 	path = ext/td
@@ -301,7 +301,7 @@
 	url = git@github.com:xzrunner/tdview.git
 [submodule "ext/terrview"]
 	path = ext/terrainlab
-	url = git@github.com:xzrunner/terrview.git
+	url = git@github.com:xzrunner/terrainlab.git
 [submodule "ext/visiongraph"]
 	path = ext/visiongraph
 	url = git@github.com:xzrunner/visiongraph.git
@@ -310,10 +310,10 @@
 	url = git@github.com:xzrunner/visiongraphv.git
 [submodule "ext/sd"]
 	path = ext/texgraph
-	url = git@github.com:xzrunner/sd.git
+	url = git@github.com:xzrunner/texgraph.git
 [submodule "ext/sdv"]
 	path = ext/texlab
-	url = git@github.com:xzrunner/sdv.git
+	url = git@github.com:xzrunner/texlab.git
 [submodule "ext/citygraph"]
 	path = ext/citygraph
 	url = git@github.com:xzrunner/citygraph.git
