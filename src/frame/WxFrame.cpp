@@ -77,6 +77,7 @@ void WxFrame::OnNew(wxCommandEvent& event)
         { "VisionGraph",     new PageItemData(eone::PAGE_VISION_LAB) },
         { "Material",        new PageItemData(eone::PAGE_MATERIAL) },
         { "EditOp",          new PageItemData(eone::PAGE_EDITOP) },
+        { "Task",            new PageItemData(eone::PAGE_TASK) },
 
 		{ "Script...",       new PageItemData(eone::PAGE_SCRIPT) },
 		{ "Blueprint",       new PageItemData(eone::PAGE_BLUEPRINT) },

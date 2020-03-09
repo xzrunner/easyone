@@ -259,7 +259,7 @@ void Application::LoadFromFile(const std::string& filepath)
                 new_type = PAGE_EDITOP;
 #endif // MODULE_EDITOP
 #ifdef MODULE_TASK
-            } else if (type == editop::WxStagePage::PAGE_TYPE) {
+            } else if (type == task::WxStagePage::PAGE_TYPE) {
                 new_type = PAGE_TASK;
 #endif // MODULE_TASK
             }

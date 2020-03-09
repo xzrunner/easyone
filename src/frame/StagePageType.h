@@ -111,6 +111,8 @@ std::string GetPageName(int type)
         return "Material";
     case PAGE_EDITOP:
         return "EditOp";
+    case PAGE_TASK:
+        return "Task";
 
 	case PAGE_SCRIPT:
 		return "Script";
