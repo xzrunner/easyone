@@ -189,10 +189,10 @@ void WxStagePage::LoadFromFileExt(const std::string& filepath)
     }
 }
 
-bp::WxGraphPage<taskgraph::ParamType>*
+bp::WxGraphPage<size_t>*
 WxStagePage::CreateGraphPanel(wxWindow* parent) const
 {
-    auto panel = new bp::WxGraphPage<taskgraph::ParamType>(
+    auto panel = new bp::WxGraphPage<size_t>(
         parent, m_graph_obj, m_sub_mgr, tasklab::MSG_ROAD_CHANGED, "taskgraph", "tasklab"
     );
     auto& panel_impl = panel->GetImpl();

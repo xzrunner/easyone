@@ -52,7 +52,7 @@ protected:
     virtual void LoadFromFileExt(const std::string& filepath) override;
 
 private:
-    bp::WxGraphPage<taskgraph::ParamType>*
+    bp::WxGraphPage<size_t>*
         CreateGraphPanel(wxWindow* parent) const;
 
     bool InsertSceneObj(const ee0::VariantSet& variants);
