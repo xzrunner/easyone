@@ -341,3 +341,9 @@
 [submodule "ext/tasklab"]
 	path = ext/tasklab
 	url = git@github.com:xzrunner/tasklab.git
+[submodule "ext/clipmap"]
+	path = ext/clipmap
+	url = git@github.com:xzrunner/clipmap.git
+[submodule "ext/textile"]
+	path = ext/textile
+	url = git@github.com:xzrunner/textile.git
