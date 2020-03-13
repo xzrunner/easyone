@@ -431,6 +431,9 @@
     <ProjectReference Include="..\..\..\ext\vop\platform\msvc\projects\vop.vcxproj">
       <Project>{ee9ef814-c26a-45d3-a14e-323235c09d34}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\vtex\platform\msvc\projects\vtex.vcxproj">
+      <Project>{eb17c700-1495-4066-9722-d62b71c0c55a}</Project>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\anim3\CompBone.h" />
