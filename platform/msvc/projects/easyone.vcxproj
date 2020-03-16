@@ -137,6 +137,9 @@
     <ProjectReference Include="..\..\..\ext\citylab\platform\msvc\projects\citylab.vcxproj">
       <Project>{c9ef1b31-9aa0-44ca-9e79-5ae1498b09c0}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\clipmap\platform\msvc\projects\clipmap.vcxproj">
+      <Project>{44f4d386-f533-44f2-afe0-63968d489eff}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\ext\easyarchgraph\platform\msvc\projects\easyarchgraph.vcxproj">
       <Project>{d3726c18-8ebe-4e6b-9fb9-ef88645f679b}</Project>
     </ProjectReference>
@@ -391,6 +394,9 @@
     </ProjectReference>
     <ProjectReference Include="..\..\..\ext\td\platform\msvc\projects\td.vcxproj">
       <Project>{9288b548-5121-4d7f-b7d6-bb54e0fd687f}</Project>
+    </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\textile\platform\msvc\projects\textile.vcxproj">
+      <Project>{c62780ac-9bdd-4ff5-8f9f-8f67128e2472}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\..\ext\visiongraphv\platform\msvc\projects\visiongraphv.vcxproj">
       <Project>{975b6480-ff5e-4674-8482-fbe0b8d82362}</Project>
