@@ -372,6 +372,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "texture", "texture", "{530D
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3.textile", "..\..\ext\textile\platform\msvc\projects\textile.vcxproj", "{C62780AC-9BDD-4FF5-8F9F-8F67128E2472}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "0.unirender2", "..\..\ext\unirender2\platform\msvc\projects\unirender2.vcxproj", "{1BC59363-F960-45FC-9F0F-F925642B444A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -2130,6 +2132,20 @@ Global
 		{C62780AC-9BDD-4FF5-8F9F-8F67128E2472}.RelWithDebInfo|Win32.Build.0 = Release|Win32
 		{C62780AC-9BDD-4FF5-8F9F-8F67128E2472}.RelWithDebInfo|x64.ActiveCfg = Release|Win32
 		{C62780AC-9BDD-4FF5-8F9F-8F67128E2472}.RelWithDebInfo|x64.Build.0 = Release|Win32
+		{1BC59363-F960-45FC-9F0F-F925642B444A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1BC59363-F960-45FC-9F0F-F925642B444A}.Debug|Win32.Build.0 = Debug|Win32
+		{1BC59363-F960-45FC-9F0F-F925642B444A}.Debug|x64.ActiveCfg = Debug|Win32
+		{1BC59363-F960-45FC-9F0F-F925642B444A}.MinSizeRel|Win32.ActiveCfg = Release|Win32
+		{1BC59363-F960-45FC-9F0F-F925642B444A}.MinSizeRel|Win32.Build.0 = Release|Win32
+		{1BC59363-F960-45FC-9F0F-F925642B444A}.MinSizeRel|x64.ActiveCfg = Release|Win32
+		{1BC59363-F960-45FC-9F0F-F925642B444A}.MinSizeRel|x64.Build.0 = Release|Win32
+		{1BC59363-F960-45FC-9F0F-F925642B444A}.Release|Win32.ActiveCfg = Release|Win32
+		{1BC59363-F960-45FC-9F0F-F925642B444A}.Release|Win32.Build.0 = Release|Win32
+		{1BC59363-F960-45FC-9F0F-F925642B444A}.Release|x64.ActiveCfg = Release|Win32
+		{1BC59363-F960-45FC-9F0F-F925642B444A}.RelWithDebInfo|Win32.ActiveCfg = Release|Win32
+		{1BC59363-F960-45FC-9F0F-F925642B444A}.RelWithDebInfo|Win32.Build.0 = Release|Win32
+		{1BC59363-F960-45FC-9F0F-F925642B444A}.RelWithDebInfo|x64.ActiveCfg = Release|Win32
+		{1BC59363-F960-45FC-9F0F-F925642B444A}.RelWithDebInfo|x64.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -2303,6 +2319,7 @@ Global
 		{44F4D386-F533-44F2-AFE0-63968D489EFF} = {530DF364-81CD-4E36-A875-C0F7DDB3B408}
 		{530DF364-81CD-4E36-A875-C0F7DDB3B408} = {7B938AA4-2196-4A91-B94F-E1C20BCCFA05}
 		{C62780AC-9BDD-4FF5-8F9F-8F67128E2472} = {530DF364-81CD-4E36-A875-C0F7DDB3B408}
+		{1BC59363-F960-45FC-9F0F-F925642B444A} = {AF317573-4862-4C0B-9F3C-2C364C0EC958}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8D54C01A-3C82-4351-A325-2853C3E81322}
