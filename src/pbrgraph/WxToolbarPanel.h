@@ -9,7 +9,7 @@
 
 #include <wx/panel.h>
 
-namespace rlab { class WxNodeProperty; }
+namespace renderlab { class WxNodeProperty; }
 
 namespace eone
 {
@@ -39,7 +39,7 @@ private:
 
     WxPreviewPanel* m_preview;
 
-    rlab::WxNodeProperty* m_prop;
+    renderlab::WxNodeProperty* m_prop;
 
 }; // WxToolbarPanel
 

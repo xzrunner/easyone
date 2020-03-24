@@ -10,7 +10,7 @@
 #include <blueprint/typedef.h>
 #include <blueprint/StageFuncNode.h>
 
-namespace rlab { class Evaluator; }
+namespace renderlab { class Evaluator; }
 
 namespace eone
 {
@@ -65,7 +65,7 @@ private:
 private:
     WxToolbarPanel* m_toolbar = nullptr;
 
-    std::shared_ptr<rlab::Evaluator> m_eval = nullptr;
+    std::shared_ptr<renderlab::Evaluator> m_eval = nullptr;
 
     bp::StageFuncNode m_func_node_helper;
 

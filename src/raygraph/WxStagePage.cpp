@@ -47,7 +47,7 @@ WxStagePage::WxStagePage(wxWindow* parent, ECS_WORLD_PARAM const ee0::GameObj& o
 		bp::Blueprint::Instance();
 	}
 
-//    rlab::Blackboard::Instance()->SetEval(m_eval);
+//    renderlab::Blackboard::Instance()->SetEval(m_eval);
 
 	m_messages.push_back(ee0::MSG_SCENE_NODE_INSERT);
 	m_messages.push_back(ee0::MSG_SCENE_NODE_DELETE);
@@ -299,19 +299,19 @@ bool WxStagePage::UpdateNodes()
 
 void WxStagePage::UpdateBlueprint()
 {
-    //rlab::Blackboard::Instance()->SetEval(m_eval);
+    //renderlab::Blackboard::Instance()->SetEval(m_eval);
 
     //bool dirty = UpdateNodes();
 
-    //std::vector<std::shared_ptr<rlab::Node>> nodes;
+    //std::vector<std::shared_ptr<renderlab::Node>> nodes;
     //Traverse([&](const ee0::GameObj& obj)->bool
     //{
     //    if (!obj->HasUniqueComp<bp::CompNode>()) {
     //        return true;
     //    }
     //    auto& bp_node = obj->GetUniqueComp<bp::CompNode>().GetNode();
-    //    if (bp_node->get_derived_info().m_type.is_derived_from<rlab::Node>()) {
-    //        nodes.push_back(std::static_pointer_cast<rlab::Node>(bp_node));
+    //    if (bp_node->get_derived_info().m_type.is_derived_from<renderlab::Node>()) {
+    //        nodes.push_back(std::static_pointer_cast<renderlab::Node>(bp_node));
     //    }
     //    return true;
     //});

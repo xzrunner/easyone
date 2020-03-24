@@ -23,7 +23,7 @@ namespace rgraph
 {
 
 WxPreviewPanel::WxPreviewPanel(wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr,
-                               const ee0::RenderContext* rc, const std::shared_ptr<rlab::Evaluator>& eval)
+                               const ee0::RenderContext* rc, const std::shared_ptr<renderlab::Evaluator>& eval)
     : wxPanel(parent, wxID_ANY, wxDefaultPosition, wxSize(300, 300))
     , m_sub_mgr(sub_mgr)
     , m_edit_impl(this, m_sub_mgr)
@@ -49,7 +49,7 @@ void WxPreviewPanel::OnSize(wxSizeEvent& event)
 
 WxPreviewPanel::Canvas::Canvas(WxPreviewPanel* panel,
                                const ee0::RenderContext* rc,
-                               const std::shared_ptr<rlab::Evaluator>& eval)
+                               const std::shared_ptr<renderlab::Evaluator>& eval)
     : ee0::WxStageCanvas(panel, panel->m_edit_impl, std::make_shared<pt3::PerspCam>(sm::vec3(0, 0, -1.5f), sm::vec3(0, 0, 0), sm::vec3(0, 1, 0)), rc, nullptr, HAS_3D)
     , m_panel(panel)
     , m_eval(eval)
@@ -95,7 +95,7 @@ void WxPreviewPanel::Canvas::OnDrawSprites() const
 
     auto& ur_rc = ur::Blackboard::Instance()->GetRenderContext();
 
-    rg::RenderContext rc(ur_rc);
+    rendergraph::RenderContext rc(ur_rc);
     rc.cam_proj_mat = m_camera->GetProjectionMat();
     rc.cam_view_mat = m_camera->GetViewMat();
     if (m_camera->TypeID() == pt0::GetCamTypeID<pt3::PerspCam>()) {

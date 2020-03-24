@@ -16,7 +16,7 @@
 #include <wx/panel.h>
 
 namespace bp { class Node; }
-namespace rlab { class Evaluator; }
+namespace renderlab { class Evaluator; }
 
 namespace eone
 {
@@ -27,7 +27,7 @@ class WxPreviewPanel : public wxPanel
 {
 public:
     WxPreviewPanel(wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr,
-        const ee0::RenderContext* rc, const std::shared_ptr<rlab::Evaluator>& eval);
+        const ee0::RenderContext* rc, const std::shared_ptr<renderlab::Evaluator>& eval);
 
 private:
     void OnSize(wxSizeEvent& event);
@@ -37,7 +37,7 @@ private:
     {
     public:
         Canvas(WxPreviewPanel* panel, const ee0::RenderContext* rc,
-            const std::shared_ptr<rlab::Evaluator>& eval);
+            const std::shared_ptr<renderlab::Evaluator>& eval);
         virtual ~Canvas();
 
         virtual void OnNotify(uint32_t msg, const ee0::VariantSet& variants) override;
@@ -53,7 +53,7 @@ private:
 
         pt3::Viewport m_viewport;
 
-        const std::shared_ptr<rlab::Evaluator>& m_eval;
+        const std::shared_ptr<renderlab::Evaluator>& m_eval;
 
     }; // Canvas
 

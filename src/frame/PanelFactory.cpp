@@ -464,7 +464,7 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
 		auto arrange_op = std::make_shared<bp::ArrangeNodeOP>(
 			canvas->GetCamera(), *page, ECS_WORLD_VAR cfg, select_op);
 
-        auto& nodes = rlab::RenderLab::Instance()->GetAllNodes();
+        auto& nodes = renderlab::RenderLab::Instance()->GetAllNodes();
 		auto op = std::make_shared<bp::ConnectPinOP>(canvas->GetCamera(), *page, nodes);
 		op->SetPrevEditOP(arrange_op);
 		page->GetImpl().SetEditOP(op);
@@ -564,7 +564,7 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
 		auto arrange_op = std::make_shared<bp::ArrangeNodeOP>(
 			canvas->GetCamera(), *page, ECS_WORLD_VAR cfg, select_op);
 
-        auto& nodes = rlab::RenderLab::Instance()->GetAllNodes();
+        auto& nodes = renderlab::RenderLab::Instance()->GetAllNodes();
 		auto op = std::make_shared<bp::ConnectPinOP>(canvas->GetCamera(), *page, nodes);
 		op->SetPrevEditOP(arrange_op);
 		page->GetImpl().SetEditOP(op);

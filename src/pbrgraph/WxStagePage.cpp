@@ -49,7 +49,7 @@ const std::string WxStagePage::PAGE_TYPE = "render_graph";
 
 WxStagePage::WxStagePage(wxWindow* parent, ECS_WORLD_PARAM const ee0::GameObj& obj)
 	: eone::WxStagePage(parent, ECS_WORLD_VAR obj, SHOW_STAGE | SHOW_TOOLBAR | TOOLBAR_LFET)
-    , m_eval(std::make_shared<rlab::Evaluator>())
+    , m_eval(std::make_shared<renderlab::Evaluator>())
 {
 	static bool inited = false;
 	if (!inited) {
@@ -57,7 +57,7 @@ WxStagePage::WxStagePage(wxWindow* parent, ECS_WORLD_PARAM const ee0::GameObj& o
 		bp::Blueprint::Instance();
 	}
 
-    rlab::Blackboard::Instance()->SetEval(m_eval);
+    renderlab::Blackboard::Instance()->SetEval(m_eval);
 
 	m_messages.push_back(ee0::MSG_SCENE_NODE_INSERT);
 	m_messages.push_back(ee0::MSG_SCENE_NODE_DELETE);
@@ -350,7 +350,7 @@ bool WxStagePage::UpdateNodes()
 
 void WxStagePage::UpdateBlueprint()
 {
-    rlab::Blackboard::Instance()->SetEval(m_eval);
+    renderlab::Blackboard::Instance()->SetEval(m_eval);
 
     bool dirty = UpdateNodes();
 
