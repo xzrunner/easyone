@@ -95,14 +95,14 @@ void WxPreviewPanel::Canvas::OnDrawSprites() const
 
     auto& ur_rc = ur::Blackboard::Instance()->GetRenderContext();
 
-    rendergraph::RenderContext rc(ur_rc);
-    rc.cam_proj_mat = m_camera->GetProjectionMat();
-    rc.cam_view_mat = m_camera->GetViewMat();
+    auto rc = std::make_shared<rendergraph::RenderContext>(ur_rc);
+    rc->cam_proj_mat = m_camera->GetProjectionMat();
+    rc->cam_view_mat = m_camera->GetViewMat();
     if (m_camera->TypeID() == pt0::GetCamTypeID<pt3::PerspCam>()) {
         auto persp = std::static_pointer_cast<pt3::PerspCam>(m_camera);
-        rc.cam_position = persp->GetPos();
+        rc->cam_position = persp->GetPos();
     }
-    rc.light_position.Set(0, 2, -4);
+    rc->light_position.Set(0, 2, -4);
 
     m_eval->Draw(rc);
 }
