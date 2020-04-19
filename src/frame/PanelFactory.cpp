@@ -205,7 +205,7 @@
 namespace eone
 {
 
-WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStagePanel* stage_panel)
+WxStagePage* PanelFactory::CreateStagePage(const ur2::Device& dev, ECS_WORLD_PARAM int page_type, WxStagePanel* stage_panel)
 {
 	WxStagePage* page = nullptr;
 
@@ -446,28 +446,8 @@ WxStagePage* PanelFactory::CreateStagePage(ECS_WORLD_PARAM int page_type, WxStag
 #ifdef MODULE_RENDERGRAPH
     case PAGE_RENDER_GRAPH:
     {
-		auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX2D);
-		page = new rgraph::WxStagePage(frame, ECS_WORLD_VAR obj);
-        auto canvas = std::make_shared<WxBlueprintCanvas>(page, rc);
-        page->GetImpl().SetCanvas(canvas);
-
-        auto prev_op = std::make_shared<LeftDClickOP>(canvas->GetCamera(), *page, rc, wc);
-
-        auto select_op = std::make_shared<bp::NodeSelectOP>(canvas->GetCamera(), *page);
-        select_op->AddPrevEditOP(prev_op);
-
-		ee2::ArrangeNodeCfg cfg;
-		cfg.is_auto_align_open = false;
-		cfg.is_deform_open = false;
-		cfg.is_offset_open = false;
-		cfg.is_rotate_open = false;
-		auto arrange_op = std::make_shared<bp::ArrangeNodeOP>(
-			canvas->GetCamera(), *page, ECS_WORLD_VAR cfg, select_op);
-
-        auto& nodes = renderlab::RenderLab::Instance()->GetAllNodes();
-		auto op = std::make_shared<bp::ConnectPinOP>(canvas->GetCamera(), *page, nodes);
-		op->SetPrevEditOP(arrange_op);
-		page->GetImpl().SetEditOP(op);
+        auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX2D);
+        page = new rgraph::WxStagePage(dev, frame, ECS_WORLD_VAR obj, rc);
     }
         break;
 #endif // MODULE_RENDERGRAPH

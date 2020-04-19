@@ -9,8 +9,12 @@
 
 #include <blueprint/typedef.h>
 #include <blueprint/StageFuncNode.h>
+#include <blueprint/WxGraphPage.h>
+#include <renderlab/PreviewPage.h>
 
-namespace renderlab { class Evaluator; }
+#include <rendergraph/Variable.h>
+
+namespace renderlab { class Evaluator; class WxGraphPage; }
 
 namespace eone
 {
@@ -22,7 +26,8 @@ class WxToolbarPanel;
 class WxStagePage : public eone::WxStagePage
 {
 public:
-	WxStagePage(wxWindow* parent, ECS_WORLD_PARAM const ee0::GameObj& obj);
+	WxStagePage(const ur2::Device& dev, wxWindow* parent,
+        ECS_WORLD_PARAM const ee0::GameObj& obj, const ee0::RenderContext& rc);
     virtual ~WxStagePage();
 
 	virtual void OnNotify(uint32_t msg, const ee0::VariantSet& variants) override;
@@ -49,6 +54,8 @@ protected:
 	virtual void LoadFromFileExt(const std::string& filepath) override;
 
 private:
+    renderlab::WxGraphPage* CreateGraphPanel(wxWindow* parent) const;
+
 	bool InsertSceneObj(const ee0::VariantSet& variants);
 	bool DeleteSceneObj(const ee0::VariantSet& variants);
 	bool ClearSceneObj();
@@ -63,11 +70,18 @@ private:
     auto& GetFuncNodeHelper() { return m_func_node_helper; }
 
 private:
+    const ur2::Device& m_dev;
+
+    renderlab::PreviewPage m_preview_impl;
+
     WxToolbarPanel* m_toolbar = nullptr;
 
     std::shared_ptr<renderlab::Evaluator> m_eval = nullptr;
 
     bp::StageFuncNode m_func_node_helper;
+
+    n0::SceneNodePtr  m_graph_obj = nullptr;
+    ee0::WxStagePage* m_graph_page = nullptr;
 
 }; // WxStagePage
 

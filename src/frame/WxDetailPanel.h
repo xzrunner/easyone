@@ -11,6 +11,7 @@
 
 #include <wx/panel.h>
 
+namespace ur2 { class Device; }
 namespace ee0 { class WxCompPanel; }
 ECS_WORLD_DECL
 
@@ -20,7 +21,7 @@ namespace eone
 class WxDetailPanel : public wxPanel, public ee0::Observer
 {
 public:
-	WxDetailPanel(wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr,
+	WxDetailPanel(const ur2::Device& dev, wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr,
 		ECS_WORLD_PARAM const ee0::GameObj& root_obj, const moon::ContextPtr& moon_ctx);
 
 	virtual void OnNotify(uint32_t msg, const ee0::VariantSet& variants) override;
@@ -41,6 +42,8 @@ private:
 	void OnAddPress(wxCommandEvent& event);
 
 private:
+    const ur2::Device& m_dev;
+
 	ee0::SubjectMgrPtr m_sub_mgr;
 	ECS_WORLD_SELF_DEF
 	ee0::GameObj       m_root_obj;

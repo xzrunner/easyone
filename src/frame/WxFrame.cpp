@@ -92,8 +92,9 @@ void WxFrame::OnNew(wxCommandEvent& event)
 
 	auto app = std::static_pointer_cast<Application>(m_app);
 	auto type = static_cast<PageItemData*>(dlg.GetSelected())->type;
+    auto dev = Blackboard::Instance()->GetRenderDevice();
 #ifndef GAME_OBJ_ECS
-	auto page = PanelFactory::CreateStagePage(type, app->GetStagePanel());
+	auto page = PanelFactory::CreateStagePage(*dev, type, app->GetStagePanel());
 #else
 	auto page = PanelFactory::Create(app->GetWorld(), type, app->GetStagePanel());
 #endif // GAME_OBJ_ECS

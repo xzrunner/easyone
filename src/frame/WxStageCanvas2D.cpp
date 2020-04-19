@@ -13,6 +13,7 @@
 #else
 #endif // GAME_OBJ_ECS
 #include <moon/Blackboard.h>
+#include <unirender2/RenderState.h>
 #include <painting2/OrthoCamera.h>
 
 #include <wx/frame.h>
@@ -20,9 +21,9 @@
 namespace eone
 {
 
-WxStageCanvas2D::WxStageCanvas2D(ee0::WxStagePage* stage, ECS_WORLD_PARAM
-	                             const ee0::RenderContext& rc)
-	: ee2::WxStageCanvas(stage, ECS_WORLD_VAR &rc)
+WxStageCanvas2D::WxStageCanvas2D(const ur2::Device& dev, ee0::WxStagePage* stage,
+                                 ECS_WORLD_PARAM const ee0::RenderContext& rc)
+	: ee2::WxStageCanvas(dev, stage, ECS_WORLD_VAR &rc)
 {
 }
 
@@ -42,7 +43,9 @@ void WxStageCanvas2D::DrawForeground() const
 			    line_width *= std::dynamic_pointer_cast<pt2::OrthoCamera>(m_camera)->GetScale();
 		    }
 		    auto& cscissor = obj->GetUniqueComp<n2::CompScissor>();
-		    n2::RenderSystem::Instance()->DrawScissorRect(cscissor.GetRect(), line_width, sm::Matrix2D());
+
+            ur2::RenderState rs;
+		    n2::RenderSystem::Instance()->DrawScissorRect(m_dev, *GetRenderContext().ur_ctx, rs, cscissor.GetRect(), line_width, sm::Matrix2D());
 	    }
     }
 #else

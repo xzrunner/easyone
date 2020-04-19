@@ -31,9 +31,10 @@
 namespace eone
 {
 
-WxWorldPanel::WxWorldPanel(wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr,
+WxWorldPanel::WxWorldPanel(const ur2::Device& dev, wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr,
 	                       ECS_WORLD_PARAM const ee0::GameObj& root_obj)
 	: wxPanel(parent, wxID_ANY)
+    , m_dev(dev)
 	, m_sub_mgr(sub_mgr)
 {
 	InitLayout(sub_mgr, ECS_WORLD_VAR root_obj);
@@ -126,7 +127,7 @@ void WxWorldPanel::OnAddPress(wxCommandEvent& event)
 			if (dlg.ShowModal() == wxID_OK)
 			{
 				auto& path = dlg.GetPath();
-				auto img = facade::ResPool::Instance().Fetch<facade::Image>(path.ToStdString());
+				auto img = facade::ResPool::Instance().Fetch<facade::Image>(path.ToStdString(), &m_dev);
 
 				obj = GameObjFactory::Create(ECS_WORLD_SELF_VAR GAME_OBJ_IMAGE);
 

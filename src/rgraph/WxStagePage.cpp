@@ -2,18 +2,19 @@
 
 #ifdef MODULE_RENDERGRAPH
 
-#include "rgraph/WxToolbarPanel.h"
-#include "rgraph/WxPreviewPanel.h"
-
 #include "frame/AppStyle.h"
 #include "frame/Blackboard.h"
 #include "frame/PanelFactory.h"
 #include "frame/WxStagePanel.h"
 #include "frame/WxStageSubPanel.h"
+#include "frame/GameObjFactory.h"
 
 #include <ee0/SubjectMgr.h>
 #include <ee0/WxStageCanvas.h>
 #include <ee0/MsgHelper.h>
+#include <blueprint/NodeSelectOP.h>
+#include <blueprint/ArrangeNodeOP.h>
+#include <blueprint/ConnectPinOP.h>
 #include <blueprint/Blueprint.h>
 #include <blueprint/MessageID.h>
 #include <blueprint/NSCompNode.h>
@@ -22,14 +23,21 @@
 #include <blueprint/CompNode.h>
 #include <blueprint/CommentaryNodeHelper.h>
 #include <blueprint/node/Function.h>
+#include <blueprint/WxToolbarPanel.h>
+#include <blueprint/Serializer.h>
 #include <renderlab/RegistNodes.h>
 #include <renderlab/Evaluator.h>
-#include <renderlab/Blackboard.h>
+#include <renderlab/RenderLab.h>
+#include <renderlab/WxGraphCanvas.h>
+#include <renderlab/WxGraphPage.h>
+#include <renderlab/WxPreviewCanvas.h>
 
 #include <node0/SceneNode.h>
 #include <node0/CompComplex.h>
 #include <sx/ResFileHelper.h>
 #include <js/RapidJsonHelper.h>
+
+#include <boost/filesystem.hpp>
 
 namespace
 {
@@ -45,9 +53,12 @@ namespace rgraph
 
 const std::string WxStagePage::PAGE_TYPE = "render_graph";
 
-WxStagePage::WxStagePage(wxWindow* parent, ECS_WORLD_PARAM const ee0::GameObj& obj)
-	: eone::WxStagePage(parent, ECS_WORLD_VAR obj, SHOW_STAGE | SHOW_TOOLBAR | TOOLBAR_LFET)
-    , m_eval(std::make_shared<renderlab::Evaluator>())
+WxStagePage::WxStagePage(const ur2::Device& dev, wxWindow* parent,
+                         ECS_WORLD_PARAM const ee0::GameObj& obj, const ee0::RenderContext& rc)
+	: eone::WxStagePage(parent, ECS_WORLD_VAR obj, /*SHOW_STAGE | SHOW_TOOLBAR | TOOLBAR_LFET*/SHOW_STAGE | SHOW_TOOLBAR | SHOW_STAGE_EXT | STAGE_EXT_RIGHT)
+    , m_dev(dev)
+    , m_preview_impl(dev, *this, rc)
+//    , m_eval(std::make_shared<renderlab::Evaluator>())
 {
 	static bool inited = false;
 	if (!inited) {
@@ -55,7 +66,7 @@ WxStagePage::WxStagePage(wxWindow* parent, ECS_WORLD_PARAM const ee0::GameObj& o
 		bp::Blueprint::Instance();
 	}
 
-    renderlab::Blackboard::Instance()->SetEval(m_eval);
+//    renderlab::Blackboard::Instance()->SetEval(m_eval);
 
 	m_messages.push_back(ee0::MSG_SCENE_NODE_INSERT);
 	m_messages.push_back(ee0::MSG_SCENE_NODE_DELETE);
@@ -93,14 +104,6 @@ void WxStagePage::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
 
     case ee0::MSG_STAGE_PAGE_NEW:
         CreateNewPage(variants);
-        break;
-    case ee0::MSG_STAGE_PAGE_ON_SHOW:
-        m_toolbar->Show();
-        m_toolbar->GetParent()->Layout();
-        break;
-    case ee0::MSG_STAGE_PAGE_ON_HIDE:
-        m_toolbar->Hide();
-        m_toolbar->GetParent()->Layout();
         break;
 
     case bp::MSG_BP_CONN_INSERT:
@@ -159,10 +162,19 @@ void WxStagePage::Traverse(std::function<bool(const ee0::GameObj&)> func,
 
 void WxStagePage::OnPageInit()
 {
-    assert(!m_toolbar);
+    m_graph_obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX2D);
+
+    auto stage_ext_panel = Blackboard::Instance()->GetStageExtPanel();
+    auto graph_page = CreateGraphPanel(stage_ext_panel);
+    m_graph_page = graph_page;
+    stage_ext_panel->AddPagePanel(m_graph_page, wxVERTICAL);
+
     auto toolbar_panel = Blackboard::Instance()->GetToolbarPanel();
-    m_toolbar = new WxToolbarPanel(toolbar_panel, this);
-    toolbar_panel->AddPagePanel(m_toolbar, wxVERTICAL);
+    auto toolbar_page = new bp::WxToolbarPanel(m_dev, toolbar_panel, m_graph_page->GetSubjectMgr());
+    toolbar_panel->AddPagePanel(toolbar_page, wxVERTICAL);
+
+    auto prev_canvas = std::static_pointer_cast<renderlab::WxPreviewCanvas>(GetImpl().GetCanvas());
+    prev_canvas->SetGraphPage(graph_page);
 }
 
 #ifndef GAME_OBJ_ECS
@@ -175,29 +187,66 @@ const n0::NodeComp& WxStagePage::GetEditedObjComp() const
 void WxStagePage::StoreToJsonExt(const std::string& dir, rapidjson::Value& val,
 	                             rapidjson::MemoryPoolAllocator<>& alloc) const
 {
-	// connection
-	auto& ccomplex = m_obj->GetSharedComp<n0::CompComplex>();
-	bp::NSCompNode::StoreConnection(ccomplex.GetAllChildren(), val["nodes"], alloc);
+    bp::Serializer::StoreToJson(m_graph_obj, dir, val, alloc);
 
-	val.AddMember("page_type", rapidjson::Value(PAGE_TYPE.c_str(), alloc), alloc);
+    assert(m_graph_obj->HasSharedComp<n0::CompComplex>());
+    auto& ccomplex = m_graph_obj->GetSharedComp<n0::CompComplex>();
+    bp::NSCompNode::StoreConnection(ccomplex.GetAllChildren(), val["nodes"], alloc);
+
+    val.AddMember("page_type", rapidjson::Value(PAGE_TYPE.c_str(), alloc), alloc);
 }
 
 void WxStagePage::LoadFromFileExt(const std::string& filepath)
 {
-    bp::CommentaryNodeHelper::InsertNodeToCommentary(*this);
-
-    LoadFunctionNodes();
-
-    if (sx::ResFileHelper::Type(filepath) == sx::RES_FILE_JSON)
+    auto type = sx::ResFileHelper::Type(filepath);
+    switch (type)
     {
+    case sx::RES_FILE_JSON:
+    {
+        static_cast<renderlab::WxGraphPage*>(m_graph_page)->SetFilepath(filepath);
+
         rapidjson::Document doc;
         js::RapidJsonHelper::ReadFromFile(filepath.c_str(), doc);
 
-        auto& ccomplex = m_obj->GetSharedComp<n0::CompComplex>();
+        auto dir = boost::filesystem::path(filepath).parent_path().string();
+        bp::Serializer::LoadFromJson(m_dev, *m_graph_page, m_graph_obj, doc, dir);
+
+        auto& ccomplex = m_graph_obj->GetSharedComp<n0::CompComplex>();
         bp::NSCompNode::LoadConnection(ccomplex.GetAllChildren(), doc["nodes"]);
 
-        m_sub_mgr->NotifyObservers(bp::MSG_BP_CONN_REBUILD);
+        m_graph_page->GetSubjectMgr()->NotifyObservers(bp::MSG_BP_CONN_REBUILD);
     }
+    break;
+    }
+}
+
+renderlab::WxGraphPage*
+WxStagePage::CreateGraphPanel(wxWindow* parent) const
+{
+    auto panel = new renderlab::WxGraphPage(m_dev, parent, m_graph_obj, m_sub_mgr);
+    auto& panel_impl = panel->GetImpl();
+
+    auto canvas = std::make_shared<renderlab::WxGraphCanvas>(
+        m_dev, panel, Blackboard::Instance()->GetRenderContext()
+    );
+    panel_impl.SetCanvas(canvas);
+
+    auto select_op = std::make_shared<bp::NodeSelectOP>(canvas->GetCamera(), *panel);
+
+    ee2::ArrangeNodeCfg cfg;
+    cfg.is_auto_align_open = false;
+    cfg.is_deform_open = false;
+    cfg.is_offset_open = false;
+    cfg.is_rotate_open = false;
+    auto arrange_op = std::make_shared<bp::ArrangeNodeOP>(
+        canvas->GetCamera(), *panel, ECS_WORLD_VAR cfg, select_op);
+
+    auto& nodes = renderlab::RenderLab::Instance()->GetAllNodes();
+    auto op = std::make_shared<bp::ConnectPinOP>(canvas->GetCamera(), *panel, nodes);
+    op->SetPrevEditOP(arrange_op);
+    panel_impl.SetEditOP(op);
+
+    return panel;
 }
 
 bool WxStagePage::InsertSceneObj(const ee0::VariantSet& variants)
@@ -215,7 +264,7 @@ bool WxStagePage::InsertSceneObj(const ee0::VariantSet& variants)
 	ccomplex.children->push_back(*obj);
 #endif // GAME_OBJ_ECS
 
-    m_func_node_helper.InsertSceneObj(*obj);
+    m_func_node_helper.InsertSceneObj(m_dev, *obj);
 
 	return true;
 }
@@ -280,7 +329,7 @@ void WxStagePage::CreateNewPage(const ee0::VariantSet& variants) const
     if (page_type >= 0)
     {
         auto stage_panel = Blackboard::Instance()->GetStagePanel();
-        auto stage_page = PanelFactory::CreateStagePage(page_type, stage_panel);
+        auto stage_page = PanelFactory::CreateStagePage(m_dev, page_type, stage_panel);
         stage_panel->AddNewPage(stage_page, GetPageName(stage_page->GetPageType()));
 
         if (page_type == PAGE_RENDER_GRAPH)
@@ -344,7 +393,7 @@ bool WxStagePage::UpdateNodes()
 
 void WxStagePage::UpdateBlueprint()
 {
-    renderlab::Blackboard::Instance()->SetEval(m_eval);
+    //renderlab::Blackboard::Instance()->SetEval(m_eval);
 
     bool dirty = UpdateNodes();
 
@@ -359,9 +408,9 @@ void WxStagePage::UpdateBlueprint()
         return true;
     });
 
-    if (!nodes.empty()) {
-        m_eval->Rebuild(nodes);
-    }
+    //if (!nodes.empty()) {
+    //    m_eval->Rebuild(nodes);
+    //}
 
     if (dirty) {
         m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
@@ -375,7 +424,7 @@ void WxStagePage::LoadFunctionNodes()
         if (obj->HasUniqueComp<bp::CompNode>()) {
             auto& bp_node = obj->GetUniqueComp<bp::CompNode>().GetNode();
             if (bp_node->get_type() == rttr::type::get<bp::node::Function>()) {
-                bp::NodeHelper::LoadFunctionNode(obj, bp_node);
+                bp::NodeHelper::LoadFunctionNode(m_dev, obj, bp_node);
             }
         }
         return true;

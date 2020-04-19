@@ -1,5 +1,6 @@
 #include "frame/GameObjFactory.h"
 #include "frame/config.h"
+#include "frame/Blackboard.h"
 
 #ifdef MODULE_PARTICLE3D
 #include "particle3d/config.h"
@@ -224,7 +225,8 @@ ee0::GameObj GameObjFactory::Create(ECS_WORLD_PARAM GameObjType type,
         cid.SetName("light");
 
         auto& cmesh = obj->AddUniqueComp<n3::CompMeshFilter>();
-        cmesh.SetMesh(model::Sphere::TYPE_NAME);
+        auto dev = Blackboard::Instance()->GetRenderDevice();
+        cmesh.SetMesh(*dev, model::Sphere::TYPE_NAME);
 
         auto& caabb = obj->AddUniqueComp<n3::CompAABB>();
         caabb.SetAABB(cmesh.GetAABB());
@@ -253,7 +255,8 @@ ee0::GameObj GameObjFactory::Create(ECS_WORLD_PARAM GameObjType type,
         cid.SetName(model::Sphere::TYPE_NAME);
 
         auto& cmesh = obj->AddUniqueComp<n3::CompMeshFilter>();
-        cmesh.SetMesh(model::Sphere::TYPE_NAME);
+        auto dev = Blackboard::Instance()->GetRenderDevice();
+        cmesh.SetMesh(*dev, model::Sphere::TYPE_NAME);
 
         auto& caabb = obj->AddUniqueComp<n3::CompAABB>();
         caabb.SetAABB(cmesh.GetAABB());

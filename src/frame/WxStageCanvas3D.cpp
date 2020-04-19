@@ -13,9 +13,9 @@
 namespace eone
 {
 
-WxStageCanvas3D::WxStageCanvas3D(WxStagePage* stage, ECS_WORLD_PARAM
+WxStageCanvas3D::WxStageCanvas3D(const ur2::Device& dev, WxStagePage* stage, ECS_WORLD_PARAM
 	                             const ee0::RenderContext& rc, bool has2d)
-	: ee3::WxStageCanvas(stage, ECS_WORLD_VAR &rc, nullptr, has2d)
+	: ee3::WxStageCanvas(dev, stage, ECS_WORLD_VAR &rc, nullptr, has2d)
 {
 }
 

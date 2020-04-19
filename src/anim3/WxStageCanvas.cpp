@@ -9,8 +9,6 @@
 #include <ee0/WxStagePage.h>
 #include <ee0/SubjectMgr.h>
 
-#include <unirender/Blackboard.h>
-#include <unirender/RenderContext.h>
 #include <model/Model.h>
 #include <node0/SceneNode.h>
 #include <node3/CompModel.h>

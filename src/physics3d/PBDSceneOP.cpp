@@ -32,7 +32,7 @@ bool PBDSceneOP::OnMouseWheelRotation(int x, int y, int direction)
     return false;
 }
 
-bool PBDSceneOP::OnDraw() const
+bool PBDSceneOP::OnDraw(const ur2::Device& dev, ur2::Context& ctx) const
 {
     if (ee0::EditOP::OnDraw()) {
         return true;

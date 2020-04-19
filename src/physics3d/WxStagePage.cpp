@@ -23,9 +23,6 @@
 #include <node3/CompModelInst.h>
 #include <node3/CompCloth.h>
 #include <sx/ResFileHelper.h>
-#include <unirender/VertexAttrib.h>
-#include <unirender/Shader.h>
-#include <unirender/Blackboard.h>
 #include <uniphysics/cloth/ClothMeshData.h>
 #include <uniphysics/rigid/bullet/Shape.h>
 #include <facade/ResPool.h>

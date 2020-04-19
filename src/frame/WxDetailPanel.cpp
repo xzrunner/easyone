@@ -68,10 +68,11 @@
 namespace eone
 {
 
-WxDetailPanel::WxDetailPanel(wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr,
+WxDetailPanel::WxDetailPanel(const ur2::Device& dev, wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr,
 	                         ECS_WORLD_PARAM const ee0::GameObj& root_obj,
 	                         const moon::ContextPtr& moon_ctx)
 	: wxPanel(parent, wxID_ANY)
+    , m_dev(dev)
 	, m_sub_mgr(sub_mgr)
 	ECS_WORLD_SELF_ASSIGN
 	, m_root_obj(root_obj)
@@ -245,7 +246,7 @@ void WxDetailPanel::InitComponents(const ee0::GameObj& obj)
     if (m_owp.GetNode()->HasUniqueComp<n3::CompMeshFilter>())
     {
         auto panel = new ee3::WxCompMeshFilterPanel(
-            this, m_sub_mgr, m_owp.GetNode()
+            m_dev, this, m_sub_mgr, m_owp.GetNode()
         );
         m_comp_sizer->Insert(m_components.size(), panel);
         m_components.push_back(panel);
@@ -310,9 +311,9 @@ void WxDetailPanel::InitComponents(const ee0::GameObj& obj)
 	{
 		auto panel = new ee2::WxCompImagePanel(
 #ifndef GAME_OBJ_ECS
-			this, m_owp.GetNode()
+			m_dev, this, m_owp.GetNode()
 #else
-			this, m_world, m_owp
+            m_dev, this, m_world, m_owp
 #endif // GAME_OBJ_ECS
 		);
 		m_comp_sizer->Insert(m_components.size(), panel);
@@ -342,9 +343,9 @@ void WxDetailPanel::InitComponents(const ee0::GameObj& obj)
 	{
 		auto panel = new ee2::WxCompMaskPanel(
 #ifndef GAME_OBJ_ECS
-			this, m_owp.GetNode()
+			m_dev, this, m_owp.GetNode()
 #else
-			this, m_world, m_owp
+            m_dev, this, m_world, m_owp
 #endif // GAME_OBJ_ECS
 		);
 		m_comp_sizer->Insert(m_components.size(), panel);
@@ -358,9 +359,9 @@ void WxDetailPanel::InitComponents(const ee0::GameObj& obj)
 	{
 		auto panel = new ee2::WxCompMeshPanel(
 #ifndef GAME_OBJ_ECS
-			this, m_owp.GetNode()
+			m_dev, this, m_owp.GetNode()
 #else
-			this, m_world, m_owp
+            m_dev, this, m_world, m_owp
 #endif // GAME_OBJ_ECS
 		);
 		m_comp_sizer->Insert(m_components.size(), panel);

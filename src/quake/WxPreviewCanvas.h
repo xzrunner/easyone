@@ -6,7 +6,6 @@
 
 #include <ee3/WxStageCanvas.h>
 
-namespace ur { class Shader; }
 namespace ee0 { class SubjectMgr; }
 
 namespace eone

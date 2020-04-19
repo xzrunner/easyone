@@ -18,9 +18,6 @@
 #include <node0/SceneNode.h>
 #include <node0/CompComplex.h>
 #include <sx/ResFileHelper.h>
-#include <unirender/VertexAttrib.h>
-#include <unirender/Shader.h>
-#include <unirender/Blackboard.h>
 #include <facade/ResPool.h>
 #include <facade/ImageCube.h>
 

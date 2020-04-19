@@ -45,7 +45,6 @@ private:
         const pt3::Viewport& GetViewport() const { return m_viewport; }
 
     private:
-        virtual void OnSize(int w, int h) override;
         virtual void OnDrawSprites() const override;
 
     private:

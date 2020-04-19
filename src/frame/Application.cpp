@@ -300,13 +300,16 @@ void Application::LoadFromFile(const std::string& filepath)
 
 	if (old_type != new_type)
     {
-		page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR new_type, m_stage);
+        auto dev = Blackboard::Instance()->GetRenderDevice();
+		page = PanelFactory::CreateStagePage(*dev, ECS_WORLD_SELF_VAR new_type, m_stage);
         m_stage->AddNewPage(page, GetPageName(page->GetPageType()));
 		page->GetSubjectMgr()->NotifyObservers(ee0::MSG_STAGE_PAGE_ON_SHOW);
 	}
 
 	page->SetFilepath(filepath);
-	page->LoadFromFile(filepath);
+
+    auto dev = Blackboard::Instance()->GetRenderDevice();
+	page->LoadFromFile(*dev, filepath);
 
 	m_frame->SetTitle(filepath);
 }
@@ -432,6 +435,8 @@ wxWindow* Application::CreateStagePanel()
 
     WxStagePage* page = nullptr;
 
+    auto dev = Blackboard::Instance()->GetRenderDevice();
+
 #ifdef MODULE_SCENE2D
 	page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_SCENE2D, m_stage);
 #endif // MODULE_SCENE2D
@@ -477,7 +482,7 @@ wxWindow* Application::CreateStagePanel()
 	page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_PROTOTYPING, m_stage);
 #endif // MODULE_PROTOTYPE
 #ifdef MODULE_RENDERGRAPH
-    page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_RENDER_GRAPH, m_stage);
+    page = PanelFactory::CreateStagePage(*dev, ECS_WORLD_SELF_VAR PAGE_RENDER_GRAPH, m_stage);
 #endif // MODULE_RENDERGRAPH
 #ifdef MODULE_PHYSICS3D
     page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_PHYSICS3D, m_stage);
@@ -553,8 +558,9 @@ wxWindow* Application::CreatePreviewPanel()
 	auto preview = new WxPreviewPanel(m_frame, sub_mgr, m_stage->GetCurrentStagePage());
 	Blackboard::Instance()->SetPreviewPanel(preview);
 
+    auto dev = Blackboard::Instance()->GetRenderDevice();
 	auto canvas = std::make_shared<WxPreviewCanvas>(
-		preview, ECS_WORLD_SELF_VAR Blackboard::Instance()->GetRenderContext());
+		*dev, preview, ECS_WORLD_SELF_VAR Blackboard::Instance()->GetRenderContext());
 	preview->GetImpl().SetCanvas(canvas);
 	PanelFactory::CreatePreviewOP(
 #ifdef GAME_OBJ_ECS
@@ -567,15 +573,17 @@ wxWindow* Application::CreatePreviewPanel()
 
 wxWindow* Application::CreateWorldPanel()
 {
+    auto dev = Blackboard::Instance()->GetRenderDevice();
 	auto curr_page = m_stage->GetCurrentStagePage();
-	return new WxWorldPanel(m_frame, curr_page->GetSubjectMgr(),
+	return new WxWorldPanel(*dev, m_frame, curr_page->GetSubjectMgr(),
 		ECS_WORLD_SELF_VAR curr_page->GetEditedObj());
 }
 
 wxWindow* Application::CreateDetailPanel()
 {
+    auto dev = Blackboard::Instance()->GetRenderDevice();
 	auto curr_page = m_stage->GetCurrentStagePage();
-	return new WxDetailPanel(m_frame, curr_page->GetSubjectMgr(),
+	return new WxDetailPanel(*dev, m_frame, curr_page->GetSubjectMgr(),
 		ECS_WORLD_SELF_VAR curr_page->GetEditedObj(), curr_page->GetMoonCtx());
 }
 

@@ -31,10 +31,6 @@
 #include <sgconv/ASEImporter.h>
 
 #include <js/RapidJsonHelper.h>
-#include <unirender/VertexAttrib.h>
-#include <unirender/Blackboard.h>
-#include <unirender/Shader.h>
-#include <unirender/RenderContext.h>
 #include <painting3/Shader.h>
 #include <node0/SceneNode.h>
 #include <node0/CompComplex.h>

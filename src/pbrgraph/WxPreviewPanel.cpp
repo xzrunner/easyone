@@ -11,7 +11,6 @@
 #include <painting3/PerspCam.h>
 #include <painting3/Blackboard.h>
 #include <painting3/WindowContext.h>
-#include <unirender/Blackboard.h>
 #include <rendergraph/DrawList.h>
 #include <rendergraph/RenderContext.h>
 #include <renderpipeline/RenderMgr.h>
@@ -70,19 +69,6 @@ void WxPreviewPanel::Canvas::OnNotify(uint32_t msg, const ee0::VariantSet& varia
         SetDirty();
         break;
     }
-}
-
-void WxPreviewPanel::Canvas::OnSize(int w, int h)
-{
-	auto& wc = pt3::Blackboard::Instance()->GetWindowContext();
-	if (wc)
-	{
-		wc->SetScreen(w, h);
-		m_viewport.SetSize(w, h);
-
-		m_camera->OnSize(static_cast<float>(w), static_cast<float>(h));
-		wc->SetProjection(m_camera->GetProjectionMat());
-	}
 }
 
 void WxPreviewPanel::Canvas::OnDrawSprites() const

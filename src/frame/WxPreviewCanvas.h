@@ -16,14 +16,14 @@ class WxPreviewPanel;
 class WxPreviewCanvas : public ee0::WxStageCanvas, public ee0::Observer
 {
 public:
-	WxPreviewCanvas(WxPreviewPanel* stage, ECS_WORLD_PARAM const ee0::RenderContext& rc);
+	WxPreviewCanvas(const ur2::Device& dev, WxPreviewPanel* stage,
+        ECS_WORLD_PARAM const ee0::RenderContext& rc);
 
 	virtual void OnNotify(uint32_t msg, const ee0::VariantSet& variants) override;
 
 	void RegisterMsg(ee0::SubjectMgr& sub_mgr);
 
 protected:
-	virtual void OnSize(int w, int h) override;
 	virtual void OnDrawSprites() const override;
 
 private:

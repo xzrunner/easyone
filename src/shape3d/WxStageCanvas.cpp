@@ -2,8 +2,6 @@
 
 #ifdef MODULE_SHAPE3D
 
-#include <unirender/VertexAttrib.h>
-#include <unirender/Blackboard.h>
 #include <tessellation/Painter.h>
 #include <painting2/RenderSystem.h>
 #include <painting3/PerspCam.h>

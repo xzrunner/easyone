@@ -208,12 +208,6 @@
     <Filter Include="63.render">
       <UniqueIdentifier>{31182a01-d587-4a9e-8109-604526b31e39}</UniqueIdentifier>
     </Filter>
-    <Filter Include="63.render\stage">
-      <UniqueIdentifier>{4f2facd9-6a78-4462-802d-5691bb1ee6d9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="63.render\toolbar">
-      <UniqueIdentifier>{f2c86d53-a87d-4a9e-b055-e005172c05f8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="64.gui">
       <UniqueIdentifier>{3c07c0e4-3044-49c7-82eb-fa4a81f14293}</UniqueIdentifier>
     </Filter>
@@ -453,15 +447,6 @@
     <ClInclude Include="..\..\..\src\frame\WxStageSubPanel.h">
       <Filter>00.frame\view</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\rgraph\WxToolbarPanel.h">
-      <Filter>63.render\toolbar</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\rgraph\WxPreviewPanel.h">
-      <Filter>63.render\toolbar</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\rgraph\WxStagePage.h">
-      <Filter>63.render\stage</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\physics3d\WxStagePage.h">
       <Filter>34.physics3d</Filter>
     </ClInclude>
@@ -563,6 +548,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\src\task\WxStagePage.h">
       <Filter>66.task</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\src\rgraph\WxStagePage.h">
+      <Filter>63.render</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -761,15 +749,6 @@
     <ClCompile Include="..\..\..\src\frame\WxStageSubPanel.cpp">
       <Filter>00.frame\view</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\rgraph\WxToolbarPanel.cpp">
-      <Filter>63.render\toolbar</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\rgraph\WxPreviewPanel.cpp">
-      <Filter>63.render\toolbar</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\rgraph\WxStagePage.cpp">
-      <Filter>63.render\stage</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\physics3d\WxStagePage.cpp">
       <Filter>34.physics3d</Filter>
     </ClCompile>
@@ -868,6 +847,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\task\WxStagePage.cpp">
       <Filter>66.task</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\rgraph\WxStagePage.cpp">
+      <Filter>63.render</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -11,6 +11,7 @@ class wxFrame;
 class wxGLCanvas;
 
 namespace ee0 { class WxLibraryPanel; }
+namespace ur2 { class Device; }
 
 namespace eone
 {
@@ -49,6 +50,8 @@ public:
 	const ee0::RenderContext& GetRenderContext() const { return m_rc; }
 	const ee0::WindowContext& GetWindowContext() const { return m_wc; }
 
+    auto GetRenderDevice() const { return m_dev; }
+
 private:
 	wxFrame* m_frame;
 
@@ -63,6 +66,8 @@ private:
 	ee0::WindowContext m_wc;
 
 	std::shared_ptr<Application> m_app = nullptr;
+
+    std::shared_ptr<ur2::Device> m_dev = nullptr;
 
 	CU_SINGLETON_DECLARATION(Blackboard);
 

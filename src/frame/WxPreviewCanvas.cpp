@@ -6,7 +6,7 @@
 #include <ee0/EditOP.h>
 #include <ee0/color_config.h>
 
-#include <unirender/RenderContext.h>
+#include <unirender2/RenderState.h>
 #include <painting2/OrthoCamera.h>
 #include <painting2/Blackboard.h>
 #include <painting2/WindowContext.h>
@@ -25,9 +25,9 @@
 namespace eone
 {
 
-WxPreviewCanvas::WxPreviewCanvas(WxPreviewPanel* stage, ECS_WORLD_PARAM
-	                             const ee0::RenderContext& rc)
-	: ee0::WxStageCanvas(stage, stage->GetImpl(), std::make_shared<pt2::OrthoCamera>(sm::vec2(0, 0), 2.0f), &rc, nullptr, HAS_2D)
+WxPreviewCanvas::WxPreviewCanvas(const ur2::Device& dev, WxPreviewPanel* stage,
+                                 ECS_WORLD_PARAM const ee0::RenderContext& rc)
+	: ee0::WxStageCanvas(dev, stage, stage->GetImpl(), std::make_shared<pt2::OrthoCamera>(sm::vec2(0, 0), 2.0f), &rc, nullptr, HAS_2D)
 	, m_stage(stage)
 	ECS_WORLD_SELF_ASSIGN
 {
@@ -49,17 +49,6 @@ void WxPreviewCanvas::RegisterMsg(ee0::SubjectMgr& sub_mgr)
 	sub_mgr.RegisterObserver(ee0::MSG_SET_CANVAS_DIRTY, this);
 }
 
-void WxPreviewCanvas::OnSize(int w, int h)
-{
-	auto& wc = pt2::Blackboard::Instance()->GetWindowContext();
-	if (wc)
-	{
-		wc->SetViewport(0, 0, w, h);
-		wc->SetScreen(w, h);
-		wc->SetProjection(w, h);
-	}
-}
-
 void WxPreviewCanvas::OnDrawSprites() const
 {
 	ee0::RenderContext::Reset2D(true);
@@ -72,7 +61,10 @@ void WxPreviewCanvas::OnDrawSprites() const
 	}
 	tess::Painter pt;
 	pt.AddRect({ -hw, -hh }, { hw, hh }, 0xffffffff, line_width);
-	pt2::RenderSystem::DrawPainter(pt);
+
+    auto& ctx = *GetRenderContext().ur_ctx;
+    ur2::RenderState rs;
+	pt2::RenderSystem::DrawPainter(m_dev, ctx, rs, pt);
 
 	ee0::VariantSet vars;
 	ee0::Variant var;
@@ -96,7 +88,7 @@ void WxPreviewCanvas::OnDrawSprites() const
 			rp.SetPatch(patch);
 		}
 
-		n2::RenderSystem::Instance()->Draw(obj, rp);
+		n2::RenderSystem::Instance()->Draw(m_dev, ctx, rs, obj, rp);
 #else
 		e2::SysRender::Draw(m_world, obj, rp);
 #endif // GAME_OBJ_ECS
@@ -106,7 +98,7 @@ void WxPreviewCanvas::OnDrawSprites() const
 
 	auto& op = m_stage->GetImpl().GetEditOP();
 	if (op) {
-		op->OnDraw();
+		op->OnDraw(m_dev, ctx);
 	}
 }
 
