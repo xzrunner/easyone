@@ -2,8 +2,6 @@
 
 #include <ee0/WxStageCanvas.h>
 
-#include <unirender2/Factory.h>
-
 #include <wx/frame.h>
 
 namespace eone
@@ -23,10 +21,10 @@ Blackboard::Blackboard()
 void Blackboard::InitRenderContext()
 {
     m_dummy_canvas = ee0::WxStageCanvas::CreateWxGLCanvas(m_frame);
-    ee0::WxStageCanvas::CreateRenderContext(/**m_dev, */m_rc, m_dummy_canvas);
 
-    m_dev = ur2::CreateDeviceGL();
-    m_rc.ur_ctx = ur2::CreateContextGL(*m_dev);
+    m_dev = ee0::WxStageCanvas::CreateRenderContext(nullptr, m_rc, m_dummy_canvas);
+
+//    m_rc.ur_ctx = ur2::CreateContextGL(*m_dev);
 
 	ee0::WxStageCanvas::CreateWindowContext(m_wc, true, false);
 }

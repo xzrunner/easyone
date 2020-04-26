@@ -224,12 +224,10 @@ renderlab::WxGraphPage*
 WxStagePage::CreateGraphPanel(wxWindow* parent) const
 {
     auto panel = new renderlab::WxGraphPage(m_dev, parent, m_graph_obj, m_sub_mgr);
-    auto& panel_impl = panel->GetImpl();
-
     auto canvas = std::make_shared<renderlab::WxGraphCanvas>(
         m_dev, panel, Blackboard::Instance()->GetRenderContext()
     );
-    panel_impl.SetCanvas(canvas);
+    panel->SetCanvas(canvas);
 
     auto select_op = std::make_shared<bp::NodeSelectOP>(canvas->GetCamera(), *panel);
 
@@ -244,7 +242,7 @@ WxStagePage::CreateGraphPanel(wxWindow* parent) const
     auto& nodes = renderlab::RenderLab::Instance()->GetAllNodes();
     auto op = std::make_shared<bp::ConnectPinOP>(canvas->GetCamera(), *panel, nodes);
     op->SetPrevEditOP(arrange_op);
-    panel_impl.SetEditOP(op);
+    panel->GetImpl().SetEditOP(op);
 
     return panel;
 }

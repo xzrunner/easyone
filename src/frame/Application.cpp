@@ -330,11 +330,13 @@ void Application::Clear()
 
 void Application::InitSubmodule()
 {
+    auto dev = Blackboard::Instance()->GetRenderDevice();
+
 	facade::Facade::Instance()->AddInitCB([] {
 		moon_add_module("moon.bp", luaopen_moon_bp);
 		moon_add_module("moon.sg", luaopen_moon_sg);
 	});
-	facade::Facade::Instance()->Init();
+	facade::Facade::Instance()->Init(*dev);
 
 	auto cfg = ee0::ConfigFile::Instance();
 	facade::GTxt::Instance()->LoadFonts(cfg->GetFonts(), cfg->GetUserFonts());
