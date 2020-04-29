@@ -43,9 +43,6 @@
 [submodule "ext/ps/src/ps"]
 	path = ext/ps/src/ps
 	url = git@github.com:xzrunner/ps.git
-[submodule "ext/unirender"]
-	path = ext/unirender
-	url = git@github.com:xzrunner/unirender.git
 [submodule "ext/painting2"]
 	path = ext/painting2
 	url = git@github.com:xzrunner/painting2.git
