@@ -46,9 +46,6 @@
 [submodule "ext/unirender"]
 	path = ext/unirender
 	url = git@github.com:xzrunner/unirender.git
-[submodule "ext/dtex2"]
-	path = ext/dtex2
-	url = git@github.com:xzrunner/dtex2.git
 [submodule "ext/painting2"]
 	path = ext/painting2
 	url = git@github.com:xzrunner/painting2.git
@@ -350,3 +347,6 @@
 [submodule "ext/unirender2"]
 	path = ext/unirender2
 	url = git@github.com:xzrunner/unirender2.git
+[submodule "ext/dtex"]
+	path = ext/dtex
+	url = git@github.com:xzrunner/dtex.git
