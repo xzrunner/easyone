@@ -341,9 +341,9 @@
 [submodule "ext/textile"]
 	path = ext/textile
 	url = git@github.com:xzrunner/textile.git
-[submodule "ext/unirender2"]
-	path = ext/unirender2
-	url = git@github.com:xzrunner/unirender2.git
 [submodule "ext/dtex"]
 	path = ext/dtex
 	url = git@github.com:xzrunner/dtex.git
+[submodule "ext/unirender"]
+	path = ext/unirender
+	url = git@github.com:xzrunner/unirender.git
