@@ -24,7 +24,7 @@ void Blackboard::InitRenderContext()
 
     m_dev = ee0::WxStageCanvas::CreateRenderContext(nullptr, m_rc, m_dummy_canvas);
 
-//    m_rc.ur_ctx = ur2::CreateContextGL(*m_dev);
+//    m_rc.ur_ctx = ur::CreateContextGL(*m_dev);
 
 	ee0::WxStageCanvas::CreateWindowContext(m_wc, true, false);
 }

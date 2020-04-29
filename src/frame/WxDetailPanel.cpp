@@ -68,7 +68,7 @@
 namespace eone
 {
 
-WxDetailPanel::WxDetailPanel(const ur2::Device& dev, wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr,
+WxDetailPanel::WxDetailPanel(const ur::Device& dev, wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr,
 	                         ECS_WORLD_PARAM const ee0::GameObj& root_obj,
 	                         const moon::ContextPtr& moon_ctx)
 	: wxPanel(parent, wxID_ANY)

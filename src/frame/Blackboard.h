@@ -11,7 +11,7 @@ class wxFrame;
 class wxGLCanvas;
 
 namespace ee0 { class WxLibraryPanel; }
-namespace ur2 { class Device; }
+namespace ur { class Device; }
 
 namespace eone
 {
@@ -67,7 +67,7 @@ private:
 
 	std::shared_ptr<Application> m_app = nullptr;
 
-    std::shared_ptr<ur2::Device> m_dev = nullptr;
+    std::shared_ptr<ur::Device> m_dev = nullptr;
 
 	CU_SINGLETON_DECLARATION(Blackboard);
 

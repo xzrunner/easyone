@@ -2,7 +2,7 @@
 
 #include "frame/WxStageCanvas2D.h"
 
-namespace ur2 { class Device; }
+namespace ur { class Device; }
 
 namespace eone
 {
@@ -10,7 +10,7 @@ namespace eone
 class WxBlueprintCanvas : public WxStageCanvas2D
 {
 public:
-	WxBlueprintCanvas(const ur2::Device& dev,
+	WxBlueprintCanvas(const ur::Device& dev,
         ee0::WxStagePage* stage, const ee0::RenderContext& rc);
 
 protected:

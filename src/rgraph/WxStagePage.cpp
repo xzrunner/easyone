@@ -53,7 +53,7 @@ namespace rgraph
 
 const std::string WxStagePage::PAGE_TYPE = "render_graph";
 
-WxStagePage::WxStagePage(const ur2::Device& dev, wxWindow* parent,
+WxStagePage::WxStagePage(const ur::Device& dev, wxWindow* parent,
                          ECS_WORLD_PARAM const ee0::GameObj& obj, const ee0::RenderContext& rc)
 	: eone::WxStagePage(parent, ECS_WORLD_VAR obj, /*SHOW_STAGE | SHOW_TOOLBAR | TOOLBAR_LFET*/SHOW_STAGE | SHOW_TOOLBAR | SHOW_STAGE_EXT | STAGE_EXT_RIGHT)
     , m_dev(dev)

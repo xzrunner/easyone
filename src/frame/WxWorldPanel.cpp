@@ -31,7 +31,7 @@
 namespace eone
 {
 
-WxWorldPanel::WxWorldPanel(const ur2::Device& dev, wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr,
+WxWorldPanel::WxWorldPanel(const ur::Device& dev, wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr,
 	                       ECS_WORLD_PARAM const ee0::GameObj& root_obj)
 	: wxPanel(parent, wxID_ANY)
     , m_dev(dev)

@@ -9,7 +9,7 @@ class wxWindow;
 
 namespace pt0 { class Camera; }
 namespace ee0 { class WxStagePage; class RenderContext; class WindowContext; }
-namespace ur2 { class Device; }
+namespace ur { class Device; }
 
 namespace eone
 {
@@ -20,7 +20,7 @@ class WxStagePage;
 class PanelFactory
 {
 public:
-	static WxStagePage* CreateStagePage(const ur2::Device& dev, ECS_WORLD_PARAM int page_type, WxStagePanel* stage_panel);
+	static WxStagePage* CreateStagePage(const ur::Device& dev, ECS_WORLD_PARAM int page_type, WxStagePanel* stage_panel);
 
 	static void CreatePreviewOP(
 #ifdef GAME_OBJ_ECS

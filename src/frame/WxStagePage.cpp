@@ -90,7 +90,7 @@ void WxStagePage::StoreToJson(const std::string& dir, rapidjson::Value& val,
 	m_backup.Clear();
 }
 
-void WxStagePage::LoadFromFile(const ur2::Device& dev, const std::string& filepath)
+void WxStagePage::LoadFromFile(const ur::Device& dev, const std::string& filepath)
 {
 	m_sub_mgr->NotifyObservers(ee0::MSG_NODE_SELECTION_CLEAR);
 	m_sub_mgr->NotifyObservers(ee0::MSG_SCENE_NODE_CLEAR);

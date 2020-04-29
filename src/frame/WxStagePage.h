@@ -10,7 +10,7 @@
 namespace n0 { class NodeComp; }
 namespace ee0 { class VariantSet; }
 ECS_WORLD_DECL
-namespace ur2 { class Device; }
+namespace ur { class Device; }
 
 namespace eone
 {
@@ -35,7 +35,7 @@ public:
 
 	void StoreToJson(const std::string& dir, rapidjson::Value& val,
 		rapidjson::MemoryPoolAllocator<>& alloc) const;
-	void LoadFromFile(const ur2::Device& dev, const std::string& filepath);
+	void LoadFromFile(const ur::Device& dev, const std::string& filepath);
 
 	const ee0::GameObj& GetEditedObj() const { return m_obj; }
 

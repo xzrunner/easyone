@@ -205,7 +205,7 @@
 namespace eone
 {
 
-WxStagePage* PanelFactory::CreateStagePage(const ur2::Device& dev, ECS_WORLD_PARAM int page_type, WxStagePanel* stage_panel)
+WxStagePage* PanelFactory::CreateStagePage(const ur::Device& dev, ECS_WORLD_PARAM int page_type, WxStagePanel* stage_panel)
 {
 	WxStagePage* page = nullptr;
 

@@ -26,7 +26,7 @@ class WxToolbarPanel;
 class WxStagePage : public eone::WxStagePage
 {
 public:
-	WxStagePage(const ur2::Device& dev, wxWindow* parent,
+	WxStagePage(const ur::Device& dev, wxWindow* parent,
         ECS_WORLD_PARAM const ee0::GameObj& obj, const ee0::RenderContext& rc);
     virtual ~WxStagePage();
 
@@ -70,7 +70,7 @@ private:
     auto& GetFuncNodeHelper() { return m_func_node_helper; }
 
 private:
-    const ur2::Device& m_dev;
+    const ur::Device& m_dev;
 
     renderlab::PreviewPage m_preview_impl;
 

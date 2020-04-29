@@ -10,7 +10,7 @@ class WxStagePage;
 class WxStageCanvas2D : public ee2::WxStageCanvas
 {
 public:
-	WxStageCanvas2D(const ur2::Device& dev, ee0::WxStagePage* stage,
+	WxStageCanvas2D(const ur::Device& dev, ee0::WxStagePage* stage,
         ECS_WORLD_PARAM const ee0::RenderContext& rc);
 
 protected:

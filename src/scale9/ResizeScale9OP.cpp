@@ -136,7 +136,7 @@ bool ResizeScale9OP::OnMouseDrag(int x, int y)
 	return false;
 }
 
-bool ResizeScale9OP::OnDraw(const ur2::Device& dev, ur2::Context& ctx) const
+bool ResizeScale9OP::OnDraw(const ur::Device& dev, ur::Context& ctx) const
 {
 	if (ee0::EditOP::OnDraw()) {
 		return true;

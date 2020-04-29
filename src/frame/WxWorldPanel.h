@@ -8,7 +8,7 @@
 class wxNotebook;
 class wxSearchCtrl;
 
-namespace ur2 { class Device; }
+namespace ur { class Device; }
 
 namespace eone
 {
@@ -19,7 +19,7 @@ class WxItemsListCtrl;
 class WxWorldPanel : public wxPanel
 {
 public:
-	WxWorldPanel(const ur2::Device& dev, wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr,
+	WxWorldPanel(const ur::Device& dev, wxWindow* parent, const ee0::SubjectMgrPtr& sub_mgr,
 		ECS_WORLD_PARAM const ee0::GameObj& root_obj);
 
 private:
@@ -30,7 +30,7 @@ private:
 	void OnSearch(wxCommandEvent& event);
 
 private:
-    const ur2::Device& m_dev;
+    const ur::Device& m_dev;
 
 	ee0::SubjectMgrPtr m_sub_mgr;
 
