@@ -37,9 +37,6 @@
 [submodule "ext/rapidvg/src/rapidvg"]
 	path = ext/rapidvg/src/rapidvg
 	url = git@github.com:xzrunner/rapidvg.git
-[submodule "ext/shaderlab"]
-	path = ext/shaderlab
-	url = git@github.com:xzrunner/shaderlab.git
 [submodule "ext/ps/src/ps"]
 	path = ext/ps/src/ps
 	url = git@github.com:xzrunner/ps.git
