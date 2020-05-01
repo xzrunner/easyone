@@ -49,7 +49,7 @@ private:
 
 	ee3::WxMaterialPreview* m_preview;
 
-	sg::WxNodeProperty* m_prop;
+	shaderlab::WxNodeProperty* m_prop;
 
 }; // WxToolbarPanel
 

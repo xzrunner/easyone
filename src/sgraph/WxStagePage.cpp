@@ -24,10 +24,10 @@
 #include <blueprint/node/Input.h>
 #include <blueprint/node/Output.h>
 #include <blueprint/node/Function.h>
-#include <shadergraph/ShaderGraph.h>
-#include <shadergraph/NodeBuilder.h>
-#include <shadergraph/ShaderWeaver.h>
-#include <shadergraph/RegistNodes.h>
+#include <shaderlab/ShaderLab.h>
+#include <shaderlab/NodeBuilder.h>
+#include <shaderlab/ShaderWeaver.h>
+#include <shaderlab/RegistNodes.h>
 #include <sgconv/ASEImporter.h>
 
 #include <js/RapidJsonHelper.h>
@@ -64,7 +64,7 @@ WxStagePage::WxStagePage(wxWindow* parent, ECS_WORLD_PARAM const ee0::GameObj& o
 		inited = true;
 		bp::Blueprint::Instance();
 	}
-	sg::ShaderGraph::Instance();
+	shaderlab::ShaderLab::Instance();
 
 	m_messages.push_back(ee0::MSG_SCENE_NODE_INSERT);
 	m_messages.push_back(ee0::MSG_SCENE_NODE_DELETE);
@@ -184,16 +184,16 @@ void WxStagePage::SetModelType(ModelType model_type)
     switch (model_type)
 	{
     case ModelType::SPRITE:
-        m_model_type_str = rttr::type::get<sg::node::Sprite>().get_name().to_string();
+        m_model_type_str = rttr::type::get<shaderlab::node::Sprite>().get_name().to_string();
 		break;
 	case ModelType::PHONG:
-        m_model_type_str = rttr::type::get<sg::node::Phong>().get_name().to_string();
+        m_model_type_str = rttr::type::get<shaderlab::node::Phong>().get_name().to_string();
 		break;
     case ModelType::PBR:
-        m_model_type_str = rttr::type::get<sg::node::PBR>().get_name().to_string();
+        m_model_type_str = rttr::type::get<shaderlab::node::PBR>().get_name().to_string();
         break;
     case ModelType::RAYMARCHING:
-        m_model_type_str = rttr::type::get<sg::node::Raymarching>().get_name().to_string();
+        m_model_type_str = rttr::type::get<shaderlab::node::Raymarching>().get_name().to_string();
         break;
 	}
 }
@@ -209,7 +209,7 @@ void WxStagePage::OnPageInit()
     if (m_model_type != ModelType::UNKNOWN)
     {
         std::vector<n0::SceneNodePtr> nodes;
-        auto bp_node = sg::NodeBuilder::Create(nodes, m_model_type_str);
+        auto bp_node = shaderlab::NodeBuilder::Create(nodes, m_model_type_str);
         if (bp_node) {
             ClearSceneObj();
             for (auto& node : nodes) {
@@ -419,15 +419,15 @@ void WxStagePage::UpdateShader()
             return;
         }
 
-		sg::ShaderWeaver::ShaderType shader_type;
-        if (m_model_type_str == rttr::type::get<sg::node::PBR>().get_name().to_string()) {
-            shader_type = sg::ShaderWeaver::SHADER_PBR;
-        } else if (m_model_type_str == rttr::type::get<sg::node::Phong>().get_name().to_string()) {
-            shader_type = sg::ShaderWeaver::SHADER_PHONG;
-        } else if (m_model_type_str == rttr::type::get<sg::node::Raymarching>().get_name().to_string()) {
-            shader_type = sg::ShaderWeaver::SHADER_RAYMARCHING;
-        } else if (m_model_type_str == rttr::type::get<sg::node::Sprite>().get_name().to_string()) {
-            shader_type = sg::ShaderWeaver::SHADER_SPRITE;
+		shaderlab::ShaderWeaver::ShaderType shader_type;
+        if (m_model_type_str == rttr::type::get<shaderlab::node::PBR>().get_name().to_string()) {
+            shader_type = shaderlab::ShaderWeaver::SHADER_PBR;
+        } else if (m_model_type_str == rttr::type::get<shaderlab::node::Phong>().get_name().to_string()) {
+            shader_type = shaderlab::ShaderWeaver::SHADER_PHONG;
+        } else if (m_model_type_str == rttr::type::get<shaderlab::node::Raymarching>().get_name().to_string()) {
+            shader_type = shaderlab::ShaderWeaver::SHADER_RAYMARCHING;
+        } else if (m_model_type_str == rttr::type::get<shaderlab::node::Sprite>().get_name().to_string()) {
+            shader_type = shaderlab::ShaderWeaver::SHADER_SPRITE;
         } else {
 			assert(0);
 		}
@@ -436,7 +436,7 @@ void WxStagePage::UpdateShader()
         int old_vl_id = rc.GetBindedVertexLayoutID();
 
         auto& gi = m_toolbar->GetPreviewPanel()->GetGlobalIllumination();
-		sg::ShaderWeaver sw(shader_type, *final_node, DEBUG_PRINT_SHADER, all_bp_nodes, gi);
+		shaderlab::ShaderWeaver sw(shader_type, *final_node, DEBUG_PRINT_SHADER, all_bp_nodes, gi);
 		auto& wc = canvas->GetWidnowContext().wc3;
 		auto shader = sw.CreateShader3();
         if (shader->IsValid()) {

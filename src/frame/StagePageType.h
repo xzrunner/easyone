@@ -80,7 +80,7 @@ std::string GetPageName(int type)
 	case PAGE_ANIM3:
 		return "Anim3";
 	case PAGE_SHADER_GRAPH:
-		return "ShaderGraph";
+		return "ShaderLab";
 	case PAGE_PROTOTYPING:
 		return "Prototyping";
     case PAGE_RENDER_GRAPH:

@@ -13,8 +13,8 @@
 #include <blueprint/node/GetReference.h>
 #include <blueprint/node/SetValue.h>
 #include <blueprint/node/GetValue.h>
-#include <shadergraph/RegistNodes.h>
-#include <shadergraph/TypeDeduction.h>
+#include <shaderlab/RegistNodes.h>
+#include <shaderlab/TypeDeduction.h>
 
 #include <node0/SceneNode.h>
 #include <node2/CompBoundingBox.h>
@@ -60,7 +60,7 @@ bool WxStageCanvas::OnUpdate()
                 get_var_name_dirty = true;
             }
 			if (!canvas_dirty) {
-				canvas_dirty = bp::NodeHelper::HasInputNode<sg::node::Time>(*bp_node);
+				canvas_dirty = bp::NodeHelper::HasInputNode<shaderlab::node::Time>(*bp_node);
 			}
 		}
 		return true;
@@ -139,7 +139,7 @@ void WxStageCanvas::OnGetVarNameChanged() const
             port->SetOldType(type);
 
             for (auto& c : port->GetConnecting()) {
-                sg::TypeDeduction::DeduceConn(*port, *c->GetTo());
+                shaderlab::TypeDeduction::DeduceConn(*port, *c->GetTo());
             }
         }
 

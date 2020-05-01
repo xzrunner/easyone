@@ -160,9 +160,6 @@
 [submodule "ext/eanim"]
 	path = ext/eanim
 	url = git@github.com:xzrunner/eanim.git
-[submodule "ext/shadergraph"]
-	path = ext/shadergraph
-	url = git@github.com:xzrunner/shadergraph.git
 [submodule "ext/cpputil"]
 	path = ext/cpputil
 	url = git@github.com:xzrunner/cpputil.git
@@ -344,3 +341,6 @@
 [submodule "ext/unirender"]
 	path = ext/unirender
 	url = git@github.com:xzrunner/unirender.git
+[submodule "ext/shaderlab"]
+	path = ext/shaderlab
+	url = git@github.com:xzrunner/shaderlab.git

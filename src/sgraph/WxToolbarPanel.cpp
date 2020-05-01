@@ -10,8 +10,8 @@
 #include <node0/SceneNode.h>
 #include <blueprint/CompNode.h>
 #include <blueprint/MessageID.h>
-#include <shadergraph/WxNodeProperty.h>
-#include <shadergraph/RegistNodes.h>
+#include <shaderlab/WxNodeProperty.h>
+#include <shaderlab/RegistNodes.h>
 
 #include <wx/sizer.h>
 
@@ -70,7 +70,7 @@ void WxToolbarPanel::InitLayout()
 	sizer->Add(m_preview = new ee3::WxMaterialPreview(this, sm::ivec2(300, 300), sub_mgr, &rc, true));
 	sizer->AddSpacer(10);
 	// property
-	sizer->Add(m_prop = new sg::WxNodeProperty(this, sub_mgr));
+	sizer->Add(m_prop = new shaderlab::WxNodeProperty(this, sub_mgr));
 
 	SetSizer(sizer);
 }

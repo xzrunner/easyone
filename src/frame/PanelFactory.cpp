@@ -151,7 +151,7 @@
 #include <blueprint/Blueprint.h>
 #include <blueprint/ArrangeNodeOP.h>
 #include <blueprint/NodeSelectOP.h>
-#include <shadergraph/ShaderGraph.h>
+#include <shaderlab/ShaderLab.h>
 #include <prototyping/ArrangeNodeOP.h>
 #ifdef MODULE_RENDERGRAPH
 #include <renderlab/RenderLab.h>
@@ -419,7 +419,7 @@ WxStagePage* PanelFactory::CreateStagePage(const ur::Device& dev, ECS_WORLD_PARA
 			canvas->GetCamera(), *page, ECS_WORLD_VAR cfg, select_op);
 
         auto nodes = bp::Blueprint::Instance()->GetAllNodes();
-        auto sg_nodes = sg::ShaderGraph::Instance()->GetAllNodes();
+        auto sg_nodes = shaderlab::ShaderLab::Instance()->GetAllNodes();
         std::copy(sg_nodes.begin(), sg_nodes.end(), std::back_inserter(nodes));
 		auto op = std::make_shared<bp::ConnectPinOP>(canvas->GetCamera(), *page, nodes);
 		op->SetPrevEditOP(arrange_op);
@@ -748,7 +748,7 @@ WxStagePage* PanelFactory::CreateStagePage(const ur::Device& dev, ECS_WORLD_PARA
 			canvas->GetCamera(), *page, ECS_WORLD_VAR cfg, select_op);
 
 		auto op = std::make_shared<bp::ConnectPinOP>(
-			canvas->GetCamera(), *page, sg::ShaderGraph::Instance()->GetAllNodes()
+			canvas->GetCamera(), *page, shaderlab::ShaderLab::Instance()->GetAllNodes()
 		);
 		op->SetPrevEditOP(arrange_op);
 		page->GetImpl().SetEditOP(op);

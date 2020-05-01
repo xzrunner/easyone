@@ -120,7 +120,7 @@ namespace
 {
 
 extern "C" int luaopen_moon_bp(lua_State* L);
-extern "C" int luaopen_moon_sg(lua_State* L);
+extern "C" int luaopen_moon_shaderlab(lua_State* L);
 
 }
 
@@ -334,7 +334,7 @@ void Application::InitSubmodule()
 
 	facade::Facade::Instance()->AddInitCB([] {
 		moon_add_module("moon.bp", luaopen_moon_bp);
-		moon_add_module("moon.sg", luaopen_moon_sg);
+		moon_add_module("moon.sg", luaopen_moon_shaderlab);
 	});
 	facade::Facade::Instance()->Init(*dev);
 
