@@ -391,4 +391,4 @@ void WxStagePage::LoadFunctionNodes()
 }
 }
 
-#endif // MODULE_RENDERGRAPH
+#endif // MODULE_PBRGRAPH

@@ -71,4 +71,4 @@ void WxToolbarPanel::OnSelected(const ee0::VariantSet& variants)
 }
 }
 
-#endif // MODULE_RENDERGRAPH
+#endif // MODULE_PBRGRAPH

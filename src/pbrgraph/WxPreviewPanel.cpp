@@ -96,4 +96,4 @@ void WxPreviewPanel::Canvas::OnDrawSprites() const
 }
 }
 
-#endif // MODULE_RENDERGRAPH
+#endif // MODULE_PBRGRAPH

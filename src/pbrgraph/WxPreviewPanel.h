@@ -66,4 +66,4 @@ private:
 }
 }
 
-#endif // MODULE_RENDERGRAPH
+#endif // MODULE_PBRGRAPH
