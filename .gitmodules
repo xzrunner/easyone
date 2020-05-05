@@ -341,6 +341,3 @@
 [submodule "ext/unirender"]
 	path = ext/unirender
 	url = git@github.com:xzrunner/unirender.git
-[submodule "ext/shaderlab"]
-	path = ext/shaderlab
-	url = git@github.com:xzrunner/shaderlab.git
