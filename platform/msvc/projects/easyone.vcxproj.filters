@@ -226,6 +226,9 @@
     <Filter Include="66.task">
       <UniqueIdentifier>{308374cd-f6de-4cc3-897d-bb62af428bb2}</UniqueIdentifier>
     </Filter>
+    <Filter Include="62.shader2">
+      <UniqueIdentifier>{d7dfab46-a794-41fb-9f35-54cde53ee773}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\frame\main.h">
@@ -552,6 +555,9 @@
     <ClInclude Include="..\..\..\src\rgraph\WxStagePage.h">
       <Filter>63.render</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\sgraph2\WxStagePage.h">
+      <Filter>62.shader2</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\frame\main.cpp">
@@ -850,6 +856,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\rgraph\WxStagePage.cpp">
       <Filter>63.render</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\sgraph2\WxStagePage.cpp">
+      <Filter>62.shader2</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

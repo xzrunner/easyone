@@ -41,6 +41,9 @@
 #ifdef MODULE_PROTOTYPE
 #include "prototype/WxStagePage.h"
 #endif // MODULE_PROTOTYPE
+#ifdef MODULE_SHADERGRAPH2
+#include "sgraph2/WxStagePage.h"
+#endif // MODULE_SHADERGRAPH2
 #ifdef MODULE_RENDERGRAPH
 #include "rgraph/WxStagePage.h"
 #endif // MODULE_RENDERGRAPH
@@ -120,7 +123,7 @@ namespace
 {
 
 extern "C" int luaopen_moon_bp(lua_State* L);
-extern "C" int luaopen_moon_shaderlab(lua_State* L);
+//extern "C" int luaopen_moon_shaderlab(lua_State* L);
 
 }
 
@@ -198,6 +201,10 @@ void Application::LoadFromFile(const std::string& filepath)
 			} else if (type == prototype::WxStagePage::PAGE_TYPE) {
 				new_type = PAGE_PROTOTYPING;
 #endif // MODULE_PROTOTYPE
+#ifdef MODULE_SHADERGRAPH2
+			} else if (type == sgraph2::WxStagePage::PAGE_TYPE) {
+                new_type = PAGE_SHADER_GRAPH2;
+#endif // MODULE_SHADERGRAPH2
 #ifdef MODULE_RENDERGRAPH
 			} else if (type == rgraph::WxStagePage::PAGE_TYPE) {
                 new_type = PAGE_RENDER_GRAPH;
@@ -334,7 +341,7 @@ void Application::InitSubmodule()
 
 	facade::Facade::Instance()->AddInitCB([] {
 		moon_add_module("moon.bp", luaopen_moon_bp);
-		moon_add_module("moon.sg", luaopen_moon_shaderlab);
+		//moon_add_module("moon.sg", luaopen_moon_shaderlab);
 	});
 	facade::Facade::Instance()->Init(*dev);
 
@@ -483,6 +490,9 @@ wxWindow* Application::CreateStagePanel()
 #ifdef MODULE_PROTOTYPE
 	page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_PROTOTYPING, m_stage);
 #endif // MODULE_PROTOTYPE
+#ifdef MODULE_SHADERGRAPH2
+    page = PanelFactory::CreateStagePage(*dev, ECS_WORLD_SELF_VAR PAGE_SHADER_GRAPH2, m_stage);
+#endif // MODULE_SHADERGRAPH2
 #ifdef MODULE_RENDERGRAPH
     page = PanelFactory::CreateStagePage(*dev, ECS_WORLD_SELF_VAR PAGE_RENDER_GRAPH, m_stage);
 #endif // MODULE_RENDERGRAPH

@@ -69,6 +69,9 @@
 #ifdef MODULE_PROTOTYPE
 #include "prototype/WxStagePage.h"
 #endif // MODULE_PROTOTYPE
+#ifdef MODULE_SHADERGRAPH2
+#include "sgraph2/WxStagePage.h"
+#endif // MODULE_SHADERGRAPH2
 #ifdef MODULE_RENDERGRAPH
 #include "rgraph/WxStagePage.h"
 #endif // MODULE_RENDERGRAPH
@@ -443,6 +446,14 @@ WxStagePage* PanelFactory::CreateStagePage(const ur::Device& dev, ECS_WORLD_PARA
 	}
 		break;
 #endif // MODULE_PROTOTYPE
+#ifdef MODULE_SHADERGRAPH2
+    case PAGE_SHADER_GRAPH2:
+    {
+        auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX2D);
+        page = new sgraph2::WxStagePage(dev, frame, ECS_WORLD_VAR obj, rc);
+    }
+        break;
+#endif // MODULE_SHADERGRAPH2
 #ifdef MODULE_RENDERGRAPH
     case PAGE_RENDER_GRAPH:
     {

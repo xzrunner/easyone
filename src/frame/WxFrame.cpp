@@ -61,8 +61,9 @@ void WxFrame::OnNew(wxCommandEvent& event)
 
 		{ "Scale9",          new PageItemData(eone::PAGE_SCALE9) },
 
-		{ "ShaderLab",     new PageItemData(eone::PAGE_SHADER_GRAPH) },
+		{ "ShaderLab",       new PageItemData(eone::PAGE_SHADER_GRAPH) },
 		{ "Prototyping",     new PageItemData(eone::PAGE_PROTOTYPING) },
+        { "ShaderGraph",     new PageItemData(eone::PAGE_SHADER_GRAPH2) },
         { "RenderGraph",     new PageItemData(eone::PAGE_RENDER_GRAPH) },
         { "RayGraph",        new PageItemData(eone::PAGE_RAY_GRAPH) },
         { "GuiGraph",        new PageItemData(eone::PAGE_GUI_GRAPH) },
