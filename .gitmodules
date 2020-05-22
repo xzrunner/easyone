@@ -347,3 +347,6 @@
 [submodule "ext/shadergraph"]
 	path = ext/shadergraph
 	url = git@github.com:xzrunner/shadergraph.git
+[submodule "ext/glsl-parser"]
+	path = ext/glsl-parser
+	url = git@github.com:xzrunner/glsl-parser.git
