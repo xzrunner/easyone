@@ -235,9 +235,9 @@
 [submodule "ext/polymesh3"]
 	path = ext/polymesh3
 	url = git@github.com:xzrunner/polymesh3.git
-[submodule "ext/vexc"]
-	path = ext/vexc
-	url = git@github.com:xzrunner/vexc.git
+[submodule "ext/cslang"]
+	path = ext/cslang
+	url = git@github.com:xzrunner/cslang.git
 [submodule "ext/dungeon"]
 	path = ext/dungeon
 	url = git@github.com:xzrunner/dungeon.git
@@ -347,6 +347,3 @@
 [submodule "ext/shadergraph"]
 	path = ext/shadergraph
 	url = git@github.com:xzrunner/shadergraph.git
-[submodule "ext/glsl-parser"]
-	path = ext/glsl-parser
-	url = git@github.com:xzrunner/glsl-parser.git
