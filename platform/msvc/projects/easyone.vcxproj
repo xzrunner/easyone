@@ -425,7 +425,7 @@
     <ProjectReference Include="..\..\..\ext\uniphysics\platform\msvc\projects\uniphysics.vcxproj">
       <Project>{a94bc06e-93b2-4f30-ab4e-7d677a1d5b54}</Project>
     </ProjectReference>
-    <ProjectReference Include="..\..\..\ext\vexc\platform\msvc\projects\vexc.vcxproj">
+    <ProjectReference Include="..\..\..\ext\cslang\platform\msvc\projects\cslang.vcxproj">
       <Project>{7bad2f78-e25a-481e-87bd-d10ce3fc7586}</Project>
     </ProjectReference>
     <ProjectReference Include="..\..\..\ext\volume\platform\msvc\projects\volume.vcxproj">
