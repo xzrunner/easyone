@@ -30,6 +30,7 @@
 #include <shaderlab/WxGraphPage.h>
 #include <shaderlab/WxPreviewCanvas.h>
 #include <shaderlab/ShaderLab.h>
+#include <shaderlab/WxDefaultProperty.h>
 
 #include <node0/SceneNode.h>
 #include <node0/CompComplex.h>
@@ -165,14 +166,16 @@ void WxStagePage::OnPageInit()
     m_graph_page = graph_page;
     stage_ext_panel->AddPagePanel(m_graph_page, wxVERTICAL);
 
-    auto toolbar_panel = Blackboard::Instance()->GetToolbarPanel();
-    auto toolbar_page = new bp::WxToolbarPanel(m_dev, toolbar_panel, m_graph_page->GetSubjectMgr());
-    toolbar_panel->AddPagePanel(toolbar_page, wxVERTICAL);
-
     auto prev_canvas = std::static_pointer_cast<shaderlab::WxPreviewCanvas>(GetImpl().GetCanvas());
     prev_canvas->SetGraphPage(graph_page);
 
     prev_canvas->SetEval(graph_page->GetEval());
+
+    auto toolbar_panel = Blackboard::Instance()->GetToolbarPanel();
+    auto toolbar_page = new bp::WxToolbarPanel(m_dev, toolbar_panel, m_graph_page->GetSubjectMgr());
+    auto default_prop = new shaderlab::WxDefaultProperty(toolbar_page, prev_canvas);
+    toolbar_page->SetDefaultProp(default_prop);
+    toolbar_panel->AddPagePanel(toolbar_page, wxVERTICAL);
 }
 
 #ifndef GAME_OBJ_ECS
