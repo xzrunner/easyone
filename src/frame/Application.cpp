@@ -35,15 +35,12 @@
 #ifdef MODULE_QUAKE
 #include "quake/WxStagePage.h"
 #endif // MODULE_QUAKE
-#ifdef MODULE_SHADERGRAPH
-#include "sgraph/WxStagePage.h"
-#endif // MODULE_SHADERGRAPH
 #ifdef MODULE_PROTOTYPE
 #include "prototype/WxStagePage.h"
 #endif // MODULE_PROTOTYPE
-#ifdef MODULE_SHADERGRAPH2
-#include "sgraph2/WxStagePage.h"
-#endif // MODULE_SHADERGRAPH2
+#ifdef MODULE_SHADERGRAPH
+#include "sgraph/WxStagePage.h"
+#endif // MODULE_SHADERGRAPH
 #ifdef MODULE_RENDERGRAPH
 #include "rgraph/WxStagePage.h"
 #endif // MODULE_RENDERGRAPH
@@ -193,18 +190,14 @@ void Application::LoadFromFile(const std::string& filepath)
 			} else if (type == quake::WxStagePage::PAGE_TYPE) {
 				new_type = PAGE_QUAKE;
 #endif // MODULE_QUAKE
-#ifdef MODULE_SHADERGRAPH
-			} else if (type == sgraph::WxStagePage::PAGE_TYPE) {
-				new_type = PAGE_SHADER_GRAPH;
-#endif // MODULE_SHADERGRAPH
 #ifdef MODULE_PROTOTYPE
 			} else if (type == prototype::WxStagePage::PAGE_TYPE) {
 				new_type = PAGE_PROTOTYPING;
 #endif // MODULE_PROTOTYPE
-#ifdef MODULE_SHADERGRAPH2
-			} else if (type == sgraph2::WxStagePage::PAGE_TYPE) {
+#ifdef MODULE_SHADERGRAPH
+			} else if (type == sgraph::WxStagePage::PAGE_TYPE) {
                 new_type = PAGE_SHADER_GRAPH2;
-#endif // MODULE_SHADERGRAPH2
+#endif // MODULE_SHADERGRAPH
 #ifdef MODULE_RENDERGRAPH
 			} else if (type == rgraph::WxStagePage::PAGE_TYPE) {
                 new_type = PAGE_RENDER_GRAPH;
@@ -484,15 +477,12 @@ wxWindow* Application::CreateStagePanel()
 #ifdef MODULE_ANIM3
 	page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_ANIM3, m_stage);
 #endif // MODULE_ANIM3
-#ifdef MODULE_SHADERGRAPH
-    page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_SHADER_GRAPH, m_stage);
-#endif // MODULE_SHADERGRAPH
 #ifdef MODULE_PROTOTYPE
 	page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_PROTOTYPING, m_stage);
 #endif // MODULE_PROTOTYPE
-#ifdef MODULE_SHADERGRAPH2
+#ifdef MODULE_SHADERGRAPH
     page = PanelFactory::CreateStagePage(*dev, ECS_WORLD_SELF_VAR PAGE_SHADER_GRAPH2, m_stage);
-#endif // MODULE_SHADERGRAPH2
+#endif // MODULE_SHADERGRAPH
 #ifdef MODULE_RENDERGRAPH
     page = PanelFactory::CreateStagePage(*dev, ECS_WORLD_SELF_VAR PAGE_RENDER_GRAPH, m_stage);
 #endif // MODULE_RENDERGRAPH

@@ -6,10 +6,13 @@
 
 #include "frame/WxStagePage.h"
 #include "frame/StagePageType.h"
-#include "sgraph/ModelType.h"
 
 #include <blueprint/typedef.h>
 #include <blueprint/StageFuncNode.h>
+#include <blueprint/WxGraphPage.h>
+#include <shaderlab/PreviewPage.h>
+
+namespace shaderlab { class WxGraphPage; }
 
 namespace eone
 {
@@ -21,7 +24,8 @@ class WxToolbarPanel;
 class WxStagePage : public eone::WxStagePage
 {
 public:
-	WxStagePage(wxWindow* parent, ECS_WORLD_PARAM const ee0::GameObj& obj);
+	WxStagePage(const ur::Device& dev, wxWindow* parent,
+        ECS_WORLD_PARAM const ee0::GameObj& obj, const ee0::RenderContext& rc);
     virtual ~WxStagePage();
 
 	virtual void OnNotify(uint32_t msg, const ee0::VariantSet& variants) override;
@@ -29,12 +33,7 @@ public:
 	virtual void Traverse(std::function<bool(const ee0::GameObj&)> func,
 		const ee0::VariantSet& variants = ee0::VariantSet(), bool inverse = false) const override;
 
-	virtual int GetPageType() const override { return PAGE_SHADER_GRAPH; }
-
-    virtual void OnSetSkybox(const std::string& filepath);
-
-    ModelType GetModelType() const { return m_model_type; }
-    void SetModelType(ModelType model_type);
+	virtual int GetPageType() const override { return PAGE_SHADER_GRAPH2; }
 
 	static const std::string PAGE_TYPE;
 
@@ -51,27 +50,32 @@ protected:
 	virtual void LoadFromFileExt(const std::string& filepath) override;
 
 private:
+    shaderlab::WxGraphPage* CreateGraphPanel(wxWindow* parent) const;
+
 	bool InsertSceneObj(const ee0::VariantSet& variants);
 	bool DeleteSceneObj(const ee0::VariantSet& variants);
 	bool ClearSceneObj();
 
     void CreateNewPage(const ee0::VariantSet& variants) const;
 
-	void UpdateShader();
-
-    void LoadFromExternFile(const std::string& filepath);
+    bool UpdateNodes();
+    void UpdateBlueprint();
 
     void LoadFunctionNodes();
 
     auto& GetFuncNodeHelper() { return m_func_node_helper; }
 
 private:
+    const ur::Device& m_dev;
+
+    shaderlab::PreviewPage m_preview_impl;
+
     WxToolbarPanel* m_toolbar = nullptr;
 
     bp::StageFuncNode m_func_node_helper;
 
-    ModelType   m_model_type = ModelType::UNKNOWN;
-    std::string m_model_type_str;
+    n0::SceneNodePtr  m_graph_obj = nullptr;
+    ee0::WxStagePage* m_graph_page = nullptr;
 
 }; // WxStagePage
 

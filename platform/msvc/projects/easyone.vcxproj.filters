@@ -196,15 +196,6 @@
     <Filter Include="61.material">
       <UniqueIdentifier>{9faf4299-7f0d-4886-ad8a-012eeb438c39}</UniqueIdentifier>
     </Filter>
-    <Filter Include="62.shader">
-      <UniqueIdentifier>{70521c8d-51e2-405c-a78a-764746df18c2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="62.shader\stage">
-      <UniqueIdentifier>{3cbcb8a6-40cd-42ae-a989-a2ada73d854e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="62.shader\toolbar">
-      <UniqueIdentifier>{c2aa6c30-b4f7-4ab7-9f49-172532929a3c}</UniqueIdentifier>
-    </Filter>
     <Filter Include="63.render">
       <UniqueIdentifier>{31182a01-d587-4a9e-8109-604526b31e39}</UniqueIdentifier>
     </Filter>
@@ -226,7 +217,7 @@
     <Filter Include="66.task">
       <UniqueIdentifier>{308374cd-f6de-4cc3-897d-bb62af428bb2}</UniqueIdentifier>
     </Filter>
-    <Filter Include="62.shader2">
+    <Filter Include="62.shader">
       <UniqueIdentifier>{d7dfab46-a794-41fb-9f35-54cde53ee773}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -480,18 +471,6 @@
     <ClInclude Include="..\..\..\src\physics3d\PBDSceneOP.h">
       <Filter>34.physics3d</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\sgraph\ModelType.h">
-      <Filter>62.shader</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\sgraph\WxStagePage.h">
-      <Filter>62.shader\stage</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\sgraph\WxStageCanvas.h">
-      <Filter>62.shader\stage</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\src\sgraph\WxToolbarPanel.h">
-      <Filter>62.shader\toolbar</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\src\physics3d\WxStageCanvas2D.h">
       <Filter>34.physics3d</Filter>
     </ClInclude>
@@ -555,8 +534,8 @@
     <ClInclude Include="..\..\..\src\rgraph\WxStagePage.h">
       <Filter>63.render</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\src\sgraph2\WxStagePage.h">
-      <Filter>62.shader2</Filter>
+    <ClInclude Include="..\..\..\src\sgraph\WxStagePage.h">
+      <Filter>62.shader</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -785,15 +764,6 @@
     <ClCompile Include="..\..\..\src\physics3d\PBDSceneOP.cpp">
       <Filter>34.physics3d</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\sgraph\WxStageCanvas.cpp">
-      <Filter>62.shader\stage</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\sgraph\WxStagePage.cpp">
-      <Filter>62.shader\stage</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\src\sgraph\WxToolbarPanel.cpp">
-      <Filter>62.shader\toolbar</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\src\physics3d\WxStageCanvas2D.cpp">
       <Filter>34.physics3d</Filter>
     </ClCompile>
@@ -857,8 +827,8 @@
     <ClCompile Include="..\..\..\src\rgraph\WxStagePage.cpp">
       <Filter>63.render</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\sgraph2\WxStagePage.cpp">
-      <Filter>62.shader2</Filter>
+    <ClCompile Include="..\..\..\src\sgraph\WxStagePage.cpp">
+      <Filter>62.shader</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

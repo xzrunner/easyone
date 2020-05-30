@@ -2,43 +2,40 @@
 
 #ifdef MODULE_SHADERGRAPH
 
-#include "sgraph/WxStageCanvas.h"
-#include "sgraph/WxToolbarPanel.h"
-
 #include "frame/AppStyle.h"
 #include "frame/Blackboard.h"
-#include "frame/WxStageSubPanel.h"
 #include "frame/PanelFactory.h"
 #include "frame/WxStagePanel.h"
+#include "frame/WxStageSubPanel.h"
+#include "frame/GameObjFactory.h"
 
 #include <ee0/SubjectMgr.h>
+#include <ee0/WxStageCanvas.h>
 #include <ee0/MsgHelper.h>
-#include <ee0/WindowContext.h>
-#include <ee3/WxMaterialPreview.h>
+#include <blueprint/NodeSelectOP.h>
+#include <blueprint/ArrangeNodeOP.h>
+#include <blueprint/ConnectPinOP.h>
 #include <blueprint/Blueprint.h>
-#include <blueprint/CompNode.h>
 #include <blueprint/MessageID.h>
-#include <blueprint/Pin.h>
 #include <blueprint/NSCompNode.h>
 #include <blueprint/NodeHelper.h>
-#include <blueprint/node/Input.h>
-#include <blueprint/node/Output.h>
+#include <blueprint/Node.h>
+#include <blueprint/CompNode.h>
+#include <blueprint/CommentaryNodeHelper.h>
 #include <blueprint/node/Function.h>
-#include <shaderlab/ShaderLab.h>
-#include <shaderlab/NodeBuilder.h>
-#include <shaderlab/ShaderWeaver.h>
+#include <blueprint/WxToolbarPanel.h>
+#include <blueprint/Serializer.h>
 #include <shaderlab/RegistNodes.h>
-#include <sgconv/ASEImporter.h>
+#include <shaderlab/WxGraphCanvas.h>
+#include <shaderlab/WxGraphPage.h>
+#include <shaderlab/WxPreviewCanvas.h>
+#include <shaderlab/ShaderLab.h>
+#include <shaderlab/WxDefaultProperty.h>
 
-#include <js/RapidJsonHelper.h>
-#include <painting3/Shader.h>
 #include <node0/SceneNode.h>
 #include <node0/CompComplex.h>
-#include <node2/CompBoundingBox.h>
 #include <sx/ResFileHelper.h>
-#include <ns/CompFactory.h>
-#include <facade/ResPool.h>
-#include <facade/ImageCube.h>
+#include <js/RapidJsonHelper.h>
 
 #include <boost/filesystem.hpp>
 
@@ -54,17 +51,19 @@ namespace eone
 namespace sgraph
 {
 
-const std::string WxStagePage::PAGE_TYPE = "shader_graph";
+const std::string WxStagePage::PAGE_TYPE = "render_graph";
 
-WxStagePage::WxStagePage(wxWindow* parent, ECS_WORLD_PARAM const ee0::GameObj& obj)
-	: eone::WxStagePage(parent, ECS_WORLD_VAR obj, SHOW_STAGE | SHOW_TOOLBAR | TOOLBAR_LFET)
+WxStagePage::WxStagePage(const ur::Device& dev, wxWindow* parent,
+                         ECS_WORLD_PARAM const ee0::GameObj& obj, const ee0::RenderContext& rc)
+	: eone::WxStagePage(parent, ECS_WORLD_VAR obj, SHOW_STAGE | SHOW_TOOLBAR | SHOW_STAGE_EXT | STAGE_EXT_RIGHT)
+    , m_dev(dev)
+    , m_preview_impl(dev, *this, rc)
 {
 	static bool inited = false;
 	if (!inited) {
 		inited = true;
 		bp::Blueprint::Instance();
 	}
-	shaderlab::ShaderLab::Instance();
 
 	m_messages.push_back(ee0::MSG_SCENE_NODE_INSERT);
 	m_messages.push_back(ee0::MSG_SCENE_NODE_DELETE);
@@ -72,7 +71,7 @@ WxStagePage::WxStagePage(wxWindow* parent, ECS_WORLD_PARAM const ee0::GameObj& o
 
     m_messages.push_back(ee0::MSG_STAGE_PAGE_NEW);
 
-	m_messages.push_back(bp::MSG_BP_CONN_INSERT);
+    m_messages.push_back(bp::MSG_BP_CONN_INSERT);
     m_messages.push_back(bp::MSG_BP_CONN_DELETE);
     m_messages.push_back(bp::MSG_BP_CONN_REBUILD);
     m_messages.push_back(bp::MSG_BP_NODE_PROP_CHANGED);
@@ -103,21 +102,13 @@ void WxStagePage::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
     case ee0::MSG_STAGE_PAGE_NEW:
         CreateNewPage(variants);
         break;
-    case ee0::MSG_STAGE_PAGE_ON_SHOW:
-        m_toolbar->Show();
-        m_toolbar->GetParent()->Layout();
-        break;
-    case ee0::MSG_STAGE_PAGE_ON_HIDE:
-        m_toolbar->Hide();
-        m_toolbar->GetParent()->Layout();
-        break;
 
-	case bp::MSG_BP_CONN_INSERT:
+    case bp::MSG_BP_CONN_INSERT:
     case bp::MSG_BP_CONN_DELETE:
     case bp::MSG_BP_CONN_REBUILD:
     case bp::MSG_BP_NODE_PROP_CHANGED:
-		UpdateShader();
-		break;
+        UpdateBlueprint();
+        break;
 	}
 
 	if (dirty) {
@@ -166,59 +157,25 @@ void WxStagePage::Traverse(std::function<bool(const ee0::GameObj&)> func,
 	}
 }
 
-void WxStagePage::OnSetSkybox(const std::string& filepath)
-{
-    auto img_cube = facade::ResPool::Instance().Fetch<facade::ImageCube>(filepath);
-    m_toolbar->GetPreviewPanel()->SetSkybox(img_cube);
-}
-
-void WxStagePage::SetModelType(ModelType model_type)
-{
-	if (m_model_type == model_type) {
-		return;
-	}
-
-    m_model_type = model_type;
-
-    m_model_type_str.clear();
-    switch (model_type)
-	{
-    case ModelType::SPRITE:
-        m_model_type_str = rttr::type::get<shaderlab::node::Sprite>().get_name().to_string();
-		break;
-	case ModelType::PHONG:
-        m_model_type_str = rttr::type::get<shaderlab::node::Phong>().get_name().to_string();
-		break;
-    case ModelType::PBR:
-        m_model_type_str = rttr::type::get<shaderlab::node::PBR>().get_name().to_string();
-        break;
-    case ModelType::RAYMARCHING:
-        m_model_type_str = rttr::type::get<shaderlab::node::Raymarching>().get_name().to_string();
-        break;
-	}
-}
-
 void WxStagePage::OnPageInit()
 {
-    assert(!m_toolbar);
+    m_graph_obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX2D);
+
+    auto stage_ext_panel = Blackboard::Instance()->GetStageExtPanel();
+    auto graph_page = CreateGraphPanel(stage_ext_panel);
+    m_graph_page = graph_page;
+    stage_ext_panel->AddPagePanel(m_graph_page, wxVERTICAL);
+
+    auto prev_canvas = std::static_pointer_cast<shaderlab::WxPreviewCanvas>(GetImpl().GetCanvas());
+    prev_canvas->SetGraphPage(graph_page);
+
+    prev_canvas->SetEval(graph_page->GetEval());
+
     auto toolbar_panel = Blackboard::Instance()->GetToolbarPanel();
-    m_toolbar = new WxToolbarPanel(toolbar_panel, this);
-    toolbar_panel->AddPagePanel(m_toolbar, wxVERTICAL));
-
-    // model type init
-    if (m_model_type != ModelType::UNKNOWN)
-    {
-        std::vector<n0::SceneNodePtr> nodes;
-        auto bp_node = shaderlab::NodeBuilder::Create(nodes, m_model_type_str);
-        if (bp_node) {
-            ClearSceneObj();
-            for (auto& node : nodes) {
-                ee0::MsgHelper::InsertNode(*m_sub_mgr, node, false);
-            }
-        }
-    }
-
-	UpdateShader();
+    auto toolbar_page = new bp::WxToolbarPanel(m_dev, toolbar_panel, m_graph_page->GetSubjectMgr());
+    auto default_prop = new shaderlab::WxDefaultProperty(toolbar_page, prev_canvas);
+    toolbar_page->SetDefaultProp(default_prop);
+    toolbar_panel->AddPagePanel(toolbar_page, wxVERTICAL);
 }
 
 #ifndef GAME_OBJ_ECS
@@ -231,29 +188,64 @@ const n0::NodeComp& WxStagePage::GetEditedObjComp() const
 void WxStagePage::StoreToJsonExt(const std::string& dir, rapidjson::Value& val,
 	                             rapidjson::MemoryPoolAllocator<>& alloc) const
 {
-	// connection
-	auto& ccomplex = m_obj->GetSharedComp<n0::CompComplex>();
-	bp::NSCompNode::StoreConnection(ccomplex.GetAllChildren(), val["nodes"], alloc);
+    bp::Serializer::StoreToJson(m_graph_obj, dir, val, alloc);
 
-	val.AddMember("page_type", rapidjson::Value(PAGE_TYPE.c_str(), alloc), alloc);
+    assert(m_graph_obj->HasSharedComp<n0::CompComplex>());
+    auto& ccomplex = m_graph_obj->GetSharedComp<n0::CompComplex>();
+    bp::NSCompNode::StoreConnection(ccomplex.GetAllChildren(), val["nodes"], alloc);
+
+    val.AddMember("page_type", rapidjson::Value(PAGE_TYPE.c_str(), alloc), alloc);
 }
 
 void WxStagePage::LoadFromFileExt(const std::string& filepath)
 {
-    LoadFromExternFile(filepath);
-
-    LoadFunctionNodes();
-
-    if (sx::ResFileHelper::Type(filepath) == sx::RES_FILE_JSON)
+    auto type = sx::ResFileHelper::Type(filepath);
+    switch (type)
     {
+    case sx::RES_FILE_JSON:
+    {
+        static_cast<shaderlab::WxGraphPage*>(m_graph_page)->SetFilepath(filepath);
+
         rapidjson::Document doc;
         js::RapidJsonHelper::ReadFromFile(filepath.c_str(), doc);
 
-        auto& ccomplex = m_obj->GetSharedComp<n0::CompComplex>();
+        auto dir = boost::filesystem::path(filepath).parent_path().string();
+        bp::Serializer::LoadFromJson(m_dev, *m_graph_page, m_graph_obj, doc, dir);
+
+        auto& ccomplex = m_graph_obj->GetSharedComp<n0::CompComplex>();
         bp::NSCompNode::LoadConnection(ccomplex.GetAllChildren(), doc["nodes"]);
 
-        m_sub_mgr->NotifyObservers(bp::MSG_BP_CONN_REBUILD);
+        m_graph_page->GetSubjectMgr()->NotifyObservers(bp::MSG_BP_CONN_REBUILD);
     }
+    break;
+    }
+}
+
+shaderlab::WxGraphPage*
+WxStagePage::CreateGraphPanel(wxWindow* parent) const
+{
+    auto panel = new shaderlab::WxGraphPage(m_dev, parent, m_graph_obj, m_sub_mgr);
+    auto canvas = std::make_shared<shaderlab::WxGraphCanvas>(
+        m_dev, panel, Blackboard::Instance()->GetRenderContext()
+    );
+    panel->SetCanvas(canvas);
+
+    auto select_op = std::make_shared<bp::NodeSelectOP>(canvas->GetCamera(), *panel);
+
+    ee2::ArrangeNodeCfg cfg;
+    cfg.is_auto_align_open = false;
+    cfg.is_deform_open = false;
+    cfg.is_offset_open = false;
+    cfg.is_rotate_open = false;
+    auto arrange_op = std::make_shared<bp::ArrangeNodeOP>(
+        canvas->GetCamera(), *panel, ECS_WORLD_VAR cfg, select_op);
+
+    auto& nodes = shaderlab::ShaderLab::Instance()->GetAllNodes();
+    auto op = std::make_shared<bp::ConnectPinOP>(canvas->GetCamera(), *panel, nodes);
+    op->SetPrevEditOP(arrange_op);
+    panel->GetImpl().SetEditOP(op);
+
+    return panel;
 }
 
 bool WxStagePage::InsertSceneObj(const ee0::VariantSet& variants)
@@ -271,7 +263,7 @@ bool WxStagePage::InsertSceneObj(const ee0::VariantSet& variants)
 	ccomplex.children->push_back(*obj);
 #endif // GAME_OBJ_ECS
 
-    m_func_node_helper.InsertSceneObj(*obj);
+    m_func_node_helper.InsertSceneObj(m_dev, *obj);
 
 	return true;
 }
@@ -331,16 +323,15 @@ void WxStagePage::CreateNewPage(const ee0::VariantSet& variants) const
 
     int page_type = -1;
     if (strcmp(type, bp::PAGE_TYPE) == 0) {
-        page_type = PAGE_SHADER_GRAPH;
+        page_type = PAGE_SHADER_GRAPH2;
     }
     if (page_type >= 0)
     {
         auto stage_panel = Blackboard::Instance()->GetStagePanel();
-        auto stage_page = PanelFactory::CreateStagePage(page_type, stage_panel);
-        static_cast<WxStagePage*>(stage_page)->SetModelType(ModelType::UNKNOWN);
+        auto stage_page = PanelFactory::CreateStagePage(m_dev, page_type, stage_panel);
         stage_panel->AddNewPage(stage_page, GetPageName(stage_page->GetPageType()));
 
-        if (page_type == PAGE_SHADER_GRAPH)
+        if (page_type == PAGE_SHADER_GRAPH2)
         {
             auto var = variants.GetVariant("obj");
             GD_ASSERT(var.m_type == ee0::VT_PVOID, "no var in vars: obj");
@@ -380,119 +371,42 @@ void WxStagePage::CreateNewPage(const ee0::VariantSet& variants) const
     }
 }
 
-void WxStagePage::UpdateShader()
+bool WxStagePage::UpdateNodes()
 {
-	if (!m_toolbar) {
-		return;
-	}
-
-	bool dirty = false;
-
-	// use the same render context
-	auto& canvas = m_toolbar->GetPreviewPanel()->GetCanvas();
-	canvas->AddUpdateTask([&]()
-	{
-        if (m_model_type == ModelType::UNKNOWN) {
-            return;
+    bool dirty = false;
+    auto& wc = GetImpl().GetCanvas()->GetWidnowContext();
+    bp::UpdateParams params(wc.wc2, wc.wc3);
+    Traverse([&](const ee0::GameObj& obj)->bool
+    {
+        if (!obj->HasUniqueComp<bp::CompNode>()) {
+            return true;
         }
-
-		auto& ccomplex = m_obj->GetSharedComp<n0::CompComplex>();
-		auto& nodes = const_cast<std::vector<n0::SceneNodePtr>&>(ccomplex.GetAllChildren());
-        if (nodes.empty()) {
-            return;
-        }
-
-		bp::NodePtr final_node = nullptr;
-        std::vector<bp::NodePtr> all_bp_nodes;
-        all_bp_nodes.reserve(nodes.size());
-		for (auto& node : nodes)
-		{
-			assert(node->HasUniqueComp<bp::CompNode>());
-			auto& bp_node = node->GetUniqueComp<bp::CompNode>().GetNode();
-			assert(bp_node);
-			if (bp_node->get_type().get_name().to_string() == m_model_type_str) {
-				final_node = bp_node;
-			}
-            all_bp_nodes.push_back(bp_node);
-		}
-        if (!final_node) {
-            return;
-        }
-
-		shaderlab::ShaderWeaver::ShaderType shader_type;
-        if (m_model_type_str == rttr::type::get<shaderlab::node::PBR>().get_name().to_string()) {
-            shader_type = shaderlab::ShaderWeaver::SHADER_PBR;
-        } else if (m_model_type_str == rttr::type::get<shaderlab::node::Phong>().get_name().to_string()) {
-            shader_type = shaderlab::ShaderWeaver::SHADER_PHONG;
-        } else if (m_model_type_str == rttr::type::get<shaderlab::node::Raymarching>().get_name().to_string()) {
-            shader_type = shaderlab::ShaderWeaver::SHADER_RAYMARCHING;
-        } else if (m_model_type_str == rttr::type::get<shaderlab::node::Sprite>().get_name().to_string()) {
-            shader_type = shaderlab::ShaderWeaver::SHADER_SPRITE;
-        } else {
-			assert(0);
-		}
-
-        auto& rc = ur::Blackboard::Instance()->GetRenderContext();
-        int old_vl_id = rc.GetBindedVertexLayoutID();
-
-        auto& gi = m_toolbar->GetPreviewPanel()->GetGlobalIllumination();
-		shaderlab::ShaderWeaver sw(shader_type, *final_node, DEBUG_PRINT_SHADER, all_bp_nodes, gi);
-		auto& wc = canvas->GetWidnowContext().wc3;
-		auto shader = sw.CreateShader3();
-        if (shader->IsValid()) {
-            shader->AddNotify(std::const_pointer_cast<pt3::WindowContext>(wc));
-            m_toolbar->GetPreviewPanel()->SetShader(shader);
+        auto& bp_node = obj->GetUniqueComp<bp::CompNode>().GetNode();
+        if (bp_node->Update(params)) {
             dirty = true;
-        } else {
-            rc.BindVertexLayout(old_vl_id);
-            dirty = false;
         }
-	});
-
-	auto& wc = GetImpl().GetCanvas()->GetWidnowContext();
-	bp::UpdateParams params(wc.wc2, wc.wc3);
-	Traverse([&](const ee0::GameObj& obj)->bool
-	{
-		if (obj->HasUniqueComp<bp::CompNode>())
-		{
-			auto& bp_node = obj->GetUniqueComp<bp::CompNode>().GetNode();
-			if (bp_node->Update(params)) {
-				dirty = true;
-			}
-		}
-		return true;
-	});
-
-	if (dirty) {
-		m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
-	}
+        return true;
+    });
+    return dirty;
 }
 
-void WxStagePage::LoadFromExternFile(const std::string& filepath)
+void WxStagePage::UpdateBlueprint()
 {
-    std::vector<n0::SceneNodePtr> nodes;
+    bool dirty = UpdateNodes();
 
-    auto type = sx::ResFileHelper::Type(filepath);
-    switch (type)
+    std::vector<bp::NodePtr> nodes;
+    Traverse([&](const ee0::GameObj& obj)->bool
     {
-    case sx::RES_FILE_SHADER:
-    {
-        sgconv::ASEImporter loader;
-        loader.LoadShader(filepath);
-        nodes = loader.GetNodes();
-    }
-        break;
-    case sx::RES_FILE_ASSET:
-    {
-        sgconv::ASEImporter loader;
-        loader.LoadAsset(filepath);
-        nodes = loader.GetNodes();
-    }
-        break;
-    }
+        if (!obj->HasUniqueComp<bp::CompNode>()) {
+            return true;
+        }
+        auto& bp_node = obj->GetUniqueComp<bp::CompNode>().GetNode();
+        nodes.push_back(bp_node);
+        return true;
+    });
 
-    for (auto& node : nodes) {
-        ee0::MsgHelper::InsertNode(*m_sub_mgr, node, false);
+    if (dirty) {
+        m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
     }
 }
 
@@ -503,7 +417,7 @@ void WxStagePage::LoadFunctionNodes()
         if (obj->HasUniqueComp<bp::CompNode>()) {
             auto& bp_node = obj->GetUniqueComp<bp::CompNode>().GetNode();
             if (bp_node->get_type() == rttr::type::get<bp::node::Function>()) {
-                bp::NodeHelper::LoadFunctionNode(obj, bp_node);
+                bp::NodeHelper::LoadFunctionNode(m_dev, obj, bp_node);
             }
         }
         return true;

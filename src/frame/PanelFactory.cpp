@@ -62,16 +62,12 @@
 #include "anim3/WxStagePage.h"
 #include "anim3/WxStageCanvas.h"
 #endif // MODULE_ANIM3
-#ifdef MODULE_SHADERGRAPH
-#include "sgraph/WxStagePage.h"
-#include "sgraph/WxStageCanvas.h"
-#endif // MODULE_SHADERGRAPH
 #ifdef MODULE_PROTOTYPE
 #include "prototype/WxStagePage.h"
 #endif // MODULE_PROTOTYPE
-#ifdef MODULE_SHADERGRAPH2
-#include "sgraph2/WxStagePage.h"
-#endif // MODULE_SHADERGRAPH2
+#ifdef MODULE_SHADERGRAPH
+#include "sgraph/WxStagePage.h"
+#endif // MODULE_SHADERGRAPH
 #ifdef MODULE_RENDERGRAPH
 #include "rgraph/WxStagePage.h"
 #endif // MODULE_RENDERGRAPH
@@ -400,38 +396,6 @@ WxStagePage* PanelFactory::CreateStagePage(const ur::Device& dev, ECS_WORLD_PARA
 	}
 		break;
 #endif // MODULE_ANIM3
-#ifdef MODULE_SHADERGRAPH
-	case PAGE_SHADER_GRAPH:
-	{
-		auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX2D);
-		page = new sgraph::WxStagePage(frame, ECS_WORLD_VAR obj);
-		auto canvas = std::make_shared<sgraph::WxStageCanvas>(page, rc);
-		page->GetImpl().SetCanvas(canvas);
-
-        auto prev_op = std::make_shared<LeftDClickOP>(canvas->GetCamera(), *page, rc, wc);
-
-        auto select_op = std::make_shared<bp::NodeSelectOP>(canvas->GetCamera(), *page);
-        select_op->AddPrevEditOP(prev_op);
-
-		ee2::ArrangeNodeCfg cfg;
-		cfg.is_auto_align_open = false;
-		cfg.is_deform_open = false;
-		cfg.is_offset_open = false;
-		cfg.is_rotate_open = false;
-		auto arrange_op = std::make_shared<bp::ArrangeNodeOP>(
-			canvas->GetCamera(), *page, ECS_WORLD_VAR cfg, select_op);
-
-        auto nodes = bp::Blueprint::Instance()->GetAllNodes();
-        auto sg_nodes = shaderlab::ShaderLab::Instance()->GetAllNodes();
-        std::copy(sg_nodes.begin(), sg_nodes.end(), std::back_inserter(nodes));
-		auto op = std::make_shared<bp::ConnectPinOP>(canvas->GetCamera(), *page, nodes);
-		op->SetPrevEditOP(arrange_op);
-		page->GetImpl().SetEditOP(op);
-
-        static_cast<sgraph::WxStagePage*>(page)->SetModelType(sgraph::ModelType::PBR);
-	}
-		break;
-#endif // MODULE_SHADERGRAPH
 #ifdef MODULE_PROTOTYPE
 	case PAGE_PROTOTYPING:
 	{
@@ -446,14 +410,14 @@ WxStagePage* PanelFactory::CreateStagePage(const ur::Device& dev, ECS_WORLD_PARA
 	}
 		break;
 #endif // MODULE_PROTOTYPE
-#ifdef MODULE_SHADERGRAPH2
+#ifdef MODULE_SHADERGRAPH
     case PAGE_SHADER_GRAPH2:
     {
         auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX2D);
-        page = new sgraph2::WxStagePage(dev, frame, ECS_WORLD_VAR obj, rc);
+        page = new sgraph::WxStagePage(dev, frame, ECS_WORLD_VAR obj, rc);
     }
         break;
-#endif // MODULE_SHADERGRAPH2
+#endif // MODULE_SHADERGRAPH
 #ifdef MODULE_RENDERGRAPH
     case PAGE_RENDER_GRAPH:
     {
