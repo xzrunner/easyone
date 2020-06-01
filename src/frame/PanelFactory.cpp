@@ -578,7 +578,7 @@ WxStagePage* PanelFactory::CreateStagePage(const ur::Device& dev, ECS_WORLD_PARA
     case PAGE_TERRAIN:
     {
         auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX2D);
-        page = new terrain::WxStagePage(frame, ECS_WORLD_VAR obj, rc);
+        page = new terrain::WxStagePage(dev, frame, ECS_WORLD_VAR obj, rc);
     }
         break;
 #endif // MODULE_TERRAIN

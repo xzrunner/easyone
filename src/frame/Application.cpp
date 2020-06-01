@@ -508,7 +508,7 @@ wxWindow* Application::CreateStagePanel()
     page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_ARCHITECTURAL, m_stage);
 #endif // MODULE_ARCHITECTURAL
 #ifdef MODULE_TERRAIN
-    page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_TERRAIN, m_stage);
+    page = PanelFactory::CreateStagePage(*dev, ECS_WORLD_SELF_VAR PAGE_TERRAIN, m_stage);
 #endif // MODULE_TERRAIN
 #ifdef MODULE_CITY
     page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_CITY, m_stage);

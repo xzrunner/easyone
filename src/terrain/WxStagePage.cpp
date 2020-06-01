@@ -50,10 +50,11 @@ namespace terrain
 
 const std::string WxStagePage::PAGE_TYPE = "terr_stage";
 
-WxStagePage::WxStagePage(wxWindow* parent, ECS_WORLD_PARAM const ee0::GameObj& obj,
-                         const ee0::RenderContext& rc)
+WxStagePage::WxStagePage(const ur::Device& dev, wxWindow* parent, ECS_WORLD_PARAM
+                         const ee0::GameObj& obj, const ee0::RenderContext& rc)
     : eone::WxStagePage(parent, ECS_WORLD_VAR obj, SHOW_STAGE | SHOW_TOOLBAR | SHOW_STAGE_EXT | STAGE_EXT_RIGHT)
-    , m_preview_impl(*this, rc)
+    , m_dev(dev)
+    , m_preview_impl(dev, *this, rc)
 {
 	m_messages.push_back(ee0::MSG_SCENE_NODE_INSERT);
 	m_messages.push_back(ee0::MSG_SCENE_NODE_DELETE);
@@ -140,7 +141,7 @@ void WxStagePage::OnPageInit()
     stage_ext_panel->AddPagePanel(m_graph_page, wxVERTICAL);
 
     auto toolbar_panel = Blackboard::Instance()->GetToolbarPanel();
-    auto toolbar_page = new bp::WxToolbarPanel(toolbar_panel, m_graph_page->GetSubjectMgr());
+    auto toolbar_page = new bp::WxToolbarPanel(m_dev, toolbar_panel, m_graph_page->GetSubjectMgr());
     toolbar_panel->AddPagePanel(toolbar_page, wxVERTICAL);
 
     auto prev_canvas = std::static_pointer_cast<terrainlab::WxPreviewCanvas>(GetImpl().GetCanvas());
@@ -179,7 +180,7 @@ void WxStagePage::LoadFromFileExt(const std::string& filepath)
         js::RapidJsonHelper::ReadFromFile(filepath.c_str(), doc);
 
         auto dir = boost::filesystem::path(filepath).parent_path().string();
-        bp::Serializer::LoadFromJson(*m_graph_page, m_graph_obj, doc["graph"], dir);
+        bp::Serializer::LoadFromJson(m_dev, *m_graph_page, m_graph_obj, doc["graph"], dir);
 
         auto& ccomplex = m_graph_obj->GetSharedComp<n0::CompComplex>();
         bp::NSCompNode::LoadConnection(ccomplex.GetAllChildren(), doc["graph"]["nodes"]);
@@ -199,7 +200,7 @@ WxStagePage::CreateGraphPanel(wxWindow* parent) const
     auto& panel_impl = panel->GetImpl();
 
     auto canvas = std::make_shared<WxBlueprintCanvas>(
-        panel, Blackboard::Instance()->GetRenderContext()
+        m_dev, panel, Blackboard::Instance()->GetRenderContext()
     );
     panel_impl.SetCanvas(canvas);
 
@@ -295,7 +296,7 @@ void WxStagePage::CreateNewPage(const ee0::VariantSet& variants) const
     if (page_type >= 0)
     {
         auto stage_panel = Blackboard::Instance()->GetStagePanel();
-        auto stage_page = PanelFactory::CreateStagePage(page_type, stage_panel);
+        auto stage_page = PanelFactory::CreateStagePage(m_dev, page_type, stage_panel);
         stage_panel->AddNewPage(stage_page, GetPageName(stage_page->GetPageType()));
 
         if (page_type == PAGE_TERRAIN)

@@ -22,8 +22,8 @@ namespace terrain
 class WxStagePage : public eone::WxStagePage
 {
 public:
-    WxStagePage(wxWindow* parent, ECS_WORLD_PARAM const ee0::GameObj& obj,
-        const ee0::RenderContext& rc);
+    WxStagePage(const ur::Device& dev, wxWindow* parent, ECS_WORLD_PARAM
+        const ee0::GameObj& obj, const ee0::RenderContext& rc);
 
     virtual void OnNotify(uint32_t msg, const ee0::VariantSet& variants) override;
 
@@ -61,6 +61,8 @@ private:
     void CreateNewPage(const ee0::VariantSet& variants) const;
 
 private:
+    const ur::Device& m_dev;
+
     terrainlab::PreviewPage m_preview_impl;
 
     terrainlab::WxEditorPanel*  m_editor_panel  = nullptr;
