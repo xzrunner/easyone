@@ -163,7 +163,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "geoshape", "geoshape", "{64
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "1.gs_test", "..\..\ext\geoshape\platform\msvc\projects\gs_test.vcxproj", "{01475B8C-5CC2-4CB6-A048-5CAAB7135FC9}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3.rendergraph", "..\..\ext\rendergraph\platform\msvc\projects\rendergraph.vcxproj", "{52480C29-042F-4F4C-9690-88EF0EEF494E}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "rendergraph", "..\..\ext\rendergraph\platform\msvc\projects\rendergraph.vcxproj", "{52480C29-042F-4F4C-9690-88EF0EEF494E}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "5.gui", "5.gui", "{CD6F97A5-F7CE-48C6-B7A5-5214F7B35B33}"
 EndProject
@@ -194,7 +194,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.render", "4.render", "{AF
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "4.renderpipeline", "..\..\ext\renderpipeline\platform\msvc\projects\renderpipeline.vcxproj", "{1CBD9E7E-98C6-4D18-AC91-7683C4AB23FC}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "6.renderlab", "..\..\ext\renderlab\platform\msvc\projects\renderlab.vcxproj", "{D16C1C98-16E8-4D60-8209-E6AD7C80E918}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "renderlab", "..\..\ext\renderlab\platform\msvc\projects\renderlab.vcxproj", "{D16C1C98-16E8-4D60-8209-E6AD7C80E918}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "0.uniphysics", "..\..\ext\uniphysics\platform\msvc\projects\uniphysics.vcxproj", "{A94BC06E-93B2-4F30-AB4E-7D677A1D5B54}"
 EndProject
@@ -364,13 +364,15 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3.textile", "..\..\ext\text
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "1.dtex", "..\..\ext\dtex\platform\msvc\projects\dtex.vcxproj", "{A709822D-AA0B-4D52-A609-C6E24A7398D8}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "0.shadergraph", "..\..\ext\shadergraph\platform\msvc\projects\shadergraph.vcxproj", "{AA04F36C-3055-477E-BD99-E39C745B3321}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "shadergraph", "..\..\ext\shadergraph\platform\msvc\projects\shadergraph.vcxproj", "{AA04F36C-3055-477E-BD99-E39C745B3321}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "0.shadergraph_test", "..\..\ext\shadergraph\platform\msvc\projects\shadergraph_test.vcxproj", "{A3401E6F-4982-4B24-809A-821414322A4A}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "shadergraph_test", "..\..\ext\shadergraph\platform\msvc\projects\shadergraph_test.vcxproj", "{A3401E6F-4982-4B24-809A-821414322A4A}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "1.shaderlab", "..\..\ext\shaderlab\platform\msvc\projects\shaderlab.vcxproj", "{7EED0027-AE99-415F-B4DA-E51BF361D246}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "shaderlab", "..\..\ext\shaderlab\platform\msvc\projects\shaderlab.vcxproj", "{7EED0027-AE99-415F-B4DA-E51BF361D246}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "1.shaderlab-test", "..\..\ext\shaderlab\platform\msvc\projects\shaderlab-test.vcxproj", "{560AEA65-967A-4D7D-A1D2-A6F21D8AAE3D}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "shaderlab-test", "..\..\ext\shaderlab\platform\msvc\projects\shaderlab-test.vcxproj", "{560AEA65-967A-4D7D-A1D2-A6F21D8AAE3D}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "renderlab-test", "..\..\ext\renderlab\platform\msvc\projects\renderlab-test.vcxproj", "{D17DBF86-163A-41BF-A846-BEA4C56E3A0A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -2152,6 +2154,20 @@ Global
 		{560AEA65-967A-4D7D-A1D2-A6F21D8AAE3D}.RelWithDebInfo|Win32.Build.0 = Release|Win32
 		{560AEA65-967A-4D7D-A1D2-A6F21D8AAE3D}.RelWithDebInfo|x64.ActiveCfg = Release|Win32
 		{560AEA65-967A-4D7D-A1D2-A6F21D8AAE3D}.RelWithDebInfo|x64.Build.0 = Release|Win32
+		{D17DBF86-163A-41BF-A846-BEA4C56E3A0A}.Debug|Win32.ActiveCfg = Debug|Win32
+		{D17DBF86-163A-41BF-A846-BEA4C56E3A0A}.Debug|Win32.Build.0 = Debug|Win32
+		{D17DBF86-163A-41BF-A846-BEA4C56E3A0A}.Debug|x64.ActiveCfg = Debug|Win32
+		{D17DBF86-163A-41BF-A846-BEA4C56E3A0A}.MinSizeRel|Win32.ActiveCfg = Release|Win32
+		{D17DBF86-163A-41BF-A846-BEA4C56E3A0A}.MinSizeRel|Win32.Build.0 = Release|Win32
+		{D17DBF86-163A-41BF-A846-BEA4C56E3A0A}.MinSizeRel|x64.ActiveCfg = Release|Win32
+		{D17DBF86-163A-41BF-A846-BEA4C56E3A0A}.MinSizeRel|x64.Build.0 = Release|Win32
+		{D17DBF86-163A-41BF-A846-BEA4C56E3A0A}.Release|Win32.ActiveCfg = Release|Win32
+		{D17DBF86-163A-41BF-A846-BEA4C56E3A0A}.Release|Win32.Build.0 = Release|Win32
+		{D17DBF86-163A-41BF-A846-BEA4C56E3A0A}.Release|x64.ActiveCfg = Release|Win32
+		{D17DBF86-163A-41BF-A846-BEA4C56E3A0A}.RelWithDebInfo|Win32.ActiveCfg = Release|Win32
+		{D17DBF86-163A-41BF-A846-BEA4C56E3A0A}.RelWithDebInfo|Win32.Build.0 = Release|Win32
+		{D17DBF86-163A-41BF-A846-BEA4C56E3A0A}.RelWithDebInfo|x64.ActiveCfg = Release|Win32
+		{D17DBF86-163A-41BF-A846-BEA4C56E3A0A}.RelWithDebInfo|x64.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -2325,6 +2341,7 @@ Global
 		{A3401E6F-4982-4B24-809A-821414322A4A} = {0BFDB5AE-9FE9-45E4-AC38-B931F8DB3762}
 		{7EED0027-AE99-415F-B4DA-E51BF361D246} = {0BFDB5AE-9FE9-45E4-AC38-B931F8DB3762}
 		{560AEA65-967A-4D7D-A1D2-A6F21D8AAE3D} = {0BFDB5AE-9FE9-45E4-AC38-B931F8DB3762}
+		{D17DBF86-163A-41BF-A846-BEA4C56E3A0A} = {F92A1D55-9181-4FFF-ACA9-A51435DD3A89}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8D54C01A-3C82-4351-A325-2853C3E81322}
