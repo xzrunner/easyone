@@ -31,6 +31,7 @@
 #include <shaderlab/WxPreviewCanvas.h>
 #include <shaderlab/ShaderLab.h>
 #include <shaderlab/WxDefaultProperty.h>
+#include <shaderlab/ConnectPinOP.h>
 
 #include <node0/SceneNode.h>
 #include <node0/CompComplex.h>
@@ -172,7 +173,7 @@ void WxStagePage::OnPageInit()
     prev_canvas->SetEval(graph_page->GetEval());
 
     auto toolbar_panel = Blackboard::Instance()->GetToolbarPanel();
-    auto toolbar_page = new bp::WxToolbarPanel(m_dev, toolbar_panel, m_graph_page->GetSubjectMgr());
+    auto toolbar_page = new bp::WxToolbarPanel(m_dev, toolbar_panel, m_graph_page->GetSubjectMgr(), true);
     auto default_prop = new shaderlab::WxDefaultProperty(toolbar_page, prev_canvas);
     toolbar_page->SetDefaultProp(default_prop);
     toolbar_panel->AddPagePanel(toolbar_page, wxVERTICAL);
@@ -241,7 +242,7 @@ WxStagePage::CreateGraphPanel(wxWindow* parent) const
         canvas->GetCamera(), *panel, ECS_WORLD_VAR cfg, select_op);
 
     auto& nodes = shaderlab::ShaderLab::Instance()->GetAllNodes();
-    auto op = std::make_shared<bp::ConnectPinOP>(canvas->GetCamera(), *panel, nodes);
+    auto op = std::make_shared<shaderlab::ConnectPinOP>(canvas->GetCamera(), *panel, nodes);
     op->SetPrevEditOP(arrange_op);
     panel->GetImpl().SetEditOP(op);
 
