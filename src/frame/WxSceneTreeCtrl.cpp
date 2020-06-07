@@ -447,8 +447,10 @@ void WxSceneTreeCtrl::InsertSceneObj(wxTreeItemId parent, const ee0::GameObj& ob
 		{
 			InsertSceneObj(id, child, root, obj_id);
 #ifndef GAME_OBJ_ECS
-			auto& casset = child->GetSharedComp<n0::CompAsset>();
-			obj_id += casset.GetNodeCount();
+            if (child->HasSharedComp<n0::CompAsset>()) {
+                auto& casset = child->GetSharedComp<n0::CompAsset>();
+                obj_id += casset.GetNodeCount();
+            }
 #endif // GAME_OBJ_ECS
 		}
 
