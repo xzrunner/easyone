@@ -14,7 +14,6 @@
 #include <ee0/MsgHelper.h>
 #include <blueprint/NodeSelectOP.h>
 #include <blueprint/ArrangeNodeOP.h>
-#include <blueprint/ConnectPinOP.h>
 #include <blueprint/Blueprint.h>
 #include <blueprint/MessageID.h>
 #include <blueprint/NSCompNode.h>
@@ -189,11 +188,7 @@ const n0::NodeComp& WxStagePage::GetEditedObjComp() const
 void WxStagePage::StoreToJsonExt(const std::string& dir, rapidjson::Value& val,
 	                             rapidjson::MemoryPoolAllocator<>& alloc) const
 {
-    bp::Serializer::StoreToJson(m_graph_obj, dir, val, alloc);
-
-    assert(m_graph_obj->HasSharedComp<n0::CompComplex>());
-    auto& ccomplex = m_graph_obj->GetSharedComp<n0::CompComplex>();
-    bp::NSCompNode::StoreConnection(ccomplex.GetAllChildren(), val["nodes"], alloc);
+    bp::Serializer<shadergraph::Variant>::StoreToJson(m_graph_obj, dir, val, alloc);
 
     val.AddMember("page_type", rapidjson::Value(PAGE_TYPE.c_str(), alloc), alloc);
 }
@@ -211,10 +206,7 @@ void WxStagePage::LoadFromFileExt(const std::string& filepath)
         js::RapidJsonHelper::ReadFromFile(filepath.c_str(), doc);
 
         auto dir = boost::filesystem::path(filepath).parent_path().string();
-        bp::Serializer::LoadFromJson(m_dev, *m_graph_page, m_graph_obj, doc, dir);
-
-        auto& ccomplex = m_graph_obj->GetSharedComp<n0::CompComplex>();
-        bp::NSCompNode::LoadConnection(ccomplex.GetAllChildren(), doc["nodes"]);
+        bp::Serializer<shadergraph::Variant>::LoadFromJson(m_dev, *m_graph_page, m_graph_obj, doc, dir);
 
         m_graph_page->GetSubjectMgr()->NotifyObservers(bp::MSG_BP_CONN_REBUILD);
     }
