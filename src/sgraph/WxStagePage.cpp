@@ -31,6 +31,7 @@
 #include <shaderlab/ShaderLab.h>
 #include <shaderlab/WxDefaultProperty.h>
 #include <shaderlab/ConnectPinOP.h>
+#include <shaderlab/ShaderAdapter.h>
 
 #include <node0/SceneNode.h>
 #include <node0/CompComplex.h>
@@ -169,7 +170,7 @@ void WxStagePage::OnPageInit()
     auto prev_canvas = std::static_pointer_cast<shaderlab::WxPreviewCanvas>(GetImpl().GetCanvas());
     prev_canvas->SetGraphPage(graph_page);
 
-    prev_canvas->SetEval(graph_page->GetEval());
+    prev_canvas->SetEval(graph_page->GetSceneTree()->GetCurrEval());
 
     auto toolbar_panel = Blackboard::Instance()->GetToolbarPanel();
     auto toolbar_page = new bp::WxToolbarPanel(m_dev, toolbar_panel, m_graph_page->GetSubjectMgr(), true);
