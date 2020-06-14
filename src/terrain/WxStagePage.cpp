@@ -159,7 +159,7 @@ void WxStagePage::StoreToJsonExt(const std::string& dir, rapidjson::Value& val,
                                  rapidjson::MemoryPoolAllocator<>& alloc) const
 {
     rapidjson::Value gval;
-    bp::Serializer::StoreToJson(m_graph_obj, dir, gval, alloc);
+    bp::Serializer<terraingraph::DeviceVarType>::StoreToJson(m_graph_obj, dir, gval, alloc);
     val.AddMember("graph", gval, alloc);
 
     assert(m_graph_obj->HasSharedComp<n0::CompComplex>());
@@ -180,7 +180,7 @@ void WxStagePage::LoadFromFileExt(const std::string& filepath)
         js::RapidJsonHelper::ReadFromFile(filepath.c_str(), doc);
 
         auto dir = boost::filesystem::path(filepath).parent_path().string();
-        bp::Serializer::LoadFromJson(m_dev, *m_graph_page, m_graph_obj, doc["graph"], dir);
+        bp::Serializer<terraingraph::DeviceVarType>::LoadFromJson(m_dev, *m_graph_page, m_graph_obj, doc["graph"], dir);
 
         auto& ccomplex = m_graph_obj->GetSharedComp<n0::CompComplex>();
         bp::NSCompNode::LoadConnection(ccomplex.GetAllChildren(), doc["graph"]["nodes"]);
@@ -195,7 +195,7 @@ bp::WxGraphPage<terraingraph::DeviceVarType>*
 WxStagePage::CreateGraphPanel(wxWindow* parent) const
 {
     auto panel = new bp::WxGraphPage<terraingraph::DeviceVarType>(
-        parent, m_graph_obj, m_sub_mgr, terrainlab::MSG_HEIGHTMAP_CHANGED, "terraingraph", "terrainlab"
+        parent, m_graph_obj, m_sub_mgr, terrainlab::MSG_HEIGHTMAP_CHANGED, "terraingraph", "terrainlab", nullptr
     );
     auto& panel_impl = panel->GetImpl();
 
