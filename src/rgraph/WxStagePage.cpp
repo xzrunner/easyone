@@ -229,7 +229,8 @@ WxStagePage::CreateGraphPanel(wxWindow* parent) const
     );
     panel->SetCanvas(canvas);
 
-    auto select_op = std::make_shared<bp::NodeSelectOP>(canvas->GetCamera(), *panel);
+    const uint32_t cam_cfg = ee2::CamControlOP::MOUSE_MOVE_FOCUS | ee2::CamControlOP::RIGHT_TAP;
+    auto select_op = std::make_shared<bp::NodeSelectOP>(canvas->GetCamera(), *panel, cam_cfg);
 
     ee2::ArrangeNodeCfg cfg;
     cfg.is_auto_align_open = false;
