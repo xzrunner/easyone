@@ -168,9 +168,9 @@ void WxStagePage::OnPageInit()
     auto graph_page = CreateGraphPanel(stage_ext_panel);
     m_graph_page = graph_page;
     stage_ext_panel->AddPagePanel(m_graph_page, wxVERTICAL);
-
+    
     auto toolbar_panel = Blackboard::Instance()->GetToolbarPanel();
-    auto toolbar_page = new bp::WxToolbarPanel(m_dev, toolbar_panel, m_graph_page->GetSubjectMgr());
+    auto toolbar_page = new bp::WxToolbarPanel(m_dev, toolbar_panel, m_graph_page->GetSubjectMgr(), true);
     toolbar_panel->AddPagePanel(toolbar_page, wxVERTICAL);
 
     auto prev_canvas = std::static_pointer_cast<renderlab::WxPreviewCanvas>(GetImpl().GetCanvas());
@@ -211,8 +211,8 @@ void WxStagePage::LoadFromFileExt(const std::string& filepath)
         auto dir = boost::filesystem::path(filepath).parent_path().string();
         bp::Serializer<rendergraph::Variable>::LoadFromJson(m_dev, *m_graph_page, m_graph_obj, doc, dir);
 
-        auto& ccomplex = m_graph_obj->GetSharedComp<n0::CompComplex>();
-        bp::NSCompNode::LoadConnection(ccomplex.GetAllChildren(), doc["nodes"]);
+        //auto& ccomplex = m_graph_obj->GetSharedComp<n0::CompComplex>();
+        //bp::NSCompNode::LoadConnection(ccomplex.GetAllChildren(), doc["nodes"]);
 
         m_graph_page->GetSubjectMgr()->NotifyObservers(bp::MSG_BP_CONN_REBUILD);
     }
@@ -375,14 +375,14 @@ bool WxStagePage::UpdateNodes()
 {
     bool dirty = false;
     auto& wc = GetImpl().GetCanvas()->GetWidnowContext();
-    bp::UpdateParams params(wc.wc2, wc.wc3);
+    //bp::UpdateParams params(wc.wc2, wc.wc3);
     Traverse([&](const ee0::GameObj& obj)->bool
     {
         if (!obj->HasUniqueComp<bp::CompNode>()) {
             return true;
         }
         auto& bp_node = obj->GetUniqueComp<bp::CompNode>().GetNode();
-        if (bp_node->Update(params)) {
+        if (bp_node->Update(m_dev)) {
             dirty = true;
         }
         return true;
