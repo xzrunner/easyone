@@ -33,6 +33,8 @@ public:
 
     virtual void OnSetSkybox(const std::string& filepath) {}
 
+	virtual std::string GetFilepath() const { return m_filepath; }
+
 	void StoreToJson(const std::string& dir, rapidjson::Value& val,
 		rapidjson::MemoryPoolAllocator<>& alloc) const;
 	void LoadFromFile(const ur::Device& dev, const std::string& filepath);
@@ -40,7 +42,6 @@ public:
 	const ee0::GameObj& GetEditedObj() const { return m_obj; }
 
 	void SetFilepath(const std::string& filepath);
-	const std::string& GetFilepath() const { return m_filepath; }
 
     void InitPage();
 

@@ -37,6 +37,8 @@ public:
 
 	virtual int GetPageType() const override { return PAGE_RENDER_GRAPH; }
 
+	virtual std::string GetFilepath() const;
+
     auto& GetEval() const { return m_eval; }
 
 	static const std::string PAGE_TYPE;

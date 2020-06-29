@@ -34,6 +34,7 @@
 
 #include <node0/SceneNode.h>
 #include <node0/CompComplex.h>
+#include <node0/CompIdentity.h>
 #include <sx/ResFileHelper.h>
 #include <js/RapidJsonHelper.h>
 
@@ -160,6 +161,15 @@ void WxStagePage::Traverse(std::function<bool(const ee0::GameObj&)> func,
 	}
 }
 
+std::string WxStagePage::GetFilepath() const
+{
+	auto tree = static_cast<renderlab::WxGraphPage*>(m_graph_page)->GetSceneTree();
+	auto node = tree->GetCurrNode();
+	assert(node->HasUniqueComp<n0::CompIdentity>());
+	auto filepath = node->GetUniqueComp<n0::CompIdentity>().GetFilepath();
+	return filepath.empty() ? eone::WxStagePage::GetFilepath() : filepath;
+}
+
 void WxStagePage::OnPageInit()
 {
     m_graph_obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX2D);
@@ -168,7 +178,7 @@ void WxStagePage::OnPageInit()
     auto graph_page = CreateGraphPanel(stage_ext_panel);
     m_graph_page = graph_page;
     stage_ext_panel->AddPagePanel(m_graph_page, wxVERTICAL);
-    
+
     auto toolbar_panel = Blackboard::Instance()->GetToolbarPanel();
     auto toolbar_page = new bp::WxToolbarPanel(m_dev, toolbar_panel, m_graph_page->GetSubjectMgr(), true);
     toolbar_panel->AddPagePanel(toolbar_page, wxVERTICAL);
@@ -180,17 +190,20 @@ void WxStagePage::OnPageInit()
 #ifndef GAME_OBJ_ECS
 const n0::NodeComp& WxStagePage::GetEditedObjComp() const
 {
-	return m_obj->GetSharedComp<n0::CompComplex>();
+	auto node = static_cast<renderlab::WxGraphPage*>(m_graph_page)->GetSceneTree()->GetCurrNode();
+	return node->GetSharedComp<n0::CompComplex>();
 }
 #endif // GAME_OBJ_ECS
 
 void WxStagePage::StoreToJsonExt(const std::string& dir, rapidjson::Value& val,
 	                             rapidjson::MemoryPoolAllocator<>& alloc) const
 {
-    bp::Serializer<rendergraph::Variable>::StoreToJson(m_graph_obj, dir, val, alloc);
+	auto node = static_cast<renderlab::WxGraphPage*>(m_graph_page)->GetSceneTree()->GetCurrNode();
 
-    assert(m_graph_obj->HasSharedComp<n0::CompComplex>());
-    auto& ccomplex = m_graph_obj->GetSharedComp<n0::CompComplex>();
+    bp::Serializer<rendergraph::Variable>::StoreToJson(node, dir, val, alloc);
+
+    assert(node->HasSharedComp<n0::CompComplex>());
+    auto& ccomplex = node->GetSharedComp<n0::CompComplex>();
     bp::NSCompNode::StoreConnection(ccomplex.GetAllChildren(), val["nodes"], alloc);
 
     val.AddMember("page_type", rapidjson::Value(PAGE_TYPE.c_str(), alloc), alloc);
