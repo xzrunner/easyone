@@ -170,6 +170,14 @@ std::string WxStagePage::GetFilepath() const
 	return filepath.empty() ? eone::WxStagePage::GetFilepath() : filepath;
 }
 
+void WxStagePage::SetFilepath(const std::string& filepath)
+{
+	auto tree = static_cast<renderlab::WxGraphPage*>(m_graph_page)->GetSceneTree();
+	if (tree->GetRootNode() == tree->GetCurrNode()) {
+		eone::WxStagePage::SetFilepath(filepath);
+	}
+}
+
 void WxStagePage::OnPageInit()
 {
     m_graph_obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX2D);

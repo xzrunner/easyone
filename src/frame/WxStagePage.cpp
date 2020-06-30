@@ -77,6 +77,12 @@ void WxStagePage::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
 	}
 }
 
+void WxStagePage::SetFilepath(const std::string& filepath)
+{
+	m_filepath = filepath;
+	m_backup.SetFilepath(GetBackupPath());
+}
+
 void WxStagePage::StoreToJson(const std::string& dir, rapidjson::Value& val,
 	                          rapidjson::MemoryPoolAllocator<>& alloc) const
 {
@@ -154,12 +160,6 @@ void WxStagePage::LoadFromFile(const ur::Device& dev, const std::string& filepat
 #endif // GAME_OBJ_ECS
 
 	m_sub_mgr->NotifyObservers(ee0::MSG_SET_CANVAS_DIRTY);
-}
-
-void WxStagePage::SetFilepath(const std::string& filepath)
-{
-	m_filepath = filepath;
-	m_backup.SetFilepath(GetBackupPath());
 }
 
 void WxStagePage::InitPage()
