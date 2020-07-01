@@ -14,7 +14,7 @@
 
 #include <rendergraph/Variable.h>
 
-namespace renderlab { class Evaluator; class WxGraphPage; }
+namespace renderlab { class Evaluator; class WxGraphPage; class WxCodePanel; }
 
 namespace eone
 {
@@ -85,6 +85,8 @@ private:
 
     n0::SceneNodePtr  m_graph_obj = nullptr;
     ee0::WxStagePage* m_graph_page = nullptr;
+
+	renderlab::WxCodePanel* m_code_panel = nullptr;
 
 }; // WxStagePage
 

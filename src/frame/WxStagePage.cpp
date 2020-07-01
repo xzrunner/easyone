@@ -227,6 +227,9 @@ void WxStagePage::InitSubWindow()
 	}
 	if (m_app_style & SHOW_STAGE) {
 		ui_mgr.GetPane(STR_STAGE_PANEL).Show();
+		if (m_app_style & STAGE_LFET) {
+			ui_mgr.GetPane(STR_STAGE_PANEL).Left();
+		}
 	} else {
 		ui_mgr.GetPane(STR_STAGE_PANEL).Hide();
 	}

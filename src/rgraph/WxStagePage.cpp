@@ -31,6 +31,7 @@
 #include <renderlab/WxGraphCanvas.h>
 #include <renderlab/WxGraphPage.h>
 #include <renderlab/WxPreviewCanvas.h>
+#include <renderlab/WxCodePanel.h>
 
 #include <node0/SceneNode.h>
 #include <node0/CompComplex.h>
@@ -56,7 +57,7 @@ const std::string WxStagePage::PAGE_TYPE = "render_graph";
 
 WxStagePage::WxStagePage(const ur::Device& dev, wxWindow* parent,
                          ECS_WORLD_PARAM const ee0::GameObj& obj, const ee0::RenderContext& rc)
-	: eone::WxStagePage(parent, ECS_WORLD_VAR obj, /*SHOW_STAGE | SHOW_TOOLBAR | TOOLBAR_LFET*/SHOW_STAGE | SHOW_TOOLBAR | SHOW_STAGE_EXT | STAGE_EXT_RIGHT)
+	: eone::WxStagePage(parent, ECS_WORLD_VAR obj, SHOW_STAGE | SHOW_TOOLBAR | SHOW_STAGE_EXT | STAGE_LFET | TOOLBAR_LFET)
     , m_dev(dev)
     , m_preview_impl(dev, *this, rc)
 //    , m_eval(std::make_shared<renderlab::Evaluator>())
@@ -185,7 +186,10 @@ void WxStagePage::OnPageInit()
     auto stage_ext_panel = Blackboard::Instance()->GetStageExtPanel();
     auto graph_page = CreateGraphPanel(stage_ext_panel);
     m_graph_page = graph_page;
-    stage_ext_panel->AddPagePanel(m_graph_page, wxVERTICAL);
+    stage_ext_panel->AddPagePanel(m_graph_page, wxVERTICAL, 2);
+
+	m_code_panel = new renderlab::WxCodePanel(stage_ext_panel, m_graph_page->GetSubjectMgr());
+	stage_ext_panel->AddPagePanel(m_code_panel, wxVERTICAL, 1);
 
     auto toolbar_panel = Blackboard::Instance()->GetToolbarPanel();
     auto toolbar_page = new bp::WxToolbarPanel(m_dev, toolbar_panel, m_graph_page->GetSubjectMgr(), true);

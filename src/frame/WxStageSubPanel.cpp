@@ -10,7 +10,7 @@ WxStageSubPanel::WxStageSubPanel(wxWindow* parent)
 {
 }
 
-void WxStageSubPanel::AddPagePanel(wxWindow* panel, int orient)
+void WxStageSubPanel::AddPagePanel(wxWindow* panel, int orient, int proportion)
 {
     bool new_sizer = false;
 
@@ -21,7 +21,7 @@ void WxStageSubPanel::AddPagePanel(wxWindow* panel, int orient)
 	}
 
     if (panel) {
-        sizer->Add(panel, 1, wxEXPAND);
+        sizer->Add(panel, proportion, wxEXPAND);
 //        sizer->Add(panel);
     }
 
