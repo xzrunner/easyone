@@ -32,12 +32,15 @@
 #include <renderlab/WxGraphPage.h>
 #include <renderlab/WxPreviewCanvas.h>
 #include <renderlab/WxCodePanel.h>
+#include <renderlab/WxDefaultProperty.h>
+#include <renderlab/Serializer.h>
 
 #include <node0/SceneNode.h>
 #include <node0/CompComplex.h>
 #include <node0/CompIdentity.h>
 #include <sx/ResFileHelper.h>
 #include <js/RapidJsonHelper.h>
+#include <painting3/PerspCam.h>
 
 #include <boost/filesystem.hpp>
 
@@ -193,7 +196,9 @@ void WxStagePage::OnPageInit()
 
     auto toolbar_panel = Blackboard::Instance()->GetToolbarPanel();
     auto toolbar_page = new bp::WxToolbarPanel(m_dev, toolbar_panel, m_graph_page->GetSubjectMgr(), true);
-    toolbar_panel->AddPagePanel(toolbar_page, wxVERTICAL);
+	m_default_prop = new renderlab::WxDefaultProperty(toolbar_page);
+	toolbar_page->PushDefaultProp(m_default_prop);
+	toolbar_panel->AddPagePanel(toolbar_page, wxVERTICAL);
 
     auto prev_canvas = std::static_pointer_cast<renderlab::WxPreviewCanvas>(GetImpl().GetCanvas());
     prev_canvas->SetGraphPage(graph_page);
@@ -219,6 +224,12 @@ void WxStagePage::StoreToJsonExt(const std::string& dir, rapidjson::Value& val,
     bp::NSCompNode::StoreConnection(ccomplex.GetAllChildren(), val["nodes"], alloc);
 
     val.AddMember("page_type", rapidjson::Value(PAGE_TYPE.c_str(), alloc), alloc);
+
+	if (m_default_prop->IsSaveCamEnable()) {
+		renderlab::Serializer::StoreCamera(
+			GetImpl().GetCanvas()->GetCamera(), val, alloc
+		);
+	}
 }
 
 void WxStagePage::LoadFromFileExt(const std::string& filepath)
@@ -240,6 +251,10 @@ void WxStagePage::LoadFromFileExt(const std::string& filepath)
         //bp::NSCompNode::LoadConnection(ccomplex.GetAllChildren(), doc["nodes"]);
 
         m_graph_page->GetSubjectMgr()->NotifyObservers(bp::MSG_BP_CONN_REBUILD);
+
+		renderlab::Serializer::LoadCamera(
+			GetImpl().GetCanvas()->GetCamera(), doc
+		);
     }
     break;
     }
