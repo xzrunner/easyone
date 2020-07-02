@@ -247,9 +247,6 @@ void WxStagePage::LoadFromFileExt(const std::string& filepath)
         auto dir = boost::filesystem::path(filepath).parent_path().string();
         bp::Serializer<rendergraph::Variable>::LoadFromJson(m_dev, *m_graph_page, m_graph_obj, doc, dir);
 
-        //auto& ccomplex = m_graph_obj->GetSharedComp<n0::CompComplex>();
-        //bp::NSCompNode::LoadConnection(ccomplex.GetAllChildren(), doc["nodes"]);
-
         m_graph_page->GetSubjectMgr()->NotifyObservers(bp::MSG_BP_CONN_REBUILD);
 
 		renderlab::Serializer::LoadCamera(
