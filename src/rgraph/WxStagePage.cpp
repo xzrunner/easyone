@@ -234,6 +234,9 @@ void WxStagePage::StoreToJsonExt(const std::string& dir, rapidjson::Value& val,
 
 void WxStagePage::LoadFromFileExt(const std::string& filepath)
 {
+    m_default_prop->Reset();
+    GetImpl().GetCanvas()->ResetCamera();
+
     auto type = sx::ResFileHelper::Type(filepath);
     switch (type)
     {
