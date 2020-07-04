@@ -56,7 +56,7 @@ WxStagePage::WxStagePage(wxWindow* parent, ECS_WORLD_PARAM const ee0::GameObj& o
     m_messages.push_back(ee0::MSG_STAGE_PAGE_NEW);
 
     m_messages.push_back(bp::MSG_BP_CONN_INSERT);
-    m_messages.push_back(bp::MSG_BP_CONN_DELETE);
+    m_messages.push_back(bp::MSG_BP_BEFORE_CONN_DELETE);
     m_messages.push_back(bp::MSG_BP_CONN_REBUILD);
     m_messages.push_back(bp::MSG_BP_NODE_PROP_CHANGED);
 }
@@ -83,7 +83,7 @@ void WxStagePage::OnNotify(uint32_t msg, const ee0::VariantSet& variants)
         break;
 
     case bp::MSG_BP_CONN_INSERT:
-    case bp::MSG_BP_CONN_DELETE:
+    case bp::MSG_BP_BEFORE_CONN_DELETE:
     case bp::MSG_BP_CONN_REBUILD:
     case bp::MSG_BP_NODE_PROP_CHANGED:
         UpdateBlueprint();
