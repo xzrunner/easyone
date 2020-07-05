@@ -11,6 +11,7 @@
 
 #include <ee0/SubjectMgr.h>
 #include <ee0/WxStageCanvas.h>
+#include <ee0/WxStagePage.h>
 #include <ee0/MsgHelper.h>
 #include <blueprint/NodeSelectOP.h>
 #include <blueprint/ArrangeNodeOP.h>
@@ -268,6 +269,10 @@ WxStagePage::CreateGraphPanel(wxWindow* parent) const
         m_dev, panel, Blackboard::Instance()->GetRenderContext()
     );
     panel->SetCanvas(canvas);
+
+    auto ctx = panel->GetContext();
+    auto preview_sz = m_preview_impl.GetStagePage().GetImpl().GetCanvas()->GetSize();
+    std::static_pointer_cast<rendergraph::RenderContext>(ctx)->screen_size.Set(preview_sz.x, preview_sz.y);
 
     const uint32_t cam_cfg = ee2::CamControlOP::MOUSE_MOVE_FOCUS | ee2::CamControlOP::RIGHT_TAP;
     auto select_op = std::make_shared<bp::NodeSelectOP>(canvas->GetCamera(), *panel, cam_cfg);
