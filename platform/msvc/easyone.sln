@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.27130.2020
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30225.117
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "0.sm", "..\..\ext\sm\platform\msvc\projects\sm.vcxproj", "{81630E0D-E1EF-4837-A0EE-30435ED4FE59}"
 EndProject
@@ -186,9 +186,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "0.base", "0.base", "{AF317573-4862-4C0B-9F3C-2C364C0EC958}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "2.tools", "2.tools", "{7B938AA4-2196-4A91-B94F-E1C20BCCFA05}"
-	ProjectSection(SolutionItems) = preProject
-		..\..\ext\dtex\platform\msvc\projects\dtex.vcxproj = ..\..\ext\dtex\platform\msvc\projects\dtex.vcxproj
-	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "4.render", "4.render", "{AF5FD54D-12B0-4D18-AEE3-9A72DDD1CAE5}"
 EndProject
@@ -373,6 +370,8 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "shaderlab-test", "..\..\ext\shaderlab\platform\msvc\projects\shaderlab-test.vcxproj", "{560AEA65-967A-4D7D-A1D2-A6F21D8AAE3D}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "renderlab-test", "..\..\ext\renderlab\platform\msvc\projects\renderlab-test.vcxproj", "{D17DBF86-163A-41BF-A846-BEA4C56E3A0A}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3.shadertrans", "..\..\ext\shadertrans\platform\msvc\projects\shadertrans.vcxproj", "{0AF51930-759C-4389-8420-2BF6CB10BEFF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -2168,6 +2167,20 @@ Global
 		{D17DBF86-163A-41BF-A846-BEA4C56E3A0A}.RelWithDebInfo|Win32.Build.0 = Release|Win32
 		{D17DBF86-163A-41BF-A846-BEA4C56E3A0A}.RelWithDebInfo|x64.ActiveCfg = Release|Win32
 		{D17DBF86-163A-41BF-A846-BEA4C56E3A0A}.RelWithDebInfo|x64.Build.0 = Release|Win32
+		{0AF51930-759C-4389-8420-2BF6CB10BEFF}.Debug|Win32.ActiveCfg = Debug|Win32
+		{0AF51930-759C-4389-8420-2BF6CB10BEFF}.Debug|Win32.Build.0 = Debug|Win32
+		{0AF51930-759C-4389-8420-2BF6CB10BEFF}.Debug|x64.ActiveCfg = Debug|Win32
+		{0AF51930-759C-4389-8420-2BF6CB10BEFF}.MinSizeRel|Win32.ActiveCfg = Release|Win32
+		{0AF51930-759C-4389-8420-2BF6CB10BEFF}.MinSizeRel|Win32.Build.0 = Release|Win32
+		{0AF51930-759C-4389-8420-2BF6CB10BEFF}.MinSizeRel|x64.ActiveCfg = Release|Win32
+		{0AF51930-759C-4389-8420-2BF6CB10BEFF}.MinSizeRel|x64.Build.0 = Release|Win32
+		{0AF51930-759C-4389-8420-2BF6CB10BEFF}.Release|Win32.ActiveCfg = Release|Win32
+		{0AF51930-759C-4389-8420-2BF6CB10BEFF}.Release|Win32.Build.0 = Release|Win32
+		{0AF51930-759C-4389-8420-2BF6CB10BEFF}.Release|x64.ActiveCfg = Release|Win32
+		{0AF51930-759C-4389-8420-2BF6CB10BEFF}.RelWithDebInfo|Win32.ActiveCfg = Release|Win32
+		{0AF51930-759C-4389-8420-2BF6CB10BEFF}.RelWithDebInfo|Win32.Build.0 = Release|Win32
+		{0AF51930-759C-4389-8420-2BF6CB10BEFF}.RelWithDebInfo|x64.ActiveCfg = Release|Win32
+		{0AF51930-759C-4389-8420-2BF6CB10BEFF}.RelWithDebInfo|x64.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -2342,6 +2355,7 @@ Global
 		{7EED0027-AE99-415F-B4DA-E51BF361D246} = {0BFDB5AE-9FE9-45E4-AC38-B931F8DB3762}
 		{560AEA65-967A-4D7D-A1D2-A6F21D8AAE3D} = {0BFDB5AE-9FE9-45E4-AC38-B931F8DB3762}
 		{D17DBF86-163A-41BF-A846-BEA4C56E3A0A} = {F92A1D55-9181-4FFF-ACA9-A51435DD3A89}
+		{0AF51930-759C-4389-8420-2BF6CB10BEFF} = {21641371-9FF1-473B-8607-85E88E161C0A}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8D54C01A-3C82-4351-A325-2853C3E81322}
