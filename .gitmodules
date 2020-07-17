@@ -347,3 +347,6 @@
 [submodule "ext/shadergraph"]
 	path = ext/shadergraph
 	url = git@github.com:xzrunner/shadergraph.git
+[submodule "ext/shadertrans"]
+	path = ext/shadertrans
+	url = git@github.com:xzrunner/shadertrans.git
