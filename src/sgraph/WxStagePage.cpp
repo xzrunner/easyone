@@ -52,7 +52,7 @@ namespace eone
 namespace sgraph
 {
 
-const std::string WxStagePage::PAGE_TYPE = "render_graph";
+const std::string WxStagePage::PAGE_TYPE = "shader_graph";
 
 WxStagePage::WxStagePage(const ur::Device& dev, wxWindow* parent,
                          ECS_WORLD_PARAM const ee0::GameObj& obj, const ee0::RenderContext& rc)
