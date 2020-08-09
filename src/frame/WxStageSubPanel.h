@@ -10,7 +10,7 @@ class WxStageSubPanel : public wxPanel
 public:
 	WxStageSubPanel(wxWindow* parent);
 
-    void AddPagePanel(wxWindow* panel, int orient, int proportion = 0);
+    void AddPagePanel(wxWindow* panel, int orient, int proportion = 1);
 
 }; // WxStageSubPanel
 
