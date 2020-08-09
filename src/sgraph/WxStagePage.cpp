@@ -376,7 +376,7 @@ bool WxStagePage::UpdateNodes()
             return true;
         }
         auto& bp_node = obj->GetUniqueComp<bp::CompNode>().GetNode();
-        if (bp_node->Update(params)) {
+        if (bp_node->Update(m_dev)) {
             dirty = true;
         }
         return true;
