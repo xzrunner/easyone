@@ -350,3 +350,6 @@
 [submodule "ext/shadertrans"]
 	path = ext/shadertrans
 	url = git@github.com:xzrunner/shadertrans.git
+[submodule "ext/fxlang"]
+	path = ext/fxlang
+	url = git@github.com:xzrunner/fxlang.git
