@@ -197,6 +197,9 @@
     <ProjectReference Include="..\..\..\ext\editoplab\platform\msvc\projects\editoplab.vcxproj">
       <Project>{e9583757-1e78-45b4-bae0-052da6e26ff0}</Project>
     </ProjectReference>
+    <ProjectReference Include="..\..\..\ext\fxlang\platform\msvc\projects\fxlang.vcxproj">
+      <Project>{1adb827f-d805-4b33-8e8e-2338ce8557ef}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\..\..\ext\geolab\platform\msvc\projects\geolab.vcxproj">
       <Project>{36ce6c84-870c-4f0e-8518-d821ef1e7601}</Project>
     </ProjectReference>

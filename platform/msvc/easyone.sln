@@ -373,6 +373,10 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "renderlab-test", "..\..\ext
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "3.shadertrans", "..\..\ext\shadertrans\platform\msvc\projects\shadertrans.vcxproj", "{0AF51930-759C-4389-8420-2BF6CB10BEFF}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "fxlang", "..\..\ext\fxlang\platform\msvc\projects\fxlang.vcxproj", "{1ADB827F-D805-4B33-8E8E-2338CE8557EF}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "fxlang-test", "..\..\ext\fxlang\platform\msvc\projects\fxlang-test.vcxproj", "{287187B1-72F8-44A5-B222-545D36FEE8D1}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -2181,6 +2185,34 @@ Global
 		{0AF51930-759C-4389-8420-2BF6CB10BEFF}.RelWithDebInfo|Win32.Build.0 = Release|Win32
 		{0AF51930-759C-4389-8420-2BF6CB10BEFF}.RelWithDebInfo|x64.ActiveCfg = Release|Win32
 		{0AF51930-759C-4389-8420-2BF6CB10BEFF}.RelWithDebInfo|x64.Build.0 = Release|Win32
+		{1ADB827F-D805-4B33-8E8E-2338CE8557EF}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1ADB827F-D805-4B33-8E8E-2338CE8557EF}.Debug|Win32.Build.0 = Debug|Win32
+		{1ADB827F-D805-4B33-8E8E-2338CE8557EF}.Debug|x64.ActiveCfg = Debug|Win32
+		{1ADB827F-D805-4B33-8E8E-2338CE8557EF}.MinSizeRel|Win32.ActiveCfg = Release|Win32
+		{1ADB827F-D805-4B33-8E8E-2338CE8557EF}.MinSizeRel|Win32.Build.0 = Release|Win32
+		{1ADB827F-D805-4B33-8E8E-2338CE8557EF}.MinSizeRel|x64.ActiveCfg = Release|Win32
+		{1ADB827F-D805-4B33-8E8E-2338CE8557EF}.MinSizeRel|x64.Build.0 = Release|Win32
+		{1ADB827F-D805-4B33-8E8E-2338CE8557EF}.Release|Win32.ActiveCfg = Release|Win32
+		{1ADB827F-D805-4B33-8E8E-2338CE8557EF}.Release|Win32.Build.0 = Release|Win32
+		{1ADB827F-D805-4B33-8E8E-2338CE8557EF}.Release|x64.ActiveCfg = Release|Win32
+		{1ADB827F-D805-4B33-8E8E-2338CE8557EF}.RelWithDebInfo|Win32.ActiveCfg = Release|Win32
+		{1ADB827F-D805-4B33-8E8E-2338CE8557EF}.RelWithDebInfo|Win32.Build.0 = Release|Win32
+		{1ADB827F-D805-4B33-8E8E-2338CE8557EF}.RelWithDebInfo|x64.ActiveCfg = Release|Win32
+		{1ADB827F-D805-4B33-8E8E-2338CE8557EF}.RelWithDebInfo|x64.Build.0 = Release|Win32
+		{287187B1-72F8-44A5-B222-545D36FEE8D1}.Debug|Win32.ActiveCfg = Debug|Win32
+		{287187B1-72F8-44A5-B222-545D36FEE8D1}.Debug|Win32.Build.0 = Debug|Win32
+		{287187B1-72F8-44A5-B222-545D36FEE8D1}.Debug|x64.ActiveCfg = Debug|Win32
+		{287187B1-72F8-44A5-B222-545D36FEE8D1}.MinSizeRel|Win32.ActiveCfg = Release|Win32
+		{287187B1-72F8-44A5-B222-545D36FEE8D1}.MinSizeRel|Win32.Build.0 = Release|Win32
+		{287187B1-72F8-44A5-B222-545D36FEE8D1}.MinSizeRel|x64.ActiveCfg = Release|Win32
+		{287187B1-72F8-44A5-B222-545D36FEE8D1}.MinSizeRel|x64.Build.0 = Release|Win32
+		{287187B1-72F8-44A5-B222-545D36FEE8D1}.Release|Win32.ActiveCfg = Release|Win32
+		{287187B1-72F8-44A5-B222-545D36FEE8D1}.Release|Win32.Build.0 = Release|Win32
+		{287187B1-72F8-44A5-B222-545D36FEE8D1}.Release|x64.ActiveCfg = Release|Win32
+		{287187B1-72F8-44A5-B222-545D36FEE8D1}.RelWithDebInfo|Win32.ActiveCfg = Release|Win32
+		{287187B1-72F8-44A5-B222-545D36FEE8D1}.RelWithDebInfo|Win32.Build.0 = Release|Win32
+		{287187B1-72F8-44A5-B222-545D36FEE8D1}.RelWithDebInfo|x64.ActiveCfg = Release|Win32
+		{287187B1-72F8-44A5-B222-545D36FEE8D1}.RelWithDebInfo|x64.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -2356,6 +2388,8 @@ Global
 		{560AEA65-967A-4D7D-A1D2-A6F21D8AAE3D} = {0BFDB5AE-9FE9-45E4-AC38-B931F8DB3762}
 		{D17DBF86-163A-41BF-A846-BEA4C56E3A0A} = {F92A1D55-9181-4FFF-ACA9-A51435DD3A89}
 		{0AF51930-759C-4389-8420-2BF6CB10BEFF} = {21641371-9FF1-473B-8607-85E88E161C0A}
+		{1ADB827F-D805-4B33-8E8E-2338CE8557EF} = {AF5FD54D-12B0-4D18-AEE3-9A72DDD1CAE5}
+		{287187B1-72F8-44A5-B222-545D36FEE8D1} = {AF5FD54D-12B0-4D18-AEE3-9A72DDD1CAE5}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {8D54C01A-3C82-4351-A325-2853C3E81322}
