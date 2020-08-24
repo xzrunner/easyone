@@ -192,7 +192,7 @@ void WxStagePage::OnPageInit()
     m_graph_page = graph_page;
     stage_ext_panel->AddPagePanel(m_graph_page, wxVERTICAL, 2);
 
-	m_code_panel = new renderlab::WxCodePanel(stage_ext_panel, m_graph_page->GetSubjectMgr());
+	m_code_panel = new renderlab::WxCodePanel(stage_ext_panel, *graph_page);
 	stage_ext_panel->AddPagePanel(m_code_panel, wxVERTICAL, 1);
 
     auto toolbar_panel = Blackboard::Instance()->GetToolbarPanel();
