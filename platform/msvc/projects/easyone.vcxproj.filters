@@ -220,6 +220,9 @@
     <Filter Include="62.shader">
       <UniqueIdentifier>{d7dfab46-a794-41fb-9f35-54cde53ee773}</UniqueIdentifier>
     </Filter>
+    <Filter Include="67.gi">
+      <UniqueIdentifier>{8e134b4e-6958-4622-9113-7cc94ecbf51e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\frame\main.h">
@@ -537,6 +540,9 @@
     <ClInclude Include="..\..\..\src\sgraph\WxStagePage.h">
       <Filter>62.shader</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\gi\WxStagePage.h">
+      <Filter>67.gi</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\frame\main.cpp">
@@ -829,6 +835,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\sgraph\WxStagePage.cpp">
       <Filter>62.shader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\gi\WxStagePage.cpp">
+      <Filter>67.gi</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

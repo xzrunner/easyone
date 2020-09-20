@@ -353,3 +353,9 @@
 [submodule "ext/fxlang"]
 	path = ext/fxlang
 	url = git@github.com:xzrunner/fxlang.git
+[submodule "ext/gilab"]
+	path = ext/gilab
+	url = git@github.com:xzrunner/gilab.git
+[submodule "ext/gigraph"]
+	path = ext/gigraph
+	url = git@github.com:xzrunner/gigraph.git

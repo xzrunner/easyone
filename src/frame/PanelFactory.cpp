@@ -85,6 +85,9 @@
 #ifdef MODULE_RAYGRAPH
 #include "raygraph/WxStagePage.h"
 #endif // MODULE_RAYGRAPH
+#ifdef MODULE_GIGRAPH
+#include "gi/WxStagePage.h"
+#endif // MODULE_GIGRAPH
 #ifdef MODULE_GUIGRAPH
 #include "guigraph/WxStagePage.h"
 #include "guigraph/WxStageCanvas.h"
@@ -480,6 +483,14 @@ WxStagePage* PanelFactory::CreateStagePage(const ur::Device& dev, ECS_WORLD_PARA
     }
         break;
 #endif // MODULE_RAYGRAPH
+#ifdef MODULE_GIGRAPH
+	case PAGE_GI_GRAPH:
+	{
+		auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX2D);
+		page = new gi::WxStagePage(dev, frame, ECS_WORLD_VAR obj, rc);
+	}
+	break;
+#endif // MODULE_GIGRAPH
 #ifdef MODULE_GUIGRAPH
     case PAGE_GUI_GRAPH:
     {

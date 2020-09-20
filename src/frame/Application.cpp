@@ -48,6 +48,9 @@
 #ifdef MODULE_RAYGRAPH
 #include "raygraph/WxStagePage.h"
 #endif // MODULE_RAYGRAPH
+#ifdef MODULE_GIGRAPH
+#include "gi/WxStagePage.h"
+#endif // MODULE_GIGRAPH
 #ifdef MODULE_GUIGRAPH
 #include "guigraph/WxStagePage.h"
 #endif // MODULE_GUIGRAPH
@@ -210,6 +213,10 @@ void Application::LoadFromFile(const std::string& filepath)
             } else if (type == raygraph::WxStagePage::PAGE_TYPE) {
                 new_type = PAGE_RAY_GRAPH;
 #endif // MODULE_RAYGRAPH
+#ifdef MODULE_GIGRAPH
+            } else if (type == gi::WxStagePage::PAGE_TYPE) {
+                new_type = PAGE_GI_GRAPH;
+#endif // MODULE_GIGRAPH
 #ifdef MODULE_GUIGRAPH
             } else if (type == guigraph::WxStagePage::PAGE_TYPE) {
                 new_type = PAGE_GUI_GRAPH;
@@ -492,6 +499,9 @@ wxWindow* Application::CreateStagePanel()
 #ifdef MODULE_RAYGRAPH
     page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_RAY_GRAPH, m_stage);
 #endif // MODULE_RAYGRAPH
+#ifdef MODULE_GIGRAPH
+    page = PanelFactory::CreateStagePage(*dev, ECS_WORLD_SELF_VAR PAGE_GI_GRAPH, m_stage);
+#endif // MODULE_GIGRAPH
 #ifdef MODULE_GUIGRAPH
     page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_GUI_GRAPH, m_stage);
 #endif // MODULE_GUIGRAPH

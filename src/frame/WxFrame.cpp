@@ -66,6 +66,7 @@ void WxFrame::OnNew(wxCommandEvent& event)
         { "ShaderGraph",     new PageItemData(eone::PAGE_SHADER_GRAPH2) },
         { "RenderGraph",     new PageItemData(eone::PAGE_RENDER_GRAPH) },
         { "RayGraph",        new PageItemData(eone::PAGE_RAY_GRAPH) },
+		{ "GIGraph",         new PageItemData(eone::PAGE_GI_GRAPH) },
         { "GuiGraph",        new PageItemData(eone::PAGE_GUI_GRAPH) },
         { "PbrGraph",        new PageItemData(eone::PAGE_PBR_GRAPH) },
         { "HdiSop",          new PageItemData(eone::PAGE_HDI_SOP) },
