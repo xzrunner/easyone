@@ -636,7 +636,10 @@
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/geometry/</ObjectFileName>
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/geometry/</ObjectFileName>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\gi\WxStagePage.cpp" />
+    <ClCompile Include="..\..\..\src\gi\WxStagePage.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/gi/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/gi/</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="..\..\..\src\guigraph\WxGraphPage.cpp">
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/guigraph/</ObjectFileName>
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/guigraph/</ObjectFileName>
@@ -836,7 +839,10 @@
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/shape3d/</ObjectFileName>
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/shape3d/</ObjectFileName>
     </ClCompile>
-    <ClCompile Include="..\..\..\src\task\WxStagePage.cpp" />
+    <ClCompile Include="..\..\..\src\task\WxStagePage.cpp">
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/task/</ObjectFileName>
+      <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/task/</ObjectFileName>
+    </ClCompile>
     <ClCompile Include="..\..\..\src\terrain\WxStagePage.cpp">
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)/terrain/</ObjectFileName>
       <ObjectFileName Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(IntDir)/terrain/</ObjectFileName>
