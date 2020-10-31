@@ -40,6 +40,7 @@
 #include <js/RapidJsonHelper.h>
 #include <memmgr/LinearAllocator.h>
 #include <terraingraph/DeviceVarType.h>
+#include <terraingraph/Context.h>
 
 #include <boost/filesystem.hpp>
 
@@ -203,6 +204,11 @@ WxStagePage::CreateGraphPanel(wxWindow* parent) const
         m_dev, panel, Blackboard::Instance()->GetRenderContext()
     );
     panel_impl.SetCanvas(canvas);
+
+    auto ctx = std::make_shared<terraingraph::Context>();
+    ctx->ur_dev = &canvas->GetRenderDevice();
+    ctx->ur_ctx = canvas->GetRenderContext().ur_ctx.get();
+    panel->GetSceneTree()->GetCurrEval()->SetContext(ctx);
 
     auto select_op = std::make_shared<bp::NodeSelectOP>(canvas->GetCamera(), *panel);
 
