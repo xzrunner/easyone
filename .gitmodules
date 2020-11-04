@@ -359,3 +359,6 @@
 [submodule "ext/gigraph"]
 	path = ext/gigraph
 	url = git@github.com:xzrunner/gigraph.git
+[submodule "assets/assets"]
+	path = assets/assets
+	url = git@github.com:xzrunner/assets.git
