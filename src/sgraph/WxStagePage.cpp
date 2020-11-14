@@ -174,7 +174,7 @@ void WxStagePage::OnPageInit()
 
     auto toolbar_panel = Blackboard::Instance()->GetToolbarPanel();
     auto toolbar_page = new bp::WxToolbarPanel(m_dev, toolbar_panel, m_graph_page->GetSubjectMgr(), true);
-    auto default_prop = new shaderlab::WxDefaultProperty(toolbar_page, prev_canvas);
+    auto default_prop = new shaderlab::WxDefaultProperty(toolbar_page, prev_canvas->GetViewer());
     toolbar_page->PushDefaultProp(default_prop);
     toolbar_panel->AddPagePanel(toolbar_page, wxVERTICAL);
 }
