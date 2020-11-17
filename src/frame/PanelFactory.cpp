@@ -177,6 +177,7 @@
 #endif // MODULE_ARCHITECTURAL
 #ifdef MODULE_TERRAIN
 #include <terrainlab/WxPreviewCanvas.h>
+#include <terrainlab/TerrainLab.h>
 #endif // MODULE_TERRAIN
 #ifdef MODULE_CITY
 #include <citylab/WxPreviewCanvas.h>
@@ -589,6 +590,7 @@ WxStagePage* PanelFactory::CreateStagePage(const ur::Device& dev, ECS_WORLD_PARA
     case PAGE_TERRAIN:
     {
         auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX2D);
+		terrainlab::TerrainLab::Instance();	// init
         page = new terrain::WxStagePage(dev, frame, ECS_WORLD_VAR obj, rc);
     }
         break;
