@@ -28,7 +28,7 @@
 //#define MODULE_SHADERGRAPH
 //#define MODULE_RENDERGRAPH
 //#define MODULE_RAYGRAPH
-#define MODULE_GIGRAPH
+//#define MODULE_GIGRAPH
 //#define MODULE_GUIGRAPH
 //#define MODULE_PBRGRAPH
 //#define MODULE_GEOMETRY
@@ -36,7 +36,7 @@
 //#define MODULE_EDITOP
 //#define MODULE_TASK
 
-//#define MODULE_TERRAIN
+#define MODULE_TERRAIN
 //#define MODULE_CITY
 //#define MODULE_ARCHITECTURAL
 
