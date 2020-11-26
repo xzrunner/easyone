@@ -6,6 +6,7 @@
 #include <cu/cu_macro.h>
 
 #include <memory>
+#include <sstream>
 
 class wxFrame;
 class wxGLCanvas;
@@ -68,6 +69,8 @@ private:
 	std::shared_ptr<Application> m_app = nullptr;
 
     std::shared_ptr<ur::Device> m_dev = nullptr;
+
+	std::ostringstream m_logger;
 
 	CU_SINGLETON_DECLARATION(Blackboard);
 
