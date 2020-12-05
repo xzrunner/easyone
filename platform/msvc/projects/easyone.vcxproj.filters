@@ -223,6 +223,9 @@
     <Filter Include="67.gi">
       <UniqueIdentifier>{8e134b4e-6958-4622-9113-7cc94ecbf51e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="68.vfx">
+      <UniqueIdentifier>{ff485336-eb5b-402d-9456-c3100b670757}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\src\frame\main.h">
@@ -543,6 +546,9 @@
     <ClInclude Include="..\..\..\src\gi\WxStagePage.h">
       <Filter>67.gi</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\src\vfx\WxStagePage.h">
+      <Filter>68.vfx</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\src\frame\main.cpp">
@@ -838,6 +844,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\src\gi\WxStagePage.cpp">
       <Filter>67.gi</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\src\vfx\WxStagePage.cpp">
+      <Filter>68.vfx</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

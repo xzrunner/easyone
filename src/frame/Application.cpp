@@ -93,6 +93,9 @@
 #ifdef MODULE_TASK
 #include "task/WxStagePage.h"
 #endif // MODULE_TASK
+#ifdef MODULE_VFXGRAPH
+#include "vfx/WxStagePage.h"
+#endif // MODULE_VFXGRAPH
 
 #include <ee0/MsgHelper.h>
 #include <ee0/SubjectMgr.h>
@@ -269,6 +272,10 @@ void Application::LoadFromFile(const std::string& filepath)
             } else if (type == task::WxStagePage::PAGE_TYPE) {
                 new_type = PAGE_TASK;
 #endif // MODULE_TASK
+#ifdef MODULE_VFXGRAPH
+            } else if (type == vfx::WxStagePage::PAGE_TYPE) {
+                new_type = PAGE_VFX_GRAPH;
+#endif // MODULE_VFXGRAPH
             }
 		} else if (new_type_str == "n2_scale9") {
 			new_type = PAGE_SCALE9;
@@ -541,6 +548,9 @@ wxWindow* Application::CreateStagePanel()
 #ifdef MODULE_TASK
     page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_TASK, m_stage);
 #endif // MODULE_TASK
+#ifdef MODULE_VFXGRAPH
+	page = PanelFactory::CreateStagePage(*dev, ECS_WORLD_SELF_VAR PAGE_VFX_GRAPH, m_stage);
+#endif // MODULE_VFXGRAPH
 
 #ifdef MODULE_QUAKE
 	page = PanelFactory::CreateStagePage(ECS_WORLD_SELF_VAR PAGE_QUAKE, m_stage);

@@ -128,6 +128,9 @@
 #ifdef MODULE_TASK
 #include "task/WxStagePage.h"
 #endif // MODULE_TASK
+#ifdef MODULE_VFXGRAPH
+#include "vfx/WxStagePage.h"
+#endif // MODULE_VFXGRAPH
 
 #include <ee0/WxListSelectDlg.h>
 #include <ee0/MsgHelper.h>
@@ -200,6 +203,9 @@
 #ifdef MODULE_TASK
 #include <tasklab/WxPreviewCanvas.h>
 #endif // MODULE_TASK
+#ifdef MODULE_VFXGRAPH
+#include <vfxlab/VfxLab.h>
+#endif // MODULE_VFXGRAPH
 
 #include <boost/filesystem.hpp>
 
@@ -687,6 +693,14 @@ WxStagePage* PanelFactory::CreateStagePage(const ur::Device& dev, ECS_WORLD_PARA
     }
     break;
 #endif // MODULE_TASK
+#ifdef MODULE_VFXGRAPH
+    case PAGE_VFX_GRAPH:
+    {
+        auto obj = GameObjFactory::Create(ECS_WORLD_VAR GAME_OBJ_COMPLEX2D);
+        page = new vfx::WxStagePage(dev, frame, ECS_WORLD_VAR obj, rc);
+    }
+        break;
+#endif // MODULE_VFXGRAPH
 
 #ifdef MODULE_SCRIPT
 	case PAGE_SCRIPT:

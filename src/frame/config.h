@@ -35,8 +35,9 @@
 //#define MODULE_MATERIAL
 //#define MODULE_EDITOP
 //#define MODULE_TASK
+#define MODULE_VFXGRAPH
 
-#define MODULE_TERRAIN
+//#define MODULE_TERRAIN
 //#define MODULE_CITY
 //#define MODULE_ARCHITECTURAL
 

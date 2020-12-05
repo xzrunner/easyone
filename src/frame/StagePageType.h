@@ -43,6 +43,7 @@ enum StagePageType
     PAGE_MATERIAL,
     PAGE_EDITOP,
     PAGE_TASK,
+	PAGE_VFX_GRAPH,
 
 	PAGE_SCRIPT,
 	PAGE_BLUEPRINT,
@@ -119,6 +120,8 @@ std::string GetPageName(int type)
         return "EditOp";
     case PAGE_TASK:
         return "Task";
+	case PAGE_VFX_GRAPH:
+		return "VFX";
 
 	case PAGE_SCRIPT:
 		return "Script";

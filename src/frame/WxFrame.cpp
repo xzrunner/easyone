@@ -80,6 +80,7 @@ void WxFrame::OnNew(wxCommandEvent& event)
         { "Material",        new PageItemData(eone::PAGE_MATERIAL) },
         { "EditOp",          new PageItemData(eone::PAGE_EDITOP) },
         { "Task",            new PageItemData(eone::PAGE_TASK) },
+		{ "VFX",             new PageItemData(eone::PAGE_VFX_GRAPH) },
 
 		{ "Script...",       new PageItemData(eone::PAGE_SCRIPT) },
 		{ "Blueprint",       new PageItemData(eone::PAGE_BLUEPRINT) },

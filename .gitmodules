@@ -362,3 +362,9 @@
 [submodule "assets/assets"]
 	path = assets/assets
 	url = git@github.com:xzrunner/assets.git
+[submodule "ext/vfxlab"]
+	path = ext/vfxlab
+	url = git@github.com:xzrunner/vfxlab.git
+[submodule "ext/vfxgraph"]
+	path = ext/vfxgraph
+	url = git@github.com:xzrunner/vfxgraph.git
