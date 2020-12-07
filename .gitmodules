@@ -368,3 +368,6 @@
 [submodule "ext/vfxgraph"]
 	path = ext/vfxgraph
 	url = git@github.com:xzrunner/vfxgraph.git
+[submodule "ext/vessel"]
+	path = ext/vessel
+	url = git@github.com:xzrunner/vessel.git
